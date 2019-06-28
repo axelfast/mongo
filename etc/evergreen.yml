@@ -3900,7 +3900,7 @@ tasks:
           set -o verbose
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger-c-driver: share/doc/monger-c-driver/COPYING
             - monger_embedded: share/doc/monger_embedded/LICENSE-Embedded.txt
@@ -4350,7 +4350,7 @@ tasks:
           popd
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger-c-driver: iPhoneOS/Frameworks/mongerc.framework/COPYING
             - monger_embedded: iPhoneOS/Frameworks/monger_embedded.framework/LICENSE-Embedded.txt
@@ -4361,7 +4361,7 @@ tasks:
               ./monger-embedded-sdk-${version}/README-Licenses.txt
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger-c-driver: iPhoneOS/Frameworks/mongerc.framework/COPYING
           EOF
@@ -4371,7 +4371,7 @@ tasks:
               ./monger-embedded-sdk-${version}/README-Licenses.txt
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger_embedded: iPhoneOS/Frameworks/monger_embedded.framework/LICENSE-Embedded.txt
           EOF
@@ -4380,7 +4380,7 @@ tasks:
               ./monger-embedded-sdk-${version}/README-Licenses.txt
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - mongerc_embedded: iPhoneOS/Frameworks/mongerc_embedded.framework/LICENSE-Embedded.txt
           EOF

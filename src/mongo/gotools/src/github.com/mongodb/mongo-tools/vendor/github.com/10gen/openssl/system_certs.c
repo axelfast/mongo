@@ -1,4 +1,4 @@
-// Copyright 2016 MongerDB, Inc.
+// Copyright 2016 MongoDB, Inc.
 
 #include <openssl/err.h>
 #include <openssl/evp.h>

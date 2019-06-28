@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-present MongerDB, Inc.
+ * Copyright 2018-present MongoDB, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"){}
  *

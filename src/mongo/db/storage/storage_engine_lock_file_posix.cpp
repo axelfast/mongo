@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongerDB, Inc.
+ *    Copyright (C) 2018-present MongoDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongerDB, Inc.
+ *    as published by MongoDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -78,7 +78,7 @@ void flushMyDirectory(const boost::filesystem::path& file) {
                       << " see:" << startupWarningsLog;
                 log() << "\t\t\thttp://dochub.mongerdb.org/core/unsupported-filesystems"
                       << startupWarningsLog;
-                log() << "\t\tPlease notify MongerDB, Inc. if an unlisted filesystem generated "
+                log() << "\t\tPlease notify MongoDB, Inc. if an unlisted filesystem generated "
                       << "this warning." << startupWarningsLog;
                 _warnedAboutFilesystem = true;
             }
