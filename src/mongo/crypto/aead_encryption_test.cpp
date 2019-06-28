@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #include <algorithm>
 
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
 #include "aead_encryption.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // The first test is to ensure that the length of the cipher is correct when
@@ -149,4 +149,4 @@ TEST(AEAD, EncryptAndDecrypt) {
     ASSERT_EQ(0, std::memcmp(plainText.data(), plainTextTest.data(), 128));
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

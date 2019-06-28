@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,11 +35,11 @@
 #include <type_traits>
 #include <vector>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/util/decoration_container.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/static_assert.h"
+#include "monger/util/decoration_container.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Registry of decorations.
@@ -185,4 +185,4 @@ private:
     size_t _totalSizeBytes{sizeof(void*)};
 };
 
-}  // namespace mongo
+}  // namespace monger

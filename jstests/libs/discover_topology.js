@@ -4,7 +4,7 @@
 // Symbol type, so we just use unique string values instead.
 var Topology = {
     kStandalone: 'stand-alone',
-    kRouter: 'mongos router',
+    kRouter: 'mongers router',
     kReplicaSet: 'replica set',
     kShardedCluster: 'sharded cluster',
 };
@@ -16,8 +16,8 @@ var DiscoverTopology = (function() {
         const res = conn.adminCommand({isMaster: 1});
 
         if (!res.hasOwnProperty('setName')) {
-            // 'conn' represents a connection to a stand-alone mongod.
-            return {type: Topology.kStandalone, mongod: conn.host};
+            // 'conn' represents a connection to a stand-alone mongerd.
+            return {type: Topology.kStandalone, mongerd: conn.host};
         }
 
         // The "passives" field contains the list of unelectable (priority=0) secondaries
@@ -63,30 +63,30 @@ var DiscoverTopology = (function() {
             shardHosts[shardInfo._id] = getDataMemberConnectionStrings(shardConn);
         }
 
-        // Discover mongos URIs from the connection string. If a mongos is not passed in explicitly,
+        // Discover mongers URIs from the connection string. If a mongers is not passed in explicitly,
         // it will not be discovered.
-        const mongosUris = new MongoURI("mongodb://" + conn.host);
+        const mongersUris = new MongoURI("mongerdb://" + conn.host);
 
-        const mongos = {
+        const mongers = {
             type: Topology.kRouter,
-            nodes: mongosUris.servers.map(uriObj => uriObj.server),
+            nodes: mongersUris.servers.map(uriObj => uriObj.server),
         };
 
         return {
             type: Topology.kShardedCluster,
             configsvr: configsvrHosts,
             shards: shardHosts,
-            mongos: mongos,
+            mongers: mongers,
         };
     }
 
     /**
-     * Returns an object describing the topology of the mongod processes reachable from 'conn'.
+     * Returns an object describing the topology of the mongerd processes reachable from 'conn'.
      * The "connectFn" property can be optionally specified to support custom retry logic when
      * making connection attempts without overriding the Mongo constructor itself.
      *
-     * For a stand-alone mongod, an object of the form
-     *   {type: Topology.kStandalone, mongod: <conn-string>}
+     * For a stand-alone mongerd, an object of the form
+     *   {type: Topology.kStandalone, mongerd: <conn-string>}
      * is returned.
      *
      * For a replica set, an object of the form
@@ -102,13 +102,13 @@ var DiscoverTopology = (function() {
      *     type: Topology.kShardedCluster,
      *     configsvr: {nodes: [...]},
      *     shards: {
-     *       <shard-name1>: {type: Topology.kStandalone, mongod: ...},
+     *       <shard-name1>: {type: Topology.kStandalone, mongerd: ...},
      *       <shard-name2>: {type: Topology.kReplicaSet,
      *                       primary: <primary-conn-string>,
      *                       nodes: [...]},
      *       ...
      *     },
-     *     mongos: {
+     *     mongers: {
      *       type: Topology.kRouter,
      *       nodes: [...],
      *     }
@@ -128,7 +128,7 @@ var DiscoverTopology = (function() {
 
     function addNonConfigNodesToList(topology, hostList) {
         if (topology.type === Topology.kStandalone) {
-            hostList.push(topology.mongod);
+            hostList.push(topology.mongerd);
         } else if (topology.type === Topology.kReplicaSet) {
             hostList.push(...topology.nodes);
         } else if (topology.type === Topology.kShardedCluster) {
@@ -136,7 +136,7 @@ var DiscoverTopology = (function() {
                 const shardTopology = topology.shards[shardName];
                 addNonConfigNodesToList(shardTopology, hostList);
             }
-            hostList.push(...topology.mongos.nodes);
+            hostList.push(...topology.mongers.nodes);
         } else {
             throw new Error('Unrecognized topology format: ' + tojson(topology));
         }

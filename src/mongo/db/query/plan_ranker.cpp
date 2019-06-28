@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <cmath>
 #include <utility>
 #include <vector>
 
-#include "mongo/db/query/plan_ranker.h"
+#include "monger/db/query/plan_ranker.h"
 
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/log.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/db/server_options.h"
+#include "monger/util/log.h"
 
 namespace {
 
@@ -59,7 +59,7 @@ bool scoreComparator(const std::pair<double, size_t>& lhs, const std::pair<doubl
 
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 using std::vector;
@@ -265,4 +265,4 @@ double PlanRanker::scoreTree(const PlanStageStats* stats) {
     return score;
 }
 
-}  // namespace mongo
+}  // namespace monger

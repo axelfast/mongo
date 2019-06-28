@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/watchdog/watchdog_mongod.h"
+#include "monger/watchdog/watchdog_mongerd.h"
 
 #include <boost/filesystem.hpp>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/config.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/server_status.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/log.h"
-#include "mongo/util/tick_source_mock.h"
-#include "mongo/watchdog/watchdog.h"
-#include "mongo/watchdog/watchdog_mongod_gen.h"
-#include "mongo/watchdog/watchdog_register.h"
+#include "monger/base/init.h"
+#include "monger/config.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/log.h"
+#include "monger/util/tick_source_mock.h"
+#include "monger/watchdog/watchdog.h"
+#include "monger/watchdog/watchdog_mongerd_gen.h"
+#include "monger/watchdog/watchdog_register.h"
 
-namespace mongo {
+namespace monger {
 
 // Run the watchdog checks at a fixed interval regardless of user choice for monitoring period.
 constexpr Seconds watchdogCheckPeriod = Seconds{10};
@@ -198,4 +198,4 @@ void startWatchdog() {
     staticMonitor->start();
 }
 
-}  // namespace mongo
+}  // namespace monger

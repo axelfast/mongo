@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/catalog/index_build_entry_gen.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/catalog/index_build_entry_gen.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const std::vector<std::string> generateIndexes(size_t numIndexes) {
@@ -133,4 +133,4 @@ TEST(IndexBuildEntryTest, SerializeAndDeserialize) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

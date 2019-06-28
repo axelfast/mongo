@@ -17,16 +17,16 @@
     const INVALID_CA = 'jstests/libs/trusted-ca.pem';
 
     function runTest(inbound, outbound) {
-        const mongod = MongoRunner.runMongod({
+        const mongerd = MongoRunner.runMongod({
             sslMode: 'requireSSL',
             sslAllowConnectionsWithoutCertificates: '',
             sslPEMKeyFile: 'jstests/libs/server-intermediate-ca.pem',
             sslCAFile: outbound,
             sslClusterCAFile: inbound,
         });
-        assert(mongod);
-        assert.eq(mongod.getDB('admin').system.users.find({}).toArray(), []);
-        MongoRunner.stopMongod(mongod);
+        assert(mongerd);
+        assert.eq(mongerd.getDB('admin').system.users.find({}).toArray(), []);
+        MongoRunner.stopMongod(mongerd);
     }
 
     // Normal mode, we have a valid CA being presented for outbound and inbound.

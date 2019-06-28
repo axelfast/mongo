@@ -1,6 +1,6 @@
 description: "Mongos disconnect"
 
-uri: "mongodb://a,b"
+uri: "mongerdb://a,b"
 
 phases: [
 

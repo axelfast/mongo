@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/startup_warnings_common.h"
+#include "monger/db/startup_warnings_common.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <fstream>
 
-#include "mongo/client/authenticate.h"
-#include "mongo/config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/version.h"
+#include "monger/client/authenticate.h"
+#include "monger/config.h"
+#include "monger/db/server_options.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 
 //
 // system warnings
@@ -168,4 +168,4 @@ void logCommonStartupWarnings(const ServerGlobalParams& serverParams) {
         log() << startupWarningsLog;
     }
 }
-}  // namespace mongo
+}  // namespace monger

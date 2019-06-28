@@ -23,7 +23,7 @@
 
     if (typeof db === 'undefined') {
         throw new Error(
-            "Expected mongo shell to be connected a server, but global 'db' object isn't defined");
+            "Expected monger shell to be connected a server, but global 'db' object isn't defined");
     }
 
     // We turn off printing the JavaScript stacktrace in doassert() to avoid generating an

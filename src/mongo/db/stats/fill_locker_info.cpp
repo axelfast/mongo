@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/db/stats/fill_locker_info.h"
+#include "monger/db/stats/fill_locker_info.h"
 
 #include <algorithm>
 
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/jsobj.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 void fillLockerInfo(const Locker::LockerInfo& lockerInfo, BSONObjBuilder& infoBuilder) {
     // "locks" section
@@ -77,4 +77,4 @@ void fillLockerInfo(const Locker::LockerInfo& lockerInfo, BSONObjBuilder& infoBu
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

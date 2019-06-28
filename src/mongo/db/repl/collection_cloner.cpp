@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplicationInitialSync
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplicationInitialSync
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/collection_cloner.h"
+#include "monger/db/repl/collection_cloner.h"
 
 #include <utility>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/client/remote_command_retry_scheduler.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/repl/oplogreader.h"
-#include "mongo/db/repl/repl_server_parameters_gen.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/client/remote_command_retry_scheduler.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/repl/oplogreader.h"
+#include "monger/db/repl/repl_server_parameters_gen.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -450,7 +450,7 @@ void CollectionCloner::_beginCollectionCallback(const executor::TaskExecutor::Ca
                 log() << "initialSyncHangCollectionClonerBeforeEstablishingCursor fail point "
                          "enabled for "
                       << _destNss.toString() << ". Blocking until fail point is disabled.";
-                mongo::sleepsecs(1);
+                monger::sleepsecs(1);
             }
         }
     }
@@ -527,7 +527,7 @@ void CollectionCloner::_runQuery(const executor::TaskExecutor::CallbackArgs& cal
             log() << "initial sync - initialSyncHangBeforeCollectionClone fail point "
                      "enabled. Blocking until fail point is disabled.";
             while (MONGO_FAIL_POINT(initialSyncHangBeforeCollectionClone) && !_isShuttingDown()) {
-                mongo::sleepsecs(1);
+                monger::sleepsecs(1);
             }
         }
     }
@@ -626,7 +626,7 @@ void CollectionCloner::_handleNextBatch(std::shared_ptr<OnCompletionGuard> onCom
                 log() << "initialSyncHangCollectionClonerAfterHandlingBatchResponse fail point "
                          "enabled for "
                       << _destNss.toString() << ". Blocking until fail point is disabled.";
-                mongo::sleepsecs(1);
+                monger::sleepsecs(1);
             }
         }
     }
@@ -726,7 +726,7 @@ void CollectionCloner::_insertDocumentsCallback(
             log() << "initial sync - initialSyncHangDuringCollectionClone fail point "
                      "enabled. Blocking until fail point is disabled.";
             while (MONGO_FAIL_POINT(initialSyncHangDuringCollectionClone) && !_isShuttingDown()) {
-                mongo::sleepsecs(1);
+                monger::sleepsecs(1);
             }
             lk.lock();
         }
@@ -810,4 +810,4 @@ void CollectionCloner::Stats::append(BSONObjBuilder* builder) const {
     builder->appendNumber("receivedBatches", receivedBatches);
 }
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

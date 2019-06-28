@@ -144,7 +144,7 @@ namespace boost { namespace spirit { namespace ucd
             lycian = 49,
             lydian = 50,
             malayalam = 51,
-            mongolian = 52,
+            mongerlian = 52,
             meetei_mayek = 53,
             myanmar = 54,
             nko = 55,

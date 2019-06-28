@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,29 +31,29 @@
  * Tests for jsobj.{h,cpp} code
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cmath>
 #include <iostream>
 
-#include "mongo/bson/bsonobj_comparator.h"
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/bson/bson_helper.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/allocator.h"
-#include "mongo/util/embedded_builder.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/timer.h"
+#include "monger/bson/bsonobj_comparator.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/bson/bson_helper.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/allocator.h"
+#include "monger/util/embedded_builder.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 using std::cout;
 using std::endl;
@@ -62,7 +62,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 namespace {
 
@@ -167,7 +167,7 @@ FieldCompareResult compareDottedFieldNames(const string& l,
     verify(0);
     return SAME;  // will never get here
 }
-}  // namespace mongo
+}  // namespace monger
 
 namespace JsobjTests {
 
@@ -181,7 +181,7 @@ public:
             ASSERT(strcmp("foo", b.buf()) == 0);
         }
         {
-            mongo::StackBufBuilder b;
+            monger::StackBufBuilder b;
             b.appendStr("foo");
             ASSERT_EQUALS(4, b.len());
             ASSERT(strcmp("foo", b.buf()) == 0);
@@ -201,7 +201,7 @@ public:
         } catch (const AssertionException&) {
         }
         // assert half of max buffer size was allocated before exception is thrown
-        ASSERT(written == mongo::BufferMaxSize / 2);
+        ASSERT(written == monger::BufferMaxSize / 2);
     }
 };
 
@@ -609,7 +609,7 @@ struct AppendNumber {
         b.appendNumber("c", (1024LL * 1024 * 1024) - 1);
         b.appendNumber("d", (1024LL * 1024 * 1024 * 1024) - 1);
         b.appendNumber("e", 1024LL * 1024 * 1024 * 1024 * 1024 * 1024);
-        b.appendNumber("f", mongo::Decimal128("1"));
+        b.appendNumber("f", monger::Decimal128("1"));
 
         BSONObj o = b.obj();
 
@@ -845,7 +845,7 @@ public:
         BSONObjBuilder b;
         b.appendNull("a");
         BSONObj o = b.done();
-        set(o, 4, mongo::Undefined);
+        set(o, 4, monger::Undefined);
         ASSERT(o.valid(BSONVersion::kLatest));
     }
 };
@@ -1217,7 +1217,7 @@ class LabelSize : public LabelBase {
         return BSON("a" << BSON("$size" << 4));
     }
     BSONObj actual() {
-        return BSON("a" << mongo::BSIZE << 4);
+        return BSON("a" << monger::BSIZE << 4);
     }
 };
 
@@ -1361,8 +1361,8 @@ public:
         ASSERT_EQUALS(objTypeOf(1LL), NumberLong);
         ASSERT_EQUALS(arrTypeOf(1LL), NumberLong);
 
-        ASSERT_EQUALS(objTypeOf(mongo::Decimal128("1")), NumberDecimal);
-        ASSERT_EQUALS(arrTypeOf(mongo::Decimal128("1")), NumberDecimal);
+        ASSERT_EQUALS(objTypeOf(monger::Decimal128("1")), NumberDecimal);
+        ASSERT_EQUALS(arrTypeOf(monger::Decimal128("1")), NumberDecimal);
 
         ASSERT_EQUALS(objTypeOf(MAXKEY), MaxKey);
         ASSERT_EQUALS(arrTypeOf(MAXKEY), MaxKey);
@@ -1743,7 +1743,7 @@ public:
         // The sorted iterator should perform numeric comparisons and return results in the same
         // order as the unsorted iterator.
         BSONObjIterator unsorted(arr);
-        mongo::BSONArrayIteratorSorted sorted(arr);
+        monger::BSONArrayIteratorSorted sorted(arr);
         while (unsorted.more()) {
             ASSERT(sorted.more());
             ASSERT_EQUALS(string(unsorted.next().fieldName()), sorted.next().fieldName());
@@ -1851,7 +1851,7 @@ public:
     void run() {
         BSONObj x = BSON("_id" << 5 << "t" << 2);
         {
-            char* crap = (char*)mongoMalloc(x.objsize());
+            char* crap = (char*)mongerMalloc(x.objsize());
             memcpy(crap, x.objdata(), x.objsize());
             BSONObj y(crap);
             ASSERT_BSONOBJ_EQ(x, y);
@@ -1859,7 +1859,7 @@ public:
         }
 
         {
-            char* crap = (char*)mongoMalloc(x.objsize());
+            char* crap = (char*)mongerMalloc(x.objsize());
             memcpy(crap, x.objdata(), x.objsize());
             int* foo = (int*)crap;
             foo[0] = 123123123;

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 #include <limits>
 #include <vector>
 
-#include "mongo/base/data_view.h"
-#include "mongo/bson/bson_depth.h"
-#include "mongo/bson/bson_validate.h"
-#include "mongo/bson/oid.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/decimal128.h"
+#include "monger/base/data_view.h"
+#include "monger/bson/bson_depth.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/bson/oid.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/decimal128.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -424,4 +424,4 @@ Status validateBSON(const char* originalBuffer, uint64_t maxLength, BSONVersion 
     return validateBSONIterative(&buf);
 }
 
-}  // namespace mongo
+}  // namespace monger

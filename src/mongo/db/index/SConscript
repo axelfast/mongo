@@ -10,13 +10,13 @@ env.Library(
             'index_descriptor.cpp',
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
-            '$BUILD_DIR/mongo/db/catalog/collection',
-            '$BUILD_DIR/mongo/db/catalog/index_catalog',
+            '$BUILD_DIR/monger/base',
+            '$BUILD_DIR/monger/db/catalog/collection',
+            '$BUILD_DIR/monger/db/catalog/index_catalog',
         ],
         LIBDEPS_PRIVATE=[
-            '$BUILD_DIR/mongo/db/index_names',
-            '$BUILD_DIR/mongo/db/namespace_string',
+            '$BUILD_DIR/monger/db/index_names',
+            '$BUILD_DIR/monger/db/namespace_string',
         ],
 )
 
@@ -26,12 +26,12 @@ env.Library(
             'duplicate_key_tracker.cpp',
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/db/service_context',
+            '$BUILD_DIR/monger/db/service_context',
         ],
         LIBDEPS_PRIVATE=[
-            '$BUILD_DIR/mongo/base',
-            '$BUILD_DIR/mongo/db/curop',
-            '$BUILD_DIR/mongo/db/storage/index_entry_comparison',
+            '$BUILD_DIR/monger/base',
+            '$BUILD_DIR/monger/db/curop',
+            '$BUILD_DIR/monger/db/storage/index_entry_comparison',
         ],
 )
 
@@ -44,14 +44,14 @@ env.Library(
             'wildcard_key_generator.cpp',
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
-            '$BUILD_DIR/mongo/db/bson/dotted_path_support',
-            '$BUILD_DIR/mongo/db/fts/base_fts',
-            '$BUILD_DIR/mongo/db/geo/geoparser',
-            '$BUILD_DIR/mongo/db/index_names',
-            '$BUILD_DIR/mongo/db/mongohasher',
-            '$BUILD_DIR/mongo/db/projection_exec_agg',
-            '$BUILD_DIR/mongo/db/query/collation/collator_interface',
+            '$BUILD_DIR/monger/base',
+            '$BUILD_DIR/monger/db/bson/dotted_path_support',
+            '$BUILD_DIR/monger/db/fts/base_fts',
+            '$BUILD_DIR/monger/db/geo/geoparser',
+            '$BUILD_DIR/monger/db/index_names',
+            '$BUILD_DIR/monger/db/mongerhasher',
+            '$BUILD_DIR/monger/db/projection_exec_agg',
+            '$BUILD_DIR/monger/db/query/collation/collator_interface',
             '$BUILD_DIR/third_party/s2/s2',
             'expression_params',
             'index_descriptor',
@@ -65,12 +65,12 @@ env.Library(
             's2_common.cpp'
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
-            '$BUILD_DIR/mongo/bson/util/bson_extract',
-            '$BUILD_DIR/mongo/db/geo/geometry',
-            '$BUILD_DIR/mongo/db/geo/geoparser',
-            '$BUILD_DIR/mongo/db/mongohasher',
-            '$BUILD_DIR/mongo/db/query/collation/collator_interface',
+            '$BUILD_DIR/monger/base',
+            '$BUILD_DIR/monger/bson/util/bson_extract',
+            '$BUILD_DIR/monger/db/geo/geometry',
+            '$BUILD_DIR/monger/db/geo/geoparser',
+            '$BUILD_DIR/monger/db/mongerhasher',
+            '$BUILD_DIR/monger/db/query/collation/collator_interface',
             '$BUILD_DIR/third_party/s2/s2',
         ]
 )
@@ -81,7 +81,7 @@ env.Library(
             'index_access_method_factory.cpp',
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
+            '$BUILD_DIR/monger/base',
         ],
 )
 
@@ -93,20 +93,20 @@ serveronlyEnv.Library(
         "index_access_method.cpp"
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/catalog/index_catalog_entry',
-        '$BUILD_DIR/mongo/db/curop',
-        '$BUILD_DIR/mongo/db/concurrency/write_conflict_exception',
-        '$BUILD_DIR/mongo/db/repl/repl_coordinator_interface',
-        '$BUILD_DIR/mongo/db/storage/encryption_hooks',
-        '$BUILD_DIR/mongo/db/storage/index_entry_comparison',
-        '$BUILD_DIR/mongo/db/storage/storage_options',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/catalog/index_catalog_entry',
+        '$BUILD_DIR/monger/db/curop',
+        '$BUILD_DIR/monger/db/concurrency/write_conflict_exception',
+        '$BUILD_DIR/monger/db/repl/repl_coordinator_interface',
+        '$BUILD_DIR/monger/db/storage/encryption_hooks',
+        '$BUILD_DIR/monger/db/storage/index_entry_comparison',
+        '$BUILD_DIR/monger/db/storage/storage_options',
         '$BUILD_DIR/third_party/shim_snappy',
         'index_descriptor',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/logical_clock',
-        '$BUILD_DIR/mongo/idl/server_parameter',
+        '$BUILD_DIR/monger/db/logical_clock',
+        '$BUILD_DIR/monger/idl/server_parameter',
     ],
 )
 
@@ -123,8 +123,8 @@ env.Library(
         "wildcard_access_method.cpp",
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/query_exec',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/query_exec',
         'index_access_method',
         'key_generator',
     ],
@@ -137,12 +137,12 @@ env.Library(
         env.Idlc('index_build_interceptor.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         'duplicate_key_tracker',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/catalog/index_timestamp_helper',
-        '$BUILD_DIR/mongo/db/multi_key_path_tracker',
+        '$BUILD_DIR/monger/db/catalog/index_timestamp_helper',
+        '$BUILD_DIR/monger/db/multi_key_path_tracker',
         'index_access_methods',
     ],
 )
@@ -159,8 +159,8 @@ env.CppUnitTest(
     ],
     LIBDEPS=[
         'key_generator',
-        "$BUILD_DIR/mongo/db/matcher/expressions",
-        '$BUILD_DIR/mongo/db/mongohasher',
-        '$BUILD_DIR/mongo/db/query/collation/collator_interface_mock',
+        "$BUILD_DIR/monger/db/matcher/expressions",
+        '$BUILD_DIR/monger/db/mongerhasher',
+        '$BUILD_DIR/monger/db/query/collation/collator_interface_mock',
     ],
 )

@@ -145,7 +145,7 @@ var {withTxnAndAutoRetry, isKilledSessionCode} = (function() {
 
             } catch (e) {
                 if (!hasCommitTxnError) {
-                    // We need to call abortTransaction_forTesting() in order to update the mongo
+                    // We need to call abortTransaction_forTesting() in order to update the monger
                     // shell's state such that it agrees no transaction is currently in progress on
                     // this session.
                     // The transaction may have implicitly been aborted by the server or killed by

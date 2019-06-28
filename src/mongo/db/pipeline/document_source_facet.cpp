@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_facet.h"
+#include "monger/db/pipeline/document_source_facet.h"
 
 #include <memory>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_tee_consumer.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/tee_buffer.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_tee_consumer.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/tee_buffer.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::pair;
@@ -252,7 +252,7 @@ void DocumentSourceFacet::reattachToOperationContext(OperationContext* opCtx) {
 StageConstraints DocumentSourceFacet::constraints(Pipeline::SplitState) const {
     // Currently we don't split $facet to have a merger part and a shards part (see SERVER-24154).
     // This means that if any stage in any of the $facet pipelines needs to run on the primary shard
-    // or on mongoS, then the entire $facet stage must run there.
+    // or on mongerS, then the entire $facet stage must run there.
     static const std::set<HostTypeRequirement> definitiveHosts = {
         HostTypeRequirement::kMongoS, HostTypeRequirement::kPrimaryShard};
 
@@ -350,7 +350,7 @@ intrusive_ptr<DocumentSource> DocumentSourceFacet::createFromBson(
         }
         uassert(ErrorCodes::IllegalOperation,
                 str::stream() << "$facet pipeline '" << *needsMongoS
-                              << "' must run on mongoS, but '"
+                              << "' must run on mongerS, but '"
                               << *needsShard
                               << "' requires a shard",
                 !(needsShard && needsMongoS));
@@ -360,4 +360,4 @@ intrusive_ptr<DocumentSource> DocumentSourceFacet::createFromBson(
 
     return new DocumentSourceFacet(std::move(facetPipelines), expCtx);
 }
-}  // namespace mongo
+}  // namespace monger

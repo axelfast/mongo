@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,15 +33,15 @@
 #include <cstdint>
 #include <memory>
 
-#include "mongo/db/ftdc/collector.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/file_manager.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
+#include "monger/db/ftdc/collector.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/file_manager.h"
+#include "monger/db/jsobj.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
 
-namespace mongo {
+namespace monger {
 
 class ServiceContext;
 
@@ -128,7 +128,7 @@ public:
     /**
      * Stop the controller.
      *
-     * Does not require start to be called to support early exit by mongod.
+     * Does not require start to be called to support early exit by mongerd.
      */
     void stop();
 
@@ -214,4 +214,4 @@ private:
     stdx::thread _thread;
 };
 
-}  // namespace mongo
+}  // namespace monger

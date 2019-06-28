@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/connection_string.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/client/remote_command_targeter_factory_mock.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/client/shard_factory.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/client/shard_remote.h"
-#include "mongo/s/query/establish_cursors.h"
-#include "mongo/s/shard_id.h"
-#include "mongo/s/sharding_router_test_fixture.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/client/remote_command_targeter_factory_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/client/shard_factory.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/client/shard_remote.h"
+#include "monger/s/query/establish_cursors.h"
+#include "monger/s/shard_id.h"
+#include "monger/s/sharding_router_test_fixture.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const HostAndPort kTestConfigShardHost = HostAndPort("FakeConfigHost", 12345);
@@ -203,4 +203,4 @@ TEST_F(ShardRemoteTest, ScatterGatherRepliesWithLastCommittedOpTime) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

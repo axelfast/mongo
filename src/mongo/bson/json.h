@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,18 +31,18 @@
 
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Create a BSONObj from a JSON <http://www.json.org>,
  * <http://www.ietf.org/rfc/rfc4627.txt> string.  In addition to the JSON
  * extensions extensions described here
- * <http://dochub.mongodb.org/core/mongodbextendedjson>, this function
+ * <http://dochub.mongerdb.org/core/mongerdbextendedjson>, this function
  * accepts unquoted field names and allows single quotes to optionally be
  * used when specifying field names and std::string values instead of double
  * quotes.  JSON unicode escape sequences (of the form \uXXXX) are
@@ -503,4 +503,4 @@ private:
     const char* const _input_end;
 };
 
-}  // namespace mongo
+}  // namespace monger

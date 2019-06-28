@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <set>
 #include <string>
 
-#include "mongo/db/exec/projection_exec_agg.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/index/multikey_paths.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/str.h"
+#include "monger/db/exec/projection_exec_agg.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/index/multikey_paths.h"
+#include "monger/db/index_names.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 class MatchExpression;
@@ -223,4 +223,4 @@ struct IndexEntry : CoreIndexInfo {
 
 std::ostream& operator<<(std::ostream& stream, const IndexEntry::Identifier& ident);
 StringBuilder& operator<<(StringBuilder& builder, const IndexEntry::Identifier& ident);
-}  // namespace mongo
+}  // namespace monger

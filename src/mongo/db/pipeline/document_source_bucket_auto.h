@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/accumulation_statement.h"
-#include "mongo/db/pipeline/accumulator.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/granularity_rounder.h"
-#include "mongo/db/sorter/sorter.h"
+#include "monger/db/pipeline/accumulation_statement.h"
+#include "monger/db/pipeline/accumulator.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/granularity_rounder.h"
+#include "monger/db/sorter/sorter.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * The $bucketAuto stage takes a user-specified number of buckets and automatically determines
@@ -163,4 +163,4 @@ private:
     long long _nDocuments = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

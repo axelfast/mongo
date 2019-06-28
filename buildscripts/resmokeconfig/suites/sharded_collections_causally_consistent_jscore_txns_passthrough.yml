@@ -3,11 +3,11 @@ selector:
   roots:
   - jstests/core/txns/**/*.js
   exclude_files:
-  # Profile can only be run against the admin database on mongos.
+  # Profile can only be run against the admin database on mongers.
   - jstests/core/txns/transactions_profiling.js
   - jstests/core/txns/transactions_profiling_with_drops.js
 
-  # No featureCompatibilityVersion parameter on mongos.
+  # No featureCompatibilityVersion parameter on mongers.
   - jstests/core/txns/abort_unprepared_transactions_on_FCV_downgrade.js
   - jstests/core/txns/downgrade_fcv_while_large_partial_txn_in_progress.js
   - jstests/core/txns/large_transactions_require_fcv42.js
@@ -19,20 +19,20 @@ selector:
   # cluster.
   - jstests/core/txns/transactions_block_ddl.js
 
-  # TODO SERVER-36120: No doTxn command on mongos.
+  # TODO SERVER-36120: No doTxn command on mongers.
   - jstests/core/txns/do_txn_atomicity.js
   - jstests/core/txns/do_txn_basic.js
 
-  # TODO SERVER-36121: Set the transactionLifetimeLimitSeconds parameter, which is not on mongos.
+  # TODO SERVER-36121: Set the transactionLifetimeLimitSeconds parameter, which is not on mongers.
   - jstests/core/txns/abort_expired_transaction.js
   - jstests/core/txns/abort_transaction_thread_does_not_block_on_locks.js
   - jstests/core/txns/kill_op_on_txn_expiry.js
 
-  # Writes to the local database are not allowed through mongos.
+  # Writes to the local database are not allowed through mongers.
   # TODO SERVER-28756: Mongos CSRS write retry logic drops txnNumbers.
   - jstests/core/txns/banned_txn_dbs.js
 
-  # Uses hangAfterCollectionInserts failpoint not available on mongos.
+  # Uses hangAfterCollectionInserts failpoint not available on mongers.
   - jstests/core/txns/speculative_snapshot_includes_all_writes.js
 
   # View tests aren't expected to work when collections are implicitly sharded.
@@ -43,7 +43,7 @@ selector:
   - jstests/core/txns/non_transactional_operations_on_session_with_transaction.js
 
   exclude_with_any_tags:
-  - assumes_against_mongod_not_mongos
+  - assumes_against_mongerd_not_mongers
   # Tests tagged with the following will fail because they assume collections are not sharded.
   - assumes_no_implicit_collection_creation_after_drop
   - assumes_no_implicit_index_creation
@@ -52,7 +52,7 @@ selector:
   - does_not_support_causal_consistency
   # Transactions are not allowed to operate on capped collections.
   - requires_capped
-  # Prepare is not a command on mongos.
+  # Prepare is not a command on mongers.
   - uses_prepare_transaction
 executor:
   archive:
@@ -72,10 +72,10 @@ executor:
     n: 20
   fixture:
     class: ShardedClusterFixture
-    mongos_options:
+    mongers_options:
       set_parameters:
         enableTestCommands: 1
-    mongod_options:
+    mongerd_options:
       set_parameters:
         enableTestCommands: 1
     num_rs_nodes_per_shard: 2

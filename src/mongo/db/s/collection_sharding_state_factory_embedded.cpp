@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/service_context.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/service_context.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CollectionShardingStateFactoryEmbedded final : public CollectionShardingStateFactory {
@@ -49,7 +49,7 @@ public:
 
         private:
             boost::optional<ScopedCollectionMetadata> _getMetadata(
-                const boost::optional<mongo::LogicalTime>& atClusterTime) override {
+                const boost::optional<monger::LogicalTime>& atClusterTime) override {
                 return boost::none;
             }
         };
@@ -68,4 +68,4 @@ ServiceContext::ConstructorActionRegisterer collectionShardingStateFactoryRegist
     },
     [](ServiceContext* service) { CollectionShardingStateFactory::clear(service); }};
 
-}  // namespace mongo
+}  // namespace monger

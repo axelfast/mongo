@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <boost/optional.hpp>
@@ -39,25 +39,25 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/collection_index_usage_tracker.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/generic_cursor.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/dependencies.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/stage_constraints.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/explain_options.h"
-#include "mongo/util/intrusive_counter.h"
+#include "monger/base/init.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/collection_index_usage_tracker.h"
+#include "monger/db/commands.h"
+#include "monger/db/generic_cursor.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/dependencies.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/stage_constraints.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/explain_options.h"
+#include "monger/util/intrusive_counter.h"
 
-namespace mongo {
+namespace monger {
 
 class AggregationRequest;
 class Document;
@@ -105,7 +105,7 @@ class Document;
 
 #define REGISTER_TEST_DOCUMENT_SOURCE(key, liteParser, fullParser) \
     REGISTER_DOCUMENT_SOURCE_CONDITIONALLY(                        \
-        key, liteParser, fullParser, ::mongo::getTestCommandsEnabled())
+        key, liteParser, fullParser, ::monger::getTestCommandsEnabled())
 
 /**
  * Registers a multi-stage alias (such as $sortByCount) to have the single name 'key'. When a stage
@@ -529,4 +529,4 @@ private:
         boost::optional<ExplainOptions::Verbosity> explain = boost::none) const = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -42,16 +42,16 @@ import (
 // Mongo cluster encapsulation.
 //
 // A cluster enables the communication with one or more servers participating
-// in a mongo cluster.  This works with individual servers, a replica set,
-// a replica pair, one or multiple mongos routers, etc.
+// in a monger cluster.  This works with individual servers, a replica set,
+// a replica pair, one or multiple mongers routers, etc.
 
-type mongoCluster struct {
+type mongerCluster struct {
 	sync.RWMutex
 	serverSynced sync.Cond
 	userSeeds    []string
 	dynaSeeds    []string
-	servers      mongoServers
-	masters      mongoServers
+	servers      mongerServers
+	masters      mongerServers
 	references   int
 	syncing      bool
 	direct       bool
@@ -63,8 +63,8 @@ type mongoCluster struct {
 	dial         dialer
 }
 
-func newCluster(userSeeds []string, direct, failFast bool, dial dialer, setName string) *mongoCluster {
-	cluster := &mongoCluster{
+func newCluster(userSeeds []string, direct, failFast bool, dial dialer, setName string) *mongerCluster {
+	cluster := &mongerCluster{
 		userSeeds:  userSeeds,
 		references: 1,
 		direct:     direct,
@@ -80,7 +80,7 @@ func newCluster(userSeeds []string, direct, failFast bool, dial dialer, setName 
 }
 
 // Acquire increases the reference count for the cluster.
-func (cluster *mongoCluster) Acquire() {
+func (cluster *mongerCluster) Acquire() {
 	cluster.Lock()
 	cluster.references++
 	debugf("Cluster %p acquired (refs=%d)", cluster, cluster.references)
@@ -89,7 +89,7 @@ func (cluster *mongoCluster) Acquire() {
 
 // Release decreases the reference count for the cluster. Once
 // it reaches zero, all servers will be closed.
-func (cluster *mongoCluster) Release() {
+func (cluster *mongerCluster) Release() {
 	cluster.Lock()
 	if cluster.references == 0 {
 		panic("cluster.Release() with references == 0")
@@ -107,7 +107,7 @@ func (cluster *mongoCluster) Release() {
 	cluster.Unlock()
 }
 
-func (cluster *mongoCluster) LiveServers() (servers []string) {
+func (cluster *mongerCluster) LiveServers() (servers []string) {
 	cluster.RLock()
 	for _, serv := range cluster.servers.Slice() {
 		servers = append(servers, serv.Addr)
@@ -116,7 +116,7 @@ func (cluster *mongoCluster) LiveServers() (servers []string) {
 	return servers
 }
 
-func (cluster *mongoCluster) removeServer(server *mongoServer) {
+func (cluster *mongerCluster) removeServer(server *mongerServer) {
 	cluster.Lock()
 	cluster.masters.Remove(server)
 	other := cluster.servers.Remove(server)
@@ -140,7 +140,7 @@ type isMasterResult struct {
 	MaxWireVersion int    `bson:"maxWireVersion"`
 }
 
-func (cluster *mongoCluster) isMaster(socket *mongoSocket, result *isMasterResult) error {
+func (cluster *mongerCluster) isMaster(socket *mongerSocket, result *isMasterResult) error {
 	// Monotonic let's it talk to a slave and still hold the socket.
 	session := newSession(Monotonic, cluster, 10*time.Second)
 	session.setSocket(socket)
@@ -155,7 +155,7 @@ type possibleTimeout interface {
 
 var syncSocketTimeout = 5 * time.Second
 
-func (cluster *mongoCluster) syncServer(server *mongoServer) (info *mongoServerInfo, hosts []string, err error) {
+func (cluster *mongerCluster) syncServer(server *mongerServer) (info *mongerServerInfo, hosts []string, err error) {
 	var syncTimeout time.Duration
 	if raceDetector {
 		// This variable is only ever touched by tests.
@@ -226,7 +226,7 @@ func (cluster *mongoCluster) syncServer(server *mongoServer) (info *mongoServerI
 		return nil, nil, errors.New(addr + " is not a master nor slave")
 	}
 
-	info = &mongoServerInfo{
+	info = &mongerServerInfo{
 		Master:         result.IsMaster,
 		Mongos:         result.Msg == "isdbgrid",
 		Tags:           result.Tags,
@@ -253,7 +253,7 @@ const (
 	partialSync  syncKind = false
 )
 
-func (cluster *mongoCluster) addServer(server *mongoServer, info *mongoServerInfo, syncKind syncKind) {
+func (cluster *mongerCluster) addServer(server *mongerServer, info *mongerServerInfo, syncKind syncKind) {
 	cluster.Lock()
 	current := cluster.servers.Search(server.ResolvedAddr)
 	if current == nil {
@@ -290,7 +290,7 @@ func (cluster *mongoCluster) addServer(server *mongoServer, info *mongoServerInf
 	cluster.Unlock()
 }
 
-func (cluster *mongoCluster) getKnownAddrs() []string {
+func (cluster *mongerCluster) getKnownAddrs() []string {
 	cluster.RLock()
 	max := len(cluster.userSeeds) + len(cluster.dynaSeeds) + cluster.servers.Len()
 	seen := make(map[string]bool, max)
@@ -319,7 +319,7 @@ func (cluster *mongoCluster) getKnownAddrs() []string {
 
 // syncServers injects a value into the cluster.sync channel to force
 // an iteration of the syncServersLoop function.
-func (cluster *mongoCluster) syncServers() {
+func (cluster *mongerCluster) syncServers() {
 	select {
 	case cluster.sync <- true:
 	default:
@@ -339,7 +339,7 @@ const syncShortDelay = 500 * time.Millisecond
 // parallel, ask them about known peers and their own role within the
 // cluster, and then attempt to do the same with all the peers
 // retrieved.
-func (cluster *mongoCluster) syncServersLoop() {
+func (cluster *mongerCluster) syncServersLoop() {
 	for {
 		debugf("SYNC Cluster %p is starting a sync loop iteration.", cluster)
 
@@ -399,7 +399,7 @@ func (cluster *mongoCluster) syncServersLoop() {
 	debugf("SYNC Cluster %p is stopping its sync loop.", cluster)
 }
 
-func (cluster *mongoCluster) server(addr string, tcpaddr *net.TCPAddr) *mongoServer {
+func (cluster *mongerCluster) server(addr string, tcpaddr *net.TCPAddr) *mongerServer {
 	cluster.RLock()
 	server := cluster.servers.Search(tcpaddr.String())
 	cluster.RUnlock()
@@ -470,11 +470,11 @@ func resolveAddr(addr string) (*net.TCPAddr, error) {
 }
 
 type pendingAdd struct {
-	server *mongoServer
-	info   *mongoServerInfo
+	server *mongerServer
+	info   *mongerServerInfo
 }
 
-func (cluster *mongoCluster) syncServersIteration(direct bool) {
+func (cluster *mongerCluster) syncServersIteration(direct bool) {
 	log("SYNC Starting full topology synchronization...")
 
 	var wg sync.WaitGroup
@@ -578,7 +578,7 @@ func (cluster *mongoCluster) syncServersIteration(direct bool) {
 // AcquireSocket returns a socket to a server in the cluster.  If slaveOk is
 // true, it will attempt to return a socket to a slave server.  If it is
 // false, the socket will necessarily be to a master server.
-func (cluster *mongoCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout time.Duration, socketTimeout time.Duration, serverTags []bson.D, poolLimit int) (s *mongoSocket, err error) {
+func (cluster *mongerCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout time.Duration, socketTimeout time.Duration, serverTags []bson.D, poolLimit int) (s *mongerSocket, err error) {
 	var started time.Time
 	var syncCount uint
 	warnedLimit := false
@@ -609,7 +609,7 @@ func (cluster *mongoCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout 
 			cluster.serverSynced.Wait()
 		}
 
-		var server *mongoServer
+		var server *mongerServer
 		if slaveOk {
 			server = cluster.servers.BestFit(mode, serverTags)
 		} else {
@@ -653,7 +653,7 @@ func (cluster *mongoCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout 
 	panic("unreached")
 }
 
-func (cluster *mongoCluster) CacheIndex(cacheKey string, exists bool) {
+func (cluster *mongerCluster) CacheIndex(cacheKey string, exists bool) {
 	cluster.Lock()
 	if cluster.cachedIndex == nil {
 		cluster.cachedIndex = make(map[string]bool)
@@ -666,7 +666,7 @@ func (cluster *mongoCluster) CacheIndex(cacheKey string, exists bool) {
 	cluster.Unlock()
 }
 
-func (cluster *mongoCluster) HasCachedIndex(cacheKey string) (result bool) {
+func (cluster *mongerCluster) HasCachedIndex(cacheKey string) (result bool) {
 	cluster.RLock()
 	if cluster.cachedIndex != nil {
 		result = cluster.cachedIndex[cacheKey]
@@ -675,7 +675,7 @@ func (cluster *mongoCluster) HasCachedIndex(cacheKey string) (result bool) {
 	return
 }
 
-func (cluster *mongoCluster) ResetIndexCache() {
+func (cluster *mongerCluster) ResetIndexCache() {
 	cluster.Lock()
 	cluster.cachedIndex = make(map[string]bool)
 	cluster.Unlock()

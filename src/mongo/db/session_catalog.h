@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,17 +32,17 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/db/client.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/session.h"
-#include "mongo/db/session_killer.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/concurrency/with_lock.h"
+#include "monger/db/client.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/session.h"
+#include "monger/db/session_killer.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/concurrency/with_lock.h"
 
-namespace mongo {
+namespace monger {
 
 class ObservableSession;
 
@@ -361,4 +361,4 @@ private:
     OperationContext* const _opCtx;
 };
 
-}  // namespace mongo
+}  // namespace monger

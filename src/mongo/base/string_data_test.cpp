@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/base/string_data.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/base/string_data.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -160,7 +160,7 @@ void SDHasher_check<4>(void) {
     ASSERT_EQUALS(strCmp.hash(""), static_cast<size_t>(0));
     ASSERT_EQUALS(strCmp.hash("foo"), static_cast<size_t>(4138058784ULL));
     ASSERT_EQUALS(strCmp.hash("pizza"), static_cast<size_t>(3587803311ULL));
-    ASSERT_EQUALS(strCmp.hash("mongo"), static_cast<size_t>(3724335885ULL));
+    ASSERT_EQUALS(strCmp.hash("monger"), static_cast<size_t>(3724335885ULL));
     ASSERT_EQUALS(strCmp.hash("murmur"), static_cast<size_t>(1945310157ULL));
 }
 
@@ -170,7 +170,7 @@ void SDHasher_check<8>(void) {
     ASSERT_EQUALS(strCmp.hash(""), static_cast<size_t>(0));
     ASSERT_EQUALS(strCmp.hash("foo"), static_cast<size_t>(16316970633193145697ULL));
     ASSERT_EQUALS(strCmp.hash("pizza"), static_cast<size_t>(12165495155477134356ULL));
-    ASSERT_EQUALS(strCmp.hash("mongo"), static_cast<size_t>(2861051452199491487ULL));
+    ASSERT_EQUALS(strCmp.hash("monger"), static_cast<size_t>(2861051452199491487ULL));
     ASSERT_EQUALS(strCmp.hash("murmur"), static_cast<size_t>(18237957392784716687ULL));
 }
 
@@ -325,4 +325,4 @@ TEST(StringDataFmt, Fmt) {
     ASSERT_EQUALS("-{}-"_format("abc"_sd), "-abc-");
 }
 
-}  // namespace mongo
+}  // namespace monger

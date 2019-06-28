@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,11 +34,11 @@
 #include <set>
 #include <string>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/mutex.h"
+#include "monger/db/jsobj.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 class Scope;
 class DBClientBase;
@@ -91,7 +91,7 @@ extern ConnectionRegistry connectionRegistry;
 
 // This mutex helps the shell serialize output on exit, to avoid deadlocks at shutdown. So
 // it also protects the global dbexitCalled.
-extern stdx::mutex& mongoProgramOutputMutex;
+extern stdx::mutex& mongerProgramOutputMutex;
 
 // Helper to tell if a file exists cross platform
 // TODO: Remove this when we have a cross platform file utility library

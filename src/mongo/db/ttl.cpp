@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,40 +27,40 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ttl.h"
+#include "monger/db/ttl.h"
 
-#include "mongo/base/counter.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/fsync_locked.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/ttl_collection_cache.h"
-#include "mongo/db/ttl_gen.h"
-#include "mongo/util/background.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
+#include "monger/base/counter.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/fsync_locked.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/ttl_collection_cache.h"
+#include "monger/db/ttl_gen.h"
+#include "monger/util/background.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(hangTTLMonitorWithLock);
 
@@ -304,4 +304,4 @@ void startTTLBackgroundJob(ServiceContext* serviceContext) {
 }
 
 std::string TTLMonitor::secondsExpireField = "expireAfterSeconds";
-}  // namespace mongo
+}  // namespace monger

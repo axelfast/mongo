@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <functional>
 
-#include "mongo/base/status_with.h"
-#include "mongo/s/catalog/dist_lock_catalog.h"
-#include "mongo/s/catalog/type_lockpings.h"
-#include "mongo/s/catalog/type_locks.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/status_with.h"
+#include "monger/s/catalog/dist_lock_catalog.h"
+#include "monger/s/catalog/type_lockpings.h"
+#include "monger/s/catalog/type_locks.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Mock implementation of DistLockCatalog for testing.

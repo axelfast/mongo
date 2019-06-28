@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/cannot_implicitly_create_collection_info.h"
+#include "monger/s/cannot_implicitly_create_collection_info.h"
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 MONGO_INIT_REGISTER_ERROR_EXTRA_INFO(CannotImplicitlyCreateCollectionInfo);
@@ -51,4 +51,4 @@ std::shared_ptr<const ErrorExtraInfo> CannotImplicitlyCreateCollectionInfo::pars
     return std::make_shared<CannotImplicitlyCreateCollectionInfo>(NamespaceString(obj["ns"].str()));
 }
 
-}  // namespace mongo
+}  // namespace monger

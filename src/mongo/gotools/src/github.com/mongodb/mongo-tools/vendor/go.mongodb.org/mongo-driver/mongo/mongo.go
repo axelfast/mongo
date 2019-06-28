@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo // import "go.mongodb.org/mongo-driver/mongo"
+package monger // import "go.mongerdb.org/monger-driver/monger"
 
 import (
 	"context"
@@ -14,13 +14,13 @@ import (
 	"reflect"
 	"strings"
 
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/x/bsonx"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/bson/bsontype"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/bson/primitive"
 )
 
 // Dialer is used to make network connections.
@@ -63,7 +63,7 @@ func (me MarshalError) Error() string {
 //
 // Example usage:
 //
-//		mongo.Pipeline{
+//		monger.Pipeline{
 //			{{"$group", bson.D{{"_id", "$state"}, {"totalPop", bson.D{{"$sum", "$pop"}}}}}},
 //			{{"$match", bson.D{{"totalPop", bson.D{{"$gte", 10*1000*1000}}}}}},
 //		}

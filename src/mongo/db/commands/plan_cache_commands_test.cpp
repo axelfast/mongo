@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,23 +28,23 @@
  */
 
 /**
- * This file contains tests for mongo/db/commands/plan_cache_commands.h
+ * This file contains tests for monger/db/commands/plan_cache_commands.h
  */
 
-#include "mongo/db/commands/plan_cache_commands.h"
+#include "monger/db/commands/plan_cache_commands.h"
 
 #include <algorithm>
 #include <memory>
 
-#include "mongo/db/json.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/query/plan_ranker.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/db/json.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/query/plan_ranker.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 
@@ -66,7 +66,7 @@ std::vector<BSONObj> getShapes(const PlanCache& planCache) {
     ASSERT_OK(PlanCacheListQueryShapes::list(planCache, &bob));
     BSONObj resultObj = bob.obj();
     BSONElement shapesElt = resultObj.getField("shapes");
-    ASSERT_EQUALS(shapesElt.type(), mongo::Array);
+    ASSERT_EQUALS(shapesElt.type(), monger::Array);
     vector<BSONElement> shapesEltArray = shapesElt.Array();
     vector<BSONObj> shapes;
     for (vector<BSONElement>::const_iterator i = shapesEltArray.begin(); i != shapesEltArray.end();
@@ -518,7 +518,7 @@ vector<BSONObj> getPlans(const PlanCache& planCache,
     ASSERT_TRUE(resultObj.hasField("works"));
 
     BSONElement plansElt = resultObj.getField("plans");
-    ASSERT_EQUALS(plansElt.type(), mongo::Array);
+    ASSERT_EQUALS(plansElt.type(), monger::Array);
     vector<BSONElement> planEltArray = plansElt.Array();
     ASSERT_FALSE(planEltArray.empty());
     vector<BSONObj> plans(planEltArray.size());

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <cstdint>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/field_ref_set.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_leaf.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/field_ref_set.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_leaf.h"
 
-namespace mongo {
+namespace monger {
 
 namespace pathsupport {
 
@@ -186,4 +186,4 @@ Status addEqualitiesToDoc(const EqualityMatches& equalities, mutablebson::Docume
 
 }  // namespace pathsupport
 
-}  // namespace mongo
+}  // namespace monger

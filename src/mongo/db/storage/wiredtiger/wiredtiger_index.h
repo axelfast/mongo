@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,15 +31,15 @@
 
 #include <wiredtiger.h>
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/storage/index_entry_comparison.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_prepare_conflict.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/base/status_with.h"
+#include "monger/db/storage/index_entry_comparison.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_prepare_conflict.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
 
-namespace mongo {
+namespace monger {
 
 class IndexCatalogEntry;
 class IndexDescriptor;

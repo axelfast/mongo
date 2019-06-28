@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,73 +27,73 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 #define LOG_FOR_ELECTION(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kReplicationElection)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kReplicationElection)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/replication_coordinator_impl.h"
+#include "monger/db/repl/replication_coordinator_impl.h"
 
 #include <algorithm>
 #include <functional>
 #include <limits>
 
-#include "mongo/base/status.h"
-#include "mongo/client/fetcher.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/kill_sessions_local.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/logical_time_validator.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/prepare_conflict_tracker.h"
-#include "mongo/db/repl/check_quorum_for_config_change.h"
-#include "mongo/db/repl/data_replicator_external_state_initial_sync.h"
-#include "mongo/db/repl/is_master_response.h"
-#include "mongo/db/repl/last_vote.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/repl_set_config_checks.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/repl_set_heartbeat_response.h"
-#include "mongo/db/repl/repl_set_request_votes_args.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator_impl_gen.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/rslog.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/db/repl/transaction_oplog_application.h"
-#include "mongo/db/repl/update_position_args.h"
-#include "mongo/db/repl/vote_requester.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/executor/connection_pool_stats.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/rpc/metadata/oplog_query_metadata.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/timer.h"
+#include "monger/base/status.h"
+#include "monger/client/fetcher.h"
+#include "monger/db/audit.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/kill_sessions_local.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/logical_time_validator.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/prepare_conflict_tracker.h"
+#include "monger/db/repl/check_quorum_for_config_change.h"
+#include "monger/db/repl/data_replicator_external_state_initial_sync.h"
+#include "monger/db/repl/is_master_response.h"
+#include "monger/db/repl/last_vote.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/repl_set_config_checks.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/repl_set_heartbeat_response.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator_impl_gen.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/rslog.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/db/repl/transaction_oplog_application.h"
+#include "monger/db/repl/update_position_args.h"
+#include "monger/db/repl/vote_requester.h"
+#include "monger/db/server_options.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/write_concern.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/executor/connection_pool_stats.h"
+#include "monger/executor/network_interface.h"
+#include "monger/rpc/metadata/oplog_query_metadata.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/time_support.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 MONGO_FAIL_POINT_DEFINE(stepdownHangBeforePerformingPostMemberStateUpdateActions);
@@ -448,7 +448,7 @@ LogicalTime ReplicationCoordinatorImpl::_getCurrentCommittedLogicalTime_inlock()
     return LogicalTime(_getCurrentCommittedSnapshotOpTime_inlock().getTimestamp());
 }
 
-void ReplicationCoordinatorImpl::appendDiagnosticBSON(mongo::BSONObjBuilder* bob) {
+void ReplicationCoordinatorImpl::appendDiagnosticBSON(monger::BSONObjBuilder* bob) {
     BSONObjBuilder eBuilder(bob->subobjStart("executor"));
     _replExecutor->appendDiagnosticBSON(&eBuilder);
 }
@@ -504,14 +504,14 @@ bool ReplicationCoordinatorImpl::_startLoadLocalConfig(OperationContext* opCtx) 
             severe()
                 << "This instance has been repaired and may contain modified replicated data that "
                    "would not match other replica set members. To see your repaired data, start "
-                   "mongod without the --replSet option. When you are finished recovering your "
+                   "mongerd without the --replSet option. When you are finished recovering your "
                    "data and would like to perform a complete re-sync, please refer to the "
                    "documentation here: "
-                   "https://docs.mongodb.com/manual/tutorial/resync-replica-set-member/";
+                   "https://docs.mongerdb.com/manual/tutorial/resync-replica-set-member/";
             fassertFailedNoTrace(50923);
         }
         error() << "Locally stored replica set configuration does not parse; See "
-                   "http://www.mongodb.org/dochub/core/recover-replica-set-from-invalid-config "
+                   "http://www.mongerdb.org/dochub/core/recover-replica-set-from-invalid-config "
                    "for information on how to recover from this. Got \""
                 << status << "\" while parsing " << cfg.getValue();
         fassertFailedNoTrace(28545);
@@ -562,7 +562,7 @@ void ReplicationCoordinatorImpl::_finishLoadLocalConfig(
             myIndex = StatusWith<int>(-1);
         } else {
             error() << "Locally stored replica set configuration is invalid; See "
-                       "http://www.mongodb.org/dochub/core/recover-replica-set-from-invalid-config"
+                       "http://www.mongerdb.org/dochub/core/recover-replica-set-from-invalid-config"
                        " for information on how to recover from this. Got \""
                     << myIndex.getStatus() << "\" while validating " << localConfig.toBSON();
             fassertFailedNoTrace(28544);
@@ -582,7 +582,7 @@ void ReplicationCoordinatorImpl::_finishLoadLocalConfig(
               << startupWarningsLog;
         log() << "**          for this node. This is not a recommended configuration. Please see "
               << startupWarningsLog;
-        log() << "**          https://dochub.mongodb.org/core/psa-disable-rc-majority"
+        log() << "**          https://dochub.mongerdb.org/core/psa-disable-rc-majority"
               << startupWarningsLog;
         log() << startupWarningsLog;
     }
@@ -799,7 +799,7 @@ void ReplicationCoordinatorImpl::startup(OperationContext* opCtx) {
             _replicationProcess->getReplicationRecovery()->recoverFromOplog(opCtx, stableTimestamp);
             reconstructPreparedTransactions(opCtx, OplogApplication::Mode::kRecovering);
 
-            warning() << "Setting mongod to readOnly mode as a result of specifying "
+            warning() << "Setting mongerd to readOnly mode as a result of specifying "
                          "'recoverFromOplogAsStandalone'.";
             storageGlobalParams.readOnly = true;
         }
@@ -1327,7 +1327,7 @@ Status ReplicationCoordinatorImpl::_validateReadConcern(OperationContext* opCtx,
         return {ErrorCodes::InvalidOptions,
                 "readConcern level 'snapshot' is not supported in sharded clusters when "
                 "enableMajorityReadConcern=false. See "
-                "https://dochub.mongodb.org/core/"
+                "https://dochub.mongerdb.org/core/"
                 "disabled-read-concern-majority-snapshot-restrictions."};
     }
 
@@ -2013,7 +2013,7 @@ void ReplicationCoordinatorImpl::stepDown(OperationContext* opCtx,
                      "stepdownHangBeforePerformingPostMemberStateUpdateActions fail point enabled. "
                      "Blocking until fail point is disabled.";
             while (MONGO_FAIL_POINT(stepdownHangBeforePerformingPostMemberStateUpdateActions)) {
-                mongo::sleepsecs(1);
+                monger::sleepsecs(1);
                 {
                     stdx::lock_guard<stdx::mutex> lock(_mutex);
                     if (_inShutdown) {
@@ -4041,4 +4041,4 @@ void ReplicationCoordinatorImpl::ReadWriteAbility::setCanServeNonLocalReads_UNSA
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

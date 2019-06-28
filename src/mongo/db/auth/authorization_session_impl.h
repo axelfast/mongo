@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,17 +33,17 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/authz_session_external_state.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/auth/user_set.h"
-#include "mongo/db/namespace_string.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/authz_session_external_state.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/auth/user_set.h"
+#include "monger/db/namespace_string.h"
 
-namespace mongo {
+namespace monger {
 
 namespace auth {
 struct CreateOrUpdateRoleArgs;
@@ -56,7 +56,7 @@ class Client;
  * the users which have been authenticated, as well as a set of privileges that have been
  * granted to those users to perform various actions.
  *
- * An AuthorizationSession object is present within every mongo::Client object.
+ * An AuthorizationSession object is present within every monger::Client object.
  *
  * Users in the _authenticatedUsers cache may get marked as invalid by the AuthorizationManager,
  * for instance if their privileges are changed by a user or role modification command.  At the
@@ -232,4 +232,4 @@ private:
     std::vector<RoleName> _impersonatedRoleNames;
     bool _impersonationFlag;
 };
-}  // namespace mongo
+}  // namespace monger

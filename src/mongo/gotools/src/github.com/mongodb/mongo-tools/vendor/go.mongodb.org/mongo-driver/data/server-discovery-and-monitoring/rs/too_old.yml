@@ -1,5 +1,5 @@
 description: "Replica set member with default maxWireVersion of 0"
-uri: "mongodb://a,b/?replicaSet=rs"
+uri: "mongerdb://a,b/?replicaSet=rs"
 phases: [
     {
         responses: [

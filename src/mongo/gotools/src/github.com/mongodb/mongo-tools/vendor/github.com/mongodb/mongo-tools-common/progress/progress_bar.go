@@ -13,7 +13,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/text"
+	"github.com/mongerdb/monger-tools-common/text"
 )
 
 const (

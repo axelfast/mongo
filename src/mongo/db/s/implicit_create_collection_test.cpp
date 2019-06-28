@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/s/implicit_create_collection.h"
-#include "mongo/s/request_types/create_collection_gen.h"
-#include "mongo/s/shard_server_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/s/implicit_create_collection.h"
+#include "monger/s/request_types/create_collection_gen.h"
+#include "monger/s/shard_server_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ImplicitCreateTest : public ShardServerTestFixture {
@@ -141,4 +141,4 @@ TEST_F(ImplicitCreateTest, ShouldNotCallConfigCreateIfCollectionExists) {
 }
 
 }  // unnamed namespace
-}  // namespace mongo
+}  // namespace monger

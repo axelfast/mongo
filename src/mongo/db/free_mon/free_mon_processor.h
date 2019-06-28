@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,22 +36,22 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/client.h"
-#include "mongo/db/free_mon/free_mon_message.h"
-#include "mongo/db/free_mon/free_mon_network.h"
-#include "mongo/db/free_mon/free_mon_processor.h"
-#include "mongo/db/free_mon/free_mon_protocol_gen.h"
-#include "mongo/db/free_mon/free_mon_queue.h"
-#include "mongo/db/free_mon/free_mon_storage_gen.h"
-#include "mongo/db/ftdc/collector.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/future.h"
-#include "mongo/util/synchronized_value.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/client.h"
+#include "monger/db/free_mon/free_mon_message.h"
+#include "monger/db/free_mon/free_mon_network.h"
+#include "monger/db/free_mon/free_mon_processor.h"
+#include "monger/db/free_mon/free_mon_protocol_gen.h"
+#include "monger/db/free_mon/free_mon_queue.h"
+#include "monger/db/free_mon/free_mon_storage_gen.h"
+#include "monger/db/ftdc/collector.h"
+#include "monger/db/service_context.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/duration.h"
+#include "monger/util/future.h"
+#include "monger/util/synchronized_value.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 using FreeMonCollectorInterface = FTDCCollectorInterface;
 using FreeMonCollectorCollection = FTDCCollectorCollection;
 
@@ -520,4 +520,4 @@ private:
     FreeMonMessageQueue _queue;
 };
 
-}  // namespace mongo
+}  // namespace monger

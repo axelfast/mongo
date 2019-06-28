@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,28 +26,28 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/keys_collection_manager.h"
+#include "monger/db/keys_collection_manager.h"
 
 #include <memory>
 
-#include "mongo/db/key_generator.h"
-#include "mongo/db/keys_collection_cache.h"
-#include "mongo/db/keys_collection_client.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/key_generator.h"
+#include "monger/db/keys_collection_cache.h"
+#include "monger/db/keys_collection_client.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 const std::string KeysCollectionManager::kKeyManagerPurposeString = "HMAC";
 
@@ -351,4 +351,4 @@ bool KeysCollectionManager::PeriodicRunner::hasSeenKeys() {
     return _hasSeenKeys;
 }
 
-}  // namespace mongo
+}  // namespace monger

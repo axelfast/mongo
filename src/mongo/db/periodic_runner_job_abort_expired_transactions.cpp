@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/periodic_runner_job_abort_expired_transactions.h"
+#include "monger/db/periodic_runner_job_abort_expired_transactions.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/kill_sessions_local.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/transaction_participant_gen.h"
-#include "mongo/util/log.h"
-#include "mongo/util/periodic_runner.h"
+#include "monger/db/client.h"
+#include "monger/db/kill_sessions_local.h"
+#include "monger/db/service_context.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/transaction_participant_gen.h"
+#include "monger/util/log.h"
+#include "monger/util/periodic_runner.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -119,4 +119,4 @@ void PeriodicThreadToAbortExpiredTransactions::_init(ServiceContext* serviceCont
     });
 }
 
-}  // namespace mongo
+}  // namespace monger

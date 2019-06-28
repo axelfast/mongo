@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <boost/intrusive_ptr.hpp>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/db/pipeline/accumulator.h"
-#include "mongo/db/pipeline/expression.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/db/pipeline/accumulator.h"
+#include "monger/db/pipeline/expression.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Registers an Accumulator to have the name 'key'. When an accumulator with name '$key' is found
@@ -106,4 +106,4 @@ private:
     Accumulator::Factory _factory;
 };
 
-}  // namespace mongo
+}  // namespace monger

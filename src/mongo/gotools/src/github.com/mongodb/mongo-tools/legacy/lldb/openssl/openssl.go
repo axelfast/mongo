@@ -16,10 +16,10 @@ import (
 
 	mgo "github.com/10gen/llmgo"
 	"github.com/10gen/openssl"
-	"github.com/mongodb/mongo-tools/legacy/lldb/kerberos"
-	"github.com/mongodb/mongo-tools/legacy/log"
-	"github.com/mongodb/mongo-tools/legacy/options"
-	"github.com/mongodb/mongo-tools/legacy/util"
+	"github.com/mongerdb/monger-tools/legacy/lldb/kerberos"
+	"github.com/mongerdb/monger-tools/legacy/log"
+	"github.com/mongerdb/monger-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/legacy/util"
 )
 
 // For connecting to the database over ssl

@@ -1,6 +1,6 @@
 # Section that is ignored by resmoke.py.
 config_variables:
-- &keyFile src/mongo/db/modules/enterprise/jstests/encryptdb/libs/ekf2
+- &keyFile src/monger/db/modules/enterprise/jstests/encryptdb/libs/ekf2
 
 test_kind: js_test
 
@@ -26,7 +26,7 @@ executor:
     n: 20
   fixture:
     class: MongoDFixture
-    mongod_options:
+    mongerd_options:
       enableEncryption: ''
       encryptionKeyFile: *keyFile
       encryptionCipherMode: 'AES256-GCM'

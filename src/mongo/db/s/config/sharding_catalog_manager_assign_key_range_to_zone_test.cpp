@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/json.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/s/config/sharding_catalog_manager.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog/type_tags.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/config_server_test_fixture.h"
+#include "monger/bson/json.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/s/config/sharding_catalog_manager.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog/type_tags.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/config_server_test_fixture.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::string;
@@ -822,4 +822,4 @@ TEST_F(AssignKeyRangeWithOneRangeFixture, RemoveThatIsOnlyMaxPrefixOfExistingSho
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

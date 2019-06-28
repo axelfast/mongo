@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/sasl_plain_client_conversation.h"
+#include "monger/client/sasl_plain_client_conversation.h"
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/sasl_client_session.h"
-#include "mongo/util/password_digest.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/sasl_client_session.h"
+#include "monger/util/password_digest.h"
 
-namespace mongo {
+namespace monger {
 
 SaslPLAINClientConversation::SaslPLAINClientConversation(SaslClientSession* saslClientSession)
     : SaslClientConversation(saslClientSession) {}
@@ -56,4 +56,4 @@ StatusWith<bool> SaslPLAINClientConversation::step(StringData inputData, std::st
     return StatusWith<bool>(true);
 }
 
-}  // namespace mongo
+}  // namespace monger

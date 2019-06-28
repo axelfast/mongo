@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/protocol.h"
+#include "monger/rpc/protocol.h"
 
 #include <algorithm>
 #include <iterator>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/wire_version.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 namespace {
@@ -57,8 +57,8 @@ struct ProtocolSetAndName {
 
 constexpr ProtocolSetAndName protocolSetNames[] = {
     // Most common ones go first.
-    {"all"_sd, supports::kAll},                  // new mongod and mongos or very new client.
-    {"opQueryOnly"_sd, supports::kOpQueryOnly},  // old mongos or mongod or moderately old client.
+    {"all"_sd, supports::kAll},                  // new mongerd and mongers or very new client.
+    {"opQueryOnly"_sd, supports::kOpQueryOnly},  // old mongers or mongerd or moderately old client.
 
     // Then the rest (these should never happen in production).
     {"none"_sd, supports::kNone},
@@ -69,9 +69,9 @@ constexpr ProtocolSetAndName protocolSetNames[] = {
 
 Protocol protocolForMessage(const Message& message) {
     switch (message.operation()) {
-        case mongo::dbMsg:
+        case monger::dbMsg:
             return Protocol::kOpMsg;
-        case mongo::dbQuery:
+        case monger::dbQuery:
             return Protocol::kOpQuery;
         default:
             uasserted(ErrorCodes::UnsupportedFormat,
@@ -170,7 +170,7 @@ ProtocolSet computeProtocolSet(const WireVersionInfo version) {
 
 Status validateWireVersion(const WireVersionInfo client, const WireVersionInfo server) {
     // Since this is defined in the code, it should always hold true since this is the versions that
-    // mongos/d wants to connect to.
+    // mongers/d wants to connect to.
     invariant(client.minWireVersion <= client.maxWireVersion);
 
     // Server may return bad data.
@@ -211,4 +211,4 @@ Status validateWireVersion(const WireVersionInfo client, const WireVersionInfo s
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

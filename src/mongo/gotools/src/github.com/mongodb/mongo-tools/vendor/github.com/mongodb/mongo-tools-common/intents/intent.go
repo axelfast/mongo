@@ -11,9 +11,9 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 type file interface {
@@ -41,7 +41,7 @@ type FileNeedsIOBuffer interface {
 	ReleaseIOBuffer()
 }
 
-// mongorestore first scans the directory to generate a list
+// mongerrestore first scans the directory to generate a list
 // of all files to restore and what they map to. TODO comments
 type Intent struct {
 	// Destination namespace info
@@ -153,16 +153,16 @@ func (it *Intent) MergeIntent(newIt *Intent) {
 type Manager struct {
 	// intents are for all of the regular user created collections
 	intents map[string]*Intent
-	// special intents are for all of the collections that are created by mongod
+	// special intents are for all of the collections that are created by mongerd
 	// and require special handling
 	specialIntents map[string]*Intent
 
-	// legacy mongorestore works in the order that paths are discovered,
+	// legacy mongerrestore works in the order that paths are discovered,
 	// so we need an ordered data structure to preserve this behavior.
 	intentsByDiscoveryOrder []*Intent
 
 	// we need different scheduling order depending on the target
-	// mongod/mongos and whether or not we are multi threading;
+	// mongerd/mongers and whether or not we are multi threading;
 	// the IntentPrioritizer interface encapsulates this.
 	prioritizer IntentPrioritizer
 
@@ -419,7 +419,7 @@ func (mgr *Manager) Peek() *Intent {
 	return &intentCopy
 }
 
-// Finish tells the prioritizer that mongorestore is done restoring
+// Finish tells the prioritizer that mongerrestore is done restoring
 // the given collection intent.
 func (mgr *Manager) Finish(intent *Intent) {
 	mgr.prioritizer.Finish(intent)

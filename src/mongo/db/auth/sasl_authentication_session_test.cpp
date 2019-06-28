@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
 #include <string>
 #include <vector>
 
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/client/sasl_client_session.h"
-#include "mongo/crypto/mechanism_scram.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/authorization_manager_impl.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/authz_manager_external_state_mock.h"
-#include "mongo/db/auth/authz_session_external_state_mock.h"
-#include "mongo/db/auth/sasl_mechanism_registry.h"
-#include "mongo/db/auth/sasl_options.h"
-#include "mongo/db/auth/sasl_plain_server_conversation.h"
-#include "mongo/db/auth/sasl_scram_server_conversation.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
-#include "mongo/util/password_digest.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/client/sasl_client_session.h"
+#include "monger/crypto/mechanism_scram.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_manager_impl.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/authz_manager_external_state_mock.h"
+#include "monger/db/auth/authz_session_external_state_mock.h"
+#include "monger/db/auth/sasl_mechanism_registry.h"
+#include "monger/db/auth/sasl_options.h"
+#include "monger/db/auth/sasl_plain_server_conversation.h"
+#include "monger/db/auth/sasl_scram_server_conversation.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
+#include "monger/util/password_digest.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -276,4 +276,4 @@ TEST_F(SaslIllegalConversation, IllegalClientMechanism) {
 
 }  // namespace
 
-}  // namespace mongo
+}  // namespace monger

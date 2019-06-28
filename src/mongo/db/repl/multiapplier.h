@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,17 +36,17 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/multi_key_path_tracker.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/multi_key_path_tracker.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/task_executor.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 class OpTime;
@@ -166,4 +166,4 @@ private:
 std::ostream& operator<<(std::ostream& os, const MultiApplier::State& state);
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

@@ -38,7 +38,7 @@ limitations under the License.
     provide `-I`, `-L` and other options to the compiler.  E.g. on darwin,
     MongoDB's darwin build servers use the native libssl, but provide the
     missing headers in a custom directory, so it the build hosts set
-    `CGO_CPPFLAGS=-I/opt/mongodbtoolchain/v2/include`
+    `CGO_CPPFLAGS=-I/opt/mongerdbtoolchain/v2/include`
 
 ### Installing on Windows
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/field_ref.h"
+#include "monger/db/field_ref.h"
 
 #include <algorithm>
 #include <cctype>
 
-#include "mongo/util/assert_util.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 const size_t FieldRef::kReserveAhead;
 
@@ -383,4 +383,4 @@ std::ostream& operator<<(std::ostream& stream, const FieldRef& field) {
     return stream << field.dottedField();
 }
 
-}  // namespace mongo
+}  // namespace monger

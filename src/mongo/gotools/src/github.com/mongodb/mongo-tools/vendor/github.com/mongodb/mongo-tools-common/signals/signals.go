@@ -7,8 +7,8 @@
 package signals
 
 import (
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
 
 	"os"
 	"os/signal"

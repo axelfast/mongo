@@ -1,6 +1,6 @@
 description: "Disconnected from primary, reject primary with stale electionId"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

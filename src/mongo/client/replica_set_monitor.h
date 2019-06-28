@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,16 +35,16 @@
 #include <set>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/client/replica_set_change_notifier.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/string_data.h"
+#include "monger/client/monger_uri.h"
+#include "monger/client/replica_set_change_notifier.h"
+#include "monger/executor/task_executor.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class ReplicaSetMonitor;
@@ -368,4 +368,4 @@ private:
     ScanStatePtr _scan;  // May differ from _set->currentScan if a new scan has started.
 };
 
-}  // namespace mongo
+}  // namespace monger

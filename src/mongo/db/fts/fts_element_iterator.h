@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/fts/fts_language.h"
-#include "mongo/db/fts/fts_spec.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/fts/fts_language.h"
+#include "monger/db/fts/fts_spec.h"
 
 #include <map>
 #include <stack>
 #include <string>
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
@@ -156,4 +156,4 @@ private:
 };
 
 }  // namespace fts
-}  // namespace mongo
+}  // namespace monger

@@ -29,7 +29,7 @@ executor:
     n: 20
   fixture:
     class: ReplicaSetFixture
-    mongod_options:
+    mongerd_options:
       set_parameters:
         enableTestCommands: 1
     # Use a 1-node replica set.

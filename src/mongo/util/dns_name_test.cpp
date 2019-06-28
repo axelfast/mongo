@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,14 +28,14 @@
  */
 
 
-#include "mongo/util/dns_name.h"
+#include "monger/util/dns_name.h"
 
-#include "mongo/stdx/utility.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/stdx/utility.h"
+#include "monger/unittest/unittest.h"
 
 using namespace std::literals::string_literals;
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // To silence some warnings on some compilers at some aggressive warning levels, we use an "enum
@@ -62,16 +62,16 @@ TEST(DNSNameTest, CorrectParsing) {
     } tests[] = {
         {"com."s, {"com"s}, kIsFQDN},
         {"com"s, {"com"s}, kNotFQDN},
-        {"mongodb.com."s, {"com"s, "mongodb"s}, kIsFQDN},
-        {"mongodb.com"s, {"com"s, "mongodb"s}, kNotFQDN},
-        {"atlas.mongodb.com."s, {"com"s, "mongodb"s, "atlas"s}, kIsFQDN},
-        {"atlas.mongodb.com"s, {"com"s, "mongodb"s, "atlas"s}, kNotFQDN},
-        {"server.atlas.mongodb.com."s, {"com"s, "mongodb"s, "atlas"s, "server"s}, kIsFQDN},
-        {"server.atlas.mongodb.com"s, {"com"s, "mongodb"s, "atlas"s, "server"s}, kNotFQDN},
+        {"mongerdb.com."s, {"com"s, "mongerdb"s}, kIsFQDN},
+        {"mongerdb.com"s, {"com"s, "mongerdb"s}, kNotFQDN},
+        {"atlas.mongerdb.com."s, {"com"s, "mongerdb"s, "atlas"s}, kIsFQDN},
+        {"atlas.mongerdb.com"s, {"com"s, "mongerdb"s, "atlas"s}, kNotFQDN},
+        {"server.atlas.mongerdb.com."s, {"com"s, "mongerdb"s, "atlas"s, "server"s}, kIsFQDN},
+        {"server.atlas.mongerdb.com"s, {"com"s, "mongerdb"s, "atlas"s, "server"s}, kNotFQDN},
     };
 
     for (const auto& test : tests) {
-        const ::mongo::dns::HostName host(test.input);
+        const ::monger::dns::HostName host(test.input);
 
         ASSERT_EQ(host.nameComponents().size(), test.parsedDomains.size());
         for (std::size_t i = 0; i < host.nameComponents().size(); ++i) {
@@ -88,16 +88,16 @@ TEST(DNSNameTest, CanonicalName) {
     } tests[] = {
         {"com."s, "com."s},
         {"com"s, "com"s},
-        {"mongodb.com."s, "mongodb.com."s},
-        {"mongodb.com"s, "mongodb.com"s},
-        {"atlas.mongodb.com."s, "atlas.mongodb.com."s},
-        {"atlas.mongodb.com"s, "atlas.mongodb.com"s},
-        {"server.atlas.mongodb.com."s, "server.atlas.mongodb.com."s},
-        {"server.atlas.mongodb.com"s, "server.atlas.mongodb.com"s},
+        {"mongerdb.com."s, "mongerdb.com."s},
+        {"mongerdb.com"s, "mongerdb.com"s},
+        {"atlas.mongerdb.com."s, "atlas.mongerdb.com."s},
+        {"atlas.mongerdb.com"s, "atlas.mongerdb.com"s},
+        {"server.atlas.mongerdb.com."s, "server.atlas.mongerdb.com."s},
+        {"server.atlas.mongerdb.com"s, "server.atlas.mongerdb.com"s},
     };
 
     for (const auto& test : tests) {
-        const ::mongo::dns::HostName host(test.input);
+        const ::monger::dns::HostName host(test.input);
 
         ASSERT_EQ(host.canonicalName(), test.result);
     }
@@ -110,16 +110,16 @@ TEST(DNSNameTest, NoncanonicalName) {
     } tests[] = {
         {"com."s, "com"s},
         {"com"s, "com"s},
-        {"mongodb.com."s, "mongodb.com"s},
-        {"mongodb.com"s, "mongodb.com"s},
-        {"atlas.mongodb.com."s, "atlas.mongodb.com"s},
-        {"atlas.mongodb.com"s, "atlas.mongodb.com"s},
-        {"server.atlas.mongodb.com."s, "server.atlas.mongodb.com"s},
-        {"server.atlas.mongodb.com"s, "server.atlas.mongodb.com"s},
+        {"mongerdb.com."s, "mongerdb.com"s},
+        {"mongerdb.com"s, "mongerdb.com"s},
+        {"atlas.mongerdb.com."s, "atlas.mongerdb.com"s},
+        {"atlas.mongerdb.com"s, "atlas.mongerdb.com"s},
+        {"server.atlas.mongerdb.com."s, "server.atlas.mongerdb.com"s},
+        {"server.atlas.mongerdb.com"s, "server.atlas.mongerdb.com"s},
     };
 
     for (const auto& test : tests) {
-        const ::mongo::dns::HostName host(test.input);
+        const ::monger::dns::HostName host(test.input);
 
         ASSERT_EQ(host.noncanonicalName(), test.result);
     }
@@ -134,50 +134,50 @@ TEST(DNSNameTest, Contains) {
         Checked<IsSubdomain> isSubdomain;
         Checked<TripsCheck> tripsCheck;
     } tests[] = {
-        {"com."s, "mongodb.com."s, kIsSubdomain, kSuccess},
-        {"com"s, "mongodb.com"s, kIsSubdomain, kFailure},
-        {"com."s, "mongodb.com"s, kNotSubdomain, kFailure},
-        {"com"s, "mongodb.com."s, kNotSubdomain, kFailure},
+        {"com."s, "mongerdb.com."s, kIsSubdomain, kSuccess},
+        {"com"s, "mongerdb.com"s, kIsSubdomain, kFailure},
+        {"com."s, "mongerdb.com"s, kNotSubdomain, kFailure},
+        {"com"s, "mongerdb.com."s, kNotSubdomain, kFailure},
 
-        {"com."s, "atlas.mongodb.com."s, kIsSubdomain, kSuccess},
-        {"com"s, "atlas.mongodb.com"s, kIsSubdomain, kFailure},
-        {"com."s, "atlas.mongodb.com"s, kNotSubdomain, kFailure},
-        {"com"s, "atlas.mongodb.com."s, kNotSubdomain, kFailure},
+        {"com."s, "atlas.mongerdb.com."s, kIsSubdomain, kSuccess},
+        {"com"s, "atlas.mongerdb.com"s, kIsSubdomain, kFailure},
+        {"com."s, "atlas.mongerdb.com"s, kNotSubdomain, kFailure},
+        {"com"s, "atlas.mongerdb.com."s, kNotSubdomain, kFailure},
 
-        {"org."s, "atlas.mongodb.com."s, kNotSubdomain, kSuccess},
-        {"org"s, "atlas.mongodb.com"s, kNotSubdomain, kFailure},
-        {"org."s, "atlas.mongodb.com"s, kNotSubdomain, kFailure},
-        {"org"s, "atlas.mongodb.com."s, kNotSubdomain, kFailure},
+        {"org."s, "atlas.mongerdb.com."s, kNotSubdomain, kSuccess},
+        {"org"s, "atlas.mongerdb.com"s, kNotSubdomain, kFailure},
+        {"org."s, "atlas.mongerdb.com"s, kNotSubdomain, kFailure},
+        {"org"s, "atlas.mongerdb.com."s, kNotSubdomain, kFailure},
 
         {"com."s, "com."s, kNotSubdomain, kSuccess},
         {"com"s, "com."s, kNotSubdomain, kFailure},
         {"com."s, "com"s, kNotSubdomain, kFailure},
         {"com"s, "com"s, kNotSubdomain, kFailure},
 
-        {"mongodb.com."s, "mongodb.com."s, kNotSubdomain, kSuccess},
-        {"mongodb.com."s, "mongodb.com"s, kNotSubdomain, kFailure},
-        {"mongodb.com"s, "mongodb.com."s, kNotSubdomain, kFailure},
-        {"mongodb.com"s, "mongodb.com"s, kNotSubdomain, kFailure},
+        {"mongerdb.com."s, "mongerdb.com."s, kNotSubdomain, kSuccess},
+        {"mongerdb.com."s, "mongerdb.com"s, kNotSubdomain, kFailure},
+        {"mongerdb.com"s, "mongerdb.com."s, kNotSubdomain, kFailure},
+        {"mongerdb.com"s, "mongerdb.com"s, kNotSubdomain, kFailure},
 
-        {"mongodb.com."s, "atlas.mongodb.com."s, kIsSubdomain, kSuccess},
-        {"mongodb.com"s, "atlas.mongodb.com"s, kIsSubdomain, kFailure},
-        {"mongodb.com."s, "atlas.mongodb.com"s, kNotSubdomain, kFailure},
-        {"mongodb.com"s, "atlas.mongodb.com."s, kNotSubdomain, kFailure},
+        {"mongerdb.com."s, "atlas.mongerdb.com."s, kIsSubdomain, kSuccess},
+        {"mongerdb.com"s, "atlas.mongerdb.com"s, kIsSubdomain, kFailure},
+        {"mongerdb.com."s, "atlas.mongerdb.com"s, kNotSubdomain, kFailure},
+        {"mongerdb.com"s, "atlas.mongerdb.com."s, kNotSubdomain, kFailure},
 
-        {"mongodb.com."s, "server.atlas.mongodb.com."s, kIsSubdomain, kSuccess},
-        {"mongodb.com"s, "server.atlas.mongodb.com"s, kIsSubdomain, kFailure},
-        {"mongodb.com."s, "server.atlas.mongodb.com"s, kNotSubdomain, kFailure},
-        {"mongodb.com"s, "server.atlas.mongodb.com."s, kNotSubdomain, kFailure},
+        {"mongerdb.com."s, "server.atlas.mongerdb.com."s, kIsSubdomain, kSuccess},
+        {"mongerdb.com"s, "server.atlas.mongerdb.com"s, kIsSubdomain, kFailure},
+        {"mongerdb.com."s, "server.atlas.mongerdb.com"s, kNotSubdomain, kFailure},
+        {"mongerdb.com"s, "server.atlas.mongerdb.com."s, kNotSubdomain, kFailure},
 
-        {"mongodb.org."s, "server.atlas.mongodb.com."s, kNotSubdomain, kSuccess},
-        {"mongodb.org"s, "server.atlas.mongodb.com"s, kNotSubdomain, kFailure},
-        {"mongodb.org."s, "server.atlas.mongodb.com"s, kNotSubdomain, kFailure},
-        {"mongodb.org"s, "server.atlas.mongodb.com."s, kNotSubdomain, kFailure},
+        {"mongerdb.org."s, "server.atlas.mongerdb.com."s, kNotSubdomain, kSuccess},
+        {"mongerdb.org"s, "server.atlas.mongerdb.com"s, kNotSubdomain, kFailure},
+        {"mongerdb.org."s, "server.atlas.mongerdb.com"s, kNotSubdomain, kFailure},
+        {"mongerdb.org"s, "server.atlas.mongerdb.com."s, kNotSubdomain, kFailure},
     };
 
     for (const auto& test : tests) {
-        const ::mongo::dns::HostName domain(test.domain);
-        const ::mongo::dns::HostName subdomain(test.subdomain);
+        const ::monger::dns::HostName domain(test.domain);
+        const ::monger::dns::HostName subdomain(test.subdomain);
 
         try {
             ASSERT(test.isSubdomain == IsSubdomain(domain.contains(subdomain)));
@@ -199,23 +199,23 @@ TEST(DNSNameTest, Resolution) {
         Checked<Failure> fails;
         Checked<FQDNBool> isFQDN;
     } tests[] = {
-        {"mongodb.com."s, "atlas"s, "atlas.mongodb.com."s, kSucceeds, kIsFQDN},
-        {"mongodb.com"s, "atlas"s, "atlas.mongodb.com"s, kSucceeds, kNotFQDN},
+        {"mongerdb.com."s, "atlas"s, "atlas.mongerdb.com."s, kSucceeds, kIsFQDN},
+        {"mongerdb.com"s, "atlas"s, "atlas.mongerdb.com"s, kSucceeds, kNotFQDN},
 
-        {"mongodb.com."s, "server.atlas"s, "server.atlas.mongodb.com."s, kSucceeds, kIsFQDN},
-        {"mongodb.com"s, "server.atlas"s, "server.atlas.mongodb.com"s, kSucceeds, kNotFQDN},
+        {"mongerdb.com."s, "server.atlas"s, "server.atlas.mongerdb.com."s, kSucceeds, kIsFQDN},
+        {"mongerdb.com"s, "server.atlas"s, "server.atlas.mongerdb.com"s, kSucceeds, kNotFQDN},
 
-        {"mongodb.com."s, "atlas."s, "FAILS"s, kFails, kNotFQDN},
-        {"mongodb.com"s, "atlas."s, "FAILS"s, kFails, kNotFQDN},
+        {"mongerdb.com."s, "atlas."s, "FAILS"s, kFails, kNotFQDN},
+        {"mongerdb.com"s, "atlas."s, "FAILS"s, kFails, kNotFQDN},
     };
 
     for (const auto& test : tests) {
         try {
-            const ::mongo::dns::HostName domain(test.domain);
-            const ::mongo::dns::HostName subdomain(test.subdomain);
-            const ::mongo::dns::HostName resolved = [&] {
+            const ::monger::dns::HostName domain(test.domain);
+            const ::monger::dns::HostName subdomain(test.subdomain);
+            const ::monger::dns::HostName resolved = [&] {
                 try {
-                    const ::mongo::dns::HostName rv = subdomain.resolvedIn(domain);
+                    const ::monger::dns::HostName rv = subdomain.resolvedIn(domain);
                     return rv;
                 } catch (const ExceptionFor<ErrorCodes::DNSRecordTypeMismatch>&) {
                     ASSERT(test.fails);
@@ -234,45 +234,45 @@ TEST(DNSNameTest, Resolution) {
 
 TEST(DNSNameTest, ForceQualification) {
     enum FQDNBool : bool { kIsFQDN = true, kNotFQDN = false };
-    using Qualification = ::mongo::dns::HostName::Qualification;
+    using Qualification = ::monger::dns::HostName::Qualification;
     const struct {
         std::string domain;
         Checked<FQDNBool> startedFQDN;
-        ::mongo::dns::HostName::Qualification forced;
+        ::monger::dns::HostName::Qualification forced;
         Checked<FQDNBool> becameFQDN;
         std::string becameCanonical;
     } tests[] = {
-        {"mongodb.com."s, kIsFQDN, Qualification::kFullyQualified, kIsFQDN, "mongodb.com."s},
-        {"mongodb.com"s, kNotFQDN, Qualification::kFullyQualified, kIsFQDN, "mongodb.com."s},
+        {"mongerdb.com."s, kIsFQDN, Qualification::kFullyQualified, kIsFQDN, "mongerdb.com."s},
+        {"mongerdb.com"s, kNotFQDN, Qualification::kFullyQualified, kIsFQDN, "mongerdb.com."s},
 
-        {"atlas.mongodb.com."s,
+        {"atlas.mongerdb.com."s,
          kIsFQDN,
          Qualification::kFullyQualified,
          kIsFQDN,
-         "atlas.mongodb.com."s},
-        {"atlas.mongodb.com"s,
+         "atlas.mongerdb.com."s},
+        {"atlas.mongerdb.com"s,
          kNotFQDN,
          Qualification::kFullyQualified,
          kIsFQDN,
-         "atlas.mongodb.com."s},
+         "atlas.mongerdb.com."s},
 
-        {"mongodb.com."s, kIsFQDN, Qualification::kRelativeName, kNotFQDN, "mongodb.com"s},
-        {"mongodb.com"s, kNotFQDN, Qualification::kRelativeName, kNotFQDN, "mongodb.com"s},
+        {"mongerdb.com."s, kIsFQDN, Qualification::kRelativeName, kNotFQDN, "mongerdb.com"s},
+        {"mongerdb.com"s, kNotFQDN, Qualification::kRelativeName, kNotFQDN, "mongerdb.com"s},
 
-        {"atlas.mongodb.com."s,
+        {"atlas.mongerdb.com."s,
          kIsFQDN,
          Qualification::kRelativeName,
          kNotFQDN,
-         "atlas.mongodb.com"s},
-        {"atlas.mongodb.com"s,
+         "atlas.mongerdb.com"s},
+        {"atlas.mongerdb.com"s,
          kNotFQDN,
          Qualification::kRelativeName,
          kNotFQDN,
-         "atlas.mongodb.com"s},
+         "atlas.mongerdb.com"s},
     };
 
     for (const auto& test : tests) {
-        ::mongo::dns::HostName domain(test.domain);
+        ::monger::dns::HostName domain(test.domain);
         ASSERT(stdx::as_const(domain).isFQDN() == test.startedFQDN);
         domain.forceQualification(test.forced);
         ASSERT(stdx::as_const(domain).isFQDN() == test.becameFQDN);
@@ -281,4 +281,4 @@ TEST(DNSNameTest, ForceQualification) {
     }
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

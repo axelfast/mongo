@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/add_shard_to_zone_request_type.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/add_shard_to_zone_request_type.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const ReadPreferenceSetting kPrimaryOnlyReadPreference{ReadPreference::PrimaryOnly};
 const WriteConcernOptions kMajorityWriteConcern(WriteConcernOptions::kMajority,
                                                 // Note: Even though we're setting UNSET here,
                                                 // kMajority implies JOURNAL if journaling is
-                                                // supported by mongod and
+                                                // supported by mongerd and
                                                 // writeConcernMajorityJournalDefault is set to true
                                                 // in the ReplSetConfig.
                                                 WriteConcernOptions::SyncMode::UNSET,
@@ -113,4 +113,4 @@ public:
 } addShardToZoneCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -1,5 +1,5 @@
 /**
- * SERVER-20617: Tests that journaled write operations survive a kill -9 of the mongod.
+ * SERVER-20617: Tests that journaled write operations survive a kill -9 of the mongerd.
  *
  * This test requires persistence to ensure data survives a restart.
  * @tags: [requires_persistence]
@@ -11,20 +11,20 @@
     var dbpath = MongoRunner.dataPath + 'sync_write';
     resetDbpath(dbpath);
 
-    var mongodArgs = {dbpath: dbpath, noCleanData: true, journal: ''};
+    var mongerdArgs = {dbpath: dbpath, noCleanData: true, journal: ''};
 
-    // Start a mongod.
-    var conn = MongoRunner.runMongod(mongodArgs);
-    assert.neq(null, conn, 'mongod was unable to start up');
+    // Start a mongerd.
+    var conn = MongoRunner.runMongod(mongerdArgs);
+    assert.neq(null, conn, 'mongerd was unable to start up');
 
-    // Now connect to the mongod, do a journaled write and abruptly stop the server.
+    // Now connect to the mongerd, do a journaled write and abruptly stop the server.
     var testDB = conn.getDB('test');
     assert.writeOK(testDB.synced.insert({synced: true}, {writeConcern: {j: true}}));
     MongoRunner.stopMongod(conn, 9, {allowedExitCode: MongoRunner.EXIT_SIGKILL});
 
-    // Restart the mongod.
-    conn = MongoRunner.runMongod(mongodArgs);
-    assert.neq(null, conn, 'mongod was unable to restart after receiving a SIGKILL');
+    // Restart the mongerd.
+    conn = MongoRunner.runMongod(mongerdArgs);
+    assert.neq(null, conn, 'mongerd was unable to restart after receiving a SIGKILL');
 
     // Check that our journaled write still is present.
     testDB = conn.getDB('test');

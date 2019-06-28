@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/multi_plan.h"
+#include "monger/db/exec/multi_plan.h"
 
 #include <algorithm>
 #include <math.h>
 #include <memory>
 
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/plan_cache.h"
-#include "mongo/db/query/plan_ranker.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/plan_cache.h"
+#include "monger/db/query/plan_ranker.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 using std::list;
@@ -433,4 +433,4 @@ const SpecificStats* MultiPlanStage::getSpecificStats() const {
     return &_specificStats;
 }
 
-}  // namespace mongo
+}  // namespace monger

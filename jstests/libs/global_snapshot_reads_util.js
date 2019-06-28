@@ -1,5 +1,5 @@
 /**
- * Tests invalid getMore attempts against an established global snapshot cursor on mongos. The
+ * Tests invalid getMore attempts against an established global snapshot cursor on mongers. The
  * cursor should still be valid and usable after each failed attempt.
  */
 function verifyInvalidGetMoreAttempts(mainDb, collName, cursorId, lsid, txnNumber) {

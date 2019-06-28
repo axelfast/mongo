@@ -8,7 +8,7 @@ package json
 
 import (
 	"fmt"
-	"github.com/mongodb/mongo-tools/legacy/util"
+	"github.com/mongerdb/monger-tools/legacy/util"
 	"reflect"
 )
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/router_stage_limit.h"
+#include "monger/s/query/router_stage_limit.h"
 
-namespace mongo {
+namespace monger {
 
 RouterStageLimit::RouterStageLimit(OperationContext* opCtx,
                                    std::unique_ptr<RouterExecStage> child,
@@ -58,4 +58,4 @@ StatusWith<ClusterQueryResult> RouterStageLimit::next(RouterExecStage::ExecConte
     return childResult;
 }
 
-}  // namespace mongo
+}  // namespace monger

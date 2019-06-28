@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,13 +35,13 @@
 #include <tuple>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/ftdc/block_compressor.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/ftdc/block_compressor.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * FTDCCompressor is responsible for taking a set of BSON documents containing metrics, and
@@ -188,4 +188,4 @@ private:
     std::vector<std::uint64_t> _prevmetrics;
 };
 
-}  // namespace mongo
+}  // namespace monger

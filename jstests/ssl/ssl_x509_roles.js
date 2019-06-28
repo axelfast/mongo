@@ -25,7 +25,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     function authAndTest(port, expectSuccess) {
         // First we run the shell with the "smoke" user that has no embedded roles to verify
         // that X509 auth works overall.
-        const smoke = runMongoProgram("mongo",
+        const smoke = runMongoProgram("monger",
                                       "--host",
                                       "localhost",
                                       "--port",
@@ -40,7 +40,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
         assert.eq(smoke, 0, "Could not auth with smoke user");
 
         const runTest = function(cert, script) {
-            const res = runMongoProgram("mongo",
+            const res = runMongoProgram("monger",
                                         "--host",
                                         "localhost",
                                         "--port",
@@ -83,38 +83,38 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     const x509_options = {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT};
 
-    print("1. Testing x.509 auth to mongod");
+    print("1. Testing x.509 auth to mongerd");
     {
-        let mongo = MongoRunner.runMongod(Object.merge(x509_options, {auth: ""}));
-        prepConn(mongo);
+        let monger = MongoRunner.runMongod(Object.merge(x509_options, {auth: ""}));
+        prepConn(monger);
 
-        authAndTest(mongo.port, true);
+        authAndTest(monger.port, true);
 
-        MongoRunner.stopMongod(mongo);
+        MongoRunner.stopMongod(monger);
     }
 
     jsTestLog("2. Testing disabling x.509 auth with roles");
     {
-        const mongo = MongoRunner.runMongod(Object.merge(
+        const monger = MongoRunner.runMongod(Object.merge(
             x509_options, {auth: "", setParameter: "allowRolesFromX509Certificates=false"}));
 
-        prepConn(mongo);
+        prepConn(monger);
 
-        authAndTest(mongo.port, false);
+        authAndTest(monger.port, false);
 
-        MongoRunner.stopMongod(mongo);
+        MongoRunner.stopMongod(monger);
     }
 
-    print("3. Testing x.509 auth to mongos");
+    print("3. Testing x.509 auth to mongers");
     {
         // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
         let st = new ShardingTest({
             shards: 1,
-            mongos: 1,
+            mongers: 1,
             other: {
                 keyFile: 'jstests/libs/key1',
                 configOptions: x509_options,
-                mongosOptions: x509_options,
+                mongersOptions: x509_options,
                 shardOptions: x509_options,
                 useHostname: false,
                 shardAsReplicaSet: false
@@ -126,18 +126,18 @@ load('jstests/ssl/libs/ssl_helpers.js');
         st.stop();
     }
 
-    print("4. Testing x.509 auth to mongos with x509 roles disabled");
+    print("4. Testing x.509 auth to mongers with x509 roles disabled");
     {
         const localOptions =
             Object.merge(x509_options, {setParameter: "allowRolesFromX509Certificates=false"});
         // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
         let st = new ShardingTest({
             shards: 1,
-            mongos: 1,
+            mongers: 1,
             other: {
                 keyFile: 'jstests/libs/key1',
                 configOptions: localOptions,
-                mongosOptions: localOptions,
+                mongersOptions: localOptions,
                 shardOptions: localOptions,
                 useHostname: false,
                 shardAsReplicaSet: false

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,29 +31,29 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/initializer.h"
-#include "mongo/base/status.h"
-#include "mongo/logger/logger.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/unittest/unittest_options_gen.h"
-#include "mongo/util/options_parser/environment.h"
-#include "mongo/util/options_parser/option_section.h"
-#include "mongo/util/options_parser/options_parser.h"
-#include "mongo/util/signal_handlers_synchronous.h"
+#include "monger/base/initializer.h"
+#include "monger/base/status.h"
+#include "monger/logger/logger.h"
+#include "monger/unittest/unittest.h"
+#include "monger/unittest/unittest_options_gen.h"
+#include "monger/util/options_parser/environment.h"
+#include "monger/util/options_parser/option_section.h"
+#include "monger/util/options_parser/options_parser.h"
+#include "monger/util/signal_handlers_synchronous.h"
 
-using mongo::Status;
+using monger::Status;
 
-namespace moe = ::mongo::optionenvironment;
+namespace moe = ::monger::optionenvironment;
 
 int main(int argc, char** argv, char** envp) {
-    ::mongo::clearSignalMask();
-    ::mongo::setupSynchronousSignalHandlers();
+    ::monger::clearSignalMask();
+    ::monger::setupSynchronousSignalHandlers();
 
-    ::mongo::runGlobalInitializersOrDie(argc, argv, envp);
+    ::monger::runGlobalInitializersOrDie(argc, argv, envp);
 
     moe::OptionSection options;
 
-    Status status = mongo::unittest::addUnitTestOptions(&options);
+    Status status = monger::unittest::addUnitTestOptions(&options);
     if (!status.isOK()) {
         std::cerr << status;
         return EXIT_FAILURE;
@@ -88,20 +88,20 @@ int main(int argc, char** argv, char** envp) {
         std::cerr << options.helpString();
         return EXIT_FAILURE;
     }
-    ::mongo::logger::globalLogDomain()->setMinimumLoggedSeverity(
-        ::mongo::logger::LogSeverity::Debug(verbose.length()));
+    ::monger::logger::globalLogDomain()->setMinimumLoggedSeverity(
+        ::monger::logger::LogSeverity::Debug(verbose.length()));
 
     if (list) {
-        auto suiteNames = ::mongo::unittest::getAllSuiteNames();
+        auto suiteNames = ::monger::unittest::getAllSuiteNames();
         for (auto name : suiteNames) {
             std::cout << name << std::endl;
         }
         return EXIT_SUCCESS;
     }
 
-    auto result = ::mongo::unittest::Suite::run(suites, filter, repeat);
+    auto result = ::monger::unittest::Suite::run(suites, filter, repeat);
 
-    ret = ::mongo::runGlobalDeinitializers();
+    ret = ::monger::runGlobalDeinitializers();
     if (!ret.isOK()) {
         std::cerr << "Global deinitilization failed: " << ret.reason() << std::endl;
     }

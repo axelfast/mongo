@@ -4,19 +4,19 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 // Specially treated restore collection types.
@@ -238,7 +238,7 @@ func (restore *MongoRestore) CreateCollection(intent *intents.Intent, options bs
 
 }
 
-func (restore *MongoRestore) createCollectionWithCommand(session *mongo.Client, intent *intents.Intent, options bson.D) error {
+func (restore *MongoRestore) createCollectionWithCommand(session *monger.Client, intent *intents.Intent, options bson.D) error {
 	command := createCollectionCommand(intent, options)
 
 	// If there is no error, the result doesnt matter
@@ -256,7 +256,7 @@ func (restore *MongoRestore) createCollectionWithCommand(session *mongo.Client, 
 
 }
 
-func (restore *MongoRestore) createCollectionWithApplyOps(session *mongo.Client, intent *intents.Intent, options bson.D, uuidHex string) error {
+func (restore *MongoRestore) createCollectionWithApplyOps(session *monger.Client, intent *intents.Intent, options bson.D, uuidHex string) error {
 	command := createCollectionCommand(intent, options)
 	uuid, err := hex.DecodeString(uuidHex)
 	if err != nil {
@@ -286,7 +286,7 @@ func createCollectionCommand(intent *intents.Intent, options bson.D) bson.D {
 // them via _mergeAuthzCollections. Either or both can be nil. In the latter case
 // nothing is done.
 //
-// _mergeAuthzCollections is an internal server command implemented specifically for mongorestore. Instead of inserting
+// _mergeAuthzCollections is an internal server command implemented specifically for mongerrestore. Instead of inserting
 // into the admin.system.{roles, users} collections (which isn't allowed due to some locking policies), we construct
 // temporary collections that are then merged with or replace the existing ones.
 //
@@ -556,7 +556,7 @@ func (restore *MongoRestore) ValidateAuthVersions() error {
 
 }
 
-// ShouldRestoreUsersAndRoles returns true if mongorestore should go through
+// ShouldRestoreUsersAndRoles returns true if mongerrestore should go through
 // through the process of restoring collections pertaining to authentication.
 func (restore *MongoRestore) ShouldRestoreUsersAndRoles() bool {
 	if restore.SkipUsersAndRoles {

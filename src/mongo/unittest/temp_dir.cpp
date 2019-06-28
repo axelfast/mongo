@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/unittest/temp_dir.h"
+#include "monger/unittest/temp_dir.h"
 
 #include <boost/filesystem.hpp>
 
-#include "mongo/base/init.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
-#include "mongo/util/options_parser/startup_option_init.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
+#include "monger/util/options_parser/startup_option_init.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/str.h"
 
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
 namespace unittest {
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 
 namespace {
 boost::filesystem::path defaultRoot;
@@ -90,7 +90,7 @@ TempDir::TempDir(const std::string& namePrefix) {
         fassertFailed(17147);
     }
 
-    ::mongo::unittest::log() << "Created temporary directory: " << _path;
+    ::monger::unittest::log() << "Created temporary directory: " << _path;
 }
 
 TempDir::~TempDir() {
@@ -108,4 +108,4 @@ void TempDir::setTempPath(string tempPath) {
 }
 
 }  // namespace unittest
-}  // namespace mongo
+}  // namespace monger

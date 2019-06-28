@@ -1,14 +1,14 @@
 LIBRARY MONGO_EMBEDDED
 EXPORTS
-    mongo_embedded_v1_status_create
-    mongo_embedded_v1_status_destroy
-    mongo_embedded_v1_status_get_error
-    mongo_embedded_v1_status_get_explanation
-    mongo_embedded_v1_status_get_code
-    mongo_embedded_v1_lib_init
-    mongo_embedded_v1_lib_fini
-    mongo_embedded_v1_instance_create
-    mongo_embedded_v1_instance_destroy
-    mongo_embedded_v1_client_create
-    mongo_embedded_v1_client_destroy
-    mongo_embedded_v1_client_invoke
+    monger_embedded_v1_status_create
+    monger_embedded_v1_status_destroy
+    monger_embedded_v1_status_get_error
+    monger_embedded_v1_status_get_explanation
+    monger_embedded_v1_status_get_code
+    monger_embedded_v1_lib_init
+    monger_embedded_v1_lib_fini
+    monger_embedded_v1_instance_create
+    monger_embedded_v1_instance_destroy
+    monger_embedded_v1_client_create
+    monger_embedded_v1_client_destroy
+    monger_embedded_v1_client_invoke

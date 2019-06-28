@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,10 +26,10 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/base/status.h"
-#include "mongo/db/repl/oplog.h"
+#include "monger/base/status.h"
+#include "monger/db/repl/oplog.h"
 
-namespace mongo {
+namespace monger {
 class BSONObj;
 class BSONObjBuilder;
 class OperationContext;
@@ -54,4 +54,4 @@ Status doTxn(OperationContext* opCtx,
              const BSONObj& doTxnCmd,
              BSONObjBuilder* result);
 
-}  // namespace mongo
+}  // namespace monger

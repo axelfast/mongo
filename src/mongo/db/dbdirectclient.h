@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/client/dbclient_base.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/lasterror.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
@@ -109,4 +109,4 @@ private:
     LastError _lastError;  // This LastError will be used for all operations on this client.
 };
 
-}  // namespace mongo
+}  // namespace monger

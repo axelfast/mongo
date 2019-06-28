@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <type_traits>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/bson/json.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
+#include "monger/base/static_assert.h"
+#include "monger/bson/json.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/jsobj.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
 #include "third_party/wiredtiger/wiredtiger.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // Makes a SharedBuffer out of arguments passed to constructor.
@@ -908,4 +908,4 @@ TEST(OpMsgTest, ChecksumResizesMessage) {
     OpMsg::parse(msg);
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

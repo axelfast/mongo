@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/executor/connection_pool_test_fixture.h"
+#include "monger/executor/connection_pool_test_fixture.h"
 
 #include <algorithm>
 #include <memory>
@@ -40,12 +40,12 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "mongo/executor/connection_pool.h"
-#include "mongo/stdx/future.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/executor/connection_pool.h"
+#include "monger/stdx/future.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 namespace connection_pool_test_details {
 
@@ -1522,4 +1522,4 @@ TEST_F(ConnectionPoolTest, ReturnAfterShutdown) {
 
 }  // namespace connection_pool_test_details
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
-#include "mongo/db/matcher/expression_parser.h"
+#include "monger/db/matcher/expression_parser.h"
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_leaf.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_leaf.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
 
-namespace mongo {
+namespace monger {
 
 TEST(MatchExpressionParserTreeTest, OR1) {
     BSONObj query = BSON("$or" << BSON_ARRAY(BSON("x" << 1) << BSON("y" << 2)));

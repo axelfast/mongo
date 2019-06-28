@@ -4,16 +4,16 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongodump
+package mongerdump
 
 import (
 	"fmt"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
 )
 
 // determineOplogCollectionName uses a command to infer
@@ -31,7 +31,7 @@ func (dump *MongoDump) determineOplogCollectionName() error {
 		return nil
 	}
 	if isMaster := masterDoc["ismaster"]; util.IsFalsy(isMaster) {
-		log.Logvf(log.Info, "mongodump is not connected to a master")
+		log.Logvf(log.Info, "mongerdump is not connected to a master")
 		return fmt.Errorf("not connected to master")
 	}
 
@@ -59,7 +59,7 @@ func (dump *MongoDump) getCurrentOplogTime() (primitive.Timestamp, error) {
 }
 
 // checkOplogTimestampExists checks to make sure the oplog hasn't rolled over
-// since mongodump started. It does this by checking the oldest oplog entry
+// since mongerdump started. It does this by checking the oldest oplog entry
 // still in the database and making sure it happened at or before the timestamp
 // captured at the start of the dump.
 func (dump *MongoDump) checkOplogTimestampExists(ts primitive.Timestamp) (bool, error) {

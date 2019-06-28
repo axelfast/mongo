@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,13 +30,13 @@
 #pragma once
 
 
-#include "mongo/db/exec/requires_index_stage.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/query/index_bounds.h"
-#include "mongo/db/record_id.h"
+#include "monger/db/exec/requires_index_stage.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/query/index_bounds.h"
+#include "monger/db/record_id.h"
 
-namespace mongo {
+namespace monger {
 
 class IndexAccessMethod;
 class IndexDescriptor;
@@ -140,4 +140,4 @@ private:
     DistinctScanStats _specificStats;
 };
 
-}  // namespace mongo
+}  // namespace monger

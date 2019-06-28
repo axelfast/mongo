@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/concurrency/lock_stats.h"
+#include "monger/db/concurrency/lock_stats.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
+#include "monger/bson/bsonobjbuilder.h"
 
-namespace mongo {
+namespace monger {
 
 template <typename CounterType>
 LockStats<CounterType>::LockStats() {
@@ -135,4 +135,4 @@ void LockStats<CounterType>::reset() {
 template class LockStats<int64_t>;
 template class LockStats<AtomicWord<long long>>;
 
-}  // namespace mongo
+}  // namespace monger

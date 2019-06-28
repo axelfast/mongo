@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,21 +29,21 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/exchange_spec_gen.h"
-#include "mongo/db/pipeline/lite_parsed_pipeline.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/query/cluster_client_cursor_impl.h"
-#include "mongo/s/query/owned_remote_cursor.h"
-#include "mongo/s/shard_id.h"
+#include "monger/db/pipeline/exchange_spec_gen.h"
+#include "monger/db/pipeline/lite_parsed_pipeline.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/query/cluster_client_cursor_impl.h"
+#include "monger/s/query/owned_remote_cursor.h"
+#include "monger/s/shard_id.h"
 
-namespace mongo {
+namespace monger {
 namespace cluster_aggregation_planner {
 
 /**
  * Represents the two halves of a pipeline that will execute in a sharded cluster. 'shardsPipeline'
  * will execute in parallel on each shard, and 'mergePipeline' will execute on the merge host -
- * either one of the shards or a mongos.
+ * either one of the shards or a mongers.
  */
 struct SplitPipeline {
     SplitPipeline(std::unique_ptr<Pipeline, PipelineDeleter> shardsPipeline,
@@ -110,4 +110,4 @@ struct ShardedExchangePolicy {
 boost::optional<ShardedExchangePolicy> checkIfEligibleForExchange(OperationContext* opCtx,
                                                                   const Pipeline* mergePipeline);
 }  // namespace cluster_aggregation_planner
-}  // namespace mongo
+}  // namespace monger

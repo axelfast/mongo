@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
-TOOLS=bsondump mongodecrypt mongodump mongoexport mongofiles mongoimport mongoldap mongorestore mongostat mongotop
+TOOLS=bsondump mongerdecrypt mongerdump mongerexport mongerfiles mongerimport mongerldap mongerrestore mongerstat mongertop
 
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
@@ -20,19 +20,19 @@ build-stamp: configure-stamp
 
 	# THE FOLLOWING LINE IS INTENTIONALLY COMMENTED. 
 	# scons 
-	#docbook-to-man debian/mongodb.sgml > mongodb.1
-	echo -n > debian/mongodb-enterprise-tools.manpages
+	#docbook-to-man debian/mongerdb.sgml > mongerdb.1
+	echo -n > debian/mongerdb-enterprise-tools.manpages
 	for binary in ${TOOLS} ; \
 	do \
 		if [ -e debian/$$binary.1 ] ; \
 		then \
-			echo debian/$$binary.1 >> debian/mongodb-enterprise-tools.manpages ; \
+			echo debian/$$binary.1 >> debian/mongerdb-enterprise-tools.manpages ; \
 		fi ; \
 	done
 
-	echo debian/mongo.1 > debian/mongodb-enterprise-shell.manpages
-	echo debian/mongod.1 > debian/mongodb-enterprise-server.manpages
-	echo debian/mongos.1 > debian/mongodb-enterprise-mongos.manpages
+	echo debian/monger.1 > debian/mongerdb-enterprise-shell.manpages
+	echo debian/mongerd.1 > debian/mongerdb-enterprise-server.manpages
+	echo debian/mongers.1 > debian/mongerdb-enterprise-mongers.manpages
 
 	touch $@
 
@@ -42,28 +42,28 @@ clean:
 	rm -f build-stamp configure-stamp
 
 	# FIXME: scons freaks out at the presence of target files
-	# under debian/mongodb.
+	# under debian/mongerdb.
 	#scons -c
 
 	rm -f debian/*.manpages
 
-	rm -rf $(CURDIR)/debian/mongodb-enterprise
-	rm -rf $(CURDIR)/debian/mongodb-enterprise-shell
-	rm -rf $(CURDIR)/debian/mongodb-enterprise-server
-	rm -rf $(CURDIR)/debian/mongodb-enterprise-mongos
-	rm -rf $(CURDIR)/debian/mongodb-enterprise-tools
+	rm -rf $(CURDIR)/debian/mongerdb-enterprise
+	rm -rf $(CURDIR)/debian/mongerdb-enterprise-shell
+	rm -rf $(CURDIR)/debian/mongerdb-enterprise-server
+	rm -rf $(CURDIR)/debian/mongerdb-enterprise-mongers
+	rm -rf $(CURDIR)/debian/mongerdb-enterprise-tools
 	rm -f config.log
-	rm -f mongo
-	rm -f mongod
-	rm -f mongoimportjson
-	rm -f mongocryptd
-	rm -f mongoexport
-	rm -f mongorestore
-	rm -f mongodump
-	rm -f mongofiles
+	rm -f monger
+	rm -f mongerd
+	rm -f mongerimportjson
+	rm -f mongercryptd
+	rm -f mongerexport
+	rm -f mongerrestore
+	rm -f mongerdump
+	rm -f mongerfiles
 	rm -f install_compass
 	rm -f .sconsign.dblite
-	rm -f libmongoclient.a
+	rm -f libmongerclient.a
 	rm -rf client/*.o
 	rm -rf tools/*.o
 	rm -rf shell/*.o
@@ -80,33 +80,33 @@ install: build
 	dh_installdirs
 
 	# THE FOLLOWING LINE IS INTENTIONALLY COMMENTED.
-	# scons --prefix=$(CURDIR)/debian/mongodb/usr install
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-shell/usr/bin
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-server/usr/bin
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-mongos/usr/bin
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-tools/usr/bin
-	cp -v $(CURDIR)/bin/mongo $(CURDIR)/debian/mongodb-enterprise-shell/usr/bin
-	cp -v $(CURDIR)/bin/mongod $(CURDIR)/debian/mongodb-enterprise-server/usr/bin
-	cp -v $(CURDIR)/bin/mongocryptd $(CURDIR)/debian/mongodb-enterprise-server/usr/bin
-	cp -v $(CURDIR)/bin/mongos $(CURDIR)/debian/mongodb-enterprise-mongos/usr/bin
-	cp -v $(CURDIR)/bin/install_compass $(CURDIR)/debian/mongodb-enterprise-tools/usr/bin
+	# scons --prefix=$(CURDIR)/debian/mongerdb/usr install
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-shell/usr/bin
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-server/usr/bin
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-mongers/usr/bin
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-tools/usr/bin
+	cp -v $(CURDIR)/bin/monger $(CURDIR)/debian/mongerdb-enterprise-shell/usr/bin
+	cp -v $(CURDIR)/bin/mongerd $(CURDIR)/debian/mongerdb-enterprise-server/usr/bin
+	cp -v $(CURDIR)/bin/mongercryptd $(CURDIR)/debian/mongerdb-enterprise-server/usr/bin
+	cp -v $(CURDIR)/bin/mongers $(CURDIR)/debian/mongerdb-enterprise-mongers/usr/bin
+	cp -v $(CURDIR)/bin/install_compass $(CURDIR)/debian/mongerdb-enterprise-tools/usr/bin
 
 	for binary in ${TOOLS} ; \
 	do \
-	  cp -v $(CURDIR)/bin/$$binary $(CURDIR)/debian/mongodb-enterprise-tools/usr/bin ; \
+	  cp -v $(CURDIR)/bin/$$binary $(CURDIR)/debian/mongerdb-enterprise-tools/usr/bin ; \
 	done
 
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-server/etc
-	cp $(CURDIR)/debian/mongod.conf $(CURDIR)/debian/mongodb-enterprise-server/etc/mongod.conf 
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-server/etc
+	cp $(CURDIR)/debian/mongerd.conf $(CURDIR)/debian/mongerdb-enterprise-server/etc/mongerd.conf 
 
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-shell/usr/share/lintian/overrides/
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-server/usr/share/lintian/overrides/
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-mongos/usr/share/lintian/overrides/
-	mkdir -p $(CURDIR)/debian/mongodb-enterprise-tools/usr/share/lintian/overrides/
-	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongodb-enterprise-shell/usr/share/lintian/overrides/mongodb-enterprise-shell
-	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongodb-enterprise-server/usr/share/lintian/overrides/mongodb-enterprise-server
-	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongodb-enterprise-mongos/usr/share/lintian/overrides/mongodb-enterprise-mongos
-	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongodb-enterprise-tools/usr/share/lintian/overrides/mongodb-enterprise-tools
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-shell/usr/share/lintian/overrides/
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-server/usr/share/lintian/overrides/
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-mongers/usr/share/lintian/overrides/
+	mkdir -p $(CURDIR)/debian/mongerdb-enterprise-tools/usr/share/lintian/overrides/
+	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongerdb-enterprise-shell/usr/share/lintian/overrides/mongerdb-enterprise-shell
+	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongerdb-enterprise-server/usr/share/lintian/overrides/mongerdb-enterprise-server
+	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongerdb-enterprise-mongers/usr/share/lintian/overrides/mongerdb-enterprise-mongers
+	install -m 644 $(CURDIR)/debian/lintian-overrides 		$(CURDIR)/debian/mongerdb-enterprise-tools/usr/share/lintian/overrides/mongerdb-enterprise-tools
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -126,7 +126,7 @@ binary-arch: build install
 #	dh_installemacsen
 #	dh_installpam
 #	dh_installmime
-	dh_installinit -pmongodb-enterprise-server --name=mongod
+	dh_installinit -pmongerdb-enterprise-server --name=mongerd
 #	dh_installinfo
 	dh_installman
 	dh_link

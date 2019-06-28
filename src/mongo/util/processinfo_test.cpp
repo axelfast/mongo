@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <iostream>
 #include <vector>
 
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/processinfo.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/processinfo.h"
 
-using mongo::ProcessInfo;
+using monger::ProcessInfo;
 using boost::optional;
 
-namespace mongo_test {
+namespace monger_test {
 TEST(ProcessInfo, SysInfoIsInitialized) {
     ProcessInfo processInfo;
     if (processInfo.supported()) {

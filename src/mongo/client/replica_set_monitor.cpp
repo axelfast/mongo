@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,35 +27,35 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/replica_set_monitor.h"
+#include "monger/client/replica_set_monitor.h"
 
 #include <algorithm>
 #include <limits>
 #include <random>
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/client/connpool.h"
-#include "mongo/client/global_conn_pool.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/replica_set_monitor_internal.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/bson_extract_optime.h"
-#include "mongo/db/server_options.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/background.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/string_map.h"
-#include "mongo/util/timer.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/client/connpool.h"
+#include "monger/client/global_conn_pool.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/replica_set_monitor_internal.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/bson_extract_optime.h"
+#include "monger/db/server_options.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/background.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/string_map.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 using std::numeric_limits;

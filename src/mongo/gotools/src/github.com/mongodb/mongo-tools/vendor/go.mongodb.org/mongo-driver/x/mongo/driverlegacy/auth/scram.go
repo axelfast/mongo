@@ -18,8 +18,8 @@ import (
 
 	"github.com/xdg/scram"
 	"github.com/xdg/stringprep"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 // SCRAMSHA1 holds the mechanism name "SCRAM-SHA-1"
@@ -29,7 +29,7 @@ const SCRAMSHA1 = "SCRAM-SHA-1"
 const SCRAMSHA256 = "SCRAM-SHA-256"
 
 func newScramSHA1Authenticator(cred *Cred) (Authenticator, error) {
-	passdigest := mongoPasswordDigest(cred.Username, cred.Password)
+	passdigest := mongerPasswordDigest(cred.Username, cred.Password)
 	client, err := scram.SHA1.NewClientUnprepped(cred.Username, passdigest, "")
 	if err != nil {
 		return nil, newAuthError("error initializing SCRAM-SHA-1 client", err)

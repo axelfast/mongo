@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"fmt"
@@ -28,7 +28,7 @@ const (
 	ReplyFromFile = 1
 )
 
-// ExecutionContext maintains information for a mongoreplay execution.
+// ExecutionContext maintains information for a mongerreplay execution.
 type ExecutionContext struct {
 	// IncompleteReplies holds half complete ReplyPairs, which contains either a
 	// live reply or a recorded reply when one arrives before the other.

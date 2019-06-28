@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/base/init.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/shell/shell_utils.h"
+#include "monger/base/init.h"
+#include "monger/scripting/engine.h"
+#include "monger/shell/shell_utils.h"
 
-namespace mongo {
+namespace monger {
 
 namespace JSFiles {
 extern const JSFile keyvault;
@@ -44,9 +44,9 @@ void callback_fn(Scope& scope) {
 }
 
 MONGO_INITIALIZER(setKeyvaultCallback)(InitializerContext*) {
-    shell_utils::setEnterpriseShellCallback(mongo::callback_fn);
+    shell_utils::setEnterpriseShellCallback(monger::callback_fn);
     return Status::OK();
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -1,8 +1,8 @@
 /**
- * Test that mongod will not allow creation of collection validators using new query features when
+ * Test that mongerd will not allow creation of collection validators using new query features when
  * the feature compatibility version is older than the latest version.
  *
- * We restart mongod during the test and expect it to have the same data after restarting.
+ * We restart mongerd during the test and expect it to have the same data after restarting.
  * @tags: [requires_persistence]
  */
 
@@ -18,7 +18,7 @@
     //
     //      { validator: { ... }, nonMatchingDocument: { ... } }
     //
-    // objects that use query features new in the latest version of mongod. Note that this also
+    // objects that use query features new in the latest version of mongerd. Note that this also
     // includes new aggregation expressions able to be used with the $expr match expression. This
     // test ensures that a collection validator accepts the new query feature when the feature
     // compatibility version is the latest version, and rejects it when the feature compatibility
@@ -26,7 +26,7 @@
     const testCases = [];
 
     let conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest"});
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
 
     let testDB = conn.getDB(testName);
 
@@ -106,20 +106,20 @@
     MongoRunner.stopMongod(conn);
 
     if (testCases.length > 0) {
-        // If we try to start up the last-stable version of mongod, it will fail, because it will
+        // If we try to start up the last-stable version of mongerd, it will fail, because it will
         // not be able to parse the validator using new query features.
         conn =
             MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
         assert.eq(null,
                   conn,
-                  `version ${MongoRunner.getBinVersionFor("last-stable")} of mongod started, even` +
+                  `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd started, even` +
                       " with a validator using new query features in place.");
     }
 
-    // Starting up the latest version of mongod, however, should succeed, even though the feature
+    // Starting up the latest version of mongerd, however, should succeed, even though the feature
     // compatibility version is still set to the last-stable version.
     conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest", noCleanData: true});
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
 
     adminDB = conn.getDB("admin");
     testDB = conn.getDB(testName);
@@ -139,19 +139,19 @@
 
     MongoRunner.stopMongod(conn);
 
-    // Now, we should be able to start up the last-stable version of mongod.
+    // Now, we should be able to start up the last-stable version of mongerd.
     conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
     assert.neq(
         null,
         conn,
-        `version ${MongoRunner.getBinVersionFor("last-stable")} of mongod failed to start, even` +
+        `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd failed to start, even` +
             " after we removed the validator using new query features");
 
     MongoRunner.stopMongod(conn);
 
-    // The rest of the test uses the latest version of mongod.
+    // The rest of the test uses the latest version of mongerd.
     conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest", noCleanData: true});
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
 
     adminDB = conn.getDB("admin");
     testDB = conn.getDB(testName);
@@ -185,7 +185,7 @@
         noCleanData: true,
         setParameter: "internalValidateFeaturesAsMaster=false"
     });
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
 
     testDB = conn.getDB(testName);
 

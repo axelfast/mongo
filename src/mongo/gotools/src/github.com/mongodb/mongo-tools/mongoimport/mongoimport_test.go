@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoimport
+package mongerimport
 
 import (
 	"bufio"
@@ -17,13 +17,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/testtype"
-	"github.com/mongodb/mongo-tools-common/testutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/testutil"
 	. "github.com/smartystreets/goconvey/convey"
-	"go.mongodb.org/mongo-driver/bson"
-	driverOpts "go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongerdb.org/monger-driver/bson"
+	driverOpts "go.mongerdb.org/monger-driver/monger/options"
 )
 
 const (
@@ -153,7 +153,7 @@ func getImportWithArgs(additionalArgs ...string) (*MongoImport, error) {
 
 	imp, err := New(opts)
 	if err != nil {
-		return nil, fmt.Errorf("error making new instance of mongorestore: %v", err)
+		return nil, fmt.Errorf("error making new instance of mongerrestore: %v", err)
 	}
 
 	return imp, nil
@@ -187,7 +187,7 @@ func TestSplitInlineHeader(t *testing.T) {
 func TestMongoImportValidateSettings(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.UnitTestType)
 
-	Convey("Given a mongoimport instance for validation, ", t, func() {
+	Convey("Given a mongerimport instance for validation, ", t, func() {
 		Convey("an error should be thrown if no collection is given", func() {
 			imp := NewMockMongoImport()
 			imp.ToolOptions.Namespace.DB = ""
@@ -407,7 +407,7 @@ func TestMongoImportValidateSettings(t *testing.T) {
 
 func TestGetSourceReader(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.UnitTestType)
-	Convey("Given a mongoimport instance, on calling getSourceReader", t,
+	Convey("Given a mongerimport instance, on calling getSourceReader", t,
 		func() {
 			Convey("an error should be thrown if the given file referenced by "+
 				"the reader does not exist", func() {
@@ -529,7 +529,7 @@ func TestGetInputReader(t *testing.T) {
 
 func TestImportDocuments(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
-	Convey("With a mongoimport instance", t, func() {
+	Convey("With a mongerimport instance", t, func() {
 		Reset(func() {
 			sessionProvider, err := db.NewSessionProvider(*getBasicToolOptions())
 			if err != nil {
@@ -717,7 +717,7 @@ func TestImportDocuments(t *testing.T) {
 			So(numFailed, ShouldEqual, 0)
 		})
 		Convey("EOF should be thrown for CSV import with --headerLine if file is empty", func() {
-			csvFile, err := ioutil.TempFile("", "mongoimport_")
+			csvFile, err := ioutil.TempFile("", "mongerimport_")
 			So(err, ShouldBeNil)
 			csvFile.Close()
 
@@ -868,7 +868,7 @@ func TestImportDocuments(t *testing.T) {
 // Regression test for TOOLS-1694 to prevent issue from TOOLS-1115
 func TestHiddenOptionsDefaults(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.UnitTestType)
-	Convey("With a new mongoimport with empty options", t, func() {
+	Convey("With a new mongerimport with empty options", t, func() {
 		imp := NewMockMongoImport()
 		imp.ToolOptions = options.New("", "", "", "", options.EnabledOptions{})
 		Convey("Then parsing should fill args with expected defaults", func() {

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,21 +32,21 @@
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/s/query/cluster_query_result.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/s/query/cluster_query_result.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
 /**
- * This is the lightweight mongoS analogue of the PlanStage abstraction used to execute queries on
- * mongoD (see mongo/db/plan_stage.h).
+ * This is the lightweight mongerS analogue of the PlanStage abstraction used to execute queries on
+ * mongerD (see monger/db/plan_stage.h).
  *
  * Each subclass is a query execution stage which executes on the merging node. In general, the
- * execution plan on mongos could have a tree of execution stages, but currently each node has at
+ * execution plan on mongers could have a tree of execution stages, but currently each node has at
  * most one child. The leaf stage of the pipeline receives query result documents merged from the
  * shards. The pipeline may then transform the result set in various ways before being returned by
  * the root stage.
@@ -197,4 +197,4 @@ private:
     std::unique_ptr<RouterExecStage> _child;
 };
 
-}  // namespace mongo
+}  // namespace monger

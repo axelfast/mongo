@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/bson/oid.h"
+#include "monger/bson/oid.h"
 
-#include "mongo/base/parse_number.h"
-#include "mongo/platform/endian.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/parse_number.h"
+#include "monger/platform/endian.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using mongo::OID;
+using monger::OID;
 
 TEST(Equals, Simple) {
     OID o1 = OID::gen();
@@ -82,7 +82,7 @@ TEST(TimestampIsBigEndian, Endianness) {
     OID::Timestamp ts = 123;
     o1.setTimestamp(ts);
 
-    int32_t ts_big = mongo::endian::nativeToBig<int32_t>(123);
+    int32_t ts_big = monger::endian::nativeToBig<int32_t>(123);
 
     const char* oidBytes = o1.view().view();
     ASSERT(std::memcmp(&ts_big, oidBytes, sizeof(int32_t)) == 0);
@@ -163,7 +163,7 @@ TEST(Basic, FromTerm) {
 
     ASSERT_EQUALS("7fffffff", oidHead);
     int oidTailInt;
-    ASSERT_OK(mongo::NumberParser::strToAny()(oidTail, &oidTailInt));
+    ASSERT_OK(monger::NumberParser::strToAny()(oidTail, &oidTailInt));
     ASSERT_EQUALS(term, oidTailInt);
 }
 }

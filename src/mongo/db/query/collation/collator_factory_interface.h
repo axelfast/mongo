@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,9 +31,9 @@
 
 #include <memory>
 
-#include "mongo/db/query/collation/collator_interface.h"
+#include "monger/db/query/collation/collator_interface.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class ServiceContext;
@@ -78,4 +78,4 @@ public:
     virtual StatusWith<std::unique_ptr<CollatorInterface>> makeFromBSON(const BSONObj& spec) = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

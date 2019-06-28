@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog/rename_collection.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/rename_collection.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog/rename_collection.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/rename_collection.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 using std::min;
 using std::string;
@@ -151,4 +151,4 @@ public:
 } cmdrenamecollection;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

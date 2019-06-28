@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,19 +31,19 @@
 
 #include <memory>
 
-#include "mongo/bson/bsonelement_comparator.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_path.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/stdx/unordered_map.h"
+#include "monger/bson/bsonelement_comparator.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_path.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/stdx/unordered_map.h"
 
 namespace pcrecpp {
 class RE;
 }  // namespace pcrecpp;
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 
@@ -635,4 +635,4 @@ public:
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

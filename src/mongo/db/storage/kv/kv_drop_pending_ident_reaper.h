@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,13 +34,13 @@
 #include <set>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/storage/kv/kv_engine.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/storage/kv/kv_engine.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This class manages idents in the KV storage engine that are marked as drop-pending by the
@@ -119,4 +119,4 @@ private:
     DropPendingIdents _dropPendingIdents;
 };
 
-}  // namespace mongo
+}  // namespace monger

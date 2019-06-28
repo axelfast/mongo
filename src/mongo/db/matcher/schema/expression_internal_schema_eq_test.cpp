@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/json.h"
-#include "mongo/db/matcher/matcher.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_eq.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/json.h"
+#include "monger/db/matcher/matcher.h"
+#include "monger/db/matcher/schema/expression_internal_schema_eq.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(InternalSchemaEqMatchExpression, CorrectlyMatchesScalarElements) {
@@ -138,4 +138,4 @@ TEST(InternalSchemaEqMatchExpression, EquivalentToClone) {
     ASSERT_TRUE(rootDocEq.getMatchExpression()->equivalent(clone.get()));
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/logical_clock_test_fixture.h"
+#include "monger/db/logical_clock_test_fixture.h"
 
 #include <memory>
 
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/signed_logical_time.h"
-#include "mongo/db/time_proof_service.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context.h"
+#include "monger/db/signed_logical_time.h"
+#include "monger/db/time_proof_service.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 
 LogicalClockTestFixture::LogicalClockTestFixture() = default;
 
@@ -101,4 +101,4 @@ DBDirectClient* LogicalClockTestFixture::getDBClient() const {
     return _dbDirectClient.get();
 }
 
-}  // namespace mongo
+}  // namespace monger

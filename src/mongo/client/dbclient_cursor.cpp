@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,34 +31,34 @@
  * Connect to a Mongo database as a database, from C++.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_cursor.h"
+#include "monger/client/dbclient_cursor.h"
 
 #include <memory>
 
-#include "mongo/client/connpool.h"
-#include "mongo/db/client.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/metadata.h"
-#include "mongo/rpc/object_check.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/util/bufreader.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/connpool.h"
+#include "monger/db/client.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/query_request.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/metadata.h"
+#include "monger/rpc/object_check.h"
+#include "monger/s/stale_exception.h"
+#include "monger/util/bufreader.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::endl;
@@ -109,7 +109,7 @@ Message DBClientCursor::_assembleInit() {
         // invalid options, we validate them here, and fall back to generating an OP_QUERY
         // through assembleQueryRequest if the options are invalid.
         bool hasValidNToReturnForCommand = (nToReturn == 1 || nToReturn == -1);
-        bool hasValidFlagsForCommand = !(opts & mongo::QueryOption_Exhaust);
+        bool hasValidFlagsForCommand = !(opts & monger::QueryOption_Exhaust);
         bool hasInvalidMaxTimeMs = query.hasField("$maxTimeMS");
 
         if (hasValidNToReturnForCommand && hasValidFlagsForCommand && !hasInvalidMaxTimeMs) {
@@ -597,4 +597,4 @@ void DBClientCursor::kill() {
 }
 
 
-}  // namespace mongo
+}  // namespace monger

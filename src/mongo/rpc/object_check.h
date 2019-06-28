@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/base/data_type_validated.h"
-#include "mongo/bson/bson_validate.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/server_options.h"
+#include "monger/base/data_type_validated.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/server_options.h"
 
 // We do not use the rpc namespace here so we can specialize Validator.
-namespace mongo {
+namespace monger {
 class BSONObj;
 class Status;
 
@@ -59,4 +59,4 @@ struct Validator<BSONObj> {
 
     static Status validateStore(const BSONObj& toStore);
 };
-}  // namespace mongo
+}  // namespace monger

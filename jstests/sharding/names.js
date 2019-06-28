@@ -2,7 +2,7 @@
 (function() {
     'use strict';
 
-    var st = new ShardingTest({shards: 0, mongos: 1});
+    var st = new ShardingTest({shards: 0, mongers: 1});
 
     var rsA = new ReplSetTest({nodes: 2, name: "rsA", nodeOptions: {shardsvr: ""}});
     var rsB = new ReplSetTest({nodes: 2, name: "rsB", nodeOptions: {shardsvr: ""}});
@@ -14,14 +14,14 @@
     rsA.getPrimary();
     rsB.getPrimary();
 
-    var mongos = st.s;
-    var config = mongos.getDB("config");
-    var admin = mongos.getDB("admin");
+    var mongers = st.s;
+    var config = mongers.getDB("config");
+    var admin = mongers.getDB("admin");
 
-    assert.commandWorked(mongos.adminCommand({addShard: rsA.getURL(), name: rsB.name}));
+    assert.commandWorked(mongers.adminCommand({addShard: rsA.getURL(), name: rsB.name}));
     printjson(config.shards.find().toArray());
 
-    assert.commandWorked(mongos.adminCommand({addShard: rsB.getURL(), name: rsA.name}));
+    assert.commandWorked(mongers.adminCommand({addShard: rsB.getURL(), name: rsA.name}));
     printjson(config.shards.find().toArray());
 
     assert.eq(2, config.shards.count(), "Error adding a shard");
@@ -31,9 +31,9 @@
         rsA.getURL(), config.shards.findOne({_id: rsB.name})["host"], "Wrong host for shard rsB");
 
     // Remove shard
-    assert.commandWorked(mongos.adminCommand({removeshard: rsA.name}),
+    assert.commandWorked(mongers.adminCommand({removeshard: rsA.name}),
                          "failed to start draining shard");
-    var res = assert.commandWorked(mongos.adminCommand({removeshard: rsA.name}),
+    var res = assert.commandWorked(mongers.adminCommand({removeshard: rsA.name}),
                                    "failed to remove shard");
 
     assert.eq(
@@ -44,7 +44,7 @@
         rsA.getURL(), config.shards.findOne({_id: rsB.name})["host"], "Wrong host for shard rsB 2");
 
     // Re-add shard
-    assert.commandWorked(mongos.adminCommand({addShard: rsB.getURL(), name: rsA.name}));
+    assert.commandWorked(mongers.adminCommand({addShard: rsB.getURL(), name: rsA.name}));
     printjson(config.shards.find().toArray());
 
     assert.eq(2, config.shards.count(), "Error re-adding a shard");

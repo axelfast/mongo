@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/async_results_merger_params_gen.h"
-#include "mongo/s/query/establish_cursors.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/async_results_merger_params_gen.h"
+#include "monger/s/query/establish_cursors.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A RAII wrapper class for RemoteCursor which schedules a killCursors request upon destruction if
@@ -93,4 +93,4 @@ private:
     NamespaceString _nss;
 };
 
-}  // namespace mongo
+}  // namespace monger

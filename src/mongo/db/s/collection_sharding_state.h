@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,20 +29,20 @@
 
 #pragma once
 
-#include "mongo/db/logical_time.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/s/scoped_collection_metadata.h"
-#include "mongo/db/s/sharding_migration_critical_section.h"
-#include "mongo/db/s/sharding_state_lock.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/s/scoped_collection_metadata.h"
+#include "monger/db/s/sharding_migration_critical_section.h"
+#include "monger/db/s/sharding_state_lock.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * Each collection on a mongod instance is dynamically assigned two pieces of information for the
+ * Each collection on a mongerd instance is dynamically assigned two pieces of information for the
  * duration of its lifetime:
  *  CollectionShardingState - this is a passive data-only state, which represents what is the
  * shard's knowledge of its the shard version and the set of chunks that it owns.
- *  CollectionShardingRuntime (missing from the embedded mongod) - this is the heavyweight machinery
+ *  CollectionShardingRuntime (missing from the embedded mongerd) - this is the heavyweight machinery
  * which implements the sharding protocol functions and is what controls the data-only state.
  *
  * The CollectionShardingStateFactory class below is used in order to allow for the collection
@@ -161,7 +161,7 @@ private:
      * atClusterTime if specified.
      */
     boost::optional<ScopedCollectionMetadata> _getMetadataWithVersionCheckAt(
-        OperationContext* opCtx, const boost::optional<mongo::LogicalTime>& atClusterTime);
+        OperationContext* opCtx, const boost::optional<monger::LogicalTime>& atClusterTime);
 
     // Object-wide ResourceMutex to protect changes to the CollectionShardingRuntime or objects
     // held within. Use only the CollectionShardingRuntimeLock to lock this mutex.
@@ -178,7 +178,7 @@ private:
      * known
      */
     virtual boost::optional<ScopedCollectionMetadata> _getMetadata(
-        const boost::optional<mongo::LogicalTime>& atClusterTime) = 0;
+        const boost::optional<monger::LogicalTime>& atClusterTime) = 0;
 };
 
 /**
@@ -212,4 +212,4 @@ protected:
     ServiceContext* const _serviceContext;
 };
 
-}  // namespace mongo
+}  // namespace monger

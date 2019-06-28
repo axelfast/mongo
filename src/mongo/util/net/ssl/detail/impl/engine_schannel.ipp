@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,9 +34,9 @@
 
 #include "asio/detail/throw_error.hpp"
 #include "asio/error.hpp"
-#include "mongo/util/net/ssl/detail/engine.hpp"
-#include "mongo/util/net/ssl/error.hpp"
-#include "mongo/util/text.h"
+#include "monger/util/net/ssl/detail/engine.hpp"
+#include "monger/util/net/ssl/error.hpp"
+#include "monger/util/text.h"
 
 #include "asio/detail/push_options.hpp"
 
@@ -47,7 +47,7 @@ namespace detail {
 
 engine::engine(SCHANNEL_CRED* context, const std::string& remoteHostName)
     : _pCred(context),
-      _remoteHostName(mongo::toNativeString(remoteHostName.c_str())),
+      _remoteHostName(monger::toNativeString(remoteHostName.c_str())),
       _inBuffer(kDefaultBufferSize),
       _outBuffer(kDefaultBufferSize),
       _extraBuffer(kDefaultBufferSize),

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/server_options.h"
+#include "monger/db/server_options.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This struct represents global configuration data for the server.  These options get set from
@@ -45,4 +45,4 @@ std::string ServerGlobalParams::getPortSettingHelpText() {
     return str::stream() << "Specify port number - " << serverGlobalParams.port << " by default";
 }
 
-}  // namespace mongo
+}  // namespace monger

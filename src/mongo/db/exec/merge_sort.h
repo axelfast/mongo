@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <queue>
 #include <vector>
 
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/record_id.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/record_id.h"
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 // External params for the merge sort stage.  Declared below.
@@ -148,4 +148,4 @@ public:
     bool dedup;
 };
 
-}  // namespace mongo
+}  // namespace monger

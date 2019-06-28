@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kTransaction
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kTransaction
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/session_catalog_mongod.h"
+#include "monger/db/session_catalog_mongerd.h"
 
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/sessions_collection.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/service_context.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/sessions_collection.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 struct SessionTasksExecutor {
@@ -454,4 +454,4 @@ MongoDOperationContextSessionWithoutRefresh::~MongoDOperationContextSessionWitho
               txnParticipant.transactionIsPrepared());
 }
 
-}  // namespace mongo
+}  // namespace monger

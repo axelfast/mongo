@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/concurrency/lock_manager.h"
-#include "mongo/db/concurrency/lock_state.h"
+#include "monger/db/concurrency/lock_manager.h"
+#include "monger/db/concurrency/lock_state.h"
 
-namespace mongo {
+namespace monger {
 
 class LockerForTests : public LockerImpl {
 public:
@@ -73,7 +73,7 @@ public:
 
 /**
  * A RAII object that temporarily forces setting of the _supportsDocLocking global variable (defined
- * in db/service_context.cpp and returned by mongo::supportsDocLocking()) for testing purposes.
+ * in db/service_context.cpp and returned by monger::supportsDocLocking()) for testing purposes.
  */
 extern bool _supportsDocLocking;
 class ForceSupportsDocLocking {
@@ -90,4 +90,4 @@ private:
     const bool _oldSupportsDocLocking;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,10 +32,10 @@
 #include <functional>
 #include <tuple>
 
-#include "mongo/base/status_with.h"
-#include "mongo/rpc/op_msg.h"
+#include "monger/base/status_with.h"
+#include "monger/rpc/op_msg.h"
 
-namespace mongo {
+namespace monger {
 class BSONObj;
 class BSONObjBuilder;
 class OperationContext;
@@ -88,4 +88,4 @@ using ReplyMetadataReader = std::function<Status(
     OperationContext* opCtx, const BSONObj& replyMetadata, StringData sourceHost)>;
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

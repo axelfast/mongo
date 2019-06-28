@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/logger/parse_log_component_settings.h"
+#include "monger/logger/parse_log_component_settings.h"
 
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/logger/log_component.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/logger/log_component.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace logger {
 
 /*
@@ -120,4 +120,4 @@ StatusWith<std::vector<LogComponentSetting>> parseLogComponentSettings(const BSO
 }
 
 }  // namespace logger
-}  // namespace mongo
+}  // namespace monger

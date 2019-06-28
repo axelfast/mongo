@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_plan_cache_stats.h"
+#include "monger/db/pipeline/document_source_plan_cache_stats.h"
 
-namespace mongo {
+namespace monger {
 
 const char* DocumentSourcePlanCacheStats::kStageName = "$planCacheStats";
 
@@ -96,7 +96,7 @@ Pipeline::SourceContainer::iterator DocumentSourcePlanCacheStats::doOptimizeAt(
 DocumentSource::GetNextResult DocumentSourcePlanCacheStats::getNext() {
     if (!_haveRetrievedStats) {
         const auto matchExpr = _absorbedMatch ? _absorbedMatch->getMatchExpression() : nullptr;
-        _results = pExpCtx->mongoProcessInterface->getMatchingPlanCacheEntryStats(
+        _results = pExpCtx->mongerProcessInterface->getMatchingPlanCacheEntryStats(
             pExpCtx->opCtx, pExpCtx->ns, matchExpr);
 
         _resultsIter = _results.begin();
@@ -110,4 +110,4 @@ DocumentSource::GetNextResult DocumentSourcePlanCacheStats::getNext() {
     return Document{*_resultsIter++};
 }
 
-}  // namespace mongo
+}  // namespace monger

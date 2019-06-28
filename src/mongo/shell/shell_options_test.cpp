@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/shell/shell_options.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/shell/shell_options.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(ShellOptions, RedactPasswords) {
@@ -43,11 +43,11 @@ TEST(ShellOptions, RedactPasswords) {
         {{"-u", "admin", "-p", "password", "--port", "27017"},                     // NOLINT
          {"-u"_sd, "admin"_sd, "-p"_sd, "xxxxxxxx"_sd, "--port"_sd, "27017"_sd}},  // NOLINT
         // Check that passwords and URIs get redacted correctly
-        {{"-p", "password", "mongodb://admin:password@localhost"},  // NOLINT
-         {"-p"_sd, "xxxxxxxx", "mongodb://admin@localhost"_sd}},    // NOLINT
+        {{"-p", "password", "mongerdb://admin:password@localhost"},  // NOLINT
+         {"-p"_sd, "xxxxxxxx", "mongerdb://admin@localhost"_sd}},    // NOLINT
         // Check that just URIs get redacted correctly
-        {{"mongodb://admin:password@localhost"},  // NOLINT
-         {"mongodb://admin@localhost"_sd}},       // NOLINT
+        {{"mongerdb://admin:password@localhost"},  // NOLINT
+         {"mongerdb://admin@localhost"_sd}},       // NOLINT
         // Sanity check that non-passwords don't get redacted
         {{"localhost"},      // NOLINT
          {"localhost"_sd}},  // NOLINT
@@ -61,8 +61,8 @@ TEST(ShellOptions, RedactPasswords) {
          {"-pxxxxxxxx"}},         // NOLINT
         // Having --password at the end of the parameters list should do nothing since it means
         // prompt for password
-        {{"mongodb://admin@localhost/admin", "--password"},         // NOLINT
-         {"mongodb://admin@localhost/admin"_sd, "--password"_sd}},  // NOLINT
+        {{"mongerdb://admin@localhost/admin", "--password"},         // NOLINT
+         {"mongerdb://admin@localhost/admin"_sd, "--password"_sd}},  // NOLINT
     };
 
     for (auto& testCase : testData) {
@@ -82,4 +82,4 @@ TEST(ShellOptions, RedactPasswords) {
     }
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

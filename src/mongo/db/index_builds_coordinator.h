@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,24 +33,24 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/catalog/index_builds_manager.h"
-#include "mongo/db/collection_index_builds_tracker.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/database_index_builds_tracker.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl_index_build_state.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/future.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/string_data.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/catalog/index_builds_manager.h"
+#include "monger/db/collection_index_builds_tracker.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/database_index_builds_tracker.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl_index_build_state.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/future.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class ServiceContext;
@@ -521,4 +521,4 @@ MONGO_FAIL_POINT_DECLARE(hangAfterIndexBuildFirstDrain);
 MONGO_FAIL_POINT_DECLARE(hangAfterIndexBuildSecondDrain);
 MONGO_FAIL_POINT_DECLARE(hangAfterIndexBuildDumpsInsertsFromBulk);
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/collation/collation_spec.h"
-#include "mongo/s/commands/strategy.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/collation/collation_spec.h"
+#include "monger/s/commands/strategy.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
- * Base class for mongos index filter commands. Cluster index filter commands don't do much more
+ * Base class for mongers index filter commands. Cluster index filter commands don't do much more
  * than forwarding the commands to all shards and combining the results.
  */
 class ClusterIndexFilterCmd : public BasicCommand {
@@ -139,4 +139,4 @@ ClusterIndexFilterCmd clusterPlanCacheSetFilterCmd(
     "planCacheSetFilter", "Sets index filter for a query shape. Overrides existing index filter.");
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,39 +27,39 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <map>
 #include <set>
 #include <string>
 #include <vector>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/client/connpool.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/mr.h"
-#include "mongo/db/query/collation/collation_spec.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/balancer_configuration.h"
-#include "mongo/s/catalog/dist_lock_manager.h"
-#include "mongo/s/catalog/sharding_catalog_client.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_connection.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/commands/strategy.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/shard_collection_gen.h"
-#include "mongo/s/write_ops/cluster_write.h"
-#include "mongo/stdx/chrono.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/client/connpool.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/mr.h"
+#include "monger/db/query/collation/collation_spec.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/balancer_configuration.h"
+#include "monger/s/catalog/dist_lock_manager.h"
+#include "monger/s/catalog/sharding_catalog_client.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_connection.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/commands/strategy.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/shard_collection_gen.h"
+#include "monger/s/write_ops/cluster_write.h"
+#include "monger/stdx/chrono.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 AtomicWord<unsigned> JOB_NUMBER;
@@ -118,7 +118,7 @@ BSONObj fixForShards(const BSONObj& orig,
 /**
  * Outline for sharded map reduce for sharded output, $out replace:
  *
- * ============= mongos =============
+ * ============= mongers =============
  * 1. Send map reduce command to all relevant shards with some extra info like the value for
  *    the chunkSize and the name of the temporary output collection.
  *
@@ -128,7 +128,7 @@ BSONObj fixForShards(const BSONObj& orig,
  * 3. Calls splitVector on itself against the output collection and puts the results into the
  *    response object.
  *
- * ============= mongos =============
+ * ============= mongers =============
  * 4. If the output collection is *not* sharded, uses the information from splitVector to
  *    create a pre-split sharded collection.
  *
@@ -147,7 +147,7 @@ BSONObj fixForShards(const BSONObj& orig,
  * 9. Atomically drops the old output collection and renames the temporary collection to the
  *    output collection.
  *
- * ============= mongos =============
+ * ============= mongers =============
  * 10. Releases the distributed lock acquired at step #5.
  *
  * 11. Inspects the BSONObject size from step #8 and determines if it needs to split.
@@ -541,8 +541,8 @@ public:
                 outputRoutingInfo = createShardedOutputCollection(
                     opCtx, outputCollNss, splitPts, &shardedOutputCollUUID);
             }
-            // This mongos might not have seen a UUID if setFCV was called on the cluster just after
-            // this mongos tried to obtain the sharded output collection's UUID, so appending the
+            // This mongers might not have seen a UUID if setFCV was called on the cluster just after
+            // this mongers tried to obtain the sharded output collection's UUID, so appending the
             // UUID is optional. If setFCV=3.6 has been called on the shard, the shard will error.
             // Else, the shard will pull the UUID from the config server on receiving setFCV=3.6.
             if (shardedOutputCollUUID) {
@@ -754,4 +754,4 @@ private:
 } clusterMapReduceCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

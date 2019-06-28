@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,38 +27,38 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/mongo.h"
+#include "monger/scripting/mozjs/monger.h"
 
 #include <memory>
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/client/dbclient_base.h"
-#include "mongo/client/dbclient_rs.h"
-#include "mongo/client/global_conn_pool.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/client/native_sasl_client_session.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/client/sasl_client_authenticate.h"
-#include "mongo/client/sasl_client_session.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/logical_session_id_helpers.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/scripting/dbdirectclient_factory.h"
-#include "mongo/scripting/mozjs/cursor.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/session.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/scripting/mozjs/valuewriter.h"
-#include "mongo/scripting/mozjs/wrapconstrainedmethod.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/quick_exit.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/client/dbclient_rs.h"
+#include "monger/client/global_conn_pool.h"
+#include "monger/client/monger_uri.h"
+#include "monger/client/native_sasl_client_session.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/client/sasl_client_authenticate.h"
+#include "monger/client/sasl_client_session.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/logical_session_id_helpers.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/scripting/dbdirectclient_factory.h"
+#include "monger/scripting/mozjs/cursor.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/session.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/scripting/mozjs/valuewriter.h"
+#include "monger/scripting/mozjs/wrapconstrainedmethod.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/quick_exit.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const JSFunctionSpec MongoBase::methods[] = {
@@ -160,8 +160,8 @@ void setCursorHandle(MozJSImplScope* scope,
 
 void setHiddenMongo(JSContext* cx, JS::HandleValue value, JS::CallArgs& args) {
     ObjectWrapper o(cx, args.rval());
-    if (!o.hasField(InternedString::_mongo)) {
-        o.defineProperty(InternedString::_mongo, value, JSPROP_READONLY | JSPROP_PERMANENT);
+    if (!o.hasField(InternedString::_monger)) {
+        o.defineProperty(InternedString::_monger, value, JSPROP_READONLY | JSPROP_PERMANENT);
     }
 }
 
@@ -174,7 +174,7 @@ void setHiddenMongo(JSContext* cx,
                     DBClientBase* origConn,
                     JS::CallArgs& args) {
     ObjectWrapper o(cx, args.rval());
-    // If the connection that ran the command is the same as conn, then we set a hidden "_mongo"
+    // If the connection that ran the command is the same as conn, then we set a hidden "_monger"
     // property on the returned object that is just "this" Mongo object.
     if (resPtr.get() == origConn) {
         setHiddenMongo(cx, args.thisv(), args);
@@ -521,7 +521,7 @@ void MongoBase::Functions::update::call(JSContext* cx, JS::CallArgs args) {
 void MongoBase::Functions::auth::call(JSContext* cx, JS::CallArgs args) {
     auto conn = getConnection(args);
     uassert(ErrorCodes::BadValue, "no connection", conn);
-    uassert(ErrorCodes::BadValue, "mongoAuth takes exactly 1 object argument", args.length() == 1);
+    uassert(ErrorCodes::BadValue, "mongerAuth takes exactly 1 object argument", args.length() == 1);
 
     conn->auth(ValueWriter(cx, args.get(0)).toBSON());
     args.rval().setBoolean(true);
@@ -803,10 +803,10 @@ void MongoBase::Functions::_markNodeAsFailed::call(JSContext* cx, JS::CallArgs a
 
 std::unique_ptr<DBClientBase> runEncryptedDBClientCallback(std::unique_ptr<DBClientBase> conn,
                                                            JS::HandleValue arg,
-                                                           JS::HandleObject mongoConnection,
+                                                           JS::HandleObject mongerConnection,
                                                            JSContext* cx) {
     if (encryptedDBClientCallback != nullptr) {
-        return encryptedDBClientCallback(std::move(conn), arg, mongoConnection, cx);
+        return encryptedDBClientCallback(std::move(conn), arg, mongerConnection, cx);
     }
     return conn;
 }
@@ -930,4 +930,4 @@ void MongoExternalInfo::Functions::_forgetReplSet::call(JSContext* cx, JS::CallA
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

@@ -1,6 +1,6 @@
 description: "Standalone removed from multi-server topology"
 
-uri: "mongodb://a,b"
+uri: "mongerdb://a,b"
 
 phases: [
 

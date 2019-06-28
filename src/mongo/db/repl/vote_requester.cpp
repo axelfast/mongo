@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplicationElection
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplicationElection
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/vote_requester.h"
+#include "monger/db/repl/vote_requester.h"
 
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/db/repl/repl_set_request_votes_args.h"
-#include "mongo/db/repl/scatter_gather_runner.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/util/log.h"
+#include "monger/base/status.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/scatter_gather_runner.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -208,4 +208,4 @@ stdx::unordered_set<HostAndPort> VoteRequester::getResponders() const {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

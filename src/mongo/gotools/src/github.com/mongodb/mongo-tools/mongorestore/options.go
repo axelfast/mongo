@@ -4,28 +4,28 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/util"
 
 	"fmt"
 )
 
-// Usage describes basic usage of mongorestore
+// Usage describes basic usage of mongerrestore
 var Usage = `<options> <directory or file to restore>
 
-Restore backups generated with mongodump to a running server.
+Restore backups generated with mongerdump to a running server.
 
 Specify a database with -d to restore a single database from the target directory,
 or use -d and -c to restore a single collection from a single .bson file.
 
-See http://docs.mongodb.org/manual/reference/program/mongorestore/ for more information.`
+See http://docs.mongerdb.org/manual/reference/program/mongerrestore/ for more information.`
 
-// Options defines the set of all options for configuring mongorestore.
+// Options defines the set of all options for configuring mongerrestore.
 type Options struct {
 	*options.ToolOptions
 	*InputOptions
@@ -87,7 +87,7 @@ type OutputOptions struct {
 	Drop   bool `long:"drop" description:"drop each collection before import"`
 	DryRun bool `long:"dryRun" description:"view summary without importing anything. recommended with verbosity"`
 
-	// By default mongorestore uses a write concern of 'majority'.
+	// By default mongerrestore uses a write concern of 'majority'.
 	WriteConcern             string `long:"writeConcern" value-name:"<write-concern>" default-mask:"-" description:"write concern options e.g. --writeConcern majority, --writeConcern '{w: 3, wtimeout: 500, fsync: true, j: true}'"`
 	NoIndexRestore           bool   `long:"noIndexRestore" description:"don't restore indexes"`
 	NoOptionsRestore         bool   `long:"noOptionsRestore" description:"don't restore collection options"`
@@ -95,7 +95,7 @@ type OutputOptions struct {
 	MaintainInsertionOrder   bool   `long:"maintainInsertionOrder" description:"restore the documents in the order of their appearance in the input source. By default the insertions will be performed in an arbitrary order. Setting this flag also enables the behavior of --stopOnError and restricts NumInsertionWorkersPerCollection to 1."`
 	NumParallelCollections   int    `long:"numParallelCollections" short:"j" description:"number of collections to restore in parallel (4 by default)" default:"4" default-mask:"-"`
 	NumInsertionWorkers      int    `long:"numInsertionWorkersPerCollection" description:"number of insert operations to run concurrently per collection (1 by default)" default:"1" default-mask:"-"`
-	StopOnError              bool   `long:"stopOnError" description:"halt after encountering any error during insertion. By default, mongorestore will attempt to continue through document validation and DuplicateKey errors, but with this option enabled, the tool will stop instead. A small number of documents may be inserted after encountering an error even with this option enabled; use --maintainInsertionOrder to halt immediately after an error"`
+	StopOnError              bool   `long:"stopOnError" description:"halt after encountering any error during insertion. By default, mongerrestore will attempt to continue through document validation and DuplicateKey errors, but with this option enabled, the tool will stop instead. A small number of documents may be inserted after encountering an error even with this option enabled; use --maintainInsertionOrder to halt immediately after an error"`
 	BypassDocumentValidation bool   `long:"bypassDocumentValidation" description:"bypass document validation"`
 	PreserveUUID             bool   `long:"preserveUUID" description:"preserve original collection UUIDs (off by default, requires drop)"`
 	TempUsersColl            string `long:"tempUsersColl" default:"tempusers" hidden:"true"`
@@ -139,7 +139,7 @@ func (*NSOptions) Name() string {
 
 // ParseOptions reads the command line arguments and converts them into options used to configure a MongoRestore instance
 func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, error) {
-	opts := options.New("mongorestore", versionStr, gitCommit, Usage,
+	opts := options.New("mongerrestore", versionStr, gitCommit, Usage,
 		options.EnabledOptions{Auth: true, Connection: true, URI: true})
 	nsOpts := &NSOptions{}
 	opts.AddOptions(nsOpts)

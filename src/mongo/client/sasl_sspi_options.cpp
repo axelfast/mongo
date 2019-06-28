@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,18 +29,18 @@
 
 #ifdef _WIN32
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/sasl_sspi_options.h"
+#include "monger/client/sasl_sspi_options.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/util/options_parser/startup_option_init.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/base/status.h"
+#include "monger/util/options_parser/startup_option_init.h"
+#include "monger/util/options_parser/startup_options.h"
 
-namespace mongo {
+namespace monger {
 
 SASLSSPIGlobalParams saslSSPIGlobalParams;
 
@@ -67,6 +67,6 @@ MONGO_STARTUP_OPTIONS_STORE(SASLSSPIOptions)(InitializerContext* context) {
     return storeSASLSSPIOptions(moe::startupOptionsParsed);
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 #endif  // ifdef _WIN32

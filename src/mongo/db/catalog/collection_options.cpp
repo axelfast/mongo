@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/collection_options.h"
+#include "monger/db/catalog/collection_options.h"
 
 #include <algorithm>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 // static
 bool CollectionOptions::validMaxCappedDocs(long long* max) {
@@ -77,13 +77,13 @@ Status checkStorageEngineOptions(const BSONElement& elem) {
     //     },
     //     ...
     // }
-    if (elem.type() != mongo::Object) {
+    if (elem.type() != monger::Object) {
         return {ErrorCodes::BadValue, "'storageEngine' has to be a document."};
     }
 
     BSONForEach(storageEngineElement, elem.Obj()) {
         StringData storageEngineName = storageEngineElement.fieldNameStringData();
-        if (storageEngineElement.type() != mongo::Object) {
+        if (storageEngineElement.type() != monger::Object) {
             return {ErrorCodes::BadValue,
                     str::stream() << "'storageEngine." << storageEngineName
                                   << "' has to be an embedded document."};
@@ -183,7 +183,7 @@ Status CollectionOptions::parse(const BSONObj& options, ParseKind kind) {
             }
             storageEngine = e.Obj().getOwned();
         } else if (fieldName == "indexOptionDefaults") {
-            if (e.type() != mongo::Object) {
+            if (e.type() != monger::Object) {
                 return {ErrorCodes::TypeMismatch, "'indexOptionDefaults' has to be a document."};
             }
             BSONForEach(option, e.Obj()) {
@@ -201,25 +201,25 @@ Status CollectionOptions::parse(const BSONObj& options, ParseKind kind) {
             }
             indexOptionDefaults = e.Obj().getOwned();
         } else if (fieldName == "validator") {
-            if (e.type() != mongo::Object) {
+            if (e.type() != monger::Object) {
                 return Status(ErrorCodes::BadValue, "'validator' has to be a document.");
             }
 
             validator = e.Obj().getOwned();
         } else if (fieldName == "validationAction") {
-            if (e.type() != mongo::String) {
+            if (e.type() != monger::String) {
                 return Status(ErrorCodes::BadValue, "'validationAction' has to be a string.");
             }
 
             validationAction = e.String();
         } else if (fieldName == "validationLevel") {
-            if (e.type() != mongo::String) {
+            if (e.type() != monger::String) {
                 return Status(ErrorCodes::BadValue, "'validationLevel' has to be a string.");
             }
 
             validationLevel = e.String();
         } else if (fieldName == "collation") {
-            if (e.type() != mongo::Object) {
+            if (e.type() != monger::Object) {
                 return Status(ErrorCodes::BadValue, "'collation' has to be a document.");
             }
 
@@ -229,7 +229,7 @@ Status CollectionOptions::parse(const BSONObj& options, ParseKind kind) {
 
             collation = e.Obj().getOwned();
         } else if (fieldName == "viewOn") {
-            if (e.type() != mongo::String) {
+            if (e.type() != monger::String) {
                 return Status(ErrorCodes::BadValue, "'viewOn' has to be a string.");
             }
 
@@ -238,13 +238,13 @@ Status CollectionOptions::parse(const BSONObj& options, ParseKind kind) {
                 return Status(ErrorCodes::BadValue, "'viewOn' cannot be empty.'");
             }
         } else if (fieldName == "pipeline") {
-            if (e.type() != mongo::Array) {
+            if (e.type() != monger::Array) {
                 return Status(ErrorCodes::BadValue, "'pipeline' has to be an array.");
             }
 
             pipeline = e.Obj().getOwned();
         } else if (fieldName == "idIndex" && kind == parseForCommand) {
-            if (e.type() != mongo::Object) {
+            if (e.type() != monger::Object) {
                 return Status(ErrorCodes::TypeMismatch, "'idIndex' has to be an object.");
             }
 
@@ -254,7 +254,7 @@ Status CollectionOptions::parse(const BSONObj& options, ParseKind kind) {
             }
 
             idIndex = std::move(tempIdIndex);
-        } else if (!createdOn24OrEarlier && !mongo::isGenericArgument(fieldName)) {
+        } else if (!createdOn24OrEarlier && !monger::isGenericArgument(fieldName)) {
             return Status(ErrorCodes::InvalidOptions,
                           str::stream() << "The field '" << fieldName
                                         << "' is not a valid collection option. Options: "

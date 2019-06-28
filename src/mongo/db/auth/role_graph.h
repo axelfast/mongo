@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,16 +33,16 @@
 #include <set>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/restriction_set.h"
-#include "mongo/db/auth/role_name.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/stdx/unordered_set.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/restriction_set.h"
+#include "monger/db/auth/role_name.h"
+#include "monger/db/namespace_string.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/stdx/unordered_set.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
@@ -361,4 +361,4 @@ inline void swap(RoleGraph& lhs, RoleGraph& rhs) {
     lhs.swap(rhs);
 }
 
-}  // namespace mongo
+}  // namespace monger

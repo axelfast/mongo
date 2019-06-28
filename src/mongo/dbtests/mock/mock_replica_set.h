@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/db/repl/member_config.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/dbtests/mock/mock_remote_db_server.h"
+#include "monger/db/repl/member_config.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/dbtests/mock/mock_remote_db_server.h"
 
 #include <map>
 #include <string>
 #include <vector>
 
-namespace mongo {
+namespace monger {
 /**
  * This is a helper class for managing a replica set consisting of
  * MockRemoteDBServer instances.

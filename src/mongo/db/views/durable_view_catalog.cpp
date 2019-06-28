@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/views/durable_view_catalog.h"
+#include "monger/db/views/durable_view_catalog.h"
 
 #include <string>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/record_data.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/curop.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/record_data.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 // DurableViewCatalog
 
@@ -135,7 +135,7 @@ BSONObj DurableViewCatalogImpl::_validateViewDefinition(OperationContext* opCtx,
     const bool hasPipeline = viewDefinition.hasField("pipeline");
     valid &= hasPipeline;
     if (hasPipeline) {
-        valid &= viewDefinition["pipeline"].type() == mongo::Array;
+        valid &= viewDefinition["pipeline"].type() == monger::Array;
     }
 
     valid &= (!viewDefinition.hasField("collation") ||
@@ -200,4 +200,4 @@ void DurableViewCatalogImpl::remove(OperationContext* opCtx, const NamespaceStri
     LOG(2) << "remove view " << name << " from " << _db->getSystemViewsName();
     systemViews->deleteDocument(opCtx, kUninitializedStmtId, id, &CurOp::get(opCtx)->debug());
 }
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,17 +31,17 @@
 
 #include <limits>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/ordering.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/record_id.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/static_assert.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/ordering.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/record_id.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 class KeyString {
 public:
@@ -474,4 +474,4 @@ inline std::ostream& operator<<(std::ostream& stream, const KeyString& value) {
     return stream << value.toString();
 }
 
-}  // namespace mongo
+}  // namespace monger

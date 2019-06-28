@@ -3,7 +3,7 @@
     "use strict";
 
     const conn = MongoRunner.runMongod();
-    const uri = "mongodb://" + conn.host + "/test";
+    const uri = "mongerdb://" + conn.host + "/test";
     const tests = [];
 
     // Asserts that system.profile contains only entries

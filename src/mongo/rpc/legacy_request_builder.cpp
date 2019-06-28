@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/legacy_request_builder.h"
+#include "monger/rpc/legacy_request_builder.h"
 
 #include <memory>
 #include <tuple>
 #include <utility>
 
-#include "mongo/client/read_preference.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/rpc/message.h"
-#include "mongo/rpc/metadata.h"
-#include "mongo/util/assert_util.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/namespace_string.h"
+#include "monger/rpc/message.h"
+#include "monger/rpc/metadata.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 namespace {
@@ -92,7 +92,7 @@ BSONObj downconvertRequestBody(const OpMsgRequest& request, int* queryOptions) {
 
 Message legacyRequestFromOpMsgRequest(const OpMsgRequest& request) {
     BufBuilder builder;
-    builder.skip(mongo::MsgData::MsgDataHeaderSize);
+    builder.skip(monger::MsgData::MsgDataHeaderSize);
 
     const auto cmdNS = NamespaceString(request.getDatabase(), "").getCommandNS().toString();
 
@@ -113,4 +113,4 @@ Message legacyRequestFromOpMsgRequest(const OpMsgRequest& request) {
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

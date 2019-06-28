@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,21 +33,21 @@
 #include <functional>
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/config.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/transport/message_compressor_base.h"
-#include "mongo/transport/service_entry_point.h"
-#include "mongo/transport/service_executor.h"
-#include "mongo/transport/service_executor_task_names.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_mode.h"
-#include "mongo/util/net/ssl_manager.h"
+#include "monger/base/status.h"
+#include "monger/config.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/transport/message_compressor_base.h"
+#include "monger/transport/service_entry_point.h"
+#include "monger/transport/service_executor.h"
+#include "monger/transport/service_executor_task_names.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_mode.h"
+#include "monger/util/net/ssl_manager.h"
 
-namespace mongo {
+namespace monger {
 
 /*
  * The ServiceStateMachine holds the state of a single client connection and represents the
@@ -274,4 +274,4 @@ T& operator<<(T& stream, const ServiceStateMachine::State& state) {
     return stream;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -40,8 +40,8 @@ var fsm = (function() {
                 return conn;
             };
 
-            connCache = {mongos: [], config: [], shards: {}};
-            connCache.mongos = args.cluster.mongos.map(makeNewConnWithExistingSession);
+            connCache = {mongers: [], config: [], shards: {}};
+            connCache.mongers = args.cluster.mongers.map(makeNewConnWithExistingSession);
             connCache.config = args.cluster.config.map(makeNewConnWithExistingSession);
 
             var shardNames = Object.keys(args.cluster.shards);

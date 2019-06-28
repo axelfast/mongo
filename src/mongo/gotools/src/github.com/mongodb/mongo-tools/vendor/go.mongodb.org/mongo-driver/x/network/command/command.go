@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package command // import "go.mongodb.org/mongo-driver/x/network/command"
+package command // import "go.mongerdb.org/monger-driver/x/network/command"
 
 import (
 	"errors"
@@ -13,17 +13,17 @@ import (
 
 	"fmt"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsontype"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/session"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/result"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/session"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/result"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 // WriteBatch represents a single batch for a write operation.

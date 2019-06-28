@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/storage_options.h"
+#include "monger/db/storage/storage_options.h"
 
-#include "mongo/platform/compiler.h"
-#include "mongo/util/str.h"
+#include "monger/platform/compiler.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 StorageGlobalParams::StorageGlobalParams() {
     reset();
@@ -60,7 +60,7 @@ void StorageGlobalParams::reset() {
 StorageGlobalParams storageGlobalParams;
 
 /**
- * The directory where the mongod instance stores its data.
+ * The directory where the mongerd instance stores its data.
  */
 #ifdef _WIN32
 const char* StorageGlobalParams::kDefaultDbPath = "\\data\\db\\";
@@ -70,4 +70,4 @@ const char* StorageGlobalParams::kDefaultDbPath = "/data/db";
 const char* StorageGlobalParams::kDefaultConfigDbPath = "/data/configdb";
 #endif
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/session.h"
+#include "monger/scripting/mozjs/session.h"
 
-#include "mongo/scripting/mozjs/bson.h"
-#include "mongo/scripting/mozjs/end_sessions_gen.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/mongo.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/scripting/mozjs/wrapconstrainedmethod.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/scripting/mozjs/bson.h"
+#include "monger/scripting/mozjs/end_sessions_gen.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/monger.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/scripting/mozjs/wrapconstrainedmethod.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const JSFunctionSpec SessionInfo::methods[8] = {
@@ -236,4 +236,4 @@ void SessionInfo::make(JSContext* cx,
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

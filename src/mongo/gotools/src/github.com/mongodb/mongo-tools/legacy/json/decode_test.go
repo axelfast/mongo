@@ -13,7 +13,7 @@ import (
 	"bytes"
 	"encoding"
 	"fmt"
-	"github.com/mongodb/mongo-tools/legacy/testtype"
+	"github.com/mongerdb/monger-tools/legacy/testtype"
 	"image"
 	"reflect"
 	"strings"

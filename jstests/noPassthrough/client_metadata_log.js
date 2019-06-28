@@ -24,7 +24,7 @@
     // Test MongoD
     let testMongoD = function() {
         let conn = MongoRunner.runMongod({useLogFiles: true});
-        assert.neq(null, conn, 'mongod was unable to start up');
+        assert.neq(null, conn, 'mongerd was unable to start up');
 
         checkLog(conn);
 
@@ -34,29 +34,29 @@
     // Test MongoS
     let testMongoS = function() {
         let options = {
-            mongosOptions: {useLogFiles: true},
+            mongersOptions: {useLogFiles: true},
         };
 
-        let st = new ShardingTest({shards: 1, mongos: 1, other: options});
+        let st = new ShardingTest({shards: 1, mongers: 1, other: options});
 
         checkLog(st.s0);
 
-        // Validate db.currentOp() contains mongos information
+        // Validate db.currentOp() contains mongers information
         let curOp = st.s0.adminCommand({currentOp: 1});
         print(tojson(curOp));
 
         var inprogSample = null;
         for (let inprog of curOp.inprog) {
             if (inprog.hasOwnProperty("clientMetadata") &&
-                inprog.clientMetadata.hasOwnProperty("mongos")) {
+                inprog.clientMetadata.hasOwnProperty("mongers")) {
                 inprogSample = inprog;
                 break;
             }
         }
 
-        assert.neq(inprogSample.clientMetadata.mongos.host, "unknown");
-        assert.neq(inprogSample.clientMetadata.mongos.client, "unknown");
-        assert.neq(inprogSample.clientMetadata.mongos.version, "unknown");
+        assert.neq(inprogSample.clientMetadata.mongers.host, "unknown");
+        assert.neq(inprogSample.clientMetadata.mongers.client, "unknown");
+        assert.neq(inprogSample.clientMetadata.mongers.version, "unknown");
 
         st.stop();
     };

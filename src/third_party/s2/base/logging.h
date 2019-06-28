@@ -16,10 +16,10 @@
 
 #include <iosfwd>
 
-#include "mongo/logger/log_severity.h"
-#include "mongo/logger/logger.h"
-#include "mongo/logger/logstream_builder.h"
-#include "mongo/util/concurrency/thread_name.h"
+#include "monger/logger/log_severity.h"
+#include "monger/logger/logger.h"
+#include "monger/logger/logstream_builder.h"
+#include "monger/util/concurrency/thread_name.h"
 
 #include "macros.h"
 
@@ -60,20 +60,20 @@
 
 // VLOG messages will be logged at debug level 5 with the S2 log component.
 #define S2LOG(x) x
-// Expansion of MONGO_LOG_COMPONENT defined in mongo/util/log.h
+// Expansion of MONGO_LOG_COMPONENT defined in monger/util/log.h
 #define VLOG(x) \
-    if (!(::mongo::logger::globalLogDomain())->shouldLog(::mongo::logger::LogComponent::kGeo, ::mongo::logger::LogSeverity::Debug(5))) {} \
-    else ::mongo::logger::LogstreamBuilder(::mongo::logger::globalLogDomain(), ::mongo::getThreadName(), ::mongo::logger::LogSeverity::Debug(5), ::mongo::logger::LogComponent::kGeo)
+    if (!(::monger::logger::globalLogDomain())->shouldLog(::monger::logger::LogComponent::kGeo, ::monger::logger::LogSeverity::Debug(5))) {} \
+    else ::monger::logger::LogstreamBuilder(::monger::logger::globalLogDomain(), ::monger::getThreadName(), ::monger::logger::LogSeverity::Debug(5), ::monger::logger::LogComponent::kGeo)
 
 class LogMessageBase {
 public:
-    LogMessageBase(::mongo::logger::LogstreamBuilder builder);
-    LogMessageBase(::mongo::logger::LogstreamBuilder builder, const char* file, int line);
+    LogMessageBase(::monger::logger::LogstreamBuilder builder);
+    LogMessageBase(::monger::logger::LogstreamBuilder builder, const char* file, int line);
     virtual ~LogMessageBase() { };
     std::ostream& stream() { return _lsb.stream(); }
 protected:
     // Fatal message will deconstruct it before abort to flush final message.
-    mongo::logger::LogstreamBuilder _lsb;
+    monger::logger::LogstreamBuilder _lsb;
 private:
     DISALLOW_COPY_AND_ASSIGN(LogMessageBase);
 };

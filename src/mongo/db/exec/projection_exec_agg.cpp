@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/projection_exec_agg.h"
+#include "monger/db/exec/projection_exec_agg.h"
 
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/parsed_aggregation_projection.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/parsed_aggregation_projection.h"
 
-namespace mongo {
+namespace monger {
 
 class ProjectionExecAgg::ProjectionExecutor {
 public:
@@ -170,4 +170,4 @@ stdx::unordered_set<std::string> ProjectionExecAgg::applyProjectionToFields(
 const std::set<FieldRef>& ProjectionExecAgg::getExhaustivePaths() const {
     return _exec->getExhaustivePaths();
 }
-}  // namespace mongo
+}  // namespace monger

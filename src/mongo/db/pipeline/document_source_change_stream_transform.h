@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/db/pipeline/document_source_change_stream_gen.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/field_path.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source_change_stream_gen.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/field_path.h"
 
-namespace mongo {
+namespace monger {
 
 class DocumentSourceChangeStreamTransform : public DocumentSource {
 public:
@@ -109,7 +109,7 @@ private:
         TransactionOpIterator& operator=(const TransactionOpIterator&) = delete;
 
         TransactionOpIterator(OperationContext* opCtx,
-                              std::shared_ptr<MongoProcessInterface> mongoProcessInterface,
+                              std::shared_ptr<MongoProcessInterface> mongerProcessInterface,
                               const Document& input,
                               const pcrecpp::RE& nsRegex);
 
@@ -186,7 +186,7 @@ private:
         TxnNumber _txnNumber;
 
         // Used for traversing the oplog with TransactionHistoryInterface.
-        std::shared_ptr<MongoProcessInterface> _mongoProcessInterface;
+        std::shared_ptr<MongoProcessInterface> _mongerProcessInterface;
 
         // An operation is relevant to a change stream iff its namespace matches this regex.
         const pcrecpp::RE& _nsRegex;
@@ -219,4 +219,4 @@ private:
     ServerGlobalParams::FeatureCompatibility::Version _fcv;
 };
 
-}  // namespace mongo
+}  // namespace monger

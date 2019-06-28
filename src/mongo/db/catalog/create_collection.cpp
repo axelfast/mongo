@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/create_collection.h"
+#include "monger/db/catalog/create_collection.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/logger/redaction.h"
-#include "mongo/util/log.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/logger/redaction.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 Status _createView(OperationContext* opCtx,
@@ -320,4 +320,4 @@ Status createCollectionForApplyOps(OperationContext* opCtx,
         opCtx, newCollName, newCmd, idIndex, CollectionOptions::parseForStorage);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,16 +32,16 @@
 #include <cstddef>
 #include <functional>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/client/fetcher.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/abstract_oplog_fetcher.h"
-#include "mongo/db/repl/data_replicator_external_state.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/util/fail_point_service.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/timestamp.h"
+#include "monger/client/fetcher.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/abstract_oplog_fetcher.h"
+#include "monger/db/repl/data_replicator_external_state.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/util/fail_point_service.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 MONGO_FAIL_POINT_DECLARE(stopReplProducer);
@@ -192,4 +192,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

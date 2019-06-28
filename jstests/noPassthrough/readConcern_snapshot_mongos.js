@@ -1,4 +1,4 @@
-// Test parsing of readConcern level 'snapshot' on mongos.
+// Test parsing of readConcern level 'snapshot' on mongers.
 // @tags: [requires_replication,requires_sharding, uses_transactions, uses_atclustertime]
 (function() {
     "use strict";
@@ -25,7 +25,7 @@
     const dbName = "test";
     const collName = "coll";
 
-    let st = new ShardingTest({shards: 1, rs: {nodes: 2}, config: 2, mongos: 1});
+    let st = new ShardingTest({shards: 1, rs: {nodes: 2}, config: 2, mongers: 1});
     let testDB = st.getDB(dbName);
     let coll = testDB.coll;
 
@@ -62,31 +62,31 @@
         readConcern: {level: "snapshot", atClusterTime: clusterTime},
     });
 
-    // Passthrough tests. There are parts not implemented on mongod and mongos, they are tracked by
+    // Passthrough tests. There are parts not implemented on mongerd and mongers, they are tracked by
     // separate jiras
 
-    // readConcern 'snapshot' is supported by insert on mongos in a transaction.
+    // readConcern 'snapshot' is supported by insert on mongers in a transaction.
     expectSuccessInTxnThenAbort(session, sessionDb, {
         insert: collName,
         documents: [{_id: "single-insert"}],
         readConcern: {level: "snapshot"},
     });
 
-    // readConcern 'snapshot' is supported by update on mongos in a transaction.
+    // readConcern 'snapshot' is supported by update on mongers in a transaction.
     expectSuccessInTxnThenAbort(session, sessionDb, {
         update: collName,
         updates: [{q: {_id: 0}, u: {$inc: {a: 1}}}],
         readConcern: {level: "snapshot"},
     });
 
-    // readConcern 'snapshot' is supported by delete on mongos in a transaction.
+    // readConcern 'snapshot' is supported by delete on mongers in a transaction.
     expectSuccessInTxnThenAbort(session, sessionDb, {
         delete: collName,
         deletes: [{q: {}, limit: 1}],
         readConcern: {level: "snapshot"},
     });
 
-    // readConcern 'snapshot' is supported by findAndModify on mongos in a transaction.
+    // readConcern 'snapshot' is supported by findAndModify on mongers in a transaction.
     expectSuccessInTxnThenAbort(session, sessionDb, {
         findAndModify: collName,
         query: {},
@@ -101,13 +101,13 @@
         readConcern: {level: "snapshot"},
     });
 
-    // readConcern 'snapshot' is supported by find on mongos.
+    // readConcern 'snapshot' is supported by find on mongers.
     expectSuccessInTxnThenAbort(session, sessionDb, {
         find: collName,
         readConcern: {level: "snapshot"},
     });
 
-    // readConcern 'snapshot' is supported by distinct on mongos.
+    // readConcern 'snapshot' is supported by distinct on mongers.
     expectSuccessInTxnThenAbort(session, sessionDb, {
         distinct: collName,
         key: "x",

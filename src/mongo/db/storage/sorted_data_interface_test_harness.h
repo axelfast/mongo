@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <initializer_list>
 #include <memory>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/db/storage/test_harness_helper.h"
-#include "mongo/util/unowned_ptr.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/record_id.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/db/storage/test_harness_helper.h"
+#include "monger/util/unowned_ptr.h"
 
-namespace mongo {
+namespace monger {
 
 const BSONObj key0 = BSON("" << 0);
 const BSONObj key1 = BSON("" << 1);
@@ -138,4 +138,4 @@ inline void removeFromIndex(unowned_ptr<HarnessHelper> harness,
 inline std::unique_ptr<SortedDataInterfaceHarnessHelper> newSortedDataInterfaceHarnessHelper() {
     return dynamic_ptr_cast<SortedDataInterfaceHarnessHelper>(newHarnessHelper());
 }
-}  // namespace mongo
+}  // namespace monger

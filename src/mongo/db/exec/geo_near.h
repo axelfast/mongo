@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,19 +29,19 @@
 
 #pragma once
 
-#include "mongo/db/exec/near.h"
-#include "mongo/db/exec/plan_stats.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/geo/geometry_container.h"
-#include "mongo/db/geo/r2_region_coverer.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index/s2_common.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_geo.h"
-#include "mongo/db/query/index_bounds.h"
+#include "monger/db/exec/near.h"
+#include "monger/db/exec/plan_stats.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/geo/geometry_container.h"
+#include "monger/db/geo/r2_region_coverer.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index/s2_common.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_geo.h"
+#include "monger/db/query/index_bounds.h"
 #include "third_party/s2/s2cellunion.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Generic parameters for a GeoNear search
@@ -146,4 +146,4 @@ private:
     std::unique_ptr<DensityEstimator> _densityEstimator;
 };
 
-}  // namespace mongo
+}  // namespace monger

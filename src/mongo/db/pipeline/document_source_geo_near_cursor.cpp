@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_geo_near_cursor.h"
+#include "monger/db/pipeline/document_source_geo_near_cursor.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <boost/optional.hpp>
 #include <list>
 #include <memory>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_cursor.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/query/plan_executor.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_cursor.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/query/plan_executor.h"
 
-namespace mongo {
+namespace monger {
 constexpr const char* DocumentSourceGeoNearCursor::kStageName;
 
 boost::intrusive_ptr<DocumentSourceGeoNearCursor> DocumentSourceGeoNearCursor::create(
@@ -111,4 +111,4 @@ Document DocumentSourceGeoNearCursor::transformBSONObjToDocument(const BSONObj& 
 
     return output.freeze();
 }
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,58 +27,58 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/private/record_store_validate_adaptor.h"
+#include "monger/db/catalog/private/record_store_validate_adaptor.h"
 
-#include "mongo/db/catalog/collection_impl.h"
+#include "monger/db/catalog/collection_impl.h"
 
-#include "mongo/base/counter.h"
-#include "mongo/base/init.h"
-#include "mongo/base/owned_pointer_map.h"
-#include "mongo/bson/ordering.h"
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_info_cache_impl.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog/index_catalog_impl.h"
-#include "mongo/db/catalog/index_consistency.h"
-#include "mongo/db/catalog/index_key_validate.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/update/update_driver.h"
+#include "monger/base/counter.h"
+#include "monger/base/init.h"
+#include "monger/base/owned_pointer_map.h"
+#include "monger/bson/ordering.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_info_cache_impl.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog/index_catalog_impl.h"
+#include "monger/db/catalog/index_consistency.h"
+#include "monger/db/catalog/index_key_validate.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/update/update_driver.h"
 
-#include "mongo/db/auth/user_document_parser.h"  // XXX-ANDY
-#include "mongo/rpc/object_check.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/user_document_parser.h"  // XXX-ANDY
+#include "monger/rpc/object_check.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 //  This fail point injects insertion failures for all collections unless a collection name is
@@ -427,14 +427,14 @@ Status CollectionImpl::insertDocuments(OperationContext* opCtx,
         const auto firstIdElem = data["first_id"];
         // If the failpoint specifies no collection or matches the existing one, hang.
         if ((!collElem || _ns.ns() == collElem.str()) &&
-            (!firstIdElem || (begin != end && firstIdElem.type() == mongo::String &&
+            (!firstIdElem || (begin != end && firstIdElem.type() == monger::String &&
                               begin->doc["_id"].str() == firstIdElem.str()))) {
             string whenFirst =
                 firstIdElem ? (string(" when first _id is ") + firstIdElem.str()) : "";
             while (MONGO_FAIL_POINT(hangAfterCollectionInserts)) {
                 log() << "hangAfterCollectionInserts fail point enabled for " << _ns << whenFirst
                       << ". Blocking until fail point is disabled.";
-                mongo::sleepsecs(1);
+                monger::sleepsecs(1);
                 opCtx->checkForInterrupt();
             }
         }
@@ -1456,4 +1456,4 @@ void CollectionImpl::establishOplogCollectionForLogging(OperationContext* opCtx)
     repl::establishOplogCollectionForLogging(opCtx, this);
 }
 
-}  // namespace mongo
+}  // namespace monger

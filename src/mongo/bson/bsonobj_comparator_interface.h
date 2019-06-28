@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/bson/bson_comparator_interface_base.h"
-#include "mongo/bson/bsonobj.h"
+#include "monger/bson/bson_comparator_interface_base.h"
+#include "monger/bson/bsonobj.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A BSONObj::ComparatorInterface is an abstract class for comparing BSONObj objects. Usage for
@@ -100,4 +100,4 @@ using BSONObjIndexedMap = BSONComparatorInterfaceBase<BSONObj>::Map<ValueType>;
 template <typename ValueType>
 using BSONObjIndexedUnorderedMap = BSONComparatorInterfaceBase<BSONObj>::UnorderedMap<ValueType>;
 
-}  // namespace mongo
+}  // namespace monger

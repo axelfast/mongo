@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -35,7 +35,7 @@ Usage:
 import sys
 
 headerFileTemplate = """// AUTO-GENERATED FILE DO NOT EDIT
-// See src/mongo/db/auth/generate_action_types.py
+// See src/monger/db/auth/generate_action_types.py
 /**
  *    Copyright (C) 2018-present MongoDB, Inc.
  *
@@ -50,7 +50,7 @@ headerFileTemplate = """// AUTO-GENERATED FILE DO NOT EDIT
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -72,9 +72,9 @@ headerFileTemplate = """// AUTO-GENERATED FILE DO NOT EDIT
 #include <map>
 #include <string>
 
-#include "mongo/base/status.h"
+#include "monger/base/status.h"
 
-namespace mongo {
+namespace monger {
 
     struct ActionType {
     public:
@@ -113,11 +113,11 @@ namespace mongo {
     // String stream operator for ActionType
     std::ostream& operator<<(std::ostream& os, const ActionType& at);
 
-} // namespace mongo
+} // namespace monger
 """
 
 sourceFileTemplate = """// AUTO-GENERATED FILE DO NOT EDIT
-// See src/mongo/db/auth/generate_action_types.py
+// See src/monger/db/auth/generate_action_types.py
 /**
  *    Copyright (C) 2018-present MongoDB, Inc.
  *
@@ -132,7 +132,7 @@ sourceFileTemplate = """// AUTO-GENERATED FILE DO NOT EDIT
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -147,18 +147,18 @@ sourceFileTemplate = """// AUTO-GENERATED FILE DO NOT EDIT
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/action_type.h"
+#include "monger/db/auth/action_type.h"
 
 #include <cstdint>
 #include <iostream>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 %(actionTypeConstants)s
     bool ActionType::operator==(const ActionType& rhs) const {
@@ -189,7 +189,7 @@ namespace mongo {
         }
     }
 
-} // namespace mongo
+} // namespace monger
 """
 
 

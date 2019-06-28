@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <condition_variable>
 #include <vector>
 
-#include "mongo/db/free_mon/free_mon_protocol_gen.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/free_mon/free_mon_protocol_gen.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/duration.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Message types for free monitoring.
@@ -410,4 +410,4 @@ private:
 
 using FreeMonRegisterCommandMessage =
     FreeMonWaitableMessageWithPayload<FreeMonMessageType::RegisterCommand>;
-}  // namespace mongo
+}  // namespace monger

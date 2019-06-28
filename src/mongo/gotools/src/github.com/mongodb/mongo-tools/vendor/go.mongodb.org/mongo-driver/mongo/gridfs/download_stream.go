@@ -16,7 +16,7 @@ import (
 	"io"
 	"math"
 
-	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 // ErrWrongIndex is used when the chunk retrieved from the server does not have the expected index.
@@ -31,7 +31,7 @@ var errNoMoreChunks = errors.New("no more chunks remaining")
 type DownloadStream struct {
 	numChunks     int32
 	chunkSize     int32
-	cursor        *mongo.Cursor
+	cursor        *monger.Cursor
 	done          bool
 	closed        bool
 	buffer        []byte // store up to 1 chunk if the user provided buffer isn't big enough
@@ -42,7 +42,7 @@ type DownloadStream struct {
 	fileLen       int64
 }
 
-func newDownloadStream(cursor *mongo.Cursor, chunkSize int32, fileLen int64) *DownloadStream {
+func newDownloadStream(cursor *monger.Cursor, chunkSize int32, fileLen int64) *DownloadStream {
 	numChunks := int32(math.Ceil(float64(fileLen) / float64(chunkSize)))
 
 	return &DownloadStream{

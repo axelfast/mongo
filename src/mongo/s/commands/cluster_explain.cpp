@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/commands/cluster_explain.h"
-#include "mongo/s/grid.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/commands/cluster_explain.h"
+#include "monger/s/grid.h"
 
-namespace mongo {
+namespace monger {
 
 using std::vector;
 
@@ -219,14 +219,14 @@ const char* ClusterExplain::getStageNameForReadOp(size_t numShards, const BSONOb
 // static
 void ClusterExplain::buildPlannerInfo(OperationContext* opCtx,
                                       const vector<Strategy::CommandResult>& shardResults,
-                                      const char* mongosStageName,
+                                      const char* mongersStageName,
                                       BSONObjBuilder* out) {
     BSONObjBuilder queryPlannerBob(out->subobjStart("queryPlanner"));
 
-    queryPlannerBob.appendNumber("mongosPlannerVersion", 1);
+    queryPlannerBob.appendNumber("mongersPlannerVersion", 1);
     BSONObjBuilder winningPlanBob(queryPlannerBob.subobjStart("winningPlan"));
 
-    winningPlanBob.append("stage", mongosStageName);
+    winningPlanBob.append("stage", mongersStageName);
     BSONArrayBuilder shardsBuilder(winningPlanBob.subarrayStart("shards"));
     for (size_t i = 0; i < shardResults.size(); i++) {
         BSONObjBuilder singleShardBob(shardsBuilder.subobjStart());
@@ -252,7 +252,7 @@ void ClusterExplain::buildPlannerInfo(OperationContext* opCtx,
 
 // static
 void ClusterExplain::buildExecStats(const vector<Strategy::CommandResult>& shardResults,
-                                    const char* mongosStageName,
+                                    const char* mongersStageName,
                                     long long millisElapsed,
                                     BSONObjBuilder* out) {
     if (!shardResults[0].result.hasField("executionStats")) {
@@ -293,8 +293,8 @@ void ClusterExplain::buildExecStats(const vector<Strategy::CommandResult>& shard
     // Fill in the tree of stages.
     BSONObjBuilder executionStagesBob(executionStatsBob.subobjStart("executionStages"));
 
-    // Info for the root mongos stage.
-    executionStagesBob.append("stage", mongosStageName);
+    // Info for the root mongers stage.
+    executionStagesBob.append("stage", mongersStageName);
     executionStatsBob.appendNumber("nReturned", nReturned);
     executionStatsBob.appendNumber("executionTimeMillis", millisElapsed);
     executionStatsBob.appendNumber("totalKeysExamined", keysExamined);
@@ -346,7 +346,7 @@ void ClusterExplain::buildExecStats(const vector<Strategy::CommandResult>& shard
 // static
 Status ClusterExplain::buildExplainResult(OperationContext* opCtx,
                                           const vector<Strategy::CommandResult>& shardResults,
-                                          const char* mongosStageName,
+                                          const char* mongersStageName,
                                           long long millisElapsed,
                                           BSONObjBuilder* out) {
     // Explain only succeeds if all shards support the explain command.
@@ -355,11 +355,11 @@ Status ClusterExplain::buildExplainResult(OperationContext* opCtx,
         return validateStatus;
     }
 
-    buildPlannerInfo(opCtx, shardResults, mongosStageName, out);
-    buildExecStats(shardResults, mongosStageName, millisElapsed, out);
+    buildPlannerInfo(opCtx, shardResults, mongersStageName, out);
+    buildExecStats(shardResults, mongersStageName, millisElapsed, out);
 
     return Status::OK();
 }
 
 
-}  // namespace mongo
+}  // namespace monger

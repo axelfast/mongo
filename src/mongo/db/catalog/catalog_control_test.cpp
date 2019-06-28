@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/db/catalog/catalog_control.h"
+#include "monger/db/catalog/catalog_control.h"
 
-#include "mongo/db/catalog/database_holder_mock.h"
-#include "mongo/db/client.h"
-#include "mongo/db/index_builds_coordinator_mongod.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/catalog/database_holder_mock.h"
+#include "monger/db/client.h"
+#include "monger/db/index_builds_coordinator_mongerd.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -155,4 +155,4 @@ TEST_F(CatalogControlTest, CloseAndOpenCatalog) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

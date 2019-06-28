@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/run_op_kill_cursors.h"
+#include "monger/db/run_op_kill_cursors.h"
 
-#include "mongo/base/data_cursor.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/cursor_id.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/util/exit.h"
+#include "monger/base/data_cursor.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/cursor_id.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/util/exit.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -103,4 +103,4 @@ int runOpKillCursors(OperationContext* opCtx, size_t numCursorIds, const char* i
     return numKilled;
 }
 
-}  // namespace mongo
+}  // namespace monger

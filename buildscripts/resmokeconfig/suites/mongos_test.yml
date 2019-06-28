@@ -1,4 +1,4 @@
-test_kind: mongos_test
+test_kind: mongers_test
 
 selector:
   test: ''

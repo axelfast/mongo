@@ -7,10 +7,10 @@ load("jstests/libs/parallelTester.js");
 (function() {
     "use strict";
 
-    const st = new ShardingTest({mongos: 1, shards: 1, rs: {nodes: 2, protocolVersion: 1}});
+    const st = new ShardingTest({mongers: 1, shards: 1, rs: {nodes: 2, protocolVersion: 1}});
     const kDbName = 'test';
-    const mongosClient = st.s;
-    const mongos = mongosClient.getDB(kDbName);
+    const mongersClient = st.s;
+    const mongers = mongersClient.getDB(kDbName);
     const rst = st.rs0;
     const primary = rst.getPrimary();
     const secondary = rst.getSecondaries()[0];
@@ -53,11 +53,11 @@ load("jstests/libs/parallelTester.js");
 
     function updateSetParameters(params) {
         var cmd = Object.assign({"setParameter": 1}, params);
-        assert.commandWorked(mongos.adminCommand(cmd));
+        assert.commandWorked(mongers.adminCommand(cmd));
     }
 
     function dropConnections() {
-        assert.commandWorked(mongos.adminCommand({dropConnections: 1, hostAndPort: allHosts}));
+        assert.commandWorked(mongers.adminCommand({dropConnections: 1, hostAndPort: allHosts}));
     }
 
     var currentCheckNum = 0;
@@ -83,7 +83,7 @@ load("jstests/libs/parallelTester.js");
         }
 
         function checkAllStats() {
-            var res = mongos.adminCommand({connPoolStats: 1});
+            var res = mongers.adminCommand({connPoolStats: 1});
             return hosts.map(host => checkStats(res, host)).every(x => x);
         }
 
@@ -93,14 +93,14 @@ load("jstests/libs/parallelTester.js");
     }
 
     function checkConnPoolStats() {
-        const ret = mongos.runCommand({"connPoolStats": 1});
+        const ret = mongers.runCommand({"connPoolStats": 1});
         const poolStats = ret["pools"]["NetworkInterfaceTL-TaskExecutorPool-0"];
         jsTestLog(poolStats);
     }
 
     function walkThroughBehavior({primaryFollows, secondaryFollows}) {
         // Start pooling with a ping
-        mongos.adminCommand({multicast: {ping: 0}});
+        mongers.adminCommand({multicast: {ping: 0}});
         checkConnPoolStats();
 
         // Block connections from finishing
@@ -131,9 +131,9 @@ load("jstests/libs/parallelTester.js");
         dropConnections();
     }
 
-    assert.writeOK(mongos.test.insert({x: 1}));
-    assert.writeOK(mongos.test.insert({x: 2}));
-    assert.writeOK(mongos.test.insert({x: 3}));
+    assert.writeOK(mongers.test.insert({x: 1}));
+    assert.writeOK(mongers.test.insert({x: 2}));
+    assert.writeOK(mongers.test.insert({x: 3}));
     st.rs0.awaitReplication();
 
     jsTestLog("Following disabled");

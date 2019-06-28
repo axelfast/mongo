@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -29,17 +29,17 @@
 # Sharding IDL file
 
 global:
-    cpp_namespace: "mongo"
+    cpp_namespace: "monger"
     cpp_includes:
-        - "mongo/s/shard_id.h"
+        - "monger/s/shard_id.h"
 
 imports:
-    - "mongo/idl/basic_types.idl"
+    - "monger/idl/basic_types.idl"
 
 types:
     shard_id:
         bson_serialization_type: string
         description: "String identifier for a shard's name"
         cpp_type: "ShardId"
-        deserializer: "mongo::BSONElement::str"
-        serializer: "mongo::ShardId::toString"
+        deserializer: "monger::BSONElement::str"
+        serializer: "monger::ShardId::toString"

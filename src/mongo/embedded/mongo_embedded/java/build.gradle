@@ -3,12 +3,12 @@ ext.libraryName = 'embedded-capi'
 ext.licenseShort = 'MongoDB Embedded License'
 ext.pomName = 'MongoDB Embedded for Java'
 ext.pomDescription = 'The MongoDB Embedded SDK for Java'
-ext.pomUrl = 'http://www.mongodb.org'
+ext.pomUrl = 'http://www.mongerdb.org'
 ext.pomLicenseName = 'MongoDB Embedded License'
-ext.pomLicenseUrl = 'https://www.mongodb.com/licensing/embedded-license'
-ext.pomScmConnection = 'https://github.com/mongodb/mongo.git'
-ext.pomScmDevConnection = 'git@github.com:mongodb/mongo.git'
-ext.pomScmUrl = 'https://github.com/mongodb/mongo'
+ext.pomLicenseUrl = 'https://www.mongerdb.com/licensing/embedded-license'
+ext.pomScmConnection = 'https://github.com/mongerdb/monger.git'
+ext.pomScmDevConnection = 'git@github.com:mongerdb/monger.git'
+ext.pomScmUrl = 'https://github.com/mongerdb/monger'
 
 buildscript {
     repositories {
@@ -59,7 +59,7 @@ if (localPropsFile.exists()) {
 }
 
 allprojects {
-    group = 'org.mongodb'
+    group = 'org.mongerdb'
     version = getGitVersion()
 
     repositories {
@@ -75,7 +75,7 @@ task clean(type: Delete) {
 apply plugin: 'io.codearte.nexus-staging'
 
 nexusStaging {
-    packageGroup = "org.mongodb"
+    packageGroup = "org.mongerdb"
     username = ossrhUsername
     password = ossrhPassword
 }

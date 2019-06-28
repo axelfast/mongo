@@ -9,8 +9,8 @@ env.Library('sha1_block',
         'sha1_block.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/util/secure_compare_memory',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/util/secure_compare_memory',
     ])
 
 env.Library('sha256_block',
@@ -18,8 +18,8 @@ env.Library('sha256_block',
         'sha256_block.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/util/secure_compare_memory',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/util/secure_compare_memory',
     ])
 
 if "tom" in env["MONGO_CRYPTO"]:
@@ -37,7 +37,7 @@ if "tom" in env["MONGO_CRYPTO"]:
             'sha_block_tom.cpp'
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
+            '$BUILD_DIR/monger/base',
             'sha1_block',
             'sha256_block',
         ],
@@ -52,7 +52,7 @@ else:
             'sha_block_${MONGO_CRYPTO}.cpp'
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
+            '$BUILD_DIR/monger/base',
             'sha1_block',
             'sha256_block',
         ])
@@ -64,9 +64,9 @@ env.Library(target='symmetric_crypto',
                 'symmetric_key.cpp',
             ],
             LIBDEPS=[
-                '$BUILD_DIR/mongo/base/secure_allocator',
-                '$BUILD_DIR/mongo/util/net/ssl_manager',
-                '$BUILD_DIR/mongo/util/secure_zero_memory',
+                '$BUILD_DIR/monger/base/secure_allocator',
+                '$BUILD_DIR/monger/util/net/ssl_manager',
+                '$BUILD_DIR/monger/util/secure_zero_memory',
             ],
 )
 
@@ -77,7 +77,7 @@ env.Library(
     ],
     LIBDEPS=[
         'symmetric_crypto',
-        '$BUILD_DIR/mongo/db/matcher/expressions',
+        '$BUILD_DIR/monger/db/matcher/expressions',
     ],
 )
 
@@ -91,8 +91,8 @@ env.CppUnitTest(
         'sha512_block_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/base/secure_allocator',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/base/secure_allocator',
         'aead_encryption' if "tom" not in env["MONGO_CRYPTO"] else [],
         'sha_block_${MONGO_CRYPTO}',
     ],

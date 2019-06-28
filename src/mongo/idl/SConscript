@@ -9,8 +9,8 @@ env.Library(
         'idl_parser.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/command_generic_argument',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/command_generic_argument',
     ]
 )
 
@@ -21,10 +21,10 @@ env.Library(
         'server_parameter_with_storage.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ],
 )
 
@@ -43,11 +43,11 @@ env.CppUnitTest(
         env.Idlc('unittest_import.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/namespace_string',
-        '$BUILD_DIR/mongo/idl/idl_parser',
-        '$BUILD_DIR/mongo/util/cmdline_utils/cmdline_utils',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/namespace_string',
+        '$BUILD_DIR/monger/idl/idl_parser',
+        '$BUILD_DIR/monger/util/cmdline_utils/cmdline_utils',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
         'server_parameter',
     ],
 )

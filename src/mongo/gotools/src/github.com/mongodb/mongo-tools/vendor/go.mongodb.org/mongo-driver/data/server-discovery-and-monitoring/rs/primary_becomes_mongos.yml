@@ -1,6 +1,6 @@
-description: "Primary becomes mongos"
+description: "Primary becomes mongers"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

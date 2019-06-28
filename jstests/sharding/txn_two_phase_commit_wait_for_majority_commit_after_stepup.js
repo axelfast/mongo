@@ -24,7 +24,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         rs0: {nodes: 2},
         causallyConsistent: true,
         other: {
-            mongosOptions: {verbose: 3},
+            mongersOptions: {verbose: 3},
         }
     });
 

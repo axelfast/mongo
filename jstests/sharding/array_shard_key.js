@@ -4,13 +4,13 @@
 
     var st = new ShardingTest({shards: 3});
 
-    var mongos = st.s0;
+    var mongers = st.s0;
 
-    var coll = mongos.getCollection("TestDB.foo");
+    var coll = mongers.getCollection("TestDB.foo");
 
     st.shardColl(coll, {_id: 1, i: 1}, {_id: ObjectId(), i: 1});
 
-    printjson(mongos.getDB("config").chunks.find().toArray());
+    printjson(mongers.getDB("config").chunks.find().toArray());
 
     print("1: insert some invalid data");
 
@@ -80,7 +80,7 @@
         "Sharding-then-inserting-multikey tested, now trying inserting-then-sharding-multikey");
 
     // Insert a bunch of data then shard over key which is an array
-    var coll = mongos.getCollection("" + coll + "2");
+    var coll = mongers.getCollection("" + coll + "2");
     for (var i = 0; i < 10; i++) {
         // TODO : does not check weird cases like [ i, i ]
         assert.writeOK(coll.insert({i: [i, i + 1]}));
@@ -97,7 +97,7 @@
     st.printShardingStatus();
 
     // Insert a bunch of data then shard over key which is not an array
-    var coll = mongos.getCollection("" + coll + "3");
+    var coll = mongers.getCollection("" + coll + "3");
     for (var i = 0; i < 10; i++) {
         // TODO : does not check weird cases like [ i, i ]
         assert.writeOK(coll.insert({i: i}));

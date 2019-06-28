@@ -9,12 +9,12 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 (function() {
     'use strict';
 
-    var st = new ShardingTest({shards: 2, mongos: 1, verbose: 3});
+    var st = new ShardingTest({shards: 2, mongers: 1, verbose: 3});
 
-    var mongos = st.s0;
-    var admin = mongos.getDB("admin");
-    var config = mongos.getDB("config");
-    var coll = mongos.getCollection(jsTestName() + ".coll");
+    var mongers = st.s0;
+    var admin = mongers.getDB("admin");
+    var config = mongers.getDB("config");
+    var coll = mongers.getCollection(jsTestName() + ".coll");
     var shards = config.shards.find().toArray();
 
     assert.commandWorked(admin.runCommand({enableSharding: coll.getDB().toString()}));

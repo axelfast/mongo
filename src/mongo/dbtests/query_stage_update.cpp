@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,29 +31,29 @@
  * This file tests the UpdateStage class
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/eof.h"
-#include "mongo/db/exec/queued_data_stage.h"
-#include "mongo/db/exec/update_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/update/update_driver.h"
-#include "mongo/dbtests/dbtests.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/eof.h"
+#include "monger/db/exec/queued_data_stage.h"
+#include "monger/db/exec/update_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/service_context.h"
+#include "monger/db/update/update_driver.h"
+#include "monger/dbtests/dbtests.h"
 
 #define ASSERT_DOES_NOT_THROW(EXPRESSION)                                          \
     try {                                                                          \
@@ -61,7 +61,7 @@
     } catch (const AssertionException& e) {                                        \
         ::str::stream err;                                                         \
         err << "Threw an exception incorrectly: " << e.toString();                 \
-        ::mongo::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream(); \
+        ::monger::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream(); \
     }
 
 namespace QueryStageUpdate {

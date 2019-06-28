@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,20 +33,20 @@
 #include <ostream>
 #include <string>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobj_comparator_interface.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/sync_tail_test_fixture.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobj_comparator_interface.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/sync_tail_test_fixture.h"
+#include "monger/util/duration.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 class Collection;
 
@@ -206,4 +206,4 @@ OplogEntry makeInsertDocumentOplogEntryWithSessionInfoAndStmtId(
 
 BSONObj makeInsertApplyOpsEntry(const NamespaceString& nss, const UUID& uuid, const BSONObj& doc);
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

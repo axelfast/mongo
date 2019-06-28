@@ -4,8 +4,8 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongostat provides an overview of the status of a currently running mongod or mongos instance.
-package mongostat
+// Package mongerstat provides an overview of the status of a currently running mongerd or mongers instance.
+package mongerstat
 
 import (
 	"fmt"
@@ -14,19 +14,19 @@ import (
 	"sync"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools/mongostat/stat_consumer"
-	"github.com/mongodb/mongo-tools/mongostat/stat_consumer/line"
-	"github.com/mongodb/mongo-tools/mongostat/status"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools/mongerstat/stat_consumer"
+	"github.com/mongerdb/monger-tools/mongerstat/stat_consumer/line"
+	"github.com/mongerdb/monger-tools/mongerstat/status"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 // MongoStat is a container for the user-specified options and
-// internal cluster state used for running mongostat.
+// internal cluster state used for running mongerstat.
 type MongoStat struct {
-	// Generic mongo tool options.
+	// Generic monger tool options.
 	Options *options.ToolOptions
 
 	// Mongostat-specific output options.
@@ -58,7 +58,7 @@ type ConfigShard struct {
 }
 
 // NodeMonitor contains the connection pool for a single host and collects the
-// mongostat data for that host on a regular interval.
+// mongerstat data for that host on a regular interval.
 type NodeMonitor struct {
 	host, alias     string
 	sessionProvider *db.SessionProvider

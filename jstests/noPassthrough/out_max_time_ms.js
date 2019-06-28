@@ -36,7 +36,7 @@
     }
 
     /**
-     * Given a mongod connection, run a $out aggregation against 'conn' which hangs on the given
+     * Given a mongerd connection, run a $out aggregation against 'conn' which hangs on the given
      * failpoint and ensure that the $out maxTimeMS expires.
      */
     function forceAggregationToHangAndCheckMaxTimeMsExpires(conn, failPointName) {
@@ -120,7 +120,7 @@
     // Run on a standalone.
     (function() {
         const conn = MongoRunner.runMongod({});
-        assert.neq(null, conn, 'mongod was unable to start up');
+        assert.neq(null, conn, 'mongerd was unable to start up');
         insertDocs(conn.getDB(kDBName)[kSourceCollName]);
         runUnshardedTest(conn);
         MongoRunner.stopMongod(conn);

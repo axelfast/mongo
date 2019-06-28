@@ -4,18 +4,18 @@
 
     var st = new ShardingTest({shards: 2});
 
-    var mongos = st.s0;
-    var admin = mongos.getDB("admin");
+    var mongers = st.s0;
+    var admin = mongers.getDB("admin");
 
     //
     // Set up multiple collections to target with regex shard keys on two shards
     //
 
-    var coll = mongos.getCollection("foo.bar");
-    var collSharded = mongos.getCollection("foo.barSharded");
-    var collCompound = mongos.getCollection("foo.barCompound");
-    var collNested = mongos.getCollection("foo.barNested");
-    var collHashed = mongos.getCollection("foo.barHashed");
+    var coll = mongers.getCollection("foo.bar");
+    var collSharded = mongers.getCollection("foo.barSharded");
+    var collCompound = mongers.getCollection("foo.barCompound");
+    var collNested = mongers.getCollection("foo.barNested");
+    var collHashed = mongers.getCollection("foo.barHashed");
 
     assert.commandWorked(admin.runCommand({enableSharding: coll.getDB().toString()}));
     st.ensurePrimaryShard(coll.getDB().toString(), st.shard0.shardName);

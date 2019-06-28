@@ -1,20 +1,20 @@
 //
-// Tests that mongos validating writes when stale does not DOS config servers
+// Tests that mongers validating writes when stale does not DOS config servers
 //
 // Note that this is *unsafe* with broadcast removes and updates
 //
 (function() {
     'use strict';
 
-    var st = new ShardingTest({shards: 2, mongos: 3, other: {shardOptions: {verbose: 2}}});
+    var st = new ShardingTest({shards: 2, mongers: 3, other: {shardOptions: {verbose: 2}}});
 
-    var mongos = st.s0;
+    var mongers = st.s0;
     var staleMongosA = st.s1;
     var staleMongosB = st.s2;
 
-    var admin = mongos.getDB("admin");
-    var config = mongos.getDB("config");
-    var coll = mongos.getCollection("foo.bar");
+    var admin = mongers.getDB("admin");
+    var config = mongers.getDB("config");
+    var coll = mongers.getCollection("foo.bar");
     var staleCollA = staleMongosA.getCollection(coll + "");
     var staleCollB = staleMongosB.getCollection(coll + "");
 
@@ -27,7 +27,7 @@
     // a StaleConfigException.
     st.shardColl(coll, {a: 1}, {a: 0}, {a: 1}, coll.getDB(), true);
 
-    // Let the stale mongos see the collection state
+    // Let the stale mongers see the collection state
     staleCollA.findOne();
     staleCollB.findOne();
 

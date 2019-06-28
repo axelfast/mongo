@@ -8,9 +8,9 @@
     }
 
     function assertStarts(opts) {
-        const mongod = MongoRunner.runMongod(opts);
-        assert(mongod, "Mongod startup up");
-        MongoRunner.stopMongod(mongod);
+        const mongerd = MongoRunner.runMongod(opts);
+        assert(mongerd, "Mongod startup up");
+        MongoRunner.stopMongod(mongerd);
     }
 
     setJsTestOption('enableTestCommands', false);

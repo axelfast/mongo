@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/db/auth/privilege.h"
+#include "monger/db/auth/privilege.h"
 
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege_parser.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege_parser.h"
 
-namespace mongo {
+namespace monger {
 
 void Privilege::addPrivilegeToPrivilegeVector(PrivilegeVector* privileges,
                                               const Privilege& privilegeToAdd) {
@@ -99,4 +99,4 @@ Status Privilege::getBSONForPrivileges(const PrivilegeVector& privileges,
     return exceptionToStatus();
 }
 
-}  // namespace mongo
+}  // namespace monger

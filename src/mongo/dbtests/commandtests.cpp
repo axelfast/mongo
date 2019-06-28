@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <unordered_set>
 
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/rpc/op_msg.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/operation_context.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/rpc/op_msg.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace CommandTests {
 

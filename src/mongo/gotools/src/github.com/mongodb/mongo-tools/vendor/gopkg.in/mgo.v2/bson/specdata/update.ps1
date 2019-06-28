@@ -1,5 +1,5 @@
 
-$repo = "git@github.com:mongodb/specifications"
+$repo = "git@github.com:mongerdb/specifications"
 
 git clone $repo
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/util/options_parser/startup_options.h"
 
 #include <iostream>
 
-#include "mongo/util/exit_code.h"
-#include "mongo/util/options_parser/option_description.h"
-#include "mongo/util/options_parser/option_section.h"
-#include "mongo/util/options_parser/options_parser.h"
-#include "mongo/util/options_parser/startup_option_init.h"
-#include "mongo/util/quick_exit.h"
+#include "monger/util/exit_code.h"
+#include "monger/util/options_parser/option_description.h"
+#include "monger/util/options_parser/option_section.h"
+#include "monger/util/options_parser/options_parser.h"
+#include "monger/util/options_parser/startup_option_init.h"
+#include "monger/util/quick_exit.h"
 
-namespace mongo {
+namespace monger {
 namespace optionenvironment {
 
 GlobalInitializerRegisterer startupOptionsInitializer(
@@ -63,4 +63,4 @@ GlobalInitializerRegisterer startupOptionsInitializer(
     {"EndStartupOptionParsing"});
 
 }  // namespace optionenvironment
-}  // namespace mongo
+}  // namespace monger

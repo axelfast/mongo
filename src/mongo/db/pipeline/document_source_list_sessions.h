@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/db/pipeline/document_source_list_local_sessions.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/db/pipeline/document_source_list_local_sessions.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * $listSessions: { allUsers: true/false, users: [ {user:"jsmith", db:"test"}, ... ] }
@@ -101,11 +101,11 @@ private:
     DocumentSourceListSessions(const BSONObj& query,
                                const boost::intrusive_ptr<ExpressionContext>& pExpCtx,
                                const bool allUsers,
-                               const boost::optional<std::vector<mongo::ListSessionsUser>>& users)
+                               const boost::optional<std::vector<monger::ListSessionsUser>>& users)
         : DocumentSourceMatch(query, pExpCtx), _allUsers(allUsers), _users(users) {}
 
     bool _allUsers;
-    boost::optional<std::vector<mongo::ListSessionsUser>> _users;
+    boost::optional<std::vector<monger::ListSessionsUser>> _users;
 };
 
-}  // namespace mongo
+}  // namespace monger

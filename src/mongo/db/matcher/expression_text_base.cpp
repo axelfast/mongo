@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/matcher/expression_text_base.h"
+#include "monger/db/matcher/expression_text_base.h"
 
-#include "mongo/db/fts/fts_query.h"
+#include "monger/db/fts/fts_query.h"
 
-namespace mongo {
+namespace monger {
 
 const bool TextMatchExpressionBase::kCaseSensitiveDefault = false;
 const bool TextMatchExpressionBase::kDiacriticSensitiveDefault = false;
@@ -75,4 +75,4 @@ bool TextMatchExpressionBase::equivalent(const MatchExpression* other) const {
     return getFTSQuery().equivalent(realOther->getFTSQuery());
 }
 
-}  // namespace mongo
+}  // namespace monger

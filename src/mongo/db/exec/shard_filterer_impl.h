@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/db/exec/shard_filterer.h"
-#include "mongo/db/matcher/matchable.h"
-#include "mongo/db/s/scoped_collection_metadata.h"
+#include "monger/db/exec/shard_filterer.h"
+#include "monger/db/matcher/matchable.h"
+#include "monger/db/s/scoped_collection_metadata.h"
 
-namespace mongo {
+namespace monger {
 
 class ShardFiltererImpl : public ShardFilterer {
 public:
@@ -54,4 +54,4 @@ private:
     ScopedCollectionMetadata _metadata;
     boost::optional<ShardKeyPattern> _keyPattern;
 };
-}  // namespace mongo
+}  // namespace monger

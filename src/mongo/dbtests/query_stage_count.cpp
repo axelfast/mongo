@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,22 +29,22 @@
 
 #include <memory>
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/collection_scan_common.h"
-#include "mongo/db/exec/count.h"
-#include "mongo/db/exec/index_scan.h"
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/query/count_command_gen.h"
-#include "mongo/dbtests/dbtests.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/collection_scan_common.h"
+#include "monger/db/exec/count.h"
+#include "monger/db/exec/index_scan.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/query/count_command_gen.h"
+#include "monger/dbtests/dbtests.h"
 
 namespace QueryStageCount {
 

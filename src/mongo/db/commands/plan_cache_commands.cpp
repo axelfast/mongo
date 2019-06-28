@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,34 +27,34 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <sstream>
 #include <string>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/plan_cache_commands.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/plan_ranker.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/plan_cache_commands.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/plan_ranker.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
 
 namespace {
 
 using std::string;
 using std::unique_ptr;
-using namespace mongo;
+using namespace monger;
 
 
 /**
@@ -89,7 +89,7 @@ static Status getPlanCache(OperationContext* opCtx,
 MONGO_INITIALIZER_WITH_PREREQUISITES(SetupPlanCacheCommands, MONGO_NO_PREREQUISITES)
 (InitializerContext* context) {
     // PlanCacheCommand constructors refer to static ActionType instances.
-    // Registering commands in a mongo static initializer ensures that
+    // Registering commands in a monger static initializer ensures that
     // the ActionType construction will be completed first.
     new PlanCacheListQueryShapes();
     new PlanCacheClear();
@@ -100,7 +100,7 @@ MONGO_INITIALIZER_WITH_PREREQUISITES(SetupPlanCacheCommands, MONGO_NO_PREREQUISI
 
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::stringstream;
@@ -453,4 +453,4 @@ Status PlanCacheListPlans::list(OperationContext* opCtx,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

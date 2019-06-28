@@ -1,7 +1,7 @@
 // SERVER-6591: Localhost authentication exception doesn't work right on sharded cluster
 //
 // This test is to ensure that localhost authentication works correctly against a standalone
-// mongod whether it is hosted with "localhost" or a hostname.
+// mongerd whether it is hosted with "localhost" or a hostname.
 
 var baseName = "auth_server-6591";
 var dbpath = MongoRunner.dataPath + baseName;
@@ -15,16 +15,16 @@ var createUser = function(db) {
     db.createUser({user: username, pwd: password, roles: jsTest.adminUserRoles});
 };
 
-var createRole = function(mongo) {
+var createRole = function(monger) {
     print("============ adding a role.");
-    mongo.getDB("admin").createRole(
+    monger.getDB("admin").createRole(
         {role: "roleAdministrator", roles: [{role: "userAdmin", db: "admin"}], privileges: []});
 };
 
-var assertCannotRunCommands = function(mongo) {
+var assertCannotRunCommands = function(monger) {
     print("============ ensuring that commands cannot be run.");
 
-    var test = mongo.getDB("test");
+    var test = monger.getDB("test");
     assert.throws(function() {
         test.system.users.findOne();
     });
@@ -52,12 +52,12 @@ var assertCannotRunCommands = function(mongo) {
     // Additional commands not permitted
     // Create non-admin user
     assert.throws(function() {
-        mongo.getDB("test").createUser({user: username, pwd: password, roles: ['readWrite']});
+        monger.getDB("test").createUser({user: username, pwd: password, roles: ['readWrite']});
     });
     // Create collection
     var authorizeErrorCode = 13;
     assert.commandFailedWithCode(
-        mongo.getDB("test").createCollection("log", {capped: true, size: 5242880, max: 5000}),
+        monger.getDB("test").createCollection("log", {capped: true, size: 5242880, max: 5000}),
         authorizeErrorCode,
         "createCollection");
     // Set/Get system parameters
@@ -79,20 +79,20 @@ var assertCannotRunCommands = function(mongo) {
         var cmd = {setParameter: 1};
         cmd[p.param] = p.val;
         assert.commandFailedWithCode(
-            mongo.getDB("admin").runCommand(cmd), authorizeErrorCode, "setParameter: " + p.param);
+            monger.getDB("admin").runCommand(cmd), authorizeErrorCode, "setParameter: " + p.param);
     });
     params.forEach(function(p) {
         var cmd = {getParameter: 1};
         cmd[p.param] = 1;
         assert.commandFailedWithCode(
-            mongo.getDB("admin").runCommand(cmd), authorizeErrorCode, "getParameter: " + p.param);
+            monger.getDB("admin").runCommand(cmd), authorizeErrorCode, "getParameter: " + p.param);
     });
 };
 
-var assertCanRunCommands = function(mongo) {
+var assertCanRunCommands = function(monger) {
     print("============ ensuring that commands can be run.");
 
-    var test = mongo.getDB("test");
+    var test = monger.getDB("test");
     // will throw on failure
     test.system.users.findOne();
 
@@ -110,9 +110,9 @@ var assertCanRunCommands = function(mongo) {
         {out: "other"});
 };
 
-var authenticate = function(mongo) {
+var authenticate = function(monger) {
     print("============ authenticating user.");
-    mongo.getDB("admin").auth(username, password);
+    monger.getDB("admin").auth(username, password);
 };
 
 var shutdown = function(conn) {
@@ -122,55 +122,55 @@ var shutdown = function(conn) {
 
 var runTest = function(useHostName, useSession) {
     print("==========================");
-    print("starting mongod: useHostName=" + useHostName);
+    print("starting mongerd: useHostName=" + useHostName);
     print("==========================");
     var conn = MongoRunner.runMongod({auth: "", dbpath: dbpath, useHostName: useHostName});
 
-    var mongo = new Mongo("localhost:" + conn.port);
+    var monger = new Mongo("localhost:" + conn.port);
 
-    assertCannotRunCommands(mongo);
+    assertCannotRunCommands(monger);
 
     if (useSession) {
-        var session = mongo.startSession();
+        var session = monger.startSession();
         createUser(session.getDatabase("admin"));
         session.endSession();
     } else {
-        createUser(mongo.getDB("admin"));
+        createUser(monger.getDB("admin"));
     }
 
-    assertCannotRunCommands(mongo);
+    assertCannotRunCommands(monger);
 
-    authenticate(mongo);
+    authenticate(monger);
 
-    assertCanRunCommands(mongo);
+    assertCanRunCommands(monger);
 
     print("============ reconnecting with new client.");
-    mongo = new Mongo("localhost:" + conn.port);
+    monger = new Mongo("localhost:" + conn.port);
 
-    assertCannotRunCommands(mongo);
+    assertCannotRunCommands(monger);
 
-    authenticate(mongo);
+    authenticate(monger);
 
-    assertCanRunCommands(mongo);
+    assertCanRunCommands(monger);
 
     shutdown(conn);
 };
 
 var runNonlocalTest = function(host) {
     print("==========================");
-    print("starting mongod: non-local host access " + host);
+    print("starting mongerd: non-local host access " + host);
     print("==========================");
     var conn = MongoRunner.runMongod({auth: "", dbpath: dbpath});
 
-    var mongo = new Mongo(host + ":" + conn.port);
+    var monger = new Mongo(host + ":" + conn.port);
 
-    assertCannotRunCommands(mongo);
+    assertCannotRunCommands(monger);
     assert.throws(function() {
-        mongo.getDB("admin").createUser(
+        monger.getDB("admin").createUser(
             {user: username, pwd: password, roles: jsTest.adminUserRoles});
     });
     assert.throws(function() {
-        mongo.getDB("$external")
+        monger.getDB("$external")
             .createUser({user: username, pwd: password, roles: jsTest.adminUserRoles});
     });
     shutdown(conn);
@@ -182,14 +182,14 @@ var runNonlocalTest = function(host) {
 // now enabled.
 var runRoleTest = function() {
     var conn = MongoRunner.runMongod({dbpath: dbpath});
-    var mongo = new Mongo("localhost:" + conn.port);
-    assertCanRunCommands(mongo);
-    createRole(mongo);
-    assertCanRunCommands(mongo);
+    var monger = new Mongo("localhost:" + conn.port);
+    assertCanRunCommands(monger);
+    createRole(monger);
+    assertCanRunCommands(monger);
     MongoRunner.stopMongod(conn);
     conn = MongoRunner.runMongod({auth: '', dbpath: dbpath, restart: true, cleanData: false});
-    mongo = new Mongo("localhost:" + conn.port);
-    assertCannotRunCommands(mongo);
+    monger = new Mongo("localhost:" + conn.port);
+    assertCannotRunCommands(monger);
     MongoRunner.stopMongod(conn);
 };
 

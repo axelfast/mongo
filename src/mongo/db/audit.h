@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,13 +34,13 @@
 
 #pragma once
 
-#include "mongo/base/error_codes.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/ops/write_ops_parsers.h"
-#include "mongo/rpc/op_msg.h"
+#include "monger/base/error_codes.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/ops/write_ops_parsers.h"
+#include "monger/rpc/op_msg.h"
 
-namespace mongo {
+namespace monger {
 
 class AuthorizationSession;
 class BSONObj;
@@ -57,7 +57,7 @@ class Document;
 namespace audit {
 
 /**
- * Narrow API for the parts of mongo::Command used by the audit library.
+ * Narrow API for the parts of monger::Command used by the audit library.
  */
 class CommandInterface {
 public:
@@ -316,4 +316,4 @@ void logRemoveShard(Client* client, StringData shardname);
 void logShardCollection(Client* client, StringData ns, const BSONObj& keyPattern, bool unique);
 
 }  // namespace audit
-}  // namespace mongo
+}  // namespace monger

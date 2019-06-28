@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional/optional.hpp>
 #include <fstream>
 #include <memory>
 #include <stdlib.h>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/init.h"
-#include "mongo/base/initializer_context.h"
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/platform/random.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/cidr.h"
-#include "mongo/util/net/private/ssl_expiration.h"
-#include "mongo/util/net/socket_exception.h"
-#include "mongo/util/net/ssl/apple.hpp"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/net/ssl_options.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/init.h"
+#include "monger/base/initializer_context.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/platform/random.h"
+#include "monger/util/base64.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/log.h"
+#include "monger/util/net/cidr.h"
+#include "monger/util/net/private/ssl_expiration.h"
+#include "monger/util/net/socket_exception.h"
+#include "monger/util/net/ssl/apple.hpp"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_options.h"
 
 using asio::ssl::apple::CFUniquePtr;
 
@@ -65,7 +65,7 @@ using asio::ssl::apple::CFUniquePtr;
  */
 extern "C" SecIdentityRef SecIdentityCreate(CFAllocatorRef, SecCertificateRef, SecKeyRef);
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -398,7 +398,7 @@ StatusWith<SSLX509Name> extractSubjectName(::CFDictionaryRef dict) {
     return subjectName;
 }
 
-StatusWith<mongo::Date_t> extractValidityDate(::CFDictionaryRef dict,
+StatusWith<monger::Date_t> extractValidityDate(::CFDictionaryRef dict,
                                               ::CFStringRef oid,
                                               StringData name) {
     auto swVal = extractDictionaryValue<::CFDictionaryRef>(dict, oid);
@@ -1561,7 +1561,7 @@ StatusWith<SSLPeerInfo> SSLManagerApple::parseAndValidatePeerCertificate(
     }
 
     if (remoteHost.empty()) {
-        // If this is an SSL server context (on a mongod/mongos)
+        // If this is an SSL server context (on a mongerd/mongers)
         // parse any client roles out of the client certificate.
         auto swPeerCertificateRoles = parsePeerRoles(cfdict.get());
         if (!swPeerCertificateRoles.isOK()) {
@@ -1682,7 +1682,7 @@ std::unique_ptr<SSLManagerInterface> SSLManagerInterface::create(const SSLParams
 MONGO_INITIALIZER_WITH_PREREQUISITES(SSLManager, ("EndStartupOptionHandling"))
 (InitializerContext*) {
     kMongoDBRolesOID = ::CFStringCreateWithCString(
-        nullptr, mongodbRolesOID.identifier.c_str(), ::kCFStringEncodingUTF8);
+        nullptr, mongerdbRolesOID.identifier.c_str(), ::kCFStringEncodingUTF8);
 
     if (!isSSLServer || (sslGlobalParams.sslMode.load() != SSLParams::SSLMode_disabled)) {
         theSSLManager = new SSLManagerApple(sslGlobalParams, isSSLServer);
@@ -1690,4 +1690,4 @@ MONGO_INITIALIZER_WITH_PREREQUISITES(SSLManager, ("EndStartupOptionHandling"))
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

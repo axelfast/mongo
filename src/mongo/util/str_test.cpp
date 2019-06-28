@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
-#include "mongo/util/hex.h"
-#include "mongo/util/str.h"
+#include "monger/util/hex.h"
+#include "monger/util/str.h"
 
-namespace mongo::str {
+namespace monger::str {
 
 using std::string;
 
@@ -280,4 +280,4 @@ TEST(StringUtilsTest, ConvertDoubleToStringWithProperPrecision) {
     ASSERT_EQUALS(std::string("0.1000000006"), convertDoubleToString(0.1 + 6E-10, 10));
     ASSERT_EQUALS(std::string("0.1"), convertDoubleToString(0.1 + 6E-8, 6));
 }
-}  // namespace mongo::str
+}  // namespace monger::str

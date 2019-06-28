@@ -4,19 +4,19 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package monger
 
 import (
 	"context"
 	"errors"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
 )
 
 // ErrNoDocuments is returned by Decode when an operation that returns a
 // SingleResult doesn't return any documents.
-var ErrNoDocuments = errors.New("mongo: no documents in result")
+var ErrNoDocuments = errors.New("monger: no documents in result")
 
 // SingleResult represents a single document returned from an operation. If
 // the operation returned an error, the Err method of SingleResult will

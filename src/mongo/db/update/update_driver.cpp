@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/db/update/update_driver.h"
+#include "monger/db/update/update_driver.h"
 
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/matcher/expression_leaf.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/update/log_builder.h"
-#include "mongo/db/update/modifier_table.h"
-#include "mongo/db/update/object_replace_executor.h"
-#include "mongo/db/update/path_support.h"
-#include "mongo/db/update/storage_validation.h"
-#include "mongo/util/embedded_builder.h"
-#include "mongo/util/str.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/matcher/expression_leaf.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/server_options.h"
+#include "monger/db/update/log_builder.h"
+#include "monger/db/update/modifier_table.h"
+#include "monger/db/update/object_replace_executor.h"
+#include "monger/db/update/path_support.h"
+#include "monger/db/update/storage_validation.h"
+#include "monger/util/embedded_builder.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using pathsupport::EqualityMatches;
 
@@ -181,7 +181,7 @@ void UpdateDriver::parse(
 
     invariant(_updateType == UpdateType::kOperator);
 
-    // Some versions of mongod support more than one version of the update language and look for a
+    // Some versions of mongerd support more than one version of the update language and look for a
     // $v "UpdateSemantics" field when applying an oplog entry, in order to know which version of
     // the update language to apply with. We currently only support the 'kUpdateNode' version, but
     // we parse $v and check its value for compatibility.
@@ -290,7 +290,7 @@ Status UpdateDriver::update(StringData matchedField,
         *docWasModified = !applyResult.noop;
     }
     if (_updateType == UpdateType::kOperator && _logOp && logOpRec) {
-        // If there are binVersion=3.6 mongod nodes in the replica set, they need to be told that
+        // If there are binVersion=3.6 mongerd nodes in the replica set, they need to be told that
         // this update is using the "kUpdateNode" version of the update semantics and not the older
         // update semantics that could be used by a featureCompatibilityVersion=3.4 node.
         //
@@ -323,4 +323,4 @@ bool UpdateDriver::isDocReplacement(const write_ops::UpdateModification& updateM
         updateMod.type() == write_ops::UpdateModification::Type::kPipeline;
 }
 
-}  // namespace mongo
+}  // namespace monger

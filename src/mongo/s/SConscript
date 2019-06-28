@@ -20,7 +20,7 @@ env.SConscript(
 # This is the main library to use for consumers of sharding. It will pull the routing and targeting
 # functionality.
 #
-# This is the only library, which should be referenced directly outside of mongo/s/ and mongo/db/s/
+# This is the only library, which should be referenced directly outside of monger/s/ and monger/db/s/
 env.Library(
     target='sharding_api',
     source=[
@@ -43,15 +43,15 @@ env.Library(
         'client/version_manager.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/client/clientdriver_network',
-        '$BUILD_DIR/mongo/db/lasterror',
+        '$BUILD_DIR/monger/client/clientdriver_network',
+        '$BUILD_DIR/monger/db/lasterror',
         'cluster_last_error_info',
         'grid',
         'sharding_router_api',
         'sharding_routing_table',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/idl/server_parameter',
+        '$BUILD_DIR/monger/idl/server_parameter',
     ],
 )
 
@@ -66,17 +66,17 @@ env.Library(
         env.Idlc('router_transactions_stats.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/commands/txn_cmd_request',
-        '$BUILD_DIR/mongo/db/curop',
-        '$BUILD_DIR/mongo/db/logical_session_id_helpers',
-        '$BUILD_DIR/mongo/db/repl/read_concern_args',
+        '$BUILD_DIR/monger/db/commands/txn_cmd_request',
+        '$BUILD_DIR/monger/db/curop',
+        '$BUILD_DIR/monger/db/logical_session_id_helpers',
+        '$BUILD_DIR/monger/db/repl/read_concern_args',
         'async_requests_sender',
         'common_s',
         'grid',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/session_catalog',
-        '$BUILD_DIR/mongo/db/sessions_collection',
+        '$BUILD_DIR/monger/db/session_catalog',
+        '$BUILD_DIR/monger/db/sessions_collection',
     ],
 )
 
@@ -88,11 +88,11 @@ env.Library(
         'shard_key_pattern.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/matcher/expressions',
-        '$BUILD_DIR/mongo/db/query/query_planner',
-        '$BUILD_DIR/mongo/db/storage/key_string',
-        '$BUILD_DIR/mongo/db/update/update_common',
-        '$BUILD_DIR/mongo/util/concurrency/ticketholder',
+        '$BUILD_DIR/monger/db/matcher/expressions',
+        '$BUILD_DIR/monger/db/query/query_planner',
+        '$BUILD_DIR/monger/db/storage/key_string',
+        '$BUILD_DIR/monger/db/update/update_common',
+        '$BUILD_DIR/monger/util/concurrency/ticketholder',
         'chunk_writes_tracker',
         'common_s',
     ],
@@ -110,16 +110,16 @@ env.Library(
         'client/sharding_network_connection_hook.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/s/catalog/dist_lock_catalog_impl',
-        '$BUILD_DIR/mongo/s/catalog/replset_dist_lock_manager',
-        '$BUILD_DIR/mongo/s/catalog/sharding_catalog_client_impl',
-        '$BUILD_DIR/mongo/util/periodic_runner_factory',
+        '$BUILD_DIR/monger/s/catalog/dist_lock_catalog_impl',
+        '$BUILD_DIR/monger/s/catalog/replset_dist_lock_manager',
+        '$BUILD_DIR/monger/s/catalog/sharding_catalog_client_impl',
+        '$BUILD_DIR/monger/util/periodic_runner_factory',
         'sharding_legacy_api',
     ],
     LIBDEPS_PRIVATE=[
-        "$BUILD_DIR/mongo/idl/server_parameter",
-        '$BUILD_DIR/mongo/executor/thread_pool_task_executor',
-        '$BUILD_DIR/mongo/executor/connection_pool_executor',
+        "$BUILD_DIR/monger/idl/server_parameter",
+        '$BUILD_DIR/monger/executor/thread_pool_task_executor',
+        '$BUILD_DIR/monger/executor/connection_pool_executor',
         'coreshard',
         'sharding_task_executor',
     ],
@@ -131,19 +131,19 @@ env.Library(
         "async_requests_sender.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/db/query/command_request_response",
-        "$BUILD_DIR/mongo/executor/scoped_task_executor",
-        "$BUILD_DIR/mongo/executor/task_executor_interface",
-        "$BUILD_DIR/mongo/s/client/sharding_client",
-        "$BUILD_DIR/mongo/s/coreshard",
-        '$BUILD_DIR/mongo/s/client/shard_interface',
+        "$BUILD_DIR/monger/db/query/command_request_response",
+        "$BUILD_DIR/monger/executor/scoped_task_executor",
+        "$BUILD_DIR/monger/executor/task_executor_interface",
+        "$BUILD_DIR/monger/s/client/sharding_client",
+        "$BUILD_DIR/monger/s/coreshard",
+        '$BUILD_DIR/monger/s/client/shard_interface',
     ],
 )
 
 env.Library(
     target='common_s',
     source=[
-        'catalog/mongo_version_range.cpp',
+        'catalog/monger_version_range.cpp',
         'catalog/type_changelog.cpp',
         'catalog/type_chunk.cpp',
         'catalog/type_collection.cpp',
@@ -151,7 +151,7 @@ env.Library(
         'catalog/type_database.cpp',
         'catalog/type_lockpings.cpp',
         'catalog/type_locks.cpp',
-        'catalog/type_mongos.cpp',
+        'catalog/type_mongers.cpp',
         'catalog/type_shard_collection.cpp',
         'catalog/type_shard_database.cpp',
         'catalog/type_shard.cpp',
@@ -188,12 +188,12 @@ env.Library(
         env.Idlc('request_types/refine_collection_shard_key.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/client/connection_string',
-        '$BUILD_DIR/mongo/db/common',
-        '$BUILD_DIR/mongo/db/namespace_string',
-        '$BUILD_DIR/mongo/db/query/query_request',
-        '$BUILD_DIR/mongo/db/repl/optime',
-        '$BUILD_DIR/mongo/idl/idl_parser',
+        '$BUILD_DIR/monger/client/connection_string',
+        '$BUILD_DIR/monger/db/common',
+        '$BUILD_DIR/monger/db/namespace_string',
+        '$BUILD_DIR/monger/db/query/query_request',
+        '$BUILD_DIR/monger/db/repl/optime',
+        '$BUILD_DIR/monger/idl/idl_parser',
     ]
 )
 
@@ -203,11 +203,11 @@ env.Library(
         'sharding_test_fixture_common.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/client/remote_command_targeter_mock',
-        '$BUILD_DIR/mongo/executor/network_interface_mock',
-        '$BUILD_DIR/mongo/executor/network_test_env',
-        '$BUILD_DIR/mongo/executor/thread_pool_task_executor_test_fixture',
-        '$BUILD_DIR/mongo/unittest/unittest',
+        '$BUILD_DIR/monger/client/remote_command_targeter_mock',
+        '$BUILD_DIR/monger/executor/network_interface_mock',
+        '$BUILD_DIR/monger/executor/network_test_env',
+        '$BUILD_DIR/monger/executor/thread_pool_task_executor_test_fixture',
+        '$BUILD_DIR/monger/unittest/unittest',
     ],
 )
 
@@ -217,32 +217,32 @@ env.Library(
         'sharding_router_test_fixture.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/query/collation/collator_factory_mock',
-        '$BUILD_DIR/mongo/db/service_context_test_fixture',
-        '$BUILD_DIR/mongo/executor/task_executor_pool',
-        '$BUILD_DIR/mongo/s/catalog/dist_lock_manager_mock',
-        '$BUILD_DIR/mongo/s/catalog/sharding_catalog_client_impl',
-        '$BUILD_DIR/mongo/s/coreshard',
-        '$BUILD_DIR/mongo/transport/transport_layer_mock',
-        '$BUILD_DIR/mongo/util/clock_source_mock',
+        '$BUILD_DIR/monger/db/query/collation/collator_factory_mock',
+        '$BUILD_DIR/monger/db/service_context_test_fixture',
+        '$BUILD_DIR/monger/executor/task_executor_pool',
+        '$BUILD_DIR/monger/s/catalog/dist_lock_manager_mock',
+        '$BUILD_DIR/monger/s/catalog/sharding_catalog_client_impl',
+        '$BUILD_DIR/monger/s/coreshard',
+        '$BUILD_DIR/monger/transport/transport_layer_mock',
+        '$BUILD_DIR/monger/util/clock_source_mock',
         'committed_optime_metadata_hook',
-        'sharding_egress_metadata_hook_for_mongos',
+        'sharding_egress_metadata_hook_for_mongers',
         'sharding_task_executor',
         'sharding_test_fixture_common',
     ],
 )
 
 env.Library(
-    target='sharding_mongod_test_fixture',
+    target='sharding_mongerd_test_fixture',
     source=[
-        'sharding_mongod_test_fixture.cpp',
+        'sharding_mongerd_test_fixture.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/repl/drop_pending_collection_reaper',
-        '$BUILD_DIR/mongo/db/repl/replmocks',
-        '$BUILD_DIR/mongo/db/s/op_observer_sharding_impl',
-        '$BUILD_DIR/mongo/db/s/sharding_runtime_d',
-        '$BUILD_DIR/mongo/db/service_context_d_test_fixture',
+        '$BUILD_DIR/monger/db/repl/drop_pending_collection_reaper',
+        '$BUILD_DIR/monger/db/repl/replmocks',
+        '$BUILD_DIR/monger/db/s/op_observer_sharding_impl',
+        '$BUILD_DIR/monger/db/s/sharding_runtime_d',
+        '$BUILD_DIR/monger/db/service_context_d_test_fixture',
         'sharding_test_fixture_common',
     ],
 )
@@ -253,9 +253,9 @@ env.Library(
         'shard_server_test_fixture.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/s/catalog/dist_lock_catalog_mock',
-        '$BUILD_DIR/mongo/s/catalog/dist_lock_manager_mock',
-        'sharding_mongod_test_fixture',
+        '$BUILD_DIR/monger/s/catalog/dist_lock_catalog_mock',
+        '$BUILD_DIR/monger/s/catalog/dist_lock_manager_mock',
+        'sharding_mongerd_test_fixture',
     ],
 )
 
@@ -265,8 +265,8 @@ env.Library(
         'config_server_test_fixture.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/s/sharding_catalog_manager',
-        'sharding_mongod_test_fixture',
+        '$BUILD_DIR/monger/db/s/sharding_catalog_manager',
+        'sharding_mongerd_test_fixture',
     ],
 )
 
@@ -276,17 +276,17 @@ env.Library(
         'sharding_task_executor.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/commands/test_commands_enabled',
-        '$BUILD_DIR/mongo/executor/thread_pool_task_executor',
-        '$BUILD_DIR/mongo/s/client/sharding_client',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/commands/test_commands_enabled',
+        '$BUILD_DIR/monger/executor/thread_pool_task_executor',
+        '$BUILD_DIR/monger/s/client/sharding_client',
         'cluster_last_error_info',
         'sharding_router_api',
     ],
 )
 
 
-# This library contains sharding functionality used by both mongod and mongos
+# This library contains sharding functionality used by both mongerd and mongers
 env.Library(
     target='grid',
     source=[
@@ -297,15 +297,15 @@ env.Library(
         'grid.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/client/clientdriver_network',
-        '$BUILD_DIR/mongo/db/logical_time_metadata_hook',
+        '$BUILD_DIR/monger/client/clientdriver_network',
+        '$BUILD_DIR/monger/db/logical_time_metadata_hook',
         'client/shard_interface',
         'query/cluster_cursor_manager',
         'sharding_routing_table',
     ],
 )
 
-# This library contains sharding functionality used by both mongod and mongos
+# This library contains sharding functionality used by both mongerd and mongers
 env.Library(
     target='coreshard',
     source=[
@@ -317,7 +317,7 @@ env.Library(
         'sharding_egress_metadata_hook.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/util/concurrency/thread_pool',
+        '$BUILD_DIR/monger/util/concurrency/thread_pool',
         'grid',
     ],
 )
@@ -329,7 +329,7 @@ env.Benchmark(
     ],
     LIBDEPS=[
         'sharding_routing_table',
-        '$BUILD_DIR/mongo/db/s/sharding_api_d',
+        '$BUILD_DIR/monger/db/s/sharding_api_d',
     ],
 )
 
@@ -339,7 +339,7 @@ env.Library(
         'chunk_writes_tracker.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -349,8 +349,8 @@ env.Library(
         'catalog_cache_test_fixture.cpp',
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/db/auth/authmocks",
-        '$BUILD_DIR/mongo/db/query/query_test_service_context',
+        "$BUILD_DIR/monger/db/auth/authmocks",
+        '$BUILD_DIR/monger/db/query/query_test_service_context',
         'coreshard',
         'sharding_router_test_fixture',
     ]
@@ -362,18 +362,18 @@ env.Library(
         'cluster_last_error_info.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/client/connection_string',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/client/connection_string',
     ]
 )
 
 env.Library(
-    target='sharding_egress_metadata_hook_for_mongos',
+    target='sharding_egress_metadata_hook_for_mongers',
     source=[
-        'sharding_egress_metadata_hook_for_mongos.cpp'
+        'sharding_egress_metadata_hook_for_mongers.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/rpc/metadata',
+        '$BUILD_DIR/monger/rpc/metadata',
         'cluster_last_error_info',
         'coreshard',
     ]
@@ -385,18 +385,18 @@ env.Library(
         'committed_optime_metadata_hook.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/rpc/metadata',
+        '$BUILD_DIR/monger/rpc/metadata',
         'coreshard',
     ]
 )
 
 env.Library(
-    target='is_mongos',
+    target='is_mongers',
     source=[
-        'is_mongos.cpp',
+        'is_mongers.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/server_options_core',
+        '$BUILD_DIR/monger/db/server_options_core',
     ],
 )
 
@@ -412,7 +412,7 @@ env.CppUnitTest(
         'catalog/type_database_test.cpp',
         'catalog/type_lockpings_test.cpp',
         'catalog/type_locks_test.cpp',
-        'catalog/type_mongos_test.cpp',
+        'catalog/type_mongers_test.cpp',
         'catalog/type_shard_collection_test.cpp',
         'catalog/type_shard_test.cpp',
         'catalog/type_tags_test.cpp',
@@ -443,12 +443,12 @@ env.CppUnitTest(
         'transaction_router_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/auth/authmocks',
-        '$BUILD_DIR/mongo/db/query/query_test_service_context',
-        '$BUILD_DIR/mongo/db/service_context_test_fixture',
-        '$BUILD_DIR/mongo/dbtests/mocklib',
-        '$BUILD_DIR/mongo/s/catalog/sharding_catalog_client_mock',
-        '$BUILD_DIR/mongo/util/net/network',
+        '$BUILD_DIR/monger/db/auth/authmocks',
+        '$BUILD_DIR/monger/db/query/query_test_service_context',
+        '$BUILD_DIR/monger/db/service_context_test_fixture',
+        '$BUILD_DIR/monger/dbtests/mocklib',
+        '$BUILD_DIR/monger/s/catalog/sharding_catalog_client_mock',
+        '$BUILD_DIR/monger/util/net/network',
         'catalog_cache_test_fixture',
         'chunk_writes_tracker',
         'cluster_last_error_info',

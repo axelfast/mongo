@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,61 +27,61 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kWrite
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kWrite
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/transaction_error.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/curop_metrics.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/update_stage.h"
-#include "mongo/db/introspect.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/ops/delete_request.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/ops/parsed_delete.h"
-#include "mongo/db/ops/parsed_update.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/ops/write_ops_exec.h"
-#include "mongo/db/ops/write_ops_gen.h"
-#include "mongo/db/ops/write_ops_retryability.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/retryable_writes_stats.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/operation_sharding_state.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/db/stats/server_write_concern_metrics.h"
-#include "mongo/db/stats/top.h"
-#include "mongo/db/storage/duplicate_key_error_info.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/cannot_implicitly_create_collection_info.h"
-#include "mongo/s/would_change_owning_shard_exception.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/log_and_backoff.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/transaction_error.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/commands.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/curop_metrics.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/update_stage.h"
+#include "monger/db/introspect.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/ops/delete_request.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/ops/parsed_delete.h"
+#include "monger/db/ops/parsed_update.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/ops/write_ops_exec.h"
+#include "monger/db/ops/write_ops_gen.h"
+#include "monger/db/ops/write_ops_retryability.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/retryable_writes_stats.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/operation_sharding_state.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/stats/counters.h"
+#include "monger/db/stats/server_write_concern_metrics.h"
+#include "monger/db/stats/top.h"
+#include "monger/db/storage/duplicate_key_error_info.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/write_concern.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/cannot_implicitly_create_collection_info.h"
+#include "monger/s/would_change_owning_shard_exception.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/log_and_backoff.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 // Convention in this file: generic helpers go in the anonymous namespace. Helpers that are for a
 // single type of operation are static functions defined above their caller.
@@ -241,7 +241,7 @@ bool handleError(OperationContext* opCtx,
     }
 
     if (ErrorCodes::WouldChangeOwningShard == ex.code()) {
-        throw;  // Fail this write so mongos can retry
+        throw;  // Fail this write so mongers can retry
     }
 
     auto txnParticipant = TransactionParticipant::get(opCtx);
@@ -742,7 +742,7 @@ static SingleWriteResult performSingleUpdateOpWithDupKeyRetry(OperationContext* 
                 throw;
             }
 
-            logAndBackoff(::mongo::logger::LogComponent::kWrite,
+            logAndBackoff(::monger::logger::LogComponent::kWrite,
                           logger::LogSeverity::Debug(1),
                           numAttempts,
                           str::stream()
@@ -982,4 +982,4 @@ WriteResult performDeletes(OperationContext* opCtx, const write_ops::Delete& who
     return out;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -1,6 +1,6 @@
 description: "Secondary's host list is not authoritative"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

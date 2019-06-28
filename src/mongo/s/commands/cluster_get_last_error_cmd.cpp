@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_last_error_info.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/multi_statement_transaction_requests_sender.h"
-#include "mongo/s/write_ops/batch_downconvert.h"
-#include "mongo/util/log.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/lasterror.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_last_error_info.h"
+#include "monger/s/grid.h"
+#include "monger/s/multi_statement_transaction_requests_sender.h"
+#include "monger/s/write_ops/batch_downconvert.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::vector;
@@ -221,7 +221,7 @@ public:
                      BSONObjBuilder& result) {
         // Mongos GLE - finicky.
         //
-        // To emulate mongod, we first append any write errors we had, then try to append
+        // To emulate mongerd, we first append any write errors we had, then try to append
         // write concern error if there was no write error.  We need to contact the previous
         // shards regardless to maintain 2.4 behavior.
         //
@@ -240,7 +240,7 @@ public:
         le->disable();
 
 
-        // Write commands always have the error stored in the mongos last error
+        // Write commands always have the error stored in the mongers last error
         bool errorOccurred = false;
         if (le->getNPrev() == 1) {
             errorOccurred = le->appendSelf(result, false);
@@ -303,7 +303,7 @@ public:
             result.append("shardRawGLE", shardRawGLE.obj());
         }
 
-        // Suppress write concern errors if a write error occurred, to match mongod behavior
+        // Suppress write concern errors if a write error occurred, to match mongerd behavior
         if (errorOccurred || numWCErrors == 0) {
             // Still need to return err
             if (!errorOccurred) {
@@ -335,4 +335,4 @@ public:
 } cmdGetLastError;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

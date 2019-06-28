@@ -1,16 +1,16 @@
 // tests gridfs with a sharded fs.chunks collection.
 // @tags: [requires_sharding]
 
-var test = new ShardingTest({shards: 3, mongos: 1, config: 1, verbose: 2, other: {chunkSize: 1}});
+var test = new ShardingTest({shards: 3, mongers: 1, config: 1, verbose: 2, other: {chunkSize: 1}});
 
-var mongos = test.s0;
+var mongers = test.s0;
 
-var filename = "mongod";  // A large file we are guaranteed to have
+var filename = "mongerd";  // A large file we are guaranteed to have
 if (_isWindows())
     filename += ".exe";
 
 function testGridFS(name) {
-    var d = mongos.getDB(name);
+    var d = mongers.getDB(name);
 
     // this function should be called on a clean db
     assert.eq(d.name.files.count(), 0);
@@ -19,14 +19,14 @@ function testGridFS(name) {
     var rawmd5 = md5sumFile(filename);
 
     // upload file (currently calls filemd5 internally)
-    var exitCode = MongoRunner.runMongoTool("mongofiles",
+    var exitCode = MongoRunner.runMongoTool("mongerfiles",
                                             {
-                                              port: mongos.port,
+                                              port: mongers.port,
                                               db: name,
                                             },
                                             "put",
                                             filename);
-    assert.eq(0, exitCode, "mongofiles failed to upload '" + filename + "' into a sharded cluster");
+    assert.eq(0, exitCode, "mongerfiles failed to upload '" + filename + "' into a sharded cluster");
 
     assert.eq(d.fs.files.count(), 1);
     var fileObj = d.fs.files.findOne();

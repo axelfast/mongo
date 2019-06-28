@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -37,18 +37,18 @@
 
 #include <sys/types.h>
 
-namespace mongo {
+namespace monger {
 namespace pal {
 int posix_fadvise(int fd, off_t offset, off_t len, int advice);
 }  // namespace pal
 using pal::posix_fadvise;
-}  // namespace mongo
+}  // namespace monger
 
 #elif defined(POSIX_FADV_DONTNEED)
 
-namespace mongo {
+namespace monger {
 using ::posix_fadvise;
-}  // namespace mongo
+}  // namespace monger
 
 #endif
 

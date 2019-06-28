@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,44 +27,44 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/and_hash.h"
-#include "mongo/db/exec/and_sorted.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/fetch.h"
-#include "mongo/db/exec/index_scan.h"
-#include "mongo/db/exec/limit.h"
-#include "mongo/db/exec/merge_sort.h"
-#include "mongo/db/exec/or.h"
-#include "mongo/db/exec/skip.h"
-#include "mongo/db/exec/sort.h"
-#include "mongo/db/exec/text.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/index/fts_access_method.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/matcher/expression_text_base.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/and_hash.h"
+#include "monger/db/exec/and_sorted.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/fetch.h"
+#include "monger/db/exec/index_scan.h"
+#include "monger/db/exec/limit.h"
+#include "monger/db/exec/merge_sort.h"
+#include "monger/db/exec/or.h"
+#include "monger/db/exec/skip.h"
+#include "monger/db/exec/sort.h"
+#include "monger/db/exec/text.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/index/fts_access_method.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/matcher/expression_text_base.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::string;
@@ -509,4 +509,4 @@ public:
 
 MONGO_REGISTER_TEST_COMMAND(StageDebugCmd);
 
-}  // namespace mongo
+}  // namespace monger

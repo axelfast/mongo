@@ -1,28 +1,28 @@
 #!/bin/bash
 
-# mongod - Startup script for mongod
+# mongerd - Startup script for mongerd
 
 # chkconfig: 35 85 15
 # description: Mongo is a scalable, document-oriented database.
-# processname: mongod
-# config: /etc/mongod.conf
+# processname: mongerd
+# config: /etc/mongerd.conf
 
 . /etc/rc.d/init.d/functions
 
 # NOTE: if you change any OPTIONS here, you get what you pay for:
 # this script assumes all options are in the config file.
-CONFIGFILE="/etc/mongod.conf"
+CONFIGFILE="/etc/mongerd.conf"
 OPTIONS=" -f $CONFIGFILE"
 
-mongod=${MONGOD-/usr/bin/mongod}
+mongerd=${MONGOD-/usr/bin/mongerd}
 
-MONGO_USER=mongod
-MONGO_GROUP=mongod
+MONGO_USER=mongerd
+MONGO_GROUP=mongerd
 
 # All variables set before this point can be overridden by users, by
 # setting them directly in the SYSCONFIG file. Use this to explicitly
 # override these values, at your own risk.
-SYSCONFIG="/etc/sysconfig/mongod"
+SYSCONFIG="/etc/sysconfig/mongerd"
 if [ -f "$SYSCONFIG" ]; then
     . "$SYSCONFIG"
 fi
@@ -37,7 +37,7 @@ else
     NUMACTL=""
 fi
 
-# things from mongod.conf get there by mongod reading it
+# things from mongerd.conf get there by mongerd reading it
 PIDFILEPATH="`awk -F'[:=]' -v IGNORECASE=1 '/^[[:blank:]]*(processManagement\.)?pidfilepath[[:blank:]]*[:=][[:blank:]]*/{print $2}' \"$CONFIGFILE\" | tr -d \"[:blank:]\\"'\" | awk -F'#' '{print $1}'`"
 PIDDIR=`dirname $PIDFILEPATH`
 
@@ -50,13 +50,13 @@ start()
 
   # Make sure the pidfile does not exist
   if [ -f "$PIDFILEPATH" ]; then
-      echo "Error starting mongod. $PIDFILEPATH exists."
+      echo "Error starting mongerd. $PIDFILEPATH exists."
       RETVAL=1
       return
   fi
 
-  # Recommended ulimit values for mongod or mongos
-  # See http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
+  # Recommended ulimit values for mongerd or mongers
+  # See http://docs.mongerdb.org/manual/reference/ulimit/#recommended-settings
   #
   ulimit -f unlimited
   ulimit -t unlimited
@@ -66,20 +66,20 @@ start()
   ulimit -u 64000
   ulimit -l unlimited
 
-  echo -n $"Starting mongod: "
-  daemon --user "$MONGO_USER" --check $mongod "$NUMACTL $mongod $OPTIONS >/dev/null 2>&1"
+  echo -n $"Starting mongerd: "
+  daemon --user "$MONGO_USER" --check $mongerd "$NUMACTL $mongerd $OPTIONS >/dev/null 2>&1"
   RETVAL=$?
   echo
-  [ $RETVAL -eq 0 ] && touch /var/lock/subsys/mongod
+  [ $RETVAL -eq 0 ] && touch /var/lock/subsys/mongerd
 }
 
 stop()
 {
-  echo -n $"Stopping mongod: "
-  mongo_killproc "$PIDFILEPATH" $mongod
+  echo -n $"Stopping mongerd: "
+  monger_killproc "$PIDFILEPATH" $mongerd
   RETVAL=$?
   echo
-  [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/mongod
+  [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/mongerd
 }
 
 restart () {
@@ -92,7 +92,7 @@ restart () {
 # Built-in killproc() (found in /etc/init.d/functions) is on certain versions of Linux
 # where it sleeps for the full $delay seconds if process does not respond fast enough to
 # the initial TERM signal.
-mongo_killproc()
+monger_killproc()
 {
   local pid_file=$1
   local procname=$2
@@ -106,10 +106,10 @@ mongo_killproc()
   fi
 
   # Per the man page the process name should always be the second
-  # field. In our case mongod is wrapped in parens hence the parens in
+  # field. In our case mongerd is wrapped in parens hence the parens in
   # the if condition below.
   local stat_procname=`cat /proc/$pid/stat | cut -d" " -f2`
-  # $procname is the full path to the mongod binary but the process
+  # $procname is the full path to the mongerd binary but the process
   # name will only match the binary's file name.
   local binary_name=`basename $procname`
   if [ "($binary_name)" != "$stat_procname" ]; then
@@ -125,7 +125,7 @@ mongo_killproc()
   #
   # The check flag here can be ignored it doesn't do anything except
   # prevent the daemon function's PID checking from throwing an error.
-  daemon --check "$mongod" --user "$MONGO_USER" "kill -TERM $pid >/dev/null 2>&1"
+  daemon --check "$mongerd" --user "$MONGO_USER" "kill -TERM $pid >/dev/null 2>&1"
   usleep 100000
   local -i x=0
   while [ $x -le $delay ] && checkpid $pid; do
@@ -133,7 +133,7 @@ mongo_killproc()
     x=$(( $x + $duration))
   done
 
-  daemon --check "$mongod" --user "$MONGO_USER" "kill -KILL $pid >/dev/null 2>&1"
+  daemon --check "$mongerd" --user "$MONGO_USER" "kill -KILL $pid >/dev/null 2>&1"
   usleep 100000
 
   checkpid $pid # returns 0 only if the process exists
@@ -156,10 +156,10 @@ case "$1" in
     restart
     ;;
   condrestart)
-    [ -f /var/lock/subsys/mongod ] && restart || :
+    [ -f /var/lock/subsys/mongerd ] && restart || :
     ;;
   status)
-    status $mongod
+    status $mongerd
     RETVAL=$?
     ;;
   *)

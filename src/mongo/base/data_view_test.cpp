@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/base/data_view.h"
+#include "monger/base/data_view.h"
 
 #include <cstring>
 
-#include "mongo/base/data_type_endian.h"
-#include "mongo/platform/endian.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/platform/endian.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 TEST(DataView, ConstDataView) {
     char buf[sizeof(uint32_t) * 3];
@@ -75,4 +75,4 @@ TEST(DataView, DataView) {
     ASSERT_EQUALS(native, dv.read<BigEndian<uint32_t>>(sizeof(uint32_t) * 2));
 }
 
-}  // namespace mongo
+}  // namespace monger

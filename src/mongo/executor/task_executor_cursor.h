@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,18 +32,18 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/cursor_id.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/producer_consumer_queue.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/cursor_id.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/namespace_string.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/task_executor.h"
+#include "monger/util/duration.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/producer_consumer_queue.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 /**
@@ -151,4 +151,4 @@ private:
 };
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

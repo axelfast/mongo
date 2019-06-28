@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/data_builder.h"
-#include "mongo/base/data_type_validated.h"
-#include "mongo/base/init.h"
-#include "mongo/db/client.h"
-#include "mongo/db/ftdc/collector.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/controller.h"
-#include "mongo/db/ftdc/varint.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/data_builder.h"
+#include "monger/base/data_type_validated.h"
+#include "monger/base/init.h"
+#include "monger/db/client.h"
+#include "monger/db/ftdc/collector.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/controller.h"
+#include "monger/db/ftdc/varint.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 // Test integer packing and unpacking
 void TestInt(std::uint64_t i) {
@@ -86,4 +86,4 @@ TEST(FTDCVarIntTest, TestDataBuilder) {
     };
 }
 
-}  // namespace mongo
+}  // namespace monger

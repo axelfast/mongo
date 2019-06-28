@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #include <iosfwd>
 
-#include "mongo/bson/mutable/document.h"
+#include "monger/bson/mutable/document.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 
@@ -136,4 +136,4 @@ std::ostream& operator<<(std::ostream& stream, const UnorderedWrapper_Doc& uw_d)
 std::ostream& operator<<(std::ostream& stream, const UnorderedWrapper_Obj& uw_o);
 
 }  // namespace mutablebson
-}  // namespace mongo
+}  // namespace monger

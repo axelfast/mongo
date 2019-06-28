@@ -12,15 +12,15 @@
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 1}, config: 1});
 
-    const mongosDB = st.s0.getDB("merge_requires_unique_index");
+    const mongersDB = st.s0.getDB("merge_requires_unique_index");
     const foreignDB = st.s0.getDB("merge_requires_unique_index_foreign");
-    const sourceColl = mongosDB.source;
-    let targetColl = mongosDB.target;
+    const sourceColl = mongersDB.source;
+    let targetColl = mongersDB.target;
     sourceColl.drop();
 
     // Enable sharding on the test DB and ensure that shard0 is the primary.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
-    st.ensurePrimaryShard(mongosDB.getName(), st.rs0.getURL());
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
+    st.ensurePrimaryShard(mongersDB.getName(), st.rs0.getURL());
 
     // Enable sharding on the foreign DB, except ensure that shard1 is the primary shard.
     assert.commandWorked(foreignDB.adminCommand({enableSharding: foreignDB.getName()}));
@@ -35,11 +35,11 @@
         targetColl.drop();
         // Shard the target collection, and set the unique flag to ensure that there's a unique
         // index on the shard key.
-        assert.commandWorked(mongosDB.adminCommand(
+        assert.commandWorked(mongersDB.adminCommand(
             {shardCollection: targetColl.getFullName(), key: shardKey, unique: true}));
         assert.commandWorked(
-            mongosDB.adminCommand({split: targetColl.getFullName(), middle: split}));
-        assert.commandWorked(mongosDB.adminCommand(
+            mongersDB.adminCommand({split: targetColl.getFullName(), middle: split}));
+        assert.commandWorked(mongersDB.adminCommand(
             {moveChunk: targetColl.getFullName(), find: split, to: st.rs1.getURL()}));
     }
 
@@ -274,7 +274,7 @@
         targetShardKey = {_id: 1, a: 1, b: 1};
         splitPoint = {_id: 0, a: 0, b: 0};
         sourceColl.drop();
-        st.shardColl(sourceColl.getName(), {a: 1}, {a: 0}, {a: 1}, mongosDB.getName());
+        st.shardColl(sourceColl.getName(), {a: 1}, {a: 0}, {a: 1}, mongersDB.getName());
         assert.commandWorked(sourceColl.insert([{a: 0, b: 0}, {a: 1, b: 1}]));
         runOnFieldsTests(targetShardKey, splitPoint);
 
@@ -285,7 +285,7 @@
     }
 
     // First test $merge to the same database as the source.
-    testAgainstDB(mongosDB);
+    testAgainstDB(mongersDB);
 
     // Then test against a foreign database, with the same expected behavior.
     testAgainstDB(foreignDB);

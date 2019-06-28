@@ -6,7 +6,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
 
     var shellVersion = version;
 
-    // Record the exit codes of mongod and mongos processes that crashed during startup keyed by
+    // Record the exit codes of mongerd and mongers processes that crashed during startup keyed by
     // port. This map is cleared when MongoRunner._startWithArgs and MongoRunner.stopMongod/s are
     // called.
     var serverExitCodeMap = {};
@@ -75,9 +75,9 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
     MongoRunner.dataDir = "/data/db";
     MongoRunner.dataPath = "/data/db/";
 
-    MongoRunner.mongodPath = "mongod";
-    MongoRunner.mongosPath = "mongos";
-    MongoRunner.mongoShellPath = "mongo";
+    MongoRunner.mongerdPath = "mongerd";
+    MongoRunner.mongersPath = "mongers";
+    MongoRunner.mongerShellPath = "monger";
 
     MongoRunner.VersionSub = function(pattern, version) {
         this.pattern = pattern;
@@ -436,12 +436,12 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
 
     MongoRunner.savedOptions = {};
 
-    MongoRunner.mongoOptions = function(opts) {
+    MongoRunner.mongerOptions = function(opts) {
         // Don't remember waitForConnect
         var waitForConnect = opts.waitForConnect;
         delete opts.waitForConnect;
 
-        // If we're a mongo object
+        // If we're a monger object
         if (opts.getDB) {
             opts = {restart: opts.runId};
         }
@@ -491,7 +491,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         if (opts.hasOwnProperty('binVersion')) {
             if (opts.binVersion instanceof MongoRunner.versionIterator.iterator) {
                 // Advance the version iterator so that subsequent calls to
-                // MongoRunner.mongoOptions() use the next version in the list.
+                // MongoRunner.mongerOptions() use the next version in the list.
                 const iterator = opts.binVersion;
                 opts.binVersion = iterator.current();
                 iterator.advance();
@@ -554,7 +554,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         return false;
     };
 
-    // Removes a setParameter parameter from mongods running a version that won't recognize them.
+    // Removes a setParameter parameter from mongerds running a version that won't recognize them.
     var _removeSetParameterIfBeforeVersion = function(opts, parameterName, requiredVersion) {
         var versionCompatible = (opts.binVersion === "" || opts.binVersion === undefined ||
                                  _isMongodVersionEqualOrAfter(requiredVersion, opts.binVersion));
@@ -562,7 +562,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             opts.setParameter[parameterName] != undefined) {
             print("Removing '" + parameterName + "' setParameter with value " +
                   opts.setParameter[parameterName] +
-                  " because it isn't compatibile with mongod running version " + opts.binVersion);
+                  " because it isn't compatibile with mongerd running version " + opts.binVersion);
             delete opts.setParameter[parameterName];
         }
     };
@@ -581,11 +581,11 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
      *     oplogSize
      *   }
      */
-    MongoRunner.mongodOptions = function(opts) {
+    MongoRunner.mongerdOptions = function(opts) {
 
-        opts = MongoRunner.mongoOptions(opts);
+        opts = MongoRunner.mongerOptions(opts);
 
-        opts.dbpath = MongoRunner.toRealDir(opts.dbpath || "$dataDir/mongod-$port", opts.pathOpts);
+        opts.dbpath = MongoRunner.toRealDir(opts.dbpath || "$dataDir/mongerd-$port", opts.pathOpts);
 
         opts.pathOpts = Object.merge(opts.pathOpts, {dbpath: opts.dbpath});
 
@@ -595,7 +595,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         _removeSetParameterIfBeforeVersion(opts, "migrationLockAcquisitionMaxWaitMS", "4.1.7");
 
         if (!opts.logFile && opts.useLogFiles) {
-            opts.logFile = opts.dbpath + "/mongod.log";
+            opts.logFile = opts.dbpath + "/mongerd.log";
         } else if (opts.logFile) {
             opts.logFile = MongoRunner.toRealFile(opts.logFile, opts.pathOpts);
         }
@@ -659,8 +659,8 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         return opts;
     };
 
-    MongoRunner.mongosOptions = function(opts) {
-        opts = MongoRunner.mongoOptions(opts);
+    MongoRunner.mongersOptions = function(opts) {
+        opts = MongoRunner.mongerOptions(opts);
 
         // Normalize configdb option to be host string if currently a host
         if (opts.configdb && opts.configdb.getDB) {
@@ -672,7 +672,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
 
         if (!opts.logFile && opts.useLogFiles) {
             opts.logFile =
-                MongoRunner.toRealFile("$dataDir/mongos-$configdb-$port.log", opts.pathOpts);
+                MongoRunner.toRealFile("$dataDir/mongers-$configdb-$port.log", opts.pathOpts);
         } else if (opts.logFile) {
             opts.logFile = MongoRunner.toRealFile(opts.logFile, opts.pathOpts);
         }
@@ -698,11 +698,11 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             opts.auditDestination = testOptions.auditDestination;
         }
 
-        if (!opts.hasOwnProperty('binVersion') && testOptions.mongosBinVersion) {
-            opts.binVersion = MongoRunner.getBinVersionFor(testOptions.mongosBinVersion);
+        if (!opts.hasOwnProperty('binVersion') && testOptions.mongersBinVersion) {
+            opts.binVersion = MongoRunner.getBinVersionFor(testOptions.mongersBinVersion);
         }
 
-        // If the mongos is being restarted with a newer version, make sure we remove any options
+        // If the mongers is being restarted with a newer version, make sure we remove any options
         // that no longer exist in the newer version.
         if (opts.restart && MongoRunner.areBinVersionsTheSame('latest', opts.binVersion)) {
             delete opts.noAutoSplit;
@@ -712,7 +712,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
     };
 
     /**
-     * Starts a mongod instance.
+     * Starts a mongerd instance.
      *
      * @param {Object} opts
      *
@@ -725,10 +725,10 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
      *     noCleanData {boolean}: Do not clean files (cleanData takes priority).
      *     binVersion {string}: version for binary (also see MongoRunner.binVersionSubs).
      *
-     *     @see MongoRunner.mongodOptions for other options
+     *     @see MongoRunner.mongerdOptions for other options
      *   }
      *
-     * @return {Mongo} connection object to the started mongod instance.
+     * @return {Mongo} connection object to the started mongerd instance.
      *
      * @see MongoRunner.arrOptions
      */
@@ -742,7 +742,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         var fullOptions = opts;
 
         if (isObject(opts)) {
-            opts = MongoRunner.mongodOptions(opts);
+            opts = MongoRunner.mongerdOptions(opts);
             fullOptions = opts;
 
             if (opts.useHostName != undefined) {
@@ -757,31 +757,31 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             waitForConnect = opts.waitForConnect;
 
             if (opts.forceLock)
-                removeFile(opts.dbpath + "/mongod.lock");
+                removeFile(opts.dbpath + "/mongerd.lock");
             if ((opts.cleanData || opts.startClean) || (!opts.restart && !opts.noCleanData)) {
                 print("Resetting db path '" + opts.dbpath + "'");
                 resetDbpath(opts.dbpath);
             }
 
-            var mongodProgram = MongoRunner.mongodPath;
-            opts = MongoRunner.arrOptions(mongodProgram, opts);
+            var mongerdProgram = MongoRunner.mongerdPath;
+            opts = MongoRunner.arrOptions(mongerdProgram, opts);
         }
 
-        var mongod = MongoRunner._startWithArgs(opts, env, waitForConnect);
-        if (!mongod) {
+        var mongerd = MongoRunner._startWithArgs(opts, env, waitForConnect);
+        if (!mongerd) {
             return null;
         }
 
-        mongod.commandLine = MongoRunner.arrToOpts(opts);
-        mongod.name = (useHostName ? getHostName() : "localhost") + ":" + mongod.commandLine.port;
-        mongod.host = mongod.name;
-        mongod.port = parseInt(mongod.commandLine.port);
-        mongod.runId = runId || ObjectId();
-        mongod.dbpath = fullOptions.dbpath;
-        mongod.savedOptions = MongoRunner.savedOptions[mongod.runId];
-        mongod.fullOptions = fullOptions;
+        mongerd.commandLine = MongoRunner.arrToOpts(opts);
+        mongerd.name = (useHostName ? getHostName() : "localhost") + ":" + mongerd.commandLine.port;
+        mongerd.host = mongerd.name;
+        mongerd.port = parseInt(mongerd.commandLine.port);
+        mongerd.runId = runId || ObjectId();
+        mongerd.dbpath = fullOptions.dbpath;
+        mongerd.savedOptions = MongoRunner.savedOptions[mongerd.runId];
+        mongerd.fullOptions = fullOptions;
 
-        return mongod;
+        return mongerd;
     };
 
     MongoRunner.runMongos = function(opts) {
@@ -794,31 +794,31 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         var fullOptions = opts;
 
         if (isObject(opts)) {
-            opts = MongoRunner.mongosOptions(opts);
+            opts = MongoRunner.mongersOptions(opts);
             fullOptions = opts;
 
             useHostName = opts.useHostName || opts.useHostname;
             runId = opts.runId;
             waitForConnect = opts.waitForConnect;
             env = opts.env;
-            var mongosProgram = MongoRunner.mongosPath;
-            opts = MongoRunner.arrOptions(mongosProgram, opts);
+            var mongersProgram = MongoRunner.mongersPath;
+            opts = MongoRunner.arrOptions(mongersProgram, opts);
         }
 
-        var mongos = MongoRunner._startWithArgs(opts, env, waitForConnect);
-        if (!mongos) {
+        var mongers = MongoRunner._startWithArgs(opts, env, waitForConnect);
+        if (!mongers) {
             return null;
         }
 
-        mongos.commandLine = MongoRunner.arrToOpts(opts);
-        mongos.name = (useHostName ? getHostName() : "localhost") + ":" + mongos.commandLine.port;
-        mongos.host = mongos.name;
-        mongos.port = parseInt(mongos.commandLine.port);
-        mongos.runId = runId || ObjectId();
-        mongos.savedOptions = MongoRunner.savedOptions[mongos.runId];
-        mongos.fullOptions = fullOptions;
+        mongers.commandLine = MongoRunner.arrToOpts(opts);
+        mongers.name = (useHostName ? getHostName() : "localhost") + ":" + mongers.commandLine.port;
+        mongers.host = mongers.name;
+        mongers.port = parseInt(mongers.commandLine.port);
+        mongers.runId = runId || ObjectId();
+        mongers.savedOptions = MongoRunner.savedOptions[mongers.runId];
+        mongers.fullOptions = fullOptions;
 
-        return mongos;
+        return mongers;
     };
 
     MongoRunner.StopError = function(returnCode) {
@@ -859,7 +859,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
     MongoRunner.validateCollectionsCallback = function(port) {};
 
     /**
-     * Kills a mongod process.
+     * Kills a mongerd process.
      *
      * @param {Mongo} conn the connection object to the process to kill
      * @param {number} signal The signal number to use for killing
@@ -873,7 +873,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
      *      allowedExitCode: <int>
      *    }
      *
-     * Note: The auth option is required in a authenticated mongod running in Windows since
+     * Note: The auth option is required in a authenticated mongerd running in Windows since
      *  it uses the shutdown command, which requires admin credentials.
      */
     MongoRunner.stopMongod = function(conn, signal, opts) {
@@ -906,9 +906,9 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             returnCode = serverExitCodeMap[port];
             delete serverExitCodeMap[port];
         } else {
-            // Invoke callback to validate collections and indexes before shutting down mongod.
+            // Invoke callback to validate collections and indexes before shutting down mongerd.
             // We skip calling the callback function when the expected return code of
-            // the mongod process is non-zero since it's likely the process has already exited.
+            // the mongerd process is non-zero since it's likely the process has already exited.
 
             var skipValidation = false;
             if (opts.skipValidation) {
@@ -934,7 +934,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
     MongoRunner.stopMongos = MongoRunner.stopMongod;
 
     /**
-     * Starts an instance of the specified mongo tool
+     * Starts an instance of the specified monger tool
      *
      * @param {String} binaryName - The name of the tool to run.
      * @param {Object} [opts={}] - Options of the form --flag or --key=value to pass to the tool.
@@ -961,13 +961,13 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         }
         opts.binVersion = MongoRunner.getBinVersionFor(opts.binVersion);
 
-        // Recent versions of the mongo tools support a --dialTimeout flag to set for how
-        // long they retry connecting to a mongod or mongos process. We have them retry
+        // Recent versions of the monger tools support a --dialTimeout flag to set for how
+        // long they retry connecting to a mongerd or mongers process. We have them retry
         // connecting for up to 30 seconds to handle when the tests are run on a
         // resource-constrained host machine.
         //
         // The bsondump tool doesn't accept the --dialTimeout flag because it doesn't connect to a
-        // mongod or mongos process.
+        // mongerd or mongers process.
         if (!opts.hasOwnProperty('dialTimeout') && binaryName !== 'bsondump' &&
             _toolVersionSupportsDialTimeout(opts.binVersion)) {
             opts['dialTimeout'] = '30';
@@ -1020,12 +1020,12 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         return dir;
     };
 
-    // Start a mongod instance and return a 'Mongo' object connected to it.
-    // This function's arguments are passed as command line arguments to mongod.
+    // Start a mongerd instance and return a 'Mongo' object connected to it.
+    // This function's arguments are passed as command line arguments to mongerd.
     // The specified 'dbpath' is cleared if it exists, created if not.
     // var conn = _startMongodEmpty("--port", 30000, "--dbpath", "asdf");
     var _startMongodEmpty = function() {
-        var args = createMongoArgs("mongod", Array.from(arguments));
+        var args = createMongoArgs("mongerd", Array.from(arguments));
 
         var dbpath = _parsePath.apply(null, args);
         resetDbpath(dbpath);
@@ -1058,8 +1058,8 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             });
         }
 
-        // programName includes the version, e.g., mongod-3.2.
-        // baseProgramName is the program name without any version information, e.g., mongod.
+        // programName includes the version, e.g., mongerd-3.2.
+        // baseProgramName is the program name without any version information, e.g., mongerd.
         let programName = argArray[0];
 
         let [baseProgramName, programVersion] = programName.split("-");
@@ -1069,7 +1069,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             programMajorMinorVersion = parseInt(major) * 100 + parseInt(minor);
         }
 
-        if (baseProgramName === 'mongod' || baseProgramName === 'mongos') {
+        if (baseProgramName === 'mongerd' || baseProgramName === 'mongers') {
             if (jsTest.options().enableTestCommands) {
                 argArray.push(...['--setParameter', "enableTestCommands=1"]);
             }
@@ -1102,10 +1102,10 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                 argArray.push(...['--setParameter', "disableLogicalSessionCacheRefresh=true"]);
             }
 
-            // Since options may not be backward compatible, mongos options are not
-            // set on older versions, e.g., mongos-3.0.
-            if (programName.endsWith('mongos')) {
-                // apply setParameters for mongos
+            // Since options may not be backward compatible, mongers options are not
+            // set on older versions, e.g., mongers-3.0.
+            if (programName.endsWith('mongers')) {
+                // apply setParameters for mongers
                 if (jsTest.options().setParametersMongos) {
                     let params = jsTest.options().setParametersMongos;
                     for (let paramName of Object.keys(params)) {
@@ -1129,12 +1129,12 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                         argArray.push(...['--setParameter', setParamStr]);
                     }
                 }
-            } else if (baseProgramName === 'mongod') {
+            } else if (baseProgramName === 'mongerd') {
                 if (jsTestOptions().roleGraphInvalidationIsFatal) {
                     argArray.push(...['--setParameter', "roleGraphInvalidationIsFatal=true"]);
                 }
 
-                // Set storageEngine for mongod. There was no storageEngine parameter before 3.0.
+                // Set storageEngine for mongerd. There was no storageEngine parameter before 3.0.
                 if (jsTest.options().storageEngine &&
                     (!programVersion || programMajorMinorVersion >= 300)) {
                     if (!argArrayContains("--storageEngine")) {
@@ -1142,7 +1142,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                     }
                 }
 
-                // New mongod-specific options in 4.0.x
+                // New mongerd-specific options in 4.0.x
                 if (!programMajorMinorVersion || programMajorMinorVersion >= 400) {
                     if (jsTest.options().transactionLifetimeLimitSeconds !== undefined) {
                         if (!argArrayContainsSetParameterValue(
@@ -1162,9 +1162,9 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                     }
                 }
 
-                // Since options may not be backward compatible, mongod options are not
-                // set on older versions, e.g., mongod-3.0.
-                if (programName.endsWith('mongod')) {
+                // Since options may not be backward compatible, mongerd options are not
+                // set on older versions, e.g., mongerd-3.0.
+                if (programName.endsWith('mongerd')) {
                     if (jsTest.options().storageEngine === "wiredTiger" ||
                         !jsTest.options().storageEngine) {
                         if (jsTest.options().enableMajorityReadConcern !== undefined &&
@@ -1205,7 +1205,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                                 ...["--inMemorySizeGB", jsTest.options().storageEngineCacheSizeGB]);
                         }
                     }
-                    // apply setParameters for mongod. The 'setParameters' field should be given as
+                    // apply setParameters for mongerd. The 'setParameters' field should be given as
                     // a plain JavaScript object, where each key is a parameter name and the value
                     // is the value to set for that parameter.
                     if (jsTest.options().setParameters) {
@@ -1240,14 +1240,14 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
     }
 
     /**
-     * Start a mongo process with a particular argument array.
+     * Start a monger process with a particular argument array.
      * If we aren't waiting for connect, return {pid: <pid>}.
      * If we are waiting for connect:
      *     returns connection to process on success;
      *     otherwise returns null if we fail to connect.
      */
     MongoRunner._startWithArgs = function(argArray, env, waitForConnect) {
-        // TODO: Make there only be one codepath for starting mongo processes
+        // TODO: Make there only be one codepath for starting monger processes
 
         argArray = appendSetParameterArgs(argArray);
         var port = _parsePort.apply(null, argArray);
@@ -1275,14 +1275,14 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             } catch (e) {
                 var res = checkProgram(pid);
                 if (!res.alive) {
-                    print("Could not start mongo program at " + port +
+                    print("Could not start monger program at " + port +
                           ", process ended with exit code: " + res.exitCode);
                     serverExitCodeMap[port] = res.exitCode;
                     return true;
                 }
             }
             return false;
-        }, "unable to connect to mongo program on port " + port, 600 * 1000);
+        }, "unable to connect to monger program on port " + port, 600 * 1000);
 
         return conn;
     };
@@ -1290,8 +1290,8 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
     /**
      * DEPRECATED
      *
-     * Start mongod or mongos and return a Mongo() object connected to there.
-     * This function's first argument is "mongod" or "mongos" program name, \
+     * Start mongerd or mongers and return a Mongo() object connected to there.
+     * This function's first argument is "mongerd" or "mongers" program name, \
      * and subsequent arguments to this function are passed as
      * command line arguments to the program.
      */
@@ -1314,7 +1314,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
             } catch (e) {
                 var res = checkProgram(pid);
                 if (!res.alive) {
-                    print("Could not start mongo program at " + port +
+                    print("Could not start monger program at " + port +
                           ", process ended with exit code: " + res.exitCode);
                     // Break out
                     m = null;
@@ -1322,7 +1322,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                 }
             }
             return false;
-        }, "unable to connect to mongo program on port " + port, 600 * 1000);
+        }, "unable to connect to monger program on port " + port, 600 * 1000);
 
         return m;
     };
@@ -1333,7 +1333,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         var progName = args[0];
 
         // The bsondump tool doesn't support these auth related command line flags.
-        if (jsTestOptions().auth && progName != 'mongod' && progName != 'bsondump') {
+        if (jsTestOptions().auth && progName != 'mongerd' && progName != 'bsondump') {
             args = args.slice(1);
             args.unshift(progName,
                          '-u',
@@ -1343,7 +1343,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                          '--authenticationDatabase=admin');
         }
 
-        if (progName == 'mongo' && !_useWriteCommandsDefault()) {
+        if (progName == 'monger' && !_useWriteCommandsDefault()) {
             progName = args[0];
             args = args.slice(1);
             args.unshift(progName, '--useLegacyWriteOps');
@@ -1352,7 +1352,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
         return _runMongoProgram.apply(null, args);
     };
 
-    // Start a mongo program instance.  This function's first argument is the
+    // Start a monger program instance.  This function's first argument is the
     // program name, and subsequent arguments to this function are passed as
     // command line arguments to the program.  Returns pid of the spawned program.
     startMongoProgramNoConnect = function() {
@@ -1370,7 +1370,7 @@ var MongoRunner, _startMongod, startMongoProgram, runMongoProgram, startMongoPro
                          '--authenticationDatabase=admin');
         }
 
-        if (progName == 'mongo' && !_useWriteCommandsDefault()) {
+        if (progName == 'monger' && !_useWriteCommandsDefault()) {
             args = args.slice(1);
             args.unshift(progName, '--useLegacyWriteOps');
         }

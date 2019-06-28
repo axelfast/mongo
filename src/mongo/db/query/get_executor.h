@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,21 +29,21 @@
 
 #pragma once
 
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/ops/delete_request.h"
-#include "mongo/db/ops/parsed_delete.h"
-#include "mongo/db/ops/parsed_update.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/count_command_gen.h"
-#include "mongo/db/query/parsed_distinct.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/query/query_planner_params.h"
-#include "mongo/db/query/query_settings.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/db/update/update_driver.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/ops/delete_request.h"
+#include "monger/db/ops/parsed_delete.h"
+#include "monger/db/ops/parsed_update.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/count_command_gen.h"
+#include "monger/db/query/parsed_distinct.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/query/query_planner_params.h"
+#include "monger/db/query/query_settings.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/db/update/update_driver.h"
 
-namespace mongo {
+namespace monger {
 
 class Collection;
 class CountRequest;
@@ -256,4 +256,4 @@ StatusWith<std::unique_ptr<PlanExecutor, PlanExecutor::Deleter>> getExecutorDele
  */
 StatusWith<std::unique_ptr<PlanExecutor, PlanExecutor::Deleter>> getExecutorUpdate(
     OperationContext* opCtx, OpDebug* opDebug, Collection* collection, ParsedUpdate* parsedUpdate);
-}  // namespace mongo
+}  // namespace monger

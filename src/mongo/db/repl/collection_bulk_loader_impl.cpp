@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/collection_bulk_loader_impl.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/collection_bulk_loader_impl.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 CollectionBulkLoaderImpl::CollectionBulkLoaderImpl(ServiceContext::UniqueClient&& client,
@@ -352,4 +352,4 @@ BSONObj CollectionBulkLoaderImpl::toBSON() const {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

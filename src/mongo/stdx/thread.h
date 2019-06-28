@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,7 +35,7 @@
 #include <thread>
 #include <type_traits>
 
-namespace mongo {
+namespace monger {
 namespace stdx {
 
 /**
@@ -48,7 +48,7 @@ namespace stdx {
  * the top of the stack).
  *
  * We're putting this in stdx, rather than having it as some kind of
- * mongo::Thread, because the signature and use of the type is otherwise
+ * monger::Thread, because the signature and use of the type is otherwise
  * completely identical.  Rather than migrate all callers, it was deemed
  * simpler to make the in place adjustment and retain it in stdx.
  *
@@ -142,4 +142,4 @@ void sleep_until(const std::chrono::time_point<Clock, Duration>& sleep_time) {  
 }  // namespace this_thread
 
 }  // namespace stdx
-}  // namespace mongo
+}  // namespace monger

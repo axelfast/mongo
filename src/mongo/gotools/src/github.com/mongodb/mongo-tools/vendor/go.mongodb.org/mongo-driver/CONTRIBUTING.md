@@ -7,8 +7,8 @@ below.
 
 ## Bug Fixes and New Features
 
-Before starting to write code, look for existing [tickets](https://jira.mongodb.org/browse/GODRIVER) or
-[create one](https://jira.mongodb.org/secure/CreateIssue!default.jspa) for your bug, issue, or feature request. This helps the community
+Before starting to write code, look for existing [tickets](https://jira.mongerdb.org/browse/GODRIVER) or
+[create one](https://jira.mongerdb.org/secure/CreateIssue!default.jspa) for your bug, issue, or feature request. This helps the community
 avoid working on something that might not be of interest or which has already been addressed.
 
 ## Pull Requests & Patches
@@ -22,7 +22,7 @@ Patches should generally be made against the master (default) branch and include
 Code should compile and tests should pass under all go versions which the driver currently supports.  Currently the driver
 supports a minimum version of go 1.7. Please ensure the following tools have been run on the code: gofmt, golint, errcheck,
 go test (with coverage and with the race detector), and go vet. For convenience, you can run 'make' to run all these tools.
-**By default, running the tests requires that you have a mongod server running on localhost, listening on the default port.**
+**By default, running the tests requires that you have a mongerd server running on localhost, listening on the default port.**
 At minimum, please test against the latest release version of the MongoDB server.
 
 If any tests do not pass, or relevant tests are not included, the patch will not be considered.
@@ -33,5 +33,5 @@ e.g. GODRIVER-123. For the patch commit message itself, please follow the [How t
 ## Talk To Us
 
 If you want to work on the driver, write documentation, or have questions/complaints, please reach out to use either via
-the [mongo-go-driver Google Group](https://groups.google.com/forum/#!forum/mongodb-go-driver) or by creating a Question
-issue at (https://jira.mongodb.org/secure/CreateIssue!default.jspa).
+the [monger-go-driver Google Group](https://groups.google.com/forum/#!forum/mongerdb-go-driver) or by creating a Question
+issue at (https://jira.mongerdb.org/secure/CreateIssue!default.jspa).

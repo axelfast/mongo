@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/cursor.h"
+#include "monger/scripting/mozjs/cursor.h"
 
-#include "mongo/scripting/mozjs/bson.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/internedstring.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/scripting/mozjs/wrapconstrainedmethod.h"
+#include "monger/scripting/mozjs/bson.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/internedstring.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/scripting/mozjs/wrapconstrainedmethod.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const JSFunctionSpec CursorInfo::methods[7] = {
@@ -140,4 +140,4 @@ void CursorInfo::Functions::isClosed::call(JSContext* cx, JS::CallArgs args) {
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

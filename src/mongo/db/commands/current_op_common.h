@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 
 #pragma once
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/db/commands.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/query/cursor_response.h"
+#include "monger/db/commands.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/query/cursor_response.h"
 
-namespace mongo {
+namespace monger {
 
 class CurrentOpCommandBase : public BasicCommand {
 public:
@@ -85,4 +85,4 @@ private:
     virtual void appendToResponse(BSONObjBuilder* result) const {};
 };
 
-}  // namespace mongo
+}  // namespace monger

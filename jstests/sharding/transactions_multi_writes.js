@@ -14,7 +14,7 @@
     const collName = "foo";
     const ns = dbName + "." + collName;
 
-    const st = new ShardingTest({shards: 3, config: 1, mongos: 2});
+    const st = new ShardingTest({shards: 3, config: 1, mongers: 2});
 
     enableStaleVersionAndSnapshotRetriesWithinTransactions(st);
 
@@ -124,24 +124,24 @@
 
     multiUpdate.ordered = false;
     runTest(st, session, multiUpdate, false /*staleRouter*/);
-    // TODO: SERVER-39704 uncomment when mongos can internally retry txn on stale errors for real.
+    // TODO: SERVER-39704 uncomment when mongers can internally retry txn on stale errors for real.
     // runTest(st, session, multiUpdate, true /*staleRouter*/);
 
     multiUpdate.ordered = true;
     runTest(st, session, multiUpdate, false /*staleRouter*/);
-    // TODO: SERVER-39704 uncomment when mongos can internally retry txn on stale errors for real.
+    // TODO: SERVER-39704 uncomment when mongers can internally retry txn on stale errors for real.
     // runTest(st, session, multiUpdate, true /*staleRouter*/);
 
     let multiDelete = {delete: collName, deletes: [{q: {skey: {$lte: 5}}, limit: 0}]};
 
     multiDelete.ordered = false;
     runTest(st, session, multiDelete, false /*staleRouter*/);
-    // TODO: SERVER-39704 uncomment when mongos can internally retry txn on stale errors for real.
+    // TODO: SERVER-39704 uncomment when mongers can internally retry txn on stale errors for real.
     // runTest(st, session, multiDelete, true /*staleRouter*/);
 
     multiDelete.ordered = true;
     runTest(st, session, multiDelete, false /*staleRouter*/);
-    // TODO: SERVER-39704 uncomment when mongos can internally retry txn on stale errors for real.
+    // TODO: SERVER-39704 uncomment when mongers can internally retry txn on stale errors for real.
     // runTest(st, session, multiDelete, true /*staleRouter*/);
 
     disableStaleVersionAndSnapshotRetriesWithinTransactions(st);

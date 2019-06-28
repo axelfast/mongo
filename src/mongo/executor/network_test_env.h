@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,14 +34,14 @@
 #include <type_traits>
 #include <vector>
 
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/stdx/future.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/time_support.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/task_executor.h"
+#include "monger/stdx/future.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class ShardingCatalogClientImpl;
@@ -194,4 +194,4 @@ private:
 };
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

@@ -51,7 +51,7 @@
     // verify that it still has the 'ns' field.
     const options = {dbpath: primary.dbpath, noCleanData: true};
     let conn = MongoRunner.runMongod(options);
-    assert.neq(null, conn, 'mongod was unable to start up with options: ' + tojson(options));
+    assert.neq(null, conn, 'mongerd was unable to start up with options: ' + tojson(options));
 
     let db = conn.getDB(dbName);
     let spec = assert.commandWorked(db.runCommand({listIndexes: collName})).cursor.firstBatch[1];
@@ -63,7 +63,7 @@
 
     options.dbpath = secondary.dbpath;
     conn = MongoRunner.runMongod(options);
-    assert.neq(null, conn, 'mongod was unable to start up with options: ' + tojson(options));
+    assert.neq(null, conn, 'mongerd was unable to start up with options: ' + tojson(options));
 
     db = conn.getDB(dbName);
     spec = assert.commandWorked(db.runCommand({listIndexes: collName})).cursor.firstBatch[1];

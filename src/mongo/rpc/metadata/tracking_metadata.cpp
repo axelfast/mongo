@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/metadata/tracking_metadata.h"
+#include "monger/rpc/metadata/tracking_metadata.h"
 
-#include "mongo/bson/util/bson_check.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/rpc/metadata.h"
+#include "monger/bson/util/bson_check.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/jsobj.h"
+#include "monger/rpc/metadata.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 namespace {
@@ -96,10 +96,10 @@ TrackingMetadata TrackingMetadata::constructChildMetadata() const {
 StatusWith<TrackingMetadata> TrackingMetadata::readFromMetadata(const BSONElement& metadataElem) {
     if (metadataElem.eoo()) {
         return TrackingMetadata{};
-    } else if (metadataElem.type() != mongo::Object) {
+    } else if (metadataElem.type() != monger::Object) {
         return {ErrorCodes::TypeMismatch,
                 str::stream() << "TrackingMetadata element has incorrect type: expected"
-                              << mongo::Object
+                              << monger::Object
                               << " but got "
                               << metadataElem.type()};
     }
@@ -154,4 +154,4 @@ BSONObj TrackingMetadata::removeTrackingData(BSONObj metadata) {
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

@@ -1,6 +1,6 @@
 description: "Host list differs from seeds"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

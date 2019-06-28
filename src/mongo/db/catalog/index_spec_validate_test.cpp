@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/index_key_validate.h"
+#include "monger/db/catalog/index_key_validate.h"
 
 #include <cmath>
 #include <limits>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/db/server_options.h"
-#include "mongo/unittest/ensure_fcv.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/db/server_options.h"
+#include "monger/unittest/ensure_fcv.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using index_key_validate::validateIndexSpec;
@@ -979,4 +979,4 @@ TEST(IndexSpecWildcard, FailsWhenExclusionWithSubpath) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

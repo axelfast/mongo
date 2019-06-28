@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <map>
 #include <set>
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/logger/logger.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/router_transactions_metrics.h"
-#include "mongo/s/session_catalog_router.h"
-#include "mongo/s/sharding_router_test_fixture.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/tick_source_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/commands.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/logger/logger.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/router_transactions_metrics.h"
+#include "monger/s/session_catalog_router.h"
+#include "monger/s/sharding_router_test_fixture.h"
+#include "monger/s/transaction_router.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/tick_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::RemoteCommandRequest;
@@ -4051,4 +4051,4 @@ TEST_F(TransactionRouterMetricsTest, RouterMetricsCommitTypeStatsSuccessfulDurat
 }
 
 }  // unnamed namespace
-}  // namespace mongo
+}  // namespace monger

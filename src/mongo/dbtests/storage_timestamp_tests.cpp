@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,63 +27,63 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstdint>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/create_collection.h"
-#include "mongo/db/catalog/drop_database.h"
-#include "mongo/db/catalog/drop_indexes.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/global_settings.h"
-#include "mongo/db/index/index_build_interceptor.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/multi_key_path_tracker.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/repl/apply_ops.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/multiapplier.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_applier.h"
-#include "mongo/db/repl/oplog_applier_impl.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_consistency_markers_impl.h"
-#include "mongo/db/repl/replication_consistency_markers_mock.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/replication_recovery_mock.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/repl/sync_tail.h"
-#include "mongo/db/repl/timestamp_block.h"
-#include "mongo/db/s/op_observer_sharding_impl.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/session.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/storage/snapshot_manager.h"
-#include "mongo/db/storage/storage_engine_impl.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/transaction_participant_gen.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/stdx/future.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/stacktrace.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/create_collection.h"
+#include "monger/db/catalog/drop_database.h"
+#include "monger/db/catalog/drop_indexes.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/global_settings.h"
+#include "monger/db/index/index_build_interceptor.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/multi_key_path_tracker.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/repl/apply_ops.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/multiapplier.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_applier.h"
+#include "monger/db/repl/oplog_applier_impl.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_consistency_markers_impl.h"
+#include "monger/db/repl/replication_consistency_markers_mock.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/replication_recovery_mock.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/repl/sync_tail.h"
+#include "monger/db/repl/timestamp_block.h"
+#include "monger/db/s/op_observer_sharding_impl.h"
+#include "monger/db/service_context.h"
+#include "monger/db/session.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/storage/snapshot_manager.h"
+#include "monger/db/storage/storage_engine_impl.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/transaction_participant_gen.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/stdx/future.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/stacktrace.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 /**
  * RAII type for operating at a timestamp. Will remove any timestamping when the object destructs.
@@ -224,7 +224,7 @@ public:
      * without actually dropping it.
      */
     void reset(NamespaceString nss) const {
-        ::mongo::writeConflictRetry(_opCtx, "deleteAll", nss.ns(), [&] {
+        ::monger::writeConflictRetry(_opCtx, "deleteAll", nss.ns(), [&] {
             _opCtx->recoveryUnit()->setTimestampReadSource(RecoveryUnit::ReadSource::kUnset);
             AutoGetCollection collRaii(_opCtx, nss, LockMode::MODE_X);
 
@@ -2731,8 +2731,8 @@ class CreateCollectionWithSystemIndex : public StorageTimestampTest {
 public:
     void run() {
         // Only run on 'wiredTiger'. No other storage engines to-date support timestamp writes.
-        if (!(mongo::storageGlobalParams.engine == "wiredTiger" &&
-              mongo::serverGlobalParams.enableMajorityReadConcern)) {
+        if (!(monger::storageGlobalParams.engine == "wiredTiger" &&
+              monger::serverGlobalParams.enableMajorityReadConcern)) {
             return;
         }
 
@@ -3566,7 +3566,7 @@ public:
         // Only run on storage engines that support snapshot reads.
         auto storageEngine = cc().getServiceContext()->getStorageEngine();
         if (!storageEngine->supportsReadConcernSnapshot() ||
-            !mongo::serverGlobalParams.enableMajorityReadConcern) {
+            !monger::serverGlobalParams.enableMajorityReadConcern) {
             unittest::log() << "Skipping this test suite because storage engine "
                             << storageGlobalParams.engine << " does not support timestamp writes.";
             return;
@@ -3618,4 +3618,4 @@ public:
 };
 
 unittest::SuiteInstance<AllStorageTimestampTests> allStorageTimestampTests;
-}  // namespace mongo
+}  // namespace monger

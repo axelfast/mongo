@@ -58,7 +58,7 @@ def download_pkg(link, pkg_format=''):
     except subprocess.CalledProcessError as error:
         print 'Unable to download MongoDB Compass, please check your internet' \
             ' connection. If the issue persists go to' \
-            ' https://www.mongodb.com/download-center?jmp=hero#compass' \
+            ' https://www.mongerdb.com/download-center?jmp=hero#compass' \
             ' to download the compass installer for your platform.'
 
     try:
@@ -167,7 +167,7 @@ def download_and_install_compass():
 
     if os_type.startswith('linux') and not is_supported_distro():
         print 'You are using an unsupported Linux distribution.\n' \
-            'Please visit: https://compass.mongodb.com/community-supported-platforms' \
+            'Please visit: https://compass.mongerdb.com/community-supported-platforms' \
             ' to view available community supported packages.'
         sys.exit(1)
 
@@ -179,9 +179,9 @@ def download_and_install_compass():
     if platform.machine() != 'x86_64':
         print 'Sorry, MongoDB Compass is only supported on 64 bit platforms.' \
             ' If you believe you\'re seeing this message in error please open a' \
-            ' ticket on the SERVER project at https://jira.mongodb.org/'
+            ' ticket on the SERVER project at https://jira.mongerdb.org/'
 
-    link = 'https://compass.mongodb.com/api/v2/download/latest/@compass_type@/stable/' + os_type
+    link = 'https://compass.mongerdb.com/api/v2/download/latest/@compass_type@/stable/' + os_type
     print 'Downloading the package...'
     try:
         pkg = download_pkg(link, pkg_format=pkg_format)
@@ -190,7 +190,7 @@ def download_and_install_compass():
     # the user in the case we have a new failure case we didn't think about.
     except Exception:
         print 'Unkown error downloading compass. Please open a ticket on the' \
-            ' SERVER project at https://jira.mongodb.org/'
+            ' SERVER project at https://jira.mongerdb.org/'
 
     print 'Installing the package...'
     try:
@@ -202,7 +202,7 @@ def download_and_install_compass():
             print 'Unrecognized os_type: %s' % os_type
     except Exception:
         print 'Unkown error downloading compass. Please open a ticket on the' \
-            ' SERVER project at https://jira.mongodb.org/'
+            ' SERVER project at https://jira.mongerdb.org/'
 
     print 'Cleaning up...'
     os.remove(pkg)

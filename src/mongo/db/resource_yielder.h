@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/db/operation_context.h"
+#include "monger/db/operation_context.h"
 
-namespace mongo {
+namespace monger {
 /**
  * Functions to call before and after blocking on the network layer so that resources may be given
  * up so that "sub operations" running on the same node may use them. For example, a node may want
@@ -45,4 +45,4 @@ public:
     virtual void yield(OperationContext*) = 0;
     virtual void unyield(OperationContext*) = 0;
 };
-}  // namespace mongo
+}  // namespace monger

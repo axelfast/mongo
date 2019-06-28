@@ -37,7 +37,7 @@
         const version_number = client.replace(/TLS/, "").replace(/_/, ".");
 
         const exitStatus =
-            runMongoProgram('mongo',
+            runMongoProgram('monger',
                             '--ssl',
                             '--sslAllowInvalidHostnames',
                             '--sslPEMKeyFile',

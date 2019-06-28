@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,38 +27,38 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session_impl.h"
+#include "monger/db/auth/authorization_session_impl.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authz_session_external_state.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/restriction_environment.h"
-#include "mongo/db/auth/security_key.h"
-#include "mongo/db/auth/user_management_commands_parser.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/client.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/lite_parsed_pipeline.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authz_session_external_state.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/restriction_environment.h"
+#include "monger/db/auth/security_key.h"
+#include "monger/db/auth/user_management_commands_parser.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/client.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/lite_parsed_pipeline.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 using std::vector;
 
 MONGO_REGISTER_SHIM(AuthorizationSession::create)
@@ -1049,4 +1049,4 @@ auto AuthorizationSessionImpl::checkCursorSessionPrivilege(
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

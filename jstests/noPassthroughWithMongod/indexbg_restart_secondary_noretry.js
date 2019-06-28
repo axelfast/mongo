@@ -8,7 +8,7 @@
 (function() {
     'use strict';
 
-    // Assert that running `mongod` with `--noIndexBuildRetry` and `--replSet` does not startup.
+    // Assert that running `mongerd` with `--noIndexBuildRetry` and `--replSet` does not startup.
     {
         // If code breaks the incompatibility between `--noIndexBuildRetry` and `--replSet`, using
         // `notAStorageEngine` will cause a failure later in execution that returns a different

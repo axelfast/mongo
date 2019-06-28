@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/crypto/symmetric_key.h"
+#include "monger/crypto/symmetric_key.h"
 
 #include <cstring>
 
-#include "mongo/crypto/symmetric_crypto.h"
-#include "mongo/util/log.h"
-#include "mongo/util/secure_zero_memory.h"
-#include "mongo/util/str.h"
+#include "monger/crypto/symmetric_crypto.h"
+#include "monger/util/log.h"
+#include "monger/util/secure_zero_memory.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 std::string SymmetricKeyId::_initStrRep() const {
     return str::stream() << _name << " (" << _id << ")";
@@ -97,4 +97,4 @@ SymmetricKey& SymmetricKey::operator=(SymmetricKey&& sk) {
 
     return *this;
 }
-}  // namespace mongo
+}  // namespace monger

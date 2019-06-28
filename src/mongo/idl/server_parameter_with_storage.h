@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,25 +31,25 @@
 /* The contents of this file are meant to be used by
  * code generated from idlc.py.
  *
- * It should not be instantiated directly from mongo code,
+ * It should not be instantiated directly from monger code,
  * rather parameters should be defined in .idl files.
  */
 
 #include <functional>
 #include <string>
 
-#include "mongo/base/parse_number.h"
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/idl/server_parameter.h"
-#include "mongo/platform/atomic_proxy.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/str.h"
-#include "mongo/util/synchronized_value.h"
+#include "monger/base/parse_number.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/idl/server_parameter.h"
+#include "monger/platform/atomic_proxy.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/str.h"
+#include "monger/util/synchronized_value.h"
 
-namespace mongo {
+namespace monger {
 namespace idl_server_parameter_detail {
 
 template <typename T>
@@ -328,4 +328,4 @@ IDLServerParameterWithStorage<paramType, T>* makeIDLServerParameterWithStorage(S
     return new IDLServerParameterWithStorage<paramType, T>(name, storage);
 }
 
-}  // namespace mongo
+}  // namespace monger

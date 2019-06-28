@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,45 +27,45 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 #define LOG_FOR_ELECTION(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kReplicationElection)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kReplicationElection)
 #define LOG_FOR_HEARTBEATS(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kReplicationHeartbeats)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kReplicationHeartbeats)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/db/repl/topology_coordinator_gen.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/db/repl/topology_coordinator_gen.h"
 
 #include <limits>
 #include <string>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/client.h"
-#include "mongo/db/mongod_options.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/heartbeat_response_action.h"
-#include "mongo/db/repl/is_master_response.h"
-#include "mongo/db/repl/isself.h"
-#include "mongo/db/repl/member_data.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/repl_set_heartbeat_response.h"
-#include "mongo/db/repl/repl_set_request_votes_args.h"
-#include "mongo/db/repl/rslog.h"
-#include "mongo/rpc/metadata/oplog_query_metadata.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/audit.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/client.h"
+#include "monger/db/mongerd_options.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/heartbeat_response_action.h"
+#include "monger/db/repl/is_master_response.h"
+#include "monger/db/repl/isself.h"
+#include "monger/db/repl/member_data.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/repl_set_heartbeat_response.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/rslog.h"
+#include "monger/rpc/metadata/oplog_query_metadata.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 MONGO_FAIL_POINT_DEFINE(forceSyncSourceCandidate);
@@ -755,7 +755,7 @@ HeartbeatResponseAction TopologyCoordinator::processHeartbeatResponse(
                 LOG(2) << "Config from heartbeat response was same as ours.";
             }
             if (logger::globalLogDomain()->shouldLog(MongoLogDefaultComponent_component,
-                                                     ::mongo::LogstreamBuilder::severityCast(2))) {
+                                                     ::monger::LogstreamBuilder::severityCast(2))) {
                 LogstreamBuilder lsb = log();
                 if (_rsConfig.isInitialized()) {
                     lsb << "Current config: " << _rsConfig.toBSON() << "; ";
@@ -2916,4 +2916,4 @@ bool TopologyCoordinator::checkIfCommitQuorumIsSatisfied(
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

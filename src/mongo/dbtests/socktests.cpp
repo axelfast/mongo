@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
  * sock.{h,cpp} unit tests.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/isself.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/db/repl/isself.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/socket_utils.h"
 
 namespace SockTests {
 

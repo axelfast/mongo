@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,46 +27,46 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_key_validate.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/enable_coordinator_for_create_indexes_command_gen.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/collection_metadata.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/database_sharding_state.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/platform/compiler.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/string_data.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_key_validate.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/enable_coordinator_for_create_indexes_command_gen.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/collection_metadata.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/database_sharding_state.h"
+#include "monger/db/server_options.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/platform/compiler.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -856,4 +856,4 @@ public:
 } cmdTwoPhaseCreateIndex;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

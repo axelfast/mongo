@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/socket_utils.h"
+#include "monger/util/net/socket_utils.h"
 
 #if !defined(_WIN32)
 #include <arpa/inet.h>
@@ -53,16 +53,16 @@
 #include <ws2tcpip.h>
 #endif
 
-#include "mongo/db/server_options.h"
-#include "mongo/util/concurrency/value.h"
-#include "mongo/util/errno_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/sockaddr.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/str.h"
-#include "mongo/util/winutil.h"
+#include "monger/db/server_options.h"
+#include "monger/util/concurrency/value.h"
+#include "monger/util/errno_util.h"
+#include "monger/util/log.h"
+#include "monger/util/net/sockaddr.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/str.h"
+#include "monger/util/winutil.h"
 
-namespace mongo {
+namespace monger {
 
 #if defined(_WIN32)
 const struct WinsockInit {
@@ -175,7 +175,7 @@ void setSocketKeepAliveParams(int sock,
 }
 
 std::string makeUnixSockPath(int port) {
-    return str::stream() << serverGlobalParams.socket << "/mongodb-" << port << ".sock";
+    return str::stream() << serverGlobalParams.socket << "/mongerdb-" << port << ".sock";
 }
 
 // If an ip address is passed in, just return that.  If a hostname is passed
@@ -222,4 +222,4 @@ std::string prettyHostName() {
                 : getHostNameCachedAndPort());
 }
 
-}  // namespace mongo
+}  // namespace monger

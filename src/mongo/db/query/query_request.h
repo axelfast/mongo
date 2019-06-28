@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/runtime_constants_gen.h"
-#include "mongo/db/query/tailable_mode.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/runtime_constants_gen.h"
+#include "monger/db/query/tailable_mode.h"
 
-namespace mongo {
+namespace monger {
 
 class QueryMessage;
 class Status;
@@ -121,7 +121,7 @@ public:
     // Read preference is attached to commands in "wrapped" form, e.g.
     //   { $query: { <cmd>: ... } , <kWrappedReadPrefField>: { ... } }
     //
-    // However, mongos internally "unwraps" the read preference and adds it as a parameter to the
+    // However, mongers internally "unwraps" the read preference and adds it as a parameter to the
     // command, e.g.
     //  { <cmd>: ... , <kUnwrappedReadPrefField>: { <kWrappedReadPrefField>: { ... } } }
     static const std::string kWrappedReadPrefField;
@@ -485,9 +485,9 @@ private:
     // The collation is parsed elsewhere.
     BSONObj _collation;
 
-    // The unwrapped readPreference object, if one was given to us by the mongos command processor.
+    // The unwrapped readPreference object, if one was given to us by the mongers command processor.
     // This object will be empty when no readPreference is specified or if the request does not
-    // originate from mongos.
+    // originate from mongers.
     BSONObj _unwrappedReadPref;
 
     bool _wantMore = true;
@@ -543,4 +543,4 @@ private:
     boost::optional<Timestamp> _internalReadAtClusterTime;
 };
 
-}  // namespace mongo
+}  // namespace monger

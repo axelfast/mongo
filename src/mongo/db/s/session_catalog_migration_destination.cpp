@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/session_catalog_migration_destination.h"
+#include "monger/db/s/session_catalog_migration_destination.h"
 
 #include <functional>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/s/migration_session_id.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/shard_id.h"
-#include "mongo/util/log.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/s/migration_session_id.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/write_concern.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/shard_id.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const auto kOplogField = "oplog";
@@ -518,4 +518,4 @@ void SessionCatalogMigrationDestination::forceFail(StringData errMsg) {
     _errorOccurred(errMsg);
 }
 
-}  // namespace mongo
+}  // namespace monger

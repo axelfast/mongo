@@ -10,10 +10,10 @@
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 1}, config: 1});
 
-    const mongosDB = st.s0.getDB("merge_hashed_shard_key");
+    const mongersDB = st.s0.getDB("merge_hashed_shard_key");
     const foreignDB = st.s0.getDB("merge_hashed_shard_key_foreign");
-    const source = mongosDB.source;
-    const target = mongosDB.target;
+    const source = mongersDB.source;
+    const target = mongersDB.target;
     source.drop();
     target.drop();
 

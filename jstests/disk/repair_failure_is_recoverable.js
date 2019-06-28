@@ -19,14 +19,14 @@
     const dbpath = MongoRunner.dataPath + baseName + "/";
     resetDbpath(dbpath);
 
-    let mongod = MongoRunner.runMongod({dbpath: dbpath});
-    const port = mongod.port;
+    let mongerd = MongoRunner.runMongod({dbpath: dbpath});
+    const port = mongerd.port;
 
-    let testColl = mongod.getDB(dbName)[collName];
+    let testColl = mongerd.getDB(dbName)[collName];
 
     assert.commandWorked(testColl.insert({_id: 0, foo: "bar"}));
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 
     /**
      * Test 1. Cause an exit before repairing data. MongoDB should not be able to restart without

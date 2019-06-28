@@ -7,15 +7,15 @@ var DB;
     var _defaultWriteConcern = {w: 'majority', wtimeout: 10 * 60 * 1000};
 
     if (DB === undefined) {
-        DB = function(mongo, name) {
-            this._mongo = mongo;
+        DB = function(monger, name) {
+            this._monger = monger;
             this._name = name;
         };
     }
 
     DB.prototype.getMongo = function() {
-        assert(this._mongo, "why no mongo!");
-        return this._mongo;
+        assert(this._monger, "why no monger!");
+        return this._monger;
     };
 
     DB.prototype.getSiblingDB = function(name) {
@@ -33,7 +33,7 @@ var DB;
     };
 
     DB.prototype.getCollection = function(name) {
-        return new DBCollection(this._mongo, this, name, this._name + "." + name);
+        return new DBCollection(this._monger, this, name, this._name + "." + name);
     };
 
     DB.prototype.commandHelp = function(name) {
@@ -456,7 +456,7 @@ var DB;
      */
     DB.prototype.cloneDatabase = function(from) {
         print(
-            "WARNING: db.cloneDatabase will only function with MongoDB 4.0 and below. See http://dochub.mongodb.org/core/4.2-copydb-clone");
+            "WARNING: db.cloneDatabase will only function with MongoDB 4.0 and below. See http://dochub.mongerdb.org/core/4.2-copydb-clone");
         assert(isString(from) && from.length);
         return this._dbCommand({clone: from});
     };
@@ -486,7 +486,7 @@ var DB;
     DB.prototype.copyDatabase = function(
         fromdb, todb, fromhost, username, password, mechanism, slaveOk) {
         print(
-            "WARNING: db.copyDatabase will only function with MongoDB 4.0 and below. See http://dochub.mongodb.org/core/4.2-copydb-clone");
+            "WARNING: db.copyDatabase will only function with MongoDB 4.0 and below. See http://dochub.mongerdb.org/core/4.2-copydb-clone");
         assert(isString(fromdb) && fromdb.length);
         assert(isString(todb) && todb.length);
         fromhost = fromhost || "";
@@ -1255,7 +1255,7 @@ var DB;
     DB.prototype.getSlaveOk = function() {
         if (this._slaveOk != undefined)
             return this._slaveOk;
-        return this._mongo.getSlaveOk();
+        return this._monger.getSlaveOk();
     };
 
     DB.prototype.getQueryOptions = function() {
@@ -1356,7 +1356,7 @@ var DB;
             throw Error("User passwords must be of type string. Was given password with type: " +
                         typeof(password));
         }
-        return hex_md5(username + ":mongo:" + password);
+        return hex_md5(username + ":monger:" + password);
     }
 
     /**
@@ -1829,7 +1829,7 @@ var DB;
 
             print("Unable to get immediate response from the Cloud Monitoring service. We will" +
                   "continue to retry in the background. Please check your firewall " +
-                  "settings to ensure that mongod can communicate with \"" + url + "\"");
+                  "settings to ensure that mongerd can communicate with \"" + url + "\"");
             return;
         }
 

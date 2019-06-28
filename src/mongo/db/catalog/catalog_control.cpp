@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,26 +26,26 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 #define LOG_FOR_RECOVERY(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kStorageRecovery)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kStorageRecovery)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/catalog_control.h"
+#include "monger/db/catalog/catalog_control.h"
 
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/ftdc/ftdc_mongod.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repair_database.h"
-#include "mongo/util/log.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/ftdc/ftdc_mongerd.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repair_database.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace catalog {
 MinVisibleTimestampMap closeCatalog(OperationContext* opCtx) {
     invariant(opCtx->lockState()->isW());
@@ -207,4 +207,4 @@ void openCatalog(OperationContext* opCtx, const MinVisibleTimestampMap& minVisib
     log() << "openCatalog: finished reloading collection catalog";
 }
 }  // namespace catalog
-}  // namespace mongo
+}  // namespace monger

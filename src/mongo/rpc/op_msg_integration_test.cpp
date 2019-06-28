@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/unittest/integration_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/unittest/integration_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 TEST(OpMsg, UnknownRequiredFlagClosesConnection) {
     std::string errMsg;
@@ -467,4 +467,4 @@ TEST(OpMsg, ServerRepliesWithoutChecksumToRequestWithoutChecksum) {
 TEST(OpMsg, ServerRepliesWithChecksumToRequestWithChecksum) {
     checksumTest(true);
 }
-}  // namespace mongo
+}  // namespace monger

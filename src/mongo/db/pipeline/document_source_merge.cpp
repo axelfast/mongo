@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_merge.h"
+#include "monger/db/pipeline/document_source_merge.h"
 
 #include <fmt/format.h>
 #include <map>
 
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/pipeline/document_path_support.h"
-#include "mongo/util/log.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/pipeline/document_path_support.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 using namespace fmt::literals;
 
 MONGO_FAIL_POINT_DEFINE(hangWhileBuildingDocumentSourceMergeBatch);
@@ -88,7 +88,7 @@ MergeStrategy makeUpdateStrategy(bool upsert, BatchTransform transform) {
         }
 
         constexpr auto multi = false;
-        uassertStatusOK(expCtx->mongoProcessInterface->update(
+        uassertStatusOK(expCtx->mongerProcessInterface->update(
             expCtx, ns, std::move(batch), wc, upsert, multi, epoch));
     };
 }
@@ -110,7 +110,7 @@ MergeStrategy makeStrictUpdateStrategy(bool upsert, BatchTransform transform) {
 
         const int64_t batchSize = batch.size();
         constexpr auto multi = false;
-        auto updateResult = uassertStatusOK(expCtx->mongoProcessInterface->update(
+        auto updateResult = uassertStatusOK(expCtx->mongerProcessInterface->update(
             expCtx, ns, std::move(batch), wc, upsert, multi, epoch));
         uassert(ErrorCodes::MergeStageNoMatchingDocument,
                 "{} could not find a matching document in the target collection "
@@ -130,7 +130,7 @@ MergeStrategy makeInsertStrategy() {
         std::transform(batch.begin(), batch.end(), objectsToInsert.begin(), [](const auto& obj) {
             return std::get<UpdateModification>(obj).getUpdateClassic();
         });
-        uassertStatusOK(expCtx->mongoProcessInterface->insert(
+        uassertStatusOK(expCtx->mongerProcessInterface->insert(
             expCtx, ns, std::move(objectsToInsert), wc, epoch));
     };
 }
@@ -408,7 +408,7 @@ boost::intrusive_ptr<DocumentSource> DocumentSourceMerge::createFromBson(
     auto whenNotMatched = mergeSpec.getWhenNotMatched().value_or(kDefaultWhenNotMatched);
     auto pipeline = mergeSpec.getWhenMatched() ? mergeSpec.getWhenMatched()->pipeline : boost::none;
     auto[mergeOnFields, targetCollectionVersion] =
-        expCtx->mongoProcessInterface->ensureFieldsUniqueOrResolveDocumentKey(
+        expCtx->mongerProcessInterface->ensureFieldsUniqueOrResolveDocumentKey(
             expCtx, mergeSpec.getOn(), mergeSpec.getTargetCollectionVersion(), targetNss);
 
     return DocumentSourceMerge::create(std::move(targetNss),
@@ -475,4 +475,4 @@ void DocumentSourceMerge::waitWhileFailPointEnabled() {
         });
 }
 
-}  // namespace mongo
+}  // namespace monger

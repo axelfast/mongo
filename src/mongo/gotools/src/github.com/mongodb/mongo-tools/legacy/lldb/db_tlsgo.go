@@ -9,8 +9,8 @@
 package lldb
 
 import (
-	"github.com/mongodb/mongo-tools/legacy/lldb/tlsgo"
-	"github.com/mongodb/mongo-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/legacy/lldb/tlsgo"
+	"github.com/mongerdb/monger-tools/legacy/options"
 )
 
 func init() {

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,16 +28,16 @@
  */
 
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/authenticate.h"
-#include "mongo/config.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/net/ssl_parameters_auth_gen.h"
+#include "monger/client/authenticate.h"
+#include "monger/config.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/db/server_options.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/net/ssl_parameters_auth_gen.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 std::string clusterAuthModeFormat() {
@@ -116,4 +116,4 @@ Status ClusterAuthModeServerParameter::setFromString(const std::string& strMode)
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

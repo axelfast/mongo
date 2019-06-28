@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -42,10 +42,10 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/builder.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/builder.h"
 
-namespace mongo::str {
+namespace monger::str {
 
 /** the idea here is to make one liners easy.  e.g.:
 
@@ -57,11 +57,11 @@ namespace mongo::str {
 
     TODO: To avoid implicit conversions in relational operation expressions, this stream
     class should provide a full symmetric set of relational operators vs itself, vs
-    std::string, vs mongo::StringData, and vs const char*, but that's a lot of functions.
+    std::string, vs monger::StringData, and vs const char*, but that's a lot of functions.
 */
 class stream {
 public:
-    mongo::StringBuilder ss;
+    monger::StringBuilder ss;
     template <class T>
     stream& operator<<(const T& v) {
         ss << v;
@@ -70,7 +70,7 @@ public:
     operator std::string() const {
         return ss.str();
     }
-    operator mongo::StringData() const {
+    operator monger::StringData() const {
         return ss.stringData();
     }
 
@@ -130,7 +130,7 @@ inline const char* after(const char* s, char x) {
     const char* p = strchr(s, x);
     return (p != nullptr) ? p + 1 : "";
 }
-inline mongo::StringData after(mongo::StringData s, char x) {
+inline monger::StringData after(monger::StringData s, char x) {
     auto pos = s.find(x);
     return s.substr(pos == std::string::npos ? s.size() : pos + 1);
 }
@@ -140,38 +140,38 @@ inline const char* after(const char* s, const char* x) {
     const char* p = strstr(s, x);
     return (p != nullptr) ? p + strlen(x) : "";
 }
-inline mongo::StringData after(mongo::StringData s, mongo::StringData x) {
+inline monger::StringData after(monger::StringData s, monger::StringData x) {
     auto pos = s.find(x);
     return s.substr(pos == std::string::npos ? s.size() : pos + x.size());
 }
 
 /** @return true if s contains x */
-inline bool contains(mongo::StringData s, mongo::StringData x) {
+inline bool contains(monger::StringData s, monger::StringData x) {
     return s.find(x) != std::string::npos;
 }
 
 /** @return true if s contains x */
-inline bool contains(mongo::StringData s, char x) {
+inline bool contains(monger::StringData s, char x) {
     return s.find(x) != std::string::npos;
 }
 
 /** @return everything before the character x, else entire string */
-inline mongo::StringData before(const char* s, char x) {
+inline monger::StringData before(const char* s, char x) {
     const char* p = s;
     // loop instead of strchr, so if we fail to find we don't have to iterate again.
     for (; *p && *p != x; ++p) {
     }
-    return mongo::StringData(s, p - s);
+    return monger::StringData(s, p - s);
 }
 
 /** @return everything before the character x, else entire string */
-inline mongo::StringData before(mongo::StringData s, char x) {
+inline monger::StringData before(monger::StringData s, char x) {
     auto pos = s.find(x);
     return pos == std::string::npos ? s : s.substr(0, pos);
 }
 
 /** @return everything before the string x, else entire string */
-inline mongo::StringData before(mongo::StringData s, mongo::StringData x) {
+inline monger::StringData before(monger::StringData s, monger::StringData x) {
     auto pos = s.find(x);
     return pos != std::string::npos ? s.substr(0, pos) : s;
 }
@@ -212,14 +212,14 @@ inline unsigned toUnsigned(const std::string& a) {
    If char not present, 'before' contains entire input string and 'after' is empty.
    @return true if char found
 */
-inline bool splitOn(mongo::StringData s,
+inline bool splitOn(monger::StringData s,
                     char c,
-                    mongo::StringData& before,
-                    mongo::StringData& after) {
+                    monger::StringData& before,
+                    monger::StringData& after) {
     auto pos = s.find(c);
     if (pos == std::string::npos) {
         before = s;
-        after = mongo::StringData();
+        after = monger::StringData();
         return false;
     }
     before = s.substr(0, pos);
@@ -227,14 +227,14 @@ inline bool splitOn(mongo::StringData s,
     return true;
 }
 /** split scanning reverse direction. Splits ONCE ONLY. */
-inline bool rSplitOn(mongo::StringData s,
+inline bool rSplitOn(monger::StringData s,
                      char c,
-                     mongo::StringData& before,
-                     mongo::StringData& after) {
+                     monger::StringData& before,
+                     monger::StringData& after) {
     auto pos = s.rfind(c);
     if (pos == std::string::npos) {
         before = s;
-        after = mongo::StringData();
+        after = monger::StringData();
         return false;
     }
     before = s.substr(0, pos);
@@ -252,7 +252,7 @@ inline unsigned count(const std::string& s, char c) {
 }
 
 /** trim leading spaces. spaces only, not tabs etc. */
-inline mongo::StringData ltrim(mongo::StringData s) {
+inline monger::StringData ltrim(monger::StringData s) {
     auto i = s.rawData();
     auto end = s.rawData() + s.size();
     for (; i != end && *i == ' '; ++i) {
@@ -273,7 +273,7 @@ inline bool isUTF8ContinuationByte(char charByte) {
  * Assuming 'str' stores a UTF-8 string, returns the number of UTF codepoints. The return value is
  * undefined if the input is not a well formed UTF-8 string.
  */
-inline size_t lengthInUTF8CodePoints(mongo::StringData str) {
+inline size_t lengthInUTF8CodePoints(monger::StringData str) {
     size_t strLen = 0;
     for (char byte : str) {
         strLen += !isUTF8ContinuationByte(byte);
@@ -350,4 +350,4 @@ boost::optional<size_t> parseUnsignedBase10Integer(StringData integer);
  */
 std::string convertDoubleToString(double d, int prec = 17);
 
-}  // namespace mongo::str
+}  // namespace monger::str

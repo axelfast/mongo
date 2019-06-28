@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/strnlen.h"
-#include "mongo/config.h"
+#include "monger/platform/strnlen.h"
+#include "monger/config.h"
 
 #ifndef MONGO_CONFIG_HAVE_STRNLEN
 
-namespace mongo {
+namespace monger {
 
 size_t strnlen(const char* s, size_t maxlen) {
     for (size_t i = 0; i < maxlen; ++i) {
@@ -43,6 +43,6 @@ size_t strnlen(const char* s, size_t maxlen) {
     return maxlen;
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 #endif

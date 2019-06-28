@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/config.h"
-#include "mongo/platform/basic.h"
+#include "monger/config.h"
+#include "monger/platform/basic.h"
 
 #include <type_traits>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/static_assert.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 #define ASSERT_CATCHES(code, Type)                                         \
@@ -374,4 +374,4 @@ DEATH_TEST(DassertTerminationTest,
 #endif  // defined(MONGO_CONFIG_DEBUG_BUILD)
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

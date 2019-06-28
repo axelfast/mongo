@@ -7,12 +7,12 @@
     "use strict";
 
     /*****************************************************************************
-     * Unsharded mongod.
+     * Unsharded mongerd.
      ****************************************************************************/
 
-    // cleanupOrphaned fails against unsharded mongod.
-    var mongod = MongoRunner.runMongod();
-    assert.commandFailed(mongod.getDB('admin').runCommand({cleanupOrphaned: 'foo.bar'}));
+    // cleanupOrphaned fails against unsharded mongerd.
+    var mongerd = MongoRunner.runMongod();
+    assert.commandFailed(mongerd.getDB('admin').runCommand({cleanupOrphaned: 'foo.bar'}));
 
     /*****************************************************************************
      * Bad invocations of cleanupOrphaned command.
@@ -20,16 +20,16 @@
 
     var st = new ShardingTest({other: {rs: true, rsOptions: {nodes: 2}}});
 
-    var mongos = st.s0;
-    var mongosAdmin = mongos.getDB('admin');
+    var mongers = st.s0;
+    var mongersAdmin = mongers.getDB('admin');
     var dbName = 'foo';
     var collectionName = 'bar';
     var ns = dbName + '.' + collectionName;
-    var coll = mongos.getCollection(ns);
+    var coll = mongers.getCollection(ns);
 
-    // cleanupOrphaned fails against mongos ('no such command'): it must be run
-    // on mongod.
-    assert.commandFailed(mongosAdmin.runCommand({cleanupOrphaned: ns}));
+    // cleanupOrphaned fails against mongers ('no such command'): it must be run
+    // on mongerd.
+    assert.commandFailed(mongersAdmin.runCommand({cleanupOrphaned: ns}));
 
     // cleanupOrphaned must be run on admin DB.
     var shardFooDB = st.shard0.getDB(dbName);
@@ -47,11 +47,11 @@
     assert.commandFailed(shardAdmin.runCommand({cleanupOrphaned: badNS}));
 
     // cleanupOrphaned works on sharded collection.
-    assert.commandWorked(mongosAdmin.runCommand({enableSharding: coll.getDB().getName()}));
+    assert.commandWorked(mongersAdmin.runCommand({enableSharding: coll.getDB().getName()}));
 
     st.ensurePrimaryShard(coll.getDB().getName(), st.shard0.shardName);
 
-    assert.commandWorked(mongosAdmin.runCommand({shardCollection: ns, key: {_id: 1}}));
+    assert.commandWorked(mongersAdmin.runCommand({shardCollection: ns, key: {_id: 1}}));
 
     assert.commandWorked(shardAdmin.runCommand({cleanupOrphaned: ns}));
 
@@ -61,14 +61,14 @@
 
     // Ping shard[1] so it will be aware that it is sharded. Otherwise cleanupOrphaned
     // may fail.
-    assert.commandWorked(mongosAdmin.runCommand({
+    assert.commandWorked(mongersAdmin.runCommand({
         moveChunk: coll.getFullName(),
         find: {_id: 1},
         to: st.shard1.shardName,
         _waitForDelete: true
     }));
 
-    assert.commandWorked(mongosAdmin.runCommand({
+    assert.commandWorked(mongersAdmin.runCommand({
         moveChunk: coll.getFullName(),
         find: {_id: 1},
         to: st.shard0.shardName,
@@ -103,10 +103,10 @@
     assert.commandFailed(
         shardAdmin.runCommand({cleanupOrphaned: ns, startingFromKey: {someKey: 'someValue'}}));
 
-    var coll2 = mongos.getCollection('foo.baz');
+    var coll2 = mongers.getCollection('foo.baz');
 
     assert.commandWorked(
-        mongosAdmin.runCommand({shardCollection: coll2.getFullName(), key: {a: 1, b: 1}}));
+        mongersAdmin.runCommand({shardCollection: coll2.getFullName(), key: {a: 1, b: 1}}));
 
     // startingFromKey doesn't match number of fields in shard key.
     assert.commandFailed(shardAdmin.runCommand(
@@ -117,6 +117,6 @@
         {cleanupOrphaned: coll2.getFullName(), startingFromKey: {a: 'someValue', c: 1}}));
 
     st.stop();
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 
 })();

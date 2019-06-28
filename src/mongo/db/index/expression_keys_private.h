@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobj_comparator_interface.h"
-#include "mongo/db/hasher.h"
-#include "mongo/db/index/multikey_paths.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobj_comparator_interface.h"
+#include "monger/db/hasher.h"
+#include "monger/db/index/multikey_paths.h"
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 struct TwoDIndexingParams;
@@ -85,7 +85,7 @@ public:
     /**
      * Hashing function used by both getHashKeys and the cursors we create.
      * Exposed for testing in dbtests/namespacetests.cpp and
-     * so mongo/db/index_legacy.cpp can use it.
+     * so monger/db/index_legacy.cpp can use it.
      */
     static long long int makeSingleHashKey(const BSONElement& e, HashSeed seed, int v);
 
@@ -128,4 +128,4 @@ public:
                           MultikeyPaths* multikeyPaths);
 };
 
-}  // namespace mongo
+}  // namespace monger

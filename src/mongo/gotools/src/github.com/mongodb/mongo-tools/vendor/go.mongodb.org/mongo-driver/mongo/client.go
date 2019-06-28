@@ -4,29 +4,29 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package monger
 
 import (
 	"context"
 	"strings"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/event"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/auth"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/session"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/topology"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/uuid"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/connection"
-	"go.mongodb.org/mongo-driver/x/network/connstring"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/event"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/auth"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/session"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/topology"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/uuid"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/connection"
+	"go.mongerdb.org/monger-driver/x/network/connstring"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 const defaultLocalThreshold = 15 * time.Millisecond
@@ -480,13 +480,13 @@ func (c *Client) ListDatabaseNames(ctx context.Context, filter interface{}, opts
 
 // WithSession allows a user to start a session themselves and manage
 // its lifetime. The only way to provide a session to a CRUD method is
-// to invoke that CRUD method with the mongo.SessionContext within the
-// closure. The mongo.SessionContext can be used as a regular context,
+// to invoke that CRUD method with the monger.SessionContext within the
+// closure. The monger.SessionContext can be used as a regular context,
 // so methods like context.WithDeadline and context.WithTimeout are
 // supported.
 //
-// If the context.Context already has a mongo.Session attached, that
-// mongo.Session will be replaced with the one provided.
+// If the context.Context already has a monger.Session attached, that
+// monger.Session will be replaced with the one provided.
 //
 // Errors returned from the closure are transparently returned from
 // this function.
@@ -499,8 +499,8 @@ func WithSession(ctx context.Context, sess Session, fn func(SessionContext) erro
 // is done upon exiting the closure. This means that an outstanding
 // transaction will be aborted, even if the closure returns an error.
 //
-// If ctx already contains a mongo.Session, that mongo.Session will be
-// replaced with the newly created mongo.Session.
+// If ctx already contains a monger.Session, that monger.Session will be
+// replaced with the newly created monger.Session.
 //
 // Errors returned from the closure are transparently returned from
 // this method.

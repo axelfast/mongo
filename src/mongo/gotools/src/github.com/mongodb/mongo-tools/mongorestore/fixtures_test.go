@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
 	"fmt"
@@ -13,9 +13,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools/legacy/util"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools/legacy/util"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 type testCollData struct {

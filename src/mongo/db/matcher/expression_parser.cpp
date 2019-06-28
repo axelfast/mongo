@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,51 +27,51 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/matcher/expression_parser.h"
+#include "monger/db/matcher/expression_parser.h"
 
 #include <memory>
 #include <pcrecpp.h>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/matcher/expression_always_boolean.h"
-#include "mongo/db/matcher/expression_array.h"
-#include "mongo/db/matcher/expression_expr.h"
-#include "mongo/db/matcher/expression_geo.h"
-#include "mongo/db/matcher/expression_internal_expr_eq.h"
-#include "mongo/db/matcher/expression_leaf.h"
-#include "mongo/db/matcher/expression_tree.h"
-#include "mongo/db/matcher/expression_type.h"
-#include "mongo/db/matcher/expression_with_placeholder.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_all_elem_match_from_index.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_allowed_properties.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_cond.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_eq.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_fmod.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_match_array_index.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_max_items.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_max_length.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_max_properties.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_min_items.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_min_length.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_min_properties.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_object_match.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_root_doc_eq.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_unique_items.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_xor.h"
-#include "mongo/db/matcher/schema/json_schema_parser.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/util/str.h"
-#include "mongo/util/string_map.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/matcher/expression_always_boolean.h"
+#include "monger/db/matcher/expression_array.h"
+#include "monger/db/matcher/expression_expr.h"
+#include "monger/db/matcher/expression_geo.h"
+#include "monger/db/matcher/expression_internal_expr_eq.h"
+#include "monger/db/matcher/expression_leaf.h"
+#include "monger/db/matcher/expression_tree.h"
+#include "monger/db/matcher/expression_type.h"
+#include "monger/db/matcher/expression_with_placeholder.h"
+#include "monger/db/matcher/schema/expression_internal_schema_all_elem_match_from_index.h"
+#include "monger/db/matcher/schema/expression_internal_schema_allowed_properties.h"
+#include "monger/db/matcher/schema/expression_internal_schema_cond.h"
+#include "monger/db/matcher/schema/expression_internal_schema_eq.h"
+#include "monger/db/matcher/schema/expression_internal_schema_fmod.h"
+#include "monger/db/matcher/schema/expression_internal_schema_match_array_index.h"
+#include "monger/db/matcher/schema/expression_internal_schema_max_items.h"
+#include "monger/db/matcher/schema/expression_internal_schema_max_length.h"
+#include "monger/db/matcher/schema/expression_internal_schema_max_properties.h"
+#include "monger/db/matcher/schema/expression_internal_schema_min_items.h"
+#include "monger/db/matcher/schema/expression_internal_schema_min_length.h"
+#include "monger/db/matcher/schema/expression_internal_schema_min_properties.h"
+#include "monger/db/matcher/schema/expression_internal_schema_object_match.h"
+#include "monger/db/matcher/schema/expression_internal_schema_root_doc_eq.h"
+#include "monger/db/matcher/schema/expression_internal_schema_unique_items.h"
+#include "monger/db/matcher/schema/expression_internal_schema_xor.h"
+#include "monger/db/matcher/schema/json_schema_parser.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/util/str.h"
+#include "monger/util/string_map.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 /**
  * Returns true if subtree contains MatchExpression 'type'.
@@ -90,7 +90,7 @@ bool hasNode(const MatchExpression* root, MatchExpression::MatchType type) {
 
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 constexpr StringData AlwaysFalseMatchExpression::kName;
 constexpr StringData AlwaysTrueMatchExpression::kName;
@@ -1739,7 +1739,7 @@ StatusWithMatchExpression MatchExpressionParser::parse(
     invariant(expCtx.get());
     const DocumentParseLevel currentLevelCall = DocumentParseLevel::kPredicateTopLevel;
     try {
-        return ::mongo::parse(obj, expCtx, &extensionsCallback, allowedFeatures, currentLevelCall);
+        return ::monger::parse(obj, expCtx, &extensionsCallback, allowedFeatures, currentLevelCall);
     } catch (const DBException& ex) {
         return {ex.toStatus()};
     }
@@ -1887,4 +1887,4 @@ boost::optional<PathAcceptingKeyword> MatchExpressionParser::parsePathAcceptingK
     }
     return defaultKeyword;
 }
-}  // namespace mongo
+}  // namespace monger

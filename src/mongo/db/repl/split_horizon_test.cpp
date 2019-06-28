@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/split_horizon.h"
+#include "monger/db/repl/split_horizon.h"
 
 #include <algorithm>
 #include <boost/optional.hpp>
 #include <iterator>
 
-#include "mongo/stdx/utility.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/stdx/utility.h"
+#include "monger/unittest/unittest.h"
 
 using namespace std::literals::string_literals;
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 static const std::string defaultHost = "default.dns.name.example.com";
@@ -466,4 +466,4 @@ TEST(SplitHorizonTesting, BSONRoundTrip) {
 }
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

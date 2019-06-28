@@ -4,14 +4,14 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Main package for the mongofiles tool.
+// Main package for the mongerfiles tool.
 package main
 
 import (
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/signals"
-	"github.com/mongodb/mongo-tools-common/util"
-	"github.com/mongodb/mongo-tools/mongofiles"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/signals"
+	"github.com/mongerdb/monger-tools-common/util"
+	"github.com/mongerdb/monger-tools/mongerfiles"
 
 	"fmt"
 	"os"
@@ -23,10 +23,10 @@ var (
 )
 
 func main() {
-	opts, err := mongofiles.ParseOptions(os.Args[1:], VersionStr, GitCommit)
+	opts, err := mongerfiles.ParseOptions(os.Args[1:], VersionStr, GitCommit)
 	if err != nil {
 		log.Logv(log.Always, err.Error())
-		log.Logv(log.Always, util.ShortUsage("mongofiles"))
+		log.Logv(log.Always, util.ShortUsage("mongerfiles"))
 		os.Exit(util.ExitFailure)
 	}
 
@@ -42,7 +42,7 @@ func main() {
 		os.Exit(util.ExitSuccess)
 	}
 
-	mf, err := mongofiles.New(opts)
+	mf, err := mongerfiles.New(opts)
 	if err != nil {
 		log.Logv(log.Always, err.Error())
 		if setupErr, ok := err.(util.SetupError); ok && setupErr.Message != "" {

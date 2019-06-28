@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -496,7 +496,7 @@ class _CppTypeOptional(_CppTypeDelegating):
         if convert:
             # We need to convert between two different types of optional<T> and yet provide
             # the ability for the user specifiy an uninitialized optional. This occurs
-            # for vector<mongo::StringData> and vector<std::string> paired together.
+            # for vector<monger::StringData> and vector<std::string> paired together.
             return common.template_args(
                 textwrap.dedent("""\
                 if (${member_name}.is_initialized()) {

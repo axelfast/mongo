@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,17 +34,17 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/connection_string.h"
+#include "monger/stdx/mutex.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 /**
  * Encode a string for embedding in a URI.
  * Replaces reserved bytes with %xx sequences.
@@ -66,14 +66,14 @@ inline std::string uriEncode(StringData str, StringData passthrough = ""_sd) {
 StatusWith<std::string> uriDecode(StringData str);
 
 /**
- * MongoURI handles parsing of URIs for mongodb, and falls back to old-style
+ * MongoURI handles parsing of URIs for mongerdb, and falls back to old-style
  * ConnectionString parsing. It's used primarily by the shell.
  * It parses URIs with the following formats:
  *
- *    mongodb://[usr:pwd@]host1[:port1]...[,hostN[:portN]]][/[db][?options]]
- *    mongodb+srv://[usr:pwd@]host[/[db][?options]]
+ *    mongerdb://[usr:pwd@]host1[:port1]...[,hostN[:portN]]][/[db][?options]]
+ *    mongerdb+srv://[usr:pwd@]host[/[db][?options]]
  *
- * `mongodb+srv://` URIs will perform DNS SRV and TXT lookups and expand per the DNS Seedlist
+ * `mongerdb+srv://` URIs will perform DNS SRV and TXT lookups and expand per the DNS Seedlist
  * specification.
  *
  * While this format is generally RFC 3986 compliant, some exceptions do exist:
@@ -84,15 +84,15 @@ StatusWith<std::string> uriDecode(StringData str);
  *   2. The 'fragment' field, as defined by section 3.5 is not permitted.
  *
  * For a complete list of URI string options, see
- * https://docs.mongodb.com/manual/reference/connection-string/#connection-string-options
+ * https://docs.mongerdb.com/manual/reference/connection-string/#connection-string-options
  *
  * Examples:
  *
  *    A replica set with three members (one running on default port 27017):
- *      string uri = mongodb://localhost,localhost:27018,localhost:27019
+ *      string uri = mongerdb://localhost,localhost:27018,localhost:27019
  *
  *    Authenticated connection to db 'bedrock' with user 'barney' and pwd 'rubble':
- *      string url = mongodb://barney:rubble@localhost/bedrock
+ *      string url = mongerdb://barney:rubble@localhost/bedrock
  *
  *    Use parse() to parse the url, then validate and connect:
  *      string errmsg;
@@ -136,7 +136,7 @@ public:
     static StatusWith<MongoURI> parse(const std::string& url);
 
     /*
-     * Returns true if str starts with one of the uri schemes (e.g. mongodb:// or mongodb+srv://)
+     * Returns true if str starts with one of the uri schemes (e.g. mongerdb:// or mongerdb+srv://)
      */
     static bool isMongoURI(StringData str);
 
@@ -293,4 +293,4 @@ inline std::ostream& operator<<(std::ostream& ss, const MongoURI& uri) {
 inline StringBuilder& operator<<(StringBuilder& sb, const MongoURI& uri) {
     return sb << uri._connectString;
 }
-}  // namespace mongo
+}  // namespace monger

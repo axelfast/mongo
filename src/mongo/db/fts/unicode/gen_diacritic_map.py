@@ -78,7 +78,7 @@ def generate(target):
     out = open(target, "w")
 
     out.write(getCopyrightNotice())
-    out.write(include("mongo/db/fts/unicode/codepoints.h"))
+    out.write(include("monger/db/fts/unicode/codepoints.h"))
     out.write("\n")
     out.write(openNamespaces())
 

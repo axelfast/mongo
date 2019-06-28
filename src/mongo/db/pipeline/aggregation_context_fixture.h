@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <boost/intrusive_ptr.hpp>
 #include <memory>
 
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Test fixture which provides an ExpressionContext for use in testing.
@@ -65,4 +65,4 @@ private:
     ServiceContext::UniqueOperationContext _opCtx = makeOperationContext();
     boost::intrusive_ptr<ExpressionContext> _expCtx;
 };
-}  // namespace mongo
+}  // namespace monger

@@ -1,4 +1,4 @@
-package mongoreplay
+package mongerreplay
 
 import (
 	"fmt"

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,24 +29,24 @@
 
 #include <vector>
 
-#include "mongo/db/query/query_solution.h"
+#include "monger/db/query/query_solution.h"
 
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/matcher/expression_geo.h"
-#include "mongo/db/query/collation/collation_index_key.h"
-#include "mongo/db/query/index_bounds_builder.h"
-#include "mongo/db/query/planner_analysis.h"
-#include "mongo/db/query/planner_wildcard_helpers.h"
-#include "mongo/db/query/query_planner_common.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/db/index_names.h"
+#include "monger/db/matcher/expression_geo.h"
+#include "monger/db/query/collation/collation_index_key.h"
+#include "monger/db/query/index_bounds_builder.h"
+#include "monger/db/query/planner_analysis.h"
+#include "monger/db/query/planner_wildcard_helpers.h"
+#include "monger/db/query/query_planner_common.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
-namespace wcp = ::mongo::wildcard_planning;
+namespace wcp = ::monger::wildcard_planning;
 
 // Create an ordred interval list which represents the bounds for all BSON elements of type String,
 // Object, or Array.
@@ -1212,4 +1212,4 @@ QuerySolutionNode* EnsureSortedNode::clone() const {
     return copy;
 }
 
-}  // namespace mongo
+}  // namespace monger

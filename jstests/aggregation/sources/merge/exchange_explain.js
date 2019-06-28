@@ -10,12 +10,12 @@ load('jstests/aggregation/extras/utils.js');
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 1}});
 
-    const mongosDB = st.s.getDB("test_db");
+    const mongersDB = st.s.getDB("test_db");
 
-    const inColl = mongosDB["inColl"];
-    const targetCollRange = mongosDB["targetCollRange"];
-    const targetCollRangeOtherField = mongosDB["targetCollRangeOtherField"];
-    const targetCollHash = mongosDB["targetCollHash"];
+    const inColl = mongersDB["inColl"];
+    const targetCollRange = mongersDB["targetCollRange"];
+    const targetCollRangeOtherField = mongersDB["targetCollRangeOtherField"];
+    const targetCollHash = mongersDB["targetCollHash"];
 
     const numDocs = 1000;
 
@@ -59,7 +59,7 @@ load('jstests/aggregation/extras/utils.js');
     }
 
     // Shard the input collection.
-    st.shardColl(inColl, {a: 1}, {a: 500}, {a: 500}, mongosDB.getName());
+    st.shardColl(inColl, {a: 1}, {a: 500}, {a: 500}, mongersDB.getName());
 
     // Insert some data to the input collection.
     let bulk = inColl.initializeUnorderedBulkOp();
@@ -69,9 +69,9 @@ load('jstests/aggregation/extras/utils.js');
     assert.commandWorked(bulk.execute());
 
     // Shard the output collections.
-    st.shardColl(targetCollRange, {_id: 1}, {_id: 500}, {_id: 500}, mongosDB.getName());
-    st.shardColl(targetCollRangeOtherField, {b: 1}, {b: 500}, {b: 500}, mongosDB.getName());
-    st.shardColl(targetCollHash, {_id: "hashed"}, false, false, mongosDB.getName());
+    st.shardColl(targetCollRange, {_id: 1}, {_id: 500}, {_id: 500}, mongersDB.getName());
+    st.shardColl(targetCollRangeOtherField, {b: 1}, {b: 500}, {b: 500}, mongersDB.getName());
+    st.shardColl(targetCollHash, {_id: "hashed"}, false, false, mongersDB.getName());
 
     // Run the explain. We expect to see the range based exchange here.
     let explain = runExplainQuery(targetCollRange);
@@ -117,7 +117,7 @@ load('jstests/aggregation/extras/utils.js');
                     51132);
 
     // Turn off the exchange and rerun the query.
-    assert.commandWorked(mongosDB.adminCommand({setParameter: 1, internalQueryDisableExchange: 1}));
+    assert.commandWorked(mongersDB.adminCommand({setParameter: 1, internalQueryDisableExchange: 1}));
     explain = runExplainQuery(targetCollRange);
 
     // Make sure there is no exchange.
@@ -139,8 +139,8 @@ load('jstests/aggregation/extras/utils.js');
                     }],
                     51132);
 
-    // SERVER-38349 Make sure mongos rejects specifying exchange directly.
-    assert.commandFailedWithCode(mongosDB.runCommand({
+    // SERVER-38349 Make sure mongers rejects specifying exchange directly.
+    assert.commandFailedWithCode(mongersDB.runCommand({
         aggregate: inColl.getName(),
         pipeline: [],
         cursor: {},
@@ -154,7 +154,7 @@ load('jstests/aggregation/extras/utils.js');
     }),
                                  51028);
 
-    assert.commandFailedWithCode(mongosDB.runCommand({
+    assert.commandFailedWithCode(mongersDB.runCommand({
         aggregate: inColl.getName(),
         pipeline: [{
             $merge: {

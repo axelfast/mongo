@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/db/concurrency/locker.h"
+#include "monger/db/concurrency/locker.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Constructs a human-readable BSON from the specified LockerInfo structure.
@@ -39,4 +39,4 @@ namespace mongo {
  */
 void fillLockerInfo(const Locker::LockerInfo& lockerInfo, BSONObjBuilder& infoBuilder);
 
-}  // namespace mongo
+}  // namespace monger

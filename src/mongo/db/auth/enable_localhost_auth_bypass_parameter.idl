@@ -1,5 +1,5 @@
 global: 
-  cpp_namespace: "mongo" 
+  cpp_namespace: "monger" 
  
 server_parameters: 
   enableLocalhostAuthBypass: 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/async_results_merger.h"
+#include "monger/s/query/async_results_merger.h"
 
 #include <memory>
 
-#include "mongo/db/json.h"
-#include "mongo/db/pipeline/change_stream_constants.h"
-#include "mongo/db/pipeline/resume_token.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/query/results_merger_test_fixture.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/json.h"
+#include "monger/db/pipeline/change_stream_constants.h"
+#include "monger/db/pipeline/resume_token.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/query_request.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/query/results_merger_test_fixture.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -1915,4 +1915,4 @@ TEST_F(AsyncResultsMergerTest, ShouldNotScheduleGetMoresWithoutAnOperationContex
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

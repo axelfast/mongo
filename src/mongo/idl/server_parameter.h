@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,23 +31,23 @@
 /* The contents of this file are meant to be used by
  * code generated from idlc.py.
  *
- * It should not be instantiated directly from mongo code,
+ * It should not be instantiated directly from monger code,
  * rather parameters should be defined in .idl files.
  */
 
 #include <string>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobjbuilder.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobjbuilder.h"
 
 #define MONGO_SERVER_PARAMETER_REGISTER(name) \
     MONGO_INITIALIZER_GENERAL(                \
         name, ("BeginServerParameterRegistration"), ("EndServerParameterRegistration"))
 
-namespace mongo {
+namespace monger {
 
 /**
  * Server Parameters can be set startup up and/or runtime.
@@ -171,4 +171,4 @@ private:
     ServerParameter* _sp;
 };
 
-}  // namespace mongo
+}  // namespace monger

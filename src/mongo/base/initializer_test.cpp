@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
  * Unit tests of the Initializer type.
  */
 
-#include "mongo/base/init.h"
-#include "mongo/base/initializer.h"
-#include "mongo/base/initializer_dependency_graph.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/init.h"
+#include "monger/base/initializer.h"
+#include "monger/base/initializer_dependency_graph.h"
+#include "monger/unittest/unittest.h"
 
 /*
  * Unless otherwise specified, all tests herein use the following
@@ -77,7 +77,7 @@
         ASSERT_ADD_INITIALIZER(_graph_, "n8", FN8, ("n5", "n6", "n7"), MONGO_NO_DEPENDENTS);     \
     } while (false)
 
-namespace mongo {
+namespace monger {
 namespace {
 
 int globalCounts[9];
@@ -194,4 +194,4 @@ TEST(InitializerTest, Step5Misimplemented) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

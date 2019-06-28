@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/jsobj.h"
-#include "mongo/rpc/op_msg.h"
+#include "monger/db/jsobj.h"
+#include "monger/rpc/op_msg.h"
 
-namespace mongo {
+namespace monger {
 /**
  * Returns an OpMsgRequest for the supplied db and cmd. If useDocSequence is true, it will move the
  * following fields from the body to a document sequence:
@@ -48,4 +48,4 @@ namespace mongo {
  */
 OpMsgRequest toOpMsg(StringData db, const BSONObj& cmd, bool useDocSequence);
 
-}  // namespace mongo
+}  // namespace monger

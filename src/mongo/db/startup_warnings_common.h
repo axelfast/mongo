@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-namespace mongo {
+namespace monger {
 
 struct ServerGlobalParams;
 
 // Checks various startup conditions and logs any necessary warnings that
-// are common to both mongod and mongos processes.
+// are common to both mongerd and mongers processes.
 void logCommonStartupWarnings(const ServerGlobalParams& serverParams);
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/db/session_killer.h"
+#include "monger/db/session_killer.h"
 
 /**
  * Mongod local kill session / transaction functionality library.
  */
-namespace mongo {
+namespace monger {
 
 /**
- * Kills all cursors, ops, and transactions on mongod for sessions matching 'matcher'.
+ * Kills all cursors, ops, and transactions on mongerd for sessions matching 'matcher'.
  */
 SessionKiller::Result killSessionsLocal(OperationContext* opCtx,
                                         const SessionKiller::Matcher& matcher,
@@ -71,4 +71,4 @@ void killSessionsAbortAllPreparedTransactions(OperationContext* opCtx);
  */
 void yieldLocksForPreparedTransactions(OperationContext* opCtx);
 
-}  // namespace mongo
+}  // namespace monger

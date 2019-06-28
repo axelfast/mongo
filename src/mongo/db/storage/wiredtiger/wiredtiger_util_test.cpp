@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <sstream>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/system_clock_source.h"
+#include "monger/base/string_data.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/system_clock_source.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::stringstream;
@@ -103,7 +103,7 @@ private:
     WiredTigerOplogManager _oplogManager;
 };
 
-class WiredTigerUtilMetadataTest : public mongo::unittest::Test {
+class WiredTigerUtilMetadataTest : public monger::unittest::Test {
 public:
     virtual void setUp() {
         _harnessHelper.reset(new WiredTigerUtilHarnessHelper(""));
@@ -204,7 +204,7 @@ TEST_F(WiredTigerUtilMetadataTest, GetApplicationMetadataTypes) {
     const BSONObj& obj = result.getValue();
 
     BSONElement stringElement = obj.getField("stringkey");
-    ASSERT_EQUALS(mongo::String, stringElement.type());
+    ASSERT_EQUALS(monger::String, stringElement.type());
     ASSERT_EQUALS("abc", stringElement.String());
 
     BSONElement boolElement1 = obj.getField("boolkey1");
@@ -216,7 +216,7 @@ TEST_F(WiredTigerUtilMetadataTest, GetApplicationMetadataTypes) {
     ASSERT_FALSE(boolElement2.boolean());
 
     BSONElement identifierElement = obj.getField("idkey");
-    ASSERT_EQUALS(mongo::String, identifierElement.type());
+    ASSERT_EQUALS(monger::String, identifierElement.type());
     ASSERT_EQUALS("def", identifierElement.String());
 
     BSONElement numberElement = obj.getField("numkey");
@@ -224,7 +224,7 @@ TEST_F(WiredTigerUtilMetadataTest, GetApplicationMetadataTypes) {
     ASSERT_EQUALS(123, numberElement.numberInt());
 
     BSONElement structElement = obj.getField("structkey");
-    ASSERT_EQUALS(mongo::String, structElement.type());
+    ASSERT_EQUALS(monger::String, structElement.type());
     ASSERT_EQUALS("(k1=v2,k2=v2)", structElement.String());
 }
 
@@ -324,4 +324,4 @@ TEST(WiredTigerUtilTest, GetStatisticsValueValidKey) {
     ASSERT_EQUALS(0U, result.getValue());
 }
 
-}  // namespace mongo
+}  // namespace monger

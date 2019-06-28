@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/process_id.h"
-#include "mongo/stdx/variant.h"
-#include "mongo/util/net/cidr.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/process_id.h"
+#include "monger/stdx/variant.h"
+#include "monger/util/net/cidr.h"
 
-namespace mongo {
+namespace monger {
 
 const int DEFAULT_UNIX_PERMS = 0700;
 constexpr size_t DEFAULT_MAX_CONN = 1000000;
@@ -43,7 +43,7 @@ constexpr size_t DEFAULT_MAX_CONN = 1000000;
 enum class ClusterRole { None, ShardServer, ConfigServer };
 
 struct ServerGlobalParams {
-    std::string binaryName;  // mongod or mongos
+    std::string binaryName;  // mongerd or mongers
     std::string cwd;         // cwd of when process started
 
     int port = DefaultDBPort;  // --port
@@ -247,7 +247,7 @@ struct ServerGlobalParams {
 
     } featureCompatibility;
 
-    // Feature validation differs depending on the role of a mongod in a replica set. Replica set
+    // Feature validation differs depending on the role of a mongerd in a replica set. Replica set
     // primaries can accept user-initiated writes and validate based on the feature compatibility
     // version. A secondary always validates in the upgraded mode so that it can sync new features,
     // even when in the downgraded feature compatibility mode.

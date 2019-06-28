@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <memory>
 
-#include "mongo/db/service_liaison_mock.h"
-#include "mongo/util/periodic_runner_factory.h"
+#include "monger/db/service_liaison_mock.h"
+#include "monger/util/periodic_runner_factory.h"
 
-namespace mongo {
+namespace monger {
 
 MockServiceLiaisonImpl::MockServiceLiaisonImpl() {
     _timerFactory = std::make_unique<executor::AsyncTimerFactoryMock>();
@@ -113,4 +113,4 @@ std::pair<Status, int> MockServiceLiaisonImpl::killCursorsWithMatchingSessions(
     return std::make_pair(Status::OK(), 0);
 }
 
-}  // namespace mongo
+}  // namespace monger

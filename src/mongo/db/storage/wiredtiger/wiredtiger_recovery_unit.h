@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,17 +36,17 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/repl/read_concern_level.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/util/timer.h"
+#include "monger/base/checked_cast.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/record_id.h"
+#include "monger/db/repl/read_concern_level.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 using RoundUpPreparedTimestamps = WiredTigerBeginTxnBlock::RoundUpPreparedTimestamps;
 using RoundUpReadTimestamp = WiredTigerBeginTxnBlock::RoundUpReadTimestamp;
@@ -255,4 +255,4 @@ private:
     boost::optional<int64_t> _oplogVisibleTs = boost::none;
 };
 
-}  // namespace mongo
+}  // namespace monger

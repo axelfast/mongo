@@ -20,9 +20,9 @@
             1);
     }
 
-    const mongodOptions = {};
-    const conn = MongoRunner.runMongod(mongodOptions);
-    assert.neq(null, conn, `mongod failed to start with options ${tojson(mongodOptions)}`);
+    const mongerdOptions = {};
+    const conn = MongoRunner.runMongod(mongerdOptions);
+    assert.neq(null, conn, `mongerd failed to start with options ${tojson(mongerdOptions)}`);
 
     const db = conn.getDB(`${jsTest.name()}_db`);
     const source = db.getCollection(`${jsTest.name()}_source`);

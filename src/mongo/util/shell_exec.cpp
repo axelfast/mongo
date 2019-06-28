@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/shell_exec.h"
+#include "monger/util/shell_exec.h"
 
 #include <memory>
 
@@ -41,12 +41,12 @@
 #include <stdio.h>
 #endif
 
-#include "mongo/util/errno_util.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
-#include "mongo/util/time_support.h"
+#include "monger/util/errno_util.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 constexpr size_t kExecBufferSizeBytes = 1024;
 
@@ -265,8 +265,8 @@ private:
 };
 #endif
 }  // namespace
-}  // namespace mongo
-mongo::StatusWith<std::string> mongo::shellExec(const std::string& cmd,
+}  // namespace monger
+monger::StatusWith<std::string> monger::shellExec(const std::string& cmd,
                                                 Milliseconds timeout,
                                                 size_t maxlen) try {
     if (durationCount<Milliseconds>(timeout) <= 0) {
@@ -297,5 +297,5 @@ mongo::StatusWith<std::string> mongo::shellExec(const std::string& cmd,
 
     return sb.str();
 } catch (...) {
-    return mongo::exceptionToStatus();
+    return monger::exceptionToStatus();
 }

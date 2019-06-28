@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,15 +34,15 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/s/chunk.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/util/concurrency/ticketholder.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/s/chunk.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/util/concurrency/ticketholder.h"
 
-namespace mongo {
+namespace monger {
 
 class CanonicalQuery;
 struct QuerySolutionNode;
@@ -408,4 +408,4 @@ private:
     boost::optional<Timestamp> _clusterTime;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,8 +28,8 @@
  */
 
 
-#include "mongo/platform/decimal128.h"
-#include "mongo/platform/basic.h"
+#include "monger/platform/decimal128.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <cctype>
@@ -46,15 +46,15 @@
 #include <third_party/IntelRDFPMathLib20U1/LIBRARY/src/bid_functions.h>
 #undef _WCHAR_T
 
-#include "mongo/base/static_assert.h"
-#include "mongo/base/string_data.h"
-#include "mongo/config.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/static_assert.h"
+#include "monger/base/string_data.h"
+#include "monger/config.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
 namespace {
 
-std::string toAsciiLowerCase(mongo::StringData input) {
+std::string toAsciiLowerCase(monger::StringData input) {
     std::string res = input.toString();
     for (char& c : res) {
         c = tolower(c);
@@ -64,7 +64,7 @@ std::string toAsciiLowerCase(mongo::StringData input) {
 
 // Returns the number of characters consumed from input string. If unable to parse,
 // it returns 0.
-size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlags) {
+size_t validateInputString(monger::StringData input, std::uint32_t* signalingFlags) {
     // Input must be of these forms:
     // * Valid decimal (standard or scientific notation):
     //      /[-+]?\d*(.\d+)?([e][+\-]?\d+)?/
@@ -76,7 +76,7 @@ size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlag
     // Check for NaN and Infinity
     size_t start = (isSigned) ? 1 : 0;
     size_t charsConsumed = start;
-    mongo::StringData noSign = input.substr(start);
+    monger::StringData noSign = input.substr(start);
     bool isNanOrInf = noSign == "nan" || noSign == "inf" || noSign == "infinity";
     if (isNanOrInf)
         return start + noSign.size();
@@ -84,10 +84,10 @@ size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlag
     // Input starting with non digit
     if (!std::isdigit(noSign[0])) {
         if (noSign[0] != '.') {
-            *signalingFlags = mongo::Decimal128::SignalingFlag::kInvalid;
+            *signalingFlags = monger::Decimal128::SignalingFlag::kInvalid;
             return 0;
         } else if (noSign.size() == 1) {
-            *signalingFlags = mongo::Decimal128::SignalingFlag::kInvalid;
+            *signalingFlags = monger::Decimal128::SignalingFlag::kInvalid;
             return 0;
         }
     }
@@ -101,7 +101,7 @@ size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlag
         char c = noSign[i];
         if (c == '.') {
             if (parsedDot) {
-                *signalingFlags = mongo::Decimal128::SignalingFlag::kInvalid;
+                *signalingFlags = monger::Decimal128::SignalingFlag::kInvalid;
                 return 0;
             }
             parsedDot = true;
@@ -118,7 +118,7 @@ size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlag
 
     if (isZero) {
         // Override inexact/overflow flag set by the intel library
-        *signalingFlags = mongo::Decimal128::SignalingFlag::kNoFlag;
+        *signalingFlags = monger::Decimal128::SignalingFlag::kNoFlag;
     }
 
     // Input is valid if we've parsed the entire string
@@ -128,21 +128,21 @@ size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlag
 
     // String with empty coefficient and non-empty exponent
     if (!hasCoefficient) {
-        *signalingFlags = mongo::Decimal128::SignalingFlag::kInvalid;
+        *signalingFlags = monger::Decimal128::SignalingFlag::kInvalid;
         return 0;
     }
 
     // Check exponent
-    mongo::StringData exponent = noSign.substr(i);
+    monger::StringData exponent = noSign.substr(i);
 
     if (exponent[0] != 'e' || exponent.size() < 2) {
-        *signalingFlags = mongo::Decimal128::SignalingFlag::kInvalid;
+        *signalingFlags = monger::Decimal128::SignalingFlag::kInvalid;
         return 0;
     }
     if (exponent[1] == '-' || exponent[1] == '+') {
         exponent = exponent.substr(2);
         if (exponent.size() == 0) {
-            *signalingFlags = mongo::Decimal128::SignalingFlag::kInvalid;
+            *signalingFlags = monger::Decimal128::SignalingFlag::kInvalid;
             return 0;
         }
         charsConsumed += 2;
@@ -154,7 +154,7 @@ size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlag
     for (size_t j = 0; j < exponent.size(); j++) {
         char c = exponent[j];
         if (!std::isdigit(c)) {
-            *signalingFlags = mongo::Decimal128::SignalingFlag::kInvalid;
+            *signalingFlags = monger::Decimal128::SignalingFlag::kInvalid;
             return 0;
         }
         ++charsConsumed;
@@ -163,7 +163,7 @@ size_t validateInputString(mongo::StringData input, std::uint32_t* signalingFlag
 }
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 namespace {
 // Determine system's endian ordering in order to construct decimal 128 values directly
@@ -1034,4 +1034,4 @@ std::ostream& operator<<(std::ostream& stream, const Decimal128& value) {
     return stream << value.toString();
 }
 
-}  // namespace mongo
+}  // namespace monger

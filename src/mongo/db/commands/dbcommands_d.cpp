@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,73 +27,73 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <time.h>
 
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/user_management_commands_parser.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/coll_mod.h"
-#include "mongo/db/catalog/create_collection.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/drop_collection.h"
-#include "mongo/db/catalog/drop_database.h"
-#include "mongo/db/catalog/index_key_validate.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/profile_common.h"
-#include "mongo/db/commands/profile_gen.h"
-#include "mongo/db/commands/server_status.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/introspect.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/read_concern.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/stats/storage_stats.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/md5.hpp"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/user_management_commands_parser.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/coll_mod.h"
+#include "monger/db/catalog/create_collection.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/drop_collection.h"
+#include "monger/db/catalog/drop_database.h"
+#include "monger/db/catalog/index_key_validate.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/profile_common.h"
+#include "monger/db/commands/profile_gen.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/introspect.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/stats/storage_stats.h"
+#include "monger/db/write_concern.h"
+#include "monger/s/stale_exception.h"
+#include "monger/scripting/engine.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/md5.hpp"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 using std::ostringstream;
 using std::string;
@@ -193,8 +193,8 @@ public:
         if (partialOk) {
             // WARNING: This code depends on the binary layout of md5_state. It will not be
             // compatible with different md5 libraries or work correctly in an environment with
-            // mongod's of different endians. It is ok for mongos to be a different endian since
-            // it just passes the buffer through to another mongod.
+            // mongerd's of different endians. It is ok for mongers to be a different endian since
+            // it just passes the buffer through to another mongerd.
             BSONElement stateElem = jsobj["md5state"];
             if (!stateElem.eoo()) {
                 uassert(50847,
@@ -376,4 +376,4 @@ public:
 } availableQueryOptionsCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

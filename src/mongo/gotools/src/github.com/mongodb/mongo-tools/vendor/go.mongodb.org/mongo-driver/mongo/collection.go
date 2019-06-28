@@ -4,24 +4,24 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package monger
 
 import (
 	"context"
 	"errors"
 	"strings"
 
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/session"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/result"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/session"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/result"
 )
 
 // Collection performs operations on a given collection.
@@ -145,7 +145,7 @@ func (coll *Collection) Database() *Database {
 
 // BulkWrite performs a bulk write operation.
 //
-// See https://docs.mongodb.com/manual/core/bulk-write-operations/.
+// See https://docs.mongerdb.com/manual/core/bulk-write-operations/.
 func (coll *Collection) BulkWrite(ctx context.Context, models []WriteModel,
 	opts ...*options.BulkWriteOptions) (*BulkWriteResult, error) {
 
@@ -670,7 +670,7 @@ func (coll *Collection) ReplaceOne(ctx context.Context, filter interface{},
 
 // Aggregate runs an aggregation framework pipeline.
 //
-// See https://docs.mongodb.com/manual/aggregation/.
+// See https://docs.mongerdb.com/manual/aggregation/.
 func (coll *Collection) Aggregate(ctx context.Context, pipeline interface{},
 	opts ...*options.AggregateOptions) (*Cursor, error) {
 

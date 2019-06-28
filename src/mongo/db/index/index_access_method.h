@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,17 +33,17 @@
 #include <memory>
 #include <set>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index/multikey_metadata_access_stats.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/sorter/sorter.h"
-#include "mongo/db/storage/sorted_data_interface.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index/multikey_metadata_access_stats.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/record_id.h"
+#include "monger/db/sorter/sorter.h"
+#include "monger/db/storage/sorted_data_interface.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 class MatchExpression;
@@ -211,7 +211,7 @@ public:
 
     class BulkBuilder {
     public:
-        using Sorter = mongo::Sorter<BSONObj, RecordId>;
+        using Sorter = monger::Sorter<BSONObj, RecordId>;
 
         virtual ~BulkBuilder() = default;
 
@@ -582,4 +582,4 @@ private:
     const std::unique_ptr<SortedDataInterface> _newInterface;
 };
 
-}  // namespace mongo
+}  // namespace monger

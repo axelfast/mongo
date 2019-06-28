@@ -4,22 +4,22 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoexport
+package mongerexport
 
 import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
 )
 
 var Usage = `<options>
 
 Export data from MongoDB in CSV or JSON format.
 
-See http://docs.mongodb.org/manual/reference/program/mongoexport/ for more information.`
+See http://docs.mongerdb.org/manual/reference/program/mongerexport/ for more information.`
 
 // OutputFormatOptions defines the set of options to use in formatting exported data.
 type OutputFormatOptions struct {
@@ -91,7 +91,7 @@ func (inputOptions *InputOptions) GetQuery() ([]byte, error) {
 	panic("GetQuery can return valid values only for query or queryFile input")
 }
 
-// Options represents all possible options that can be used to configure mongoexport.
+// Options represents all possible options that can be used to configure mongerexport.
 type Options struct {
 	*options.ToolOptions
 	*OutputFormatOptions
@@ -99,10 +99,10 @@ type Options struct {
 	ParsedArgs []string
 }
 
-// ParseOptions reads command line arguments and converts them into options that can be used to configure mongoexport.
+// ParseOptions reads command line arguments and converts them into options that can be used to configure mongerexport.
 func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, error) {
 	// initialize command-line opts
-	opts := options.New("mongoexport", versionStr, gitCommit, Usage,
+	opts := options.New("mongerexport", versionStr, gitCommit, Usage,
 		options.EnabledOptions{Auth: true, Connection: true, Namespace: true, URI: true})
 	outputOpts := &OutputFormatOptions{}
 	opts.AddOptions(outputOpts)

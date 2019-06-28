@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cmath>
 #include <cstdint>
@@ -36,11 +36,11 @@
 #include <typeinfo>
 #include <vector>
 
-#include "mongo/base/parse_number.h"
-#include "mongo/base/status.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/if_constexpr.h"
-#include "mongo/util/str.h"  // for str::stream()!
+#include "monger/base/parse_number.h"
+#include "monger/base/status.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/if_constexpr.h"
+#include "monger/util/str.h"  // for str::stream()!
 
 #define ASSERT_PARSES_WITH_PARSER(type, input_string, parser, expected_value) \
     do {                                                                      \
@@ -55,7 +55,7 @@
 #define ASSERT_PARSES_WITH_BASE(TYPE, INPUT_STRING, BASE, EXPECTED_VALUE) \
     ASSERT_PARSES_WITH_PARSER(TYPE, INPUT_STRING, NumberParser().base(BASE), EXPECTED_VALUE)
 
-namespace mongo {
+namespace monger {
 namespace {
 
 template <typename... Ts>
@@ -542,4 +542,4 @@ TEST(Double, TestParsingNormal) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

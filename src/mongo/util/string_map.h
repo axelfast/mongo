@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,10 +32,10 @@
 #include <absl/container/flat_hash_map.h>
 #include <absl/container/flat_hash_set.h>
 
-#include "mongo/base/string_data.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/string_data.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 // Type that bundles a hashed key with the actual string so hashing can be performed outside of
 // insert call by using heterogeneous lookup.
@@ -118,4 +118,4 @@ using StringDataMap = absl::flat_hash_map<StringData, V, StringMapHasher, String
 
 using StringDataSet = absl::flat_hash_set<StringData, StringMapHasher, StringMapEq>;
 
-}  // namespace mongo
+}  // namespace monger

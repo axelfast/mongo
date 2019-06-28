@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/s/balancer/balancer_random.h"
-#include "mongo/db/s/balancer/cluster_statistics.h"
+#include "monger/db/s/balancer/balancer_random.h"
+#include "monger/db/s/balancer/cluster_statistics.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Default implementation for the cluster statistics gathering utility. Uses a blocking method to
@@ -51,4 +51,4 @@ private:
     BalancerRandomSource& _random;
 };
 
-}  // namespace mongo
+}  // namespace monger

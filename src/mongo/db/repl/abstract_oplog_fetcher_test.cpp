@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/repl/abstract_oplog_fetcher.h"
-#include "mongo/db/repl/abstract_oplog_fetcher_test_fixture.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/task_executor_mock.h"
-#include "mongo/unittest/task_executor_proxy.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/repl/abstract_oplog_fetcher.h"
+#include "monger/db/repl/abstract_oplog_fetcher_test_fixture.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/task_executor_mock.h"
+#include "monger/unittest/task_executor_proxy.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/scopeguard.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 
 using executor::RemoteCommandRequest;
 using executor::RemoteCommandResponse;

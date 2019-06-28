@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/feature_compatibility_version.h"
+#include "monger/db/commands/feature_compatibility_version.h"
 
-#include "mongo/base/status.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/commands/feature_compatibility_version_documentation.h"
-#include "mongo/db/commands/feature_compatibility_version_gen.h"
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/kill_sessions_local.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/executor/egress_tag_closer_manager.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/grid.h"
-#include "mongo/transport/service_entry_point.h"
-#include "mongo/util/log.h"
+#include "monger/base/status.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/commands/feature_compatibility_version_documentation.h"
+#include "monger/db/commands/feature_compatibility_version_gen.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/kill_sessions_local.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/wire_version.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/executor/egress_tag_closer_manager.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/grid.h"
+#include "monger/transport/service_entry_point.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using repl::UnreplicatedWritesBlock;
 
@@ -317,4 +317,4 @@ Status FeatureCompatibilityVersionParameter::setFromString(const std::string&) {
                           << "."};
 }
 
-}  // namespace mongo
+}  // namespace monger

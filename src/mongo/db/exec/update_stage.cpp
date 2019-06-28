@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,39 +27,39 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kWrite
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kWrite
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/update_stage.h"
+#include "monger/db/exec/update_stage.h"
 
 #include <algorithm>
 #include <memory>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bson_comparator_interface_base.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/exec/write_stage_common.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/operation_sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/duplicate_key_error_info.h"
-#include "mongo/db/update/path_support.h"
-#include "mongo/db/update/storage_validation.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/s/would_change_owning_shard_exception.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bson_comparator_interface_base.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/exec/write_stage_common.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/operation_sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/duplicate_key_error_info.h"
+#include "monger/db/update/path_support.h"
+#include "monger/db/update/storage_validation.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/s/would_change_owning_shard_exception.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(hangBeforeUpsertPerformsInsert);
 MONGO_FAIL_POINT_DEFINE(hangBeforeThrowWouldChangeOwningShard);
@@ -986,4 +986,4 @@ bool UpdateStage::checkUpdateChangesShardKeyFields(ScopedCollectionMetadata meta
     return true;
 }
 
-}  // namespace mongo
+}  // namespace monger

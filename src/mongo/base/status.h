@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <iosfwd>
 #include <string>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/error_extra_info.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/compiler.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/error_extra_info.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/compiler.h"
 
-namespace mongo {
+namespace monger {
 
 namespace str {
 class stream;
@@ -332,4 +332,4 @@ inline bool operator!=(const ErrorCodes::Error lhs, const Status& rhs) {
     return rhs != lhs;
 }
 
-}  // namespace mongo
+}  // namespace monger

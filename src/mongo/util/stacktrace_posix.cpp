@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/stacktrace.h"
+#include "monger/util/stacktrace.h"
 
 #include <cstdlib>
 #include <dlfcn.h>
@@ -39,13 +39,13 @@
 #include <string>
 #include <sys/utsname.h>
 
-#include "mongo/base/init.h"
-#include "mongo/config.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/version.h"
+#include "monger/base/init.h"
+#include "monger/config.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/version.h"
 
 #if defined(MONGO_CONFIG_HAVE_EXECINFO_BACKTRACE)
 #include <execinfo.h>
@@ -53,7 +53,7 @@
 #include <ucontext.h>
 #endif
 
-namespace mongo {
+namespace monger {
 
 namespace {
 /// Maximum number of stack frames to appear in a backtrace.
@@ -260,7 +260,7 @@ MONGO_INITIALIZER(ExtractSOMap)(InitializerContext*) {
     BSONObjBuilder soMap;
 
     auto&& vii = VersionInfoInterface::instance(VersionInfoInterface::NotEnabledAction::kFallback);
-    soMap << "mongodbVersion" << vii.version();
+    soMap << "mongerdbVersion" << vii.version();
     soMap << "gitVersion" << vii.gitVersion();
     soMap << "compiledModules" << vii.modules();
 
@@ -276,14 +276,14 @@ MONGO_INITIALIZER(ExtractSOMap)(InitializerContext*) {
 }
 }  // namespace
 
-}  // namespace mongo
+}  // namespace monger
 
 #if defined(__linux__)
 
 #include <elf.h>
 #include <link.h>
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -454,7 +454,7 @@ void addOSComponentsToSoMap(BSONObjBuilder* soMap) {
 
 }  // namespace
 
-}  // namespace mongo
+}  // namespace monger
 
 #elif defined(__APPLE__) && defined(__MACH__)
 
@@ -462,7 +462,7 @@ void addOSComponentsToSoMap(BSONObjBuilder* soMap) {
 #include <mach-o/ldsyms.h>
 #include <mach-o/loader.h>
 
-namespace mongo {
+namespace monger {
 namespace {
 const char* lcNext(const char* lcCurr) {
     const load_command* cmd = reinterpret_cast<const load_command*>(lcCurr);
@@ -539,11 +539,11 @@ void addOSComponentsToSoMap(BSONObjBuilder* soMap) {
     }
 }
 }  // namepace
-}  // namespace mongo
+}  // namespace monger
 #else
-namespace mongo {
+namespace monger {
 namespace {
 void addOSComponentsToSoMap(BSONObjBuilder* soMap) {}
 }  // namepace
-}  // namespace mongo
+}  // namespace monger
 #endif

@@ -1,4 +1,4 @@
-// Test TransientTransactionErrors error label in mongos write commands.
+// Test TransientTransactionErrors error label in mongers write commands.
 // @tags: [uses_transactions, uses_multi_shard_transaction]
 (function() {
     "use strict";
@@ -18,7 +18,7 @@
                     closeConnection: closeConnection,
                     errorCode: errorCode,
                     failCommands: [commandToFail],
-                    failInternalCommands: true  // mongod sees mongos as an internal client
+                    failInternalCommands: true  // mongerd sees mongers as an internal client
                 }
             }));
         });
@@ -32,7 +32,7 @@
                 data: {
                     writeConcernError: {code: NumberInt(12345), errmsg: "dummy"},
                     failCommands: [commandToFail],
-                    failInternalCommands: true  // mongod sees mongos as an internal client
+                    failInternalCommands: true  // mongerd sees mongers as an internal client
                 }
             }));
         });
@@ -46,10 +46,10 @@
     };
 
     let numCalls = 0;
-    const startTransaction = function(mongosSession, dbName, collName) {
+    const startTransaction = function(mongersSession, dbName, collName) {
         numCalls++;
-        mongosSession.startTransaction();
-        return mongosSession.getDatabase(dbName).runCommand({
+        mongersSession.startTransaction();
+        return mongersSession.getDatabase(dbName).runCommand({
             insert: collName,
             // Target both chunks, wherever they may be
             documents: [{_id: -1 * numCalls}, {_id: numCalls}],
@@ -66,9 +66,9 @@
         }));
     };
 
-    const commitTransaction = function(mongosSession) {
-        let res = mongosSession.commitTransaction_forTesting();
-        print("commitTransaction response from mongos: " + tojson(res));
+    const commitTransaction = function(mongersSession) {
+        let res = mongersSession.commitTransaction_forTesting();
+        print("commitTransaction response from mongers: " + tojson(res));
         return res;
     };
 
@@ -98,51 +98,51 @@
     const runCommitTests = function(commandSentToShard) {
         jsTest.log("Mongos does not attach any error label if " + commandSentToShard +
                    " returns success.");
-        assert.commandWorked(startTransaction(mongosSession, dbName, collName));
-        res = mongosSession.commitTransaction_forTesting();
+        assert.commandWorked(startTransaction(mongersSession, dbName, collName));
+        res = mongersSession.commitTransaction_forTesting();
         checkMongosResponse(res, null, null, null);
 
         jsTest.log("Mongos does not attach any error label if " + commandSentToShard +
                    " returns success with writeConcern error.");
         failCommandWithWriteConcernError(st.rs0, commandSentToShard);
-        assert.commandWorked(startTransaction(mongosSession, dbName, collName));
-        res = mongosSession.commitTransaction_forTesting();
+        assert.commandWorked(startTransaction(mongersSession, dbName, collName));
+        res = mongersSession.commitTransaction_forTesting();
         checkMongosResponse(res, null, null, true);
         turnOffFailCommand(st.rs0);
 
         jsTest.log("Mongos attaches 'TransientTransactionError' label if " + commandSentToShard +
                    " returns NoSuchTransaction.");
-        assert.commandWorked(startTransaction(mongosSession, dbName, collName));
+        assert.commandWorked(startTransaction(mongersSession, dbName, collName));
         abortTransactionDirectlyOnParticipant(
-            st.rs0, mongosSession.getSessionId(), mongosSession.getTxnNumber_forTesting());
-        res = mongosSession.commitTransaction_forTesting();
+            st.rs0, mongersSession.getSessionId(), mongersSession.getTxnNumber_forTesting());
+        res = mongersSession.commitTransaction_forTesting();
         checkMongosResponse(res, ErrorCodes.NoSuchTransaction, "TransientTransactionError", null);
         turnOffFailCommand(st.rs0);
 
         jsTest.log("Mongos does not attach any error label if " + commandSentToShard +
                    " returns NoSuchTransaction with writeConcern error.");
         failCommandWithWriteConcernError(st.rs0, commandSentToShard);
-        assert.commandWorked(startTransaction(mongosSession, dbName, collName));
+        assert.commandWorked(startTransaction(mongersSession, dbName, collName));
         abortTransactionDirectlyOnParticipant(
-            st.rs0, mongosSession.getSessionId(), mongosSession.getTxnNumber_forTesting());
-        res = mongosSession.commitTransaction_forTesting();
+            st.rs0, mongersSession.getSessionId(), mongersSession.getTxnNumber_forTesting());
+        res = mongersSession.commitTransaction_forTesting();
         checkMongosResponse(res, ErrorCodes.NoSuchTransaction, null, true);
         turnOffFailCommand(st.rs0);
 
         jsTest.log("No error label for network error if " + commandSentToShard +
                    " returns network error");
-        assert.commandWorked(startTransaction(mongosSession, dbName, collName));
+        assert.commandWorked(startTransaction(mongersSession, dbName, collName));
         failCommandWithError(st.rs0, {
             commandToFail: commandSentToShard,
             errorCode: ErrorCodes.InternalError,
             closeConnection: true
         });
-        res = mongosSession.commitTransaction_forTesting();
+        res = mongersSession.commitTransaction_forTesting();
         checkMongosResponse(res, ErrorCodes.HostUnreachable, false /* expectedErrorLabel */, null);
         turnOffFailCommand(st.rs0);
     };
 
-    let st = new ShardingTest({shards: 2, config: 1, mongosOptions: {verbose: 3}});
+    let st = new ShardingTest({shards: 2, config: 1, mongersOptions: {verbose: 3}});
 
     // Create a sharded collection with a chunk on each shard:
     // shard0: [-inf, 0)
@@ -158,8 +158,8 @@
     assert.commandWorked(st.shard0.adminCommand({_flushRoutingTableCacheUpdates: ns}));
     assert.commandWorked(st.shard1.adminCommand({_flushRoutingTableCacheUpdates: ns}));
 
-    let mongosSession = st.s.startSession();
-    let mongosSessionDB = mongosSession.getDatabase(dbName);
+    let mongersSession = st.s.startSession();
+    let mongersSessionDB = mongersSession.getDatabase(dbName);
 
     let res;
 
@@ -169,26 +169,26 @@
     failCommandWithError(
         st.rs0,
         {commandToFail: "insert", errorCode: ErrorCodes.WriteConflict, closeConnection: false});
-    res = startTransaction(mongosSession, dbName, collName);
+    res = startTransaction(mongersSession, dbName, collName);
     checkMongosResponse(res, ErrorCodes.WriteConflict, "TransientTransactionError", null);
     turnOffFailCommand(st.rs0);
-    assert.commandFailedWithCode(mongosSession.abortTransaction_forTesting(),
+    assert.commandFailedWithCode(mongersSession.abortTransaction_forTesting(),
                                  ErrorCodes.NoSuchTransaction);
 
     // statements prior to commit network error
     failCommandWithError(
         st.rs0,
         {commandToFail: "insert", errorCode: ErrorCodes.InternalError, closeConnection: true});
-    res = startTransaction(mongosSession, dbName, collName);
+    res = startTransaction(mongersSession, dbName, collName);
     checkMongosResponse(res, ErrorCodes.HostUnreachable, "TransientTransactionError", null);
     turnOffFailCommand(st.rs0);
-    assert.commandFailedWithCode(mongosSession.abortTransaction_forTesting(),
+    assert.commandFailedWithCode(mongersSession.abortTransaction_forTesting(),
                                  ErrorCodes.NoSuchTransaction);
 
-    // commitTransaction for single-shard transaction (mongos sends commitTransaction)
+    // commitTransaction for single-shard transaction (mongers sends commitTransaction)
     runCommitTests("commitTransaction");
 
-    // commitTransaction for multi-shard transaction (mongos sends coordinateCommitTransaction)
+    // commitTransaction for multi-shard transaction (mongers sends coordinateCommitTransaction)
     assert.commandWorked(
         st.s.adminCommand({moveChunk: ns, find: {_id: 0}, to: st.shard1.shardName}));
     flushRoutersAndRefreshShardMetadata(st, {ns});

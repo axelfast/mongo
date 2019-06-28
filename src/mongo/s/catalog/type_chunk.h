@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/s/catalog/type_chunk_base_gen.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/shard_id.h"
-#include "mongo/s/shard_key_pattern.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/s/catalog/type_chunk_base_gen.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/shard_id.h"
+#include "monger/s/shard_key_pattern.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 class Status;
@@ -112,7 +112,7 @@ private:
 class ChunkHistory : public ChunkHistoryBase {
 public:
     ChunkHistory() : ChunkHistoryBase() {}
-    ChunkHistory(mongo::Timestamp ts, mongo::ShardId shard) : ChunkHistoryBase() {
+    ChunkHistory(monger::Timestamp ts, monger::ShardId shard) : ChunkHistoryBase() {
         setValidAfter(std::move(ts));
         setShard(std::move(shard));
     }
@@ -305,4 +305,4 @@ private:
     std::vector<ChunkHistory> _history;
 };
 
-}  // namespace mongo
+}  // namespace monger

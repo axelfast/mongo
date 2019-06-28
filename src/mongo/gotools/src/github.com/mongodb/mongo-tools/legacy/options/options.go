@@ -5,7 +5,7 @@
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
 // Package options implements command-line options that are used by all of
-// the mongo tools.
+// the monger tools.
 package options
 
 import (
@@ -18,10 +18,10 @@ import (
 	"time"
 
 	"github.com/jessevdk/go-flags"
-	"github.com/mongodb/mongo-tools/legacy/connstring"
-	"github.com/mongodb/mongo-tools/legacy/failpoint"
-	"github.com/mongodb/mongo-tools/legacy/log"
-	"github.com/mongodb/mongo-tools/legacy/util"
+	"github.com/mongerdb/monger-tools/legacy/connstring"
+	"github.com/mongerdb/monger-tools/legacy/failpoint"
+	"github.com/mongerdb/monger-tools/legacy/log"
+	"github.com/mongerdb/monger-tools/legacy/util"
 )
 
 // Gitspec that the tool was built with. Needs to be set using -ldflags
@@ -116,7 +116,7 @@ func (v Verbosity) IsQuiet() bool {
 }
 
 type URI struct {
-	ConnectionString string `long:"uri" value-name:"mongodb-uri" description:"mongodb uri connection string"`
+	ConnectionString string `long:"uri" value-name:"mongerdb-uri" description:"mongerdb uri connection string"`
 
 	knownURIParameters   []string
 	extraOptionsRegistry []ExtraOptions
@@ -125,7 +125,7 @@ type URI struct {
 
 // Struct holding connection-related options
 type Connection struct {
-	Host string `short:"h" long:"host" value-name:"<hostname>" description:"mongodb host to connect to (setname/host1,host2 for replica sets)"`
+	Host string `short:"h" long:"host" value-name:"<hostname>" description:"mongerdb host to connect to (setname/host1,host2 for replica sets)"`
 	Port string `long:"port" value-name:"<port>" description:"server port (can also use --host hostname:port)"`
 
 	// XXX Rename Timeout to ConnectTimeout for clarity
@@ -135,7 +135,7 @@ type Connection struct {
 
 // Struct holding ssl-related options
 type SSL struct {
-	UseSSL              bool   `long:"ssl" description:"connect to a mongod or mongos that has ssl enabled"`
+	UseSSL              bool   `long:"ssl" description:"connect to a mongerd or mongers that has ssl enabled"`
 	SSLCAFile           string `long:"sslCAFile" value-name:"<filename>" description:"the .pem file containing the root certificate chain from the certificate authority"`
 	SSLPEMKeyFile       string `long:"sslPEMKeyFile" value-name:"<filename>" description:"the .pem file containing the certificate and key"`
 	SSLPEMKeyPassword   string `long:"sslPEMKeyPassword" value-name:"<password>" description:"the password to decrypt the sslPEMKeyFile, if necessary"`
@@ -155,12 +155,12 @@ type Auth struct {
 
 // Struct for Kerberos/GSSAPI-specific options
 type Kerberos struct {
-	Service     string `long:"gssapiServiceName" value-name:"<service-name>" description:"service name to use when authenticating using GSSAPI/Kerberos ('mongodb' by default)"`
+	Service     string `long:"gssapiServiceName" value-name:"<service-name>" description:"service name to use when authenticating using GSSAPI/Kerberos ('mongerdb' by default)"`
 	ServiceHost string `long:"gssapiHostName" value-name:"<host-name>" description:"hostname to use when authenticating using GSSAPI/Kerberos (remote server's address by default)"`
 }
 type WriteConcern struct {
-	// Specifies the write concern for each write operation that mongofiles writes to the target database.
-	// By default, mongofiles waits for a majority of members from the replica set to respond before returning.
+	// Specifies the write concern for each write operation that mongerfiles writes to the target database.
+	// By default, mongerfiles waits for a majority of members from the replica set to respond before returning.
 	WriteConcern string `long:"writeConcern" value-name:"<write-concern>" default:"majority" default-mask:"-" description:"write concern options e.g. --writeConcern majority, --writeConcern '{w: 3, wtimeout: 500, fsync: true, j: true}' (defaults to 'majority')"`
 
 	w        int
@@ -280,7 +280,7 @@ func New(appName, usageStr string, enabled EnabledOptions) *ToolOptions {
 // not mention the shard/host:port format used in the data-mutating tools
 func (o *ToolOptions) UseReadOnlyHostDescription() {
 	hostOpt := o.parser.FindOptionByLongName("host")
-	hostOpt.Description = "mongodb host(s) to connect to (use commas to delimit hosts)"
+	hostOpt.Description = "mongerdb host(s) to connect to (use commas to delimit hosts)"
 }
 
 // FindOptionByLongName finds an option in any of the added option groups by
@@ -452,7 +452,7 @@ func (o *ToolOptions) ParseArgs(args []string) ([]string, error) {
 func (opts *ToolOptions) handleUnknownOption(option string, arg flags.SplitArgument, args []string) ([]string, error) {
 	if option == "dbpath" || option == "directoryperdb" || option == "journal" {
 		return args, fmt.Errorf("--dbpath and related flags are not supported in 3.0 tools.\n" +
-			"See http://dochub.mongodb.org/core/tools-dbpath-deprecated for more information")
+			"See http://dochub.mongerdb.org/core/tools-dbpath-deprecated for more information")
 	}
 
 	return args, fmt.Errorf(`unknown option "%v"`, option)

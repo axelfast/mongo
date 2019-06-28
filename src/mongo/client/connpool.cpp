@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,25 +29,25 @@
 
 // _ todo: reconnect?
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/connpool.h"
+#include "monger/client/connpool.h"
 
 #include <limits>
 #include <string>
 
-#include "mongo/base/init.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/client/global_conn_pool.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/executor/connection_pool_stats.h"
-#include "mongo/stdx/chrono.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_exception.h"
+#include "monger/base/init.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/client/global_conn_pool.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/executor/connection_pool_stats.h"
+#include "monger/stdx/chrono.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_exception.h"
 
 #if !defined(__has_feature)
 #define __has_feature(x) 0
@@ -57,7 +57,7 @@
 #include <sanitizer/lsan_interface.h>
 #endif
 
-namespace mongo {
+namespace monger {
 
 namespace {
 const int kDefaultIdleTimeout = std::numeric_limits<int>::max();
@@ -694,4 +694,4 @@ MONGO_INITIALIZER(SetupDBClientBaseWithConnection)(InitializerContext*) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

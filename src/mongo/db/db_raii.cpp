@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/db_raii.h"
+#include "monger/db/db_raii.h"
 
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii_gen.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/util/log.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii_gen.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const boost::optional<int> kDoNotChangeProfilingLevel = boost::none;
@@ -387,4 +387,4 @@ LockMode getLockModeForQuery(OperationContext* opCtx, const boost::optional<Name
     return MODE_IS;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -11,9 +11,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"go.mongodb.org/mongo-driver/x/network/address"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/x/network/address"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 	"golang.org/x/sync/semaphore"
 )
 

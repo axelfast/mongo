@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/db/catalog/index_timestamp_helper.h"
+#include "monger/db/catalog/index_timestamp_helper.h"
 
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/repl/member_state.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/util/log.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/repl/member_state.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 bool requiresGhostCommitTimestampForWrite(OperationContext* opCtx, const NamespaceString& nss) {
@@ -165,4 +165,4 @@ void IndexTimestampHelper::setGhostCommitTimestampForCatalogWrite(OperationConte
     }
     fassert(50701, status);
 }
-}  // namespace mongo
+}  // namespace monger

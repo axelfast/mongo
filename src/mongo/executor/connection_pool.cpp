@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kConnectionPool
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kConnectionPool
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/executor/connection_pool.h"
+#include "monger/executor/connection_pool.h"
 
 #include <fmt/format.h>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/executor/connection_pool_stats.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/log.h"
-#include "mongo/util/lru_cache.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/executor/connection_pool_stats.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/log.h"
+#include "monger/util/lru_cache.h"
+#include "monger/util/scopeguard.h"
 
 using namespace fmt::literals;
 
@@ -56,7 +56,7 @@ using namespace fmt::literals;
 // value. In practice, dumping the locks is always safe (because we restrict
 // ourselves to operations over the connection).
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -1135,4 +1135,4 @@ void ConnectionPool::SpecificPool::updateState() {
 }
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

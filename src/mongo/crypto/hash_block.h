@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,14 +35,14 @@
 #include <third_party/murmurhash3/MurmurHash3.h>
 #include <vector>
 
-#include "mongo/base/data_range.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/secure_compare_memory.h"
+#include "monger/base/data_range.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/base64.h"
+#include "monger/util/secure_compare_memory.h"
 
-namespace mongo {
+namespace monger {
 
 struct BSONBinData;
 class BSONObjBuilder;
@@ -234,4 +234,4 @@ std::ostream& operator<<(std::ostream& os, const HashBlock<Traits>& sha) {
     return os << sha.toString();
 }
 
-}  // namespace mongo
+}  // namespace monger

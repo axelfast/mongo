@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fcntl.h>
 #include <fstream>
@@ -38,21 +38,21 @@
 #include <io.h>
 #endif
 
-#include "mongo/base/initializer.h"
-#include "mongo/db/traffic_reader.h"
-#include "mongo/util/signal_handlers.h"
-#include "mongo/util/text.h"
+#include "monger/base/initializer.h"
+#include "monger/db/traffic_reader.h"
+#include "monger/util/signal_handlers.h"
+#include "monger/util/text.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 
-using namespace mongo;
+using namespace monger;
 
 int main(int argc, char* argv[], char** envp) {
 
     setupSignalHandlers();
 
-    Status status = mongo::runGlobalInitializers(argc, argv, envp);
+    Status status = monger::runGlobalInitializers(argc, argv, envp);
     if (!status.isOK()) {
         std::cerr << "Failed global initialization: " << status << std::endl;
         return EXIT_FAILURE;
@@ -71,7 +71,7 @@ int main(int argc, char* argv[], char** envp) {
         // Define the program options
         auto inputStr = "Path to file input file (defaults to stdin)";
         auto outputStr =
-            "Path to file that mongotrafficreader will place its output (defaults to stdout)";
+            "Path to file that mongertrafficreader will place its output (defaults to stdout)";
         boost::program_options::options_description desc{"Options"};
         desc.add_options()("help,h", "help")(
             "input,i", boost::program_options::value<std::string>(), inputStr)(
@@ -83,8 +83,8 @@ int main(int argc, char* argv[], char** envp) {
 
         // Handle the help option
         if (vm.count("help")) {
-            std::cout << "Mongo Traffic Reader Help: \n\n\t./mongotrafficreader "
-                         "-i trafficinput.txt -o mongotrafficreader_dump.bson \n\n"
+            std::cout << "Mongo Traffic Reader Help: \n\n\t./mongertrafficreader "
+                         "-i trafficinput.txt -o mongertrafficreader_dump.bson \n\n"
                       << desc << std::endl;
             return EXIT_SUCCESS;
         }
@@ -127,7 +127,7 @@ int main(int argc, char* argv[], char** envp) {
         return EXIT_FAILURE;
     }
 
-    mongo::trafficRecordingFileToMongoReplayFile(inputFd, outputStream);
+    monger::trafficRecordingFileToMongoReplayFile(inputFd, outputStream);
 
     return 0;
 }

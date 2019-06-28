@@ -83,7 +83,7 @@
  *
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #ifdef _WIN32
 
@@ -119,7 +119,7 @@
 #include <string>
 #include <vector>
 
-#include "mongo/util/errno_util.h"
+#include "monger/util/errno_util.h"
 
 using std::string;
 using std::vector;
@@ -2764,7 +2764,7 @@ int linenoiseHistorySetMaxLen(int len) {
 }
 
 namespace {
-mongo::Status linenoiseFileError(mongo::ErrorCodes::Error code,
+monger::Status linenoiseFileError(monger::ErrorCodes::Error code,
                                  const char* what,
                                  const char* filename,
                                  const std::string& ewd) {
@@ -2775,59 +2775,59 @@ mongo::Status linenoiseFileError(mongo::ErrorCodes::Error code,
 }  // namespace
 
 /* Save the history in the specified file. */
-mongo::Status linenoiseHistorySave(const char* filename) {
+monger::Status linenoiseHistorySave(const char* filename) {
     FILE* fp;
 #if _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE || defined(__APPLE__)
     int fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
     if (fd == -1) {
-        const auto ewd = mongo::errnoWithDescription();
-        return linenoiseFileError(mongo::ErrorCodes::FileOpenFailed, "open()", filename, ewd);
+        const auto ewd = monger::errnoWithDescription();
+        return linenoiseFileError(monger::ErrorCodes::FileOpenFailed, "open()", filename, ewd);
     }
     fp = fdopen(fd, "wt");
     if (fp == nullptr) {
-        const auto ewd = mongo::errnoWithDescription();
+        const auto ewd = monger::errnoWithDescription();
         // We've already failed, so no need to report any close() failure.
         (void)close(fd);
-        return linenoiseFileError(mongo::ErrorCodes::FileOpenFailed, "fdopen()", filename, ewd);
+        return linenoiseFileError(monger::ErrorCodes::FileOpenFailed, "fdopen()", filename, ewd);
     }
 #else
     fp = fopen(filename, "wt");
     if (fp == nullptr) {
-        const auto ewd = mongo::errnoWithDescription();
-        return linenoiseFileError(mongo::ErrorCodes::FileOpenFailed, "fopen()", filename, ewd);
+        const auto ewd = monger::errnoWithDescription();
+        return linenoiseFileError(monger::ErrorCodes::FileOpenFailed, "fopen()", filename, ewd);
     }
 #endif  // _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE || defined(__APPLE__)
 
     for (int j = 0; j < historyLen; ++j) {
         if (history[j][0] != '\0') {
             if (fprintf(fp, "%s\n", history[j]) < 0) {
-                const auto ewd = mongo::errnoWithDescription();
+                const auto ewd = monger::errnoWithDescription();
                 // We've already failed, so no need to report any fclose() failure.
                 (void)fclose(fp);
                 return linenoiseFileError(
-                    mongo::ErrorCodes::FileStreamFailed, "fprintf() to", filename, ewd);
+                    monger::ErrorCodes::FileStreamFailed, "fprintf() to", filename, ewd);
             }
         }
     }
     // Closing fp also causes fd to be closed.
     if (fclose(fp) != 0) {
-        const auto ewd = mongo::errnoWithDescription();
-        return linenoiseFileError(mongo::ErrorCodes::FileStreamFailed, "fclose()", filename, ewd);
+        const auto ewd = monger::errnoWithDescription();
+        return linenoiseFileError(monger::ErrorCodes::FileStreamFailed, "fclose()", filename, ewd);
     }
-    return mongo::Status::OK();
+    return monger::Status::OK();
 }
 
 /* Load the history from the specified file. */
-mongo::Status linenoiseHistoryLoad(const char* filename) {
+monger::Status linenoiseHistoryLoad(const char* filename) {
     FILE* fp = fopen(filename, "rt");
     if (fp == nullptr) {
         if (errno == ENOENT) {
             // Not having a history file isn't an error condition.
             // For example, it's always the case when the shell is run for the first time.
-            return mongo::Status::OK();
+            return monger::Status::OK();
         }
-        const auto ewd = mongo::errnoWithDescription();
-        return linenoiseFileError(mongo::ErrorCodes::FileOpenFailed, "fopen()", filename, ewd);
+        const auto ewd = monger::errnoWithDescription();
+        return linenoiseFileError(monger::ErrorCodes::FileOpenFailed, "fopen()", filename, ewd);
     }
 
     char buf[LINENOISE_MAX_LINE];
@@ -2846,15 +2846,15 @@ mongo::Status linenoiseHistoryLoad(const char* filename) {
     // fgets() returns NULL on error or EOF (with nothing read).
     // So if we aren't EOF, it must have been an error.
     if (!feof(fp)) {
-        const auto ewd = mongo::errnoWithDescription();
+        const auto ewd = monger::errnoWithDescription();
         // We've already failed, so no need to report any fclose() failure.
         (void)fclose(fp);
         return linenoiseFileError(
-            mongo::ErrorCodes::FileStreamFailed, "fgets() from", filename, ewd);
+            monger::ErrorCodes::FileStreamFailed, "fgets() from", filename, ewd);
     }
     if (fclose(fp) != 0) {
-        const auto ewd = mongo::errnoWithDescription();
-        return linenoiseFileError(mongo::ErrorCodes::FileStreamFailed, "fclose()", filename, ewd);
+        const auto ewd = monger::errnoWithDescription();
+        return linenoiseFileError(monger::ErrorCodes::FileStreamFailed, "fclose()", filename, ewd);
     }
-    return mongo::Status::OK();
+    return monger::Status::OK();
 }

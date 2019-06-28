@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,52 +27,52 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/find_and_modify_common.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/update_stage.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/delete_request.h"
-#include "mongo/db/ops/find_and_modify_result.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/ops/parsed_delete.h"
-#include "mongo/db/ops/parsed_update.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/ops/write_ops_retryability.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/find_and_modify_request.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/retryable_writes_stats.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/stats/top.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/find_and_modify_common.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/update_stage.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/delete_request.h"
+#include "monger/db/ops/find_and_modify_result.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/ops/parsed_delete.h"
+#include "monger/db/ops/parsed_update.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/ops/write_ops_retryability.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/find_and_modify_request.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/retryable_writes_stats.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/stats/top.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/write_concern.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -515,4 +515,4 @@ public:
 } cmdFindAndModify;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <deque>
 
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_graph_lookup.h"
-#include "mongo/db/pipeline/document_source_mock.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/stub_mongo_process_interface.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_graph_lookup.h"
+#include "monger/db/pipeline/document_source_mock.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/stub_monger_process_interface.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -102,7 +102,7 @@ TEST_F(DocumentSourceGraphLookUpTest,
     NamespaceString fromNs("test", "graph_lookup");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
                                           fromNs,
@@ -131,7 +131,7 @@ TEST_F(DocumentSourceGraphLookUpTest,
     NamespaceString fromNs("test", "graph_lookup");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
                                           fromNs,
@@ -160,7 +160,7 @@ TEST_F(DocumentSourceGraphLookUpTest,
     NamespaceString fromNs("test", "graph_lookup");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
     auto unwindStage = DocumentSourceUnwind::create(expCtx, "results", false, boost::none);
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
@@ -204,7 +204,7 @@ TEST_F(DocumentSourceGraphLookUpTest,
     NamespaceString fromNs("test", "graph_lookup");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
                                           fromNs,
@@ -269,7 +269,7 @@ TEST_F(DocumentSourceGraphLookUpTest, ShouldPropagatePauses) {
     NamespaceString fromNs("test", "foreign");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
                                           fromNs,
@@ -338,7 +338,7 @@ TEST_F(DocumentSourceGraphLookUpTest, ShouldPropagatePausesWhileUnwinding) {
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
 
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
 
     const bool preserveNullAndEmptyArrays = false;
     const boost::optional<std::string> includeArrayIndex = boost::none;
@@ -402,7 +402,7 @@ TEST_F(DocumentSourceGraphLookUpTest, GraphLookupShouldReportAsFieldIsModified) 
     NamespaceString fromNs("test", "foreign");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
@@ -427,7 +427,7 @@ TEST_F(DocumentSourceGraphLookUpTest, GraphLookupShouldReportFieldsModifiedByAbs
     NamespaceString fromNs("test", "foreign");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
     auto unwindStage =
         DocumentSourceUnwind::create(expCtx, "results", false, std::string("arrIndex"));
@@ -460,7 +460,7 @@ TEST_F(DocumentSourceGraphLookUpTest, GraphLookupWithComparisonExpressionForStar
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
     std::deque<DocumentSource::GetNextResult> fromContents{Document{{"_id", 0}, {"to", true}},
                                                            Document{{"_id", 1}, {"to", false}}};
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
 
     auto graphLookupStage = DocumentSourceGraphLookUp::create(
         expCtx,
@@ -524,7 +524,7 @@ TEST_F(DocumentSourceGraphLookUpTest, ShouldExpandArraysAtEndOfConnectFromField)
     NamespaceString fromNs("test", "graph_lookup");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
                                           fromNs,
@@ -597,7 +597,7 @@ TEST_F(DocumentSourceGraphLookUpTest, ShouldNotExpandArraysWithinArraysAtEndOfCo
     NamespaceString fromNs("test", "graph_lookup");
     expCtx->setResolvedNamespaces(StringMap<ExpressionContext::ResolvedNamespace>{
         {fromNs.coll().toString(), {fromNs, std::vector<BSONObj>()}}});
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(std::move(fromContents));
     auto graphLookupStage =
         DocumentSourceGraphLookUp::create(expCtx,
                                           fromNs,
@@ -629,4 +629,4 @@ TEST_F(DocumentSourceGraphLookUpTest, ShouldNotExpandArraysWithinArraysAtEndOfCo
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

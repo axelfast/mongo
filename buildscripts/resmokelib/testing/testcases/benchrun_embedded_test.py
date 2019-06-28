@@ -1,4 +1,4 @@
-"""The unittest.TestCase for tests using benchrun embedded (mongoebench)."""
+"""The unittest.TestCase for tests using benchrun embedded (mongerebench)."""
 
 import os
 import posixpath
@@ -17,14 +17,14 @@ class BenchrunEmbeddedTestCase(  # pylint: disable=too-many-instance-attributes
 
     REGISTERED_NAME = "benchrun_embedded_test"
 
-    def __init__(self, logger, mongoebench_config_file, program_options=None):
+    def __init__(self, logger, mongerebench_config_file, program_options=None):
         """Initialize the BenchrunEmbeddedTestCase with the executable to run."""
 
         interface.ProcessTestCase.__init__(self, logger, "Benchmark embedded test",
-                                           mongoebench_config_file)
+                                           mongerebench_config_file)
         parser.validate_benchmark_options()
 
-        self.benchrun_config_file = mongoebench_config_file
+        self.benchrun_config_file = mongerebench_config_file
 
         # Command line options override the YAML configuration.
         self.benchrun_executable = utils.default_if_none(_config.MONGOEBENCH_EXECUTABLE,
@@ -40,7 +40,7 @@ class BenchrunEmbeddedTestCase(  # pylint: disable=too-many-instance-attributes
 
         # Set the dbpath.
         dbpath = utils.default_if_none(_config.DBPATH_PREFIX, _config.DEFAULT_DBPATH_PREFIX)
-        self.dbpath = os.path.join(dbpath, "mongoebench")
+        self.dbpath = os.path.join(dbpath, "mongerebench")
 
         self.android_device = _config.BENCHRUN_DEVICE == "Android"
         # If Android device, then the test runs via adb shell.
@@ -53,8 +53,8 @@ class BenchrunEmbeddedTestCase(  # pylint: disable=too-many-instance-attributes
                                                        os.path.basename(self.benchrun_config_file))
             ld_library_path = "LD_LIBRARY_PATH={}".format(
                 posixpath.join(self.android_benchrun_root, "sdk"))
-            mongoebench = posixpath.join(self.android_benchrun_root, "sdk", "mongoebench")
-            self.benchrun_executable = "adb shell {} {}".format(ld_library_path, mongoebench)
+            mongerebench = posixpath.join(self.android_benchrun_root, "sdk", "mongerebench")
+            self.benchrun_executable = "adb shell {} {}".format(ld_library_path, mongerebench)
 
     def configure(self, fixture, *args, **kwargs):
         """Configure BenchrunEmbeddedTestCase."""
@@ -122,7 +122,7 @@ class BenchrunEmbeddedTestCase(  # pylint: disable=too-many-instance-attributes
     def _device_report_path(self, iter_num):
         """Return the device report path."""
         if self.android_device:
-            # The mongoebench report is generated on the remote device.
+            # The mongerebench report is generated on the remote device.
             return posixpath.join(self.device_report_root, self._report_name(iter_num))
         return self._report_path(iter_num)
 
@@ -137,8 +137,8 @@ class BenchrunEmbeddedTestCase(  # pylint: disable=too-many-instance-attributes
 
     @staticmethod
     def _report_name(iter_num):
-        """Return the constructed report name of the form mongoebench.<iteration num>.json."""
-        return "mongoebench.{}.json".format(iter_num)
+        """Return the constructed report name of the form mongerebench.<iteration num>.json."""
+        return "mongerebench.{}.json".format(iter_num)
 
     def _make_process(self):
         # The 'commands' argument for core.programs.generic_program must be a list.

@@ -12,7 +12,7 @@
         if (!isMongos)
             return obj;
 
-        // Sample mongos format:
+        // Sample mongers format:
         // {
         //   raw: {
         //     "localhost:30000": {

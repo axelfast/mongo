@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/object.h"
+#include "monger/scripting/mozjs/object.h"
 
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/scripting/mozjs/valuewriter.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/scripting/mozjs/valuewriter.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const JSFunctionSpec ObjectInfo::methods[2] = {
@@ -61,4 +61,4 @@ void ObjectInfo::Functions::bsonsize::call(JSContext* cx, JS::CallArgs args) {
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

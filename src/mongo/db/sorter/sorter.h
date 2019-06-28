@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,7 +36,7 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/bson/util/builder.h"
+#include "monger/bson/util/builder.h"
 
 /**
  * This is the public API for the Sorter (both in-memory and external)
@@ -83,7 +83,7 @@
  * };
  */
 
-namespace mongo {
+namespace monger {
 
 /**
  * Runtime options that control the Sorter's behavior
@@ -269,27 +269,27 @@ private:
 }
 
 /**
- * #include "mongo/db/sorter/sorter.cpp" and call this in a single translation
+ * #include "monger/db/sorter/sorter.cpp" and call this in a single translation
  * unit once for each unique set of template parameters.
  */
 #define MONGO_CREATE_SORTER(Key, Value, Comparator)                                      \
     /* public classes */                                                                 \
-    template class ::mongo::Sorter<Key, Value>;                                          \
-    template class ::mongo::SortIteratorInterface<Key, Value>;                           \
-    template class ::mongo::SortedFileWriter<Key, Value>;                                \
+    template class ::monger::Sorter<Key, Value>;                                          \
+    template class ::monger::SortIteratorInterface<Key, Value>;                           \
+    template class ::monger::SortedFileWriter<Key, Value>;                                \
     /* internal classes */                                                               \
-    template class ::mongo::sorter::NoLimitSorter<Key, Value, Comparator>;               \
-    template class ::mongo::sorter::LimitOneSorter<Key, Value, Comparator>;              \
-    template class ::mongo::sorter::TopKSorter<Key, Value, Comparator>;                  \
-    template class ::mongo::sorter::MergeIterator<Key, Value, Comparator>;               \
-    template class ::mongo::sorter::InMemIterator<Key, Value>;                           \
-    template class ::mongo::sorter::FileIterator<Key, Value>;                            \
+    template class ::monger::sorter::NoLimitSorter<Key, Value, Comparator>;               \
+    template class ::monger::sorter::LimitOneSorter<Key, Value, Comparator>;              \
+    template class ::monger::sorter::TopKSorter<Key, Value, Comparator>;                  \
+    template class ::monger::sorter::MergeIterator<Key, Value, Comparator>;               \
+    template class ::monger::sorter::InMemIterator<Key, Value>;                           \
+    template class ::monger::sorter::FileIterator<Key, Value>;                            \
     /* factory functions */                                                              \
-    template ::mongo::SortIteratorInterface<Key, Value>* ::mongo::                       \
+    template ::monger::SortIteratorInterface<Key, Value>* ::monger::                       \
         SortIteratorInterface<Key, Value>::merge<Comparator>(                            \
             const std::vector<std::shared_ptr<SortIteratorInterface>>& iters,            \
             const std::string& fileName,                                                 \
             const SortOptions& opts,                                                     \
             const Comparator& comp);                                                     \
-    template ::mongo::Sorter<Key, Value>* ::mongo::Sorter<Key, Value>::make<Comparator>( \
+    template ::monger::Sorter<Key, Value>* ::monger::Sorter<Key, Value>::make<Comparator>( \
         const SortOptions& opts, const Comparator& comp, const Settings& settings);

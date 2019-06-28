@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,10 +28,10 @@
  */
 #pragma once
 
-#include "mongo/base/concept/constructible.h"
-#include "mongo/base/concept/unique_ptr.h"
+#include "monger/base/concept/constructible.h"
+#include "monger/base/concept/unique_ptr.h"
 
-namespace mongo {
+namespace monger {
 namespace concept {
 /*!
  * Objects conforming to the Clonable concept can be dynamically copied, using `this->clone()`.
@@ -45,4 +45,4 @@ struct Clonable {
     Constructible<UniquePtr<Clonable>> clone() const;
 };
 }  // namespace concept
-}  // namespace mongo
+}  // namespace monger

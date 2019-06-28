@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/process_interface_shardsvr.h"
+#include "monger/db/pipeline/process_interface_shardsvr.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/shard_filterer_impl.h"
-#include "mongo/db/ops/write_ops_exec.h"
-#include "mongo/db/ops/write_ops_gen.h"
-#include "mongo/db/pipeline/document_source_internal_shard_filter.h"
-#include "mongo/db/pipeline/sharded_agg_helpers.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/document_source_merge_cursors.h"
-#include "mongo/s/write_ops/cluster_write.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/shard_filterer_impl.h"
+#include "monger/db/ops/write_ops_exec.h"
+#include "monger/db/ops/write_ops_gen.h"
+#include "monger/db/pipeline/document_source_internal_shard_filter.h"
+#include "monger/db/pipeline/sharded_agg_helpers.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/document_source_merge_cursors.h"
+#include "monger/s/write_ops/cluster_write.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::shared_ptr;
@@ -211,4 +211,4 @@ std::unique_ptr<ShardFilterer> MongoInterfaceShardServer::getShardFilterer(
     return std::make_unique<ShardFiltererImpl>(std::move(shardingMetadata));
 }
 
-}  // namespace mongo
+}  // namespace monger

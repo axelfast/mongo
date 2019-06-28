@@ -38,7 +38,7 @@ requireSSLProvider('apple', function() {
             setParameter: {logLevel: '1'},
         };
         clearRawMongoProgramOutput();
-        const mongod = MongoRunner.runMongod(opts);
+        const mongerd = MongoRunner.runMongod(opts);
 
         assert.soon(function() {
             const log = rawMongoProgramOutput();
@@ -53,7 +53,7 @@ requireSSLProvider('apple', function() {
         }, "Starting Mongod with " + tojson(opts), 10000);
 
         try {
-            MongoRunner.stopMongod(mongod);
+            MongoRunner.stopMongod(mongerd);
         } catch (e) {
             // Depending on timing, exitCode might be 0, 1, or -9.
             // All that matters is that it dies, resmoke will tell us if that failed.

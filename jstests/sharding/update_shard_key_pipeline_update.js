@@ -8,14 +8,14 @@
 
     load("jstests/sharding/libs/update_shard_key_helpers.js");
 
-    const st = new ShardingTest({mongos: 1, shards: {rs0: {nodes: 3}, rs1: {nodes: 3}}});
+    const st = new ShardingTest({mongers: 1, shards: {rs0: {nodes: 3}, rs1: {nodes: 3}}});
     const kDbName = 'db';
-    const mongos = st.s0;
+    const mongers = st.s0;
     const shard0 = st.shard0.shardName;
     const shard1 = st.shard1.shardName;
     const ns = kDbName + '.foo';
 
-    assert.commandWorked(mongos.adminCommand({enableSharding: kDbName}));
+    assert.commandWorked(mongers.adminCommand({enableSharding: kDbName}));
     st.ensurePrimaryShard(kDbName, shard0);
 
     // Tuples represent [shouldRunCommandInTxn, runUpdateAsFindAndModifyCmd, isUpsert].

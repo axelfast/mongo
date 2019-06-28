@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 
 #include <string>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/rollback.h"
-#include "mongo/db/s/collection_sharding_state.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/rollback.h"
+#include "monger/db/s/collection_sharding_state.h"
 
-namespace mongo {
+namespace monger {
 
 struct InsertStatement;
 class OperationContext;
@@ -421,4 +421,4 @@ private:
     Times& _times;
 };
 
-}  // namespace mongo
+}  // namespace monger

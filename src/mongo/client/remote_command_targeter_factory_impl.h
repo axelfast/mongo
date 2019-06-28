@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/client/remote_command_targeter_factory.h"
+#include "monger/client/remote_command_targeter_factory.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Targeter factory that instantiates remote command targeters based on the type of the
@@ -47,4 +47,4 @@ public:
     std::unique_ptr<RemoteCommandTargeter> create(const ConnectionString& connStr) override;
 };
 
-}  // namespace mongo
+}  // namespace monger

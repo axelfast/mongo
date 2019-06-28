@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,16 +29,16 @@
 
 #pragma once
 
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_liaison.h"
-#include "mongo/executor/async_timer_mock.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/periodic_runner.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_liaison.h"
+#include "monger/executor/async_timer_mock.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/periodic_runner.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * To allow us to move a MockServiceLiaison into the session cache while
@@ -135,4 +135,4 @@ private:
     ServiceContext::UniqueServiceContext _serviceContext;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/sharding_egress_metadata_hook_for_mongos.h"
+#include "monger/s/sharding_egress_metadata_hook_for_mongers.h"
 
-#include "mongo/db/client.h"
-#include "mongo/rpc/metadata/sharding_metadata.h"
-#include "mongo/s/cluster_last_error_info.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
+#include "monger/db/client.h"
+#include "monger/rpc/metadata/sharding_metadata.h"
+#include "monger/s/cluster_last_error_info.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 void ShardingEgressMetadataHookForMongos::_saveGLEStats(const BSONObj& metadata,
@@ -50,4 +50,4 @@ repl::OpTime ShardingEgressMetadataHookForMongos::_getConfigServerOpTime() {
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

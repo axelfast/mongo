@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <benchmark/benchmark.h>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/inline_decls.h"
-#include "mongo/db/s/collection_metadata.h"
-#include "mongo/platform/random.h"
-#include "mongo/s/chunk_manager.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/bson/inline_decls.h"
+#include "monger/db/s/collection_metadata.h"
+#include "monger/platform/random.h"
+#include "monger/s/chunk_manager.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 ChunkRange getRangeForChunk(int i, int nChunks) {
@@ -354,4 +354,4 @@ MONGO_INITIALIZER(RegisterBenchmarks)(InitializerContext* context) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

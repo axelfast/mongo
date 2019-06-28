@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,16 +30,16 @@
 #pragma once
 
 
-#include "mongo/base/status.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/parsed_projection.h"
-#include "mongo/db/query/query_request.h"
+#include "monger/base/status.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/parsed_projection.h"
+#include "monger/db/query/query_request.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
@@ -206,4 +206,4 @@ private:
     bool _canHaveNoopMatchNodes = false;
 };
 
-}  // namespace mongo
+}  // namespace monger

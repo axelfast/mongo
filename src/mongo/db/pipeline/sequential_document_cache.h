@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,11 +33,11 @@
 #include <stddef.h>
 #include <vector>
 
-#include "mongo/db/pipeline/document.h"
+#include "monger/db/pipeline/document.h"
 
-#include "mongo/base/status.h"
+#include "monger/base/status.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Implements a sequential cache of Documents, up to an optional maximum size. Can be in one of
@@ -153,4 +153,4 @@ private:
     std::vector<Document> _cache;
 };
 
-}  // namespace mongo
+}  // namespace monger

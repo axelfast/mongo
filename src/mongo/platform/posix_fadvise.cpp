@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 
 #if defined(__sun)
 
-#include "mongo/platform/posix_fadvise.h"
+#include "monger/platform/posix_fadvise.h"
 
 #include <dlfcn.h>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
 
-namespace mongo {
+namespace monger {
 namespace pal {
 
 int posix_fadvise_emulation(int fd, off_t offset, off_t len, int advice) {
@@ -44,7 +44,7 @@ int posix_fadvise_emulation(int fd, off_t offset, off_t len, int advice) {
 }
 
 typedef int (*PosixFadviseFunc)(int fd, off_t offset, off_t len, int advice);
-static PosixFadviseFunc posix_fadvise_switcher = mongo::pal::posix_fadvise_emulation;
+static PosixFadviseFunc posix_fadvise_switcher = monger::pal::posix_fadvise_emulation;
 
 int posix_fadvise(int fd, off_t offset, off_t len, int advice) {
     return posix_fadvise_switcher(fd, offset, len, advice);
@@ -58,12 +58,12 @@ MONGO_INITIALIZER_GENERAL(SolarisPosixFadvise, MONGO_NO_PREREQUISITES, ("default
 (InitializerContext* context) {
     void* functionAddress = dlsym(RTLD_DEFAULT, "posix_fadvise");
     if (functionAddress != nullptr) {
-        mongo::pal::posix_fadvise_switcher =
-            reinterpret_cast<mongo::pal::PosixFadviseFunc>(functionAddress);
+        monger::pal::posix_fadvise_switcher =
+            reinterpret_cast<monger::pal::PosixFadviseFunc>(functionAddress);
     }
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 #endif  // #if defined(__sun)

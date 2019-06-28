@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/command_can_run_here.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/util/str.h"
+#include "monger/db/command_can_run_here.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/explain.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -172,4 +172,4 @@ std::unique_ptr<CommandInvocation> CmdExplain::parse(OperationContext* opCtx,
 CmdExplain cmdExplain;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

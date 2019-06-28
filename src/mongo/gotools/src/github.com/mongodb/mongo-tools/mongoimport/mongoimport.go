@@ -4,17 +4,17 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongoimport allows importing content from a JSON, CSV, or TSV into a MongoDB instance.
-package mongoimport
+// Package mongerimport allows importing content from a JSON, CSV, or TSV into a MongoDB instance.
+package mongerimport
 
 import (
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/progress"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/progress"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger"
 	"gopkg.in/tomb.v2"
 
 	"fmt"
@@ -26,14 +26,14 @@ import (
 	"sync/atomic"
 )
 
-// Input format types accepted by mongoimport.
+// Input format types accepted by mongerimport.
 const (
 	CSV  = "csv"
 	TSV  = "tsv"
 	JSON = "json"
 )
 
-// Modes accepted by mongoimport.
+// Modes accepted by mongerimport.
 const (
 	modeInsert = "insert"
 	modeUpsert = "upsert"
@@ -46,7 +46,7 @@ const (
 )
 
 // MongoImport is a container for the user-specified options and
-// internal state used for running mongoimport.
+// internal state used for running mongerimport.
 type MongoImport struct {
 	// insertionCount keeps track of how many documents have successfully
 	// been inserted into the database
@@ -57,7 +57,7 @@ type MongoImport struct {
 	// Should be updated atomically.
 	failureCount uint64
 
-	// generic mongo tool options
+	// generic monger tool options
 	ToolOptions *options.ToolOptions
 
 	// InputOptions defines options used to read data to be ingested
@@ -381,7 +381,7 @@ func (imp *MongoImport) importDocuments(inputReader InputReader) (numImported ui
 		imp.ToolOptions.Namespace.DB,
 		imp.ToolOptions.Namespace.Collection)
 
-	// check if the server is a replica set, mongos, or standalone
+	// check if the server is a replica set, mongers, or standalone
 	imp.nodeType, err = imp.SessionProvider.GetNodeType()
 	if err != nil {
 		return 0, 0, fmt.Errorf("error checking connected node type: %v", err)
@@ -459,7 +459,7 @@ func (imp *MongoImport) ingestDocuments(readDocs chan bson.D) (retErr error) {
 func (imp *MongoImport) runInsertionWorker(readDocs chan bson.D) (err error) {
 	session, err := imp.SessionProvider.GetSession()
 	if err != nil {
-		return fmt.Errorf("error connecting to mongod: %v", err)
+		return fmt.Errorf("error connecting to mongerd: %v", err)
 	}
 	collection := session.Database(imp.ToolOptions.DB).Collection(imp.ToolOptions.Collection)
 
@@ -488,17 +488,17 @@ readLoop:
 	return db.FilterError(imp.IngestOptions.StopOnError, err)
 }
 
-func (imp *MongoImport) updateCounts(result *mongo.BulkWriteResult, err error) {
+func (imp *MongoImport) updateCounts(result *monger.BulkWriteResult, err error) {
 	if result != nil {
 		atomic.AddUint64(&imp.insertionCount, uint64(result.InsertedCount)+uint64(result.ModifiedCount)+uint64(result.UpsertedCount))
 	}
-	if bwe, ok := err.(mongo.BulkWriteException); ok {
+	if bwe, ok := err.(monger.BulkWriteException); ok {
 		atomic.AddUint64(&imp.failureCount, uint64(len(bwe.WriteErrors)))
 	}
 }
 
 func (imp *MongoImport) importDocument(inserter *db.BufferedBulkInserter, document bson.D) error {
-	var result *mongo.BulkWriteResult
+	var result *monger.BulkWriteResult
 	var err error
 
 	if imp.IngestOptions.Mode == modeInsert {

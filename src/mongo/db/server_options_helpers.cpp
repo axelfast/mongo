@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/db/server_options_helpers.h"
+#include "monger/db/server_options_helpers.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -42,27 +42,27 @@
 #include <ios>
 #include <iostream>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/logger/log_component.h"
-#include "mongo/logger/message_event_utf8_encoder.h"
-#include "mongo/transport/message_compressor_registry.h"
-#include "mongo/util/cmdline_utils/censor_cmdline.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/map_util.h"
-#include "mongo/util/net/sock.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/bson/util/builder.h"
+#include "monger/config.h"
+#include "monger/db/server_options.h"
+#include "monger/logger/log_component.h"
+#include "monger/logger/message_event_utf8_encoder.h"
+#include "monger/transport/message_compressor_registry.h"
+#include "monger/util/cmdline_utils/censor_cmdline.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/map_util.h"
+#include "monger/util/net/sock.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/str.h"
 
 using std::endl;
 using std::string;
 
-namespace mongo {
+namespace monger {
 
 /*
  * SERVER-11160 syslog.h does not define facilitynames under solaris.
@@ -433,4 +433,4 @@ Status storeBaseOptions(const moe::Environment& params) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

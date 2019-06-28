@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,27 +34,27 @@
  * The primary entry point at runtime is saslClientAuthenticateImpl().
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstdint>
 #include <string>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/sasl_client_authenticate.h"
-#include "mongo/client/sasl_client_session.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/password_digest.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/sasl_client_authenticate.h"
+#include "monger/client/sasl_client_session.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/util/base64.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/password_digest.h"
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 using executor::RemoteCommandRequest;
@@ -81,7 +81,7 @@ int getSaslClientLogLevel(const BSONObj& saslParameters) {
  * Gets the password data from "saslParameters" and stores it to "outPassword".
  *
  * If "digestPassword" indicates that the password needs to be "digested" via
- * mongo::createPasswordDigest(), this method takes care of that.
+ * monger::createPasswordDigest(), this method takes care of that.
  * On success, the value of "*outPassword" is always the correct value to set
  * as the password on the SaslClientSession.
  *
@@ -103,7 +103,7 @@ Status extractPassword(const BSONObj& saslParameters,
         if (!status.isOK())
             return status;
 
-        *outPassword = mongo::createPasswordDigest(user, rawPassword);
+        *outPassword = monger::createPasswordDigest(user, rawPassword);
     } else {
         *outPassword = rawPassword;
     }
@@ -279,4 +279,4 @@ MONGO_INITIALIZER(SaslClientAuthenticateFunction)(InitializerContext* context) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

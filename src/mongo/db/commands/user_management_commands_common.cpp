@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/user_management_commands.h"
+#include "monger/db/commands/user_management_commands.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/config.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/resource_pattern.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_management_commands_parser.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/log.h"
-#include "mongo/util/sequence_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/config.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/resource_pattern.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_management_commands_parser.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/log.h"
+#include "monger/util/sequence_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace auth {
 
 Status checkAuthorizedToGrantRoles(AuthorizationSession* authzSession,
@@ -564,4 +564,4 @@ Status checkAuthForMergeAuthzCollectionsCommand(Client* client, const BSONObj& c
 }
 
 }  // namespace auth
-}  // namespace mongo
+}  // namespace monger

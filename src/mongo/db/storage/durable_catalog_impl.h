@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,16 +33,16 @@
 #include <memory>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/storage/bson_collection_catalog_entry.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/string_data.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/record_id.h"
+#include "monger/db/storage/bson_collection_catalog_entry.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class RecordStore;
@@ -285,4 +285,4 @@ private:
 
     StorageEngineInterface* const _engine;
 };
-}  // namespace mongo
+}  // namespace monger

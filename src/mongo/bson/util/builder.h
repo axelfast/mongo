@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -39,21 +39,21 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/data_view.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/inline_decls.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/stdx/type_traits.h"
-#include "mongo/util/allocator.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concepts.h"
-#include "mongo/util/itoa.h"
-#include "mongo/util/shared_buffer.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/data_view.h"
+#include "monger/base/static_assert.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/inline_decls.h"
+#include "monger/platform/decimal128.h"
+#include "monger/stdx/type_traits.h"
+#include "monger/util/allocator.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concepts.h"
+#include "monger/util/itoa.h"
+#include "monger/util/shared_buffer.h"
 
-namespace mongo {
+namespace monger {
 
 /* Note the limit here is rather arbitrary and is simply a standard. generally the code works
    with any object that fits in ram.
@@ -124,16 +124,16 @@ public:
     enum { SZ = 512 };
     void malloc(size_t sz) {
         if (sz > SZ)
-            _ptr = mongoMalloc(sz);
+            _ptr = mongerMalloc(sz);
     }
     void realloc(size_t sz) {
         if (_ptr == _buf) {
             if (sz > SZ) {
-                _ptr = mongoMalloc(sz);
+                _ptr = mongerMalloc(sz);
                 memcpy(_ptr, _buf, SZ);
             }
         } else {
-            _ptr = mongoRealloc(_ptr, sz);
+            _ptr = mongerRealloc(_ptr, sz);
         }
     }
     void free() {
@@ -530,4 +530,4 @@ extern template class _BufBuilder<StackAllocator>;
 extern template class StringBuilderImpl<SharedBufferAllocator>;
 extern template class StringBuilderImpl<StackAllocator>;
 
-}  // namespace mongo
+}  // namespace monger

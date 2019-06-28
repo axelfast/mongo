@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/auth/address_restriction.h"
-#include "mongo/db/auth/address_restriction_gen.h"
-#include "mongo/db/server_options.h"
+#include "monger/db/auth/address_restriction.h"
+#include "monger/db/auth/address_restriction_gen.h"
+#include "monger/db/server_options.h"
 
-constexpr mongo::StringData mongo::address_restriction_detail::ClientSource::label;
-constexpr mongo::StringData mongo::address_restriction_detail::ClientSource::field;
+constexpr monger::StringData monger::address_restriction_detail::ClientSource::label;
+constexpr monger::StringData monger::address_restriction_detail::ClientSource::field;
 
-constexpr mongo::StringData mongo::address_restriction_detail::ServerAddress::label;
-constexpr mongo::StringData mongo::address_restriction_detail::ServerAddress::field;
+constexpr monger::StringData monger::address_restriction_detail::ServerAddress::label;
+constexpr monger::StringData monger::address_restriction_detail::ServerAddress::field;
 
-mongo::StatusWith<mongo::RestrictionSet<>> mongo::parseAddressRestrictionSet(
+monger::StatusWith<monger::RestrictionSet<>> monger::parseAddressRestrictionSet(
     const BSONObj& obj) try {
     IDLParserErrorContext ctx("address restriction");
     const auto ar = Address_restriction::parse(ctx, obj);
@@ -66,7 +66,7 @@ mongo::StatusWith<mongo::RestrictionSet<>> mongo::parseAddressRestrictionSet(
     return Status(ErrorCodes::BadValue, e.what());
 }
 
-mongo::StatusWith<mongo::SharedRestrictionDocument> mongo::parseAuthenticationRestriction(
+monger::StatusWith<monger::SharedRestrictionDocument> monger::parseAuthenticationRestriction(
     const BSONArray& arr) {
     static_assert(
         std::is_same<std::shared_ptr<RestrictionDocument<>>, SharedRestrictionDocument>::value,
@@ -95,7 +95,7 @@ mongo::StatusWith<mongo::SharedRestrictionDocument> mongo::parseAuthenticationRe
     return std::make_shared<document_type>(std::move(doc));
 }
 
-mongo::StatusWith<mongo::BSONArray> mongo::getRawAuthenticationRestrictions(
+monger::StatusWith<monger::BSONArray> monger::getRawAuthenticationRestrictions(
     const BSONArray& arr) noexcept try {
     BSONArrayBuilder builder;
 

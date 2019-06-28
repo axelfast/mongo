@@ -4,15 +4,15 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongofiles
+package mongerfiles
 
 import (
 	"fmt"
 	"time"
 
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/gridfs"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongerdb.org/monger-driver/monger"
+	"go.mongerdb.org/monger-driver/monger/gridfs"
+	"go.mongerdb.org/monger-driver/monger/options"
 )
 
 // Struct representing a GridFS files collection document.
@@ -42,7 +42,7 @@ func newGfsFile(ID interface{}, name string, mf *MongoFiles) (*gfsFile, error) {
 	return &gfsFile{Name: name, ID: ID, mf: mf}, nil
 }
 
-func newGfsFileFromCursor(cursor *mongo.Cursor, mf *MongoFiles) (*gfsFile, error) {
+func newGfsFileFromCursor(cursor *monger.Cursor, mf *MongoFiles) (*gfsFile, error) {
 	if mf == nil {
 		return nil, fmt.Errorf("invalid gfsFile argument, MongoFiles nil")
 	}

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/db/matcher/matchable.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/s/shard_key_pattern.h"
+#include "monger/db/matcher/matchable.h"
+#include "monger/db/operation_context.h"
+#include "monger/s/shard_key_pattern.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Interface for doing shard filtering, to be used by both the find and agg execution trees.
@@ -48,4 +48,4 @@ public:
     virtual bool isCollectionSharded() const = 0;
     virtual const KeyPattern& getKeyPattern() const = 0;
 };
-}  // namespace mongo
+}  // namespace monger

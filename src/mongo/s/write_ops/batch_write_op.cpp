@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/write_ops/batch_write_op.h"
+#include "monger/s/write_ops/batch_write_op.h"
 
 #include <memory>
 #include <numeric>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/write_ops_parsers.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/base/error_codes.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/write_ops_parsers.h"
+#include "monger/s/transaction_router.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::set;
@@ -902,4 +902,4 @@ const std::vector<ShardError>& TrackedErrors::getErrors(int errCode) const {
     return _errorMap.find(errCode)->second;
 }
 
-}  // namespace mongo
+}  // namespace monger

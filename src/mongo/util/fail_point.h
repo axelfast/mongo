@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <functional>
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/status_with.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A simple thread-safe fail point implementation that can be activated and
@@ -281,7 +281,7 @@ inline void MONGO_FAIL_POINT_PAUSE_WHILE_SET_OR_INTERRUPTED(OperationContext* op
  * you want to access the data stored in the fail point.
  */
 #define MONGO_FAIL_POINT_BLOCK(symbol, blockSymbol) \
-    for (mongo::ScopedFailPoint blockSymbol(&symbol); MONGO_unlikely(blockSymbol.isActive());)
+    for (monger::ScopedFailPoint blockSymbol(&symbol); MONGO_unlikely(blockSymbol.isActive());)
 
 /**
  * Macro for creating a fail point with block context and a pre-flight condition. Also use this when
@@ -293,7 +293,7 @@ inline void MONGO_FAIL_POINT_PAUSE_WHILE_SET_OR_INTERRUPTED(OperationContext* op
  * instance).
  */
 #define MONGO_FAIL_POINT_BLOCK_IF(symbol, blockSymbol, ...)        \
-    for (mongo::ScopedFailPoint blockSymbol(&symbol, __VA_ARGS__); \
+    for (monger::ScopedFailPoint blockSymbol(&symbol, __VA_ARGS__); \
          MONGO_unlikely(blockSymbol.isActive());)
 
-}  // namespace mongo
+}  // namespace monger

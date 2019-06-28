@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,18 +31,18 @@
 
 #include <cstddef>
 
-namespace mongo {
+namespace monger {
 
 /**
  * Wrapper around std::malloc().
  * If std::malloc() fails, reports error with stack trace and exit.
  */
-void* mongoMalloc(size_t size);
+void* mongerMalloc(size_t size);
 
 /**
  * Wrapper around std::realloc().
  * If std::realloc() fails, reports error with stack trace and exit.
  */
-void* mongoRealloc(void* ptr, size_t size);
+void* mongerRealloc(void* ptr, size_t size);
 
-}  // namespace mongo
+}  // namespace monger

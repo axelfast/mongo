@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,22 +35,22 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/base/global_initializer_registerer.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/transport/service_executor.h"
-#include "mongo/transport/session.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/decorable.h"
-#include "mongo/util/periodic_runner.h"
-#include "mongo/util/tick_source.h"
+#include "monger/base/global_initializer_registerer.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/transport/service_executor.h"
+#include "monger/transport/session.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/decorable.h"
+#include "monger/util/periodic_runner.h"
+#include "monger/util/tick_source.h"
 
-namespace mongo {
+namespace monger {
 
 class AbstractMessagingPort;
 class Client;
@@ -251,7 +251,7 @@ public:
     public:
         /**
          * This constructor registers a constructor and optional destructor with the given
-         * "name" and no prerequisite constructors or mongo initializers.
+         * "name" and no prerequisite constructors or monger initializers.
          */
         ConstructorActionRegisterer(std::string name,
                                     ConstructorAction constructor,
@@ -623,4 +623,4 @@ void setGlobalServiceContext(ServiceContext::UniqueServiceContext&& serviceConte
  */
 bool supportsDocLocking();
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/db/service_context.h"
-#include "mongo/db/traffic_recorder_gen.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/rpc/message.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/transport/session.h"
+#include "monger/db/service_context.h"
+#include "monger/db/traffic_recorder_gen.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/rpc/message.h"
+#include "monger/stdx/mutex.h"
+#include "monger/transport/session.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A service context level global which captures packet capture through the transport layer if it is
@@ -76,4 +76,4 @@ private:
     std::shared_ptr<Recording> _recording;
 };
 
-}  // namespace mongo
+}  // namespace monger

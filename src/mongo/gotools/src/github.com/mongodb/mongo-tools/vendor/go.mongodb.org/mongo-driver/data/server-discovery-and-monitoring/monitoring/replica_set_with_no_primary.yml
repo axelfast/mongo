@@ -1,5 +1,5 @@
 description: "Monitoring a topology that is a replica set with no primary connected"
-uri: "mongodb://a,b"
+uri: "mongerdb://a,b"
 phases: 
   - 
     responses: 

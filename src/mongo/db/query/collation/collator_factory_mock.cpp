@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/collation/collator_factory_mock.h"
+#include "monger/db/query/collation/collator_factory_mock.h"
 
 #include <memory>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
 
-namespace mongo {
+namespace monger {
 
 StatusWith<std::unique_ptr<CollatorInterface>> CollatorFactoryMock::makeFromBSON(
     const BSONObj& spec) {
@@ -51,4 +51,4 @@ StatusWith<std::unique_ptr<CollatorInterface>> CollatorFactoryMock::makeFromBSON
     return {std::move(collator)};
 }
 
-}  // namespace mongo
+}  // namespace monger

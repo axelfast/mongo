@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/tools/bridge_commands.h"
+#include "monger/tools/bridge_commands.h"
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/str.h"
-#include "mongo/util/string_map.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/str.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -183,4 +183,4 @@ StatusWith<BridgeCommand*> BridgeCommand::findCommand(StringData cmdName) {
 
 BridgeCommand::~BridgeCommand() = default;
 
-}  // namespace mongo
+}  // namespace monger

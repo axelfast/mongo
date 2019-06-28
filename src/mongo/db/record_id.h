@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,11 +35,11 @@
 #include <cstdint>
 #include <ostream>
 
-#include "mongo/bson/util/builder.h"
-#include "mongo/logger/logstream_builder.h"
-#include "mongo/util/bufreader.h"
+#include "monger/bson/util/builder.h"
+#include "monger/logger/logstream_builder.h"
+#include "monger/util/bufreader.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * The key that uniquely identifies a Record in a Collection or RecordStore.
@@ -196,4 +196,4 @@ inline logger::LogstreamBuilder& operator<<(logger::LogstreamBuilder& stream, co
     stream.stream() << id;
     return stream;
 }
-}  // namespace mongo
+}  // namespace monger

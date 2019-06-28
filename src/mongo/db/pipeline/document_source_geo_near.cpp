@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_geo_near.h"
+#include "monger/db/pipeline/document_source_geo_near.h"
 
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
-#include "mongo/util/log.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 
@@ -242,4 +242,4 @@ DocumentSourceGeoNear::distributedPlanLogic() {
     return DistributedPlanLogic{this, nullptr, BSON(distanceField->fullPath() << 1)};
 }
 
-}  // namespace mongo
+}  // namespace monger

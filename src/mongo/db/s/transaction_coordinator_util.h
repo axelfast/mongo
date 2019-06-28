@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <vector>
 
-#include "mongo/db/s/transaction_coordinator_document_gen.h"
-#include "mongo/db/s/transaction_coordinator_futures_util.h"
+#include "monger/db/s/transaction_coordinator_document_gen.h"
+#include "monger/db/s/transaction_coordinator_futures_util.h"
 
-namespace mongo {
+namespace monger {
 namespace txn {
 
 /**
@@ -218,4 +218,4 @@ Future<void> sendDecisionToShard(ServiceContext* service,
                                  const BSONObj& commandObj);
 
 }  // namespace txn
-}  // namespace mongo
+}  // namespace monger

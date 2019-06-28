@@ -35,6 +35,6 @@ executor:
     n: 20
   fixture:
     class: MongoDFixture
-    mongod_options:
+    mongerd_options:
       set_parameters:
         enableTestCommands: 1

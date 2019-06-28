@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,35 +27,35 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/db/bson/bson_helper.h"
-#include "mongo/db/commands/feature_compatibility_version_documentation.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/pipeline/change_stream_constants.h"
-#include "mongo/db/pipeline/document_path_support.h"
-#include "mongo/db/pipeline/document_source_change_stream_close_cursor.h"
-#include "mongo/db/pipeline/document_source_change_stream_transform.h"
-#include "mongo/db/pipeline/document_source_check_invalidate.h"
-#include "mongo/db/pipeline/document_source_check_resume_token.h"
-#include "mongo/db/pipeline/document_source_limit.h"
-#include "mongo/db/pipeline/document_source_lookup_change_post_image.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
-#include "mongo/db/pipeline/resume_token.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/oplog_entry_gen.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/db/bson/bson_helper.h"
+#include "monger/db/commands/feature_compatibility_version_documentation.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/pipeline/change_stream_constants.h"
+#include "monger/db/pipeline/document_path_support.h"
+#include "monger/db/pipeline/document_source_change_stream_close_cursor.h"
+#include "monger/db/pipeline/document_source_change_stream_transform.h"
+#include "monger/db/pipeline/document_source_check_invalidate.h"
+#include "monger/db/pipeline/document_source_check_resume_token.h"
+#include "monger/db/pipeline/document_source_limit.h"
+#include "monger/db/pipeline/document_source_lookup_change_post_image.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/pipeline/resume_token.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/oplog_entry_gen.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using boost::optional;
@@ -344,7 +344,7 @@ list<intrusive_ptr<DocumentSource>> buildPipeline(const intrusive_ptr<Expression
     bool ignoreFirstInvalidate = false;
     bool showMigrationEvents = spec.getShowMigrationEvents();
     uassert(31123,
-            "Change streams from mongos may not show migration events.",
+            "Change streams from mongers may not show migration events.",
             !(expCtx->inMongos && showMigrationEvents));
 
     auto resumeAfter = spec.getResumeAfter();
@@ -397,7 +397,7 @@ list<intrusive_ptr<DocumentSource>> buildPipeline(const intrusive_ptr<Expression
         resumeStage = DocumentSourceShardCheckResumability::create(expCtx, *startFrom);
     }
 
-    // There might not be a starting point if we're on mongos, otherwise we should either have a
+    // There might not be a starting point if we're on mongers, otherwise we should either have a
     // 'resumeAfter' starting point, or should start from the latest majority committed operation.
     auto replCoord = repl::ReplicationCoordinator::get(expCtx->opCtx);
     uassert(40573,
@@ -471,11 +471,11 @@ list<intrusive_ptr<DocumentSource>> DocumentSourceChangeStream::createFromBson(
     auto stages = buildPipeline(expCtx, spec, elem);
     if (!expCtx->needsMerge) {
         // There should only be one close cursor stage. If we're on the shards and producing input
-        // to be merged, do not add a close cursor stage, since the mongos will already have one.
+        // to be merged, do not add a close cursor stage, since the mongers will already have one.
         stages.push_back(DocumentSourceCloseCursor::create(expCtx));
 
         // There should be only one post-image lookup stage.  If we're on the shards and producing
-        // input to be merged, the lookup is done on the mongos.
+        // input to be merged, the lookup is done on the mongers.
         if (shouldLookupPostImage) {
             stages.push_back(DocumentSourceLookupChangePostImage::create(expCtx));
         }
@@ -531,4 +531,4 @@ void DocumentSourceChangeStream::assertIsLegalSpecification(
             !expCtx->ns.isSystem());
 }
 
-}  // namespace mongo
+}  // namespace monger

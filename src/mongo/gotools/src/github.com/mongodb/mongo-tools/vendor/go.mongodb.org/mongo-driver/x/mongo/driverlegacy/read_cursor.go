@@ -9,13 +9,13 @@ package driverlegacy
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/session"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/topology"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/uuid"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/session"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/topology"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/uuid"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 // ReadCursor handles the full dispatch cycle and execution of a read command against the provided topology and returns

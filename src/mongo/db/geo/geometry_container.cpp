@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/db/geo/geometry_container.h"
+#include "monger/db/geo/geometry_container.h"
 
-#include "mongo/db/geo/geoconstants.h"
-#include "mongo/db/geo/geoparser.h"
-#include "mongo/util/str.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/db/geo/geoconstants.h"
+#include "monger/db/geo/geoparser.h"
+#include "monger/util/str.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 
-namespace mongo {
+namespace monger {
 
 bool GeometryContainer::isSimpleContainer() const {
     return nullptr != _point || nullptr != _line || nullptr != _polygon;
@@ -1316,4 +1316,4 @@ const CapWithCRS* GeometryContainer::getCapGeometryHack() const {
     return _cap.get();
 }
 
-}  // namespace mongo
+}  // namespace monger

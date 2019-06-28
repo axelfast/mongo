@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ import (
 )
 
 // DeleteOp is used to remove one or more documents from a collection.
-// http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#op-delete
+// http://docs.mongerdb.org/meta-driver/latest/legacy/mongerdb-wire-protocol/#op-delete
 type DeleteOp struct {
 	Header MsgHeader
 	mgo.DeleteOp

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/repl/abstract_oplog_fetcher_test_fixture.h"
-#include "mongo/db/repl/data_replicator_external_state_mock.h"
-#include "mongo/db/repl/oplog_fetcher.h"
-#include "mongo/rpc/metadata.h"
-#include "mongo/rpc/metadata/oplog_query_metadata.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/ensure_fcv.h"
-#include "mongo/unittest/task_executor_proxy.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/repl/abstract_oplog_fetcher_test_fixture.h"
+#include "monger/db/repl/data_replicator_external_state_mock.h"
+#include "monger/db/repl/oplog_fetcher.h"
+#include "monger/rpc/metadata.h"
+#include "monger/rpc/metadata/oplog_query_metadata.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/ensure_fcv.h"
+#include "monger/unittest/task_executor_proxy.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/scopeguard.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 using namespace unittest;
 
 using executor::RemoteCommandRequest;
@@ -231,7 +231,7 @@ TEST_F(
     OplogFetcherTest,
     FindQueryContainsTermAndStartTimestampIfGetCurrentTermAndLastCommittedOpTimeReturnsValidTerm) {
     auto cmdObj = makeOplogFetcher(_createConfig())->getFindQuery_forTest();
-    ASSERT_EQUALS(mongo::BSONType::Object, cmdObj["filter"].type());
+    ASSERT_EQUALS(monger::BSONType::Object, cmdObj["filter"].type());
     ASSERT_BSONOBJ_EQ(BSON("ts" << BSON("$gte" << lastFetched.getTimestamp())),
                       cmdObj["filter"].Obj());
     ASSERT_EQUALS(dataReplicatorExternalState->currentTerm, cmdObj["term"].numberLong());
@@ -242,7 +242,7 @@ TEST_F(OplogFetcherTest,
        FindQueryDoesNotContainTermIfGetCurrentTermAndLastCommittedOpTimeReturnsUninitializedTerm) {
     dataReplicatorExternalState->currentTerm = OpTime::kUninitializedTerm;
     auto cmdObj = makeOplogFetcher(_createConfig())->getFindQuery_forTest();
-    ASSERT_EQUALS(mongo::BSONType::Object, cmdObj["filter"].type());
+    ASSERT_EQUALS(monger::BSONType::Object, cmdObj["filter"].type());
     ASSERT_BSONOBJ_EQ(BSON("ts" << BSON("$gte" << lastFetched.getTimestamp())),
                       cmdObj["filter"].Obj());
     ASSERT_FALSE(cmdObj.hasField("term"));
@@ -932,7 +932,7 @@ TEST_F(
         {firstEntry, secondEntry, thirdEntry},
         true,
         unittest::assertGet(OpTime::parseFromOplogEntry(firstEntry)).getTimestamp(),
-        mongo::repl::OplogFetcher::StartingPoint::kSkipFirstDoc));
+        monger::repl::OplogFetcher::StartingPoint::kSkipFirstDoc));
 
     ASSERT_EQUALS(3U, info.networkDocumentCount);
     ASSERT_EQUALS(2U, info.toApplyDocumentCount);
@@ -954,7 +954,7 @@ TEST_F(
         {firstEntry, secondEntry, thirdEntry},
         true,
         unittest::assertGet(OpTime::parseFromOplogEntry(firstEntry)).getTimestamp(),
-        mongo::repl::OplogFetcher::StartingPoint::kEnqueueFirstDoc));
+        monger::repl::OplogFetcher::StartingPoint::kEnqueueFirstDoc));
 
     ASSERT_EQUALS(3U, info.networkDocumentCount);
     ASSERT_EQUALS(3U, info.toApplyDocumentCount);

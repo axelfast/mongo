@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -26,19 +26,19 @@
 # it in the license file.
 
 global:
-  cpp_namespace: "mongo"
+  cpp_namespace: "monger"
   cpp_includes:
-    - "mongo/db/auth/user_cache_invalidator_job.h"
+    - "monger/db/auth/user_cache_invalidator_job.h"
 
 imports:
-  - "mongo/idl/basic_types.idl"
+  - "monger/idl/basic_types.idl"
 
 server_parameters:
   userCacheInvalidationIntervalSecs:
     description: >
-      On a mongos instance, specifies the interval (in seconds) at which the mongos instance
+      On a mongers instance, specifies the interval (in seconds) at which the mongers instance
       checks to determine whether the in-memory cache of user objects has stale data, and if so,
-      clears the cache. If there are no changes to user objects, mongos will not clear the cache.
+      clears the cache. If there are no changes to user objects, mongers will not clear the cache.
     cpp_varname: userCacheInvalidationIntervalSecs
     cpp_vartype: AtomicWord<int>
     set_at:

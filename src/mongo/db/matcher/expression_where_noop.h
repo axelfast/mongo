@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/db/matcher/expression_where_base.h"
+#include "monger/db/matcher/expression_where_base.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * Bogus no-op $where match expression to parse $where in mongos, since mongos doesn't have script
+ * Bogus no-op $where match expression to parse $where in mongers, since mongers doesn't have script
  * engine to compile JS functions.
  *
- * Linked into mongos, instead of the real WhereMatchExpression.
+ * Linked into mongers, instead of the real WhereMatchExpression.
  */
 class WhereNoOpMatchExpression final : public WhereMatchExpressionBase {
 public:
@@ -48,4 +48,4 @@ public:
     std::unique_ptr<MatchExpression> shallowClone() const final;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-namespace mongo {
+namespace monger {
 // Instead of making a forward declaration to `extern char** environ;`, it's better to call this
 // function.  The way that `environ` is linked into a final binary is different on different
 // UNIX-like platforms and can cause issues with our link-graph verification.  Calling this function
 // and linking to this library resolve those issues correctly for our codebase.
 char** getEnvironPointer();
-}  // namespace mongo
+}  // namespace monger

@@ -7,11 +7,11 @@
 package db
 
 import (
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/network/connstring"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/network/connstring"
 
 	"fmt"
 	"strconv"

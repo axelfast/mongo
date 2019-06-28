@@ -18,7 +18,7 @@
         const primary = replTest.getPrimary();
 
         const args = [
-            "mongo",
+            "monger",
             "--nodb",
             "--eval",
             "inner_mode=true;port=" + primary.port + ";",
@@ -36,7 +36,7 @@
     }
 
     function testHost(host, uri, ok) {
-        const exitCode = runMongoProgram('mongo', '--eval', ';', '--host', host, uri);
+        const exitCode = runMongoProgram('monger', '--eval', ';', '--host', host, uri);
         if (ok) {
             assert.eq(exitCode, 0, "failed to connect with `--host " + host + "`");
         } else {
@@ -54,7 +54,7 @@
 
     function expSuccess(str) {
         runConnectionStringTestFor(str, '', true);
-        if (!str.startsWith('mongodb://')) {
+        if (!str.startsWith('mongerdb://')) {
             runConnectionStringTestFor(str, 'dbname', true);
         }
     }
@@ -68,8 +68,8 @@
     expSuccess(`${replSetName}/localhost:${port},[::1]:${port}`);
     expSuccess(`${replSetName}/localhost:${port},`);
     expSuccess(`${replSetName}/localhost:${port},,`);
-    expSuccess(`mongodb://localhost:${port}/admin?replicaSet=${replSetName}`);
-    expSuccess(`mongodb://localhost:${port}`);
+    expSuccess(`mongerdb://localhost:${port}/admin?replicaSet=${replSetName}`);
+    expSuccess(`mongerdb://localhost:${port}`);
 
     expFailure(',');
     expFailure(',,');
@@ -77,9 +77,9 @@
     expFailure(`${replSetName}/,`);
     expFailure(`${replSetName}/,,`);
     expFailure(`${replSetName}//not/a/socket`);
-    expFailure(`mongodb://localhost:${port}/admin?replicaSet=`);
-    expFailure('mongodb://localhost:');
-    expFailure(`mongodb://:${port}`);
+    expFailure(`mongerdb://localhost:${port}/admin?replicaSet=`);
+    expFailure('mongerdb://localhost:');
+    expFailure(`mongerdb://:${port}`);
 
     jsTest.log("SUCCESSFUL test completion");
 })();

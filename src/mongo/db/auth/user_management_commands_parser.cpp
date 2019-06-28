@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/user_management_commands_parser.h"
+#include "monger/db/auth/user_management_commands_parser.h"
 
 #include <algorithm>
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/address_restriction.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/privilege_parser.h"
-#include "mongo/db/auth/user_document_parser.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/address_restriction.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/privilege_parser.h"
+#include "monger/db/auth/user_document_parser.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/jsobj.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace auth {
 
 using std::vector;
@@ -698,7 +698,7 @@ Status parseMergeAuthzCollectionsCommand(const BSONObj& cmdObj,
             return Status(ErrorCodes::OutdatedClient,
                           "Missing \"db\" field for _mergeAuthzCollections command. This is "
                           "most likely due to running an outdated (pre-2.6.4) version of "
-                          "mongorestore.");
+                          "mongerrestore.");
         }
         return status;
     }
@@ -712,4 +712,4 @@ Status parseMergeAuthzCollectionsCommand(const BSONObj& cmdObj,
 }
 
 }  // namespace auth
-}  // namespace mongo
+}  // namespace monger

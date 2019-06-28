@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
@@ -37,21 +37,21 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/lock_state.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/storage/mobile/mobile_index.h"
-#include "mongo/db/storage/mobile/mobile_kv_engine.h"
-#include "mongo/db/storage/mobile/mobile_record_store.h"
-#include "mongo/db/storage/mobile/mobile_recovery_unit.h"
-#include "mongo/db/storage/mobile/mobile_session.h"
-#include "mongo/db/storage/mobile/mobile_sqlite_statement.h"
-#include "mongo/db/storage/mobile/mobile_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/lock_state.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/storage/mobile/mobile_index.h"
+#include "monger/db/storage/mobile/mobile_kv_engine.h"
+#include "monger/db/storage/mobile/mobile_record_store.h"
+#include "monger/db/storage/mobile/mobile_recovery_unit.h"
+#include "monger/db/storage/mobile/mobile_session.h"
+#include "monger/db/storage/mobile/mobile_sqlite_statement.h"
+#include "monger/db/storage/mobile/mobile_util.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 int64_t queryPragmaInt(const MobileSession& session, StringData pragma) {
     SqliteStatement stmt(session, "PRAGMA ", pragma, ";");
@@ -323,4 +323,4 @@ std::vector<std::string> MobileKVEngine::getAllIdents(OperationContext* opCtx) c
     return idents;
 }
 
-}  // namespace mongo
+}  // namespace monger

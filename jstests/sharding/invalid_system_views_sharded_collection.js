@@ -7,9 +7,9 @@
     "use strict";
 
     function runTest(st, badViewDefinition) {
-        const mongos = st.s;
-        const config = mongos.getDB("config");
-        const db = mongos.getDB("invalid_system_views");
+        const mongers = st.s;
+        const config = mongers.getDB("config");
+        const db = mongers.getDB("invalid_system_views");
         assert.commandWorked(db.dropDatabase());
 
         assert.commandWorked(config.adminCommand({enableSharding: db.getName()}));

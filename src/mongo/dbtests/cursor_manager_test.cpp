@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 
 #include <boost/optional/optional.hpp>
 #include <boost/optional/optional_io.hpp>
 
-#include "mongo/db/client.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/cursor_server_params.h"
-#include "mongo/db/exec/queued_data_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/db/repl/read_concern_level.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/client.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/cursor_server_params.h"
+#include "monger/db/exec/queued_data_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/db/repl/read_concern_level.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 const NamespaceString kTestNss{"test.collection"};
 
@@ -587,4 +587,4 @@ TEST_F(CursorManagerTest, CanAccessFromOperationContext) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

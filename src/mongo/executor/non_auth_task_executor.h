@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/executor/task_executor.h"
+#include "monger/executor/task_executor.h"
 
-namespace mongo {
+namespace monger {
 
 class ServiceContext;
 
@@ -42,9 +42,9 @@ namespace executor {
  * in its connection pool.
  *
  * This executor has a bounded thread pool and otherwise unspecified hooks.  It should only be used
- * for internal communication to local mongodb protocol speaking services.
+ * for internal communication to local mongerdb protocol speaking services.
  */
 TaskExecutor* getNonAuthTaskExecutor(ServiceContext* svc);
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

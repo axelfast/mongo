@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/db/fts/fts_language.h"
+#include "monger/db/fts/fts_language.h"
 
 #include <memory>
 #include <string>
 
-#include "mongo/base/init.h"
-#include "mongo/db/fts/fts_basic_phrase_matcher.h"
-#include "mongo/db/fts/fts_basic_tokenizer.h"
-#include "mongo/db/fts/fts_unicode_phrase_matcher.h"
-#include "mongo/db/fts/fts_unicode_tokenizer.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
-#include "mongo/util/string_map.h"
+#include "monger/base/init.h"
+#include "monger/db/fts/fts_basic_phrase_matcher.h"
+#include "monger/db/fts/fts_basic_tokenizer.h"
+#include "monger/db/fts/fts_unicode_phrase_matcher.h"
+#include "monger/db/fts/fts_unicode_tokenizer.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
@@ -139,7 +139,7 @@ MONGO_FTS_LANGUAGE_LIST(LANGUAGE_DECLV3);
 MONGO_INITIALIZER_GENERAL(FTSRegisterV2LanguagesAndLater,
                           MONGO_NO_PREREQUISITES,
                           ("FTSAllLanguagesRegistered"))
-(::mongo::InitializerContext* context) {
+(::monger::InitializerContext* context) {
     FTSLanguage::registerLanguage("none", TEXT_INDEX_VERSION_2, &languageNoneV2);
     MONGO_FTS_LANGUAGE_LIST(LANGUAGE_INITV2);
 

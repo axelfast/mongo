@@ -15,10 +15,10 @@
 #pragma once
 #endif  // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
-#include "mongo/util/net/ssl/context.hpp"
-#include "mongo/util/net/ssl/context_base.hpp"
-#include "mongo/util/net/ssl/error.hpp"
-#include "mongo/util/net/ssl/stream.hpp"
-#include "mongo/util/net/ssl/stream_base.hpp"
+#include "monger/util/net/ssl/context.hpp"
+#include "monger/util/net/ssl/context_base.hpp"
+#include "monger/util/net/ssl/error.hpp"
+#include "monger/util/net/ssl/stream.hpp"
+#include "monger/util/net/ssl/stream_base.hpp"
 
 #endif  // ASIO_SSL_HPP

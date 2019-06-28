@@ -10,8 +10,8 @@ import json
 import sys
 import urllib2
 
-url_current = "http://downloads.mongodb.org/current.json"
-url_full = "http://downloads.mongodb.org/full.json"
+url_current = "http://downloads.mongerdb.org/current.json"
+url_full = "http://downloads.mongerdb.org/full.json"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--arch", help="processor architecture (e.g. 'x86_64', 'arm64')")

@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,7 +28,7 @@
  *    it in the license file.
  */
 
-package com.mongodb.embedded.capi.internal;
+package com.mongerdb.embedded.capi.internal;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Memory;
@@ -66,54 +66,54 @@ public class CAPI {
         }
     }
 
-    public static class mongo_embedded_v1_status extends PointerType {
+    public static class monger_embedded_v1_status extends PointerType {
 
-        public mongo_embedded_v1_status() {
+        public monger_embedded_v1_status() {
             super();
         }
 
-        public mongo_embedded_v1_status(Pointer address) {
+        public monger_embedded_v1_status(Pointer address) {
             super(address);
         }
     }
 
-    public static class mongo_embedded_v1_lib extends PointerType {
-        public mongo_embedded_v1_lib() {
+    public static class monger_embedded_v1_lib extends PointerType {
+        public monger_embedded_v1_lib() {
             super();
         }
 
-        public mongo_embedded_v1_lib(Pointer address) {
+        public monger_embedded_v1_lib(Pointer address) {
             super(address);
         }
     }
 
-    public static class mongo_embedded_v1_instance extends PointerType {
-        public mongo_embedded_v1_instance() {
+    public static class monger_embedded_v1_instance extends PointerType {
+        public monger_embedded_v1_instance() {
             super();
         }
 
-        public mongo_embedded_v1_instance(Pointer address) {
+        public monger_embedded_v1_instance(Pointer address) {
             super(address);
         }
     }
 
-    public static class mongo_embedded_v1_client extends PointerType {
-        public mongo_embedded_v1_client() {
+    public static class monger_embedded_v1_client extends PointerType {
+        public monger_embedded_v1_client() {
             super();
         }
 
-        public mongo_embedded_v1_client(Pointer address) {
+        public monger_embedded_v1_client(Pointer address) {
             super(address);
         }
     }
 
-    public static class mongo_embedded_v1_init_params extends Structure {
+    public static class monger_embedded_v1_init_params extends Structure {
         public cstring yaml_config;
         public long log_flags;
-        public mongo_embedded_v1_log_callback log_callback;
+        public monger_embedded_v1_log_callback log_callback;
         public Pointer log_user_data;
 
-        public mongo_embedded_v1_init_params() {
+        public monger_embedded_v1_init_params() {
             super();
         }
 
@@ -122,46 +122,46 @@ public class CAPI {
                     "log_user_data");
         }
 
-        public static class ByReference extends mongo_embedded_v1_init_params
+        public static class ByReference extends monger_embedded_v1_init_params
                 implements Structure.ByReference {
         }
     }
 
-    public interface mongo_embedded_v1_log_callback extends Callback {
+    public interface monger_embedded_v1_log_callback extends Callback {
         void log(Pointer user_data, cstring message, cstring component, cstring context, int severity);
     }
 
-    public static native mongo_embedded_v1_status mongo_embedded_v1_status_create();
+    public static native monger_embedded_v1_status monger_embedded_v1_status_create();
 
-    public static native void mongo_embedded_v1_status_destroy(mongo_embedded_v1_status status);
+    public static native void monger_embedded_v1_status_destroy(monger_embedded_v1_status status);
 
-    public static native int mongo_embedded_v1_status_get_error(mongo_embedded_v1_status status);
+    public static native int monger_embedded_v1_status_get_error(monger_embedded_v1_status status);
 
-    public static native cstring mongo_embedded_v1_status_get_explanation(mongo_embedded_v1_status status);
+    public static native cstring monger_embedded_v1_status_get_explanation(monger_embedded_v1_status status);
 
-    public static native int mongo_embedded_v1_status_get_code(mongo_embedded_v1_status status);
+    public static native int monger_embedded_v1_status_get_code(monger_embedded_v1_status status);
 
-    public static native mongo_embedded_v1_lib mongo_embedded_v1_lib_init(mongo_embedded_v1_init_params.ByReference init_params,
-                                                                          mongo_embedded_v1_status status);
+    public static native monger_embedded_v1_lib monger_embedded_v1_lib_init(monger_embedded_v1_init_params.ByReference init_params,
+                                                                          monger_embedded_v1_status status);
 
-    public static native int mongo_embedded_v1_lib_fini(mongo_embedded_v1_lib lib, mongo_embedded_v1_status status);
+    public static native int monger_embedded_v1_lib_fini(monger_embedded_v1_lib lib, monger_embedded_v1_status status);
 
-    public static native mongo_embedded_v1_instance mongo_embedded_v1_instance_create(mongo_embedded_v1_lib lib, cstring yaml_config,
-                                                                                      mongo_embedded_v1_status status);
+    public static native monger_embedded_v1_instance monger_embedded_v1_instance_create(monger_embedded_v1_lib lib, cstring yaml_config,
+                                                                                      monger_embedded_v1_status status);
 
-    public static native int mongo_embedded_v1_instance_destroy(mongo_embedded_v1_instance instance, mongo_embedded_v1_status status);
+    public static native int monger_embedded_v1_instance_destroy(monger_embedded_v1_instance instance, monger_embedded_v1_status status);
 
-    public static native mongo_embedded_v1_client mongo_embedded_v1_client_create(mongo_embedded_v1_instance instance,
-                                                                                  mongo_embedded_v1_status status);
+    public static native monger_embedded_v1_client monger_embedded_v1_client_create(monger_embedded_v1_instance instance,
+                                                                                  monger_embedded_v1_status status);
 
-    public static native int mongo_embedded_v1_client_destroy(mongo_embedded_v1_client client, mongo_embedded_v1_status status);
+    public static native int monger_embedded_v1_client_destroy(monger_embedded_v1_client client, monger_embedded_v1_status status);
 
-    public static native int mongo_embedded_v1_client_invoke(mongo_embedded_v1_client client, Pointer input, NativeLong size,
+    public static native int monger_embedded_v1_client_invoke(monger_embedded_v1_client client, Pointer input, NativeLong size,
                                                              PointerByReference output, NativeLongByReference output_size,
-                                                             mongo_embedded_v1_status status);
+                                                             monger_embedded_v1_status status);
 
     static {
-        Native.register(CAPI.class, "mongo_embedded");
+        Native.register(CAPI.class, "monger_embedded");
     }
 
 }

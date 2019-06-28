@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/config.h"
+#include "monger/config.h"
 
-namespace mongo {
+namespace monger {
 
 #ifdef MONGO_CONFIG_USDT_ENABLED
 
@@ -57,7 +57,7 @@ namespace mongo {
  * MONGO_USDT(probe2, arg1, arg2, arg3); // symbol is probe2, passing 3 arguments to probe
  */
 #define MONGO_USDT(...) \
-    MONGO_USDT_CONCAT_(DTRACE_PROBE, MONGO_USDT_SUFFIX_(__VA_ARGS__))(mongodb, __VA_ARGS__)
+    MONGO_USDT_CONCAT_(DTRACE_PROBE, MONGO_USDT_SUFFIX_(__VA_ARGS__))(mongerdb, __VA_ARGS__)
 
 #else
 
@@ -65,4 +65,4 @@ namespace mongo {
 
 #endif  // MONGO_CONFIG_USDT_ENABLED
 
-}  // namespace mongo
+}  // namespace monger

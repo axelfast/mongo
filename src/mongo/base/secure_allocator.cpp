@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/secure_allocator.h"
+#include "monger/base/secure_allocator.h"
 
 #include <memory>
 
@@ -43,17 +43,17 @@
 #include <sys/types.h>
 #endif
 
-#include "mongo/base/init.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/secure_zero_memory.h"
-#include "mongo/util/text.h"
+#include "monger/base/init.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/secure_zero_memory.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -249,7 +249,7 @@ void* systemAllocate(std::size_t bytes) {
     if (mlock(ptr, bytes) != 0) {
         auto str = errnoWithPrefix(
             "Failed to mlock: Cannot allocate locked memory. For more details see: "
-            "https://dochub.mongodb.org/core/cannot-allocate-locked-memory");
+            "https://dochub.mongerdb.org/core/cannot-allocate-locked-memory");
         severe() << str;
         fassertFailed(28832);
     }
@@ -391,4 +391,4 @@ void deallocate(void* ptr, std::size_t bytes) {
 
 constexpr StringData SecureAllocatorAuthDomainTrait::DomainType;
 
-}  // namespace mongo
+}  // namespace monger

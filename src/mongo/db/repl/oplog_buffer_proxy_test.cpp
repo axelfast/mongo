@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional/optional_io.hpp>
 #include <deque>
 #include <functional>
 #include <memory>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/oplog_buffer_proxy.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/oplog_buffer_proxy.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 
 class OplogBufferMock : public OplogBuffer {
     OplogBufferMock(const OplogBufferMock&) = delete;

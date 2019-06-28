@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/profile_common.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/profile_common.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ProfileCmd : public ProfileCmdBase {
 public:
     ProfileCmd() = default;
 
-    // On mongoS, the 'profile' command is only used to change the global 'slowms' and 'sampleRate'
-    // parameters. Since it does not apply to any specific database but rather the mongoS as a
+    // On mongerS, the 'profile' command is only used to change the global 'slowms' and 'sampleRate'
+    // parameters. Since it does not apply to any specific database but rather the mongerS as a
     // whole, we require that it be run on the 'admin' database.
     bool adminOnly() const final {
         return true;
@@ -50,11 +50,11 @@ protected:
     int _applyProfilingLevel(OperationContext* opCtx,
                              const std::string& dbName,
                              int profilingLevel) const final {
-        // Because mongoS does not allow profiling, but only uses the 'profile' command to change
+        // Because mongerS does not allow profiling, but only uses the 'profile' command to change
         // 'slowms' and 'sampleRate' for logging purposes, we do not apply the profiling level here.
         // Instead, we validate that the user is not attempting to set a "real" profiling level.
         uassert(ErrorCodes::BadValue,
-                "Profiling is not permitted on mongoS: the 'profile' field should be 0 to change "
+                "Profiling is not permitted on mongerS: the 'profile' field should be 0 to change "
                 "'slowms' and 'sampleRate' settings for logging, or -1 to view current values",
                 profilingLevel == -1 || profilingLevel == 0);
 
@@ -64,4 +64,4 @@ protected:
 } profileCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_comparator.h"
-#include "mongo/db/pipeline/document_path_support.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/json.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_comparator.h"
+#include "monger/db/pipeline/document_path_support.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace document_path_support {
 
 namespace {
@@ -379,4 +379,4 @@ TEST(DocumentToBsonWithPathsTest, ShouldExtractEntireArrayFromPrefixOfDottedFiel
 
 }  // namespace
 }  // namespace document_path_support
-}  // namespace mongo
+}  // namespace monger

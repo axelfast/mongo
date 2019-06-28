@@ -1,4 +1,4 @@
-# Driver doesn't validate maxStalenessSeconds for mongos
+# Driver doesn't validate maxStalenessSeconds for mongers
 ---
 heartbeatFrequencyMS: 10000
 topology_description:

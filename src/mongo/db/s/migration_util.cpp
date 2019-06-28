@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/migration_util.h"
+#include "monger/db/s/migration_util.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/s/catalog/type_chunk.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/namespace_string.h"
+#include "monger/s/catalog/type_chunk.h"
 
-namespace mongo {
+namespace monger {
 namespace migrationutil {
 namespace {
 
@@ -64,4 +64,4 @@ BSONObj makeMigrationStatusDocument(const NamespaceString& nss,
 
 }  // namespace migrationutil
 
-}  // namespace mongo
+}  // namespace monger

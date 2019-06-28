@@ -118,22 +118,22 @@ var Cluster = function(options) {
         options.setupFunctions = options.setupFunctions || {};
         assert.eq('object', typeof options.setupFunctions);
 
-        options.setupFunctions.mongod = options.setupFunctions.mongod || [];
-        assert(Array.isArray(options.setupFunctions.mongod),
-               'Expected setupFunctions.mongod to be an array');
-        assert(options.setupFunctions.mongod.every(f => (typeof f === 'function')),
-               'Expected setupFunctions.mongod to be an array of functions');
+        options.setupFunctions.mongerd = options.setupFunctions.mongerd || [];
+        assert(Array.isArray(options.setupFunctions.mongerd),
+               'Expected setupFunctions.mongerd to be an array');
+        assert(options.setupFunctions.mongerd.every(f => (typeof f === 'function')),
+               'Expected setupFunctions.mongerd to be an array of functions');
 
-        if (typeof options.setupFunctions.mongos !== 'undefined') {
+        if (typeof options.setupFunctions.mongers !== 'undefined') {
             assert(options.sharded.enabled,
-                   "Must have sharded.enabled be true if 'setupFunctions.mongos' is specified");
+                   "Must have sharded.enabled be true if 'setupFunctions.mongers' is specified");
         }
 
-        options.setupFunctions.mongos = options.setupFunctions.mongos || [];
-        assert(Array.isArray(options.setupFunctions.mongos),
-               'Expected setupFunctions.mongos to be an array');
-        assert(options.setupFunctions.mongos.every(f => (typeof f === 'function')),
-               'Expected setupFunctions.mongos to be an array of functions');
+        options.setupFunctions.mongers = options.setupFunctions.mongers || [];
+        assert(Array.isArray(options.setupFunctions.mongers),
+               'Expected setupFunctions.mongers to be an array');
+        assert(options.setupFunctions.mongers.every(f => (typeof f === 'function')),
+               'Expected setupFunctions.mongers to be an array of functions');
 
         options.setupFunctions.config = options.setupFunctions.config || [];
         assert(Array.isArray(options.setupFunctions.config),
@@ -144,22 +144,22 @@ var Cluster = function(options) {
         options.teardownFunctions = options.teardownFunctions || {};
         assert.eq('object', typeof options.teardownFunctions);
 
-        options.teardownFunctions.mongod = options.teardownFunctions.mongod || [];
-        assert(Array.isArray(options.teardownFunctions.mongod),
-               'Expected teardownFunctions.mongod to be an array');
-        assert(options.teardownFunctions.mongod.every(f => (typeof f === 'function')),
-               'Expected teardownFunctions.mongod to be an array of functions');
+        options.teardownFunctions.mongerd = options.teardownFunctions.mongerd || [];
+        assert(Array.isArray(options.teardownFunctions.mongerd),
+               'Expected teardownFunctions.mongerd to be an array');
+        assert(options.teardownFunctions.mongerd.every(f => (typeof f === 'function')),
+               'Expected teardownFunctions.mongerd to be an array of functions');
 
-        if (typeof options.teardownFunctions.mongos !== 'undefined') {
+        if (typeof options.teardownFunctions.mongers !== 'undefined') {
             assert(options.sharded.enabled,
-                   "Must have sharded.enabled be true if 'teardownFunctions.mongos' is specified");
+                   "Must have sharded.enabled be true if 'teardownFunctions.mongers' is specified");
         }
 
-        options.teardownFunctions.mongos = options.teardownFunctions.mongos || [];
-        assert(Array.isArray(options.teardownFunctions.mongos),
-               'Expected teardownFunctions.mongos to be an array');
-        assert(options.teardownFunctions.mongos.every(f => (typeof f === 'function')),
-               'Expected teardownFunctions.mongos to be an array of functions');
+        options.teardownFunctions.mongers = options.teardownFunctions.mongers || [];
+        assert(Array.isArray(options.teardownFunctions.mongers),
+               'Expected teardownFunctions.mongers to be an array');
+        assert(options.teardownFunctions.mongers.every(f => (typeof f === 'function')),
+               'Expected teardownFunctions.mongers to be an array of functions');
 
         options.teardownFunctions.config = options.teardownFunctions.config || [];
         assert(Array.isArray(options.teardownFunctions.config),
@@ -176,7 +176,7 @@ var Cluster = function(options) {
     var initialized = false;
     var clusterStartTime;
 
-    var _conns = {mongos: [], mongod: []};
+    var _conns = {mongers: [], mongerd: []};
     var nextConn = 0;
     var replSets = [];
     var rst;
@@ -192,13 +192,13 @@ var Cluster = function(options) {
         }
 
         if (options.sharded.enabled) {
-            st = new FSMShardingTest(`mongodb://${db.getMongo().host}`);
+            st = new FSMShardingTest(`mongerdb://${db.getMongo().host}`);
 
-            conn = st.s(0);  // First mongos
+            conn = st.s(0);  // First mongers
 
             this.teardown = function teardown() {
-                options.teardownFunctions.mongod.forEach(this.executeOnMongodNodes);
-                options.teardownFunctions.mongos.forEach(this.executeOnMongosNodes);
+                options.teardownFunctions.mongerd.forEach(this.executeOnMongodNodes);
+                options.teardownFunctions.mongers.forEach(this.executeOnMongosNodes);
                 options.teardownFunctions.config.forEach(this.executeOnConfigNodes);
             };
 
@@ -211,17 +211,17 @@ var Cluster = function(options) {
                 }
             };
 
-            // Save all mongos, mongod, and ReplSet connections (if any).
+            // Save all mongers, mongerd, and ReplSet connections (if any).
             var i;
 
             i = 0;
             while (st.s(i)) {
-                _conns.mongos.push(st.s(i++));
+                _conns.mongers.push(st.s(i++));
             }
 
             i = 0;
             while (st.d(i)) {
-                _conns.mongod.push(st.d(i++));
+                _conns.mongerd.push(st.d(i++));
             }
 
             i = 0;
@@ -239,7 +239,7 @@ var Cluster = function(options) {
             replSets = [rst];
 
             this.teardown = function teardown() {
-                options.teardownFunctions.mongod.forEach(this.executeOnMongodNodes);
+                options.teardownFunctions.mongerd.forEach(this.executeOnMongodNodes);
             };
 
             this._addReplicaSetConns(rst);
@@ -248,23 +248,23 @@ var Cluster = function(options) {
             conn = db.getMongo();
             db.adminCommand({setParameter: 1, logLevel: verbosityLevel});
 
-            _conns.mongod = [conn];
+            _conns.mongerd = [conn];
         }
 
         initialized = true;
         clusterStartTime = new Date();
 
-        options.setupFunctions.mongod.forEach(this.executeOnMongodNodes);
+        options.setupFunctions.mongerd.forEach(this.executeOnMongodNodes);
         options.setupFunctions.config.forEach(this.executeOnConfigNodes);
         if (options.sharded) {
-            options.setupFunctions.mongos.forEach(this.executeOnMongosNodes);
+            options.setupFunctions.mongers.forEach(this.executeOnMongosNodes);
         }
     };
 
     this._addReplicaSetConns = function _addReplicaSetConns(rsTest) {
-        _conns.mongod.push(rsTest.getPrimary());
+        _conns.mongerd.push(rsTest.getPrimary());
         rsTest.getSecondaries().forEach(function(secondaryConn) {
-            _conns.mongod.push(secondaryConn);
+            _conns.mongerd.push(secondaryConn);
         });
     };
 
@@ -272,10 +272,10 @@ var Cluster = function(options) {
         assert(initialized, 'cluster must be initialized first');
 
         if (!fn || typeof(fn) !== 'function' || fn.length !== 1) {
-            throw new Error('mongod function must be a function that takes a db as an argument');
+            throw new Error('mongerd function must be a function that takes a db as an argument');
         }
-        _conns.mongod.forEach(function(mongodConn) {
-            fn(mongodConn.getDB('admin'));
+        _conns.mongerd.forEach(function(mongerdConn) {
+            fn(mongerdConn.getDB('admin'));
         });
     };
 
@@ -283,10 +283,10 @@ var Cluster = function(options) {
         assert(initialized, 'cluster must be initialized first');
 
         if (!fn || typeof(fn) !== 'function' || fn.length !== 1) {
-            throw new Error('mongos function must be a function that takes a db as an argument');
+            throw new Error('mongers function must be a function that takes a db as an argument');
         }
-        _conns.mongos.forEach(function(mongosConn) {
-            fn(mongosConn.getDB('admin'), true /* isMongos */);
+        _conns.mongers.forEach(function(mongersConn) {
+            fn(mongersConn.getDB('admin'), true /* isMongos */);
         });
     };
 
@@ -302,13 +302,13 @@ var Cluster = function(options) {
     };
 
     this.synchronizeMongosClusterTimes = function synchronizeMongosClusterTimes() {
-        const contactConfigServerFn = ((mongosConn) => {
+        const contactConfigServerFn = ((mongersConn) => {
             // The admin database is hosted on the config server.
-            assert.commandWorked(mongosConn.adminCommand({find: "foo"}));
+            assert.commandWorked(mongersConn.adminCommand({find: "foo"}));
         });
 
         // After the first iteration, the config server will have been gossiped the highest cluster
-        // time any mongos has seen. After the second iteration, each mongos should have been
+        // time any mongers has seen. After the second iteration, each mongers should have been
         // gossiped this time as well.
         this.executeOnMongosNodes(contactConfigServerFn);
         this.executeOnMongosNodes(contactConfigServerFn);
@@ -316,7 +316,7 @@ var Cluster = function(options) {
 
     this.teardown = function teardown() {
         assert(initialized, 'cluster must be initialized first');
-        options.teardownFunctions.mongod.forEach(this.executeOnMongodNodes);
+        options.teardownFunctions.mongerd.forEach(this.executeOnMongodNodes);
     };
 
     this.getDB = function getDB(dbName) {
@@ -327,9 +327,9 @@ var Cluster = function(options) {
     this.getHost = function getHost() {
         assert(initialized, 'cluster must be initialized first');
 
-        // Alternate mongos connections for sharded clusters
+        // Alternate mongers connections for sharded clusters
         if (this.isSharded()) {
-            return _conns.mongos[nextConn++ % _conns.mongos.length].host;
+            return _conns.mongers[nextConn++ % _conns.mongers.length].host;
         }
         return conn.host;
     };
@@ -407,7 +407,7 @@ var Cluster = function(options) {
     //
     // Serialized format:
     // {
-    //      mongos: [
+    //      mongers: [
     //          "localhost:30998",
     //          "localhost:30999"
     //      ],
@@ -437,14 +437,14 @@ var Cluster = function(options) {
             return '';
         }
 
-        var cluster = {mongos: [], config: [], shards: {}};
+        var cluster = {mongers: [], config: [], shards: {}};
 
         var i = 0;
-        var mongos = st.s(0);
-        while (mongos) {
-            cluster.mongos.push(mongos.name);
+        var mongers = st.s(0);
+        while (mongers) {
+            cluster.mongers.push(mongers.name);
             ++i;
-            mongos = st.s(i);
+            mongers = st.s(i);
         }
 
         i = 0;
@@ -464,7 +464,7 @@ var Cluster = function(options) {
                 var [setName, shards] = shard.name.split('/');
                 cluster.shards[setName] = shards.split(',');
             } else {
-                // If the shard is a standalone mongod, the format of st.shard(0).name in
+                // If the shard is a standalone mongerd, the format of st.shard(0).name in
                 // ShardingTest is "localhost:20006".
                 cluster.shards[shard.shardName] = [shard.name];
             }
@@ -491,12 +491,12 @@ var Cluster = function(options) {
             var res = db.adminCommand({listDatabases: 1});
             assert.commandWorked(res);
             res.databases.forEach(dbInfo => {
-                // Don't perform listCollections on the admin or config database through a mongos
+                // Don't perform listCollections on the admin or config database through a mongers
                 // connection when stepping down the config server primary, because both are stored
                 // on the config server, and listCollections may return a not master error if the
-                // mongos is stale.
+                // mongers is stale.
                 //
-                // TODO SERVER-30949: listCollections through mongos should automatically retry on
+                // TODO SERVER-30949: listCollections through mongers should automatically retry on
                 // NotMaster errors. Once that is true, remove this check.
                 if (isSteppingDownConfigServers && isMongos &&
                     (dbInfo.name === "admin" || dbInfo.name === "config")) {
@@ -603,7 +603,7 @@ var Cluster = function(options) {
 
         if (this.isSharded()) {
             // Get the storage engine the sharded cluster is configured to use from one of the
-            // shards since mongos won't report it.
+            // shards since mongers won't report it.
             adminDB = st.shard(0).getDB('admin');
         }
 
@@ -643,7 +643,7 @@ var Cluster = function(options) {
 };
 
 /**
- * Returns true if 'clusterOptions' represents a standalone mongod,
+ * Returns true if 'clusterOptions' represents a standalone mongerd,
  * and false otherwise.
  */
 Cluster.isStandalone = function isStandalone(clusterOptions) {

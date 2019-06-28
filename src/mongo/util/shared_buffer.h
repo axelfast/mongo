@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,12 +34,12 @@
 
 #include <boost/intrusive_ptr.hpp>
 
-#include "mongo/platform/atomic_word.h"
+#include "monger/platform/atomic_word.h"
 
-#include "mongo/util/allocator.h"
-#include "mongo/util/assert_util.h"
+#include "monger/util/allocator.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A mutable, ref-counted buffer.
@@ -53,7 +53,7 @@ public:
     }
 
     static SharedBuffer allocate(size_t bytes) {
-        return takeOwnership(mongoMalloc(sizeof(Holder) + bytes), bytes);
+        return takeOwnership(mongerMalloc(sizeof(Holder) + bytes), bytes);
     }
 
     /**
@@ -68,7 +68,7 @@ public:
         invariant(!_holder || !_holder->isShared());
 
         const size_t realSize = size + sizeof(Holder);
-        void* newPtr = mongoRealloc(_holder.get(), realSize);
+        void* newPtr = mongerRealloc(_holder.get(), realSize);
 
         // Get newPtr into _holder with a ref-count of 1 without touching the current pointee of
         // _holder which is now invalid.

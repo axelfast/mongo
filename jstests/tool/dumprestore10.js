@@ -37,15 +37,15 @@
         replTest.awaitReplication();
     }
 
-    step("mongodump from replset");
+    step("mongerdump from replset");
 
     var data = MongoRunner.dataDir + "/dumprestore10-dump1/";
 
-    var exitCode = MongoRunner.runMongoTool("mongodump", {
+    var exitCode = MongoRunner.runMongoTool("mongerdump", {
         host: "127.0.0.1:" + master.port,
         out: data,
     });
-    assert.eq(0, exitCode, "mongodump failed to dump data from the replica set");
+    assert.eq(0, exitCode, "mongerdump failed to dump data from the replica set");
 
     {
         step("remove data after dumping");
@@ -57,23 +57,23 @@
         replTest.awaitReplication();
     }
 
-    step("try mongorestore with write concern");
+    step("try mongerrestore with write concern");
 
-    exitCode = MongoRunner.runMongoTool("mongorestore", {
+    exitCode = MongoRunner.runMongoTool("mongerrestore", {
         writeConcern: "2",
         host: "127.0.0.1:" + master.port,
         dir: data,
     });
     assert.eq(0,
               exitCode,
-              "mongorestore failed to restore the data to a replica set while using w=2 writes");
+              "mongerrestore failed to restore the data to a replica set while using w=2 writes");
 
     var x = 0;
 
     // no waiting for replication
     x = master.getDB("foo").getCollection("bar").count();
 
-    assert.eq(x, total, "mongorestore should have successfully restored the collection");
+    assert.eq(x, total, "mongerrestore should have successfully restored the collection");
 
     step("stopSet");
     replTest.stopSet();

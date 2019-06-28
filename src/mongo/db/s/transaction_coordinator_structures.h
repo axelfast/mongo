@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,11 +32,11 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/logger/logstream_builder.h"
-#include "mongo/s/shard_id.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/logger/logstream_builder.h"
+#include "monger/s/shard_id.h"
 
-namespace mongo {
+namespace monger {
 namespace txn {
 
 using ParticipantsList = std::vector<ShardId>;
@@ -58,4 +58,4 @@ logger::LogstreamBuilder& operator<<(logger::LogstreamBuilder& stream,
                                      const CommitDecision& decision);
 
 }  // namespace txn
-}  // namespace mongo
+}  // namespace monger

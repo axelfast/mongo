@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,24 +28,24 @@
  */
 
 /**
- * This file contains tests for mongo/db/exec/working_set.cpp
+ * This file contains tests for monger/db/exec/working_set.cpp
  */
 
 
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/storage/snapshot.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/storage/snapshot.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 
 using std::string;
 
-class WorkingSetFixture : public mongo::unittest::Test {
+class WorkingSetFixture : public monger::unittest::Test {
 protected:
     void setUp() {
         ws.reset(new WorkingSet());

@@ -4,16 +4,16 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Main package for the mongoimport tool.
+// Main package for the mongerimport tool.
 package main
 
 import (
 	"os"
 
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/signals"
-	"github.com/mongodb/mongo-tools-common/util"
-	"github.com/mongodb/mongo-tools/mongoimport"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/signals"
+	"github.com/mongerdb/monger-tools-common/util"
+	"github.com/mongerdb/monger-tools/mongerimport"
 )
 
 var (
@@ -22,10 +22,10 @@ var (
 )
 
 func main() {
-	opts, err := mongoimport.ParseOptions(os.Args[1:], VersionStr, GitCommit)
+	opts, err := mongerimport.ParseOptions(os.Args[1:], VersionStr, GitCommit)
 	if err != nil {
 		log.Logvf(log.Always, "error parsing command line options: %v", err)
-		log.Logvf(log.Always, util.ShortUsage("mongoimport"))
+		log.Logvf(log.Always, util.ShortUsage("mongerimport"))
 		os.Exit(util.ExitFailure)
 	}
 
@@ -41,7 +41,7 @@ func main() {
 		return
 	}
 
-	m, err := mongoimport.New(opts)
+	m, err := mongerimport.New(opts)
 	if err != nil {
 		log.Logvf(log.Always, err.Error())
 		os.Exit(util.ExitFailure)

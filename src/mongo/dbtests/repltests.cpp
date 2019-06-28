@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/mutable_bson_test_utils.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/json.h"
-#include "mongo/db/ops/update.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/sync_tail.h"
-#include "mongo/db/s/op_observer_sharding_impl.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/transport/transport_layer_asio.h"
-#include "mongo/util/log.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/mutable_bson_test_utils.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/json.h"
+#include "monger/db/ops/update.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/sync_tail.h"
+#include "monger/db/s/op_observer_sharding_impl.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/transport/transport_layer_asio.h"
+#include "monger/util/log.h"
 
-using namespace mongo::repl;
+using namespace monger::repl;
 
 namespace ReplTests {
 
@@ -104,7 +104,7 @@ public:
           _defaultReplSettings(
               ReplicationCoordinator::get(getGlobalServiceContext())->getSettings()) {
         // Replication is not supported by mobile SE.
-        if (mongo::storageGlobalParams.engine == "mobile") {
+        if (monger::storageGlobalParams.engine == "mobile") {
             return;
         }
 
@@ -148,7 +148,7 @@ public:
     }
     ~Base() {
         // Replication is not supported by mobile SE.
-        if (mongo::storageGlobalParams.engine == "mobile") {
+        if (monger::storageGlobalParams.engine == "mobile") {
             return;
         }
         try {
@@ -194,7 +194,7 @@ protected:
     }
     void check(const BSONObj& expected, const BSONObj& got) const {
         if (expected.woCompare(got)) {
-            ::mongo::log() << "expected: " << expected.toString() << ", got: " << got.toString()
+            ::monger::log() << "expected: " << expected.toString() << ", got: " << got.toString()
                            << endl;
         }
         ASSERT_BSONOBJ_EQ(expected, got);
@@ -246,7 +246,7 @@ protected:
             OldClientContext ctx(&_opCtx, ns());
             for (vector<BSONObj>::iterator i = ops.begin(); i != ops.end(); ++i) {
                 if (0) {
-                    mongo::unittest::log() << "op: " << *i << endl;
+                    monger::unittest::log() << "op: " << *i << endl;
                 }
                 repl::UnreplicatedWritesBlock uwb(&_opCtx);
                 uassertStatusOK(applyOperation_inlock(
@@ -268,14 +268,14 @@ protected:
         }
 
         auto cursor = coll->getCursor(&_opCtx);
-        ::mongo::log() << "all for " << ns << endl;
+        ::monger::log() << "all for " << ns << endl;
         while (auto record = cursor->next()) {
-            ::mongo::log() << record->data.releaseToBson() << endl;
+            ::monger::log() << record->data.releaseToBson() << endl;
         }
     }
     // These deletes don't get logged.
     void deleteAll(const char* ns) const {
-        ::mongo::writeConflictRetry(&_opCtx, "deleteAll", ns, [&] {
+        ::monger::writeConflictRetry(&_opCtx, "deleteAll", ns, [&] {
             NamespaceString nss(ns);
             Lock::GlobalWrite lk(&_opCtx);
             OldClientContext ctx(&_opCtx, ns);
@@ -334,7 +334,7 @@ class LogBasic : public Base {
 public:
     void run() {
         // Replication is not supported by mobile SE.
-        if (mongo::storageGlobalParams.engine == "mobile") {
+        if (monger::storageGlobalParams.engine == "mobile") {
             return;
         }
         ASSERT_EQUALS(1, opCount());
@@ -350,7 +350,7 @@ public:
     virtual ~Base() {}
     void run() {
         // Replication is not supported by mobile SE.
-        if (mongo::storageGlobalParams.engine == "mobile") {
+        if (monger::storageGlobalParams.engine == "mobile") {
             return;
         }
         reset();
@@ -1336,7 +1336,7 @@ class DeleteOpIsIdBased : public Base {
 public:
     void run() {
         // Replication is not supported by mobile SE.
-        if (mongo::storageGlobalParams.engine == "mobile") {
+        if (monger::storageGlobalParams.engine == "mobile") {
             return;
         }
         insert(BSON("_id" << 0 << "a" << 10));
@@ -1388,7 +1388,7 @@ class FetchAndInsertMissingDocument : public Base {
 public:
     void run() {
         // Replication is not supported by mobile SE.
-        if (mongo::storageGlobalParams.engine == "mobile") {
+        if (monger::storageGlobalParams.engine == "mobile") {
             return;
         }
         bool threw = false;

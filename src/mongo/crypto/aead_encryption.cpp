@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/crypto/aead_encryption.h"
+#include "monger/crypto/aead_encryption.h"
 
-#include "mongo/base/data_view.h"
-#include "mongo/crypto/sha512_block.h"
-#include "mongo/crypto/symmetric_crypto.h"
-#include "mongo/db/matcher/schema/encrypt_schema_gen.h"
-#include "mongo/util/secure_compare_memory.h"
+#include "monger/base/data_view.h"
+#include "monger/crypto/sha512_block.h"
+#include "monger/crypto/symmetric_crypto.h"
+#include "monger/db/matcher/schema/encrypt_schema_gen.h"
+#include "monger/util/secure_compare_memory.h"
 
-namespace mongo {
+namespace monger {
 namespace crypto {
 
 namespace {
@@ -388,4 +388,4 @@ Status aeadDecrypt(const SymmetricKey& key,
 }
 
 }  // namespace crypto
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/filesystem.hpp>
 #include <fstream>
 #include <ostream>
 
-#include "mongo/db/storage/storage_engine_lock_file.h"
-#include "mongo/platform/process_id.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/storage/storage_engine_lock_file.h"
+#include "monger/platform/process_id.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
 
 #ifndef _WIN32
 #include <sys/stat.h>
@@ -47,9 +47,9 @@
 namespace {
 
 using std::string;
-using mongo::unittest::TempDir;
+using monger::unittest::TempDir;
 
-using namespace mongo;
+using namespace monger;
 
 TEST(StorageEngineLockFileTest, UncleanShutdownNoExistingFile) {
     TempDir tempDir("StorageEngineLockFileTest_UncleanShutdownNoExistingFile");
@@ -60,7 +60,7 @@ TEST(StorageEngineLockFileTest, UncleanShutdownNoExistingFile) {
 TEST(StorageEngineLockFileTest, UncleanShutdownEmptyExistingFile) {
     TempDir tempDir("StorageEngineLockFileTest_UncleanShutdownEmptyExistingFile");
     {
-        std::string filename(tempDir.path() + "/mongod.lock");
+        std::string filename(tempDir.path() + "/mongerd.lock");
         std::ofstream(filename.c_str());
     }
     StorageEngineLockFile lockFile(tempDir.path());
@@ -70,7 +70,7 @@ TEST(StorageEngineLockFileTest, UncleanShutdownEmptyExistingFile) {
 TEST(StorageEngineLockFileTest, UncleanShutdownNonEmptyExistingFile) {
     TempDir tempDir("StorageEngineLockFileTest_UncleanShutdownNonEmptyExistingFile");
     {
-        std::string filename(tempDir.path() + "/mongod.lock");
+        std::string filename(tempDir.path() + "/mongerd.lock");
         std::ofstream ofs(filename.c_str());
         ofs << 12345 << std::endl;
     }
@@ -80,7 +80,7 @@ TEST(StorageEngineLockFileTest, UncleanShutdownNonEmptyExistingFile) {
 
 TEST(StorageEngineLockFileTest, OpenInvalidDirectory) {
     StorageEngineLockFile lockFile("no_such_directory");
-    ASSERT_EQUALS((boost::filesystem::path("no_such_directory") / "mongod.lock").string(),
+    ASSERT_EQUALS((boost::filesystem::path("no_such_directory") / "mongerd.lock").string(),
                   lockFile.getFilespec());
     Status status = lockFile.open();
     ASSERT_NOT_OK(status);
@@ -142,7 +142,7 @@ TEST(StorageEngineLockFileTest, WritePidTruncateExistingFile) {
     TempDir tempDir("StorageEngineLockFileTest_WritePidTruncateExistingFile");
     StorageEngineLockFile lockFile(tempDir.path());
     {
-        std::string filename(tempDir.path() + "/mongod.lock");
+        std::string filename(tempDir.path() + "/mongerd.lock");
         std::ofstream ofs(filename.c_str());
         std::string currentPidStr = ProcessId::getCurrent().toString();
         ASSERT_FALSE(currentPidStr.empty());

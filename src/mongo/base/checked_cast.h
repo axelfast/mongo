@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <memory>
 
-#include "mongo/util/assert_util.h"
-#include "mongo/util/debug_util.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/debug_util.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Similar to static_cast, but in debug builds uses RTTI to confirm that the cast
@@ -124,4 +124,4 @@ std::shared_ptr<T> checked_pointer_cast(const std::shared_ptr<U>& u) {
     return checked_pointer_cast_impl<kDebugBuild>::cast<T>(u);
 };
 
-}  // namespace mongo
+}  // namespace monger

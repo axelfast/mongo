@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,32 +28,32 @@
  */
 
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_manager.h"
 
 #include <boost/algorithm/string.hpp>
 #include <string>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/config.h"
-#include "mongo/db/commands/server_status.h"
-#include "mongo/platform/overflow_arithmetic.h"
-#include "mongo/transport/session.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/icu.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/net/ssl_parameters_gen.h"
-#include "mongo/util/str.h"
-#include "mongo/util/synchronized_value.h"
-#include "mongo/util/text.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/config.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/platform/overflow_arithmetic.h"
+#include "monger/transport/session.h"
+#include "monger/util/hex.h"
+#include "monger/util/icu.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/net/ssl_parameters_gen.h"
+#include "monger/util/str.h"
+#include "monger/util/synchronized_value.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 
 SSLManagerInterface* theSSLManager = nullptr;
 
@@ -941,7 +941,7 @@ StatusWith<DERToken> DERToken::parse(ConstDataRange cdr, size_t* outLength) {
     const uint64_t tagAndLengthByteCount = kTagLength + encodedLengthBytesCount;
 
     // This may overflow since derLength is from user data so check our arithmetic carefully.
-    if (mongoUnsignedAddOverflow64(tagAndLengthByteCount, derLength, outLength) ||
+    if (mongerUnsignedAddOverflow64(tagAndLengthByteCount, derLength, outLength) ||
         *outLength > cdr.length()) {
         return Status(ErrorCodes::InvalidSSLConfiguration, "Invalid DER length");
     }
@@ -1104,7 +1104,7 @@ public:
 
 void recordTLSVersion(TLSVersion version, const HostAndPort& hostForLogging) {
     StringData versionString;
-    auto& counts = mongo::TLSVersionCounts::get(getGlobalServiceContext());
+    auto& counts = monger::TLSVersionCounts::get(getGlobalServiceContext());
     switch (version) {
         case TLSVersion::kTLS10:
             counts.tls10.addAndFetch(1);
@@ -1175,4 +1175,4 @@ bool hostNameMatchForX509Certificates(std::string nameToMatch, std::string certH
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -8,14 +8,14 @@
     // implicit sessions.
     TestData.disableImplicitSessions = true;
 
-    const mongod = MongoRunner.runMongod({auth: ""});
+    const mongerd = MongoRunner.runMongod({auth: ""});
 
     const refresh = {refreshLogicalSessionCacheNow: 1};
     const startSession = {startSession: 1};
 
-    const admin = mongod.getDB('admin');
-    const db = mongod.getDB("test");
-    const config = mongod.getDB("config");
+    const admin = mongerd.getDB('admin');
+    const db = mongerd.getDB("test");
+    const config = mongerd.getDB("config");
 
     admin.createUser({user: 'admin', pwd: 'pass', roles: jsTest.adminUserRoles});
     assert(admin.auth('admin', 'pass'));
@@ -43,5 +43,5 @@
                   .next()
                   .count);
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 })();

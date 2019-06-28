@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/proxyscope.h"
+#include "monger/scripting/mozjs/proxyscope.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/functional.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/client.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/decimal128.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/functional.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 MozJSProxyScope::MozJSProxyScope(MozJSScriptEngine* engine)
@@ -396,4 +396,4 @@ void MozJSProxyScope::implThread(void* arg) {
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

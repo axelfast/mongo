@@ -26,12 +26,12 @@ load('jstests/libs/write_concern_util.js');
             }
         },
         configReplSetTestOptions: {settings: {chainingAllowed: false}},
-        mongos: 1,
+        mongers: 1,
     });
 
-    var mongos = st.s;
+    var mongers = st.s;
     var dbName = "wc-test-shards";
-    var db = mongos.getDB(dbName);
+    var db = mongers.getDB(dbName);
     var collName = 'leaves';
     var coll = db[collName];
 

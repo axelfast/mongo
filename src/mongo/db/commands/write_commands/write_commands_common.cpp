@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/write_commands/write_commands_common.h"
+#include "monger/db/commands/write_commands/write_commands_common.h"
 
 #include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace auth {
 namespace {
 
@@ -126,4 +126,4 @@ void checkAuthForDeleteCommand(AuthorizationSession* authzSession,
 }
 
 }  // namespace auth
-}  // namespace mongo
+}  // namespace monger

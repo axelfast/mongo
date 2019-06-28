@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,30 +31,30 @@
  * Unit tests for DocumentSource classes.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/multi_plan.h"
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/pipeline/dependencies.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_cursor.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/mock_yield_policies.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/stage_builder.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/multi_plan.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/pipeline/dependencies.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_cursor.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/mock_yield_policies.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/stage_builder.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using boost::intrusive_ptr;
@@ -481,4 +481,4 @@ TEST_F(DocumentSourceCursorTest, NormalCursorShouldErrorAfterBeingKilled) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,13 +28,13 @@
  *    it in the license file.
  */
 
-package com.mongodb.embedded.capi.internal.logging;
+package com.mongerdb.embedded.capi.internal.logging;
 
 /**
  * This class is not part of the public API.
  */
 public final class Loggers {
-    private static final String NAME = "org.mongodb.driver.embedded.capi";
+    private static final String NAME = "org.mongerdb.driver.embedded.capi";
 
     private static final boolean USE_SLF4J = shouldUseSLF4J();
 

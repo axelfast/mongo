@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/client/sasl_client_session.h"
+#include "monger/client/sasl_client_session.h"
 
-#include "mongo/base/init.h"
-#include "mongo/util/allocator.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/signal_handlers_synchronous.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/util/allocator.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/signal_handlers_synchronous.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 SaslClientSession::SaslClientSessionFactoryFn SaslClientSession::create;
 
 SaslClientSession::SaslClientSession() {}
@@ -74,4 +74,4 @@ StringData SaslClientSession::getParameter(Parameter id) {
     return StringData(buffer.data.get(), buffer.size);
 }
 
-}  // namespace mongo
+}  // namespace monger

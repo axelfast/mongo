@@ -12,7 +12,7 @@ package kerberos
 
 import (
 	mgo "github.com/10gen/llmgo"
-	"github.com/mongodb/mongo-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/legacy/options"
 )
 
 const authMechanism = "GSSAPI"

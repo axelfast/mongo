@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <memory>
 
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/runtime_constants_gen.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/runtime_constants_gen.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * The state used as input and working space for Expressions.
@@ -229,4 +229,4 @@ private:
     Variables::Id _lastSeen = -1;
 };
 
-}  // namespace mongo
+}  // namespace monger

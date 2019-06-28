@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/db/storage/mobile/mobile_options_gen.h"
-#include "mongo/util/options_parser/startup_option_init.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/db/storage/mobile/mobile_options_gen.h"
+#include "monger/util/options_parser/startup_option_init.h"
+#include "monger/util/options_parser/startup_options.h"
 
-// When the mobile storage engine is used in embedded we don't need to do this. But when mongod we
+// When the mobile storage engine is used in embedded we don't need to do this. But when mongerd we
 // need to inject the mobile specific options.
-namespace mongo {
-MONGO_MODULE_STARTUP_OPTIONS_REGISTER(mobile_options_mongod_register)(InitializerContext*) {
+namespace monger {
+MONGO_MODULE_STARTUP_OPTIONS_REGISTER(mobile_options_mongerd_register)(InitializerContext*) {
     return addMobileStorageOptionDefinitions(&optionenvironment::startupOptions);
 }
-MONGO_STARTUP_OPTIONS_STORE(mobile_options_mongod_store)(InitializerContext*) {
+MONGO_STARTUP_OPTIONS_STORE(mobile_options_mongerd_store)(InitializerContext*) {
     return storeMobileStorageOptionDefinitions(optionenvironment::startupOptionsParsed);
 }
-}  // namespace mongo
+}  // namespace monger

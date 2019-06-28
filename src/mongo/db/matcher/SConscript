@@ -11,8 +11,8 @@ env.Library(
         'path_internal.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/common',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/common',
     ],
 )
 
@@ -59,37 +59,37 @@ env.Library(
         env.Idlc('schema/encrypt_schema.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/db/common',
-        '$BUILD_DIR/mongo/db/fts/fts_query_noop',
-        '$BUILD_DIR/mongo/db/geo/geometry',
-        '$BUILD_DIR/mongo/db/geo/geoparser',
-        '$BUILD_DIR/mongo/db/query/collation/collator_interface',
-        '$BUILD_DIR/mongo/db/query/query_knobs',
-        '$BUILD_DIR/mongo/db/pipeline/expression',
-        '$BUILD_DIR/mongo/idl/idl_parser',
-        '$BUILD_DIR/mongo/util/regex_util',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/db/common',
+        '$BUILD_DIR/monger/db/fts/fts_query_noop',
+        '$BUILD_DIR/monger/db/geo/geometry',
+        '$BUILD_DIR/monger/db/geo/geoparser',
+        '$BUILD_DIR/monger/db/query/collation/collator_interface',
+        '$BUILD_DIR/monger/db/query/query_knobs',
+        '$BUILD_DIR/monger/db/pipeline/expression',
+        '$BUILD_DIR/monger/idl/idl_parser',
+        '$BUILD_DIR/monger/util/regex_util',
         '$BUILD_DIR/third_party/shim_pcrecpp',
         'path',
     ],
 )
 
 env.Library(
-    target='expressions_mongod_only',
+    target='expressions_mongerd_only',
     source=[
         'extensions_callback_real.cpp',
         'expression_text.cpp',
         'expression_where.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/concurrency/lock_manager',
-        '$BUILD_DIR/mongo/db/fts/base_fts',
-        '$BUILD_DIR/mongo/scripting/scripting_server',
+        '$BUILD_DIR/monger/db/concurrency/lock_manager',
+        '$BUILD_DIR/monger/db/fts/base_fts',
+        '$BUILD_DIR/monger/scripting/scripting_server',
         'expressions',
-        '$BUILD_DIR/mongo/db/catalog/collection',
-        '$BUILD_DIR/mongo/db/catalog/index_catalog',
-        '$BUILD_DIR/mongo/db/catalog_raii',
+        '$BUILD_DIR/monger/db/catalog/collection',
+        '$BUILD_DIR/monger/db/catalog/index_catalog',
+        '$BUILD_DIR/monger/db/catalog_raii',
     ],
 )
 
@@ -140,9 +140,9 @@ env.CppUnitTest(
         'schema/json_schema_parser_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/query/collation/collator_interface_mock',
-        '$BUILD_DIR/mongo/db/query/query_planner',
-        '$BUILD_DIR/mongo/db/query/query_test_service_context',
+        '$BUILD_DIR/monger/db/query/collation/collator_interface_mock',
+        '$BUILD_DIR/monger/db/query/query_planner',
+        '$BUILD_DIR/monger/db/query/query_test_service_context',
         'expressions',
         'path',
     ],

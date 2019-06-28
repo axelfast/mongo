@@ -125,7 +125,7 @@
         {mapReduce: collName, map: function() {}, reduce: function(key, vals) {}, out: {inline: 1}},
     ];
 
-    // There is no applyOps command on mongos.
+    // There is no applyOps command on mongers.
     if (!isMongos) {
         commands.push(
             {applyOps: [{op: "u", ns: testColl.getFullName(), o2: {_id: 0}, o: {$set: {a: 5}}}]});
@@ -137,7 +137,7 @@
     // Test that doTxn is not allowed at positions after the first in transactions.
     //
 
-    // There is no doTxn command on mongos.
+    // There is no doTxn command on mongers.
     if (!isMongos) {
         assert.commandWorked(sessionDb.runCommand({
             find: collName,

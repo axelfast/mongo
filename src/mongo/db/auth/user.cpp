@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/db/auth/user.h"
+#include "monger/db/auth/user.h"
 
 #include <vector>
 
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/resource_pattern.h"
-#include "mongo/db/auth/role_name.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/sequence_util.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/resource_pattern.h"
+#include "monger/db/auth/role_name.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/sequence_util.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -168,4 +168,4 @@ void User::_invalidate() {
     _isValid.store(false);
 }
 
-}  // namespace mongo
+}  // namespace monger

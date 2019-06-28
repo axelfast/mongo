@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,11 +33,11 @@
 #include <memory>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/fts/unicode/codepoints.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/fts/unicode/codepoints.h"
 
-namespace mongo {
+namespace monger {
 namespace unicode {
 
 /**
@@ -176,4 +176,4 @@ private:
 };
 
 }  // namespace unicode
-}  // namespace mongo
+}  // namespace monger

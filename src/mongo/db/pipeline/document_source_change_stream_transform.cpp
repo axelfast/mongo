@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,38 +27,38 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_change_stream_transform.h"
+#include "monger/db/pipeline/document_source_change_stream_transform.h"
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/db/bson/bson_helper.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/commands/feature_compatibility_version_documentation.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/pipeline/change_stream_constants.h"
-#include "mongo/db/pipeline/document_path_support.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/db/pipeline/document_source_check_resume_token.h"
-#include "mongo/db/pipeline/document_source_limit.h"
-#include "mongo/db/pipeline/document_source_lookup_change_post_image.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
-#include "mongo/db/pipeline/resume_token.h"
-#include "mongo/db/repl/bson_extract_optime.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/oplog_entry_gen.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/db/bson/bson_helper.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/commands/feature_compatibility_version_documentation.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/pipeline/change_stream_constants.h"
+#include "monger/db/pipeline/document_path_support.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source_check_resume_token.h"
+#include "monger/db/pipeline/document_source_limit.h"
+#include "monger/db/pipeline/document_source_lookup_change_post_image.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/pipeline/resume_token.h"
+#include "monger/db/repl/bson_extract_optime.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/oplog_entry_gen.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using boost::optional;
@@ -160,17 +160,17 @@ ResumeTokenData DocumentSourceChangeStreamTransform::getResumeToken(Value ts,
 }
 
 Document DocumentSourceChangeStreamTransform::applyTransformation(const Document& input) {
-    // If we're executing a change stream pipeline that was forwarded from mongos, then we expect it
+    // If we're executing a change stream pipeline that was forwarded from mongers, then we expect it
     // to "need merge"---we expect to be executing the shards part of a split pipeline. It is never
-    // correct for mongos to pass through the change stream without splitting into into a merging
-    // part executed on mongos and a shards part.
+    // correct for mongers to pass through the change stream without splitting into into a merging
+    // part executed on mongers and a shards part.
     //
-    // This is necessary so that mongos can correctly handle "invalidate" and "retryNeeded" change
+    // This is necessary so that mongers can correctly handle "invalidate" and "retryNeeded" change
     // notifications. See SERVER-31978 for an example of why the pipeline must be split.
     //
     // We have to check this invariant at run-time of the change stream rather than parse time,
-    // since a mongos may forward a change stream in an invalid position (e.g. in a nested $lookup
-    // or $facet pipeline). In this case, mongod is responsible for parsing the pipeline and
+    // since a mongers may forward a change stream in an invalid position (e.g. in a nested $lookup
+    // or $facet pipeline). In this case, mongerd is responsible for parsing the pipeline and
     // throwing an error without ever executing the change stream.
     if (pExpCtx->fromMongos) {
         invariant(pExpCtx->needsMerge);
@@ -203,7 +203,7 @@ Document DocumentSourceChangeStreamTransform::applyTransformation(const Document
         auto it = _documentKeyCache.find(uuid.getUuid());
         if (it == _documentKeyCache.end() || !it->second.isFinal) {
             auto docKeyFields =
-                pExpCtx->mongoProcessInterface->collectDocumentKeyFieldsForHostedCollection(
+                pExpCtx->mongerProcessInterface->collectDocumentKeyFieldsForHostedCollection(
                     pExpCtx->opCtx, nss, uuid.getUuid());
             if (it == _documentKeyCache.end() || docKeyFields.second) {
                 _documentKeyCache[uuid.getUuid()] = DocumentKeyCacheEntry(docKeyFields);
@@ -352,8 +352,8 @@ Document DocumentSourceChangeStreamTransform::applyTransformation(const Document
 Value DocumentSourceChangeStreamTransform::serialize(
     boost::optional<ExplainOptions::Verbosity> explain) const {
     Document changeStreamOptions(_changeStreamSpec);
-    // If we're on a mongos and no other start time is specified, we want to start at the current
-    // cluster time on the mongos.  This ensures all shards use the same start time.
+    // If we're on a mongers and no other start time is specified, we want to start at the current
+    // cluster time on the mongers.  This ensures all shards use the same start time.
     if (pExpCtx->inMongos &&
         changeStreamOptions[DocumentSourceChangeStreamSpec::kResumeAfterFieldName].missing() &&
         changeStreamOptions[DocumentSourceChangeStreamSpec::kStartAtOperationTimeFieldName]
@@ -363,7 +363,7 @@ Value DocumentSourceChangeStreamTransform::serialize(
 
         // Use the current cluster time plus 1 tick since the oplog query will include all
         // operations/commands equal to or greater than the 'startAtOperationTime' timestamp. In
-        // particular, avoid including the last operation that went through mongos in an attempt to
+        // particular, avoid including the last operation that went through mongers in an attempt to
         // match the behavior of a replica set more closely.
         auto clusterTime = LogicalClock::get(pExpCtx->opCtx)->getClusterTime();
         clusterTime.addTicks(1);
@@ -393,7 +393,7 @@ DocumentSource::GetNextResult DocumentSourceChangeStreamTransform::getNext() {
     pExpCtx->checkForInterrupt();
 
     uassert(50988,
-            "Illegal attempt to execute an internal change stream stage on mongos. A $changeStream "
+            "Illegal attempt to execute an internal change stream stage on mongers. A $changeStream "
             "stage must be the first stage in a pipeline",
             !pExpCtx->inMongos);
 
@@ -436,7 +436,7 @@ DocumentSource::GetNextResult DocumentSourceChangeStreamTransform::getNext() {
         // mean we are looking at an applyOps or commit nested within an applyOps, which is not
         // allowed in the oplog.
         invariant(!_txnIterator);
-        _txnIterator.emplace(pExpCtx->opCtx, pExpCtx->mongoProcessInterface, doc, *_nsRegex);
+        _txnIterator.emplace(pExpCtx->opCtx, pExpCtx->mongerProcessInterface, doc, *_nsRegex);
 
         // Once we initialize the transaction iterator, we can loop back to the top in order to call
         // 'getNextTransactionOp' on it. Note that is possible for the transaction iterator
@@ -447,10 +447,10 @@ DocumentSource::GetNextResult DocumentSourceChangeStreamTransform::getNext() {
 
 DocumentSourceChangeStreamTransform::TransactionOpIterator::TransactionOpIterator(
     OperationContext* opCtx,
-    std::shared_ptr<MongoProcessInterface> mongoProcessInterface,
+    std::shared_ptr<MongoProcessInterface> mongerProcessInterface,
     const Document& input,
     const pcrecpp::RE& nsRegex)
-    : _mongoProcessInterface(mongoProcessInterface), _nsRegex(nsRegex) {
+    : _mongerProcessInterface(mongerProcessInterface), _nsRegex(nsRegex) {
     Value lsidValue = input["lsid"];
     checkValueType(lsidValue, "lsid", BSONType::Object);
     _lsid = lsidValue.getDocument();
@@ -577,7 +577,7 @@ DocumentSourceChangeStreamTransform::TransactionOpIterator::_lookUpOplogEntryByO
     invariant(!lookupTime.isNull());
 
     std::unique_ptr<TransactionHistoryIteratorBase> iterator(
-        _mongoProcessInterface->createTransactionHistoryIterator(lookupTime));
+        _mongerProcessInterface->createTransactionHistoryIterator(lookupTime));
     try {
         return iterator->next(opCtx);
     } catch (ExceptionFor<ErrorCodes::IncompleteTransactionHistory>& ex) {
@@ -591,7 +591,7 @@ DocumentSourceChangeStreamTransform::TransactionOpIterator::_lookUpOplogEntryByO
 void DocumentSourceChangeStreamTransform::TransactionOpIterator::_collectAllOpTimesFromTransaction(
     OperationContext* opCtx, repl::OpTime firstOpTime) {
     std::unique_ptr<TransactionHistoryIteratorBase> iterator(
-        _mongoProcessInterface->createTransactionHistoryIterator(firstOpTime));
+        _mongerProcessInterface->createTransactionHistoryIterator(firstOpTime));
 
     try {
         while (iterator->hasNext()) {
@@ -605,4 +605,4 @@ void DocumentSourceChangeStreamTransform::TransactionOpIterator::_collectAllOpTi
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/s/balancer/migration_manager.h"
-#include "mongo/db/s/balancer/type_migration.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/s/catalog/dist_lock_manager_mock.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog/type_locks.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/config_server_test_fixture.h"
-#include "mongo/s/database_version_helpers.h"
-#include "mongo/s/request_types/move_chunk_request.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/commands.h"
+#include "monger/db/s/balancer/migration_manager.h"
+#include "monger/db/s/balancer/type_migration.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/s/catalog/dist_lock_manager_mock.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog/type_locks.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/config_server_test_fixture.h"
+#include "monger/s/database_version_helpers.h"
+#include "monger/s/request_types/move_chunk_request.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::RemoteCommandRequest;
@@ -729,7 +729,7 @@ TEST_F(MigrationManagerTest, FailMigrationRecovery) {
 }
 
 // Check that retriable / replset monitor altering errors returned from remote moveChunk commands
-// sent to source shards are not returned to the caller (mongos), but instead converted into
+// sent to source shards are not returned to the caller (mongers), but instead converted into
 // OperationFailed errors.
 TEST_F(MigrationManagerTest, RemoteCallErrorConversionToOperationFailed) {
     // Set up two shards in the metadata.
@@ -792,4 +792,4 @@ TEST_F(MigrationManagerTest, RemoteCallErrorConversionToOperationFailed) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

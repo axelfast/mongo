@@ -13,7 +13,7 @@ connect_count = 0
 
 class ConfigExpandRestHandler(http.server.BaseHTTPRequestHandler):
     """
-    Handle requests from mongod during config expansion.
+    Handle requests from mongerd during config expansion.
     """
 
     protocol_version = 'HTTP/1.1'

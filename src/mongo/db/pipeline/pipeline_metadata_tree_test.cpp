@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <functional>
 #include <memory>
@@ -37,38 +37,38 @@
 #include <typeinfo>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/document_source_bucket_auto.h"
-#include "mongo/db/pipeline/document_source_facet.h"
-#include "mongo/db/pipeline/document_source_graph_lookup.h"
-#include "mongo/db/pipeline/document_source_group.h"
-#include "mongo/db/pipeline/document_source_limit.h"
-#include "mongo/db/pipeline/document_source_lookup.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/document_source_single_document_transformation.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/document_source_tee_consumer.h"
-#include "mongo/db/pipeline/document_source_unwind.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/pipeline_metadata_tree.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/document_source_bucket_auto.h"
+#include "monger/db/pipeline/document_source_facet.h"
+#include "monger/db/pipeline/document_source_graph_lookup.h"
+#include "monger/db/pipeline/document_source_group.h"
+#include "monger/db/pipeline/document_source_limit.h"
+#include "monger/db/pipeline/document_source_lookup.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/document_source_single_document_transformation.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/document_source_tee_consumer.h"
+#include "monger/db/pipeline/document_source_unwind.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/pipeline_metadata_tree.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
 
 #define ASSERT_DOES_NOT_THROW(EXPRESSION)                                          \
     try {                                                                          \
         EXPRESSION;                                                                \
     } catch (const AssertionException& e) {                                        \
-        ::mongo::str::stream err;                                                  \
+        ::monger::str::stream err;                                                  \
         err << "Threw an exception incorrectly: " << e.toString()                  \
             << " Exception occured in: " << #EXPRESSION;                           \
-        ::mongo::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream(); \
+        ::monger::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream(); \
     }
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class PipelineMetadataTreeTest : public AggregationContextFixture {
@@ -413,4 +413,4 @@ TEST_F(PipelineMetadataTreeTest, BranchingPipelineMissesInitialStageContents) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

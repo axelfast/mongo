@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/scoped_operation_completion_sharding_actions.h"
+#include "monger/db/s/scoped_operation_completion_sharding_actions.h"
 
-#include "mongo/db/curop.h"
-#include "mongo/db/s/implicit_create_collection.h"
-#include "mongo/db/s/operation_sharding_state.h"
-#include "mongo/db/s/shard_filtering_metadata_refresh.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/s/cannot_implicitly_create_collection_info.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/util/log.h"
+#include "monger/db/curop.h"
+#include "monger/db/s/implicit_create_collection.h"
+#include "monger/db/s/operation_sharding_state.h"
+#include "monger/db/s/shard_filtering_metadata_refresh.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/s/cannot_implicitly_create_collection_info.h"
+#include "monger/s/stale_exception.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -90,4 +90,4 @@ ScopedOperationCompletionShardingActions::~ScopedOperationCompletionShardingActi
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

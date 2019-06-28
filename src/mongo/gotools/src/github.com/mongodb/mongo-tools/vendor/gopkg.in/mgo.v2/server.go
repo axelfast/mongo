@@ -39,13 +39,13 @@ import (
 // ---------------------------------------------------------------------------
 // Mongo server encapsulation.
 
-type mongoServer struct {
+type mongerServer struct {
 	sync.RWMutex
 	Addr          string
 	ResolvedAddr  string
 	tcpaddr       *net.TCPAddr
-	unusedSockets []*mongoSocket
-	liveSockets   []*mongoSocket
+	unusedSockets []*mongerSocket
+	liveSockets   []*mongerSocket
 	closed        bool
 	closedCh      chan struct{}
 	abended       bool
@@ -55,7 +55,7 @@ type mongoServer struct {
 	pingIndex     int
 	pingCount     uint32
 	pingWindow    [6]time.Duration
-	info          *mongoServerInfo
+	info          *mongerServerInfo
 }
 
 type dialer struct {
@@ -67,7 +67,7 @@ func (dial dialer) isSet() bool {
 	return dial.old != nil || dial.new != nil
 }
 
-type mongoServerInfo struct {
+type mongerServerInfo struct {
 	Master         bool
 	Mongos         bool
 	Tags           bson.D
@@ -75,10 +75,10 @@ type mongoServerInfo struct {
 	SetName        string
 }
 
-var defaultServerInfo mongoServerInfo
+var defaultServerInfo mongerServerInfo
 
-func newServer(addr string, tcpaddr *net.TCPAddr, sync chan bool, dial dialer) *mongoServer {
-	server := &mongoServer{
+func newServer(addr string, tcpaddr *net.TCPAddr, sync chan bool, dial dialer) *mongerServer {
+	server := &mongerServer{
 		Addr:         addr,
 		ResolvedAddr: tcpaddr.String(),
 		tcpaddr:      tcpaddr,
@@ -103,7 +103,7 @@ var errServerClosed = errors.New("server was closed")
 // If the poolLimit argument is greater than zero and the number of sockets in
 // use in this server is greater than the provided limit, errPoolLimit is
 // returned.
-func (server *mongoServer) AcquireSocket(poolLimit int, timeout time.Duration) (socket *mongoSocket, abended bool, err error) {
+func (server *mongerServer) AcquireSocket(poolLimit int, timeout time.Duration) (socket *mongerSocket, abended bool, err error) {
 	for {
 		server.Lock()
 		abended = server.abended
@@ -150,7 +150,7 @@ func (server *mongoServer) AcquireSocket(poolLimit int, timeout time.Duration) (
 
 // Connect establishes a new connection to the server. This should
 // generally be done through server.AcquireSocket().
-func (server *mongoServer) Connect(timeout time.Duration) (*mongoSocket, error) {
+func (server *mongerServer) Connect(timeout time.Duration) (*mongerSocket, error) {
 	server.RLock()
 	master := server.info.Master
 	dial := server.dial
@@ -188,7 +188,7 @@ func (server *mongoServer) Connect(timeout time.Duration) (*mongoSocket, error) 
 
 // Close forces closing all sockets that are alive, whether
 // they're currently in use or not.
-func (server *mongoServer) Close() {
+func (server *mongerServer) Close() {
 	server.Lock()
 	if !server.closed {
 		// close once
@@ -211,7 +211,7 @@ func (server *mongoServer) Close() {
 }
 
 // RecycleSocket puts socket back into the unused cache.
-func (server *mongoServer) RecycleSocket(socket *mongoSocket) {
+func (server *mongerServer) RecycleSocket(socket *mongerSocket) {
 	server.Lock()
 	if !server.closed {
 		server.unusedSockets = append(server.unusedSockets, socket)
@@ -219,7 +219,7 @@ func (server *mongoServer) RecycleSocket(socket *mongoSocket) {
 	server.Unlock()
 }
 
-func removeSocket(sockets []*mongoSocket, socket *mongoSocket) []*mongoSocket {
+func removeSocket(sockets []*mongerSocket, socket *mongerSocket) []*mongerSocket {
 	for i, s := range sockets {
 		if s == socket {
 			copy(sockets[i:], sockets[i+1:])
@@ -234,7 +234,7 @@ func removeSocket(sockets []*mongoSocket, socket *mongoSocket) []*mongoSocket {
 
 // AbendSocket notifies the server that the given socket has terminated
 // abnormally, and thus should be discarded rather than cached.
-func (server *mongoServer) AbendSocket(socket *mongoSocket) {
+func (server *mongerServer) AbendSocket(socket *mongerSocket) {
 	server.Lock()
 	server.abended = true
 	if server.closed {
@@ -251,20 +251,20 @@ func (server *mongoServer) AbendSocket(socket *mongoSocket) {
 	}
 }
 
-func (server *mongoServer) SetInfo(info *mongoServerInfo) {
+func (server *mongerServer) SetInfo(info *mongerServerInfo) {
 	server.Lock()
 	server.info = info
 	server.Unlock()
 }
 
-func (server *mongoServer) Info() *mongoServerInfo {
+func (server *mongerServer) Info() *mongerServerInfo {
 	server.Lock()
 	info := server.info
 	server.Unlock()
 	return info
 }
 
-func (server *mongoServer) hasTags(serverTags []bson.D) bool {
+func (server *mongerServer) hasTags(serverTags []bson.D) bool {
 NextTagSet:
 	for _, tags := range serverTags {
 	NextReqTag:
@@ -286,7 +286,7 @@ NextTagSet:
 
 var pingDelay = 15 * time.Second
 
-func (server *mongoServer) pinger(loop bool) {
+func (server *mongerServer) pinger(loop bool) {
 	var delay time.Duration
 	if raceDetector {
 		// This variable is only ever touched by tests.
@@ -345,25 +345,25 @@ func (server *mongoServer) pinger(loop bool) {
 	}
 }
 
-type mongoServerSlice []*mongoServer
+type mongerServerSlice []*mongerServer
 
-func (s mongoServerSlice) Len() int {
+func (s mongerServerSlice) Len() int {
 	return len(s)
 }
 
-func (s mongoServerSlice) Less(i, j int) bool {
+func (s mongerServerSlice) Less(i, j int) bool {
 	return s[i].ResolvedAddr < s[j].ResolvedAddr
 }
 
-func (s mongoServerSlice) Swap(i, j int) {
+func (s mongerServerSlice) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-func (s mongoServerSlice) Sort() {
+func (s mongerServerSlice) Sort() {
 	sort.Sort(s)
 }
 
-func (s mongoServerSlice) Search(resolvedAddr string) (i int, ok bool) {
+func (s mongerServerSlice) Search(resolvedAddr string) (i int, ok bool) {
 	n := len(s)
 	i = sort.Search(n, func(i int) bool {
 		return s[i].ResolvedAddr >= resolvedAddr
@@ -371,23 +371,23 @@ func (s mongoServerSlice) Search(resolvedAddr string) (i int, ok bool) {
 	return i, i != n && s[i].ResolvedAddr == resolvedAddr
 }
 
-type mongoServers struct {
-	slice mongoServerSlice
+type mongerServers struct {
+	slice mongerServerSlice
 }
 
-func (servers *mongoServers) Search(resolvedAddr string) (server *mongoServer) {
+func (servers *mongerServers) Search(resolvedAddr string) (server *mongerServer) {
 	if i, ok := servers.slice.Search(resolvedAddr); ok {
 		return servers.slice[i]
 	}
 	return nil
 }
 
-func (servers *mongoServers) Add(server *mongoServer) {
+func (servers *mongerServers) Add(server *mongerServer) {
 	servers.slice = append(servers.slice, server)
 	servers.slice.Sort()
 }
 
-func (servers *mongoServers) Remove(other *mongoServer) (server *mongoServer) {
+func (servers *mongerServers) Remove(other *mongerServer) (server *mongerServer) {
 	if i, found := servers.slice.Search(other.ResolvedAddr); found {
 		server = servers.slice[i]
 		copy(servers.slice[i:], servers.slice[i+1:])
@@ -398,23 +398,23 @@ func (servers *mongoServers) Remove(other *mongoServer) (server *mongoServer) {
 	return
 }
 
-func (servers *mongoServers) Slice() []*mongoServer {
-	return ([]*mongoServer)(servers.slice)
+func (servers *mongerServers) Slice() []*mongerServer {
+	return ([]*mongerServer)(servers.slice)
 }
 
-func (servers *mongoServers) Get(i int) *mongoServer {
+func (servers *mongerServers) Get(i int) *mongerServer {
 	return servers.slice[i]
 }
 
-func (servers *mongoServers) Len() int {
+func (servers *mongerServers) Len() int {
 	return len(servers.slice)
 }
 
-func (servers *mongoServers) Empty() bool {
+func (servers *mongerServers) Empty() bool {
 	return len(servers.slice) == 0
 }
 
-func (servers *mongoServers) HasMongos() bool {
+func (servers *mongerServers) HasMongos() bool {
 	for _, s := range servers.slice {
 		if s.Info().Mongos {
 			return true
@@ -425,8 +425,8 @@ func (servers *mongoServers) HasMongos() bool {
 
 // BestFit returns the best guess of what would be the most interesting
 // server to perform operations on at this point in time.
-func (servers *mongoServers) BestFit(mode Mode, serverTags []bson.D) *mongoServer {
-	var best *mongoServer
+func (servers *mongerServers) BestFit(mode Mode, serverTags []bson.D) *mongerServer {
+	var best *mongerServer
 	for _, next := range servers.slice {
 		if best == nil {
 			best = next
@@ -443,7 +443,7 @@ func (servers *mongoServers) BestFit(mode Mode, serverTags []bson.D) *mongoServe
 		case serverTags != nil && !next.info.Mongos && !next.hasTags(serverTags):
 			// Must have requested tags.
 		case mode == Secondary && next.info.Master && !next.info.Mongos:
-			// Must be a secondary or mongos.
+			// Must be a secondary or mongers.
 		case next.info.Master != best.info.Master && mode != Nearest:
 			// Prefer slaves, unless the mode is PrimaryPreferred.
 			swap = (mode == PrimaryPreferred) != best.info.Master

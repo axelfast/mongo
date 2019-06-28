@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -28,23 +28,23 @@
 
 # IDL Basic Types
 global:
-    cpp_namespace: "mongo"
+    cpp_namespace: "monger"
     cpp_includes:
-        - "mongo/db/namespace_string.h"
-        - "mongo/util/uuid.h"
+        - "monger/db/namespace_string.h"
+        - "monger/util/uuid.h"
 
 types:
     string:
         bson_serialization_type: string
         description: "A BSON UTF-8 string"
         cpp_type: "std::string"
-        deserializer: "mongo::BSONElement::str"
+        deserializer: "monger::BSONElement::str"
 
     int:
         bson_serialization_type: int
         description: "A BSON 32-bit integer"
         cpp_type: "std::int32_t"
-        deserializer: "mongo::BSONElement::_numberInt"
+        deserializer: "monger::BSONElement::_numberInt"
 
     safeInt64:
         bson_serialization_type:
@@ -54,31 +54,31 @@ types:
                                 - double
         description: "Accepts any numerical type within int64 range"
         cpp_type: std::int64_t
-        deserializer: "mongo::BSONElement::safeNumberLong"
+        deserializer: "monger::BSONElement::safeNumberLong"
 
     long:
         bson_serialization_type: long
         description: "A BSON 64-bit integer"
         cpp_type: "std::int64_t"
-        deserializer: "mongo::BSONElement::_numberLong"
+        deserializer: "monger::BSONElement::_numberLong"
 
     double:
         bson_serialization_type: double
         description: "A BSON 64-bit floating point number"
         cpp_type: "double"
-        deserializer: "mongo::BSONElement::_numberDouble"
+        deserializer: "monger::BSONElement::_numberDouble"
 
     decimal:
         bson_serialization_type: double
         description: "A BSON 128-bit floating point decimal number"
-        cpp_type: "mongo::Decimal128"
-        deserializer: "mongo::BSONElement::_numberDecimal"
+        cpp_type: "monger::Decimal128"
+        deserializer: "monger::BSONElement::_numberDecimal"
 
     bool:
         bson_serialization_type: bool
         description: "A BSON bool"
         cpp_type: "bool"
-        deserializer: "mongo::BSONElement::boolean"
+        deserializer: "monger::BSONElement::boolean"
 
     safeBool:
         bson_serialization_type:
@@ -90,71 +90,71 @@ types:
         description: "Accepts any numerical type (including bool) which can be interpreted as a
                       true/false value"
         cpp_type: bool
-        deserializer: "mongo::BSONElement::trueValue"
+        deserializer: "monger::BSONElement::trueValue"
 
     bindata_generic:
         bson_serialization_type: bindata
         bindata_subtype: generic
         description: "A BSON bindata of "
         cpp_type: "std::vector<std::uint8_t>"
-        deserializer: "mongo::BSONElement::_binDataVector"
+        deserializer: "monger::BSONElement::_binDataVector"
 
     bindata_function:
         bson_serialization_type: bindata
         bindata_subtype: function
         description: "A BSON bindata of function sub type"
         cpp_type: "std::vector<std::uint8_t>"
-        deserializer: "mongo::BSONElement::_binDataVector"
+        deserializer: "monger::BSONElement::_binDataVector"
 
     bindata_uuid:
         bson_serialization_type: bindata
         bindata_subtype: uuid
         description: "A BSON bindata of uuid sub type"
         cpp_type: "std::array<std::uint8_t, 16>"
-        deserializer: "mongo::BSONElement::uuid"
+        deserializer: "monger::BSONElement::uuid"
 
     uuid:
         bson_serialization_type: bindata
         bindata_subtype: uuid
         description: "A UUID"
-        cpp_type: "mongo::UUID"
+        cpp_type: "monger::UUID"
         deserializer: "UUID"
-        serializer: "mongo::UUID::toCDR"
+        serializer: "monger::UUID::toCDR"
 
     bindata_md5:
         bson_serialization_type: bindata
         bindata_subtype: md5
         description: "A BSON bindata of uuid sub type"
         cpp_type: "std::array<std::uint8_t, 16>"
-        deserializer: "mongo::BSONElement::md5"
+        deserializer: "monger::BSONElement::md5"
 
     objectid:
         bson_serialization_type: objectid
         description: "A BSON ObjectID"
-        cpp_type: "mongo::OID"
-        deserializer: "mongo::BSONElement::OID"
+        cpp_type: "monger::OID"
+        deserializer: "monger::BSONElement::OID"
 
     object:
         bson_serialization_type: object
         description: "A BSONObj without custom deserialization or serialization"
-        cpp_type: "mongo::BSONObj"
+        cpp_type: "monger::BSONObj"
 
     date:
         bson_serialization_type: date
         description: "A BSON UTC DateTime"
-        cpp_type: "mongo::Date_t"
-        deserializer: "mongo::BSONElement::date"
+        cpp_type: "monger::Date_t"
+        deserializer: "monger::BSONElement::date"
 
     timestamp:
         bson_serialization_type: timestamp
         description: "A BSON TimeStamp"
-        cpp_type: "mongo::Timestamp"
-        deserializer: "mongo::BSONElement::timestamp"
+        cpp_type: "monger::Timestamp"
+        deserializer: "monger::BSONElement::timestamp"
 
     namespacestring:
         bson_serialization_type: string
         description: "A MongoDB NamespaceString"
-        cpp_type: "mongo::NamespaceString"
-        serializer: mongo::NamespaceString::toString
-        deserializer: mongo::NamespaceString
+        cpp_type: "monger::NamespaceString"
+        serializer: monger::NamespaceString::toString
+        deserializer: monger::NamespaceString
 

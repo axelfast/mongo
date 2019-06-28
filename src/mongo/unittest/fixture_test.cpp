@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
  * Unit tests of the unittest framework itself.
  */
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-class TestFixture : public mongo::unittest::Test {
+class TestFixture : public monger::unittest::Test {
 protected:
     int _myVar;
     static int _num_set_ups;
@@ -103,7 +103,7 @@ TEST_F(TestFixture, VariableAndMethodAccessTest) {
     ASSERT_EQUALS(11, inc());
 }
 
-class EmptyFixture : public mongo::unittest::Test {};
+class EmptyFixture : public monger::unittest::Test {};
 
 TEST_F(EmptyFixture, EmptyTest) {}
 

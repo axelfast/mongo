@@ -30,7 +30,7 @@ executor:
           forceValidationWithFeatureCompatibilityVersion: "4.2"
   fixture:
     class: ReplicaSetFixture
-    mongod_options:
+    mongerd_options:
       set_parameters:
         disableLogicalSessionCacheRefresh: false
         enableElectionHandoff: 0

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/multi_index_block.h"
+#include "monger/db/catalog/multi_index_block.h"
 
-#include "mongo/db/catalog/collection_mock.h"
-#include "mongo/db/catalog/index_catalog_noop.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/catalog/collection_mock.h"
+#include "monger/db/catalog/index_catalog_noop.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -259,4 +259,4 @@ TEST_F(MultiIndexBlockTest, CommitFailsAfterAbort) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

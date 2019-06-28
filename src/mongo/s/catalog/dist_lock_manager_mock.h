@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,10 +33,10 @@
 #include <string>
 #include <vector>
 
-#include "mongo/s/catalog/dist_lock_catalog.h"
-#include "mongo/s/catalog/dist_lock_manager.h"
+#include "monger/s/catalog/dist_lock_catalog.h"
+#include "monger/s/catalog/dist_lock_manager.h"
 
-namespace mongo {
+namespace monger {
 
 class DistLockManagerMock : public DistLockManager {
 public:
@@ -92,4 +92,4 @@ private:
     LockFunc _lockChecker;
 };
 
-}  // namespace mongo
+}  // namespace monger

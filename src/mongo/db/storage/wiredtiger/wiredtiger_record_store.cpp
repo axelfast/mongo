@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,49 +27,49 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 #define LOG_FOR_RECOVERY(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kStorageRecovery)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kStorageRecovery)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fmt/format.h>
 
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
 
 #include <memory>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/global_settings.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/server_recovery.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/oplog_hack.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_customization_hooks.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_global_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_prepare_conflict.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store_oplog_stones.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/fail_point.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/timer.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/static_assert.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/global_settings.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/server_recovery.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/oplog_hack.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_customization_hooks.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_global_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_prepare_conflict.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store_oplog_stones.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/fail_point.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 using namespace fmt::literals;
 using std::unique_ptr;
@@ -2228,4 +2228,4 @@ Status WiredTigerRecordStore::updateCappedSize(OperationContext* opCtx, long lon
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

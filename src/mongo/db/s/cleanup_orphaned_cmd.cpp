@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/field_parser.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/range_arithmetic.h"
-#include "mongo/db/s/chunk_move_write_concern_options.h"
-#include "mongo/db/s/collection_sharding_runtime.h"
-#include "mongo/db/s/shard_filtering_metadata_refresh.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/s/request_types/migration_secondary_throttle_options.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/commands.h"
+#include "monger/db/field_parser.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/range_arithmetic.h"
+#include "monger/db/s/chunk_move_write_concern_options.h"
+#include "monger/db/s/collection_sharding_runtime.h"
+#include "monger/db/s/shard_filtering_metadata_refresh.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/s/request_types/migration_secondary_throttle_options.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 enum CleanupResult { CleanupResult_Done, CleanupResult_Continue, CleanupResult_Error };
@@ -253,4 +253,4 @@ BSONField<BSONObj> CleanupOrphanedCommand::startingFromKeyField("startingFromKey
 BSONField<BSONObj> CleanupOrphanedCommand::stoppedAtKeyField("stoppedAtKey");
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

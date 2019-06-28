@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/repl/task_runner.h"
-#include "mongo/db/repl/task_runner_test_fixture.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/unittest/barrier.h"
-#include "mongo/util/concurrency/thread_pool.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/repl/task_runner.h"
+#include "monger/db/repl/task_runner_test_fixture.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/unittest/barrier.h"
+#include "monger/util/concurrency/thread_pool.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 
 using Task = TaskRunner::Task;
 

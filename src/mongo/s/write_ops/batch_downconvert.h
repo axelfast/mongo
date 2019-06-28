@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/rpc/write_concern_error_detail.h"
-#include "mongo/s/write_ops/write_error_detail.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/rpc/write_concern_error_detail.h"
+#include "monger/s/write_ops/write_error_detail.h"
 
-namespace mongo {
+namespace monger {
 
 // Used for reporting legacy write concern responses
 struct LegacyWCResponse {
@@ -67,4 +67,4 @@ Status extractGLEErrors(const BSONObj& gleResponse, GLEErrors* errors);
  */
 BSONObj stripNonWCInfo(const BSONObj& gleResponse);
 
-}  // namespace mongo
+}  // namespace monger

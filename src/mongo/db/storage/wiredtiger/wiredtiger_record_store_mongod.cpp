@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <set>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/init.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/background.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/init.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/background.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -172,4 +172,4 @@ MONGO_INITIALIZER(SetInitRsOplogBackgroundThreadCallback)(InitializerContext* co
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

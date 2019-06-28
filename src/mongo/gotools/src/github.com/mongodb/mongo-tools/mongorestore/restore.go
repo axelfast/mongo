@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
 	"fmt"
@@ -12,15 +12,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/progress"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/progress"
+	"github.com/mongerdb/monger-tools-common/util"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 const insertBufferFactor = 16
@@ -53,7 +53,7 @@ func (result Result) withErr(err error) Result {
 	return result
 }
 
-func NewResultFromBulkResult(result *mongo.BulkWriteResult, err error) Result {
+func NewResultFromBulkResult(result *monger.BulkWriteResult, err error) Result {
 	if result == nil {
 		return Result{}
 	}
@@ -62,7 +62,7 @@ func NewResultFromBulkResult(result *mongo.BulkWriteResult, err error) Result {
 	var nFailure int64
 
 	// if a write concern error is encountered, the failure count may be inaccurate.
-	if bwe, ok := err.(mongo.BulkWriteException); ok {
+	if bwe, ok := err.(monger.BulkWriteException); ok {
 		nFailure = int64(len(bwe.WriteErrors))
 	}
 

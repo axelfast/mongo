@@ -1,6 +1,6 @@
 description: "Handle a not-ok ismaster response"
 
-uri: "mongodb://a"
+uri: "mongerdb://a"
 
 phases: [
 

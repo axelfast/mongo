@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <deque>
 #include <vector>
 
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_lookup.h"
-#include "mongo/db/pipeline/document_source_mock.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/stub_mongo_process_interface.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/server_options.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_lookup.h"
+#include "monger/db/pipeline/document_source_mock.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/stub_monger_process_interface.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/server_options.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 using boost::intrusive_ptr;
 using std::deque;
@@ -571,7 +571,7 @@ TEST_F(DocumentSourceLookUpTest, ShouldPropagatePauses) {
     // Mock out the foreign collection.
     deque<DocumentSource::GetNextResult> mockForeignContents{Document{{"_id", 0}},
                                                              Document{{"_id", 1}}};
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::move(mockForeignContents));
 
     auto next = lookup->getNext();
@@ -627,7 +627,7 @@ TEST_F(DocumentSourceLookUpTest, ShouldPropagatePausesWhileUnwinding) {
     // Mock out the foreign collection.
     deque<DocumentSource::GetNextResult> mockForeignContents{Document{{"_id", 0}},
                                                              Document{{"_id", 1}}};
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::move(mockForeignContents));
 
     auto next = lookup->getNext();
@@ -721,7 +721,7 @@ TEST_F(DocumentSourceLookUpTest, ShouldCacheNonCorrelatedSubPipelinePrefix) {
     auto lookupStage = static_cast<DocumentSourceLookUp*>(docSource.get());
     ASSERT(lookupStage);
 
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 5));
@@ -756,7 +756,7 @@ TEST_F(DocumentSourceLookUpTest,
     auto lookupStage = static_cast<DocumentSourceLookUp*>(docSource.get());
     ASSERT(lookupStage);
 
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 5));
@@ -788,7 +788,7 @@ TEST_F(DocumentSourceLookUpTest, ExprEmbeddedInMatchExpressionShouldBeOptimized)
     auto lookupStage = static_cast<DocumentSourceLookUp*>(docSource.get());
     ASSERT(lookupStage);
 
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 5));
@@ -831,7 +831,7 @@ TEST_F(DocumentSourceLookUpTest,
     auto lookupStage = static_cast<DocumentSourceLookUp*>(docSource.get());
     ASSERT(lookupStage);
 
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 5));
@@ -867,7 +867,7 @@ TEST_F(DocumentSourceLookUpTest, ShouldInsertCacheBeforeCorrelatedNestedLookup) 
     auto lookupStage = static_cast<DocumentSourceLookUp*>(docSource.get());
     ASSERT(lookupStage);
 
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 5));
@@ -904,7 +904,7 @@ TEST_F(DocumentSourceLookUpTest,
     auto lookupStage = static_cast<DocumentSourceLookUp*>(docSource.get());
     ASSERT(lookupStage);
 
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 5));
@@ -936,7 +936,7 @@ TEST_F(DocumentSourceLookUpTest, ShouldCacheEntirePipelineIfNonCorrelated) {
     auto lookupStage = static_cast<DocumentSourceLookUp*>(docSource.get());
     ASSERT(lookupStage);
 
-    expCtx->mongoProcessInterface =
+    expCtx->mongerProcessInterface =
         std::make_shared<MockMongoInterface>(std::deque<DocumentSource::GetNextResult>{});
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 5));
@@ -979,7 +979,7 @@ TEST_F(DocumentSourceLookUpTest,
     deque<DocumentSource::GetNextResult> mockForeignContents{
         Document{{"x", 0}}, Document{{"x", 1}}, Document{{"x", 2}}};
 
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(mockForeignContents);
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(mockForeignContents);
 
     // Confirm that the empty 'kBuilding' cache is placed just before the correlated $addFields.
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 0));
@@ -1057,7 +1057,7 @@ TEST_F(DocumentSourceLookUpTest,
     deque<DocumentSource::GetNextResult> mockForeignContents{Document{{"x", 0}},
                                                              Document{{"x", 1}}};
 
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(mockForeignContents);
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(mockForeignContents);
 
     // Confirm that the empty 'kBuilding' cache is placed just before the correlated $addFields.
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 0));
@@ -1114,7 +1114,7 @@ TEST_F(DocumentSourceLookUpTest, ShouldNotCacheIfCorrelatedStageIsAbsorbedIntoPl
 
     const bool removeLeadingQueryStages = true;
 
-    expCtx->mongoProcessInterface = std::make_shared<MockMongoInterface>(
+    expCtx->mongerProcessInterface = std::make_shared<MockMongoInterface>(
         std::deque<DocumentSource::GetNextResult>{}, removeLeadingQueryStages);
 
     auto subPipeline = lookupStage->getSubPipeline_forTest(DOC("_id" << 0));
@@ -1127,4 +1127,4 @@ TEST_F(DocumentSourceLookUpTest, ShouldNotCacheIfCorrelatedStageIsAbsorbedIntoPl
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

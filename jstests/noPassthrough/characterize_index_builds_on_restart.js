@@ -1,6 +1,6 @@
 /**
  * Characterizes the actions (rebuilds or drops the index) taken upon unfinished indexes when
- * restarting mongod from (standalone -> standalone) and (replica set member -> standalone).
+ * restarting mongerd from (standalone -> standalone) and (replica set member -> standalone).
  * Additionally, the primary will use the 'disableIndexSpecNamespaceGeneration' server test
  * parameter to prevent index specs from having the 'ns' field to test the absence of the 'ns' field
  * on a replica set with unfinished indexes during restart.
@@ -29,20 +29,20 @@
     ];
 
     function startStandalone() {
-        let mongod = MongoRunner.runMongod({cleanData: true});
-        let db = mongod.getDB(dbName);
+        let mongerd = MongoRunner.runMongod({cleanData: true});
+        let db = mongerd.getDB(dbName);
         db.dropDatabase();
-        return mongod;
+        return mongerd;
     }
 
     function restartStandalone(old) {
-        jsTest.log("Restarting mongod");
+        jsTest.log("Restarting mongerd");
         MongoRunner.stopMongod(old);
         return MongoRunner.runMongod({restart: true, dbpath: old.dbpath, cleanData: false});
     }
 
-    function shutdownStandalone(mongod) {
-        MongoRunner.stopMongod(mongod);
+    function shutdownStandalone(mongerd) {
+        MongoRunner.stopMongod(mongerd);
     }
 
     function startReplSet() {
@@ -113,9 +113,9 @@
         }
     }
 
-    function checkForIndexRebuild(mongod, indexName, shouldExist) {
-        let adminDB = mongod.getDB("admin");
-        let collDB = mongod.getDB(dbName);
+    function checkForIndexRebuild(mongerd, indexName, shouldExist) {
+        let adminDB = mongerd.getDB("admin");
+        let collDB = mongerd.getDB(dbName);
         let logs = adminDB.runCommand({getLog: "global"});
 
         let rebuildIndexLogEntry = false;
@@ -170,8 +170,8 @@
     }
 
     function standaloneToStandaloneTest() {
-        let mongod = startStandalone();
-        let collDB = mongod.getDB(dbName);
+        let mongerd = startStandalone();
+        let collDB = mongerd.getDB(dbName);
 
         addTestDocuments(collDB);
 
@@ -187,14 +187,14 @@
                 {configureFailPoint: "leaveIndexBuildUnfinishedForShutdown", mode: "off"}));
         }
 
-        mongod = restartStandalone(mongod);
+        mongerd = restartStandalone(mongerd);
 
-        checkForIndexRebuild(mongod, firstIndex, /*shouldExist=*/false);
-        checkForIndexRebuild(mongod, secondIndex, /*shouldExist=*/false);
-        checkForIndexRebuild(mongod, thirdIndex, /*shouldExist=*/false);
-        checkForIndexRebuild(mongod, fourthIndex, /*shouldExist=*/false);
+        checkForIndexRebuild(mongerd, firstIndex, /*shouldExist=*/false);
+        checkForIndexRebuild(mongerd, secondIndex, /*shouldExist=*/false);
+        checkForIndexRebuild(mongerd, thirdIndex, /*shouldExist=*/false);
+        checkForIndexRebuild(mongerd, fourthIndex, /*shouldExist=*/false);
 
-        shutdownStandalone(mongod);
+        shutdownStandalone(mongerd);
     }
 
     function secondaryToStandaloneTest() {
@@ -214,33 +214,33 @@
 
         replSet.stopSet(/*signal=*/null, /*forRestart=*/true);
 
-        let mongod = restartStandalone(secondary);
+        let mongerd = restartStandalone(secondary);
 
-        checkForIndexRebuild(mongod, firstIndex, /*shouldExist=*/true);
-        checkForIndexRebuild(mongod, secondIndex, /*shouldExist=*/true);
-        checkForIndexRebuild(mongod, thirdIndex, /*shouldExist=*/true);
-        checkForIndexRebuild(mongod, fourthIndex, /*shouldExist=*/true);
+        checkForIndexRebuild(mongerd, firstIndex, /*shouldExist=*/true);
+        checkForIndexRebuild(mongerd, secondIndex, /*shouldExist=*/true);
+        checkForIndexRebuild(mongerd, thirdIndex, /*shouldExist=*/true);
+        checkForIndexRebuild(mongerd, fourthIndex, /*shouldExist=*/true);
 
-        shutdownStandalone(mongod);
+        shutdownStandalone(mongerd);
 
-        mongod = restartStandalone(primary);
-        let specs = mongod.getDB(dbName).getCollection(collName).getIndexes();
+        mongerd = restartStandalone(primary);
+        let specs = mongerd.getDB(dbName).getCollection(collName).getIndexes();
         assert.eq(specs.length, 5);
         for (let index = 0; index < specs.length; index++) {
             assert.eq(true, specs[index].hasOwnProperty('ns'));
         }
 
-        shutdownStandalone(mongod);
+        shutdownStandalone(mongerd);
     }
 
     /* Begin tests */
     jsTest.log("Restarting nodes as standalone with unfinished indexes.");
 
     // Standalone restarts as standalone
-    jsTest.log("Restarting standalone mongod.");
+    jsTest.log("Restarting standalone mongerd.");
     standaloneToStandaloneTest();
 
     // Replica set node restarts as standalone
-    jsTest.log("Restarting replica set node mongod.");
+    jsTest.log("Restarting replica set node mongerd.");
     secondaryToStandaloneTest();
 })();

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_lookup_change_post_image.h"
+#include "monger/db/pipeline/document_source_lookup_change_post_image.h"
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr StringData DocumentSourceLookupChangePostImage::kStageName;
 constexpr StringData DocumentSourceLookupChangePostImage::kFullDocumentFieldName;
@@ -117,12 +117,12 @@ Value DocumentSourceLookupChangePostImage::lookupPostImage(const Document& updat
         : boost::none;
 
 
-    // Update lookup queries sent from mongoS to shards are allowed to use speculative majority
+    // Update lookup queries sent from mongerS to shards are allowed to use speculative majority
     // reads.
     const auto allowSpeculativeMajorityRead = pExpCtx->inMongos;
     invariant(resumeToken.getData().uuid);
     auto lookedUpDoc =
-        pExpCtx->mongoProcessInterface->lookupSingleDocument(pExpCtx,
+        pExpCtx->mongerProcessInterface->lookupSingleDocument(pExpCtx,
                                                              nss,
                                                              *resumeToken.getData().uuid,
                                                              documentKey,
@@ -134,4 +134,4 @@ Value DocumentSourceLookupChangePostImage::lookupPostImage(const Document& updat
     return (lookedUpDoc ? Value(*lookedUpDoc) : Value(BSONNULL));
 }
 
-}  // namespace mongo
+}  // namespace monger

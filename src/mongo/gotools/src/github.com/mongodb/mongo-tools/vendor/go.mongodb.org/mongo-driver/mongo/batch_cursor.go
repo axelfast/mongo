@@ -1,10 +1,10 @@
-package mongo
+package monger
 
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/topology"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/topology"
 )
 
 // batchCursor is the interface implemented by types that can provide batches of document results.

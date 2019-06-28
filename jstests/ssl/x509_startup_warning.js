@@ -5,16 +5,16 @@
 
     function runTest(checkMongos, opts, expectWarningCertifcates, expectWarningHostnames) {
         clearRawMongoProgramOutput();
-        let mongo;
+        let monger;
 
         if (checkMongos) {
-            mongo = MongoRunner.runMongos(Object.assign({
+            monger = MongoRunner.runMongos(Object.assign({
                 configdb: "fakeRS/localhost:27017",
                 waitForConnect: false,
             },
                                                         opts));
         } else {
-            mongo = MongoRunner.runMongod(Object.assign({
+            monger = MongoRunner.runMongod(Object.assign({
                 auth: '',
                 sslMode: 'preferSSL',
                 sslPEMKeyFile: 'jstests/libs/server.pem',
@@ -33,7 +33,7 @@
                             'WARNING: This server will not perform X.509 hostname validation'));
         });
 
-        stopMongoProgramByPid(mongo.pid);
+        stopMongoProgramByPid(monger.pid);
     }
 
     function runTests(checkMongos) {
@@ -54,10 +54,10 @@
                 true);
     }
 
-    // Run tests on mongos
+    // Run tests on mongers
     runTests(true);
 
-    // Run tests on mongod
+    // Run tests on mongerd
     runTests(false);
 
 })();

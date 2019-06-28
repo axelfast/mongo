@@ -6,7 +6,7 @@ env = env.Clone()
 
 env.Library('parse_log_component_settings',
             ['parse_log_component_settings.cpp'],
-            LIBDEPS=['$BUILD_DIR/mongo/base',])
+            LIBDEPS=['$BUILD_DIR/monger/base',])
 
 # writes multi-byte sequences to console
 # to support manual testing of console stream  under Windows
@@ -17,8 +17,8 @@ env.Program(
         'console_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/unittest/unittest_main'
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/unittest/unittest_main'
     ],
 )
 
@@ -33,7 +33,7 @@ env.CppUnitTest(
         'rotatable_file_writer_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         'parse_log_component_settings',
     ],
 )

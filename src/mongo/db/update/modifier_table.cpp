@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#include "mongo/db/update/modifier_table.h"
+#include "monger/db/update/modifier_table.h"
 
 #include <memory>
 #include <string>
 #include <utility>
 
-#include "mongo/base/init.h"
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/base/status.h"
-#include "mongo/db/update/addtoset_node.h"
-#include "mongo/db/update/arithmetic_node.h"
-#include "mongo/db/update/bit_node.h"
-#include "mongo/db/update/compare_node.h"
-#include "mongo/db/update/conflict_placeholder_node.h"
-#include "mongo/db/update/current_date_node.h"
-#include "mongo/db/update/pop_node.h"
-#include "mongo/db/update/pull_node.h"
-#include "mongo/db/update/pullall_node.h"
-#include "mongo/db/update/push_node.h"
-#include "mongo/db/update/rename_node.h"
-#include "mongo/db/update/set_node.h"
-#include "mongo/db/update/unset_node.h"
+#include "monger/base/init.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/base/status.h"
+#include "monger/db/update/addtoset_node.h"
+#include "monger/db/update/arithmetic_node.h"
+#include "monger/db/update/bit_node.h"
+#include "monger/db/update/compare_node.h"
+#include "monger/db/update/conflict_placeholder_node.h"
+#include "monger/db/update/current_date_node.h"
+#include "monger/db/update/pop_node.h"
+#include "monger/db/update/pull_node.h"
+#include "monger/db/update/pullall_node.h"
+#include "monger/db/update/push_node.h"
+#include "monger/db/update/rename_node.h"
+#include "monger/db/update/set_node.h"
+#include "monger/db/update/unset_node.h"
 
-namespace mongo {
+namespace monger {
 
 using std::make_pair;
 using std::string;
@@ -175,4 +175,4 @@ std::unique_ptr<UpdateLeafNode> makeUpdateLeafNode(ModifierType modType) {
 }
 
 }  // namespace modifiertable
-}  // namespace mongo
+}  // namespace monger

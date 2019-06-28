@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_record_store.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_record_store.h"
 
 #include <memory>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/oplog_hack.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/unowned_ptr.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/oplog_hack.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/unowned_ptr.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 
@@ -634,4 +634,4 @@ boost::optional<RecordId> EphemeralForTestRecordStore::oplogStartHack(
     return it->first;
 }
 
-}  // namespace mongo
+}  // namespace monger

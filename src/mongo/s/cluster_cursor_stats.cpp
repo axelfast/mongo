@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/cluster_cursor_manager.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 //
@@ -66,4 +66,4 @@ public:
 } clusterCursorStats;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

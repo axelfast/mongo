@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_manager.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -43,26 +43,26 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/init.h"
-#include "mongo/base/secure_allocator.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/config.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/transport/session.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/cidr.h"
-#include "mongo/util/net/dh_openssl.h"
-#include "mongo/util/net/private/ssl_expiration.h"
-#include "mongo/util/net/socket_exception.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/net/ssl_types.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/init.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/config.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/transport/session.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/net/cidr.h"
+#include "monger/util/net/dh_openssl.h"
+#include "monger/util/net/private/ssl_expiration.h"
+#include "monger/util/net/socket_exception.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/net/ssl_types.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
 
 #ifndef _WIN32
 #include <netinet/in.h>
@@ -83,7 +83,7 @@
 #include <Security/Security.h>
 #endif
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -117,9 +117,9 @@ constexpr std::array<std::uint8_t, 384> ffdhe3072_p = {
 // Generator for Diffie-Hellman parameter 'ffdhe3072' defined in RFC 7919 (2)
 constexpr std::uint8_t ffdhe3072_g = 0x02;
 
-// Because the hostname having a slash is used by `mongo::SockAddr` to determine if a hostname is a
+// Because the hostname having a slash is used by `monger::SockAddr` to determine if a hostname is a
 // Unix Domain Socket endpoint, this function uses the same logic.  (See
-// `mongo::SockAddr::Sockaddr(StringData, int, sa_family_t)`).  A user explicitly specifying a Unix
+// `monger::SockAddr::Sockaddr(StringData, int, sa_family_t)`).  A user explicitly specifying a Unix
 // Domain Socket in the present working directory, through a code path which supplies `sa_family_t`
 // as `AF_UNIX` will cause this code to lie.  This will, in turn, cause the
 // `SSLManagerInterface::parseAndValidatePeerCertificate` code to believe a socket is a host, which
@@ -426,9 +426,9 @@ public:
     int SSL_shutdown(SSLConnectionInterface* conn) final;
 
 private:
-    const int _rolesNid = OBJ_create(mongodbRolesOID.identifier.c_str(),
-                                     mongodbRolesOID.shortDescription.c_str(),
-                                     mongodbRolesOID.longDescription.c_str());
+    const int _rolesNid = OBJ_create(mongerdbRolesOID.identifier.c_str(),
+                                     mongerdbRolesOID.shortDescription.c_str(),
+                                     mongerdbRolesOID.longDescription.c_str());
     UniqueSSLContext _serverContext;  // SSL context for incoming connections
     UniqueSSLContext _clientContext;  // SSL context for outgoing connections
 
@@ -594,7 +594,7 @@ void setupFIPS() {
     }
     log() << "FIPS 140-2 mode activated";
 #else
-    severe() << "this version of mongodb was not compiled with FIPS support";
+    severe() << "this version of mongerdb was not compiled with FIPS support";
     fassertFailedNoTrace(17089);
 #endif
 }
@@ -1748,4 +1748,4 @@ void SSLManagerOpenSSL::_handleSSLError(SSLConnectionOpenSSL* conn, int ret) {
     _flushNetworkBIO(conn);
     throwSocketError(errToThrow, conn->socket->remoteString());
 }
-}  // namespace mongo
+}  // namespace monger

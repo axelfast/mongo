@@ -5,7 +5,7 @@ sh = function() {
 sh._checkMongos = function() {
     var x = db.runCommand("ismaster");
     if (x.msg != "isdbgrid")
-        throw Error("not connected to a mongos");
+        throw Error("not connected to a mongers");
 };
 
 sh._checkFullName = function(fullName) {
@@ -67,7 +67,7 @@ sh.help = function() {
     print("\tsh.enableSharding(dbname)                 enables sharding on the database dbname");
     print("\tsh.getBalancerState()                     returns whether the balancer is enabled");
     print(
-        "\tsh.isBalancerRunning()                    return true if the balancer has work in progress on any mongos");
+        "\tsh.isBalancerRunning()                    return true if the balancer has work in progress on any mongers");
     print(
         "\tsh.moveChunk(fullName,find,to)            move the chunk where 'find' is to 'to' (name of shard)");
     print("\tsh.removeShardFromZone(shard,zone)      removes the shard from zone");
@@ -205,7 +205,7 @@ sh.getShouldAutoSplit = function(configDB) {
 
 sh.waitForPingChange = function(activePings, timeout, interval) {
     var isPingChanged = function(activePing) {
-        var newPing = sh._getConfigDB().mongos.findOne({_id: activePing._id});
+        var newPing = sh._getConfigDB().mongers.findOne({_id: activePing._id});
         return !newPing || newPing.ping + "" != activePing.ping + "";
     };
 
@@ -289,7 +289,7 @@ sh.enableBalancing = function(coll) {
 
 /*
  * Can call _lastMigration( coll ), _lastMigration( db ), _lastMigration( st ), _lastMigration(
- * mongos )
+ * mongers )
  */
 sh._lastMigration = function(ns) {
 
@@ -543,7 +543,7 @@ function printShardingStatus(configDB, verbose) {
     var version = configDB.getCollection("version").findOne();
     if (version == null) {
         print(
-            "printShardingStatus: this db does not have sharding enabled. be sure you are connecting to a mongos from the shell and not to a mongod.");
+            "printShardingStatus: this db does not have sharding enabled. be sure you are connecting to a mongers from the shell and not to a mongerd.");
         return;
     }
 
@@ -559,22 +559,22 @@ function printShardingStatus(configDB, verbose) {
         output(2, tojsononeline(z));
     });
 
-    // (most recently) active mongoses
-    var mongosActiveThresholdMs = 60000;
-    var mostRecentMongos = configDB.mongos.find().sort({ping: -1}).limit(1);
+    // (most recently) active mongerses
+    var mongersActiveThresholdMs = 60000;
+    var mostRecentMongos = configDB.mongers.find().sort({ping: -1}).limit(1);
     var mostRecentMongosTime = null;
-    var mongosAdjective = "most recently active";
+    var mongersAdjective = "most recently active";
     if (mostRecentMongos.hasNext()) {
         mostRecentMongosTime = mostRecentMongos.next().ping;
         // Mongoses older than the threshold are the most recent, but cannot be
-        // considered "active" mongoses. (This is more likely to be an old(er)
-        // configdb dump, or all the mongoses have been stopped.)
-        if (mostRecentMongosTime.getTime() >= Date.now() - mongosActiveThresholdMs) {
-            mongosAdjective = "active";
+        // considered "active" mongerses. (This is more likely to be an old(er)
+        // configdb dump, or all the mongerses have been stopped.)
+        if (mostRecentMongosTime.getTime() >= Date.now() - mongersActiveThresholdMs) {
+            mongersAdjective = "active";
         }
     }
 
-    output(1, mongosAdjective + " mongoses:");
+    output(1, mongersAdjective + " mongerses:");
     if (mostRecentMongosTime === null) {
         output(2, "none");
     } else {
@@ -582,21 +582,21 @@ function printShardingStatus(configDB, verbose) {
             ping: {
                 $gt: (function() {
                     var d = mostRecentMongosTime;
-                    d.setTime(d.getTime() - mongosActiveThresholdMs);
+                    d.setTime(d.getTime() - mongersActiveThresholdMs);
                     return d;
                 })()
             }
         };
 
         if (verbose) {
-            configDB.mongos.find(recentMongosQuery).sort({ping: -1}).forEach(function(z) {
+            configDB.mongers.find(recentMongosQuery).sort({ping: -1}).forEach(function(z) {
                 output(2, tojsononeline(z));
             });
         } else {
-            configDB.mongos
+            configDB.mongers
                 .aggregate([
                     {$match: recentMongosQuery},
-                    {$group: {_id: "$mongoVersion", num: {$sum: 1}}},
+                    {$group: {_id: "$mongerVersion", num: {$sum: 1}}},
                     {$sort: {num: -1}}
                 ])
                 .forEach(function(z) {

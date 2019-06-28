@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/catalog/catalog_test_fixture.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/catalog/index_build_entry_gen.h"
-#include "mongo/db/client.h"
-#include "mongo/db/index_build_entry_helpers.h"
-#include "mongo/db/service_context.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/catalog/catalog_test_fixture.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/catalog/index_build_entry_gen.h"
+#include "monger/db/client.h"
+#include "monger/db/index_build_entry_helpers.h"
+#include "monger/db/service_context.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 using namespace indexbuildentryhelpers;
@@ -289,4 +289,4 @@ TEST_F(IndexBuildEntryHelpersTest, ClearAllIndexBuildEntries) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

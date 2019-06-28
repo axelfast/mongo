@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/db/auth/role_name.h"
+#include "monger/db/auth/role_name.h"
 
 #include <algorithm>
 #include <iostream>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/string_data.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 RoleName::RoleName(StringData role, StringData dbname) {
     _fullName.resize(role.size() + dbname.size() + 1);
@@ -91,4 +91,4 @@ void RoleName::_serializeToSubObj(BSONObjBuilder* sub) const {
 }
 
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/pull_node.h"
+#include "monger/db/update/pull_node.h"
 
-#include "mongo/db/matcher/copyable_match_expression.h"
-#include "mongo/db/query/collation/collator_interface.h"
+#include "monger/db/matcher/copyable_match_expression.h"
+#include "monger/db/query/collation/collator_interface.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * The ObjectMatcher is used when the $pull condition is specified as an object and the first field
@@ -53,7 +53,7 @@ public:
     }
 
     bool match(const mutablebson::ConstElement& element) final {
-        if (element.getType() == mongo::Object) {
+        if (element.getType() == monger::Object) {
             return _matchExpr->matchesBSON(element.getValueObject());
         } else {
             return false;
@@ -143,11 +143,11 @@ Status PullNode::init(BSONElement modExpr, const boost::intrusive_ptr<Expression
     invariant(modExpr.ok());
 
     try {
-        if (modExpr.type() == mongo::Object &&
+        if (modExpr.type() == monger::Object &&
             !MatchExpressionParser::parsePathAcceptingKeyword(
                 modExpr.embeddedObject().firstElement())) {
             _matcher = std::make_unique<ObjectMatcher>(modExpr.embeddedObject(), expCtx);
-        } else if (modExpr.type() == mongo::Object || modExpr.type() == mongo::RegEx) {
+        } else if (modExpr.type() == monger::Object || modExpr.type() == monger::RegEx) {
             _matcher = std::make_unique<WrappedObjectMatcher>(modExpr, expCtx);
         } else {
             _matcher = std::make_unique<EqualityMatcher>(modExpr, expCtx->getCollator());
@@ -159,4 +159,4 @@ Status PullNode::init(BSONElement modExpr, const boost::intrusive_ptr<Expression
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

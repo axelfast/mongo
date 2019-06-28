@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,8 +29,8 @@
 #ifndef HEADERUUID_8CAAB40D_AC65_46CF_9FA9_B48825C825DC_DEFINED
 #define HEADERUUID_8CAAB40D_AC65_46CF_9FA9_B48825C825DC_DEFINED
 
-#include <mongo_embedded/mongo_embedded.h>
-#include <mongoc/mongoc.h>
+#include <monger_embedded/monger_embedded.h>
+#include <mongerc/mongerc.h>
 
 #pragma push_macro("MONGO_API_CALL")
 #undef MONGO_API_CALL
@@ -70,11 +70,11 @@ extern "C" {
 
 /**
  * Creates a client with the correct stream intiator set
- * @param db must be a valid instance handle created by `mongo_embedded_v1_instance_create`
- * @returns a mongoc client or `NULL` on error
+ * @param db must be a valid instance handle created by `monger_embedded_v1_instance_create`
+ * @returns a mongerc client or `NULL` on error
  */
-MONGOC_EMBEDDED_API mongoc_client_t* MONGO_API_CALL
-mongoc_embedded_v1_client_create(mongo_embedded_v1_instance* instance);
+MONGOC_EMBEDDED_API mongerc_client_t* MONGO_API_CALL
+mongerc_embedded_v1_client_create(monger_embedded_v1_instance* instance);
 
 #ifdef __cplusplus
 }  // extern "C"

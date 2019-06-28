@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/collection_index_usage_tracker.h"
-#include "mongo/db/query/plan_cache.h"
-#include "mongo/db/query/query_settings.h"
-#include "mongo/db/update_index_data.h"
+#include "monger/db/collection_index_usage_tracker.h"
+#include "monger/db/query/plan_cache.h"
+#include "monger/db/query/query_settings.h"
+#include "monger/db/update_index_data.h"
 
-namespace mongo {
+namespace monger {
 class Collection;
 class IndexDescriptor;
 class OperationContext;
@@ -106,4 +106,4 @@ public:
 
     virtual void setNs(NamespaceString ns) = 0;
 };
-}  // namespace mongo
+}  // namespace monger

@@ -42,12 +42,12 @@ executor:
       <<: *authOptions
   fixture:
     class: ShardedClusterFixture
-    mongos_options:
+    mongers_options:
       keyFile: *keyFile
       set_parameters:
         enableTestCommands: 1
         enableLocalhostAuthBypass: false
-    mongod_options:
+    mongerd_options:
       auth: ''
       keyFile: *keyFile
       set_parameters:

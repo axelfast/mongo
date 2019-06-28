@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_btree_impl.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_btree_impl.h"
 
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_recovery_unit.h"
-#include "mongo/db/storage/sorted_data_interface_test_harness.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/init.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_recovery_unit.h"
+#include "monger/db/storage/sorted_data_interface_test_harness.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class EphemeralForBtreeImplTestHarnessHelper final
@@ -68,8 +68,8 @@ std::unique_ptr<HarnessHelper> makeHarnessHelper() {
 }
 
 MONGO_INITIALIZER(RegisterHarnessFactory)(InitializerContext* const) {
-    mongo::registerHarnessHelperFactory(makeHarnessHelper);
+    monger::registerHarnessHelperFactory(makeHarnessHelper);
     return Status::OK();
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

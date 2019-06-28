@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,13 +33,13 @@
 #include <deque>
 #include <vector>
 
-#include "mongo/db/exec/shard_filterer.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/stub_mongo_process_interface.h"
+#include "monger/db/exec/shard_filterer.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/stub_monger_process_interface.h"
 
-namespace mongo {
+namespace monger {
 
 class StubShardFilterer : public ShardFilterer {
 public:
@@ -85,7 +85,7 @@ public:
 
     std::unique_ptr<ShardFilterer> getShardFilterer(
         const boost::intrusive_ptr<ExpressionContext>& expCtx) const override {
-        // Try to emulate the behavior mongos and mongod would each follow.
+        // Try to emulate the behavior mongers and mongerd would each follow.
         if (expCtx->inMongos) {
             return nullptr;
         } else {
@@ -96,4 +96,4 @@ public:
 private:
     std::deque<DocumentSource::GetNextResult> _mockResults;
 };
-}  // namespace mongo
+}  // namespace monger

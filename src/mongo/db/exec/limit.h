@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,11 +30,11 @@
 #pragma once
 
 
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/record_id.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/record_id.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This stage implements limit functionality.  It only returns 'limit' results before EOF.
@@ -71,4 +71,4 @@ private:
     LimitStats _specificStats;
 };
 
-}  // namespace mongo
+}  // namespace monger

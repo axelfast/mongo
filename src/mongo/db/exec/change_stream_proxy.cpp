@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/change_stream_proxy.h"
+#include "monger/db/exec/change_stream_proxy.h"
 
-#include "mongo/db/pipeline/pipeline_d.h"
-#include "mongo/db/pipeline/resume_token.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
+#include "monger/db/pipeline/pipeline_d.h"
+#include "monger/db/pipeline/resume_token.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
 
-namespace mongo {
+namespace monger {
 
 const char* ChangeStreamProxyStage::kStageType = "CHANGE_STREAM_PROXY";
 
@@ -77,7 +77,7 @@ boost::optional<BSONObj> ChangeStreamProxyStage::getNextBson() {
 }
 
 BSONObj ChangeStreamProxyStage::_validateAndConvertToBSON(const Document& event) const {
-    // If we are producing output to be merged on mongoS, then no stages can have modified the _id.
+    // If we are producing output to be merged on mongerS, then no stages can have modified the _id.
     if (_includeMetaData) {
         return event.toBsonWithMetaData();
     }
@@ -114,4 +114,4 @@ std::unique_ptr<PlanStageStats> ChangeStreamProxyStage::getStats() {
     return ret;
 }
 
-}  // namespace mongo
+}  // namespace monger

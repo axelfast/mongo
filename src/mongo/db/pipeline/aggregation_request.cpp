@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/aggregation_request.h"
 
 #include <algorithm>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/cursor_request.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/storage/storage_options.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/cursor_request.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/storage/storage_options.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr StringData AggregationRequest::kCommandName;
 constexpr StringData AggregationRequest::kCursorName;
@@ -221,7 +221,7 @@ StatusWith<AggregationRequest> AggregationRequest::parseFromBSON(
             }
         } else if (fieldName == "mergeByPBRT"_sd) {
             // TODO SERVER-41900: we must retain the ability to ingest the 'mergeByPBRT' field for
-            // 4.4 upgrade purposes, since a 4.2 mongoS will always send {mergeByPBRT:true} to the
+            // 4.4 upgrade purposes, since a 4.2 mongerS will always send {mergeByPBRT:true} to the
             // shards. We do nothing with it because mergeByPBRT is the only mode available in 4.4.
             // Remove this final vestige of mergeByPBRT during the 4.5 development cycle.
         } else if (!isGenericArgument(fieldName)) {
@@ -330,4 +330,4 @@ Document AggregationRequest::serializeToCommandObj() const {
         {kRuntimeConstants, _runtimeConstants ? Value(_runtimeConstants->toBSON()) : Value()},
     };
 }
-}  // namespace mongo
+}  // namespace monger

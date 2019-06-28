@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_graph_lookup.h"
+#include "monger/db/pipeline/document_source_graph_lookup.h"
 
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_comparator.h"
-#include "mongo/db/pipeline/document_path_support.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/query_planner_common.h"
+#include "monger/base/init.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_comparator.h"
+#include "monger/db/pipeline/document_path_support.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/query_planner_common.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 std::unique_ptr<DocumentSourceGraphLookUp::LiteParsed> DocumentSourceGraphLookUp::liteParse(
     const AggregationRequest& request, const BSONElement& spec) {
@@ -207,7 +207,7 @@ void DocumentSourceGraphLookUp::doBreadthFirstSearch() {
             // We've already allocated space for the trailing $match stage in '_fromPipeline'.
             _fromPipeline.back() = *matchStage;
             auto pipeline =
-                pExpCtx->mongoProcessInterface->makePipeline(_fromPipeline, _fromExpCtx);
+                pExpCtx->mongerProcessInterface->makePipeline(_fromPipeline, _fromExpCtx);
             while (auto next = pipeline->getNext()) {
                 uassert(40271,
                         str::stream()
@@ -603,4 +603,4 @@ void DocumentSourceGraphLookUp::addInvolvedCollections(
         stage->addInvolvedCollections(collectionNames);
     }
 }
-}  // namespace mongo
+}  // namespace monger

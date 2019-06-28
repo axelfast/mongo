@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/bson/bsontypes.h"
+#include "monger/bson/bsontypes.h"
 
-#include "mongo/config.h"
-#include "mongo/db/jsobj.h"
+#include "monger/config.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 const char kMaxKeyData[] = {7, 0, 0, 0, static_cast<char>(MaxKey), 0, 0};
 const BSONObj kMaxBSONKey(kMaxKeyData);
@@ -197,4 +197,4 @@ bool isValidBinDataType(int type) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

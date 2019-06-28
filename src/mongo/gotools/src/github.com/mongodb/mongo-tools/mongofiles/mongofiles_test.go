@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongofiles
+package mongerfiles
 
 import (
 	"bytes"
@@ -15,20 +15,20 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/testtype"
-	"github.com/mongodb/mongo-tools-common/testutil"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/testutil"
+	"github.com/mongerdb/monger-tools-common/util"
 	. "github.com/smartystreets/goconvey/convey"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/gridfs"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger/gridfs"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
 )
 
 var (
-	testDB     = "mongofiles_test_db"
+	testDB     = "mongerfiles_test_db"
 	testServer = "localhost"
 	testPort   = db.DefaultTestPort
 
@@ -124,7 +124,7 @@ func simpleMongoFilesInstanceWithFilenameAndID(command, fname, ID string) (*Mong
 		return nil, err
 	}
 
-	mongofiles := MongoFiles{
+	mongerfiles := MongoFiles{
 		ToolOptions:     toolOptions,
 		InputOptions:    &InputOptions{},
 		StorageOptions:  &StorageOptions{GridFSPrefix: "fs", DB: testDB},
@@ -134,7 +134,7 @@ func simpleMongoFilesInstanceWithFilenameAndID(command, fname, ID string) (*Mong
 		Id:              ID,
 	}
 
-	return &mongofiles, nil
+	return &mongerfiles, nil
 }
 
 // simpleMockMongoFilesInstanceWithFilename gets an instance of MongoFiles with no underlying SessionProvider.
@@ -314,7 +314,7 @@ func TestValidArguments(t *testing.T) {
 	})
 }
 
-// Test that the output from mongofiles is actually correct
+// Test that the output from mongerfiles is actually correct
 func TestMongoFilesCommands(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 
@@ -613,7 +613,7 @@ func TestDefaultWriteConcern(t *testing.T) {
 	}
 
 	Convey("with a URI that doesn't specify write concern", t, func() {
-		mf, err := getMongofilesWithArgs("get", "filename", "--uri", "mongodb://localhost:33333")
+		mf, err := getMongofilesWithArgs("get", "filename", "--uri", "mongerdb://localhost:33333")
 		So(err, ShouldBeNil)
 		So(mf.SessionProvider.DB("test").WriteConcern(), ShouldResemble, writeconcern.New(writeconcern.WMajority()))
 	})
@@ -627,17 +627,17 @@ func TestDefaultWriteConcern(t *testing.T) {
 
 func runPutIDTestCase(idToTest string, t *testing.T) {
 	remoteName := "remoteName"
-	mongoFilesInstance, err := simpleMongoFilesInstanceWithFilenameAndID("put_id", remoteName, idToTest)
+	mongerFilesInstance, err := simpleMongoFilesInstanceWithFilenameAndID("put_id", remoteName, idToTest)
 
 	var buff bytes.Buffer
 	log.SetWriter(&buff)
 
 	So(err, ShouldBeNil)
-	So(mongoFilesInstance, ShouldNotBeNil)
-	mongoFilesInstance.StorageOptions.LocalFileName = util.ToUniversalPath("testdata/lorem_ipsum_287613_bytes.txt")
+	So(mongerFilesInstance, ShouldNotBeNil)
+	mongerFilesInstance.StorageOptions.LocalFileName = util.ToUniversalPath("testdata/lorem_ipsum_287613_bytes.txt")
 
 	t.Log("Should correctly insert the file into GridFS")
-	str, err := mongoFilesInstance.Run(false)
+	str, err := mongerFilesInstance.Run(false)
 	So(err, ShouldBeNil)
 	So(str, ShouldEqual, "")
 	So(buff.Len(), ShouldNotEqual, 0)

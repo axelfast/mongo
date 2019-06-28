@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,17 +29,17 @@
 
 #pragma once
 
-#include "mongo/config.h"
+#include "monger/config.h"
 
 #include <cstring>
 #include <type_traits>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/static_assert.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
 
-namespace mongo {
+namespace monger {
 
 struct DataType {
     // Second template parameter allows templatized SFINAE specialization.
@@ -167,9 +167,9 @@ struct DataType {
     static Status makeTrivialLoadStatus(size_t sizeOfT, size_t length, size_t debug_offset);
 };
 
-}  // namespace mongo
+}  // namespace monger
 
 // Force the visibility of the DataType::Handler specializations.
 #define MONGO_BASE_DATA_TYPE_H_INCLUDE_HANDSHAKE_
-#include "mongo/base/data_type_string_data.h"
+#include "monger/base/data_type_string_data.h"
 #undef MONGO_BASE_DATA_TYPE_H_INCLUDE_HANDSHAKE_

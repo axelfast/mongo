@@ -16,21 +16,21 @@
  * the cross platform abstractions that we rely upon.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <array>
 #include <js/Utility.h>
 #include <vm/PosixNSPR.h>
 
-#include "mongo/stdx/chrono.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/time_support.h"
+#include "monger/stdx/chrono.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/time_support.h"
 
 class nspr::Thread {
-    mongo::stdx::thread thread_;
+    monger::stdx::thread thread_;
     void (*start)(void* arg);
     void* arg;
     bool joinable;
@@ -41,7 +41,7 @@ public:
 
     static void* ThreadRoutine(void* arg);
 
-    mongo::stdx::thread& thread() {
+    monger::stdx::thread& thread() {
         return thread_;
     }
 };
@@ -59,7 +59,7 @@ void* nspr::Thread::ThreadRoutine(void* arg) {
     return nullptr;
 }
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 void PR_BindThread(PRThread* thread) {
@@ -74,7 +74,7 @@ void PR_DestroyFakeThread(PRThread* thread) {
     delete thread;
 }
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger
 
 
 // In mozjs-45, js_delete takes a const pointer which is incompatible with std::unique_ptr.
@@ -105,7 +105,7 @@ PRThread* PR_CreateThread(PRThreadType type,
         // that they were created in. So, we use the standard allocator here.
         auto t = std::make_unique<nspr::Thread>(start, arg, state != PR_UNJOINABLE_THREAD);
 
-        t->thread() = mongo::stdx::thread(&nspr::Thread::ThreadRoutine, t.get());
+        t->thread() = monger::stdx::thread(&nspr::Thread::ThreadRoutine, t.get());
 
         if (state == PR_UNJOINABLE_THREAD) {
             t->thread().detach();
@@ -134,7 +134,7 @@ PRThread* PR_GetCurrentThread() {
 }
 
 PRStatus PR_SetCurrentThreadName(const char* name) {
-    mongo::setThreadName(name);
+    monger::setThreadName(name);
 
     return PR_SUCCESS;
 }
@@ -185,11 +185,11 @@ PRStatus PR_CallOnceWithArg(PRCallOnceType* once, PRCallOnceWithArgFN func, void
 }
 
 class nspr::Lock {
-    mongo::stdx::mutex mutex_;
+    monger::stdx::mutex mutex_;
 
 public:
     Lock() {}
-    mongo::stdx::mutex& mutex() {
+    monger::stdx::mutex& mutex() {
         return mutex_;
     }
 };
@@ -213,12 +213,12 @@ PRStatus PR_Unlock(PRLock* lock) {
 }
 
 class nspr::CondVar {
-    mongo::stdx::condition_variable cond_;
+    monger::stdx::condition_variable cond_;
     nspr::Lock* lock_;
 
 public:
     CondVar(nspr::Lock* lock) : lock_(lock) {}
-    mongo::stdx::condition_variable& cond() {
+    monger::stdx::condition_variable& cond() {
         return cond_;
     }
     nspr::Lock* lock() {
@@ -265,8 +265,8 @@ uint32_t PR_TicksPerSecond() {
 PRStatus PR_WaitCondVar(PRCondVar* cvar, uint32_t timeout) {
     if (timeout == PR_INTERVAL_NO_TIMEOUT) {
         try {
-            mongo::stdx::unique_lock<mongo::stdx::mutex> lk(cvar->lock()->mutex(),
-                                                            mongo::stdx::adopt_lock_t());
+            monger::stdx::unique_lock<monger::stdx::mutex> lk(cvar->lock()->mutex(),
+                                                            monger::stdx::adopt_lock_t());
 
             cvar->cond().wait(lk);
             lk.release();
@@ -277,10 +277,10 @@ PRStatus PR_WaitCondVar(PRCondVar* cvar, uint32_t timeout) {
         }
     } else {
         try {
-            mongo::stdx::unique_lock<mongo::stdx::mutex> lk(cvar->lock()->mutex(),
-                                                            mongo::stdx::adopt_lock_t());
+            monger::stdx::unique_lock<monger::stdx::mutex> lk(cvar->lock()->mutex(),
+                                                            monger::stdx::adopt_lock_t());
 
-            cvar->cond().wait_for(lk, mongo::Microseconds(timeout).toSystemDuration());
+            cvar->cond().wait_for(lk, monger::Microseconds(timeout).toSystemDuration());
             lk.release();
 
             return PR_SUCCESS;

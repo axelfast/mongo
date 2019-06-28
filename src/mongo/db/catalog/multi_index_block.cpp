@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,39 +27,39 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/multi_index_block.h"
+#include "monger/db/catalog/multi_index_block.h"
 
 #include <ostream>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/multi_index_block_gen.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/index/index_build_interceptor.h"
-#include "mongo/db/index/multikey_paths.h"
-#include "mongo/db/multi_key_path_tracker.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/storage/write_unit_of_work.h"
-#include "mongo/logger/redaction.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point.h"
-#include "mongo/util/log.h"
-#include "mongo/util/progress_meter.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/error_codes.h"
+#include "monger/db/audit.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/multi_index_block_gen.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/index/index_build_interceptor.h"
+#include "monger/db/index/multikey_paths.h"
+#include "monger/db/multi_key_path_tracker.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/storage/write_unit_of_work.h"
+#include "monger/logger/redaction.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point.h"
+#include "monger/util/log.h"
+#include "monger/util/progress_meter.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(hangAfterSettingUpIndexBuild);
 MONGO_FAIL_POINT_DEFINE(hangAfterStartingIndexBuild);
@@ -846,4 +846,4 @@ logger::LogstreamBuilder& operator<<(logger::LogstreamBuilder& out,
     return out;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -14,13 +14,13 @@
     const oldVersion = '4.0';
     const newVersion = 'latest';
 
-    // We set noCleanData to true in order to preserve the data files across mongod restart.
-    const mongodOptions = {dbpath: dbpath, noCleanData: true, binVersion: oldVersion};
+    // We set noCleanData to true in order to preserve the data files across mongerd restart.
+    const mongerdOptions = {dbpath: dbpath, noCleanData: true, binVersion: oldVersion};
 
-    // Start up an old binary version mongod.
-    let conn = MongoRunner.runMongod(mongodOptions);
+    // Start up an old binary version mongerd.
+    let conn = MongoRunner.runMongod(mongerdOptions);
 
-    assert.neq(null, conn, `mongod was unable able to start with version ${oldVersion}`);
+    assert.neq(null, conn, `mongerd was unable able to start with version ${oldVersion}`);
 
     // Set up a collection on a 4.0 binary version node with one document and an index with
     // an empty string as index value, and then shut it down.
@@ -30,22 +30,22 @@
     assert.commandWorked(testDB.testColl.createIndex({a: ""}));
     MongoRunner.stopMongod(conn);
 
-    // Restart the mongod with the latest binary version and the 4.0 version data files.
-    mongodOptions.binVersion = newVersion;
-    conn = MongoRunner.runMongod(mongodOptions);
+    // Restart the mongerd with the latest binary version and the 4.0 version data files.
+    mongerdOptions.binVersion = newVersion;
+    conn = MongoRunner.runMongod(mongerdOptions);
     assert.neq(null, conn);
 
-    // Confirm that mongod startup does not fail due to the index specification
+    // Confirm that mongerd startup does not fail due to the index specification
     // containing an empty string.
     testDB = conn.getDB('test');
     testDB.testColl.find();
     assert.eq(1,
               testDB.testColl.count({}, {hint: {a: ""}}),
-              `data from ${oldVersion} should be available; options: ` + tojson(mongodOptions));
+              `data from ${oldVersion} should be available; options: ` + tojson(mongerdOptions));
 
     assert.neq(null,
                GetIndexHelpers.findByKeyPattern(testDB.testColl.getIndexes(), {a: ""}),
-               `index from ${oldVersion} should be available; options: ` + tojson(mongodOptions));
+               `index from ${oldVersion} should be available; options: ` + tojson(mongerdOptions));
 
     // Verify that indexes with empty string values cannot be created
     assert.commandFailedWithCode(testDB.testColl.createIndex({x: ""}),

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,59 +27,59 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/cluster_aggregate.h"
+#include "monger/s/query/cluster_aggregate.h"
 
 #include <boost/intrusive_ptr.hpp>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/db/pipeline/document_source_out.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/lite_parsed_pipeline.h"
-#include "mongo/db/pipeline/mongos_process_interface.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/sharded_agg_helpers.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/views/resolved_view.h"
-#include "mongo/db/views/view.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/op_msg_rpc_impls.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/multi_statement_transaction_requests_sender.h"
-#include "mongo/s/query/cluster_aggregation_planner.h"
-#include "mongo/s/query/cluster_client_cursor_impl.h"
-#include "mongo/s/query/cluster_client_cursor_params.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
-#include "mongo/s/query/cluster_query_knobs_gen.h"
-#include "mongo/s/query/document_source_merge_cursors.h"
-#include "mongo/s/query/establish_cursors.h"
-#include "mongo/s/query/owned_remote_cursor.h"
-#include "mongo/s/query/router_stage_pipeline.h"
-#include "mongo/s/query/store_possible_cursor.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/util/fail_point.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/curop.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source_out.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/lite_parsed_pipeline.h"
+#include "monger/db/pipeline/mongers_process_interface.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/sharded_agg_helpers.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/views/resolved_view.h"
+#include "monger/db/views/view.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/op_msg_rpc_impls.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/s/multi_statement_transaction_requests_sender.h"
+#include "monger/s/query/cluster_aggregation_planner.h"
+#include "monger/s/query/cluster_client_cursor_impl.h"
+#include "monger/s/query/cluster_client_cursor_params.h"
+#include "monger/s/query/cluster_cursor_manager.h"
+#include "monger/s/query/cluster_query_knobs_gen.h"
+#include "monger/s/query/document_source_merge_cursors.h"
+#include "monger/s/query/establish_cursors.h"
+#include "monger/s/query/owned_remote_cursor.h"
+#include "monger/s/query/router_stage_pipeline.h"
+#include "monger/s/query/store_possible_cursor.h"
+#include "monger/s/stale_exception.h"
+#include "monger/s/transaction_router.h"
+#include "monger/util/fail_point.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
 
-namespace mongo {
+namespace monger {
 
 using SplitPipeline = cluster_aggregation_planner::SplitPipeline;
 
@@ -237,7 +237,7 @@ Status appendExplainResults(sharded_agg_helpers::DispatchShardPipelineResults&& 
         auto* mergePipeline = dispatchResults.splitPipeline->mergePipeline.get();
         const char* mergeType = [&]() {
             if (mergePipeline->canRunOnMongos()) {
-                return "mongos";
+                return "mongers";
             } else if (dispatchResults.exchangeSpec) {
                 return "exchange";
             } else if (mergePipeline->needsPrimaryShardMerger()) {
@@ -374,7 +374,7 @@ BSONObj establishMergingMongosCursor(OperationContext* opCtx,
             // We reached end-of-stream. If the cursor is not tailable, then we mark it as
             // exhausted. If it is tailable, usually we keep it open (i.e. "NotExhausted") even when
             // we reach end-of-stream. However, if all the remote cursors are exhausted, there is no
-            // hope of returning data and thus we need to close the mongos cursor as well.
+            // hope of returning data and thus we need to close the mongers cursor as well.
             if (!ccc->isTailable() || ccc->remotesExhausted()) {
                 cursorState = ClusterCursorManager::CursorState::Exhausted;
             }
@@ -547,17 +547,17 @@ ShardId pickMergingShard(OperationContext* opCtx,
                          const std::vector<ShardId>& targetedShards,
                          ShardId primaryShard) {
     auto& prng = opCtx->getClient()->getPrng();
-    // If we cannot merge on mongoS, establish the merge cursor on a shard. Perform the merging
+    // If we cannot merge on mongerS, establish the merge cursor on a shard. Perform the merging
     // command on random shard, unless the pipeline dictates that it needs to be run on the primary
     // shard for the database.
     return needsPrimaryShardMerge ? primaryShard
                                   : targetedShards[prng.nextInt32(targetedShards.size())];
 }
 
-// "Resolve" involved namespaces into a map. We won't try to execute anything on a mongos, but we
+// "Resolve" involved namespaces into a map. We won't try to execute anything on a mongers, but we
 // still have to populate this map so that any $lookups, etc. will be able to have a resolved view
 // definition. It's okay that this is incorrect, we will repopulate the real namespace map on the
-// mongod. Note that this function must be called before forwarding an aggregation command on an
+// mongerd. Note that this function must be called before forwarding an aggregation command on an
 // unsharded collection, in order to verify that the involved namespaces are allowed to be sharded.
 auto resolveInvolvedNamespaces(OperationContext* opCtx, const LiteParsedPipeline& litePipe) {
     StringMap<ExpressionContext::ResolvedNamespace> resolvedNamespaces;
@@ -598,8 +598,8 @@ boost::intrusive_ptr<ExpressionContext> makeExpressionContext(
     return mergeCtx;
 }
 
-// Runs a pipeline on mongoS, having first validated that it is eligible to do so. This can be a
-// pipeline which is split for merging, or an intact pipeline which must run entirely on mongoS.
+// Runs a pipeline on mongerS, having first validated that it is eligible to do so. This can be a
+// pipeline which is split for merging, or an intact pipeline which must run entirely on mongerS.
 Status runPipelineOnMongoS(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                            const ClusterAggregate::Namespaces& namespaces,
                            const AggregationRequest& request,
@@ -607,7 +607,7 @@ Status runPipelineOnMongoS(const boost::intrusive_ptr<ExpressionContext>& expCtx
                            std::unique_ptr<Pipeline, PipelineDeleter> pipeline,
                            BSONObjBuilder* result,
                            const PrivilegeVector& privileges) {
-    // We should never receive a pipeline which cannot run on mongoS.
+    // We should never receive a pipeline which cannot run on mongerS.
     invariant(!expCtx->explain);
     invariant(pipeline->canRunOnMongos());
 
@@ -616,17 +616,17 @@ Status runPipelineOnMongoS(const boost::intrusive_ptr<ExpressionContext>& expCtx
 
     // Verify that the first stage can produce input for the remainder of the pipeline.
     uassert(ErrorCodes::IllegalOperation,
-            str::stream() << "Aggregation pipeline must be run on mongoS, but "
+            str::stream() << "Aggregation pipeline must be run on mongerS, but "
                           << pipeline->getSources().front()->getSourceName()
                           << " is not capable of producing input",
             !pipeline->getSources().front()->constraints().requiresInputDocSource);
 
-    // Register the new mongoS cursor, and retrieve the initial batch of results.
+    // Register the new mongerS cursor, and retrieve the initial batch of results.
     auto cursorResponse = establishMergingMongosCursor(
         opCtx, request, requestedNss, litePipe, std::move(pipeline), privileges);
 
     // We don't need to storePossibleCursor or propagate writeConcern errors; a pipeline with
-    // writing stages like $out can never run on mongoS. Filter the command response and return
+    // writing stages like $out can never run on mongerS. Filter the command response and return
     // immediately.
     CommandHelpers::filterCommandReplyForPassthrough(cursorResponse, result);
     return getStatusFromCommandResult(result->asTempObj());
@@ -662,7 +662,7 @@ Status dispatchMergingPipeline(
         shardDispatchResults.splitPipeline->shardCursorsSortSpec,
         Grid::get(opCtx)->getExecutorPool()->getArbitraryExecutor());
 
-    // First, check whether we can merge on the mongoS. If the merge pipeline MUST run on mongoS,
+    // First, check whether we can merge on the mongerS. If the merge pipeline MUST run on mongerS,
     // then ignore the internalQueryProhibitMergingOnMongoS parameter.
     if (mergePipeline->requiredToRunOnMongos() ||
         (!internalQueryProhibitMergingOnMongoS.load() && mergePipeline->canRunOnMongos())) {
@@ -675,7 +675,7 @@ Status dispatchMergingPipeline(
                                    privileges);
     }
 
-    // If we are not merging on mongoS, then this is not a $changeStream aggregation, and we
+    // If we are not merging on mongerS, then this is not a $changeStream aggregation, and we
     // therefore must have a valid routing table.
     invariant(routingInfo);
 
@@ -733,15 +733,15 @@ Status ClusterAggregate::runAggregate(OperationContext* opCtx,
                                       const AggregationRequest& request,
                                       const PrivilegeVector& privileges,
                                       BSONObjBuilder* result) {
-    uassert(51028, "Cannot specify exchange option to a mongos", !request.getExchangeSpec());
+    uassert(51028, "Cannot specify exchange option to a mongers", !request.getExchangeSpec());
     uassert(51143,
-            "Cannot specify runtime constants option to a mongos",
+            "Cannot specify runtime constants option to a mongers",
             !request.getRuntimeConstants());
     uassert(51089,
             str::stream() << "Internal parameter(s) [" << AggregationRequest::kNeedsMergeName
                           << ", "
                           << AggregationRequest::kFromMongosName
-                          << "] cannot be set to 'true' when sent to mongos",
+                          << "] cannot be set to 'true' when sent to mongers",
             !request.needsMerge() && !request.isFromMongos());
     auto executionNsRoutingInfoStatus =
         sharded_agg_helpers::getExecutionNsRoutingInfo(opCtx, namespaces.executionNss);
@@ -808,11 +808,11 @@ Status ClusterAggregate::runAggregate(OperationContext* opCtx,
     auto pipeline = uassertStatusOK(Pipeline::parse(request.getPipeline(), expCtx));
     pipeline->optimizePipeline();
 
-    // Check whether the entire pipeline must be run on mongoS.
+    // Check whether the entire pipeline must be run on mongerS.
     if (pipeline->requiredToRunOnMongos()) {
         // If this is an explain write the explain output and return.
         if (expCtx->explain) {
-            *result << "splitPipeline" << BSONNULL << "mongos"
+            *result << "splitPipeline" << BSONNULL << "mongers"
                     << Document{{"host", getHostNameCachedAndPort()},
                                 {"stages", pipeline->writeExplainOps(*expCtx->explain)}};
             return Status::OK();
@@ -956,7 +956,7 @@ Status ClusterAggregate::retryOnViewError(OperationContext* opCtx,
     }
 
     // We pass both the underlying collection namespace and the view namespace here. The
-    // underlying collection namespace is used to execute the aggregation on mongoD. Any cursor
+    // underlying collection namespace is used to execute the aggregation on mongerD. Any cursor
     // returned will be registered under the view namespace so that subsequent getMore and
     // killCursors calls against the view have access.
     Namespaces nsStruct;
@@ -981,4 +981,4 @@ Status ClusterAggregate::retryOnViewError(OperationContext* opCtx,
     return status;
 }
 
-}  // namespace mongo
+}  // namespace monger

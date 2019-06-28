@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/drop_collection.h"
-#include "mongo/db/catalog/rename_collection.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/record_id.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/drop_collection.h"
+#include "monger/db/catalog/rename_collection.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/record_id.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/unittest/unittest.h"
 
 using std::unique_ptr;
 using std::list;

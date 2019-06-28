@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 
-#include "mongo/bson/json.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document_source_plan_cache_stats.h"
-#include "mongo/db/pipeline/stub_mongo_process_interface.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/json.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document_source_plan_cache_stats.h"
+#include "monger/db/pipeline/stub_monger_process_interface.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 using DocumentSourcePlanCacheStatsTest = AggregationContextFixture;
 
@@ -143,7 +143,7 @@ TEST_F(DocumentSourcePlanCacheStatsTest, SerializesSuccessfullyAfterAbsorbingMat
 }
 
 TEST_F(DocumentSourcePlanCacheStatsTest, ReturnsImmediateEOFWithEmptyPlanCache) {
-    getExpCtx()->mongoProcessInterface =
+    getExpCtx()->mongerProcessInterface =
         std::make_shared<PlanCacheStatsMongoProcessInterface>(std::vector<BSONObj>{});
     const auto specObj = fromjson("{$planCacheStats: {}}");
     auto stage = DocumentSourcePlanCacheStats::createFromBson(specObj.firstElement(), getExpCtx());
@@ -161,7 +161,7 @@ TEST_F(DocumentSourcePlanCacheStatsTest, ReturnsOnlyMatchingStatsAfterAbsorbingM
                                     << "bar"
                                     << "match"
                                     << true)};
-    getExpCtx()->mongoProcessInterface =
+    getExpCtx()->mongerProcessInterface =
         std::make_shared<PlanCacheStatsMongoProcessInterface>(stats);
 
     const auto specObj = fromjson("{$planCacheStats: {}}");
@@ -176,4 +176,4 @@ TEST_F(DocumentSourcePlanCacheStatsTest, ReturnsOnlyMatchingStatsAfterAbsorbingM
     ASSERT(!pipeline->getNext());
 }
 
-}  // namespace mongo
+}  // namespace monger

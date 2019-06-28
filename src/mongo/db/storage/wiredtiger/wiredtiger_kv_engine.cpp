@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 #define LOG_FOR_RECOVERY(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kStorageRecovery)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kStorageRecovery)
 #define LOG_FOR_ROLLBACK(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kReplicationRollback)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kReplicationRollback)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #ifdef _WIN32
 #define NVALGRIND
@@ -41,7 +41,7 @@
 
 #include <memory>
 
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -50,46 +50,46 @@
 #include <fmt/format.h>
 #include <valgrind/valgrind.h>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/global_settings.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/snapshot_window_options.h"
-#include "mongo/db/storage/journal_listener.h"
-#include "mongo/db/storage/storage_file_util.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/storage/storage_repair_observer.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_cursor.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_customization_hooks.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_extensions.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_global_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_index.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_parameters_gen.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_size_storer.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/background.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/concurrency/ticketholder.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/error_codes.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/global_settings.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/snapshot_window_options.h"
+#include "monger/db/storage/journal_listener.h"
+#include "monger/db/storage/storage_file_util.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/storage/storage_repair_observer.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_cursor.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_customization_hooks.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_extensions.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_global_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_index.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_parameters_gen.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_size_storer.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/background.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/concurrency/ticketholder.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/time_support.h"
 
 #if !defined(__has_feature)
 #define __has_feature(x) 0
@@ -97,7 +97,7 @@
 
 using namespace fmt::literals;
 
-namespace mongo {
+namespace monger {
 
 bool WiredTigerFileVersion::shouldDowngrade(bool readOnly,
                                             bool repairMode,
@@ -168,7 +168,7 @@ std::string WiredTigerFileVersion::getDowngradeString() {
 using std::set;
 using std::string;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 class WiredTigerKVEngine::WiredTigerSessionSweeper : public BackgroundJob {
 public:
@@ -595,7 +595,7 @@ WiredTigerKVEngine::WiredTigerKVEngine(const std::string& canonicalName,
         ss << "file_manager=(close_idle_time=100000),";  //~28 hours, will put better fix in 3.1.x
         ss << "statistics_log=(wait=" << wiredTigerGlobalOptions.statisticsLogDelaySecs << "),";
 
-        if (shouldLog(::mongo::logger::LogComponent::kStorageRecovery,
+        if (shouldLog(::monger::logger::LogComponent::kStorageRecovery,
                       logger::LogSeverity::Debug(3))) {
             ss << "verbose=[recovery_progress,checkpoint_progress,compact_progress,recovery],";
         } else {
@@ -1967,4 +1967,4 @@ std::uint64_t WiredTigerKVEngine::_getCheckpointTimestamp() const {
     return tmp;
 }
 
-}  // namespace mongo
+}  // namespace monger

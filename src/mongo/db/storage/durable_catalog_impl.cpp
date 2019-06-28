@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/db/storage/durable_catalog_impl.h"
+#include "monger/db/storage/durable_catalog_impl.h"
 
 #include <memory>
 #include <stdlib.h>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/catalog/disable_index_spec_namespace_generation_gen.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/durable_catalog_feature_tracker.h"
-#include "mongo/db/storage/kv/kv_collection_catalog_entry.h"
-#include "mongo/db/storage/kv/kv_engine.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/db/storage/storage_engine_interface.h"
-#include "mongo/platform/bits.h"
-#include "mongo/platform/random.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/catalog/disable_index_spec_namespace_generation_gen.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/durable_catalog_feature_tracker.h"
+#include "monger/db/storage/kv/kv_collection_catalog_entry.h"
+#include "monger/db/storage/kv/kv_engine.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/db/storage/storage_engine_interface.h"
+#include "monger/platform/bits.h"
+#include "monger/platform/random.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 // This is a global resource, which protects accesses to the catalog metadata (instance-wide).
 // It is never used with KVEngines that support doc-level locking so this should never conflict
@@ -245,10 +245,10 @@ Status DurableCatalogImpl::FeatureTracker::isCompatibleWithCurrentCode(
         versionInfo.nonRepairableFeatures & ~_usedNonRepairableFeaturesMask;
     if (unrecognizedNonRepairableFeatures) {
         StringBuilder sb;
-        sb << "The data files use features not recognized by this version of mongod; the NR feature"
+        sb << "The data files use features not recognized by this version of mongerd; the NR feature"
               " bits in positions ";
         appendPositionsOfBitsSet(unrecognizedNonRepairableFeatures, &sb);
-        sb << " aren't recognized by this version of mongod";
+        sb << " aren't recognized by this version of mongerd";
         return {ErrorCodes::MustUpgrade, sb.str()};
     }
 
@@ -256,10 +256,10 @@ Status DurableCatalogImpl::FeatureTracker::isCompatibleWithCurrentCode(
         versionInfo.repairableFeatures & ~_usedRepairableFeaturesMask;
     if (unrecognizedRepairableFeatures) {
         StringBuilder sb;
-        sb << "The data files use features not recognized by this version of mongod; the R feature"
+        sb << "The data files use features not recognized by this version of mongerd; the R feature"
               " bits in positions ";
         appendPositionsOfBitsSet(unrecognizedRepairableFeatures, &sb);
-        sb << " aren't recognized by this version of mongod";
+        sb << " aren't recognized by this version of mongerd";
         return {ErrorCodes::CanRepairToDowngrade, sb.str()};
     }
 
@@ -1319,4 +1319,4 @@ KVPrefix DurableCatalogImpl::getIndexPrefix(OperationContext* opCtx,
     invariant(offset >= 0);
     return md.indexes[offset].prefix;
 }
-}  // namespace mongo
+}  // namespace monger

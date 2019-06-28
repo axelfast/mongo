@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/plan_executor_impl.h"
+#include "monger/db/query/plan_executor_impl.h"
 
 #include <memory>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/exec/cached_plan.h"
-#include "mongo/db/exec/change_stream_proxy.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/multi_plan.h"
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/plan_stats.h"
-#include "mongo/db/exec/subplan.h"
-#include "mongo/db/exec/trial_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/query/mock_yield_policies.h"
-#include "mongo/db/query/plan_yield_policy.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/stacktrace.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/exec/cached_plan.h"
+#include "monger/db/exec/change_stream_proxy.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/multi_plan.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/plan_stats.h"
+#include "monger/db/exec/subplan.h"
+#include "monger/db/exec/trial_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/query/mock_yield_policies.h"
+#include "monger/db/query/plan_yield_policy.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/stacktrace.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 using std::string;
@@ -700,4 +700,4 @@ Status PlanExecutorImpl::getMemberObjectStatus(const BSONObj& memberObj) const {
     return WorkingSetCommon::getMemberObjectStatus(memberObj);
 }
 
-}  // namespace mongo
+}  // namespace monger

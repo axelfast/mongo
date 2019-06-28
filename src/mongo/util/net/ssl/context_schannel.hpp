@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,7 +34,7 @@
 
 #include "asio/buffer.hpp"
 #include "asio/io_context.hpp"
-#include "mongo/util/net/ssl/context_base.hpp"
+#include "monger/util/net/ssl/context_base.hpp"
 #include <string>
 
 #include "asio/detail/push_options.hpp"
@@ -99,7 +99,7 @@ private:
 #include "asio/detail/pop_options.hpp"
 
 #if defined(ASIO_HEADER_ONLY)
-#include "mongo/util/net/ssl/impl/context_schannel.ipp"
+#include "monger/util/net/ssl/impl/context_schannel.ipp"
 #endif  // defined(ASIO_HEADER_ONLY)
 
 }  // namespace ssl

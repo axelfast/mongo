@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <functional>
@@ -35,22 +35,22 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/lock_manager_test_help.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/field_parser.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/oplog_interface_local.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/unittest/barrier.h"
-#include "mongo/util/concurrency/thread_pool.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/lock_manager_test_help.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/field_parser.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/oplog_interface_local.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/stdx/mutex.h"
+#include "monger/unittest/barrier.h"
+#include "monger/util/concurrency/thread_pool.h"
 
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -60,7 +60,7 @@ private:
 };
 
 void OplogTest::setUp() {
-    // Set up mongod.
+    // Set up mongerd.
     ServiceContextMongoDTest::setUp();
 
     auto service = getServiceContext();
@@ -406,4 +406,4 @@ TEST_F(OplogTest, ConcurrentLogOpWithDocLockingSupportRevertLastOplogEntry) {
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

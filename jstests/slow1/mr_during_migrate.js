@@ -4,10 +4,10 @@
 (function() {
     'use strict';
 
-    var st = new ShardingTest({shards: 10, mongos: 2, verbose: 2});
+    var st = new ShardingTest({shards: 10, mongers: 2, verbose: 2});
 
-    var mongos = st.s0;
-    var admin = mongos.getDB("admin");
+    var mongers = st.s0;
+    var admin = mongers.getDB("admin");
     var coll = st.s.getCollection(jsTest.name() + ".coll");
 
     var numDocs = 1024 * 1024;
@@ -70,9 +70,9 @@
     for (var t = 0; t < numTests; t++) {
         jsTest.log("Test #" + t);
 
-        var mongos = st.s1;  // use other mongos so we get stale shard versions
-        var coll = mongos.getCollection(coll + "");
-        var outputColl = mongos.getCollection(coll + "_output");
+        var mongers = st.s1;  // use other mongers so we get stale shard versions
+        var coll = mongers.getCollection(coll + "");
+        var outputColl = mongers.getCollection(coll + "_output");
 
         var numTypes = 32;
         var map = function() {

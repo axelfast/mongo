@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/exec/projection.h"
+#include "monger/db/exec/projection.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/exec/working_set_computed_data.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/record_id.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/exec/working_set_computed_data.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/record_id.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 static const char* kIdField = "_id";
 
@@ -318,4 +318,4 @@ Status ProjectionStageSimple::transform(WorkingSetMember* member) const {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,7 +34,7 @@
  *
  * Initializer functions take a parameter of type InitializerContext*, and return
  * a Status. Any status other than Status::OK() is considered a failure that will stop further
- * intializer processing. See src/mongo/base/init.h for details.
+ * intializer processing. See src/monger/base/init.h for details.
  *
  * Note that currently storage and validation are done in the same stage, so do not try to do things
  * that depend on your initializer being between these two stages
@@ -85,7 +85,7 @@
 
 #pragma once
 
-#include "mongo/base/init.h"
+#include "monger/base/init.h"
 
 #define MONGO_GENERAL_STARTUP_OPTIONS_REGISTER(fname) \
     MONGO_STARTUP_OPTION_IN_GROUP_(fname, _Register, GeneralStartupOptionRegistration)

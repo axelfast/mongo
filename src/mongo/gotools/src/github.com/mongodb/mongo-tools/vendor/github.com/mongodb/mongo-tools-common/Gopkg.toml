@@ -51,5 +51,5 @@
   unused-packages = true
 
 [[constraint]]
-  name = "go.mongodb.org/mongo-driver"
+  name = "go.mongerdb.org/monger-driver"
   revision = "bb984ba94a90e2bdf108128bf6bef0c0505a4bc7"

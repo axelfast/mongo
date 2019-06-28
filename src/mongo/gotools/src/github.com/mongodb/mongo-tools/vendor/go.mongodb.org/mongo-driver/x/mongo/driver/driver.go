@@ -1,9 +1,9 @@
-package driver // import "go.mongodb.org/mongo-driver/x/mongo/driver"
+package driver // import "go.mongerdb.org/monger-driver/x/monger/driver"
 
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 // Deployment is implemented by types that can select a server from a deployment.

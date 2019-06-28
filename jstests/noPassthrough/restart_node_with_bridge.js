@@ -52,7 +52,7 @@
     rst.restart(primary);
     rst.getPrimary();
     // Note that we specify 'primaryDB' to avoid having reconnect() send a message directly to the
-    // mongod process rather than going through the mongobridge process as well.
+    // mongerd process rather than going through the mongerbridge process as well.
     reconnect(primaryDB);
     assertWriteFailsToReplicate();
 

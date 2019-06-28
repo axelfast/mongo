@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,47 +27,47 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/cluster_find.h"
+#include "monger/s/query/cluster_find.h"
 
 #include <memory>
 #include <set>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/connpool.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/platform/overflow_arithmetic.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/async_results_merger.h"
-#include "mongo/s/query/cluster_client_cursor_impl.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
-#include "mongo/s/query/establish_cursors.h"
-#include "mongo/s/query/store_possible_cursor.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/connpool.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/curop.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/platform/overflow_arithmetic.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/async_results_merger.h"
+#include "monger/s/query/cluster_client_cursor_impl.h"
+#include "monger/s/query/cluster_cursor_manager.h"
+#include "monger/s/query/establish_cursors.h"
+#include "monger/s/query/store_possible_cursor.h"
+#include "monger/s/stale_exception.h"
+#include "monger/s/transaction_router.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -85,7 +85,7 @@ static const int kPerDocumentOverheadBytesUpperBound = 10;
 const char kFindCmdName[] = "find";
 
 /**
- * Given the QueryRequest 'qr' being executed by mongos, returns a copy of the query which is
+ * Given the QueryRequest 'qr' being executed by mongers, returns a copy of the query which is
  * suitable for forwarding to the targeted hosts.
  */
 StatusWith<std::unique_ptr<QueryRequest>> transformQueryForShards(
@@ -94,7 +94,7 @@ StatusWith<std::unique_ptr<QueryRequest>> transformQueryForShards(
     boost::optional<long long> newLimit;
     if (qr.getLimit()) {
         long long newLimitValue;
-        if (mongoSignedAddOverflow64(*qr.getLimit(), qr.getSkip().value_or(0), &newLimitValue)) {
+        if (mongerSignedAddOverflow64(*qr.getLimit(), qr.getSkip().value_or(0), &newLimitValue)) {
             return Status(
                 ErrorCodes::Overflow,
                 str::stream()
@@ -112,7 +112,7 @@ StatusWith<std::unique_ptr<QueryRequest>> transformQueryForShards(
         // !wantMore and ntoreturn mean the same as !wantMore and limit, so perform the conversion.
         if (!qr.wantMore()) {
             long long newLimitValue;
-            if (mongoSignedAddOverflow64(
+            if (mongerSignedAddOverflow64(
                     *qr.getNToReturn(), qr.getSkip().value_or(0), &newLimitValue)) {
                 return Status(ErrorCodes::Overflow,
                               str::stream()
@@ -125,7 +125,7 @@ StatusWith<std::unique_ptr<QueryRequest>> transformQueryForShards(
             newLimit = newLimitValue;
         } else {
             long long newNToReturnValue;
-            if (mongoSignedAddOverflow64(
+            if (mongerSignedAddOverflow64(
                     *qr.getNToReturn(), qr.getSkip().value_or(0), &newNToReturnValue)) {
                 return Status(ErrorCodes::Overflow,
                               str::stream()
@@ -246,7 +246,7 @@ CursorId runQueryWithoutRetrying(OperationContext* opCtx,
     }
 
     // $natural sort is actually a hint to use a collection scan, and shouldn't be treated like a
-    // sort on mongos. Including a $natural anywhere in the sort spec results in the whole sort
+    // sort on mongers. Including a $natural anywhere in the sort spec results in the whole sort
     // being considered a hint to use a collection scan.
     if (!query.getQueryRequest().getSort().hasField("$natural")) {
         params.sort = FindCommon::transformSortSpec(query.getQueryRequest().getSort());
@@ -308,7 +308,7 @@ CursorId runQueryWithoutRetrying(OperationContext* opCtx,
             // We reached end-of-stream. If the cursor is not tailable, then we mark it as
             // exhausted. If it is tailable, usually we keep it open (i.e. "NotExhausted") even
             // when we reach end-of-stream. However, if all the remote cursors are exhausted, there
-            // is no hope of returning data and thus we need to close the mongos cursor as well.
+            // is no hope of returning data and thus we need to close the mongers cursor as well.
             if (!ccc->isTailable() || ccc->remotesExhausted()) {
                 cursorState = ClusterCursorManager::CursorState::Exhausted;
             }
@@ -405,7 +405,7 @@ CursorId ClusterFind::runQuery(OperationContext* opCtx,
                                std::vector<BSONObj>* results) {
     invariant(results);
 
-    // Projection on the reserved sort key field is illegal in mongos.
+    // Projection on the reserved sort key field is illegal in mongers.
     if (query.getQueryRequest().getProj().hasField(AsyncResultsMerger::kSortKeyField)) {
         uasserted(ErrorCodes::BadValue,
                   str::stream() << "Projection contains illegal field '"
@@ -642,7 +642,7 @@ StatusWith<CursorResponse> ClusterFind::runGetMore(OperationContext* opCtx,
             // We reached end-of-stream. If the cursor is not tailable, then we mark it as
             // exhausted. If it is tailable, usually we keep it open (i.e. "NotExhausted") even when
             // we reach end-of-stream. However, if all the remote cursors are exhausted, there is no
-            // hope of returning data and thus we need to close the mongos cursor as well.
+            // hope of returning data and thus we need to close the mongers cursor as well.
             if (!pinnedCursor.getValue().isTailable() ||
                 pinnedCursor.getValue().remotesExhausted()) {
                 cursorState = ClusterCursorManager::CursorState::Exhausted;
@@ -699,4 +699,4 @@ StatusWith<CursorResponse> ClusterFind::runGetMore(OperationContext* opCtx,
         request.nss, idToReturn, std::move(batch), startingFrom, postBatchResumeToken);
 }
 
-}  // namespace mongo
+}  // namespace monger

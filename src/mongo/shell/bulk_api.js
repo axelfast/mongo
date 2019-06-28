@@ -1021,7 +1021,7 @@ var _bulk_api_module = (function() {
                 extractedErr.writeError = {code: WRITE_CONCERN_FAILED, errmsg: jNote};
             }
 
-            // Handling of writeback not needed for mongo shell.
+            // Handling of writeback not needed for monger shell.
             return extractedErr;
         };
 
@@ -1150,7 +1150,7 @@ var _bulk_api_module = (function() {
                 throw Error("A bulk operation cannot be re-executed");
 
             // If writeConcern set, use it, else get from collection (which will inherit from
-            // db/mongo)
+            // db/monger)
             writeConcern = _writeConcern ? _writeConcern : coll.getWriteConcern();
             if (writeConcern instanceof WriteConcern)
                 writeConcern = writeConcern.toJSON();

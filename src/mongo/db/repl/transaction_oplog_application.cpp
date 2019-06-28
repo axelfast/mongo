@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/transaction_oplog_application.h"
+#include "monger/db/repl/transaction_oplog_application.h"
 
-#include "mongo/db/background.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/repl/apply_ops.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/repl/timestamp_block.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/util/log.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/repl/apply_ops.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/repl/timestamp_block.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 using repl::OplogEntry;
 namespace {
 // If enabled, causes _applyPrepareTransaction to hang before preparing the transaction participant.
@@ -454,4 +454,4 @@ void reconstructPreparedTransactions(OperationContext* opCtx, repl::OplogApplica
         }
     }
 }
-}  // namespace mongo
+}  // namespace monger

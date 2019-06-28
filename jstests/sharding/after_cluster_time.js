@@ -45,7 +45,7 @@
     assert.commandWorked(testDB.runCommand(
         {insert: "foo", documents: [{_id: 1, x: 1}], writeConcern: {w: "majority"}}));
 
-    // Test the afterClusterTime API without causal consistency enabled on the mongo connection.
+    // Test the afterClusterTime API without causal consistency enabled on the monger connection.
 
     assertAfterClusterTimeReadFailsWithCode(
         testDB,
@@ -88,7 +88,7 @@
                   [{_id: 1, x: 1}],
                   "expected afterClusterTime read to return the committed document");
 
-        // Test the afterClusterTime API with causal consistency enabled on the mongo connection.
+        // Test the afterClusterTime API with causal consistency enabled on the monger connection.
         testDB.getMongo().setCausalConsistency(true);
 
         // With causal consistency enabled, the shell sets read concern to level "majority" if it is

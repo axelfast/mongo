@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,10 +33,10 @@
 #include <jsapi.h>
 #include <type_traits>
 
-#include "mongo/scripting/mozjs/base.h"
-#include "mongo/scripting/mozjs/exception.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/util/assert_util.h"
+#include "monger/scripting/mozjs/base.h"
+#include "monger/scripting/mozjs/exception.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/util/assert_util.h"
 
 // The purpose of this class is to take in specially crafted types and generate
 // a wrapper which installs the type, along with any useful life cycle methods
@@ -45,11 +45,11 @@
 // complexity of exposing C++ code into javascript. Most prominently, we have
 // to wrap every function that can be called from javascript to prevent any C++
 // exceptions from leaking out. We do this, with template and macro based
-// codegen, and turn mongo exceptions into instances of Status, then convert
+// codegen, and turn monger exceptions into instances of Status, then convert
 // those into javascript exceptions before returning. That allows all consumers
 // of this library to throw exceptions freely, with the understanding that
 // they'll be visible in javascript. Javascript exceptions are trapped at the
-// top level and converted back to mongo exceptions by an error handler on
+// top level and converted back to monger exceptions by an error handler on
 // ImplScope.
 
 // MONGO_*_JS_FUNCTION_* macros are public and allow wrapped types to install
@@ -83,7 +83,7 @@
                 nullptr                                                                           \
     }
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 namespace smUtils {
@@ -95,7 +95,7 @@ bool wrapFunction(JSContext* cx, unsigned argc, JS::Value* vp) {
         T::call(cx, args);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 }
@@ -107,7 +107,7 @@ bool addProperty(JSContext* cx, JS::HandleObject obj, JS::HandleId id, JS::Handl
         T::addProperty(cx, obj, id, v);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -118,7 +118,7 @@ bool call(JSContext* cx, unsigned argc, JS::Value* vp) {
         T::call(cx, JS::CallArgsFromVp(argc, vp));
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -129,7 +129,7 @@ bool construct(JSContext* cx, unsigned argc, JS::Value* vp) {
         T::construct(cx, JS::CallArgsFromVp(argc, vp));
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -140,7 +140,7 @@ bool delProperty(JSContext* cx, JS::HandleObject obj, JS::HandleId id, JS::Objec
         T::delProperty(cx, obj, id, result);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -154,7 +154,7 @@ bool enumerate(JSContext* cx,
         T::enumerate(cx, obj, properties, enumerableOnly);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -175,7 +175,7 @@ bool getProperty(JSContext* cx,
         T::getProperty(cx, obj, id, receiver, vp);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -186,7 +186,7 @@ bool hasInstance(JSContext* cx, JS::HandleObject obj, JS::MutableHandleValue vp,
         T::hasInstance(cx, obj, vp, bp);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -202,7 +202,7 @@ bool setProperty(JSContext* cx,
         T::setProperty(cx, obj, id, vp, receiver, result);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -219,7 +219,7 @@ bool resolve(JSContext* cx, JS::HandleObject obj, JS::HandleId id, bool* resolve
         T::resolve(cx, obj, id, resolvedp);
         return true;
     } catch (...) {
-        mongoToJSException(cx);
+        mongerToJSException(cx);
         return false;
     }
 };
@@ -569,4 +569,4 @@ private:
 };
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

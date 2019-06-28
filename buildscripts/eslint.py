@@ -71,7 +71,7 @@ def extract_eslint(tar_path, target_file):
 
 
 def get_eslint_from_cache(dest_file, platform, arch):
-    """Get ESLint binary from mongodb's cache."""
+    """Get ESLint binary from mongerdb's cache."""
     # Get URL
     if platform == "Linux":
         url = ESLINT_HTTP_LINUX_CACHE
@@ -190,7 +190,7 @@ class ESLint(object):
 
 def is_interesting_file(file_name):
     """Return true if this file should be checked."""
-    return ((file_name.startswith("src/mongo") or file_name.startswith("jstests"))
+    return ((file_name.startswith("src/monger") or file_name.startswith("jstests"))
             and file_name.endswith(".js"))
 
 
@@ -262,10 +262,10 @@ def main():
     success = False
     usage = "%prog [-e <eslint>] [-d] lint|lint-patch|fix [glob patterns] "
     description = "lint runs ESLint on provided patterns or all .js files under jstests/ "\
-                  "and src/mongo. lint-patch runs ESLint against .js files modified in the "\
+                  "and src/monger. lint-patch runs ESLint against .js files modified in the "\
                   "provided patch file (for upload.py). "\
                   "fix runs ESLint with --fix on provided patterns "\
-                  "or files under jstests/ and src/mongo."
+                  "or files under jstests/ and src/monger."
     epilog = "*Unless you specify -d a separate ESLint process will be launched for every file"
     parser = OptionParser()
     parser = OptionParser(usage=usage, description=description, epilog=epilog)
@@ -286,7 +286,7 @@ def main():
         command = args[1]
         searchlist = args[2:]
         if not searchlist:
-            searchlist = ["jstests/", "src/mongo/"]
+            searchlist = ["jstests/", "src/monger/"]
 
         if command == "lint":
             success = lint(options.eslint, options.dirmode, searchlist)

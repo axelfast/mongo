@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/db/auth/user_set.h"
+#include "monger/db/auth/user_set.h"
 
 #include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/user.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/user.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 class UserSetNameIteratorImpl : public UserNameIterator::Impl {
@@ -117,4 +117,4 @@ UserNameIterator UserSet::getNames() const {
     return UserNameIterator(
         std::make_unique<UserSetNameIteratorImpl>(_users.cbegin(), _users.cend()));
 }
-}  // namespace mongo
+}  // namespace monger

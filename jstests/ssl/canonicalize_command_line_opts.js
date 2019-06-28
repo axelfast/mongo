@@ -3,9 +3,9 @@
 (function() {
     'use strict';
 
-    function runTest(mongod) {
-        assert(mongod);
-        const admin = mongod.getDB('admin');
+    function runTest(mongerd) {
+        assert(mongerd);
+        const admin = mongerd.getDB('admin');
 
         const opts = assert.commandWorked(admin.runCommand({getCmdLineOpts: 1}));
         print(tojson(opts));
@@ -33,7 +33,7 @@
         sslAllowInvalidHostnames: '',
     };
 
-    const mongod = MongoRunner.runMongod(options);
-    runTest(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod(options);
+    runTest(mongerd);
+    MongoRunner.stopMongod(mongerd);
 })();

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,14 +33,14 @@
 #include <memory>
 #include <thread>
 
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/time_support.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A clock source that reads the Date_t lastNow time and uses a background thread to ensure
@@ -104,4 +104,4 @@ private:
     stdx::thread _timer;
 };
 
-}  // namespace mongo
+}  // namespace monger

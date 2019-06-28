@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/tools/mongoebench_options.h"
+#include "monger/tools/mongerebench_options.h"
 
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <iterator>
 
-#include "mongo/base/status.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/platform/random.h"
-#include "mongo/shell/bench.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/platform/random.h"
+#include "monger/shell/bench.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
-MongoeBenchGlobalParams mongoeBenchGlobalParams;
+MongoeBenchGlobalParams mongereBenchGlobalParams;
 
 void printMongoeBenchHelp(std::ostream* out) {
-    *out << "Usage: mongoebench <config file> [options]" << std::endl;
+    *out << "Usage: mongerebench <config file> [options]" << std::endl;
     *out << moe::startupOptions.helpString();
     *out << std::flush;
 }
@@ -83,10 +83,10 @@ Status storeMongoeBenchOptions(const moe::Environment& params,
     for (auto&& elem : config) {
         const auto fieldName = elem.fieldNameStringData();
         if (fieldName == "pre") {
-            mongoeBenchGlobalParams.preConfig.reset(
+            mongereBenchGlobalParams.preConfig.reset(
                 BenchRunConfig::createFromBson(elem.wrap("ops")));
         } else if (fieldName == "ops") {
-            mongoeBenchGlobalParams.opsConfig.reset(BenchRunConfig::createFromBson(elem.wrap()));
+            mongereBenchGlobalParams.opsConfig.reset(BenchRunConfig::createFromBson(elem.wrap()));
         } else {
             return {ErrorCodes::BadValue,
                     str::stream() << "Unrecognized key in benchRun config file: " << fieldName};
@@ -96,32 +96,32 @@ Status storeMongoeBenchOptions(const moe::Environment& params,
     int64_t seed = params.count("seed") ? static_cast<int64_t>(params["seed"].as<long>())
                                         : SecureRandom::create()->nextInt64();
 
-    if (mongoeBenchGlobalParams.preConfig) {
-        mongoeBenchGlobalParams.preConfig->randomSeed = seed;
+    if (mongereBenchGlobalParams.preConfig) {
+        mongereBenchGlobalParams.preConfig->randomSeed = seed;
     }
 
-    if (mongoeBenchGlobalParams.opsConfig) {
-        mongoeBenchGlobalParams.opsConfig->randomSeed = seed;
+    if (mongereBenchGlobalParams.opsConfig) {
+        mongereBenchGlobalParams.opsConfig->randomSeed = seed;
 
         if (params.count("threads")) {
-            mongoeBenchGlobalParams.opsConfig->parallel = params["threads"].as<unsigned>();
+            mongereBenchGlobalParams.opsConfig->parallel = params["threads"].as<unsigned>();
         }
 
         if (params.count("time")) {
-            mongoeBenchGlobalParams.opsConfig->seconds = params["time"].as<double>();
+            mongereBenchGlobalParams.opsConfig->seconds = params["time"].as<double>();
         }
     }
 
     if (params.count("output")) {
-        mongoeBenchGlobalParams.outputFile =
+        mongereBenchGlobalParams.outputFile =
             boost::filesystem::path(params["output"].as<std::string>());
     } else {
         boost::filesystem::path dbpath(storageGlobalParams.dbpath);
-        mongoeBenchGlobalParams.outputFile = dbpath / kDefaultOutputFile;
+        mongereBenchGlobalParams.outputFile = dbpath / kDefaultOutputFile;
     }
 
-    mongoeBenchGlobalParams.outputFile = mongoeBenchGlobalParams.outputFile.lexically_normal();
-    auto parentPath = mongoeBenchGlobalParams.outputFile.parent_path();
+    mongereBenchGlobalParams.outputFile = mongereBenchGlobalParams.outputFile.lexically_normal();
+    auto parentPath = mongereBenchGlobalParams.outputFile.parent_path();
     if (!parentPath.empty() && !boost::filesystem::exists(parentPath)) {
         return {ErrorCodes::NonExistentPath,
                 str::stream() << "Directory containing output file must already exist, but "
@@ -132,4 +132,4 @@ Status storeMongoeBenchOptions(const moe::Environment& params,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

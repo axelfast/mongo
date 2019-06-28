@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fstream>
 #include <ostream>
 
-#include "mongo/db/startup_warnings_mongod.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/startup_warnings_mongerd.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using mongo::unittest::TempDir;
+using monger::unittest::TempDir;
 
-using namespace mongo;
+using namespace monger;
 
 TEST(StartupWarningsMongodTest, ReadTransparentHugePagesParameterInvalidDirectory) {
     StatusWith<std::string> result =

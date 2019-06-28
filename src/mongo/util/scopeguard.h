@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,9 +31,9 @@
 
 #include <type_traits>
 
-#include "mongo/platform/compiler.h"
+#include "monger/platform/compiler.h"
 
-namespace mongo {
+namespace monger {
 
 template <typename F>
 class[[nodiscard]] ScopeGuard {
@@ -69,7 +69,7 @@ auto makeGuard(F&& fun) {
     return ScopeGuard<std::decay_t<F>>(std::forward<F>(fun));
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 #define MONGO_SCOPEGUARD_CAT2(s1, s2) s1##s2
 #define MONGO_SCOPEGUARD_CAT(s1, s2) MONGO_SCOPEGUARD_CAT2(s1, s2)

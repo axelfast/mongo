@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 #include <string>
 
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index/multikey_paths.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/service_context.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index/multikey_paths.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/service_context.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const auto kIndexVersion = IndexDescriptor::IndexVersion::kV2;
@@ -372,4 +372,4 @@ TEST_F(MultikeyPathsTest, PathsUpdatedForMultipleIndexesOnDocumentInsert) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

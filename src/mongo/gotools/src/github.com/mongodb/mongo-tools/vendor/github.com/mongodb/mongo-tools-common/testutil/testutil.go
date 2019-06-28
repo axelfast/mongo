@@ -13,15 +13,15 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/options"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/options"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 // GetBareSession returns an mgo.Session from the environment or
 // from a default host and port.
-func GetBareSession() (*mongo.Client, error) {
+func GetBareSession() (*monger.Client, error) {
 	sessionProvider, _, err := GetBareSessionProvider()
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func GetBareSessionProvider() (*db.SessionProvider, *options.ToolOptions, error)
 	// get ToolOptions from URI or defaults
 	if uri := os.Getenv("TOOLS_TESTING_MONGOD"); uri != "" {
 		fakeArgs := []string{"--uri=" + uri}
-		toolOptions = options.New("mongodump", "", "", "", options.EnabledOptions{URI: true})
+		toolOptions = options.New("mongerdump", "", "", "", options.EnabledOptions{URI: true})
 		toolOptions.URI.AddKnownURIParameters(options.KnownURIOptionsReadPreference)
 		_, err := toolOptions.ParseArgs(fakeArgs)
 		if err != nil {
@@ -81,7 +81,7 @@ func GetBareArgs() []string {
 
 // GetFCV returns the featureCompatibilityVersion string for an mgo Session
 // or the empty string if it can't be found.
-func GetFCV(s *mongo.Client) string {
+func GetFCV(s *monger.Client) string {
 	coll := s.Database("admin").Collection("system.version")
 	var result struct {
 		Version string

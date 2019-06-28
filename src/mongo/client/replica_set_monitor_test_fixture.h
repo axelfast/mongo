@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <type_traits>
 #include <vector>
 
-#include "mongo/client/replica_set_change_notifier.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/client/replica_set_monitor_internal.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/replica_set_change_notifier.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/client/replica_set_monitor_internal.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 // NOTE: Unless stated otherwise, all tests assume exclusive access to state belongs to the
 // current (only) thread, so they do not lock SetState::mutex before examining state. This is
@@ -84,4 +84,4 @@ protected:
     ReplicaSetChangeNotifier _notifier;
 };
 
-}  // namespace mongo
+}  // namespace monger

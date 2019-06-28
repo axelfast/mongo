@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,19 +28,19 @@
  *    it in the license file.
  */
 
-package com.mongodb.embedded.capi;
+package com.mongerdb.embedded.capi;
 
-import com.mongodb.embedded.capi.internal.CAPI;
+import com.mongerdb.embedded.capi.internal.CAPI;
 
 class MongoEmbeddedInstanceImpl implements MongoEmbeddedInstance {
-    private final CAPI.mongo_embedded_v1_status status;
-    private final CAPI.mongo_embedded_v1_instance instance;
+    private final CAPI.monger_embedded_v1_status status;
+    private final CAPI.monger_embedded_v1_instance instance;
 
-    MongoEmbeddedInstanceImpl(final CAPI.mongo_embedded_v1_lib libraryPointer, final String yamlConfig) {
+    MongoEmbeddedInstanceImpl(final CAPI.monger_embedded_v1_lib libraryPointer, final String yamlConfig) {
         status = CAPIHelper.createStatusPointer();
 
         try {
-            instance = CAPI.mongo_embedded_v1_instance_create(libraryPointer,
+            instance = CAPI.monger_embedded_v1_instance_create(libraryPointer,
                     new CAPI.cstring(yamlConfig != null ? yamlConfig : ""), status);
         } catch (Throwable t) {
             throw CAPIHelper.createError("instance_create", t);
@@ -60,7 +60,7 @@ class MongoEmbeddedInstanceImpl implements MongoEmbeddedInstance {
     public void close() {
         try {
             CAPIHelper.validateErrorCode(status,
-                    CAPI.mongo_embedded_v1_instance_destroy(instance, status));
+                    CAPI.monger_embedded_v1_instance_destroy(instance, status));
         } catch (Throwable t) {
             throw CAPIHelper.createError("instance_destroy", t);
         }

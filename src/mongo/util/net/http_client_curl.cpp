@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstddef>
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <string>
 
-#include "mongo/base/data_builder.h"
-#include "mongo/base/data_range.h"
-#include "mongo/base/data_range_cursor.h"
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/http_client.h"
+#include "monger/base/data_builder.h"
+#include "monger/base/data_range.h"
+#include "monger/base/data_range_cursor.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/net/http_client.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -361,4 +361,4 @@ BSONObj HttpClient::getServerStatus() {
     return info.obj();
 }
 
-}  // namespace mongo
+}  // namespace monger

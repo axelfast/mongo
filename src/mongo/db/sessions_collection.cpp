@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/sessions_collection.h"
+#include "monger/db/sessions_collection.h"
 
 #include <functional>
 #include <memory>
 #include <vector>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/client/dbclient_base.h"
-#include "mongo/db/create_indexes_gen.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/write_ops/batched_command_response.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/db/create_indexes_gen.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/write_ops/batched_command_response.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // This batch size is chosen to ensure that we don't form requests larger than the 16mb limit.
@@ -328,4 +328,4 @@ BSONObj SessionsCollection::generateCollModCmd() {
     return collModCmdBuilder.obj();
 }
 
-}  // namespace mongo
+}  // namespace monger

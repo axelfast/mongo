@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/client/fetcher.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/rpc/metadata.h"
+#include "monger/client/fetcher.h"
+#include "monger/db/jsobj.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/rpc/metadata.h"
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 using executor::NetworkInterfaceMock;
 using executor::RemoteCommandRequest;
 using executor::TaskExecutor;
@@ -867,7 +867,7 @@ TEST_F(FetcherTest, EmptyGetMoreRequestAfterFirstBatchMakesFetcherInactiveAndKil
     auto firstElement = cmdObj.firstElement();
     ASSERT_EQUALS("killCursors", firstElement.fieldNameStringData());
     ASSERT_EQUALS(nss.coll(), firstElement.String());
-    ASSERT_EQUALS(mongo::BSONType::Array, cmdObj["cursors"].type());
+    ASSERT_EQUALS(monger::BSONType::Array, cmdObj["cursors"].type());
     auto cursors = cmdObj["cursors"].Array();
     ASSERT_EQUALS(1U, cursors.size());
     ASSERT_EQUALS(cursorId, cursors.front().numberLong());
@@ -942,7 +942,7 @@ TEST_F(FetcherTest, UpdateNextActionAfterSecondBatch) {
         auto firstElement = cmdObj.firstElement();
         ASSERT_EQUALS("killCursors", firstElement.fieldNameStringData());
         ASSERT_EQUALS(nss.coll(), firstElement.String());
-        ASSERT_EQUALS(mongo::BSONType::Array, cmdObj["cursors"].type());
+        ASSERT_EQUALS(monger::BSONType::Array, cmdObj["cursors"].type());
         auto cursors = cmdObj["cursors"].Array();
         ASSERT_EQUALS(1U, cursors.size());
         ASSERT_EQUALS(cursorId, cursors.front().numberLong());

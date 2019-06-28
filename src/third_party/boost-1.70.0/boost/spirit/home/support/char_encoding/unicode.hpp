@@ -283,7 +283,7 @@ namespace boost { namespace spirit { namespace char_encoding
         BOOST_SPIRIT_SCRIPT(lycian)
         BOOST_SPIRIT_SCRIPT(lydian)
         BOOST_SPIRIT_SCRIPT(malayalam)
-        BOOST_SPIRIT_SCRIPT(mongolian)
+        BOOST_SPIRIT_SCRIPT(mongerlian)
         BOOST_SPIRIT_SCRIPT(meetei_mayek)
         BOOST_SPIRIT_SCRIPT(myanmar)
         BOOST_SPIRIT_SCRIPT(nko)

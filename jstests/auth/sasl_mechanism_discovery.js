@@ -66,12 +66,12 @@
     runTest(m);
     MongoRunner.stopMongod(m);
 
-    // Test mongos.
+    // Test mongers.
     var st = new ShardingTest({
         keyFile: 'jstests/libs/key1',
         shards: 0,
         other: {
-            mongosOptions:
+            mongersOptions:
                 {setParameter: "authenticationMechanisms=PLAIN,SCRAM-SHA-256,SCRAM-SHA-1"}
         }
     });

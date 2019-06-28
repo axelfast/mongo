@@ -4,7 +4,7 @@
 (function() {
     'use strict';
 
-    // The mongo shell cannot authenticate as the internal __system user in tests that use x509 for
+    // The monger shell cannot authenticate as the internal __system user in tests that use x509 for
     // cluster authentication. Choosing the default value for wcMajorityJournalDefault in
     // ReplSetTest cannot be done automatically without the shell performing such authentication, so
     // in this test we must make the choice explicitly, based on the global test options.
@@ -57,7 +57,7 @@
     };
 
     const subShellArgs = [
-        'mongo',
+        'monger',
         '--ssl',
         '--sslCAFile=jstests/libs/ca.pem',
         '--sslPEMKeyFile=jstests/libs/server.pem',
@@ -70,7 +70,7 @@
     ];
 
     const retVal = _runMongoProgram(...subShellArgs);
-    assert.eq(retVal, 0, 'mongo shell did not succeed with exit code 0');
+    assert.eq(retVal, 0, 'monger shell did not succeed with exit code 0');
 
     rst.stopSet();
 })();

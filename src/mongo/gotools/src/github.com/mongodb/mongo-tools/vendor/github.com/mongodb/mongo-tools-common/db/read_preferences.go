@@ -10,10 +10,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/json"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/tag"
-	"go.mongodb.org/mongo-driver/x/network/connstring"
+	"github.com/mongerdb/monger-tools-common/json"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/tag"
+	"go.mongerdb.org/monger-driver/x/network/connstring"
 )
 
 // readPrefDoc is a struct corresponding to the json object passed in for the --readPreference command line arg.
@@ -25,7 +25,7 @@ type readPrefDoc struct {
 
 const (
 	WarningNonPrimaryMongosConnection = "Warning: using a non-primary readPreference with a " +
-		"connection to mongos may produce inconsistent duplicates or miss some documents."
+		"connection to mongers may produce inconsistent duplicates or miss some documents."
 )
 
 // NewReadPreference takes a string (command line read preference argument) and a ConnString (from the command line

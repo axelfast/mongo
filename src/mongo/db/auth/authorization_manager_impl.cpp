@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,48 +27,48 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_manager_impl.h"
+#include "monger/db/auth/authorization_manager_impl.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/crypto/mechanism_scram.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/address_restriction.h"
-#include "mongo/db/auth/authorization_manager_impl_parameters_gen.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/authorization_session_impl.h"
-#include "mongo/db/auth/authz_manager_external_state.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/privilege_parser.h"
-#include "mongo/db/auth/role_graph.h"
-#include "mongo/db/auth/sasl_options.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_document_parser.h"
-#include "mongo/db/auth/user_management_commands_parser.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/global_settings.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/mongod_options.h"
-#include "mongo/platform/compiler.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/crypto/mechanism_scram.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/address_restriction.h"
+#include "monger/db/auth/authorization_manager_impl_parameters_gen.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/authorization_session_impl.h"
+#include "monger/db/auth/authz_manager_external_state.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/privilege_parser.h"
+#include "monger/db/auth/role_graph.h"
+#include "monger/db/auth/sasl_options.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_document_parser.h"
+#include "monger/db/auth/user_management_commands_parser.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/global_settings.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/mongerd_options.h"
+#include "monger/platform/compiler.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::back_inserter;
@@ -90,8 +90,8 @@ MONGO_INITIALIZER_GENERAL(SetupInternalSecurityUser,
     RoleGraph::generateUniversalPrivileges(&privileges);
     user->addPrivileges(privileges);
 
-    if (mongodGlobalParams.whitelistedClusterNetwork) {
-        const auto& whitelist = *mongodGlobalParams.whitelistedClusterNetwork;
+    if (mongerdGlobalParams.whitelistedClusterNetwork) {
+        const auto& whitelist = *mongerdGlobalParams.whitelistedClusterNetwork;
 
         auto restriction = std::make_unique<ClientSourceRestriction>(whitelist);
         auto restrictionSet = std::make_unique<RestrictionSet<>>(std::move(restriction));
@@ -851,4 +851,4 @@ std::vector<AuthorizationManager::CachedUserInfo> AuthorizationManagerImpl::getU
     return ret;
 }
 
-}  // namespace mongo
+}  // namespace monger

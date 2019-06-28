@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/db/auth/privilege_parser.h"
+#include "monger/db/auth/privilege_parser.h"
 
 #include <string>
 
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/field_parser.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/util/str.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/field_parser.h"
+#include "monger/db/namespace_string.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::vector;
@@ -471,4 +471,4 @@ bool ParsedPrivilege::privilegeToParsedPrivilege(const Privilege& privilege,
     result->setActions(privilege.getActions().getActionsAsStrings());
     return result->isValid(errmsg);
 }
-}  // namespace mongo
+}  // namespace monger

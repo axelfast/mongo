@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
 #ifdef _WIN32
 #define NVALGRIND
 #endif
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <gperftools/malloc_extension.h>
 #include <valgrind/valgrind.h>
 
-#include "mongo/base/init.h"
-#include "mongo/db/commands/server_status.h"
-#include "mongo/db/service_context.h"
-#include "mongo/transport/service_entry_point.h"
-#include "mongo/util/log.h"
-#include "mongo/util/tcmalloc_parameters_gen.h"
+#include "monger/base/init.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/db/service_context.h"
+#include "monger/transport/service_entry_point.h"
+#include "monger/util/log.h"
+#include "monger/util/tcmalloc_parameters_gen.h"
 
-namespace mongo {
+namespace monger {
 
 // TODO: Remove these implementations and the associated IDL definition in 4.3.
 void TCMallocEnableMarkThreadTemporarilyIdle::append(OperationContext*,
@@ -190,4 +190,4 @@ private:
 #endif
 } tcmallocServerStatusSection;
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

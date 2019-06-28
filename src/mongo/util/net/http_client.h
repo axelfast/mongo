@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,13 +33,13 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/base/data_builder.h"
-#include "mongo/base/data_range.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/util/duration.h"
+#include "monger/base/data_builder.h"
+#include "monger/base/data_range.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/util/duration.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr Seconds kConnectionTimeout{60};
 constexpr Seconds kTotalRequestTimeout{120};
@@ -95,4 +95,4 @@ public:
     static BSONObj getServerStatus();
 };
 
-}  // namespace mongo
+}  // namespace monger

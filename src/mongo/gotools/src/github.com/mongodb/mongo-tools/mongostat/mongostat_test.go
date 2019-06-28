@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongostat
+package mongerstat
 
 import (
 	"io/ioutil"
@@ -12,9 +12,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/testtype"
-	"github.com/mongodb/mongo-tools/mongostat/stat_consumer/line"
-	"github.com/mongodb/mongo-tools/mongostat/status"
+	"github.com/mongerdb/monger-tools-common/testtype"
+	"github.com/mongerdb/monger-tools/mongerstat/stat_consumer/line"
+	"github.com/mongerdb/monger-tools/mongerstat/status"
 	. "github.com/smartystreets/goconvey/convey"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -112,17 +112,17 @@ func TestIsMongos(t *testing.T) {
 	}
 
 	Convey("should accept reasonable process names", t, func() {
-		So(runCheck("/mongos-prod.exe"), ShouldBeTrue)
-		So(runCheck("/mongos.exe"), ShouldBeTrue)
-		So(runCheck("mongos"), ShouldBeTrue)
-		So(runCheck("mongodb/bin/mongos"), ShouldBeTrue)
-		So(runCheck(`C:\data\mci\48de1dc1ec3c2be5dcd6a53739578de4\src\mongos.exe`), ShouldBeTrue)
+		So(runCheck("/mongers-prod.exe"), ShouldBeTrue)
+		So(runCheck("/mongers.exe"), ShouldBeTrue)
+		So(runCheck("mongers"), ShouldBeTrue)
+		So(runCheck("mongerdb/bin/mongers"), ShouldBeTrue)
+		So(runCheck(`C:\data\mci\48de1dc1ec3c2be5dcd6a53739578de4\src\mongers.exe`), ShouldBeTrue)
 	})
 	Convey("should accept reasonable process names", t, func() {
-		So(runCheck("mongosx/mongod"), ShouldBeFalse)
-		So(runCheck("mongostat"), ShouldBeFalse)
-		So(runCheck("mongos_stuff/mongod"), ShouldBeFalse)
-		So(runCheck("mongos.stuff/mongod"), ShouldBeFalse)
-		So(runCheck("mongodb/bin/mongod"), ShouldBeFalse)
+		So(runCheck("mongersx/mongerd"), ShouldBeFalse)
+		So(runCheck("mongerstat"), ShouldBeFalse)
+		So(runCheck("mongers_stuff/mongerd"), ShouldBeFalse)
+		So(runCheck("mongers.stuff/mongerd"), ShouldBeFalse)
+		So(runCheck("mongerdb/bin/mongerd"), ShouldBeFalse)
 	})
 }

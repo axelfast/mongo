@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kASIO
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kASIO
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <exception>
 #include <memory>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/executor/async_stream_factory.h"
-#include "mongo/executor/async_stream_interface.h"
-#include "mongo/executor/async_timer_asio.h"
-#include "mongo/executor/network_interface_asio.h"
-#include "mongo/executor/network_interface_asio_test_utils.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/unittest/integration_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/timer.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/client/connection_string.h"
+#include "monger/executor/async_stream_factory.h"
+#include "monger/executor/async_stream_interface.h"
+#include "monger/executor/async_timer_asio.h"
+#include "monger/executor/network_interface_asio.h"
+#include "monger/executor/network_interface_asio_test_utils.h"
+#include "monger/executor/task_executor.h"
+#include "monger/unittest/integration_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 namespace {
 
@@ -112,4 +112,4 @@ TEST(NetworkInterfaceASIO, SerialPerf) {
 
 }  // namespace
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

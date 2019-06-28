@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <utility>
 #include <vector>
 
-#include "mongo/db/baton.h"
+#include "monger/db/baton.h"
 
-#include "mongo/base/status.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/status.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -151,4 +151,4 @@ auto Baton::makeSubBaton() -> SubBatonHolder {
     return SubBatonHolder(std::make_shared<SubBaton>(shared_from_this()));
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,29 +33,29 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/repl/initial_syncer.h"
-#include "mongo/db/repl/member_state.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_external_state.h"
-#include "mongo/db/repl/sync_source_resolver.h"
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/db/repl/update_position_args.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/random.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/repl/initial_syncer.h"
+#include "monger/db/repl/member_state.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_external_state.h"
+#include "monger/db/repl/sync_source_resolver.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/db/repl/update_position_args.h"
+#include "monger/executor/task_executor.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/random.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 class Timer;
 template <typename T>
@@ -1523,4 +1523,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

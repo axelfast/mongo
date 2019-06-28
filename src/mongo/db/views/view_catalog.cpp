@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/views/view_catalog.h"
+#include "monger/db/views/view_catalog.h"
 
 #include <memory>
 #include <string>
 
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/commands/feature_compatibility_version_command_parser.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/lite_parsed_pipeline.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/stub_mongo_process_interface.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/db/views/resolved_view.h"
-#include "mongo/db/views/view.h"
-#include "mongo/db/views/view_graph.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/commands/feature_compatibility_version_command_parser.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/lite_parsed_pipeline.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/stub_monger_process_interface.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/db/views/resolved_view.h"
+#include "monger/db/views/view.h"
+#include "monger/db/views/view_graph.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 auto getViewCatalog = Database::declareDecoration<std::unique_ptr<ViewCatalog>>();
@@ -319,7 +319,7 @@ StatusWith<stdx::unordered_set<NamespaceString>> ViewCatalog::_validatePipeline(
             return {ErrorCodes::OptionNotSupportedOnView,
                     "$changeStream cannot be used in a view definition"};
         } else if (firstPersistentStage != sources.end()) {
-            mongo::StringBuilder errorMessage;
+            monger::StringBuilder errorMessage;
             errorMessage << "The aggregation stage " << firstPersistentStage->get()->getSourceName()
                          << " in location " << std::distance(sources.begin(), firstPersistentStage)
                          << " of the pipeline cannot be used in the view definition of "
@@ -580,4 +580,4 @@ StatusWith<ResolvedView> ViewCatalog::resolveView(OperationContext* opCtx,
     };
     MONGO_UNREACHABLE;
 }
-}  // namespace mongo
+}  // namespace monger

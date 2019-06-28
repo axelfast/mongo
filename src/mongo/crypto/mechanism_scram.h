@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,14 +34,14 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/secure_allocator.h"
-#include "mongo/base/status.h"
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/random.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/base/status.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/random.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace scram {
 
 constexpr auto kServerKeyConst = "Server Key"_sd;
@@ -326,4 +326,4 @@ private:
 };
 
 }  // namespace scram
-}  // namespace mongo
+}  // namespace monger

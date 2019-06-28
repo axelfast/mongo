@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,9 +34,9 @@
 #include <tuple>
 #include <vector>
 
-#include "mongo/base/string_data.h"
+#include "monger/base/string_data.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 
@@ -168,18 +168,18 @@ protected:
 /**
  * Returns a pretty string describing the current shell version.
  */
-std::string mongoShellVersion(const VersionInfoInterface& provider);
+std::string mongerShellVersion(const VersionInfoInterface& provider);
 
 /**
- * Returns a pretty string describing the current mongos version.
+ * Returns a pretty string describing the current mongers version.
  */
-std::string mongosVersion(const VersionInfoInterface& provider);
+std::string mongersVersion(const VersionInfoInterface& provider);
 
 /**
- * Returns a pretty string describing the current mongod version.
+ * Returns a pretty string describing the current mongerd version.
  */
-std::string mongodVersion(const VersionInfoInterface& provider);
+std::string mongerdVersion(const VersionInfoInterface& provider);
 
-}  // namespace mongo
+}  // namespace monger
 
 #endif  // UTIL_VERSION_HEADER

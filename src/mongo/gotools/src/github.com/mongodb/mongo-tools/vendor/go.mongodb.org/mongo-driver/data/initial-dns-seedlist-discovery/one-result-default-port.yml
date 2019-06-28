@@ -1,4 +1,4 @@
-uri: "mongodb+srv://test3.test.build.10gen.cc/?replicaSet=repl0"
+uri: "mongerdb+srv://test3.test.build.10gen.cc/?replicaSet=repl0"
 seeds:
     - localhost.test.build.10gen.cc:27017
 hosts:

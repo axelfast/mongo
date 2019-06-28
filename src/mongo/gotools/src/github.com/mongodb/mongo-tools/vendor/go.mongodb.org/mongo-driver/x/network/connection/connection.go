@@ -11,7 +11,7 @@
 // writing to and reading from a connection to wireops.Op's. This package also provides types for
 // listening for and accepting Connections, as well as some types for handling connections and
 // proxying connections to another server.
-package connection // import "go.mongodb.org/mongo-driver/x/network/connection"
+package connection // import "go.mongerdb.org/monger-driver/x/network/connection"
 
 import (
 	"context"
@@ -24,15 +24,15 @@ import (
 	"sync/atomic"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsontype"
-	"go.mongodb.org/mongo-driver/event"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"go.mongodb.org/mongo-driver/x/network/address"
-	"go.mongodb.org/mongo-driver/x/network/compressor"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/event"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/x/network/address"
+	"go.mongerdb.org/monger-driver/x/network/compressor"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 var globalClientConnectionID uint64

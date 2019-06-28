@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 void QueryPlannerCommon::reverseScans(QuerySolutionNode* node) {
     StageType type = node->getType();
@@ -75,4 +75,4 @@ void QueryPlannerCommon::reverseScans(QuerySolutionNode* node) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

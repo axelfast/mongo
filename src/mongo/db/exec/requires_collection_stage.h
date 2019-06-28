@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/util/uuid.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A base class for plan stages which access a collection. In addition to providing derived classes
@@ -115,4 +115,4 @@ using RequiresCollectionStage = RequiresCollectionStageBase<const Collection*>;
 // Type alias for use by PlanStages that write to a Collection.
 using RequiresMutableCollectionStage = RequiresCollectionStageBase<Collection*>;
 
-}  // namespace mongo
+}  // namespace monger

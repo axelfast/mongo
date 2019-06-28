@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/logger/log_test.h"
+#include "monger/logger/log_test.h"
 
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include "mongo/logger/appender.h"
-#include "mongo/logger/encoder.h"
-#include "mongo/logger/log_component.h"
-#include "mongo/logger/message_event_utf8_encoder.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/logger/appender.h"
+#include "monger/logger/encoder.h"
+#include "monger/logger/log_component.h"
+#include "monger/logger/message_event_utf8_encoder.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-using namespace mongo::logger;
+using namespace monger::logger;
 
-namespace mongo {
+namespace monger {
 namespace {
 
 typedef LogTest<MessageEventDetailsEncoder> LogTestDetailsEncoder;
@@ -127,4 +127,4 @@ TEST_F(LogTestDetailsEncoder, LogFunctionsOverrideGlobalComponent) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

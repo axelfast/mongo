@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/regexp.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/scripting/mozjs/wrapconstrainedmethod.h"
+#include "monger/scripting/mozjs/regexp.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/scripting/mozjs/wrapconstrainedmethod.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const JSFunctionSpec RegExpInfo::methods[2] = {
@@ -53,4 +53,4 @@ void RegExpInfo::Functions::toJSON::call(JSContext* cx, JS::CallArgs args) {
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

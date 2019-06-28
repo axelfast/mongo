@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/index/duplicate_key_tracker.h"
+#include "monger/db/index/duplicate_key_tracker.h"
 
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/curop.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/keypattern.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 static constexpr StringData kKeyField = "key"_sd;
@@ -154,4 +154,4 @@ bool DuplicateKeyTracker::areAllConstraintsChecked(OperationContext* opCtx) cons
     return false;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/error_codes.h"
+#include "monger/base/error_codes.h"
 
-#include "mongo/base/static_assert.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/static_assert.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
 //#set $codes_with_extra = [ec for ec in $codes if ec.extra]
 
-namespace mongo {
+namespace monger {
 
 namespace {
 // You can thing of this namespace as a compile-time map<ErrorCodes::Error, ErrorExtraInfoParser*>.
@@ -153,4 +153,4 @@ void error_details::throwExceptionForStatus(const Status& status) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

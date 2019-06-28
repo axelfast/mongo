@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,34 +27,34 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/find_and_modify_common.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/storage/duplicate_key_error_info.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/balancer_configuration.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/commands/cluster_explain.h"
-#include "mongo/s/commands/document_shard_key_update_util.h"
-#include "mongo/s/commands/strategy.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/multi_statement_transaction_requests_sender.h"
-#include "mongo/s/session_catalog_router.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/s/would_change_owning_shard_exception.h"
-#include "mongo/s/write_ops/cluster_write.h"
-#include "mongo/util/timer.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/find_and_modify_common.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/storage/duplicate_key_error_info.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/balancer_configuration.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/commands/cluster_explain.h"
+#include "monger/s/commands/document_shard_key_update_util.h"
+#include "monger/s/commands/strategy.h"
+#include "monger/s/grid.h"
+#include "monger/s/multi_statement_transaction_requests_sender.h"
+#include "monger/s/session_catalog_router.h"
+#include "monger/s/stale_exception.h"
+#include "monger/s/transaction_router.h"
+#include "monger/s/would_change_owning_shard_exception.h"
+#include "monger/s/write_ops/cluster_write.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const ReadPreferenceSetting kPrimaryOnlyReadPreference(ReadPreference::PrimaryOnly);
@@ -62,7 +62,7 @@ const char kRuntimeConstantsField[] = "runtimeConstants";
 
 BSONObj appendRuntimeConstantsToCommandObject(OperationContext* opCtx, const BSONObj& origCmdObj) {
     uassert(51196,
-            "Cannot specify runtime constants option to a mongos",
+            "Cannot specify runtime constants option to a mongers",
             !origCmdObj.getField(kRuntimeConstantsField));
     auto rtcBSON =
         BSON(kRuntimeConstantsField << Variables::generateRuntimeConstants(opCtx).toBSON());
@@ -230,7 +230,7 @@ public:
         // that the parsing be pulled into this function.
         createShardDatabase(opCtx, nss.db());
 
-        // Append mongoS' runtime constants to the command object before forwarding it to the shard.
+        // Append mongerS' runtime constants to the command object before forwarding it to the shard.
         auto cmdObjForShard = appendRuntimeConstantsToCommandObject(opCtx, cmdObj);
 
         const auto routingInfo = uassertStatusOK(getCollectionRoutingInfoForTxnCmd(opCtx, nss));
@@ -353,4 +353,4 @@ private:
 } findAndModifyCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

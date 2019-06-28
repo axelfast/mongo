@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,30 +26,30 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <vector>
 
-#include "mongo/db/commands.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/base_cloner_test_fixture.h"
-#include "mongo/db/repl/collection_cloner.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/dbtests/mock/mock_dbclient_connection.h"
-#include "mongo/unittest/task_executor_proxy.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/db/commands.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/base_cloner_test_fixture.h"
+#include "monger/db/repl/collection_cloner.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/dbtests/mock/mock_dbclient_connection.h"
+#include "monger/unittest/task_executor_proxy.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 using namespace unittest;
 
-class MockCallbackState final : public mongo::executor::TaskExecutor::CallbackState {
+class MockCallbackState final : public monger::executor::TaskExecutor::CallbackState {
 public:
     MockCallbackState() = default;
     void cancel() override {}
@@ -78,10 +78,10 @@ public:
     }
 
     using MockDBClientConnection::query;  // This avoids warnings from -Woverloaded-virtual
-    unsigned long long query(std::function<void(mongo::DBClientCursorBatchIterator&)> f,
+    unsigned long long query(std::function<void(monger::DBClientCursorBatchIterator&)> f,
                              const NamespaceStringOrUUID& nsOrUuid,
-                             mongo::Query query,
-                             const mongo::BSONObj* fieldsToReturn,
+                             monger::Query query,
+                             const monger::BSONObj* fieldsToReturn,
                              int queryOptions,
                              int batchSize) override {
         ON_BLOCK_EXIT([this]() {
@@ -169,7 +169,7 @@ private:
         while (_waiting) {
             lk->unlock();
             _net->signalWorkAvailable();
-            mongo::sleepmillis(10);
+            monger::sleepmillis(10);
             lk->lock();
         }
     }
@@ -745,7 +745,7 @@ TEST_F(CollectionClonerTest, BeginCollectionCallbackCanceled) {
     collectionCloner->setScheduleDbWorkFn_forTest(
         [&](const executor::TaskExecutor::CallbackFn& workFn) {
             executor::TaskExecutor::CallbackHandle handle(std::make_shared<MockCallbackState>());
-            mongo::executor::TaskExecutor::CallbackArgs args{
+            monger::executor::TaskExecutor::CallbackArgs args{
                 &executor,
                 handle,
                 {ErrorCodes::CallbackCanceled, "Never run, but treat like cancelled."}};
@@ -975,7 +975,7 @@ TEST_F(CollectionClonerTest, InsertDocumentsCallbackCanceled) {
     collectionCloner->setScheduleDbWorkFn_forTest(
         [&](const executor::TaskExecutor::CallbackFn& workFn) {
             executor::TaskExecutor::CallbackHandle handle(std::make_shared<MockCallbackState>());
-            mongo::executor::TaskExecutor::CallbackArgs args{
+            monger::executor::TaskExecutor::CallbackArgs args{
                 &executor,
                 handle,
                 {ErrorCodes::CallbackCanceled, "Never run, but treat like cancelled."}};

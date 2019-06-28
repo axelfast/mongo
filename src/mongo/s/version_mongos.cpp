@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/s/version_mongos.h"
+#include "monger/s/version_mongers.h"
 
 #include <iostream>
 
-#include "mongo/db/log_process_details.h"
-#include "mongo/db/server_options.h"
-#include "mongo/platform/process_id.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/version.h"
+#include "monger/db/log_process_details.h"
+#include "monger/db/server_options.h"
+#include "monger/platform/process_id.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/log.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 
 void printShardingVersionInfo(bool out) {
     auto&& vii = VersionInfoInterface::instance();
     if (out) {
         setPlainConsoleLogger();
-        log() << mongosVersion(vii);
+        log() << mongersVersion(vii);
         vii.logBuildInfo();
     } else {
-        log() << mongosVersion(vii);
+        log() << mongersVersion(vii);
         vii.logBuildInfo();
         logProcessDetails();
     }
 }
-}  // namespace mongo
+}  // namespace monger

@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package bsonx // import "go.mongodb.org/mongo-driver/x/bsonx"
+package bsonx // import "go.mongerdb.org/monger-driver/x/bsonx"
 
 import (
 	"bytes"
@@ -12,8 +12,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"go.mongodb.org/mongo-driver/bson/bsontype"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
 )
 
 // ErrNilArray indicates that an operation was attempted on a nil *Array.

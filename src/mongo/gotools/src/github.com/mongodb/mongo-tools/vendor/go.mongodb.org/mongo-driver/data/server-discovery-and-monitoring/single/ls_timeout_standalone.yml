@@ -1,6 +1,6 @@
 description: "Parse logicalSessionTimeoutMinutes from standalone"
 
-uri: "mongodb://a"
+uri: "mongerdb://a"
 
 phases: [
 

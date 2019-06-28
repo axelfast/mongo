@@ -1,5 +1,5 @@
 /**
- * Tests that mongod does not gossip cluster time metadata and operation time until at least one key
+ * Tests that mongerd does not gossip cluster time metadata and operation time until at least one key
  * is created on the
  * config server.
  *

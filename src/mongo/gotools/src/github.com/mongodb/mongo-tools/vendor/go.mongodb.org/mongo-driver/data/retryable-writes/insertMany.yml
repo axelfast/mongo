@@ -53,8 +53,8 @@ tests:
         clientOptions:
             retryWrites: true
         failPoint:
-            # Normally, a mongod will insert the documents as a batch with a
-            # single commit. If this fails, mongod may try to insert each
+            # Normally, a mongerd will insert the documents as a batch with a
+            # single commit. If this fails, mongerd may try to insert each
             # document one at a time depending on the failure. Therefore our
             # single insert command may trigger the failpoint twice on each
             # driver attempt. This test permanently enables the fail point to

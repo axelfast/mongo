@@ -7,7 +7,7 @@ import threading
 import time
 
 import bson
-import pymongo.errors
+import pymonger.errors
 
 from buildscripts.resmokelib import errors
 from buildscripts.resmokelib import utils
@@ -25,7 +25,7 @@ class ContinuousStepdown(interface.Hook):  # pylint: disable=too-many-instance-a
     def __init__(  # pylint: disable=too-many-arguments
             self, hook_logger, fixture, config_stepdown=True, shard_stepdown=True,
             stepdown_interval_ms=8000, terminate=False, kill=False,
-            use_stepdown_permitted_file=False, wait_for_mongos_retarget=False,
+            use_stepdown_permitted_file=False, wait_for_mongers_retarget=False,
             stepdown_via_heartbeats=True):
         """Initialize the ContinuousStepdown.
 
@@ -38,7 +38,7 @@ class ContinuousStepdown(interface.Hook):  # pylint: disable=too-many-instance-a
             terminate: shut down the node cleanly as a means of stepping it down.
             kill: With a 50% probability, kill the node instead of shutting it down cleanly.
             use_stepdown_permitted_file: use a file to control if stepdown thread should do a stepdown.
-            wait_for_mongos_retarget: whether to run validate on all mongoses for each collection
+            wait_for_mongers_retarget: whether to run validate on all mongerses for each collection
                 in each database, after pausing the stepdown thread.
             stepdown_via_heartbeats: step up secondaries instead of stepping down primary.
 
@@ -52,11 +52,11 @@ class ContinuousStepdown(interface.Hook):  # pylint: disable=too-many-instance-a
         self._config_stepdown = config_stepdown
         self._shard_stepdown = shard_stepdown
         self._stepdown_interval_secs = float(stepdown_interval_ms) / 1000
-        self._wait_for_mongos_retarget = wait_for_mongos_retarget
+        self._wait_for_mongers_retarget = wait_for_mongers_retarget
         self._stepdown_via_heartbeats = stepdown_via_heartbeats
 
         self._rs_fixtures = []
-        self._mongos_fixtures = []
+        self._mongers_fixtures = []
         self._stepdown_thread = None
 
         # kill implies terminate.
@@ -80,8 +80,8 @@ class ContinuousStepdown(interface.Hook):  # pylint: disable=too-many-instance-a
             self._add_fixture(self._fixture)
 
         self._stepdown_thread = _StepdownThread(
-            self.logger, self._mongos_fixtures, self._rs_fixtures, self._stepdown_interval_secs,
-            self._terminate, self._kill, self.__lifecycle, self._wait_for_mongos_retarget,
+            self.logger, self._mongers_fixtures, self._rs_fixtures, self._stepdown_interval_secs,
+            self._terminate, self._kill, self.__lifecycle, self._wait_for_mongers_retarget,
             self._stepdown_via_heartbeats)
         self.logger.info("Starting the stepdown thread.")
         self._stepdown_thread.start()
@@ -125,9 +125,9 @@ class ContinuousStepdown(interface.Hook):  # pylint: disable=too-many-instance-a
                     self._add_fixture(shard_fixture)
             if self._config_stepdown:
                 self._add_fixture(fixture.configsvr)
-            if self._wait_for_mongos_retarget:
-                for mongos_fixture in fixture.mongos:
-                    self._mongos_fixtures.append(mongos_fixture)
+            if self._wait_for_mongers_retarget:
+                for mongers_fixture in fixture.mongers:
+                    self._mongers_fixtures.append(mongers_fixture)
 
 
 class FlagBasedStepdownLifecycle(object):
@@ -227,7 +227,7 @@ class FileBasedStepdownLifecycle(object):
 
     See jstests/concurrency/fsm_libs/resmoke_runner.js for the other half of the file-base protocol.
 
-        Python inside of resmoke.py                     JavaScript inside of the mongo shell
+        Python inside of resmoke.py                     JavaScript inside of the monger shell
         ---------------------------                     ------------------------------------
 
                                                         FSM workload starts.
@@ -342,13 +342,13 @@ class FileBasedStepdownLifecycle(object):
 
 class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-attributes
     def __init__(  # pylint: disable=too-many-arguments
-            self, logger, mongos_fixtures, rs_fixtures, stepdown_interval_secs, terminate, kill,
-            stepdown_lifecycle, wait_for_mongos_retarget, stepdown_via_heartbeats):
+            self, logger, mongers_fixtures, rs_fixtures, stepdown_interval_secs, terminate, kill,
+            stepdown_lifecycle, wait_for_mongers_retarget, stepdown_via_heartbeats):
         """Initialize _StepdownThread."""
         threading.Thread.__init__(self, name="StepdownThread")
         self.daemon = True
         self.logger = logger
-        self._mongos_fixtures = mongos_fixtures
+        self._mongers_fixtures = mongers_fixtures
         self._rs_fixtures = rs_fixtures
         self._stepdown_interval_secs = stepdown_interval_secs
         # We set the self._stepdown_duration_secs to a very long time, to ensure that the former
@@ -358,7 +358,7 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
         self._terminate = terminate
         self._kill = kill
         self.__lifecycle = stepdown_lifecycle
-        self._should_wait_for_mongos_retarget = wait_for_mongos_retarget
+        self._should_wait_for_mongers_retarget = wait_for_mongers_retarget
         self._stepdown_via_heartbeats = stepdown_via_heartbeats
 
         self._last_exec = time.time()
@@ -428,7 +428,7 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
         # Wait until we all the replica sets have primaries.
         self._await_primaries()
         # Wait for Mongos to retarget the primary for each shard and the config server.
-        self._do_wait_for_mongos_retarget()
+        self._do_wait_for_mongers_retarget()
 
     def resume(self):
         """Resume the thread."""
@@ -474,24 +474,24 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
             self.logger.info("%s the primary on port %d of replica set '%s'.", action, primary.port,
                              rs_fixture.replset_name)
 
-            # We send the mongod process the signal to exit but don't immediately wait for it to
+            # We send the mongerd process the signal to exit but don't immediately wait for it to
             # exit because clean shutdown may take a while and we want to restore write availability
             # as quickly as possible.
-            primary.mongod.stop(kill=should_kill)
+            primary.mongerd.stop(kill=should_kill)
         elif not self._stepdown_via_heartbeats:
             self.logger.info("Stepping down the primary on port %d of replica set '%s'.",
                              primary.port, rs_fixture.replset_name)
             try:
-                client = primary.mongo_client()
+                client = primary.monger_client()
                 client.admin.command(
                     bson.SON([
                         ("replSetStepDown", self._stepdown_duration_secs),
                         ("force", True),
                     ]))
-            except pymongo.errors.AutoReconnect:
+            except pymonger.errors.AutoReconnect:
                 # AutoReconnect exceptions are expected as connections are closed during stepdown.
                 pass
-            except pymongo.errors.PyMongoError:
+            except pymonger.errors.PyMongoError:
                 self.logger.exception(
                     "Error while stepping down the primary on port %d of replica set '%s'.",
                     primary.port, rs_fixture.replset_name)
@@ -514,10 +514,10 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
                              chosen.port, rs_fixture.replset_name)
 
             try:
-                client = chosen.mongo_client()
+                client = chosen.monger_client()
                 client.admin.command("replSetStepUp")
                 break
-            except pymongo.errors.OperationFailure:
+            except pymonger.errors.OperationFailure:
                 # OperationFailure exceptions are expected when the election attempt fails due to
                 # not receiving enough votes. This can happen when the 'chosen' secondary's opTime
                 # is behind that of other secondaries. We handle this by attempting to elect a
@@ -530,13 +530,13 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
             self.logger.info("Waiting for the old primary on port %d of replica set '%s' to exit.",
                              primary.port, rs_fixture.replset_name)
 
-            primary.mongod.wait()
+            primary.mongerd.wait()
 
             self.logger.info("Attempting to restart the old primary on port %d of replica set '%s.",
                              primary.port, rs_fixture.replset_name)
 
-            # Restart the mongod on the old primary and wait until we can contact it again. Keep the
-            # original preserve_dbpath to restore after restarting the mongod.
+            # Restart the mongerd on the old primary and wait until we can contact it again. Keep the
+            # original preserve_dbpath to restore after restarting the mongerd.
             original_preserve_dbpath = primary.preserve_dbpath
             primary.preserve_dbpath = True
             try:
@@ -551,7 +551,7 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
             # introduced a stepdown period on the former primary and so we have to run the
             # {replSetFreeze: 0} command to ensure the former primary is electable in the next
             # round of _step_down().
-            client = primary.mongo_client()
+            client = primary.monger_client()
             client.admin.command({"replSetFreeze": 0})
         elif secondaries:
             # We successfully stepped up a secondary, wait for the former primary to step down via
@@ -563,11 +563,11 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
                 chosen.port, rs_fixture.replset_name)
             while True:
                 try:
-                    client = primary.mongo_client()
+                    client = primary.monger_client()
                     is_secondary = client.admin.command("isMaster")["secondary"]
                     if is_secondary:
                         break
-                except pymongo.errors.AutoReconnect:
+                except pymonger.errors.AutoReconnect:
                     pass
                 self.logger.info("Waiting for primary on port %d of replica set '%s' to step down.",
                                  primary.port, rs_fixture.replset_name)
@@ -585,10 +585,10 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
             retry_start_time = time.time()
             while True:
                 try:
-                    client = primary.mongo_client()
+                    client = primary.monger_client()
                     client.admin.command("replSetStepUp")
                     break
-                except pymongo.errors.OperationFailure:
+                except pymonger.errors.OperationFailure:
                     self._wait(0.2)
                 if time.time() - retry_start_time > retry_time_secs:
                     raise errors.ServerFailure(
@@ -602,49 +602,49 @@ class _StepdownThread(threading.Thread):  # pylint: disable=too-many-instance-at
                              chosen.get_internal_connection_string() if secondaries else "none")
         self._step_up_stats[key] += 1
 
-    def _do_wait_for_mongos_retarget(self):  # pylint: disable=too-many-branches
-        """Run collStats on each collection in each database on each mongos.
+    def _do_wait_for_mongers_retarget(self):  # pylint: disable=too-many-branches
+        """Run collStats on each collection in each database on each mongers.
 
-        This is to ensure mongos can target the primary for each shard with data, including the
+        This is to ensure mongers can target the primary for each shard with data, including the
         config servers.
         """
-        if not self._should_wait_for_mongos_retarget:
+        if not self._should_wait_for_mongers_retarget:
             return
 
-        for mongos_fixture in self._mongos_fixtures:
-            mongos_conn_str = mongos_fixture.get_internal_connection_string()
+        for mongers_fixture in self._mongers_fixtures:
+            mongers_conn_str = mongers_fixture.get_internal_connection_string()
             try:
-                client = mongos_fixture.mongo_client()
-            except pymongo.errors.AutoReconnect:
+                client = mongers_fixture.monger_client()
+            except pymonger.errors.AutoReconnect:
                 pass
             for db in client.database_names():
-                self.logger.info("Waiting for mongos %s to retarget db: %s", mongos_conn_str, db)
+                self.logger.info("Waiting for mongers %s to retarget db: %s", mongers_conn_str, db)
                 start_time = time.time()
                 while True:
                     try:
                         coll_names = client[db].collection_names()
                         break
-                    except pymongo.errors.NotMasterError:
+                    except pymonger.errors.NotMasterError:
                         pass
                     retarget_time = time.time() - start_time
                     if retarget_time >= 60:
                         raise RuntimeError(
-                            "Timeout waiting for mongos: {} to retarget to db: {}".format(
-                                mongos_conn_str, db))
+                            "Timeout waiting for mongers: {} to retarget to db: {}".format(
+                                mongers_conn_str, db))
                     time.sleep(0.2)
                 for coll in coll_names:
                     while True:
                         try:
                             client[db].command({"collStats": coll})
                             break
-                        except pymongo.errors.NotMasterError:
+                        except pymonger.errors.NotMasterError:
                             pass
                         retarget_time = time.time() - start_time
                         if retarget_time >= 60:
                             raise RuntimeError(
-                                "Timeout waiting for mongos: {} to retarget to db: {}".format(
-                                    mongos_conn_str, db))
+                                "Timeout waiting for mongers: {} to retarget to db: {}".format(
+                                    mongers_conn_str, db))
                         time.sleep(0.2)
                 retarget_time = time.time() - start_time
-                self.logger.info("Finished waiting for mongos: %s to retarget db: %s, in %d ms",
-                                 mongos_conn_str, db, retarget_time * 1000)
+                self.logger.info("Finished waiting for mongers: %s to retarget db: %s, in %d ms",
+                                 mongers_conn_str, db, retarget_time * 1000)

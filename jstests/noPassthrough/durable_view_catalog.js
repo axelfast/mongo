@@ -12,13 +12,13 @@
     let dbpath = MongoRunner.dataPath + '_durable_view_catalog';
     resetDbpath(dbpath);
 
-    let mongodArgs = {dbpath: dbpath, noCleanData: true, journal: ''};
+    let mongerdArgs = {dbpath: dbpath, noCleanData: true, journal: ''};
 
-    // Start a mongod.
-    let conn = MongoRunner.runMongod(mongodArgs);
-    assert.neq(null, conn, 'mongod was unable to start up');
+    // Start a mongerd.
+    let conn = MongoRunner.runMongod(mongerdArgs);
+    assert.neq(null, conn, 'mongerd was unable to start up');
 
-    // Now connect to the mongod, create, remove and modify views and then abruptly stop the server.
+    // Now connect to the mongerd, create, remove and modify views and then abruptly stop the server.
     let viewsDB = conn.getDB('test');
     let pipe = [{$match: {}}];
     assert.commandWorked(
@@ -31,12 +31,12 @@
     // On the final modification, require a sync to ensure durability.
     assert.commandWorked(viewsDB.runCommand({drop: "view1", writeConcern: {j: 1}}));
 
-    // Hard kill the mongod to ensure the data was indeed synced to durable storage.
+    // Hard kill the mongerd to ensure the data was indeed synced to durable storage.
     MongoRunner.stopMongod(conn, 9, {allowedExitCode: MongoRunner.EXIT_SIGKILL});
 
-    // Restart the mongod.
-    conn = MongoRunner.runMongod(mongodArgs);
-    assert.neq(null, conn, 'mongod was unable to restart after receiving a SIGKILL');
+    // Restart the mongerd.
+    conn = MongoRunner.runMongod(mongerdArgs);
+    assert.neq(null, conn, 'mongerd was unable to restart after receiving a SIGKILL');
 
     // Check that our journaled write still is present.
     viewsDB = conn.getDB('test');
@@ -63,13 +63,13 @@
     // Skip collection validation during stopMongod if invalid views exists.
     TestData.skipValidationOnInvalidViewDefinitions = true;
 
-    // Restarting the mongod should succeed despite the presence of invalid view definitions.
+    // Restarting the mongerd should succeed despite the presence of invalid view definitions.
     MongoRunner.stopMongod(conn);
-    conn = MongoRunner.runMongod(mongodArgs);
+    conn = MongoRunner.runMongod(mongerdArgs);
     assert.neq(
         null,
         conn,
-        "after inserting bad views, failed to restart mongod with options: " + tojson(mongodArgs));
+        "after inserting bad views, failed to restart mongerd with options: " + tojson(mongerdArgs));
 
     // Now that the database's view catalog has been marked as invalid, all view operations in that
     // database should fail.

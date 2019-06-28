@@ -1,12 +1,12 @@
-// Verifies that mongos correctly handles empty documents when all fields are projected out
+// Verifies that mongers correctly handles empty documents when all fields are projected out
 (function() {
     'use strict';
 
     var st = new ShardingTest({shards: 2});
 
-    var mongos = st.s0;
-    var coll = mongos.getCollection("foo.bar");
-    var admin = mongos.getDB("admin");
+    var mongers = st.s0;
+    var coll = mongers.getCollection("foo.bar");
+    var admin = mongers.getDB("admin");
 
     assert.commandWorked(admin.runCommand({enableSharding: coll.getDB().getName()}));
     printjson(admin.runCommand({movePrimary: coll.getDB().getName(), to: st.shard0.shardName}));

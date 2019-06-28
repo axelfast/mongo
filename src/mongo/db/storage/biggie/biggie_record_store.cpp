@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/biggie/biggie_record_store.h"
+#include "monger/db/storage/biggie/biggie_record_store.h"
 
 #include <cstring>
 #include <memory>
 #include <utility>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/biggie/biggie_recovery_unit.h"
-#include "mongo/db/storage/biggie/biggie_visibility_manager.h"
-#include "mongo/db/storage/biggie/store.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/db/storage/oplog_hack.h"
-#include "mongo/db/storage/write_unit_of_work.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/biggie/biggie_recovery_unit.h"
+#include "monger/db/storage/biggie/biggie_visibility_manager.h"
+#include "monger/db/storage/biggie/store.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/db/storage/oplog_hack.h"
+#include "monger/db/storage/write_unit_of_work.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace biggie {
 namespace {
 Ordering allAscending = Ordering::make(BSONObj());
@@ -80,7 +80,7 @@ RecordStore::RecordStore(StringData ns,
                          int64_t cappedMaxDocs,
                          CappedCallback* cappedCallback,
                          VisibilityManager* visibilityManager)
-    : mongo::RecordStore(ns),
+    : monger::RecordStore(ns),
       _isCapped(isCapped),
       _cappedMaxSize(cappedMaxSize),
       _cappedMaxDocs(cappedMaxDocs),
@@ -616,4 +616,4 @@ RecordStore::SizeAdjuster::~SizeAdjuster() {
 }
 
 }  // namespace biggie
-}  // namespace mongo
+}  // namespace monger

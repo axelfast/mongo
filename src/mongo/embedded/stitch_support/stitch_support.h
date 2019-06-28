@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -347,7 +347,7 @@ typedef struct stitch_support_v1_projection stitch_support_v1_projection;
  * 'status' with information about the error.
  *
  * If the projection specification includes a positional ($) operator, then the caller must pass a
- * mongo_embedded_v1_matcher. The 'matcher' argument is unnecessary if the specification has no
+ * monger_embedded_v1_matcher. The 'matcher' argument is unnecessary if the specification has no
  * positional operator and it can be NULL.
  *
  * The 'collator' argument, a pointer to a stitch_support_v1_collator, will cause the projection to

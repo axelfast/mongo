@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,30 +35,30 @@
 #include <iosfwd>
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/callback_completion_guard.h"
-#include "mongo/db/repl/collection_cloner.h"
-#include "mongo/db/repl/data_replicator_external_state.h"
-#include "mongo/db/repl/database_cloner.h"
-#include "mongo/db/repl/multiapplier.h"
-#include "mongo/db/repl/oplog_applier.h"
-#include "mongo/db/repl/oplog_buffer.h"
-#include "mongo/db/repl/oplog_fetcher.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/rollback_checker.h"
-#include "mongo/db/repl/sync_source_selector.h"
-#include "mongo/dbtests/mock/mock_dbclient_connection.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/callback_completion_guard.h"
+#include "monger/db/repl/collection_cloner.h"
+#include "monger/db/repl/data_replicator_external_state.h"
+#include "monger/db/repl/database_cloner.h"
+#include "monger/db/repl/multiapplier.h"
+#include "monger/db/repl/oplog_applier.h"
+#include "monger/db/repl/oplog_buffer.h"
+#include "monger/db/repl/oplog_fetcher.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/rollback_checker.h"
+#include "monger/db/repl/sync_source_selector.h"
+#include "monger/dbtests/mock/mock_dbclient_connection.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 // TODO: Remove forward declares once we remove rs_initialsync.cpp and other dependents.
@@ -669,4 +669,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

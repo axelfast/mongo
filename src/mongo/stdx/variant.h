@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,7 +31,7 @@
 
 #include "third_party/variant-1.3.0/include/mpark/variant.hpp"
 
-namespace mongo::stdx {
+namespace monger::stdx {
 
 using ::mpark::variant;
 using ::mpark::visit;
@@ -56,4 +56,4 @@ using ::mpark::operator>=;
 using ::mpark::monostate;
 using ::mpark::bad_variant_access;
 
-}  // namespace mongo::stdx
+}  // namespace monger::stdx

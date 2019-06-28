@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
 
 #include <limits>
 
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/snapshot_window_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/snapshot_window_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -708,4 +708,4 @@ void WiredTigerUtil::appendSnapshotWindowSettings(WiredTigerKVEngine* engine,
                     oldestTimestamp.toStringPretty());
 }
 
-}  // namespace mongo
+}  // namespace monger

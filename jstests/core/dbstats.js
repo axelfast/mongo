@@ -36,7 +36,7 @@
     assert.eq(dataSize, dbStats.avgObjSize, tojson(dbStats));
     assert.eq(dataSize, dbStats.dataSize, tojson(dbStats));
 
-    // Index count will vary on mongoS if an additional index is needed to support sharding.
+    // Index count will vary on mongerS if an additional index is needed to support sharding.
     if (isMongoS) {
         assert(dbStats.hasOwnProperty("indexes"), tojson(dbStats));
     } else {
@@ -52,7 +52,7 @@
         assert(dbStats.hasOwnProperty("fsTotalSize"), tojson(dbStats));
     }
 
-    // Confirm collection and view counts on mongoD
+    // Confirm collection and view counts on mongerD
     if (!isMongoS) {
         assert.eq(testDB.getName(), dbStats.db, tojson(dbStats));
 

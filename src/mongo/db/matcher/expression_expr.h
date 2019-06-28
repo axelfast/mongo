@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <vector>
 
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_tree.h"
-#include "mongo/db/matcher/rewrite_expr.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/expression_context.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_tree.h"
+#include "monger/db/matcher/rewrite_expr.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression_context.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * MatchExpression for the top-level $expr keyword. Take an expression as an argument, evaluates and
@@ -109,4 +109,4 @@ private:
     boost::optional<RewriteExpr::RewriteResult> _rewriteResult;
 };
 
-}  // namespace mongo
+}  // namespace monger

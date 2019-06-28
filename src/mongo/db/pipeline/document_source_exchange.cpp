@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <iterator>
 #include <set>
 
-#include "mongo/db/curop.h"
-#include "mongo/db/hasher.h"
-#include "mongo/db/pipeline/document_source_exchange.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/util/log.h"
+#include "monger/db/curop.h"
+#include "monger/db/hasher.h"
+#include "monger/db/pipeline/document_source_exchange.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(exchangeFailLoadNextBatch);
 
@@ -484,4 +484,4 @@ bool Exchange::ExchangeBuffer::appendDocument(DocumentSource::GetNextResult inpu
     return _bytesInBuffer >= limit;
 }
 
-}  // namespace mongo
+}  // namespace monger

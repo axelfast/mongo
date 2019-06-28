@@ -1,5 +1,5 @@
 #!/bin/sh
-# preinst script for mongodb
+# preinst script for mongerdb
 #
 # see: dh_installdeb(1)
 

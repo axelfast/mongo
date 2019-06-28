@@ -52,7 +52,7 @@ def parse_source_files(callback):
         re.compile(r"ErrorCodes::Error\s*[({]\s*(\d+)", re.MULTILINE)
     ]
 
-    for source_file in utils.get_all_source_files(prefix='src/mongo/'):
+    for source_file in utils.get_all_source_files(prefix='src/monger/'):
         if list_files:
             print('scanning file: ' + source_file)
 

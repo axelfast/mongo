@@ -1,5 +1,5 @@
-description: "Multiple mongoses with default maxWireVersion of 0"
-uri: "mongodb://a,b"
+description: "Multiple mongerses with default maxWireVersion of 0"
+uri: "mongerdb://a,b"
 phases: [
     {
         responses: [

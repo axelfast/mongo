@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/cyrus_sasl_client_session.h"
+#include "monger/client/cyrus_sasl_client_session.h"
 
-#include "mongo/base/init.h"
-#include "mongo/client/native_sasl_client_session.h"
-#include "mongo/util/allocator.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/signal_handlers_synchronous.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/client/native_sasl_client_session.h"
+#include "monger/util/allocator.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/signal_handlers_synchronous.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 void saslSetError(sasl_conn_t* conn, const std::string& msg) {
@@ -68,7 +68,7 @@ typedef unsigned long SaslAllocSize;
 typedef int (*SaslCallbackFn)();
 
 void* saslOurMalloc(SaslAllocSize sz) {
-    return mongoMalloc(sz);
+    return mongerMalloc(sz);
 }
 
 void* saslOurCalloc(SaslAllocSize count, SaslAllocSize size) {
@@ -80,7 +80,7 @@ void* saslOurCalloc(SaslAllocSize count, SaslAllocSize size) {
 }
 
 void* saslOurRealloc(void* ptr, SaslAllocSize sz) {
-    return mongoRealloc(ptr, sz);
+    return mongerRealloc(ptr, sz);
 }
 
 /*
@@ -130,7 +130,7 @@ int saslClientLogSwallow(void* context, int priority, const char* message) throw
  * CyrusSaslAllocatorsAndMutexes as a prerequisite and CyrusSaslClientContext as a
  * dependent.  If it wishes to override both, it should implement a MONGO_INITIALIZER_GENERAL
  * with CyrusSaslAllocatorsAndMutexes and CyrusSaslClientContext as dependents, or
- * initialize the library before calling mongo::runGlobalInitializersOrDie().
+ * initialize the library before calling monger::runGlobalInitializersOrDie().
  */
 MONGO_INITIALIZER_WITH_PREREQUISITES(CyrusSaslClientContext,
                                      ("NativeSaslClientContext", "CyrusSaslAllocatorsAndMutexes"))

@@ -28,27 +28,27 @@
             }
         });
 
-        const mongosDB = st.s0.getDB(jsTestName());
-        assert.commandWorked(st.s0.adminCommand({enableSharding: mongosDB.getName()}));
-        st.ensurePrimaryShard(mongosDB.getName(), st.shard0.shardName);
+        const mongersDB = st.s0.getDB(jsTestName());
+        assert.commandWorked(st.s0.adminCommand({enableSharding: mongersDB.getName()}));
+        st.ensurePrimaryShard(mongersDB.getName(), st.shard0.shardName);
 
-        const mongosColl = mongosDB[collName];
+        const mongersColl = mongersDB[collName];
 
         //
         // Sanity tests
         //
 
         // Test that $sort and $group are banned from running in a $changeStream pipeline.
-        assertErrorCode(mongosDB.NegativeTest,
+        assertErrorCode(mongersDB.NegativeTest,
                         [{$changeStream: {}}, {$sort: {operationType: 1}}],
                         ErrorCodes.IllegalOperation);
-        assertErrorCode(mongosDB.NegativeTest,
+        assertErrorCode(mongersDB.NegativeTest,
                         [{$changeStream: {}}, {$group: {_id: '$documentKey'}}],
                         ErrorCodes.IllegalOperation);
 
         // Test that using change streams with $out results in an error.
         assertErrorCode(
-            mongosColl, [{$changeStream: {}}, {$out: "shouldntWork"}], ErrorCodes.IllegalOperation);
+            mongersColl, [{$changeStream: {}}, {$out: "shouldntWork"}], ErrorCodes.IllegalOperation);
 
         //
         // Main tests
@@ -71,38 +71,38 @@
         jsTestLog('Testing change streams with shard key ' + shardKey);
         // Shard the test collection and split it into 2 chunks:
         //  [MinKey, 0) - shard0, [0, MaxKey) - shard1
-        st.shardColl(mongosColl,
+        st.shardColl(mongersColl,
                      makeShardKey(1) /* shard key */,
                      makeShardKey(0) /* split at */,
                      makeShardKey(1) /* move to shard 1 */);
 
         // Write a document to each chunk.
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(-1)));
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(1)));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(-1)));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(1)));
 
-        let changeStream = mongosColl.aggregate([{$changeStream: {}}]);
+        let changeStream = mongersColl.aggregate([{$changeStream: {}}]);
 
         // Test that a change stream can see inserts on shard 0.
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(1000)));
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(-1000)));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(1000)));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(-1000)));
 
         assert.soon(() => changeStream.hasNext(), "expected to be able to see the first insert");
         assertChangeStreamEventEq(changeStream.next(), {
             documentKey: makeShardKeyDocument(1000),
             fullDocument: makeShardKeyDocument(1000),
-            ns: {db: mongosDB.getName(), coll: mongosColl.getName()},
+            ns: {db: mongersDB.getName(), coll: mongersColl.getName()},
             operationType: "insert",
         });
 
         // Because the periodic noop writer is disabled, do another write to shard 0 in order to
         // advance that shard's clock and enabling the stream to return the earlier write to shard 1
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(1001)));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(1001)));
 
         assert.soon(() => changeStream.hasNext(), "expected to be able to see the second insert");
         assertChangeStreamEventEq(changeStream.next(), {
             documentKey: makeShardKeyDocument(-1000),
             fullDocument: makeShardKeyDocument(-1000),
-            ns: {db: mongosDB.getName(), coll: mongosColl.getName()},
+            ns: {db: mongersDB.getName(), coll: mongersColl.getName()},
             operationType: "insert",
         });
 
@@ -116,22 +116,22 @@
         assertChangeStreamEventEq(changeStream.next(), {
             documentKey: makeShardKeyDocument(1001),
             fullDocument: makeShardKeyDocument(1001),
-            ns: {db: mongosDB.getName(), coll: mongosColl.getName()},
+            ns: {db: mongersDB.getName(), coll: mongersColl.getName()},
             operationType: "insert",
         });
         changeStream.close();
 
         jsTestLog('Testing multi-update change streams with shard key ' + shardKey);
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(10, {a: 0, b: 0})));
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(-10, {a: 0, b: 0})));
-        changeStream = mongosColl.aggregate([{$changeStream: {}}]);
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(10, {a: 0, b: 0})));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(-10, {a: 0, b: 0})));
+        changeStream = mongersColl.aggregate([{$changeStream: {}}]);
 
-        assert.writeOK(mongosColl.update({a: 0}, {$set: {b: 2}}, {multi: true}));
+        assert.writeOK(mongersColl.update({a: 0}, {$set: {b: 2}}, {multi: true}));
 
         assert.soon(() => changeStream.hasNext());
         assertChangeStreamEventEq(changeStream.next(), {
             operationType: "update",
-            ns: {db: mongosDB.getName(), coll: mongosColl.getName()},
+            ns: {db: mongersDB.getName(), coll: mongersColl.getName()},
             documentKey: makeShardKeyDocument(-10),
             updateDescription: {updatedFields: {b: 2}, removedFields: []},
         });
@@ -139,7 +139,7 @@
         assert.soon(() => changeStream.hasNext());
         assertChangeStreamEventEq(changeStream.next(), {
             operationType: "update",
-            ns: {db: mongosDB.getName(), coll: mongosColl.getName()},
+            ns: {db: mongersDB.getName(), coll: mongersColl.getName()},
             documentKey: makeShardKeyDocument(10),
             updateDescription: {updatedFields: {b: 2}, removedFields: []},
         });
@@ -149,29 +149,29 @@
         // 'internalQueryProhibitMergingOnMongos' parameter is set.
         assert.commandWorked(
             st.s0.adminCommand({setParameter: 1, internalQueryProhibitMergingOnMongoS: true}));
-        let tempCursor = assert.doesNotThrow(() => mongosColl.aggregate([{$changeStream: {}}]));
+        let tempCursor = assert.doesNotThrow(() => mongersColl.aggregate([{$changeStream: {}}]));
         tempCursor.close();
         assert.commandWorked(
             st.s0.adminCommand({setParameter: 1, internalQueryProhibitMergingOnMongoS: false}));
 
-        assert.writeOK(mongosColl.remove({}));
+        assert.writeOK(mongersColl.remove({}));
         // We awaited the replication of the first write, so the change stream shouldn't return it.
         // Use { w: "majority" } to deal with journaling correctly, even though we only have one
         // node.
         assert.writeOK(
-            mongosColl.insert(makeShardKeyDocument(0, {a: 1}), {writeConcern: {w: "majority"}}));
+            mongersColl.insert(makeShardKeyDocument(0, {a: 1}), {writeConcern: {w: "majority"}}));
 
-        changeStream = mongosColl.aggregate([{$changeStream: {}}]);
+        changeStream = mongersColl.aggregate([{$changeStream: {}}]);
         assert(!changeStream.hasNext());
 
         // Drop the collection and test that we return a "drop" followed by an "invalidate" entry
         // and close the cursor.
         jsTestLog('Testing getMore command closes cursor for invalidate entries with shard key' +
                   shardKey);
-        mongosColl.drop();
+        mongersColl.drop();
         // Wait for the drop to actually happen.
         assert.soon(() => !TwoPhaseDropCollectionTest.collectionIsPendingDropInDatabase(
-                        mongosColl.getDB(), mongosColl.getName()));
+                        mongersColl.getDB(), mongersColl.getName()));
         assert.soon(() => changeStream.hasNext());
         assert.eq(changeStream.next().operationType, "drop");
         assert.soon(() => changeStream.hasNext());
@@ -182,34 +182,34 @@
                   shardKey);
         // Shard the test collection and split it into 2 chunks:
         //  [MinKey, 0) - shard0, [0, MaxKey) - shard1
-        st.shardColl(mongosColl,
+        st.shardColl(mongersColl,
                      makeShardKey(1) /* shard key */,
                      makeShardKey(0) /* split at */,
                      makeShardKey(1) /* move to shard 1 */);
 
         // Write one document to each chunk.
         assert.writeOK(
-            mongosColl.insert(makeShardKeyDocument(-1), {writeConcern: {w: "majority"}}));
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(1), {writeConcern: {w: "majority"}}));
+            mongersColl.insert(makeShardKeyDocument(-1), {writeConcern: {w: "majority"}}));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(1), {writeConcern: {w: "majority"}}));
 
-        changeStream = mongosColl.aggregate([{$changeStream: {}}]);
+        changeStream = mongersColl.aggregate([{$changeStream: {}}]);
         assert(!changeStream.hasNext());
 
         // Store a valid resume token before dropping the collection, to be used later in the test
         assert.writeOK(
-            mongosColl.insert(makeShardKeyDocument(-2), {writeConcern: {w: "majority"}}));
-        assert.writeOK(mongosColl.insert(makeShardKeyDocument(2), {writeConcern: {w: "majority"}}));
+            mongersColl.insert(makeShardKeyDocument(-2), {writeConcern: {w: "majority"}}));
+        assert.writeOK(mongersColl.insert(makeShardKeyDocument(2), {writeConcern: {w: "majority"}}));
 
         assert.soon(() => changeStream.hasNext());
         const resumeToken = changeStream.next()._id;
 
-        mongosColl.drop();
+        mongersColl.drop();
 
         assert.soon(() => changeStream.hasNext());
         assertChangeStreamEventEq(changeStream.next(), {
             documentKey: makeShardKeyDocument(2),
             fullDocument: makeShardKeyDocument(2),
-            ns: {db: mongosDB.getName(), coll: mongosColl.getName()},
+            ns: {db: mongersDB.getName(), coll: mongersColl.getName()},
             operationType: "insert",
         });
 
@@ -221,13 +221,13 @@
 
         // With an explicit collation, test that we can resume from before the collection drop
         changeStream =
-            mongosColl.watch([], {resumeAfter: resumeToken, collation: {locale: "simple"}});
+            mongersColl.watch([], {resumeAfter: resumeToken, collation: {locale: "simple"}});
 
         assert.soon(() => changeStream.hasNext());
         assertChangeStreamEventEq(changeStream.next(), {
             documentKey: makeShardKeyDocument(2),
             fullDocument: makeShardKeyDocument(2),
-            ns: {db: mongosDB.getName(), coll: mongosColl.getName()},
+            ns: {db: mongersDB.getName(), coll: mongersColl.getName()},
             operationType: "insert",
         });
 
@@ -238,8 +238,8 @@
         assert.eq(changeStream.next().operationType, "invalidate");
 
         // Test that we can resume from before the collection drop without an explicit collation.
-        assert.commandWorked(mongosDB.runCommand({
-            aggregate: mongosColl.getName(),
+        assert.commandWorked(mongersDB.runCommand({
+            aggregate: mongersColl.getName(),
             pipeline: [{$changeStream: {resumeAfter: resumeToken}}],
             cursor: {}
         }));

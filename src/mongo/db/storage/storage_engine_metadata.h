@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,10 +34,10 @@
 #include <memory>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/status.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This reads and write the storage engine metadata file 'storage.bson'
@@ -124,4 +124,4 @@ private:
 bool fsyncFile(boost::filesystem::path path);
 void flushMyDirectory(const boost::filesystem::path& file);
 
-}  // namespace mongo
+}  // namespace monger

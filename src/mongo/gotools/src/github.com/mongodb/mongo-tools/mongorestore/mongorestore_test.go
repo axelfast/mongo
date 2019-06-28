@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
 	"bufio"
@@ -12,14 +12,14 @@ import (
 	"os"
 	"testing"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/testtype"
-	"github.com/mongodb/mongo-tools-common/testutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/testutil"
 	. "github.com/smartystreets/goconvey/convey"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
 )
 
 const (
@@ -41,7 +41,7 @@ func getRestoreWithArgs(additionalArgs ...string) (*MongoRestore, error) {
 
 	restore, err := New(opts)
 	if err != nil {
-		return nil, fmt.Errorf("error making new instance of mongorestore: %v", err)
+		return nil, fmt.Errorf("error making new instance of mongerrestore: %v", err)
 	}
 
 	return restore, nil
@@ -138,7 +138,7 @@ func TestMongorestorePreserveUUID(t *testing.T) {
 		t.Skip("Requires server with FCV 3.6 or later")
 	}
 
-	// From mongorestore/testdata/oplogdump/db1/c1.metadata.json
+	// From mongerrestore/testdata/oplogdump/db1/c1.metadata.json
 	originalUUID := "699f503df64b4aa8a484a8052046fa3a"
 
 	Convey("With a test MongoRestore", t, func() {

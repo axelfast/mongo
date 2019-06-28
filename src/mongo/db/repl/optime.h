@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,9 +31,9 @@
 
 #include <tuple>
 
-#include "mongo/bson/timestamp.h"
+#include "monger/bson/timestamp.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class BSONObjBuilder;
@@ -183,4 +183,4 @@ std::ostream& operator<<(std::ostream& out, const OpTimeAndWallTime& opTime);
 BSONObjBuilder& operator<<(BSONObjBuilderValueStream& builder, const repl::OpTime& value);
 
 
-}  // namespace mongo
+}  // namespace monger

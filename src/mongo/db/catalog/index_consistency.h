@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 
 #pragma once
 
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/util/elapsed_tracker.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/util/elapsed_tracker.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * The IndexConsistency class is used to keep track of the index consistency.
@@ -211,4 +211,4 @@ private:
     uint32_t _hashKeyString(const KeyString& ks, uint32_t indexNameHash) const;
 
 };  // IndexConsistency
-}  // namespace mongo
+}  // namespace monger

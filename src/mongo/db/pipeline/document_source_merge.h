@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source_merge_gen.h"
-#include "mongo/db/pipeline/document_source_writer.h"
+#include "monger/db/pipeline/document_source_merge_gen.h"
+#include "monger/db/pipeline/document_source_writer.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A class for the $merge aggregation stage to handle all supported merge modes. Each instance of
@@ -64,9 +64,9 @@ public:
     };
 
     /**
-     * A "lite parsed" $merge stage to disallow passthrough from mongos even if the source
+     * A "lite parsed" $merge stage to disallow passthrough from mongers even if the source
      * collection is unsharded. This ensures that the unique index verification happens once on
-     * mongos and can be bypassed on the shards.
+     * mongers and can be bypassed on the shards.
      */
     class LiteParsed final : public LiteParsedDocumentSourceForeignCollections {
     public:
@@ -98,7 +98,7 @@ public:
         // optimization.
         return {StreamType::kStreaming,
                 PositionRequirement::kLast,
-                pExpCtx->mongoProcessInterface->isSharded(pExpCtx->opCtx, _outputNs)
+                pExpCtx->mongerProcessInterface->isSharded(pExpCtx->opCtx, _outputNs)
                     ? HostTypeRequirement::kAnyShard
                     : HostTypeRequirement::kPrimaryShard,
                 DiskUseRequirement::kWritesPersistentData,
@@ -115,7 +115,7 @@ public:
         // Note that this decision is inherently racy and subject to become stale. This is okay
         // because either choice will work correctly, we are simply applying a heuristic
         // optimization.
-        if (pExpCtx->mongoProcessInterface->isSharded(pExpCtx->opCtx, _outputNs)) {
+        if (pExpCtx->mongerProcessInterface->isSharded(pExpCtx->opCtx, _outputNs)) {
             return boost::none;
         }
         return DocumentSourceWriter::distributedPlanLogic();
@@ -234,4 +234,4 @@ private:
     bool _mergeOnFieldsIncludesId;
 };
 
-}  // namespace mongo
+}  // namespace monger

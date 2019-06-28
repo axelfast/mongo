@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/auth_op_observer.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/locker_noop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/keys_collection_client_sharded.h"
-#include "mongo/db/keys_collection_manager.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/logical_time_validator.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_interface_local.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_recovery_unit.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/db/auth/auth_op_observer.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/locker_noop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/keys_collection_client_sharded.h"
+#include "monger/db/keys_collection_manager.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/logical_time_validator.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_interface_local.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_recovery_unit.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/unittest/death_test.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using repl::OplogEntry;
@@ -60,7 +60,7 @@ using unittest::assertGet;
 class AuthOpObserverTest : public ServiceContextMongoDTest {
 public:
     void setUp() override {
-        // Set up mongod.
+        // Set up mongerd.
         ServiceContextMongoDTest::setUp();
 
         auto service = getServiceContext();
@@ -161,4 +161,4 @@ DEATH_TEST_F(AuthOpObserverTest, EachOnDeleteRequiresAboutToDelete, "invariant")
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

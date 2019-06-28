@@ -9,7 +9,7 @@ import SCons
 
 def get_toolchain_ver(env, tool):
     # By default we don't know the version of each tool, and only report what
-    # command gets executed (gcc vs /opt/mongodbtoolchain/bin/gcc).
+    # command gets executed (gcc vs /opt/mongerdbtoolchain/bin/gcc).
     verstr = "version unknown"
     proc = None
     if env.ToolchainIs('clang', 'gcc'):

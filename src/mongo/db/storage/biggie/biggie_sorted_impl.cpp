@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstring>
 #include <memory>
 #include <string>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/storage/biggie/biggie_recovery_unit.h"
-#include "mongo/db/storage/biggie/biggie_sorted_impl.h"
-#include "mongo/db/storage/biggie/store.h"
-#include "mongo/db/storage/index_entry_comparison.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/util/bufreader.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/shared_buffer.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/storage/biggie/biggie_recovery_unit.h"
+#include "monger/db/storage/biggie/biggie_sorted_impl.h"
+#include "monger/db/storage/biggie/store.h"
+#include "monger/db/storage/index_entry_comparison.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/util/bufreader.h"
+#include "monger/util/hex.h"
+#include "monger/util/shared_buffer.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace biggie {
 namespace {
 
@@ -488,7 +488,7 @@ bool SortedDataInterface::isEmpty(OperationContext* opCtx) {
                                  workingCopy->upper_bound(_KSForIdentEnd)) == 0;
 }
 
-std::unique_ptr<mongo::SortedDataInterface::Cursor> SortedDataInterface::newCursor(
+std::unique_ptr<monger::SortedDataInterface::Cursor> SortedDataInterface::newCursor(
     OperationContext* opCtx, bool isForward) const {
     StringStore* workingCopy(RecoveryUnit::get(opCtx)->getHead());
 
@@ -848,4 +848,4 @@ void SortedDataInterface::Cursor::reattachToOperationContext(OperationContext* o
     this->_opCtx = opCtx;
 }
 }  // namespace biggie
-}  // namespace mongo
+}  // namespace monger

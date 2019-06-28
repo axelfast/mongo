@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include "boost/optional.hpp"
 
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 
@@ -259,7 +259,7 @@ private:
     MetaMap _meta;
 
     // Do we have a returnKey projection?  If so we *only* output the index key metadata, and
-    // possibly the sort key for mongos to use.  If it's not found we output nothing.
+    // possibly the sort key for mongers to use.  If it's not found we output nothing.
     bool _hasReturnKey = false;
 
     // After parsing in the constructor, these fields will indicate the neccesity of metadata
@@ -279,4 +279,4 @@ private:
     const CollatorInterface* _collator = nullptr;
 };
 
-}  // namespace mongo
+}  // namespace monger

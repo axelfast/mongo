@@ -4,21 +4,21 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoimport
+package mongerimport
 
 import (
 	"encoding/base32"
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/bson/primitive"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/mongodb/mongo-tools/mongoimport/dateconv"
+	"github.com/mongerdb/monger-tools/mongerimport/dateconv"
 )
 
 // columnType defines different types for columns that can be parsed distinctly

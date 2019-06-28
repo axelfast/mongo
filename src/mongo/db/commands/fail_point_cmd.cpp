@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Command for modifying installed fail points.

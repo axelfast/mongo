@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 
 #include "vm/PosixNSPR.h"
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/scripting/mozjs/engine.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/functional.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/scripting/mozjs/engine.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/functional.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 class MozJSImplScope;
@@ -59,7 +59,7 @@ class MozJSImplScope;
  * the argument capture and method dispatch explicit, but I'll wait until we've
  * measured it before bothering.
  *
- * See mongo::Scope for details on all of the overridden functions
+ * See monger::Scope for details on all of the overridden functions
  *
  */
 class MozJSProxyScope final : public Scope {
@@ -207,4 +207,4 @@ private:
 };
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

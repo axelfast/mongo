@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <map>
 #include <vector>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/list_databases_gen.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/commands/strategy.h"
-#include "mongo/s/grid.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/list_databases_gen.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/commands/strategy.h"
+#include "monger/s/grid.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ListDatabasesCmd : public BasicCommand {
@@ -220,4 +220,4 @@ public:
 } listDatabasesCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

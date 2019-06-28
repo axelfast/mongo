@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/rollback_source_impl.h"
+#include "monger/db/repl/rollback_source_impl.h"
 
-#include "mongo/db/cloner.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/oplogreader.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/db/cloner.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/oplogreader.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 RollbackSourceImpl::RollbackSourceImpl(GetConnectionFn getConnection,
@@ -127,4 +127,4 @@ StatusWith<BSONObj> RollbackSourceImpl::getCollectionInfo(const NamespaceString&
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

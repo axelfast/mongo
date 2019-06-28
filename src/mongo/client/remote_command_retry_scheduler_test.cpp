@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/client/remote_command_retry_scheduler.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/unittest/task_executor_proxy.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status_with.h"
+#include "monger/client/remote_command_retry_scheduler.h"
+#include "monger/db/jsobj.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/executor/task_executor.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/unittest/task_executor_proxy.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/net/hostandport.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 using ResponseStatus = executor::TaskExecutor::ResponseStatus;
 
 class CallbackResponseSaver;

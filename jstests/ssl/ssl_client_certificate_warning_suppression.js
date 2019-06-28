@@ -22,19 +22,19 @@ load('jstests/ssl/libs/ssl_helpers.js');
             setParameter: {suppressNoTLSPeerCertificateWarning: suppress}
         };
         clearRawMongoProgramOutput();
-        const mongod = MongoRunner.runMongod(opts);
+        const mongerd = MongoRunner.runMongod(opts);
 
         assert.soon(function() {
-            return runMongoProgram('mongo',
+            return runMongoProgram('monger',
                                    '--ssl',
                                    '--sslAllowInvalidHostnames',
                                    '--sslCAFile',
                                    CA_CERT,
                                    '--port',
-                                   mongod.port,
+                                   mongerd.port,
                                    '--eval',
                                    'quit()') === 0;
-        }, "mongo did not initialize properly");
+        }, "monger did not initialize properly");
 
         // Keep checking the log file until client metadata is logged since the SSL warning is
         // logged before it.
@@ -52,7 +52,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
         assert.eq(suppress, log.search('no SSL certificate provided by peer') === -1);
 
         try {
-            MongoRunner.stopMongod(mongod);
+            MongoRunner.stopMongod(mongerd);
         } catch (e) {
             // Depending on timing, exitCode might be 0, 1, or -9.
             // All that matters is that it dies, resmoke will tell us if that failed.

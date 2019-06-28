@@ -10,7 +10,7 @@ import (
 	"net"
 	"time"
 
-	"go.mongodb.org/mongo-driver/event"
+	"go.mongerdb.org/monger-driver/event"
 )
 
 type config struct {

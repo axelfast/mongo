@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,14 +28,14 @@
  */
 
 
-#include "mongo/db/logical_time.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/signed_logical_time.h"
-#include "mongo/db/time_proof_service.h"
-#include "mongo/platform/basic.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/logical_time.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/signed_logical_time.h"
+#include "monger/db/time_proof_service.h"
+#include "monger/platform/basic.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(LogicalTime, comparisons) {
@@ -156,4 +156,4 @@ TEST(SignedLogicalTime, roundtrip) {
 }
 
 }  // unnamed namespace
-}  // namespace mongo
+}  // namespace monger

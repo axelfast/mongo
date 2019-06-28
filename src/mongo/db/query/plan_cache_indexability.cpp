@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/plan_cache_indexability.h"
+#include "monger/db/query/plan_cache_indexability.h"
 
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/db/index/wildcard_key_generator.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_algo.h"
-#include "mongo/db/matcher/expression_internal_expr_eq.h"
-#include "mongo/db/matcher/expression_leaf.h"
-#include "mongo/db/query/collation/collation_index_key.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/index_entry.h"
-#include "mongo/db/query/planner_ixselect.h"
+#include "monger/base/init.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/db/index/wildcard_key_generator.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_algo.h"
+#include "monger/db/matcher/expression_internal_expr_eq.h"
+#include "monger/db/matcher/expression_leaf.h"
+#include "monger/db/query/collation/collation_index_key.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/index_entry.h"
+#include "monger/db/query/planner_ixselect.h"
 #include <memory>
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -188,4 +188,4 @@ void PlanCacheIndexabilityState::updateDiscriminators(
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

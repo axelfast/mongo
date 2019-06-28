@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/sessions_collection_rs.h"
+#include "monger/db/sessions_collection_rs.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 #include <utility>
 
-#include "mongo/client/authenticate.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/query.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/remote_command_targeter_factory_impl.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/rpc/get_status_from_command_result.h"
+#include "monger/client/authenticate.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/query.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/remote_command_targeter_factory_impl.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/rpc/get_status_from_command_result.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 BSONObj lsidQuery(const LogicalSessionId& lsid) {
@@ -55,7 +55,7 @@ BSONObj lsidQuery(const LogicalSessionId& lsid) {
 }
 
 Status makePrimaryConnection(OperationContext* opCtx, boost::optional<ScopedDbConnection>* conn) {
-    auto coord = mongo::repl::ReplicationCoordinator::get(opCtx);
+    auto coord = monger::repl::ReplicationCoordinator::get(opCtx);
     auto config = coord->getConfig();
     if (!config.isInitialized()) {
         return {ErrorCodes::NotYetInitialized, "Replication has not yet been configured"};
@@ -91,7 +91,7 @@ auto runIfStandaloneOrPrimary(const NamespaceString& ns, OperationContext* opCtx
         Lock::DBLock lk(opCtx, ns.db(), MODE_IS);
         Lock::CollectionLock lock(opCtx, NamespaceString::kLogicalSessionsNamespace, MODE_IS);
 
-        auto coord = mongo::repl::ReplicationCoordinator::get(opCtx);
+        auto coord = monger::repl::ReplicationCoordinator::get(opCtx);
 
         // There is a window here where we may transition from Primary to
         // Secondary after we release the locks we take above. In this case,
@@ -269,4 +269,4 @@ StatusWith<LogicalSessionIdSet> SessionsCollectionRS::findRemovedSessions(
         });
 }
 
-}  // namespace mongo
+}  // namespace monger

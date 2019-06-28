@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,10 +32,10 @@
 #include <deque>
 #include <vector>
 
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/matcher/expression.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/matcher/expression.h"
 
-namespace mongo {
+namespace monger {
 
 // output from enumerator to query planner
 class IndexTag : public MatchExpression::TagData {
@@ -263,4 +263,4 @@ private:
  */
 void prepareForAccessPlanning(MatchExpression* tree);
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <cstdint>
 
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/data_view.h"
-#include "mongo/base/encoded_value_storage.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/util/str.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/data_view.h"
+#include "monger/base/encoded_value_storage.h"
+#include "monger/base/static_assert.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Maximum accepted message size on the wire protocol.
@@ -177,7 +177,7 @@ namespace MSGHEADER {
 
 #pragma pack(1)
 /**
- * See http://dochub.mongodb.org/core/mongowireprotocol
+ * See http://dochub.mongerdb.org/core/mongerwireprotocol
  */
 struct Layout {
     int32_t messageLength;  // total message size, including this
@@ -480,4 +480,4 @@ private:
  */
 int32_t nextMessageId();
 
-}  // namespace mongo
+}  // namespace monger

@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongotop
+package mongertop
 
 import (
 	"bytes"
@@ -13,10 +13,10 @@ import (
 	"sort"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/text"
+	"github.com/mongerdb/monger-tools-common/text"
 )
 
-// FormattableDiff represents a diff of two samples taken by mongotop,
+// FormattableDiff represents a diff of two samples taken by mongertop,
 // which can be printed to output in various formats.
 type FormattableDiff interface {
 	// Generate a JSON representation of the diff

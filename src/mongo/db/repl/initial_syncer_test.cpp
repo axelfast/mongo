@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,50 +27,50 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iosfwd>
 #include <memory>
 #include <ostream>
 
-#include "mongo/client/fetcher.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
-#include "mongo/db/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/repl/base_cloner_test_fixture.h"
-#include "mongo/db/repl/data_replicator_external_state_mock.h"
-#include "mongo/db/repl/initial_syncer.h"
-#include "mongo/db/repl/member_state.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/oplog_fetcher.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/replication_consistency_markers_mock.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/replication_recovery_mock.h"
-#include "mongo/db/repl/reporter.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/repl/sync_source_resolver.h"
-#include "mongo/db/repl/sync_source_selector.h"
-#include "mongo/db/repl/sync_source_selector_mock.h"
-#include "mongo/db/repl/task_executor_mock.h"
-#include "mongo/db/repl/update_position_args.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/client/fetcher.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/repl/base_cloner_test_fixture.h"
+#include "monger/db/repl/data_replicator_external_state_mock.h"
+#include "monger/db/repl/initial_syncer.h"
+#include "monger/db/repl/member_state.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/oplog_fetcher.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/replication_consistency_markers_mock.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/replication_recovery_mock.h"
+#include "monger/db/repl/reporter.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/repl/sync_source_resolver.h"
+#include "monger/db/repl/sync_source_selector.h"
+#include "monger/db/repl/sync_source_selector_mock.h"
+#include "monger/db/repl/task_executor_mock.h"
+#include "monger/db/repl/update_position_args.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-#include "mongo/unittest/barrier.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/barrier.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 /**
@@ -91,13 +91,13 @@ std::ostream& operator<<(std::ostream& os, const InitialSyncer::State& state) {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger
 
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 
 using executor::NetworkInterfaceMock;
 using executor::RemoteCommandRequest;
@@ -598,7 +598,7 @@ void InitialSyncerTest::processSuccessfulLastOplogEntryFetcherResponse(std::vect
         net->scheduleSuccessfulResponse(makeCursorResponse(0LL, _options.localOplogNS, docs)));
     ASSERT_EQUALS(1, request.cmdObj.getIntField("limit"));
     ASSERT_TRUE(request.cmdObj.hasField("sort"));
-    ASSERT_EQUALS(mongo::BSONType::Object, request.cmdObj["sort"].type());
+    ASSERT_EQUALS(monger::BSONType::Object, request.cmdObj["sort"].type());
     ASSERT_BSONOBJ_EQ(BSON("$natural" << -1), request.cmdObj.getObjectField("sort"));
     net->runReadyNetworkOperations();
 }

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <functional>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/fail_point.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/time_support.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/fail_point.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/time_support.h"
 
-using mongo::getGlobalFailPointRegistry;
-using mongo::BSONObj;
-using mongo::FailPoint;
-using mongo::FailPointEnableBlock;
-namespace stdx = mongo::stdx;
+using monger::getGlobalFailPointRegistry;
+using monger::BSONObj;
+using monger::FailPoint;
+using monger::FailPointEnableBlock;
+namespace stdx = monger::stdx;
 
-namespace mongo_test {
+namespace monger_test {
 TEST(FailPoint, InitialState) {
     FailPoint failPoint;
     ASSERT_FALSE(failPoint.shouldFail());
@@ -147,7 +147,7 @@ TEST(FailPoint, SetGetParam) {
     }
 }
 
-class FailPointStress : public mongo::unittest::Test {
+class FailPointStress : public monger::unittest::Test {
 public:
     void setUp() {
         _fp.setMode(FailPoint::alwaysOn, 0, BSON("a" << 44));
@@ -182,12 +182,12 @@ private:
     void blockTask() {
         while (true) {
             MONGO_FAIL_POINT_BLOCK(_fp, scopedFp) {
-                const mongo::BSONObj& data = scopedFp.getData();
+                const monger::BSONObj& data = scopedFp.getData();
 
                 // Expanded ASSERT_EQUALS since the error is not being
                 // printed out properly
                 if (data["a"].numberInt() != 44) {
-                    mongo::error() << "blockTask thread detected anomaly"
+                    monger::error() << "blockTask thread detected anomaly"
                                    << " - data: " << data << std::endl;
                     ASSERT(false);
                 }
@@ -203,10 +203,10 @@ private:
         while (true) {
             try {
                 MONGO_FAIL_POINT_BLOCK(_fp, scopedFp) {
-                    const mongo::BSONObj& data = scopedFp.getData();
+                    const monger::BSONObj& data = scopedFp.getData();
 
                     if (data["a"].numberInt() != 44) {
-                        mongo::error() << "blockWithExceptionTask thread detected anomaly"
+                        monger::error() << "blockWithExceptionTask thread detected anomaly"
                                        << " - data: " << data << std::endl;
                         ASSERT(false);
                     }
@@ -253,7 +253,7 @@ private:
 
 TEST_F(FailPointStress, Basic) {
     startTest();
-    mongo::sleepsecs(30);
+    monger::sleepsecs(30);
     stopTest();
 }
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <string>
 #include <utility>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/optime.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/optime.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 const char OpTime::kTimestampFieldName[] = "ts";
@@ -129,4 +129,4 @@ BSONObjBuilder& operator<<(BSONObjBuilderValueStream& builder, const repl::OpTim
     return builder << value.toBSON();
 }
 
-}  // namespace mongo
+}  // namespace monger

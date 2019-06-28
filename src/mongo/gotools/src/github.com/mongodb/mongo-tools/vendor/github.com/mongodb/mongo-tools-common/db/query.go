@@ -1,14 +1,14 @@
 package db
 
 import (
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	mopt "go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger"
+	mopt "go.mongerdb.org/monger-driver/monger/options"
 )
 
 // DeferredQuery represents a deferred query
 type DeferredQuery struct {
-	Coll      *mongo.Collection
+	Coll      *monger.Collection
 	Filter    interface{}
 	Hint      interface{}
 	LogReplay bool
@@ -26,7 +26,7 @@ func (q *DeferredQuery) Count() (int, error) {
 	return int(c), err
 }
 
-func (q *DeferredQuery) Iter() (*mongo.Cursor, error) {
+func (q *DeferredQuery) Iter() (*monger.Cursor, error) {
 	opts := mopt.Find()
 	if q.Hint != nil {
 		opts.SetHint(q.Hint)

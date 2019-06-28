@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <boost/intrusive_ptr.hpp>
 #include <memory>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/dependencies.h"
-#include "mongo/db/pipeline/document_source_cursor.h"
-#include "mongo/db/pipeline/document_source_group.h"
-#include "mongo/db/query/plan_executor.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/dependencies.h"
+#include "monger/db/pipeline/document_source_cursor.h"
+#include "monger/db/pipeline/document_source_group.h"
+#include "monger/db/query/plan_executor.h"
 
-namespace mongo {
+namespace monger {
 class Collection;
 class DocumentSourceCursor;
 class DocumentSourceMatch;
@@ -52,7 +52,7 @@ struct PlanSummaryStats;
 
 /**
  * PipelineD is an extension of the Pipeline class, but with additional material that references
- * symbols that are not available in mongos, where the remainder of the Pipeline class also
+ * symbols that are not available in mongers, where the remainder of the Pipeline class also
  * functions.  PipelineD is a friend of Pipeline so that it can have equal access to Pipeline's
  * members.
  *
@@ -189,4 +189,4 @@ private:
                                 const BSONObj& projectionObj = BSONObj());
 };
 
-}  // namespace mongo
+}  // namespace monger

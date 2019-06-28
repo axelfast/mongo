@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,16 +29,16 @@
 
 #pragma once
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/index/multikey_paths.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/db/storage/record_store.h"
+#include "monger/base/string_data.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/index/multikey_paths.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/record_id.h"
+#include "monger/db/server_options.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/db/storage/record_store.h"
 
-namespace mongo {
+namespace monger {
 
 class Collection;
 class IndexDescriptor;

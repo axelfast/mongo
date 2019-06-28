@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/db/jsobj.h"
+#include "monger/db/jsobj.h"
 
-#include "mongo/base/data_range.h"
-#include "mongo/bson/bson_validate.h"
-#include "mongo/bson/bsonelement_comparator_interface.h"
-#include "mongo/db/json.h"
-#include "mongo/util/allocator.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/data_range.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/bson/bsonelement_comparator_interface.h"
+#include "monger/db/json.h"
+#include "monger/util/allocator.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -683,4 +683,4 @@ BSONObjIteratorSorted::BSONObjIteratorSorted(const BSONObj& object)
 BSONArrayIteratorSorted::BSONArrayIteratorSorted(const BSONArray& array)
     : BSONIteratorSorted(array, ElementFieldCmp(true)) {}
 
-}  // namespace mongo
+}  // namespace monger

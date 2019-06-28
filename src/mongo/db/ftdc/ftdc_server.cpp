@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ftdc/ftdc_server.h"
+#include "monger/db/ftdc/ftdc_server.h"
 
 #include <boost/filesystem.hpp>
 #include <fstream>
 #include <memory>
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/ftdc/collector.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/controller.h"
-#include "mongo/db/ftdc/ftdc_server_gen.h"
-#include "mongo/db/ftdc/ftdc_system_stats.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/synchronized_value.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/commands.h"
+#include "monger/db/ftdc/collector.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/controller.h"
+#include "monger/db/ftdc/ftdc_server_gen.h"
+#include "monger/db/ftdc/ftdc_system_stats.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/service_context.h"
+#include "monger/util/synchronized_value.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -272,4 +272,4 @@ FTDCController* FTDCController::get(ServiceContext* serviceContext) {
     return getFTDCController(serviceContext).get();
 }
 
-}  // namespace mongo
+}  // namespace monger

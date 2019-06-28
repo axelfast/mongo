@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,48 +27,48 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kBridge
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kBridge
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <cstdint>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/base/initializer.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/random.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/message.h"
-#include "mongo/rpc/reply_builder_interface.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/tools/bridge_commands.h"
-#include "mongo/tools/mongobridge_options.h"
-#include "mongo/transport/message_compressor_manager.h"
-#include "mongo/transport/service_entry_point_impl.h"
-#include "mongo/transport/service_executor_synchronous.h"
-#include "mongo/transport/transport_layer_asio.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/signal_handlers.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/timer.h"
+#include "monger/base/init.h"
+#include "monger/base/initializer.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/random.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/message.h"
+#include "monger/rpc/reply_builder_interface.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/tools/bridge_commands.h"
+#include "monger/tools/mongerbridge_options.h"
+#include "monger/transport/message_compressor_manager.h"
+#include "monger/transport/service_entry_point_impl.h"
+#include "monger/transport/service_executor_synchronous.h"
+#include "monger/transport/transport_layer_asio.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/signal_handlers.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
+#include "monger/util/time_support.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
 boost::optional<HostAndPort> extractHostInfo(const OpMsgRequest& request) {
-    // The initial isMaster request made by mongod and mongos processes should contain a hostInfo
+    // The initial isMaster request made by mongerd and mongers processes should contain a hostInfo
     // field that identifies the process by its host:port.
     StringData cmdName = request.getCommandName();
     if (cmdName != "isMaster" && cmdName != "ismaster") {
@@ -123,7 +123,7 @@ public:
     }
 
     PseudoRandom makeSeededPRNG() {
-        static PseudoRandom globalPRNG(mongoBridgeGlobalParams.seed);
+        static PseudoRandom globalPRNG(mongerBridgeGlobalParams.seed);
         return PseudoRandom(globalPRNG.nextInt64());
     }
 
@@ -184,7 +184,7 @@ public:
             return;
         _seenFirstMessage = true;
 
-        // The initial isMaster request made by mongod and mongos processes should contain a
+        // The initial isMaster request made by mongerd and mongers processes should contain a
         // hostInfo field that identifies the process by its host:port.
         StringData cmdName = request.getCommandName();
         if (cmdName != "isMaster" && cmdName != "ismaster") {
@@ -236,7 +236,7 @@ DbResponse ServiceEntryPointBridge::handleRequest(OperationContext* opCtx, const
 
     if (!dest.getSession()) {
         dest.setSession([]() -> transport::SessionHandle {
-            HostAndPort destAddr{mongoBridgeGlobalParams.destUri};
+            HostAndPort destAddr{mongerBridgeGlobalParams.destUri};
             const Seconds kConnectTimeout(30);
             auto now = getGlobalServiceContext()->getFastClockSource()->now();
             const auto connectExpiration = now + kConnectTimeout;
@@ -297,8 +297,8 @@ DbResponse ServiceEntryPointBridge::handleRequest(OperationContext* opCtx, const
                << cmdRequest->body << " from " << dest;
     }
 
-    // Handle a message intended to configure the mongobridge and return a response.
-    // The 'request' is consumed by the mongobridge and does not get forwarded to
+    // Handle a message intended to configure the mongerbridge and return a response.
+    // The 'request' is consumed by the mongerbridge and does not get forwarded to
     // 'dest'.
     if (auto status = brCtx->maybeProcessBridgeCommand(cmdRequest)) {
         invariant(!isFireAndForgetCommand);
@@ -397,7 +397,7 @@ int bridgeMain(int argc, char** argv, char** envp) {
 
     registerShutdownTask([&] {
         // NOTE: This function may be called at any time. It must not
-        // depend on the prior execution of mongo initializers or the
+        // depend on the prior execution of monger initializers or the
         // existence of threads.
         if (hasGlobalServiceContext()) {
             auto sc = getGlobalServiceContext();
@@ -425,9 +425,9 @@ int bridgeMain(int argc, char** argv, char** envp) {
 
     transport::TransportLayerASIO::Options opts;
     opts.ipList.emplace_back("0.0.0.0");
-    opts.port = mongoBridgeGlobalParams.port;
+    opts.port = mongerBridgeGlobalParams.port;
 
-    serviceContext->setTransportLayer(std::make_unique<mongo::transport::TransportLayerASIO>(
+    serviceContext->setTransportLayer(std::make_unique<monger::transport::TransportLayerASIO>(
         opts, serviceContext->getServiceEntryPoint()));
     auto tl = serviceContext->getTransportLayer();
     if (!tl->setup().isOK()) {
@@ -444,7 +444,7 @@ int bridgeMain(int argc, char** argv, char** envp) {
     return waitForShutdown();
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 #if defined(_WIN32)
 // In Windows, wmain() is an alternate entry point for main(), and receives the same parameters
@@ -453,13 +453,13 @@ int bridgeMain(int argc, char** argv, char** envp) {
 // and makes them available through the argv() and envp() members.  This enables bridgeMain()
 // to process UTF-8 encoded arguments and environment variables without regard to platform.
 int wmain(int argc, wchar_t* argvW[], wchar_t* envpW[]) {
-    mongo::WindowsCommandLine wcl(argc, argvW, envpW);
-    int exitCode = mongo::bridgeMain(argc, wcl.argv(), wcl.envp());
-    mongo::quickExit(exitCode);
+    monger::WindowsCommandLine wcl(argc, argvW, envpW);
+    int exitCode = monger::bridgeMain(argc, wcl.argv(), wcl.envp());
+    monger::quickExit(exitCode);
 }
 #else
 int main(int argc, char* argv[], char** envp) {
-    int exitCode = mongo::bridgeMain(argc, argv, envp);
-    mongo::quickExit(exitCode);
+    int exitCode = monger::bridgeMain(argc, argv, envp);
+    monger::quickExit(exitCode);
 }
 #endif

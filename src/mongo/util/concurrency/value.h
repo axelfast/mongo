@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,7 +35,7 @@
 
 #include "spin_lock.h"
 
-namespace mongo {
+namespace monger {
 
 // todo: rename this to ThreadSafeString or something
 /** there is now one mutex per DiagStr.  If you have hundreds or millions of

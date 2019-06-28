@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,39 +27,39 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/db/mongod_options.h"
+#include "monger/db/mongerd_options.h"
 
 #include <boost/filesystem.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/json.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/config.h"
-#include "mongo/db/cluster_auth_mode_option_gen.h"
-#include "mongo/db/global_settings.h"
-#include "mongo/db/keyfile_option_gen.h"
-#include "mongo/db/mongod_options_general_gen.h"
-#include "mongo/db/mongod_options_legacy_gen.h"
-#include "mongo/db/mongod_options_replication_gen.h"
-#include "mongo/db/mongod_options_sharding_gen.h"
-#include "mongo/db/mongod_options_storage_gen.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/server_options_base.h"
-#include "mongo/db/server_options_nongeneral_gen.h"
-#include "mongo/db/server_options_server_helpers.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/str.h"
-#include "mongo/util/version.h"
+#include "monger/base/status.h"
+#include "monger/bson/json.h"
+#include "monger/bson/util/builder.h"
+#include "monger/config.h"
+#include "monger/db/cluster_auth_mode_option_gen.h"
+#include "monger/db/global_settings.h"
+#include "monger/db/keyfile_option_gen.h"
+#include "monger/db/mongerd_options_general_gen.h"
+#include "monger/db/mongerd_options_legacy_gen.h"
+#include "monger/db/mongerd_options_replication_gen.h"
+#include "monger/db/mongerd_options_sharding_gen.h"
+#include "monger/db/mongerd_options_storage_gen.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/server_options.h"
+#include "monger/db/server_options_base.h"
+#include "monger/db/server_options_nongeneral_gen.h"
+#include "monger/db/server_options_server_helpers.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/str.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 
@@ -121,7 +121,7 @@ bool handlePreValidationMongodOptions(const moe::Environment& params,
     if (params.count("version") && params["version"].as<bool>() == true) {
         setPlainConsoleLogger();
         auto&& vii = VersionInfoInterface::instance();
-        log() << mongodVersion(vii);
+        log() << mongerdVersion(vii);
         vii.logBuildInfo();
         return false;
     }
@@ -464,18 +464,18 @@ Status storeMongodOptions(const moe::Environment& params) {
     }
 
     if (params.count("security.javascriptEnabled")) {
-        mongodGlobalParams.scriptingEnabled = params["security.javascriptEnabled"].as<bool>();
+        mongerdGlobalParams.scriptingEnabled = params["security.javascriptEnabled"].as<bool>();
     }
 
     if (params.count("security.clusterIpSourceWhitelist")) {
-        mongodGlobalParams.whitelistedClusterNetwork = std::vector<std::string>();
+        mongerdGlobalParams.whitelistedClusterNetwork = std::vector<std::string>();
         for (const std::string& whitelistEntry :
              params["security.clusterIpSourceWhitelist"].as<std::vector<std::string>>()) {
             std::vector<std::string> intermediates;
             str::splitStringDelim(whitelistEntry, &intermediates, ',');
             std::copy(intermediates.begin(),
                       intermediates.end(),
-                      std::back_inserter(*mongodGlobalParams.whitelistedClusterNetwork));
+                      std::back_inserter(*mongerdGlobalParams.whitelistedClusterNetwork));
         }
     }
 
@@ -614,7 +614,7 @@ Status storeMongodOptions(const moe::Environment& params) {
                       "****\n"
                       "Replica Pairs have been deprecated. Invalid options: "
                       "--pairwith, --arbiter, and/or --opIdMem\n"
-                      "<http://dochub.mongodb.org/core/replicapairs>\n"
+                      "<http://dochub.mongerdb.org/core/replicapairs>\n"
                       "****");
     }
 
@@ -656,4 +656,4 @@ Status storeMongodOptions(const moe::Environment& params) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

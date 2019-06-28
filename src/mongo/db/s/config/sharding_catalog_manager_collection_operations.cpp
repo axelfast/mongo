@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,52 +27,52 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/config/sharding_catalog_manager.h"
+#include "monger/db/s/config/sharding_catalog_manager.h"
 
 #include <iomanip>
 #include <set>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/s/config/initial_split_policy.h"
-#include "mongo/db/s/sharding_logging.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/balancer_configuration.h"
-#include "mongo/s/catalog/sharding_catalog_client_impl.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog/type_tags.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/set_shard_version_request.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/s/shard_util.h"
-#include "mongo/s/write_ops/batched_command_request.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/s/config/initial_split_policy.h"
+#include "monger/db/s/sharding_logging.h"
+#include "monger/executor/network_interface.h"
+#include "monger/executor/task_executor.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/balancer_configuration.h"
+#include "monger/s/catalog/sharding_catalog_client_impl.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog/type_tags.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/set_shard_version_request.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/s/shard_util.h"
+#include "monger/s/write_ops/batched_command_request.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using CollectionUUID = UUID;
 using std::string;
@@ -459,7 +459,7 @@ void ShardingCatalogManager::shardCollection(OperationContext* opCtx,
     auto shard = uassertStatusOK(shardRegistry->getShard(opCtx, dbPrimaryShardId));
     invariant(!shard->isConfig());
 
-    // Tell the primary mongod to refresh its data
+    // Tell the primary mongerd to refresh its data
     SetShardVersionRequest ssv = SetShardVersionRequest::makeForVersioningNoPersist(
         shardRegistry->getConfigServerConnectionString(),
         dbPrimaryShardId,
@@ -575,4 +575,4 @@ void ShardingCatalogManager::createCollection(OperationContext* opCtx,
     repl::ReplClientInfo::forClient(opCtx->getClient()).setLastOpToSystemLastOpTime(opCtx);
 }
 
-}  // namespace mongo
+}  // namespace monger

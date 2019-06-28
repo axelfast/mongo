@@ -4,12 +4,12 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoexport
+package mongerexport
 
 import (
 	"testing"
 
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"go.mongerdb.org/monger-driver/monger/readpref"
 )
 
 func TestParseOptions(t *testing.T) {
@@ -18,8 +18,8 @@ func TestParseOptions(t *testing.T) {
 		secondaryCmdLine := []string{"--readPreference", "secondary"}
 		slaveOkCmdLine := []string{"--slaveOk"}
 		rpSlaveOkCmdLine := []string{"--slaveOk", "--readPreference", "secondary"}
-		secondaryURI := []string{"--uri", "mongodb://localhost:27017/db?readPreference=secondary"}
-		cmdLineAndURI := []string{"--uri", "mongodb://localhost:27017/db?readPreference=secondary", "--readPreference", "nearest"}
+		secondaryURI := []string{"--uri", "mongerdb://localhost:27017/db?readPreference=secondary"}
+		cmdLineAndURI := []string{"--uri", "mongerdb://localhost:27017/db?readPreference=secondary", "--readPreference", "nearest"}
 
 		testCases := []struct {
 			name          string

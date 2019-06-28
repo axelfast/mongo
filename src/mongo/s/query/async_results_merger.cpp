@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/async_results_merger.h"
+#include "monger/s/query/async_results_merger.h"
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/db/pipeline/change_stream_constants.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/killcursors_request.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/db/pipeline/change_stream_constants.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/killcursors_request.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr StringData AsyncResultsMerger::kSortKeyField;
 const BSONObj AsyncResultsMerger::kWholeSortKeySortPattern = BSON(kSortKeyField << 1);
@@ -73,7 +73,7 @@ BSONObj extractSortKey(BSONObj obj, bool compareWholeSortKey) {
  * > 0 if 'leftSortKey' > 'rightSortKey' according to the pattern 'sortKeyPattern'.
  */
 int compareSortKeys(BSONObj leftSortKey, BSONObj rightSortKey, BSONObj sortKeyPattern) {
-    // This does not need to sort with a collator, since mongod has already mapped strings to their
+    // This does not need to sort with a collator, since mongerd has already mapped strings to their
     // ICU comparison keys as part of the $sortKey meta projection.
     const bool considerFieldName = false;
     return leftSortKey.woCompare(rightSortKey, sortKeyPattern, considerFieldName);
@@ -359,7 +359,7 @@ Status AsyncResultsMerger::_askForNextBatch(WithLock, size_t remoteIndex) {
 
     invariant(!remote.cbHandle.isValid());
 
-    // If mongod returned less docs than the requested batchSize then modify the next getMore
+    // If mongerd returned less docs than the requested batchSize then modify the next getMore
     // request to fetch the remaining docs only. If the remote node has a plan with OR for top k and
     // a full sort as is the case for the OP_QUERY find then this optimization will prevent
     // switching to the full sort plan branch.
@@ -791,4 +791,4 @@ bool AsyncResultsMerger::PromisedMinSortKeyComparator::operator()(
     return sortKeyComp < 0 || (sortKeyComp == 0 && lhs.second < rhs.second);
 }
 
-}  // namespace mongo
+}  // namespace monger

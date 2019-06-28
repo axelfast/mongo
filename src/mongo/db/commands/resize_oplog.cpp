@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/commands.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CmdReplSetResizeOplog : public BasicCommand {
@@ -125,4 +125,4 @@ public:
 } cmdReplSetResizeOplog;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

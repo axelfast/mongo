@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/dbcollection.h"
+#include "monger/scripting/mozjs/dbcollection.h"
 
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/scripting/mozjs/bson.h"
-#include "mongo/scripting/mozjs/db.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/valuewriter.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/scripting/mozjs/bson.h"
+#include "monger/scripting/mozjs/db.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/valuewriter.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const char* const DBCollectionInfo::className = "DBCollection";
@@ -67,7 +67,7 @@ void DBCollectionInfo::construct(JSContext* cx, JS::CallArgs args) {
     scope->getProto<DBCollectionInfo>().newObject(&thisv);
     ObjectWrapper o(cx, thisv);
 
-    o.setValue(InternedString::_mongo, args.get(0));
+    o.setValue(InternedString::_monger, args.get(0));
     o.setValue(InternedString::_db, args.get(1));
     o.setValue(InternedString::_shortName, args.get(2));
     o.setValue(InternedString::_fullName, args.get(3));
@@ -76,4 +76,4 @@ void DBCollectionInfo::construct(JSContext* cx, JS::CallArgs args) {
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,15 +31,15 @@
 
 #include <deque>
 
-#include "mongo/db/commands/server_status.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/member_data.h"
-#include "mongo/db/repl/replication_coordinator_fwd.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/member_data.h"
+#include "monger/db/repl/replication_coordinator_fwd.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This class encapsulates (most) logic relating to throttling incoming writes when a primary
@@ -145,4 +145,4 @@ private:
     PeriodicJobAnchor _jobAnchor;
 };
 
-}  // namespace mongo
+}  // namespace monger

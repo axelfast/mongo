@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -38,12 +38,12 @@
 
 #include <fmt/format.h>
 
-#include "mongo/stdx/type_traits.h"
+#include "monger/stdx/type_traits.h"
 #define MONGO_INCLUDE_INVARIANT_H_WHITELISTED
-#include "mongo/util/invariant.h"
+#include "monger/util/invariant.h"
 #undef MONGO_INCLUDE_INVARIANT_H_WHITELISTED
 
-namespace mongo {
+namespace monger {
 
 /**
  * A StringData object wraps a 'const std::string&' or a 'const char*' without copying its
@@ -358,4 +358,4 @@ constexpr fmt::string_view to_string_view(StringData s) noexcept {
     return fmt::string_view(s.rawData(), s.size());
 }
 
-}  // namespace mongo
+}  // namespace monger

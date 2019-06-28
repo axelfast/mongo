@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 #include <memory>
 #include <utility>
 
-#include "mongo/base/status.h"
-#include "mongo/executor/network_connection_hook.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/test_network_connection_hook.h"
-#include "mongo/executor/thread_pool_mock.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/status.h"
+#include "monger/executor/network_connection_hook.h"
+#include "monger/executor/network_interface.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/test_network_connection_hook.h"
+#include "monger/executor/thread_pool_mock.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 namespace {
 
-class NetworkInterfaceMockTest : public mongo::unittest::Test {
+class NetworkInterfaceMockTest : public monger::unittest::Test {
 public:
     NetworkInterfaceMockTest()
         : _net{}, _executor(&_net, 1, ThreadPoolMock::Options()), _tearDownCalled(false) {}
@@ -490,4 +490,4 @@ TEST_F(NetworkInterfaceMockTest, CommandTimeout) {
 
 }  // namespace
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/db/pipeline/variables.h"
-#include "mongo/db/client.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/platform/basic.h"
-#include "mongo/platform/random.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/pipeline/variables.h"
+#include "monger/db/client.h"
+#include "monger/db/logical_clock.h"
+#include "monger/platform/basic.h"
+#include "monger/platform/random.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr Variables::Id Variables::kRootId;
 constexpr Variables::Id Variables::kRemoveId;

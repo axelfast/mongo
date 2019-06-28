@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/repl_set_tag.h"
+#include "monger/db/repl/repl_set_tag.h"
 
 #include <algorithm>
 #include <functional>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/sequence_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/sequence_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 bool ReplSetTag::operator==(const ReplSetTag& other) const {
@@ -230,4 +230,4 @@ void ReplSetTagConfig::_appendConstraint(const ReplSetTagPattern::TagCountConstr
 
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

@@ -213,7 +213,7 @@ namespace boost { namespace spirit { namespace tag
     struct lycian { BOOST_SPIRIT_IS_TAG() };
     struct lydian { BOOST_SPIRIT_IS_TAG() };
     struct malayalam { BOOST_SPIRIT_IS_TAG() };
-    struct mongolian { BOOST_SPIRIT_IS_TAG() };
+    struct mongerlian { BOOST_SPIRIT_IS_TAG() };
     struct meetei_mayek { BOOST_SPIRIT_IS_TAG() };
     struct myanmar { BOOST_SPIRIT_IS_TAG() };
     struct nko { BOOST_SPIRIT_IS_TAG() };
@@ -458,7 +458,7 @@ namespace boost { namespace spirit { namespace char_class
     BOOST_SPIRIT_UNICODE_CLASSIFY(lycian)
     BOOST_SPIRIT_UNICODE_CLASSIFY(lydian)
     BOOST_SPIRIT_UNICODE_CLASSIFY(malayalam)
-    BOOST_SPIRIT_UNICODE_CLASSIFY(mongolian)
+    BOOST_SPIRIT_UNICODE_CLASSIFY(mongerlian)
     BOOST_SPIRIT_UNICODE_CLASSIFY(meetei_mayek)
     BOOST_SPIRIT_UNICODE_CLASSIFY(myanmar)
     BOOST_SPIRIT_UNICODE_CLASSIFY(nko)
@@ -702,7 +702,7 @@ namespace boost { namespace spirit { namespace char_class
     BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(lycian)
     BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(lydian)
     BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(malayalam)
-    BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(mongolian)
+    BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(mongerlian)
     BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(meetei_mayek)
     BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(myanmar)
     BOOST_SPIRIT_UNICODE_CLASSIFY_WHAT(nko)

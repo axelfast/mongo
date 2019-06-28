@@ -23,8 +23,8 @@ var FSMShardingTest = class {
                     ]
                 }
             },
-            "mongos" : {
-                "type" : "mongos router",
+            "mongers" : {
+                "type" : "mongers router",
                 "nodes" : [
                     "robert-macbook-pro.local:20004"
                 ]
@@ -37,12 +37,12 @@ var FSMShardingTest = class {
         const topology = DiscoverTopology.findConnectedNodes(conn);
         assert.eq(topology.type, Topology.kShardedCluster, 'Topology must be a sharded cluster');
 
-        this._mongoses = [];
-        for (let connStr of topology.mongos.nodes) {
-            this._mongoses.push(new Mongo(connStr));
+        this._mongerses = [];
+        for (let connStr of topology.mongers.nodes) {
+            this._mongerses.push(new Mongo(connStr));
         }
-        for (let mongos of this._mongoses) {
-            mongos.name = mongos.host;
+        for (let mongers of this._mongerses) {
+            mongers.name = mongers.host;
         }
 
         this._configsvr = new ReplSetTest(topology.configsvr.nodes[0]);
@@ -50,7 +50,7 @@ var FSMShardingTest = class {
             node.name = node.host;
         }
 
-        // connections to replsets or mongods.
+        // connections to replsets or mongerds.
         this._shard_connections = [];
         // ReplSetTest objects for replsets shards.
         this._shard_rsts = [];
@@ -64,7 +64,7 @@ var FSMShardingTest = class {
                 shard = new Mongo(shard_rst.getURL());
                 shard.name = shard_rst.getURL();
             } else {
-                shard = new Mongo(shardTopology.mongod);
+                shard = new Mongo(shardTopology.mongerd);
                 shard.name = shard.host;
             }
             shard.shardName = shardName;
@@ -77,7 +77,7 @@ var FSMShardingTest = class {
      */
 
     s(n = 0) {
-        return this._mongoses[n];
+        return this._mongerses[n];
     }
 
     d(n = 0) {

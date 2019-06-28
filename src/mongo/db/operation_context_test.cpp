@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/db/client.h"
-#include "mongo/db/json.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/operation_context_group.h"
-#include "mongo/db/service_context.h"
-#include "mongo/stdx/future.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/barrier.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/tick_source_mock.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/client.h"
+#include "monger/db/json.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/operation_context_group.h"
+#include "monger/db/service_context.h"
+#include "monger/stdx/future.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/barrier.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/tick_source_mock.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using unittest::assertGet;
@@ -977,4 +977,4 @@ TEST(OperationContextTest, TestWaitForConditionOrInterruptNoAssertUntilAPI) {
 
 }  // namespace
 
-}  // namespace mongo
+}  // namespace monger

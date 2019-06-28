@@ -18,7 +18,7 @@ load("jstests/watchdog/lib/wd_test_common.js");
 
     const journalFusePath = control.getMountPath();
 
-    const dbPath = MongoRunner.toRealDir("$dataDir/mongod-journal");
+    const dbPath = MongoRunner.toRealDir("$dataDir/mongerd-journal");
 
     const journalLinkPath = dbPath + "/journal";
 

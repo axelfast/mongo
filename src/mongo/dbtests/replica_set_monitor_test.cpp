@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <set>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/client/connpool.h"
-#include "mongo/client/dbclient_rs.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/client/replica_set_monitor_internal.h"
-#include "mongo/dbtests/mock/mock_conn_registry.h"
-#include "mongo/dbtests/mock/mock_replica_set.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/init.h"
+#include "monger/client/connpool.h"
+#include "monger/client/dbclient_rs.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/client/replica_set_monitor_internal.h"
+#include "monger/dbtests/mock/mock_conn_registry.h"
+#include "monger/dbtests/mock/mock_replica_set.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::map;
@@ -62,19 +62,19 @@ MONGO_INITIALIZER(DisableReplicaSetMonitorRefreshRetries)(InitializerContext*) {
  * Warning: Tests running this fixture cannot be run in parallel with other tests
  * that uses ConnectionString::setConnectionHook
  */
-class ReplicaSetMonitorTest : public mongo::unittest::Test {
+class ReplicaSetMonitorTest : public monger::unittest::Test {
 protected:
     void setUp() {
         _replSet.reset(new MockReplicaSet("test", 3));
         _originalConnectionHook = ConnectionString::getConnectionHook();
-        ConnectionString::setConnectionHook(mongo::MockConnRegistry::get()->getConnStrHook());
+        ConnectionString::setConnectionHook(monger::MockConnRegistry::get()->getConnStrHook());
     }
 
     void tearDown() {
         ConnectionString::setConnectionHook(_originalConnectionHook);
         ReplicaSetMonitor::cleanup();
         _replSet.reset();
-        mongo::ScopedDbConnection::clearPool();
+        monger::ScopedDbConnection::clearPool();
     }
 
     MockReplicaSet* getReplSet() {
@@ -148,7 +148,7 @@ TEST(ReplicaSetMonitorTest, PrimaryRemovedFromSetStress) {
     const size_t NODE_COUNT = 5;
     MockReplicaSet replSet("test", NODE_COUNT);
     ConnectionString::ConnectionHook* originalConnHook = ConnectionString::getConnectionHook();
-    ConnectionString::setConnectionHook(mongo::MockConnRegistry::get()->getConnStrHook());
+    ConnectionString::setConnectionHook(monger::MockConnRegistry::get()->getConnStrHook());
 
     const string replSetName(replSet.getSetName());
     set<HostAndPort> seedList;
@@ -170,7 +170,7 @@ TEST(ReplicaSetMonitorTest, PrimaryRemovedFromSetStress) {
 
             // Stats are under the replica set name, "test".
             BSONElement hostsElem = monitorState["test"]["hosts"];
-            BSONElement addrElem = hostsElem[mongo::str::stream() << idxToRemove]["addr"];
+            BSONElement addrElem = hostsElem[monger::str::stream() << idxToRemove]["addr"];
             hostToRemove = addrElem.String();
         }
 
@@ -189,32 +189,32 @@ TEST(ReplicaSetMonitorTest, PrimaryRemovedFromSetStress) {
     replMonitor.reset();
     ReplicaSetMonitor::cleanup();
     ConnectionString::setConnectionHook(originalConnHook);
-    mongo::ScopedDbConnection::clearPool();
+    monger::ScopedDbConnection::clearPool();
 }
 
 /**
  * Warning: Tests running this fixture cannot be run in parallel with other tests
  * that use ConnectionString::setConnectionHook.
  */
-class TwoNodeWithTags : public mongo::unittest::Test {
+class TwoNodeWithTags : public monger::unittest::Test {
 protected:
     void setUp() {
         _replSet.reset(new MockReplicaSet("test", 2));
         _originalConnectionHook = ConnectionString::getConnectionHook();
-        ConnectionString::setConnectionHook(mongo::MockConnRegistry::get()->getConnStrHook());
+        ConnectionString::setConnectionHook(monger::MockConnRegistry::get()->getConnStrHook());
 
         repl::ReplSetConfig oldConfig = _replSet->getReplConfig();
 
-        mongo::BSONObjBuilder newConfigBuilder;
+        monger::BSONObjBuilder newConfigBuilder;
         newConfigBuilder.append("_id", oldConfig.getReplSetName());
         newConfigBuilder.append("version", oldConfig.getConfigVersion());
         newConfigBuilder.append("protocolVersion", oldConfig.getProtocolVersion());
 
-        mongo::BSONArrayBuilder membersBuilder(newConfigBuilder.subarrayStart("members"));
+        monger::BSONArrayBuilder membersBuilder(newConfigBuilder.subarrayStart("members"));
 
         {
             const string host(_replSet->getPrimary());
-            const mongo::repl::MemberConfig* member =
+            const monger::repl::MemberConfig* member =
                 oldConfig.findMemberByHostAndPort(HostAndPort(host));
             membersBuilder.append(BSON(
                 "_id" << member->getId().getData() << "host" << host << "tags" << BSON("dc"
@@ -225,7 +225,7 @@ protected:
 
         {
             const string host(_replSet->getSecondaries().front());
-            const mongo::repl::MemberConfig* member =
+            const monger::repl::MemberConfig* member =
                 oldConfig.findMemberByHostAndPort(HostAndPort(host));
             membersBuilder.append(BSON(
                 "_id" << member->getId().getData() << "host" << host << "tags" << BSON("dc"
@@ -277,7 +277,7 @@ TEST_F(TwoNodeWithTags, SecDownRetryNoTag) {
 
     HostAndPort node = monitor
                            ->getHostOrRefresh(ReadPreferenceSetting(
-                                                  mongo::ReadPreference::SecondaryOnly, TagSet()),
+                                                  monger::ReadPreference::SecondaryOnly, TagSet()),
                                               Milliseconds(1))
                            .get();
 
@@ -308,7 +308,7 @@ TEST_F(TwoNodeWithTags, SecDownRetryWithTag) {
                                 << "ny")));
     HostAndPort node =
         monitor
-            ->getHostOrRefresh(ReadPreferenceSetting(mongo::ReadPreference::SecondaryOnly, tags),
+            ->getHostOrRefresh(ReadPreferenceSetting(monger::ReadPreference::SecondaryOnly, tags),
                                Milliseconds(1))
             .get();
 
@@ -336,26 +336,26 @@ TEST_F(TwoNodeWithTags, SecDownRetryExpiredTimeout) {
 
     // This will fail, immediately without doing any refreshing.
     auto errorFut = monitor->getHostOrRefresh(
-        ReadPreferenceSetting(mongo::ReadPreference::SecondaryOnly, TagSet()), Milliseconds(0));
+        ReadPreferenceSetting(monger::ReadPreference::SecondaryOnly, TagSet()), Milliseconds(0));
     ASSERT(errorFut.isReady());
     ASSERT_EQ(errorFut.getNoThrow().getStatus(), ErrorCodes::FailedToSatisfyReadPreference);
 
     // Because it did not schedule an expedited scan, it will continue failing until someone waits.
     errorFut = monitor->getHostOrRefresh(
-        ReadPreferenceSetting(mongo::ReadPreference::SecondaryOnly, TagSet()), Milliseconds(0));
+        ReadPreferenceSetting(monger::ReadPreference::SecondaryOnly, TagSet()), Milliseconds(0));
     ASSERT(errorFut.isReady());
     ASSERT_EQ(errorFut.getNoThrow().getStatus(), ErrorCodes::FailedToSatisfyReadPreference);
 
     // Negative timeouts are handled the same way
     errorFut = monitor->getHostOrRefresh(
-        ReadPreferenceSetting(mongo::ReadPreference::SecondaryOnly, TagSet()), Milliseconds(-1234));
+        ReadPreferenceSetting(monger::ReadPreference::SecondaryOnly, TagSet()), Milliseconds(-1234));
     ASSERT(errorFut.isReady());
     ASSERT_EQ(errorFut.getNoThrow().getStatus(), ErrorCodes::FailedToSatisfyReadPreference);
 
     // This will trigger a rescan. It is the only call in this test with a non-zero timeout.
     HostAndPort node = monitor
                            ->getHostOrRefresh(ReadPreferenceSetting(
-                                                  mongo::ReadPreference::SecondaryOnly, TagSet()),
+                                                  monger::ReadPreference::SecondaryOnly, TagSet()),
                                               Milliseconds(1))
                            .get();
 
@@ -365,7 +365,7 @@ TEST_F(TwoNodeWithTags, SecDownRetryExpiredTimeout) {
     // And this will now succeed.
     node = monitor
                ->getHostOrRefresh(
-                   ReadPreferenceSetting(mongo::ReadPreference::SecondaryOnly, TagSet()),
+                   ReadPreferenceSetting(monger::ReadPreference::SecondaryOnly, TagSet()),
                    Milliseconds(0))
                .get();
     ASSERT_FALSE(monitor->isPrimary(node));
@@ -375,4 +375,4 @@ TEST_F(TwoNodeWithTags, SecDownRetryExpiredTimeout) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

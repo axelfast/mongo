@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -40,9 +40,9 @@
 
 #include <boost/noncopyable.hpp>
 
-#include "mongo/util/assert_util.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace dns {
 /**
  * An `SRVHostEntry` object represents the information received from a DNS lookup of an SRV record.
@@ -111,4 +111,4 @@ std::vector<std::string> getTXTRecords(const std::string& service);
  */
 std::vector<std::string> lookupARecords(const std::string& service);
 }  // namespace dns
-}  // namespace mongo
+}  // namespace monger

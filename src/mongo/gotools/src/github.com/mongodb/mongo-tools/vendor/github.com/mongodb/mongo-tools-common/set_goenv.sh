@@ -3,7 +3,7 @@
 set_goenv() {
     # Error out if not in the same directory as this script
     if [ ! -f ./set_goenv.sh ]; then
-        echo "Must be run from mongo-tools-common top-level directory. Aborting."
+        echo "Must be run from monger-tools-common top-level directory. Aborting."
         return 1
     fi
 
@@ -16,8 +16,8 @@ set_goenv() {
         ;;
         *)
             PREF_GOROOT="/opt/golang/go1.11"
-            # XXX might not need mongodbtoolchain anymore
-            PREF_PATH="$PREF_GOROOT/bin:/opt/mongodbtoolchain/v3/bin/:$PATH"
+            # XXX might not need mongerdbtoolchain anymore
+            PREF_PATH="$PREF_GOROOT/bin:/opt/mongerdbtoolchain/v3/bin/:$PATH"
         ;;
     esac
 
@@ -33,20 +33,20 @@ set_goenv() {
     esac
 
     # XXX Setting the compiler might not be necessary anymore now that we're
-    # using standard Go toolchain and if we don't put mongodbtoolchain into the
-    # path.  But if we need to keep mongodbtoolchain for other tools (eg. python),
+    # using standard Go toolchain and if we don't put mongerdbtoolchain into the
+    # path.  But if we need to keep mongerdbtoolchain for other tools (eg. python),
     # then this is probably still necessary to find the right gcc.
     if [ -z "$CC" ]; then
         UNAME_M=$(PATH="/usr/bin:/bin" uname -m)
         case $UNAME_M in
             aarch64)
-                export CC=/opt/mongodbtoolchain/v3/bin/aarch64-mongodb-linux-gcc
+                export CC=/opt/mongerdbtoolchain/v3/bin/aarch64-mongerdb-linux-gcc
             ;;
             ppc64le)
-                export CC=/opt/mongodbtoolchain/v3/bin/ppc64le-mongodb-linux-gcc
+                export CC=/opt/mongerdbtoolchain/v3/bin/ppc64le-mongerdb-linux-gcc
             ;;
             s390x)
-                export CC=/opt/mongodbtoolchain/v3/bin/s390x-mongodb-linux-gcc
+                export CC=/opt/mongerdbtoolchain/v3/bin/s390x-mongerdb-linux-gcc
             ;;
             *)
                 # Not needed for other architectures
@@ -68,8 +68,8 @@ set_goenv() {
 
     # Derive GOPATH from current directory, but error if the current diretory
     # doesn't look like a GOPATH structure.
-    if expr "$(pwd)" : '.*src/github.com/mongodb/mongo-tools-common$' > /dev/null; then
-        export GOPATH=$(echo $(pwd) | perl -pe 's{src/github.com/mongodb/mongo-tools-common}{}')
+    if expr "$(pwd)" : '.*src/github.com/mongerdb/monger-tools-common$' > /dev/null; then
+        export GOPATH=$(echo $(pwd) | perl -pe 's{src/github.com/mongerdb/monger-tools-common}{}')
         if expr "$UNAME_S" : 'CYGWIN' > /dev/null; then
             export GOPATH=$(cygpath -w "$GOPATH")
         fi

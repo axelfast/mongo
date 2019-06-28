@@ -1,19 +1,19 @@
-// Authenticate to a mongod from the shell via command line.
+// Authenticate to a mongerd from the shell via command line.
 
 (function() {
     'use strict';
 
     const port = allocatePort();
-    const mongod = MongoRunner.runMongod({auth: '', port: port});
-    const admin = mongod.getDB('admin');
+    const mongerd = MongoRunner.runMongod({auth: '', port: port});
+    const admin = mongerd.getDB('admin');
 
     admin.createUser({user: 'admin', pwd: 'pass', roles: jsTest.adminUserRoles});
 
-    // Connect via shell round-trip in order to verify handling of mongodb:// uri with password.
-    const uri = 'mongodb://admin:pass@localhost:' + port + '/admin';
+    // Connect via shell round-trip in order to verify handling of mongerdb:// uri with password.
+    const uri = 'mongerdb://admin:pass@localhost:' + port + '/admin';
     // Be sure to actually do something requiring authentication.
-    const mongo = runMongoProgram('mongo', uri, '--eval', 'db.system.users.find({});');
-    assert.eq(mongo, 0, "Failed connecting to mongod via shell+mongodb uri");
+    const monger = runMongoProgram('monger', uri, '--eval', 'db.system.users.find({});');
+    assert.eq(monger, 0, "Failed connecting to mongerd via shell+mongerdb uri");
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 })();

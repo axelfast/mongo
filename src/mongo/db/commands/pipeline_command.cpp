@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/run_aggregate.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/pipeline.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/run_aggregate.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/pipeline.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 bool isMergePipeline(const std::vector<BSONObj>& pipeline) {
@@ -145,7 +145,7 @@ public:
     };
 
     std::string help() const override {
-        return "Runs the aggregation command. See http://dochub.mongodb.org/core/aggregation for "
+        return "Runs the aggregation command. See http://dochub.mongerdb.org/core/aggregation for "
                "more details.";
     }
 
@@ -160,4 +160,4 @@ public:
 } pipelineCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/s/cluster_last_error_info.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/lasterror.h"
+#include "monger/s/cluster_last_error_info.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CmdReplSetGetStatus : public ErrmsgCommandDeprecated {
@@ -55,13 +55,13 @@ public:
     }
 
     std::string help() const override {
-        return "Not supported through mongos";
+        return "Not supported through mongers";
     }
 
     virtual Status checkAuthForCommand(Client* client,
                                        const std::string& dbname,
                                        const BSONObj& cmdObj) const {
-        // Require no auth since this command isn't supported in mongos
+        // Require no auth since this command isn't supported in mongers
         return Status::OK();
     }
 
@@ -75,8 +75,8 @@ public:
             ClusterLastErrorInfo::get(cc())->disableForCommand();
         }
 
-        errmsg = "replSetGetStatus is not supported through mongos";
-        result.append("info", "mongos");
+        errmsg = "replSetGetStatus is not supported through mongers";
+        result.append("info", "mongers");
 
         return false;
     }
@@ -84,4 +84,4 @@ public:
 } cmdReplSetGetStatus;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

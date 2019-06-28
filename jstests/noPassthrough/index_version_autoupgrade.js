@@ -8,7 +8,7 @@
     load("jstests/libs/get_index_helpers.js");
 
     var conn = MongoRunner.runMongod({});
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
 
     var testDB = conn.getDB("test");
     assert.commandWorked(testDB.runCommand({create: "index_version_autoupgrade"}));

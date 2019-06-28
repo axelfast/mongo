@@ -4,18 +4,18 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoexport
+package mongerexport
 
 import (
 	"encoding/json"
 	"os"
 	"testing"
 
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/testtype"
 	. "github.com/smartystreets/goconvey/convey"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
 )
 
 func TestExtendedJSON(t *testing.T) {

@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package monger
 
 import (
 	"context"
@@ -12,10 +12,10 @@ import (
 	"io"
 	"reflect"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy"
 )
 
 // Cursor is used to iterate a stream of documents. Each document is decoded into the result

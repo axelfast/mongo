@@ -13,19 +13,19 @@
 
     const kExtraRetryProbability = 0.2;
 
-    const mongoRunCommandOriginal = Mongo.prototype.runCommand;
-    const mongoRunCommandWithMetadataOriginal = Mongo.prototype.runCommandWithMetadata;
+    const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+    const mongerRunCommandWithMetadataOriginal = Mongo.prototype.runCommandWithMetadata;
 
     Mongo.prototype.runCommand = function runCommand(dbName, cmdObj, options) {
-        return runWithRetries(this, cmdObj, mongoRunCommandOriginal, arguments);
+        return runWithRetries(this, cmdObj, mongerRunCommandOriginal, arguments);
     };
 
     Mongo.prototype.runCommandWithMetadata = function runCommandWithMetadata(
         dbName, metadata, cmdObj) {
-        return runWithRetries(this, cmdObj, mongoRunCommandWithMetadataOriginal, arguments);
+        return runWithRetries(this, cmdObj, mongerRunCommandWithMetadataOriginal, arguments);
     };
 
-    function runWithRetries(mongo, cmdObj, clientFunction, clientFunctionArguments) {
+    function runWithRetries(monger, cmdObj, clientFunction, clientFunctionArguments) {
         let cmdName = Object.keys(cmdObj)[0];
 
         // If the command is in a wrapped form, then we look for the actual command object
@@ -38,7 +38,7 @@
         const isRetryableWriteCmd = RetryableWritesUtil.isRetryableWriteCmdName(cmdName);
         const canRetryWrites = _ServerSession.canRetryWrites(cmdObj);
 
-        let res = clientFunction.apply(mongo, clientFunctionArguments);
+        let res = clientFunction.apply(monger, clientFunctionArguments);
 
         if (isRetryableWriteCmd && canRetryWrites) {
             let retryAttempt = 1;
@@ -47,7 +47,7 @@
                       " with txnNumber: " + tojson(cmdObj.txnNumber) + ", and lsid: " +
                       tojson(cmdObj.lsid));
                 ++retryAttempt;
-                res = clientFunction.apply(mongo, clientFunctionArguments);
+                res = clientFunction.apply(monger, clientFunctionArguments);
             } while (Random.rand() <= kExtraRetryProbability);
         }
 

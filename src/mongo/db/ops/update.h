@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/curop.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/ops/update_result.h"
+#include "monger/db/curop.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/ops/update_result.h"
 
-namespace mongo {
+namespace monger {
 
 class CanonicalQuery;
 class Database;
@@ -58,4 +58,4 @@ UpdateResult update(OperationContext* opCtx, Database* db, const UpdateRequest& 
 BSONObj applyUpdateOperators(OperationContext* opCtx,
                              const BSONObj& from,
                              const BSONObj& operators);
-}  // namespace mongo
+}  // namespace monger

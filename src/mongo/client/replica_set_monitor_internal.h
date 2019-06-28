@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -41,15 +41,15 @@
 #include <string>
 #include <vector>
 
-#include "mongo/client/read_preference.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/random.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/random.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 struct ReplicaSetMonitor::IsMasterReply {
     IsMasterReply() : ok(false) {}
@@ -284,4 +284,4 @@ public:
     UnconfirmedReplies unconfirmedReplies;
 };
 
-}  // namespace mongo
+}  // namespace monger

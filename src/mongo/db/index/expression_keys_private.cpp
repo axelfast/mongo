@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/db/index/expression_keys_private.h"
+#include "monger/db/index/expression_keys_private.h"
 
 #include <utility>
 
-#include "mongo/bson/bsonelement_comparator_interface.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/fts/fts_index_format.h"
-#include "mongo/db/geo/geoconstants.h"
-#include "mongo/db/geo/geometry_container.h"
-#include "mongo/db/geo/geoparser.h"
-#include "mongo/db/geo/s2.h"
-#include "mongo/db/index/2d_common.h"
-#include "mongo/db/index/s2_common.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/query/collation/collation_index_key.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonelement_comparator_interface.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/fts/fts_index_format.h"
+#include "monger/db/geo/geoconstants.h"
+#include "monger/db/geo/geometry_container.h"
+#include "monger/db/geo/geoparser.h"
+#include "monger/db/geo/s2.h"
+#include "monger/db/index/2d_common.h"
+#include "monger/db/index/s2_common.h"
+#include "monger/db/index_names.h"
+#include "monger/db/query/collation/collation_index_key.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 #include "third_party/s2/s2cell.h"
 #include "third_party/s2/s2regioncoverer.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 //
 // Helper functions for getHaystackKeys
@@ -227,7 +227,7 @@ bool getS2LiteralKeys(const BSONElementSet& elements,
 
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 using std::pair;
 using std::string;
@@ -563,4 +563,4 @@ void ExpressionKeysPrivate::getS2Keys(const BSONObj& obj,
     *keys = std::move(keysToAdd);
 }
 
-}  // namespace mongo
+}  // namespace monger

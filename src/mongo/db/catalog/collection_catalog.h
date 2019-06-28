@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,12 +34,12 @@
 #include <set>
 #include <unordered_map>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/uuid.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/service_context.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This class comprises a UUID to collection catalog, allowing for efficient
@@ -275,13 +275,13 @@ private:
 
     const std::vector<CollectionUUID>& _getOrdering_inlock(const StringData& db,
                                                            const stdx::lock_guard<stdx::mutex>&);
-    mutable mongo::stdx::mutex _catalogLock;
+    mutable monger::stdx::mutex _catalogLock;
     /**
      * When present, indicates that the catalog is in closed state, and contains a map from UUID
      * to pre-close NSS. See also onCloseCatalog.
      */
     boost::optional<
-        mongo::stdx::unordered_map<CollectionUUID, NamespaceString, CollectionUUID::Hash>>
+        monger::stdx::unordered_map<CollectionUUID, NamespaceString, CollectionUUID::Hash>>
         _shadowCatalog;
 
     /**
@@ -293,14 +293,14 @@ private:
         Collection* collectionPtr;  // This store the address to the collection object
         std::unique_ptr<CollectionCatalogEntry> collectionCatalogEntry;
     };
-    mongo::stdx::unordered_map<CollectionUUID, CollectionInfo, CollectionUUID::Hash> _catalog;
+    monger::stdx::unordered_map<CollectionUUID, CollectionInfo, CollectionUUID::Hash> _catalog;
 
     /**
      * Ordered map from <database name, collection UUID> to a Collection object.
      */
     std::map<std::pair<std::string, CollectionUUID>, CollectionInfo*> _orderedCollections;
 
-    mongo::stdx::unordered_map<NamespaceString, CollectionInfo*> _collections;
+    monger::stdx::unordered_map<NamespaceString, CollectionInfo*> _collections;
 
     /**
      * Generation number to track changes to the catalog that could invalidate iterators.
@@ -313,4 +313,4 @@ private:
     // Mapping from ResourceId to a set of strings that contains collection and database namespaces.
     std::map<ResourceId, std::set<std::string>> _resourceInformation;
 };
-}  // namespace mongo
+}  // namespace monger

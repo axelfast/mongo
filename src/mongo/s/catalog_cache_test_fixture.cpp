@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/catalog_cache_test_fixture.h"
+#include "monger/s/catalog_cache_test_fixture.h"
 
 #include <memory>
 #include <set>
 #include <vector>
 
-#include "mongo/client/remote_command_targeter_factory_mock.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/client.h"
-#include "mongo/db/query/collation/collator_factory_mock.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/database_version_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/remote_command_targeter_factory_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/client.h"
+#include "monger/db/query/collation/collator_factory_mock.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/database_version_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 void CatalogCacheTestFixture::setUp() {
     ShardingTestFixture::setUp();
@@ -224,4 +224,4 @@ CachedCollectionRoutingInfo CatalogCacheTestFixture::loadRoutingTableWithTwoChun
     return future.default_timed_get().get();
 }
 
-}  // namespace mongo
+}  // namespace monger

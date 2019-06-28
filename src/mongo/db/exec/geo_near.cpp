@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/exec/geo_near.h"
+#include "monger/db/exec/geo_near.h"
 
 #include <memory>
 #include <vector>
@@ -37,28 +37,28 @@
 // For s2 search
 #include "third_party/s2/s2regionintersection.h"
 
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/exec/fetch.h"
-#include "mongo/db/exec/index_scan.h"
-#include "mongo/db/exec/working_set_computed_data.h"
-#include "mongo/db/geo/geoconstants.h"
-#include "mongo/db/geo/geoparser.h"
-#include "mongo/db/geo/hash.h"
-#include "mongo/db/index/expression_params.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/query/expression_index.h"
-#include "mongo/db/query/expression_index_knobs_gen.h"
-#include "mongo/util/log.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/exec/fetch.h"
+#include "monger/db/exec/index_scan.h"
+#include "monger/db/exec/working_set_computed_data.h"
+#include "monger/db/geo/geoconstants.h"
+#include "monger/db/geo/geoparser.h"
+#include "monger/db/geo/hash.h"
+#include "monger/db/index/expression_params.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/query/expression_index.h"
+#include "monger/db/query/expression_index_knobs_gen.h"
+#include "monger/util/log.h"
 
 #include <algorithm>
 
-namespace mongo {
+namespace monger {
 
 using std::abs;
 using std::unique_ptr;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 //
 // Shared GeoNear search functionality
@@ -329,7 +329,7 @@ void GeoNear2DStage::DensityEstimator::buildIndexScan(OperationContext* opCtx,
     std::sort(neighbors.begin(), neighbors.end());
 
     for (vector<GeoHash>::const_iterator it = neighbors.begin(); it != neighbors.end(); it++) {
-        mongo::BSONObjBuilder builder;
+        monger::BSONObjBuilder builder;
         it->appendHashMin(&builder, "");
         it->appendHashMax(&builder, "");
         oil.intervals.push_back(IndexBoundsBuilder::makeRangeInterval(
@@ -1090,4 +1090,4 @@ StatusWith<double> GeoNear2DSphereStage::computeDistance(WorkingSetMember* membe
     return computeGeoNearDistance(_nearParams, member);
 }
 
-}  // namespace mongo
+}  // namespace monger

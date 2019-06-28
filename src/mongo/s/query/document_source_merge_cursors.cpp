@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/document_source_merge_cursors.h"
+#include "monger/s/query/document_source_merge_cursors.h"
 
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/establish_cursors.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/query/find_common.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/establish_cursors.h"
 
-namespace mongo {
+namespace monger {
 
 REGISTER_DOCUMENT_SOURCE(mergeCursors,
                          LiteParsedDocumentSourceDefault::parse,
@@ -84,7 +84,7 @@ void DocumentSourceMergeCursors::populateMerger() {
     _blockingResultsMerger.emplace(pExpCtx->opCtx,
                                    std::move(*_armParams),
                                    _executor,
-                                   pExpCtx->mongoProcessInterface->getResourceYielder());
+                                   pExpCtx->mongerProcessInterface->getResourceYielder());
     _armParams = boost::none;
     // '_blockingResultsMerger' now owns the cursors.
     _ownCursors = false;
@@ -157,4 +157,4 @@ void DocumentSourceMergeCursors::doDispose() {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

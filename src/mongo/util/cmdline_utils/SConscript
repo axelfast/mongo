@@ -10,7 +10,7 @@ env.Library(
         'censor_cmdline.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ])
 

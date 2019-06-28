@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/catalog/dist_lock_catalog.h"
+#include "monger/s/catalog/dist_lock_catalog.h"
 
-namespace mongo {
+namespace monger {
 
 const WriteConcernOptions DistLockCatalog::kLocalWriteConcern(1,
                                                               WriteConcernOptions::SyncMode::UNSET,
@@ -40,7 +40,7 @@ const WriteConcernOptions DistLockCatalog::kLocalWriteConcern(1,
 const WriteConcernOptions DistLockCatalog::kMajorityWriteConcern(
     WriteConcernOptions::kMajority,
     // Note: Even though we're setting UNSET here, kMajority implies JOURNAL if journaling is
-    // supported by this mongod.
+    // supported by this mongerd.
     WriteConcernOptions::SyncMode::UNSET,
     WriteConcernOptions::kWriteConcernTimeoutSystem);
 
@@ -49,4 +49,4 @@ DistLockCatalog::DistLockCatalog() = default;
 DistLockCatalog::ServerInfo::ServerInfo(Date_t time, OID _electionId)
     : serverTime(std::move(time)), electionId(std::move(_electionId)) {}
 
-}  // namespace mongo
+}  // namespace monger

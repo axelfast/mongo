@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <memory>
 
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/task_executor_test_fixture.h"
-#include "mongo/executor/thread_pool_mock.h"
-#include "mongo/executor/thread_pool_task_executor.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/task_executor_test_fixture.h"
+#include "monger/executor/thread_pool_mock.h"
+#include "monger/executor/thread_pool_task_executor.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 /**
@@ -73,4 +73,4 @@ private:
 };
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

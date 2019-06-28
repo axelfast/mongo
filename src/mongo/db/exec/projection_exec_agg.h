@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <memory>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/field_ref.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/field_ref.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This class provides the query system with the ability to perform projections using the
@@ -100,4 +100,4 @@ private:
     std::unique_ptr<ProjectionExecutor> _exec;
     const BSONObj _projSpec;
 };
-}  // namespace mongo
+}  // namespace monger

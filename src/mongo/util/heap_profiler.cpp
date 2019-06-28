@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/init.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/config.h"
-#include "mongo/db/commands/server_status.h"
-#include "mongo/util/log.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/tcmalloc_parameters_gen.h"
+#include "monger/base/init.h"
+#include "monger/base/static_assert.h"
+#include "monger/config.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/util/log.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/tcmalloc_parameters_gen.h"
 
 #include <gperftools/malloc_hook.h>
 #include <third_party/murmurhash3/MurmurHash3.h>
@@ -74,7 +74,7 @@
 //   * the object is removed from the object hash table
 //
 // Enable at startup time (only) with
-//     mongod --setParameter heapProfilingEnabled=true
+//     mongerd --setParameter heapProfilingEnabled=true
 //
 // If enabled, adds a heapProfile section to serverStatus as follows:
 //
@@ -93,7 +93,7 @@
 //        }
 //    }
 //
-// Each new stack encountered is also logged to mongod log with a message like
+// Each new stack encountered is also logged to mongerd log with a message like
 //     .... stack_n_: {0: "frame0", 1: "frame1", ...}
 //
 // Can be used in one of two ways:
@@ -104,7 +104,7 @@
 // will present one graph per stack, identified by the label stack_n_,
 // showing active bytes that were allocated by that stack at each
 // point in time. The mappings from stack_n_ to the actual stack can
-// be found in mongod log.
+// be found in mongerd log.
 //
 // Via serverStatus - the serverStatus section described above
 // contains complete information, including the stack trace.  It can
@@ -124,7 +124,7 @@
 // and acceptable size overhead for the hash tables.
 //
 
-namespace mongo {
+namespace monger {
 namespace {
 
 //
@@ -670,6 +670,6 @@ MONGO_INITIALIZER_GENERAL(StartHeapProfiling, ("EndStartupOptionHandling"), ("de
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger
 
 #endif  // MONGO_HAVE_HEAP_PROFILER

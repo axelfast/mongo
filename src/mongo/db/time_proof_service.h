@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/status.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/db/logical_time.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * The TimeProofService holds the key used by mongod and mongos processes to verify cluster times
+ * The TimeProofService holds the key used by mongerd and mongers processes to verify cluster times
  * and contains the logic to generate this key. As a performance optimization to avoid expensive
  * signature generation the class also holds the cache.
  */
@@ -96,4 +96,4 @@ private:
     boost::optional<CacheEntry> _cache;
 };
 
-}  // namespace mongo
+}  // namespace monger

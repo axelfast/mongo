@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,24 +28,24 @@
  */
 
 /**
- * This file contains tests for mongo/db/exec/projection_exec.cpp
+ * This file contains tests for monger/db/exec/projection_exec.cpp
  */
 
 #include "boost/optional.hpp"
 #include "boost/optional/optional_io.hpp"
 #include <memory>
 
-#include "mongo/db/exec/projection_exec.h"
+#include "monger/db/exec/projection_exec.h"
 
-#include "mongo/db/exec/working_set_computed_data.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/stdx/variant.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/exec/working_set_computed_data.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/stdx/variant.h"
+#include "monger/unittest/unittest.h"
 
-using namespace mongo;
+using namespace monger;
 using namespace std::string_literals;
 
 namespace {

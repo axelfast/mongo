@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 
-#include "mongo/dbtests/framework_options.h"
+#include "monger/dbtests/framework_options.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <iostream>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/query/find.h"
-#include "mongo/db/storage/flow_control_parameters_gen.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/password.h"
+#include "monger/base/status.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/query/find.h"
+#include "monger/db/storage/flow_control_parameters_gen.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/password.h"
 
-namespace mongo {
+namespace monger {
 
 using std::cout;
 using std::endl;
@@ -72,7 +72,7 @@ bool handlePreValidationTestFrameworkOptions(const moe::Environment& params,
     }
 
     if (params.count("list")) {
-        std::vector<std::string> suiteNames = mongo::unittest::getAllSuiteNames();
+        std::vector<std::string> suiteNames = monger::unittest::getAllSuiteNames();
         for (std::vector<std::string>::const_iterator i = suiteNames.begin(); i != suiteNames.end();
              ++i) {
             std::cout << *i << std::endl;

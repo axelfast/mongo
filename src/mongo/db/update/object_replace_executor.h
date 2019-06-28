@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,9 +35,9 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/db/update/update_executor.h"
+#include "monger/db/update/update_executor.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * An UpdateExecutor representing a replacement-style update.
@@ -85,4 +85,4 @@ private:
     bool _containsId;
 };
 
-}  // namespace mongo
+}  // namespace monger

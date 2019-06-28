@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,13 +33,13 @@
 #include <functional>
 #include <string>
 
-#include "mongo/executor/task_executor.h"
-#include "mongo/transport/baton.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/functional.h"
-#include "mongo/util/future.h"
+#include "monger/executor/task_executor.h"
+#include "monger/transport/baton.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/functional.h"
+#include "monger/util/future.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 MONGO_FAIL_POINT_DECLARE(networkInterfaceDiscardCommandsBeforeAcquireConn);
@@ -225,4 +225,4 @@ protected:
 };
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

@@ -6,15 +6,15 @@
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 3}, config: 1});
 
-    const mongosDB = st.s0.getDB("merge_write_concern");
-    const source = mongosDB["source"];
-    const target = mongosDB["target"];
+    const mongersDB = st.s0.getDB("merge_write_concern");
+    const source = mongersDB["source"];
+    const target = mongersDB["target"];
     const shard0 = st.rs0;
     const shard1 = st.rs1;
 
     // Enable sharding on the test DB and ensure its primary is shard0.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
-    st.ensurePrimaryShard(mongosDB.getName(), st.shard0.shardName);
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
+    st.ensurePrimaryShard(mongersDB.getName(), st.shard0.shardName);
 
     function testWriteConcernError(rs) {
         // Make sure that there are only 2 nodes up so w:3 writes will always time out.
@@ -23,7 +23,7 @@
 
         // Test that $merge correctly returns a WC error.
         withEachMergeMode(({whenMatchedMode, whenNotMatchedMode}) => {
-            const res = mongosDB.runCommand({
+            const res = mongersDB.runCommand({
                 aggregate: "source",
                 pipeline: [{
                     $merge: {
@@ -55,7 +55,7 @@
             if (whenNotMatchedMode == "fail")
                 return;
 
-            const res = mongosDB.runCommand({
+            const res = mongersDB.runCommand({
                 aggregate: "source",
                 pipeline: [{
                     $merge: {
@@ -81,12 +81,12 @@
     testWriteConcernError(shard0);
 
     // Shard the source collection and continue to expect writes to the primary shard.
-    st.shardColl(source, {_id: 1}, {_id: 0}, {_id: 1}, mongosDB.getName());
+    st.shardColl(source, {_id: 1}, {_id: 0}, {_id: 1}, mongersDB.getName());
     testWriteConcernError(shard0);
 
     // Shard the target collection, however make sure that all writes go to the primary shard by
     // splitting the collection at {_id: 10} and keeping all values in the same chunk.
-    st.shardColl(target, {_id: 1}, {_id: 10}, {_id: 10}, mongosDB.getName());
+    st.shardColl(target, {_id: 1}, {_id: 10}, {_id: 10}, mongersDB.getName());
     assert.eq(FixtureHelpers.isSharded(target), true);
     testWriteConcernError(shard0);
 

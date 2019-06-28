@@ -86,7 +86,7 @@
     }
     sleep(1 * 1000);
 
-    jsTest.log("Restarting the mongod...");
+    jsTest.log("Restarting the mongerd...");
     // Skip validation because it requires a lock that the prepared transaction is blocking.
     rst.stop(primary, undefined, {skipValidation: true});
     rst.start(primary, {}, true /*restart*/);

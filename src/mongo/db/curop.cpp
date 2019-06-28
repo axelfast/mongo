@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,33 +29,33 @@
 
 // CHECK_LOG_REDACTION
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/curop.h"
+#include "monger/db/curop.h"
 
 #include <iomanip>
 
-#include "mongo/bson/mutable/document.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/json.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/rpc/metadata/client_metadata.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
-#include "mongo/rpc/metadata/impersonated_user_metadata.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/str.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/json.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/rpc/metadata/client_metadata.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/rpc/metadata/impersonated_user_metadata.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -326,7 +326,7 @@ void CurOp::setGenericOpRequestDetails(OperationContext* opCtx,
                                        const Command* command,
                                        BSONObj cmdObj,
                                        NetworkOp op) {
-    // Set the _isCommand flags based on network op only. For legacy writes on mongoS, we resolve
+    // Set the _isCommand flags based on network op only. For legacy writes on mongerS, we resolve
     // them to OpMsgRequests and then pass them into the Commands path, so having a valid Command*
     // here does not guarantee that the op was issued from the client using a command protocol.
     const bool isCommand = (op == dbMsg || (op == dbQuery && nss.isCommand()));
@@ -659,8 +659,8 @@ string OpDebug::report(Client* client,
 
     OPDEBUG_TOSTRING_HELP(nShards);
     OPDEBUG_TOSTRING_HELP(cursorid);
-    if (mongotCursorId) {
-        s << " mongot: " << makeSearchBetaObject().toString();
+    if (mongertCursorId) {
+        s << " mongert: " << makeSearchBetaObject().toString();
     }
     OPDEBUG_TOSTRING_HELP(ntoreturn);
     OPDEBUG_TOSTRING_HELP(ntoskip);
@@ -763,8 +763,8 @@ void OpDebug::append(const CurOp& curop,
 
     OPDEBUG_APPEND_NUMBER(nShards);
     OPDEBUG_APPEND_NUMBER(cursorid);
-    if (mongotCursorId) {
-        b.append("mongot", makeSearchBetaObject());
+    if (mongertCursorId) {
+        b.append("mongert", makeSearchBetaObject());
     }
     OPDEBUG_APPEND_BOOL(exhaust);
 
@@ -862,8 +862,8 @@ BSONObj OpDebug::makeFlowControlObject(FlowControlTicketholder::CurOp stats) con
 
 BSONObj OpDebug::makeSearchBetaObject() const {
     BSONObjBuilder cursorBuilder;
-    invariant(mongotCursorId);
-    cursorBuilder.append("cursorid", mongotCursorId.get());
+    invariant(mongertCursorId);
+    cursorBuilder.append("cursorid", mongertCursorId.get());
     if (msWaitingForMongot) {
         cursorBuilder.append("timeWaitingMillis", msWaitingForMongot.get());
     }
@@ -968,4 +968,4 @@ string OpDebug::AdditiveMetrics::report() const {
     return s.str();
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -22,38 +22,38 @@
         }
     });
 
-    const mongosDB = st.s0.getDB(jsTestName());
-    const mongosColl = mongosDB['coll'];
+    const mongersDB = st.s0.getDB(jsTestName());
+    const mongersColl = mongersDB['coll'];
 
-    assert.commandWorked(mongosDB.dropDatabase());
+    assert.commandWorked(mongersDB.dropDatabase());
 
     // Enable sharding on the test DB and ensure its primary is st.shard0.shardName.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
-    st.ensurePrimaryShard(mongosDB.getName(), st.rs0.getURL());
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
+    st.ensurePrimaryShard(mongersDB.getName(), st.rs0.getURL());
 
     // Shard the test collection on _id.
     assert.commandWorked(
-        mongosDB.adminCommand({shardCollection: mongosColl.getFullName(), key: {_id: 1}}));
+        mongersDB.adminCommand({shardCollection: mongersColl.getFullName(), key: {_id: 1}}));
 
     // Split the collection into 2 chunks: [MinKey, 0), [0, MaxKey).
     assert.commandWorked(
-        mongosDB.adminCommand({split: mongosColl.getFullName(), middle: {_id: 0}}));
+        mongersDB.adminCommand({split: mongersColl.getFullName(), middle: {_id: 0}}));
 
     // Move the [0, MaxKey) chunk to st.shard1.shardName.
-    assert.commandWorked(mongosDB.adminCommand(
-        {moveChunk: mongosColl.getFullName(), find: {_id: 1}, to: st.rs1.getURL()}));
+    assert.commandWorked(mongersDB.adminCommand(
+        {moveChunk: mongersColl.getFullName(), find: {_id: 1}, to: st.rs1.getURL()}));
 
     // Write a document to each chunk.
-    assert.writeOK(mongosColl.insert({_id: -1}));
-    assert.writeOK(mongosColl.insert({_id: 1}));
+    assert.writeOK(mongersColl.insert({_id: -1}));
+    assert.writeOK(mongersColl.insert({_id: 1}));
 
-    const changeStream = mongosColl.aggregate([{$changeStream: {fullDocument: "updateLookup"}}]);
+    const changeStream = mongersColl.aggregate([{$changeStream: {fullDocument: "updateLookup"}}]);
 
     // Do some writes.
-    assert.writeOK(mongosColl.insert({_id: 1000}));
-    assert.writeOK(mongosColl.insert({_id: -1000}));
-    assert.writeOK(mongosColl.update({_id: 1000}, {$set: {updatedCount: 1}}));
-    assert.writeOK(mongosColl.update({_id: -1000}, {$set: {updatedCount: 1}}));
+    assert.writeOK(mongersColl.insert({_id: 1000}));
+    assert.writeOK(mongersColl.insert({_id: -1000}));
+    assert.writeOK(mongersColl.update({_id: 1000}, {$set: {updatedCount: 1}}));
+    assert.writeOK(mongersColl.update({_id: -1000}, {$set: {updatedCount: 1}}));
 
     for (let nextId of[1000, -1000]) {
         assert.soon(() => changeStream.hasNext());
@@ -73,15 +73,15 @@
 
     // Test that the change stream can still see the updated post image, even if a chunk is
     // migrated.
-    assert.writeOK(mongosColl.update({_id: 1000}, {$set: {updatedCount: 2}}));
-    assert.writeOK(mongosColl.update({_id: -1000}, {$set: {updatedCount: 2}}));
+    assert.writeOK(mongersColl.update({_id: 1000}, {$set: {updatedCount: 2}}));
+    assert.writeOK(mongersColl.update({_id: -1000}, {$set: {updatedCount: 2}}));
 
     // Split the [0, MaxKey) chunk into 2: [0, 500), [500, MaxKey).
     assert.commandWorked(
-        mongosDB.adminCommand({split: mongosColl.getFullName(), middle: {_id: 500}}));
+        mongersDB.adminCommand({split: mongersColl.getFullName(), middle: {_id: 500}}));
     // Move the [500, MaxKey) chunk back to st.shard0.shardName.
-    assert.commandWorked(mongosDB.adminCommand(
-        {moveChunk: mongosColl.getFullName(), find: {_id: 1000}, to: st.rs0.getURL()}));
+    assert.commandWorked(mongersDB.adminCommand(
+        {moveChunk: mongersColl.getFullName(), find: {_id: 1000}, to: st.rs0.getURL()}));
 
     for (let nextId of[1000, -1000]) {
         assert.soon(() => changeStream.hasNext());

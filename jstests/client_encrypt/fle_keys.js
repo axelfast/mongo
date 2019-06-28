@@ -31,11 +31,11 @@ load('jstests/ssl/libs/ssl_helpers.js');
         schemaMap: {}
     };
 
-    const conn_str = "mongodb://" + conn.host + "/?ssl=true";
+    const conn_str = "mongerdb://" + conn.host + "/?ssl=true";
     const shell = Mongo(conn_str, clientSideFLEOptions);
     const keyVault = shell.getKeyVault();
 
-    var key = keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ['mongoKey']);
+    var key = keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ['mongerKey']);
     assert.eq(1, keyVault.getKeys().itcount());
 
     var result = keyVault.createKey("aws", "arn:aws:kms:us-east-4:fake:fake:fake", {});
@@ -44,20 +44,20 @@ load('jstests/ssl/libs/ssl_helpers.js');
     result = keyVault.createKey("aws", "arn:aws:kms:us-east-5:fake:fake:fake", [1]);
     assert.eq("TypeError: items in key alternate names must be of String type.", result);
 
-    assert.eq(1, keyVault.getKeyByAltName("mongoKey").itcount());
+    assert.eq(1, keyVault.getKeyByAltName("mongerKey").itcount());
 
-    var keyId = keyVault.getKeyByAltName("mongoKey").toArray()[0]._id;
+    var keyId = keyVault.getKeyByAltName("mongerKey").toArray()[0]._id;
 
-    keyVault.addKeyAlternateName(keyId, "mongoKey2");
+    keyVault.addKeyAlternateName(keyId, "mongerKey2");
 
-    assert.eq(1, keyVault.getKeyByAltName("mongoKey2").itcount());
+    assert.eq(1, keyVault.getKeyByAltName("mongerKey2").itcount());
     assert.eq(2, keyVault.getKey(keyId).toArray()[0].keyAltNames.length);
     assert.eq(1, keyVault.getKeys().itcount());
 
     result = keyVault.addKeyAlternateName(keyId, [2]);
     assert.eq("TypeError: key alternate name cannot be object or array type.", result);
 
-    keyVault.removeKeyAlternateName(keyId, "mongoKey2");
+    keyVault.removeKeyAlternateName(keyId, "mongerKey2");
     assert.eq(1, keyVault.getKey(keyId).toArray()[0].keyAltNames.length);
 
     result = keyVault.deleteKey(keyId);

@@ -37,7 +37,7 @@
     }
 
     /**
-     * Given a $merge parameters mongod connection, run a $out aggregation against 'conn' which
+     * Given a $merge parameters mongerd connection, run a $out aggregation against 'conn' which
      * hangs on the given failpoint and ensure that the $out maxTimeMS expires.
      */
     function forceAggregationToHangAndCheckMaxTimeMsExpires(
@@ -145,18 +145,18 @@
     // Run on a standalone.
     (function() {
         const conn = MongoRunner.runMongod({});
-        assert.neq(null, conn, 'mongod was unable to start up');
+        assert.neq(null, conn, 'mongerd was unable to start up');
         insertDocs(conn.getDB(kDBName)[kSourceCollName]);
         withEachMergeMode(
             (mode) => runUnshardedTest(mode.whenMatchedMode, mode.whenNotMatchedMode, conn));
         MongoRunner.stopMongod(conn);
     })();
 
-    // Runs a $merge against 'mongosConn' and verifies that the maxTimeMS value is included in the
-    // command sent to mongod. Since the actual timeout can unreliably happen in mongos before even
+    // Runs a $merge against 'mongersConn' and verifies that the maxTimeMS value is included in the
+    // command sent to mongerd. Since the actual timeout can unreliably happen in mongers before even
     // reaching the shard, we instead set a very large timeout and verify that the command sent to
-    // mongod includes the maxTimeMS.
-    function runShardedTest(whenMatched, whenNotMatched, mongosConn, mongodConn, comment) {
+    // mongerd includes the maxTimeMS.
+    function runShardedTest(whenMatched, whenNotMatched, mongersConn, mongerdConn, comment) {
         jsTestLog("Running sharded test in whenMatched: " + whenMatched + " whenNotMatched: " +
                   whenNotMatched);
         // The target collection will always be empty so we do not test the setting that will cause
@@ -168,12 +168,12 @@
         // Set a large timeout since we expect the command to finish.
         const maxTimeMS = 1000 * 20;
 
-        const sourceColl = mongosConn.getDB(kDBName)[kSourceCollName];
-        const destColl = mongosConn.getDB(kDBName)[kDestCollName];
+        const sourceColl = mongersConn.getDB(kDBName)[kSourceCollName];
+        const destColl = mongersConn.getDB(kDBName)[kDestCollName];
         assert.commandWorked(destColl.remove({}));
 
-        // Make sure we don't timeout in mongos before even reaching the shards.
-        assert.commandWorked(mongosConn.getDB("admin").runCommand(
+        // Make sure we don't timeout in mongers before even reaching the shards.
+        assert.commandWorked(mongersConn.getDB("admin").runCommand(
             {configureFailPoint: "maxTimeNeverTimeOut", mode: "alwaysOn"}));
 
         const cursor = sourceColl.aggregate([{
@@ -186,11 +186,11 @@
                                             {maxTimeMS: maxTimeMS, comment: comment});
         assert(!cursor.hasNext());
 
-        // Filter the profiler entries on the existence of $merge, since aggregations through mongos
+        // Filter the profiler entries on the existence of $merge, since aggregations through mongers
         // will include an extra aggregation with an empty pipeline to establish cursors on the
         // shards.
         assert.soon(function() {
-            return mongodConn.getDB(kDBName)
+            return mongerdConn.getDB(kDBName)
                        .system.profile
                        .find({
                            "command.aggregate": kSourceCollName,
@@ -201,7 +201,7 @@
                        .itcount() == 1;
         });
 
-        assert.commandWorked(mongosConn.getDB("admin").runCommand(
+        assert.commandWorked(mongersConn.getDB("admin").runCommand(
             {configureFailPoint: "maxTimeNeverTimeOut", mode: "off"}));
     }
 

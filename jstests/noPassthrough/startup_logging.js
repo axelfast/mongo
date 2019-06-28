@@ -23,7 +23,7 @@
         testStartupLogging(launcher, makeRegExMatchFn(/waiting for connections on port/));
     }
 
-    print("********************\nTesting startup logging in mongod\n********************");
+    print("********************\nTesting startup logging in mongerd\n********************");
 
     validateWaitingMessage({
         start: function(opts) {

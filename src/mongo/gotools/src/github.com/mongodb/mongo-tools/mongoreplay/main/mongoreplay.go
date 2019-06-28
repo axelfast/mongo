@@ -8,8 +8,8 @@ package main
 
 import (
 	"github.com/jessevdk/go-flags"
-	"github.com/mongodb/mongo-tools/legacy/options"
-	"github.com/mongodb/mongo-tools/mongoreplay"
+	"github.com/mongerdb/monger-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/mongerreplay"
 
 	"fmt"
 	"os"
@@ -29,7 +29,7 @@ var (
 )
 
 func main() {
-	versionOpts := mongoreplay.VersionOptions{}
+	versionOpts := mongerreplay.VersionOptions{}
 	versionFlagParser := flags.NewParser(&versionOpts, flags.Default)
 	versionFlagParser.Options = flags.IgnoreUnknown
 	_, err := versionFlagParser.Parse()
@@ -42,16 +42,16 @@ func main() {
 	}
 
 	if runtime.NumCPU() == 1 {
-		fmt.Fprint(os.Stderr, "mongoreplay must be run with multiple threads")
+		fmt.Fprint(os.Stderr, "mongerreplay must be run with multiple threads")
 		os.Exit(ExitError)
 	}
 
-	opts := mongoreplay.Options{VersionStr: VersionStr, GitCommit: GitCommit}
+	opts := mongerreplay.Options{VersionStr: VersionStr, GitCommit: GitCommit}
 
 	var parser = flags.NewParser(&opts, flags.Default)
 
-	playCmd := &mongoreplay.PlayCommand{GlobalOpts: &opts}
-	playCmdParser, err := parser.AddCommand("play", "Play captured traffic against a mongodb instance", "", playCmd)
+	playCmd := &mongerreplay.PlayCommand{GlobalOpts: &opts}
+	playCmdParser, err := parser.AddCommand("play", "Play captured traffic against a mongerdb instance", "", playCmd)
 	if err != nil {
 		panic(err)
 	}
@@ -63,20 +63,20 @@ func main() {
 		}
 	}
 
-	_, err = parser.AddCommand("record", "Convert network traffic into mongodb queries", "",
-		&mongoreplay.RecordCommand{GlobalOpts: &opts})
+	_, err = parser.AddCommand("record", "Convert network traffic into mongerdb queries", "",
+		&mongerreplay.RecordCommand{GlobalOpts: &opts})
 	if err != nil {
 		panic(err)
 	}
 
-	_, err = parser.AddCommand("monitor", "Inspect live or pre-recorded mongodb traffic", "",
-		&mongoreplay.MonitorCommand{GlobalOpts: &opts})
+	_, err = parser.AddCommand("monitor", "Inspect live or pre-recorded mongerdb traffic", "",
+		&mongerreplay.MonitorCommand{GlobalOpts: &opts})
 	if err != nil {
 		panic(err)
 	}
 
 	_, err = parser.AddCommand("filter", "Filter playback file", "",
-		&mongoreplay.FilterCommand{GlobalOpts: &opts})
+		&mongerreplay.FilterCommand{GlobalOpts: &opts})
 	if err != nil {
 		panic(err)
 	}
@@ -85,7 +85,7 @@ func main() {
 
 	if err != nil {
 		switch err.(type) {
-		case mongoreplay.ErrPacketsDropped:
+		case mongerreplay.ErrPacketsDropped:
 			os.Exit(ExitNonFatal)
 		default:
 			os.Exit(ExitError)

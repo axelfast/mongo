@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/shard_metadata_util.h"
+#include "monger/db/s/shard_metadata_util.h"
 
-#include "mongo/base/status.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_shard_collection.h"
-#include "mongo/s/shard_server_test_fixture.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/status.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/commands.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_shard_collection.h"
+#include "monger/s/shard_server_test_fixture.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::string;
@@ -328,4 +328,4 @@ TEST_F(ShardMetadataUtilTest, DropChunksAndDeleteCollectionsEntry) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

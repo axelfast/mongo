@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,19 +31,19 @@
 
 #include <memory>
 
-#include "mongo/base/string_data.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog_cache_loader.h"
-#include "mongo/s/chunk_manager.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/database_version_gen.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/notification.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/string_map.h"
+#include "monger/base/string_data.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog_cache_loader.h"
+#include "monger/s/chunk_manager.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/database_version_gen.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/notification.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 class CachedDatabaseInfo;
@@ -396,4 +396,4 @@ private:
     CollectionsByDbMap _collectionsByDb;
 };
 
-}  // namespace mongo
+}  // namespace monger

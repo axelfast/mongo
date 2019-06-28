@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/background.h"
+#include "monger/util/background.h"
 
 #include <functional>
 
-#include "mongo/config.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/concurrency/spin_lock.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/timer.h"
+#include "monger/config.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/concurrency/spin_lock.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -340,4 +340,4 @@ void PeriodicTaskRunner::_runTask(PeriodicTask* const task) {
     LOG(ms <= kMinLogMs ? 3 : 0) << "task: " << taskName << " took: " << ms << "ms";
 }
 
-}  // namespace mongo
+}  // namespace monger

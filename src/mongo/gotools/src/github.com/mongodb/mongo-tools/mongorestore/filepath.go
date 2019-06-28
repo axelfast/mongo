@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
 	"compress/gzip"
@@ -16,16 +16,16 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/mongodb/mongo-tools-common/archive"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/archive"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
 )
 
 // FileType describes the various types of restore documents.
 type FileType uint
 
-// File types constants used by mongorestore.
+// File types constants used by mongerrestore.
 const (
 	UnknownFileType FileType = iota
 	BSONFileType
@@ -567,7 +567,7 @@ func hasMetadataFiles(files []archive.DirLike) bool {
 }
 
 // handleBSONInsteadOfDirectory updates -d and -c settings based on
-// the path to the BSON file passed to mongorestore. This is only
+// the path to the BSON file passed to mongerrestore. This is only
 // applicable if the target path points to a .bson file.
 //
 // As an example, when the user passes 'dump/mydb/col.bson', this method

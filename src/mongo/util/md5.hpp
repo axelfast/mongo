@@ -15,7 +15,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 
 #pragma once
 
-#include "mongo/util/md5.h"
+#include "monger/util/md5.h"
 
 #include <sstream>
 #include <string.h>
 #include <string>
 
-namespace mongo {
+namespace monger {
 
 typedef unsigned char md5digest[16];
 
@@ -74,4 +74,4 @@ inline std::string md5simpledigest(const std::string& s) {
 }
 
 
-}  // namespace mongo
+}  // namespace monger

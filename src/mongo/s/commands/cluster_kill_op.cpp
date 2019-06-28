@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/connpool.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/kill_op_cmd_base.h"
-#include "mongo/rpc/metadata.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/connpool.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/kill_op_cmd_base.h"
+#include "monger/rpc/metadata.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ClusterKillOpCommand : public KillOpCmdBase {
@@ -81,7 +81,7 @@ private:
                                     const std::string& opToKill,
                                     BSONObjBuilder& result) {
         // The format of op is shardid:opid
-        // This is different than the format passed to the mongod killOp command.
+        // This is different than the format passed to the mongerd killOp command.
         const auto opSepPos = opToKill.find(':');
 
         uassert(28625,
@@ -114,7 +114,7 @@ private:
         conn->runCommand(OpMsgRequest::fromDBAndBody("admin", BSON("killOp" << 1 << "op" << opId)));
         conn.done();
 
-        // The original behavior of killOp on mongos is to always return success, regardless of
+        // The original behavior of killOp on mongers is to always return success, regardless of
         // whether the shard reported success or not.
         return true;
     }
@@ -122,4 +122,4 @@ private:
 } clusterKillOpCommand;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

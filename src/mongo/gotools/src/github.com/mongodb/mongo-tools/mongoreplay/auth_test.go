@@ -4,14 +4,14 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"testing"
 
 	mgo "github.com/10gen/llmgo"
 	"github.com/10gen/llmgo/bson"
-	"github.com/mongodb/mongo-tools/legacy/testtype"
+	"github.com/mongerdb/monger-tools/legacy/testtype"
 )
 
 // TestCommandsAgainstAuthedDBWhenAuthed tests some basic commands against a
@@ -44,12 +44,12 @@ func TestCommandsAgainstAuthedDBWhenAuthed(t *testing.T) {
 	}
 
 	context := NewExecutionContext(statCollector, replaySession, &ExecutionOptions{})
-	t.Logf("Beginning mongoreplay playback of generated traffic against host: %v\n", urlAuth)
+	t.Logf("Beginning mongerreplay playback of generated traffic against host: %v\n", urlAuth)
 	err = Play(context, generator.opChan, testSpeed, 1, 10)
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log("Completed mongoreplay playback of generated traffic")
+	t.Log("Completed mongerreplay playback of generated traffic")
 
 	session, err := mgo.Dial(urlAuth)
 	if err != nil {
@@ -121,7 +121,7 @@ func TestCommandsAgainstAuthedDBWhenNotAuthed(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log("Completed mongoreplay playback of generated traffic")
+	t.Log("Completed mongerreplay playback of generated traffic")
 
 	session, err := mgo.Dial(urlAuth)
 	if err != nil {

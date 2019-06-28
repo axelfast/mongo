@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/log.h"
+#include "monger/util/log.h"
 
-#include "mongo/logger/console_appender.h"
-#include "mongo/logger/message_event_utf8_encoder.h"
-#include "mongo/logger/ramlog.h"
-#include "mongo/logger/rotatable_file_manager.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/time_support.h"
+#include "monger/logger/console_appender.h"
+#include "monger/logger/message_event_utf8_encoder.h"
+#include "monger/logger/ramlog.h"
+#include "monger/logger/rotatable_file_manager.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/time_support.h"
 
 // TODO: Win32 unicode console writing (in logger/console_appender?).
 // TODO: Extra log context appending, and re-enable log_user_*.js
 // TODO: Eliminate cout/cerr.
 
-namespace mongo {
+namespace monger {
 
 static logger::ExtraLogContextFn _appendExtraLogContext;
 
@@ -94,4 +94,4 @@ void setPlainConsoleLogger() {
 Tee* const warnings = RamLog::get("warnings");  // Things put here go in serverStatus
 Tee* const startupWarningsLog = RamLog::get("startupWarnings");  // intentionally leaked
 
-}  // namespace mongo
+}  // namespace monger

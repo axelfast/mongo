@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/replication_coordinator_test_fixture.h"
+#include "monger/db/repl/replication_coordinator_test_fixture.h"
 
 #include <functional>
 #include <memory>
 
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/repl/is_master_response.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_consistency_markers_mock.h"
-#include "mongo/db/repl/replication_coordinator_external_state_mock.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/replication_recovery_mock.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/db/storage/storage_engine_init.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_mock.h"
-#include "mongo/executor/thread_pool_task_executor.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/repl/is_master_response.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_consistency_markers_mock.h"
+#include "monger/db/repl/replication_coordinator_external_state_mock.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/replication_recovery_mock.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/db/storage/storage_engine_init.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_mock.h"
+#include "monger/executor/thread_pool_task_executor.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 using executor::NetworkInterfaceMock;
@@ -481,4 +481,4 @@ void ReplCoordTest::simulateCatchUpAbort() {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

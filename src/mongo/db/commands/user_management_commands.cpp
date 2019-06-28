@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,60 +27,60 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/user_management_commands.h"
+#include "monger/db/commands/user_management_commands.h"
 
 #include <functional>
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/config.h"
-#include "mongo/crypto/mechanism_scram.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/address_restriction.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/privilege_parser.h"
-#include "mongo/db/auth/resource_pattern.h"
-#include "mongo/db/auth/sasl_options.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_document_parser.h"
-#include "mongo/db/auth/user_management_commands_parser.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/run_aggregate.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/service_context.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/icu.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/password_digest.h"
-#include "mongo/util/sequence_util.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/config.h"
+#include "monger/crypto/mechanism_scram.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/address_restriction.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/privilege_parser.h"
+#include "monger/db/auth/resource_pattern.h"
+#include "monger/db/auth/sasl_options.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_document_parser.h"
+#include "monger/db/auth/user_management_commands_parser.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/run_aggregate.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/service_context.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/icu.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/password_digest.h"
+#include "monger/util/sequence_util.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 using std::string;
@@ -2353,10 +2353,10 @@ public:
 } CmdGetCacheGeneration;
 
 /**
- * This command is used only by mongorestore to handle restoring users/roles.  We do this so
- * that mongorestore doesn't do direct inserts into the admin.system.users and
+ * This command is used only by mongerrestore to handle restoring users/roles.  We do this so
+ * that mongerrestore doesn't do direct inserts into the admin.system.users and
  * admin.system.roles, which would bypass the authzUpdateLock and allow multiple concurrent
- * modifications to users/roles.  What mongorestore now does instead is it inserts all user/role
+ * modifications to users/roles.  What mongerrestore now does instead is it inserts all user/role
  * definitions it wants to restore into temporary collections, then this command moves those
  * user/role definitions into their proper place in admin.system.users and admin.system.roles.
  * It either adds the users/roles to the existing ones or replaces the existing ones, depending
@@ -2379,7 +2379,7 @@ public:
     }
 
     std::string help() const override {
-        return "Internal command used by mongorestore for updating user/role data";
+        return "Internal command used by mongerrestore for updating user/role data";
     }
 
     virtual Status checkAuthForCommand(Client* client,
@@ -2501,7 +2501,7 @@ public:
             auditCreateOrUpdateUser(userObj, false);
             Status status = updatePrivilegeDocument(opCtx, userName, userObj);
             if (!status.isOK()) {
-                // Match the behavior of mongorestore to continue on failure
+                // Match the behavior of mongerrestore to continue on failure
                 warning() << "Could not update user " << userName
                           << " in _mergeAuthzCollections command: " << redact(status);
             }
@@ -2509,7 +2509,7 @@ public:
             auditCreateOrUpdateUser(userObj, true);
             Status status = insertPrivilegeDocument(opCtx, userObj);
             if (!status.isOK()) {
-                // Match the behavior of mongorestore to continue on failure
+                // Match the behavior of mongerrestore to continue on failure
                 warning() << "Could not insert user " << userName
                           << " in _mergeAuthzCollections command: " << redact(status);
             }
@@ -2539,7 +2539,7 @@ public:
             auditCreateOrUpdateRole(roleObj, false);
             Status status = updateRoleDocument(opCtx, roleName, roleObj);
             if (!status.isOK()) {
-                // Match the behavior of mongorestore to continue on failure
+                // Match the behavior of mongerrestore to continue on failure
                 warning() << "Could not update role " << roleName
                           << " in _mergeAuthzCollections command: " << redact(status);
             }
@@ -2547,7 +2547,7 @@ public:
             auditCreateOrUpdateRole(roleObj, true);
             Status status = insertRoleDocument(opCtx, roleObj);
             if (!status.isOK()) {
-                // Match the behavior of mongorestore to continue on failure
+                // Match the behavior of mongerrestore to continue on failure
                 warning() << "Could not insert role " << roleName
                           << " in _mergeAuthzCollections command: " << redact(status);
             }
@@ -2752,4 +2752,4 @@ public:
 
 } cmdMergeAuthzCollections;
 
-}  // namespace mongo
+}  // namespace monger

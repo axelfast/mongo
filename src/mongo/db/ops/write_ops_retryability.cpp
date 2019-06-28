@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ops/write_ops_retryability.h"
+#include "monger/db/ops/write_ops_retryability.h"
 
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/ops/find_and_modify_result.h"
-#include "mongo/db/query/find_and_modify_request.h"
-#include "mongo/logger/redaction.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/ops/find_and_modify_result.h"
+#include "monger/db/query/find_and_modify_request.h"
+#include "monger/logger/redaction.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -222,4 +222,4 @@ void parseOplogEntryForFindAndModify(OperationContext* opCtx,
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

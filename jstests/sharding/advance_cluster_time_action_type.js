@@ -10,7 +10,7 @@
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     let st = new ShardingTest({
-        mongos: 1,
+        mongers: 1,
         config: 1,
         shards: 1,
         keyFile: 'jstests/libs/key1',

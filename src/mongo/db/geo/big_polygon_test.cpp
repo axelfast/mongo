@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/db/geo/big_polygon.h"
+#include "monger/db/geo/big_polygon.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/util/builder.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 using std::unique_ptr;
 using std::string;
 using std::vector;

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -37,20 +37,20 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/base/data_type.h"
-#include "mongo/base/string_data.h"
-#include "mongo/base/string_data_comparator_interface.h"
-#include "mongo/bson/bson_comparator_interface_base.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/oid.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/bufreader.h"
-#include "mongo/util/shared_buffer.h"
+#include "monger/base/data_type.h"
+#include "monger/base/string_data.h"
+#include "monger/base/string_data_comparator_interface.h"
+#include "monger/bson/bson_comparator_interface_base.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/oid.h"
+#include "monger/bson/timestamp.h"
+#include "monger/bson/util/builder.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/bufreader.h"
+#include "monger/util/shared_buffer.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjStlIterator;
 
@@ -878,4 +878,4 @@ Container BSONObj::getFieldNames() const {
     return fields;
 }
 
-}  // namespace mongo
+}  // namespace monger

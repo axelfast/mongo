@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 
-#include "mongo/base/system_error.h"
+#include "monger/base/system_error.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -45,7 +45,7 @@ public:
     MongoErrorCategoryImpl() = default;
 
     const char* name() const noexcept override {
-        return "mongo";
+        return "monger";
     }
 
     std::string message(int ev) const override {
@@ -71,18 +71,18 @@ public:
 
 }  // namespace
 
-const std::error_category& mongoErrorCategory() {
+const std::error_category& mongerErrorCategory() {
     // TODO: Remove this static, and make a constexpr instance when we move to C++14.
     static const MongoErrorCategoryImpl instance{};
     return instance;
 }
 
 std::error_code make_error_code(ErrorCodes::Error code) {
-    return std::error_code(ErrorCodes::Error(code), mongoErrorCategory());
+    return std::error_code(ErrorCodes::Error(code), mongerErrorCategory());
 }
 
 std::error_condition make_error_condition(ErrorCodes::Error code) {
-    return std::error_condition(ErrorCodes::Error(code), mongoErrorCategory());
+    return std::error_condition(ErrorCodes::Error(code), mongerErrorCategory());
 }
 
-}  // namespace mongo
+}  // namespace monger

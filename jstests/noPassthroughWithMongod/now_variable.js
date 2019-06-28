@@ -115,7 +115,7 @@
         viewWithNow.explain().find({$expr: {$eq: ["$timeField", "$$NOW"]}}).finish());
     assert.commandWorked(coll.explain().aggregate([{$addFields: {timeField: "$$NOW"}}]));
 
-    // $$CLUSTER_TIME is not available on a standalone mongod.
+    // $$CLUSTER_TIME is not available on a standalone mongerd.
     runTestsExpectFailure(baseCollectionClusterTimeFind);
     runTestsExpectFailure(baseCollectionClusterTimeAgg);
     runTestsExpectFailure(fromViewWithClusterTime);

@@ -30,7 +30,7 @@ buildvariants:
       -j$(grep -c ^processor /proc/cpuinfo)
       --ssl
       --release
-      --variables-files=etc/scons/mongodbtoolchain_v3_gcc.vars
+      --variables-files=etc/scons/mongerdbtoolchain_v3_gcc.vars
       MONGO_DISTMOD=rhel62
       multiversion_platform: rhel62
     multiversion_edition: enterprise
@@ -49,7 +49,7 @@ buildvariants:
   batchtime: 1440 # 1 day
   expansions: &enterprise-rhel-62-64-bit-inmem-expansions
     test_flags: --storageEngine=inMemory --excludeWithAnyTags=requires_persistence,requires_journaling
-    compile_flags: --ssl MONGO_DISTMOD=rhel62 -j$(grep -c ^processor /proc/cpuinfo) --variables-files=etc/scons/mongodbtoolchain_v3_gcc.vars
+    compile_flags: --ssl MONGO_DISTMOD=rhel62 -j$(grep -c ^processor /proc/cpuinfo) --variables-files=etc/scons/mongerdbtoolchain_v3_gcc.vars
     multiversion_platform: rhel62
     multiversion_edition: enterprise
     scons_cache_scope: shared

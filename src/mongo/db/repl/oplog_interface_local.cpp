@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/oplog_interface_local.h"
+#include "monger/db/repl/oplog_interface_local.h"
 
-#include "mongo/db/db_raii.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/str.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -110,4 +110,4 @@ HostAndPort OplogInterfaceLocal::hostAndPort() const {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

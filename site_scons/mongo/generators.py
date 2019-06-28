@@ -5,7 +5,7 @@ import hashlib
 # Default and alternative generator definitions go here.
 
 # This is the tuple that will be returned by the buildInfo command and
-# printed by the --version command-line option to mongod.
+# printed by the --version command-line option to mongerd.
 # Each tuple consists of:
 #   key (string)
 #   value (string)

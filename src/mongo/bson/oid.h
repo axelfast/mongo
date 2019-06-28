@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <string>
 
-#include "mongo/base/data_range.h"
-#include "mongo/base/data_view.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/data_range.h"
+#include "monger/base/data_view.h"
+#include "monger/base/static_assert.h"
+#include "monger/bson/util/builder.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 class SecureRandom;
 
 /**
@@ -252,7 +252,7 @@ inline StringBuilder& operator<<(StringBuilder& s, const OID& o) {
 }
 
 /** Formatting mode for generating JSON from BSON.
-    See <http://dochub.mongodb.org/core/mongodbextendedjson>
+    See <http://dochub.mongerdb.org/core/mongerdbextendedjson>
     for details.
 */
 enum JsonStringFormat {
@@ -276,4 +276,4 @@ inline bool operator<=(const OID& lhs, const OID& rhs) {
     return lhs.compare(rhs) <= 0;
 }
 
-}  // namespace mongo
+}  // namespace monger

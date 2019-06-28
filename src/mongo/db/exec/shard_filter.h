@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/shard_filterer_impl.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/shard_filterer_impl.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This stage drops documents that didn't belong to the shard we're executing on at the time of
@@ -105,4 +105,4 @@ private:
     ShardFiltererImpl _shardFilterer;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <string>
 #include <vector>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/matcher/schema/json_pointer.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/matcher/schema/json_pointer.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A JSON Pointer to the key id or an array of UUIDs identifying a set of keys.
@@ -143,4 +143,4 @@ public:
 private:
     BSONElement _element;
 };
-}  // namespace mongo
+}  // namespace monger

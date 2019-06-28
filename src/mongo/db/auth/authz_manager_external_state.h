@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,17 +34,17 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/shim.h"
-#include "mongo/base/status.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/authorization_manager_impl.h"
-#include "mongo/db/auth/privilege_format.h"
-#include "mongo/db/auth/role_name.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/shim.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_manager_impl.h"
+#include "monger/db/auth/privilege_format.h"
+#include "monger/db/auth/role_name.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 class AuthzSessionExternalState;
 class OperationContext;
@@ -52,7 +52,7 @@ class OperationContext;
 /**
  * Public interface for a class that encapsulates all the information related to system
  * state not stored in AuthorizationManager.  This is primarily to make AuthorizationManager
- * easier to test as well as to allow different implementations for mongos and mongod.
+ * easier to test as well as to allow different implementations for mongers and mongerd.
  */
 class AuthzManagerExternalState {
     AuthzManagerExternalState(const AuthzManagerExternalState&) = delete;
@@ -180,4 +180,4 @@ protected:
     bool shouldUseRolesFromConnection(OperationContext* opCtx, const UserName& username);
 };
 
-}  // namespace mongo
+}  // namespace monger

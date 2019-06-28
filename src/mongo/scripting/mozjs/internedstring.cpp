@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/internedstring.h"
+#include "monger/scripting/mozjs/internedstring.h"
 
-#include "mongo/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/implscope.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 InternedStringTable::InternedStringTable(JSContext* cx) {
@@ -49,7 +49,7 @@ InternedStringTable::InternedStringTable(JSContext* cx) {
         }                                                                             \
         _internedStrings[i++].init(cx, INTERNED_STRING_TO_JSID(cx, s));               \
     } while (0);
-#include "mongo/scripting/mozjs/internedstring.defs"
+#include "monger/scripting/mozjs/internedstring.defs"
 #undef MONGO_MOZJS_INTERNED_STRING
 }
 
@@ -63,4 +63,4 @@ InternedStringId::InternedStringId(JSContext* cx, InternedString id)
     : _id(cx, getScope(cx)->getInternedStringId(id)) {}
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

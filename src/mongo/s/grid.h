@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <functional>
 #include <memory>
 
-#include "mongo/db/repl/optime.h"
-#include "mongo/s/catalog/sharding_catalog_client.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/db/repl/optime.h"
+#include "monger/s/catalog/sharding_catalog_client.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 class BalancerConfiguration;
 class ClusterCursorManager;
@@ -95,7 +95,7 @@ public:
     void setShardingInitialized();
 
     /**
-     * If the instance as which this sharding component is running (config/shard/mongos) uses
+     * If the instance as which this sharding component is running (config/shard/mongers) uses
      * additional connection pools other than the default, this function will be present and can be
      * used to obtain statistics about them. Otherwise, the value will be unset.
      */
@@ -103,14 +103,14 @@ public:
     void setCustomConnectionPoolStatsFn(CustomConnectionPoolStatsFn statsFn);
 
     /**
-     * Deprecated. This is only used on mongos, and once addShard is solely handled by the configs,
+     * Deprecated. This is only used on mongers, and once addShard is solely handled by the configs,
      * it can be deleted.
      * @return true if shards and config servers are allowed to use 'localhost' in address
      */
     bool allowLocalHost() const;
 
     /**
-     * Deprecated. This is only used on mongos, and once addShard is solely handled by the configs,
+     * Deprecated. This is only used on mongers, and once addShard is solely handled by the configs,
      * it can be deleted.
      * @param whether to allow shards and config servers to use 'localhost' in address
      */
@@ -152,7 +152,7 @@ public:
     repl::OpTime configOpTime() const;
 
     /**
-     * Called whenever a mongos or shard gets a response from a config server or shard and updates
+     * Called whenever a mongers or shard gets a response from a config server or shard and updates
      * what we've seen as the last config server optime.
      * If the config optime was updated, returns the previous value.
      * NOTE: This is not valid to call on a config server instance.
@@ -195,7 +195,7 @@ private:
     mutable stdx::mutex _mutex;
 
     // Last known highest opTime from the config server that should be used when doing reads.
-    // This value is updated any time a shard or mongos talks to a config server or a shard.
+    // This value is updated any time a shard or mongers talks to a config server or a shard.
     repl::OpTime _configOpTime;
 
     /**
@@ -205,10 +205,10 @@ private:
      */
     boost::optional<repl::OpTime> _advanceConfigOpTime(const repl::OpTime& opTime);
 
-    // Deprecated. This is only used on mongos, and once addShard is solely handled by the configs,
+    // Deprecated. This is only used on mongers, and once addShard is solely handled by the configs,
     // it can be deleted.
     // Can 'localhost' be used in shard addresses?
     bool _allowLocalShard{true};
 };
 
-}  // namespace mongo
+}  // namespace monger

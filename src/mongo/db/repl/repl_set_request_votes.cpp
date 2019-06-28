@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/repl_set_command.h"
-#include "mongo/db/repl/repl_set_request_votes_args.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/client.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/repl_set_command.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/executor/network_interface.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 class CmdReplSetRequestVotes : public ReplSetCommand {
@@ -72,4 +72,4 @@ private:
 } cmdReplSetRequestVotes;
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

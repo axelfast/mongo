@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/session_update_tracker.h"
+#include "monger/db/repl/session_update_tracker.h"
 
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/session.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/transaction_participant_gen.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/server_options.h"
+#include "monger/db/session.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/transaction_participant_gen.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -320,4 +320,4 @@ boost::optional<OplogEntry> SessionUpdateTracker::_createTransactionTableUpdateF
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

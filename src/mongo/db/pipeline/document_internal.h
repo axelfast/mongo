@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,11 +34,11 @@
 #include <bitset>
 #include <boost/intrusive_ptr.hpp>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/util/intrusive_counter.h"
+#include "monger/base/static_assert.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/util/intrusive_counter.h"
 
-namespace mongo {
+namespace monger {
 /** Helper class to make the position in a document abstract
  *  Warning: This is NOT guaranteed to be the ordered position.
  *           eg. the first field may not be at Position(0)

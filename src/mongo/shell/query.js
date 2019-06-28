@@ -1,9 +1,9 @@
 // query.js
 
 if (typeof DBQuery == "undefined") {
-    DBQuery = function(mongo, db, collection, ns, query, fields, limit, skip, batchSize, options) {
+    DBQuery = function(monger, db, collection, ns, query, fields, limit, skip, batchSize, options) {
 
-        this._mongo = mongo;            // 0
+        this._monger = monger;            // 0
         this._db = db;                  // 1
         this._collection = collection;  // 2
         this._ns = ns;                  // 3
@@ -62,7 +62,7 @@ DBQuery.prototype.help = function() {
 };
 
 DBQuery.prototype.clone = function() {
-    var q = new DBQuery(this._mongo,
+    var q = new DBQuery(this._monger,
                         this._db,
                         this._collection,
                         this._ns,
@@ -105,7 +105,7 @@ DBQuery.prototype._exec = function() {
         assert.eq(0, this._numReturned);
         this._cursorSeen = 0;
 
-        if (this._mongo.useReadCommands() && this._canUseFindCommand()) {
+        if (this._monger.useReadCommands() && this._canUseFindCommand()) {
             var canAttachReadPref = true;
             var findCmd = this._convertToCommand(canAttachReadPref);
             var cmdRes = this._db.runReadCommand(findCmd, null, this._options);
@@ -127,7 +127,7 @@ DBQuery.prototype._exec = function() {
                 throw new Error("collation requires use of read commands");
             }
 
-            this._cursor = this._mongo.find(this._ns,
+            this._cursor = this._monger.find(this._ns,
                                             this._query,
                                             this._fields,
                                             this._limit,
@@ -558,10 +558,10 @@ DBQuery.prototype.toString = function() {
 //
 
 /**
-* Get partial results from a mongos if some shards are down (instead of throwing an error).
+* Get partial results from a mongers if some shards are down (instead of throwing an error).
 *
 * @method
-* @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#op-query
+* @see http://docs.mongerdb.org/meta-driver/latest/legacy/mongerdb-wire-protocol/#op-query
 * @return {DBQuery}
 */
 DBQuery.prototype.allowPartialResults = function() {
@@ -575,7 +575,7 @@ DBQuery.prototype.allowPartialResults = function() {
 * to prevent excess memory use. Set this option to prevent that.
 *
 * @method
-* @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#op-query
+* @see http://docs.mongerdb.org/meta-driver/latest/legacy/mongerdb-wire-protocol/#op-query
 * @return {DBQuery}
 */
 DBQuery.prototype.noCursorTimeout = function() {
@@ -588,7 +588,7 @@ DBQuery.prototype.noCursorTimeout = function() {
 * Internal replication use only - driver should not set
 *
 * @method
-* @see http://docs.mongodb.org/meta-driver/latest/legacy/mongodb-wire-protocol/#op-query
+* @see http://docs.mongerdb.org/meta-driver/latest/legacy/mongerdb-wire-protocol/#op-query
 * @return {DBQuery}
 */
 DBQuery.prototype.oplogReplay = function() {
@@ -601,7 +601,7 @@ DBQuery.prototype.oplogReplay = function() {
 * Limits the fields to return for all matching documents.
 *
 * @method
-* @see http://docs.mongodb.org/manual/tutorial/project-fields-from-query-results/
+* @see http://docs.mongerdb.org/manual/tutorial/project-fields-from-query-results/
 * @param {object} document Document specifying the projection of the resulting documents.
 * @return {DBQuery}
 */
@@ -615,7 +615,7 @@ DBQuery.prototype.projection = function(document) {
 * Specify cursor as a tailable cursor, allowing to specify if it will use awaitData
 *
 * @method
-* @see http://docs.mongodb.org/manual/tutorial/create-tailable-cursor/
+* @see http://docs.mongerdb.org/manual/tutorial/create-tailable-cursor/
 * @param {boolean} [awaitData=true] cursor blocks for a few seconds to wait for data if no documents
 *found.
 * @return {DBQuery}
@@ -636,7 +636,7 @@ DBQuery.prototype.tailable = function(awaitData) {
 * Specify a document containing modifiers for the query.
 *
 * @method
-* @see http://docs.mongodb.org/manual/reference/operator/query-modifier/
+* @see http://docs.mongerdb.org/manual/reference/operator/query-modifier/
 * @param {object} document A document containing modifers to apply to the cursor.
 * @return {DBQuery}
 */
@@ -676,7 +676,7 @@ DBQuery.shellBatchSize = 20;
 
 /**
  * Query option flag bit constants.
- * @see http://dochub.mongodb.org/core/mongowireprotocol#MongoWireProtocol-OPQUERY
+ * @see http://dochub.mongerdb.org/core/mongerwireprotocol#MongoWireProtocol-OPQUERY
  */
 DBQuery.Option = {
     tailable: 0x2,
@@ -689,8 +689,8 @@ DBQuery.Option = {
 };
 
 function DBCommandCursor(db, cmdResult, batchSize, maxAwaitTimeMS, txnNumber) {
-    if (cmdResult._mongo) {
-        const newSession = new _DelegatingDriverSession(cmdResult._mongo, db.getSession());
+    if (cmdResult._monger) {
+        const newSession = new _DelegatingDriverSession(cmdResult._monger, db.getSession());
         db = newSession.getDatabase(db.getName());
     }
 

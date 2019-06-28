@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package uuid // import "go.mongodb.org/mongo-driver/x/mongo/driverlegacy/uuid"
+package uuid // import "go.mongerdb.org/monger-driver/x/monger/driverlegacy/uuid"
 
 import (
 	"bytes"

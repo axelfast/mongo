@@ -16,13 +16,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"go.mongodb.org/mongo-driver/event"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/auth"
-	"go.mongodb.org/mongo-driver/x/network/address"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/connection"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/result"
+	"go.mongerdb.org/monger-driver/event"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/auth"
+	"go.mongerdb.org/monger-driver/x/network/address"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/connection"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/result"
 )
 
 const minHeartbeatInterval = 500 * time.Millisecond
@@ -117,7 +117,7 @@ func ConnectServer(ctx context.Context, addr address.Address, topo func(descript
 	return srvr, nil
 }
 
-// NewServer creates a new server. The mongodb server at the address will be monitored
+// NewServer creates a new server. The mongerdb server at the address will be monitored
 // on an internal monitoring goroutine.
 func NewServer(addr address.Address, topo func(description.Server), opts ...ServerOption) (*Server, error) {
 	cfg, err := newServerConfig(opts...)

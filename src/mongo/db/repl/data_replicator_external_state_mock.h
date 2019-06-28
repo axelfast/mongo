@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/db/repl/data_replicator_external_state.h"
+#include "monger/db/repl/data_replicator_external_state.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 class ReplicationCoordinator;
@@ -97,4 +97,4 @@ public:
 
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/service_context_d_test_fixture.h"
+#include "monger/db/service_context_d_test_fixture.h"
 
 #include <memory>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/db/catalog/catalog_control.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_impl.h"
-#include "mongo/db/catalog/database_holder_impl.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/index/index_access_method_factory_impl.h"
-#include "mongo/db/index_builds_coordinator_mongod.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/service_entry_point_mongod.h"
-#include "mongo/db/storage/storage_engine_init.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/periodic_runner_factory.h"
+#include "monger/base/checked_cast.h"
+#include "monger/db/catalog/catalog_control.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_impl.h"
+#include "monger/db/catalog/database_holder_impl.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/index/index_access_method_factory_impl.h"
+#include "monger/db/index_builds_coordinator_mongerd.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/service_entry_point_mongerd.h"
+#include "monger/db/storage/storage_engine_init.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/periodic_runner_factory.h"
 
-namespace mongo {
+namespace monger {
 
 ServiceContextMongoDTest::ServiceContextMongoDTest()
     : ServiceContextMongoDTest("ephemeralForTest") {}
@@ -102,4 +102,4 @@ ServiceContextMongoDTest::~ServiceContextMongoDTest() {
     std::swap(storageGlobalParams.repair, _stashedStorageParams.repair);
 }
 
-}  // namespace mongo
+}  // namespace monger

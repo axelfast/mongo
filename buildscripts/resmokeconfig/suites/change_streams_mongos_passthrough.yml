@@ -43,11 +43,11 @@ executor:
     # Use two shards to make sure we will only talk to the primary shard for the database and will
     # not delay changes to wait for notifications or a clock advancement from other shards.
     num_shards: 2
-    mongos_options:
+    mongers_options:
       bind_ip_all: ''
       set_parameters:
         enableTestCommands: 1
-    mongod_options:
+    mongerd_options:
       bind_ip_all: ''
       set_parameters:
         enableTestCommands: 1

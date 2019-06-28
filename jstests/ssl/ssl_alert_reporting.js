@@ -39,19 +39,19 @@ load('jstests/ssl/libs/ssl_helpers.js');
         });
 
         let shell;
-        let mongoOutput;
+        let mongerOutput;
 
         assert.soon(function() {
             clearRawMongoProgramOutput();
-            shell = runMongoProgram("mongo",
+            shell = runMongoProgram("monger",
                                     "--port",
                                     md.port,
                                     ...clientOptions,
                                     "--sslDisabledProtocols",
                                     clientDisabledProtos);
-            mongoOutput = rawMongoProgramOutput();
-            return mongoOutput.match(expectedRegex);
-        }, "Mongo shell output was as follows:\n" + mongoOutput + "\n************");
+            mongerOutput = rawMongoProgramOutput();
+            return mongerOutput.match(expectedRegex);
+        }, "Mongo shell output was as follows:\n" + mongerOutput + "\n************");
 
         MongoRunner.stopMongod(md);
     }

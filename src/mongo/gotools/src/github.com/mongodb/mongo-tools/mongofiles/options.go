@@ -4,14 +4,14 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongofiles
+package mongerfiles
 
 import (
 	"fmt"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
 )
 
 // Usage string printed as part of --help
@@ -29,12 +29,12 @@ Possible commands include:
 	delete    - delete all files with filename 'filename'
 	delete_id - delete a file with the given '_id'
 
-See http://docs.mongodb.org/manual/reference/program/mongofiles/ for more information.`
+See http://docs.mongerdb.org/manual/reference/program/mongerfiles/ for more information.`
 
 // ParseOptions reads command line arguments and converts them into options used to configure a MongoFiles instance
 func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, error) {
 	// initialize command-line opts
-	opts := options.New("mongofiles", versionStr, gitCommit, Usage, options.EnabledOptions{Auth: true, Connection: true, Namespace: false, URI: true})
+	opts := options.New("mongerfiles", versionStr, gitCommit, Usage, options.EnabledOptions{Auth: true, Connection: true, Namespace: false, URI: true})
 
 	storageOpts := &StorageOptions{}
 	inputOpts := &InputOptions{}
@@ -73,7 +73,7 @@ func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, erro
 	return Options{opts, storageOpts, inputOpts, args}, nil
 }
 
-// Options contains all the possible options that can configure mongofiles
+// Options contains all the possible options that can configure mongerfiles
 type Options struct {
 	*options.ToolOptions
 	*StorageOptions
@@ -98,8 +98,8 @@ type StorageOptions struct {
 	// GridFSPrefix specifies what GridFS prefix to use; defaults to 'fs'
 	GridFSPrefix string `long:"prefix" value-name:"<prefix>" default:"fs" default-mask:"-" description:"GridFS prefix to use (default is 'fs')"`
 
-	// Specifies the write concern for each write operation that mongofiles writes to the target database.
-	// By default, mongofiles waits for a majority of members from the replica set to respond before returning.
+	// Specifies the write concern for each write operation that mongerfiles writes to the target database.
+	// By default, mongerfiles waits for a majority of members from the replica set to respond before returning.
 	// Cannot be used simultaneously with write concern options in a URI.
 	WriteConcern string `long:"writeConcern" value-name:"<write-concern>" default-mask:"-" description:"write concern options e.g. --writeConcern majority, --writeConcern '{w: 3, wtimeout: 500, fsync: true, j: true}'"`
 }

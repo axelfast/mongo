@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,17 +32,17 @@
 #include <functional>
 #include <string>
 
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/util/future.h"
-#include "mongo/util/md5.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/util/future.h"
+#include "monger/util/md5.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 
@@ -80,10 +80,10 @@ constexpr auto kInternalAuthFallbackMechanism = kMechanismScramSha1;
  *     "user": The std::string name of the user to authenticate.  Mandatory.
  *     "db": The database target of the auth command, which identifies the location
  *         of the credential information for the user.  May be "$external" if
- *         credential information is stored outside of the mongo cluster.  Mandatory.
+ *         credential information is stored outside of the monger cluster.  Mandatory.
  *     "pwd": The password data.
  *     "digestPassword": Boolean, set to true if the "pwd" is undigested (default).
- *     "serviceName": The GSSAPI service name to use.  Defaults to "mongodb".
+ *     "serviceName": The GSSAPI service name to use.  Defaults to "mongerdb".
  *     "serviceHostname": The GSSAPI hostname to use.  Defaults to the name of the remote
  *          host.
  *
@@ -168,4 +168,4 @@ StringData getSaslCommandUserDBFieldName();
 StringData getSaslCommandUserFieldName();
 
 }  // namespace auth
-}  // namespace mongo
+}  // namespace monger

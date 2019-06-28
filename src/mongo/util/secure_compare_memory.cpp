@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,11 +28,11 @@
  */
 
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/secure_compare_memory.h"
+#include "monger/util/secure_compare_memory.h"
 
-namespace mongo {
+namespace monger {
 
 bool consttimeMemEqual(volatile const unsigned char* s1,  // NOLINT - using volatile to
                        volatile const unsigned char* s2,  // NOLINT - disable compiler optimizations
@@ -46,4 +46,4 @@ bool consttimeMemEqual(volatile const unsigned char* s1,  // NOLINT - using vola
     return (1 & ((ret - 1) >> 8));
 }
 
-}  // namespace mongo
+}  // namespace monger

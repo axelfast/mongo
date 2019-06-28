@@ -10,9 +10,9 @@ import (
 	"bytes"
 	"fmt"
 
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/x/network/address"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/x/network/address"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 var supportedWireVersions = description.NewVersionRange(2, 6)

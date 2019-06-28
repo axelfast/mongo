@@ -53,9 +53,9 @@ var $config = extendWorkload($config, function($config, $super) {
         // moveChunk operation is the same as numDocsBefore, or that the number of documents in the
         // chunk's range found on the _fromShard_ after a _failed_ moveChunk operation is the same
         // as numDocsBefore.
-        // Choose the mongos randomly to distribute load.
+        // Choose the mongers randomly to distribute load.
         var numDocsBefore = ChunkHelper.getNumDocs(
-            ChunkHelper.getRandomMongos(connCache.mongos), ns, chunk.min._id, chunk.max._id);
+            ChunkHelper.getRandomMongos(connCache.mongers), ns, chunk.min._id, chunk.max._id);
 
         // Save the number of chunks before the moveChunk operation. This will be used
         // to verify that the number of chunks after the moveChunk operation remains the same.
@@ -132,22 +132,22 @@ var $config = extendWorkload($config, function($config, $super) {
             }
         }
 
-        // Verify that all mongos processes see the correct after-state on the shards and configs.
+        // Verify that all mongers processes see the correct after-state on the shards and configs.
         // (see comments below for specifics).
-        for (var mongos of connCache.mongos) {
+        for (var mongers of connCache.mongers) {
             // Regardless of if the moveChunk operation succeeded or failed,
-            // verify that each mongos sees as many documents in the chunk's
+            // verify that each mongers sees as many documents in the chunk's
             // range after the move as there were before.
-            var numDocsAfter = ChunkHelper.getNumDocs(mongos, ns, chunk.min._id, chunk.max._id);
-            msg = 'Number of documents in range seen by mongos changed with moveChunk, range: ' +
+            var numDocsAfter = ChunkHelper.getNumDocs(mongers, ns, chunk.min._id, chunk.max._id);
+            msg = 'Number of documents in range seen by mongers changed with moveChunk, range: ' +
                 tojson(bounds) + '.\n' + msgBase;
             assertWhenOwnColl.eq(numDocsAfter, numDocsBefore, msg);
 
-            // If the moveChunk operation succeeded, verify that each mongos sees all data in the
-            // chunk's range on only the toShard. If the operation failed, verify that each mongos
+            // If the moveChunk operation succeeded, verify that each mongers sees all data in the
+            // chunk's range on only the toShard. If the operation failed, verify that each mongers
             // sees all data in the chunk's range on only the fromShard.
             var shardsForChunk =
-                ChunkHelper.getShardsForRange(mongos, ns, chunk.min._id, chunk.max._id);
+                ChunkHelper.getShardsForRange(mongers, ns, chunk.min._id, chunk.max._id);
             var msg =
                 msgBase + '\nMongos find().explain() results for chunk: ' + tojson(shardsForChunk);
             assertWhenOwnColl.eq(shardsForChunk.shards.length, 1, msg);
@@ -159,10 +159,10 @@ var $config = extendWorkload($config, function($config, $super) {
                 assertWhenOwnColl.eq(shardsForChunk.shards[0], fromShard, msg);
             }
 
-            // If the moveChunk operation succeeded, verify that each mongos updated the chunk's
-            // shard metadata with the toShard. If the operation failed, verify that each mongos
+            // If the moveChunk operation succeeded, verify that each mongers updated the chunk's
+            // shard metadata with the toShard. If the operation failed, verify that each mongers
             // still sees the chunk's shard metadata as the fromShard.
-            var chunkAfter = mongos.getDB('config').chunks.findOne({_id: chunk._id});
+            var chunkAfter = mongers.getDB('config').chunks.findOne({_id: chunk._id});
             var msg =
                 msgBase + '\nchunkBefore: ' + tojson(chunk) + '\nchunkAfter: ' + tojson(chunkAfter);
             if (moveChunkRes.ok) {

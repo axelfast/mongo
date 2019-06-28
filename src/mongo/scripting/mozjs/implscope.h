@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,55 +33,55 @@
 #include <vm/PosixNSPR.h>
 
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/scripting/mozjs/bindata.h"
-#include "mongo/scripting/mozjs/bson.h"
-#include "mongo/scripting/mozjs/code.h"
-#include "mongo/scripting/mozjs/countdownlatch.h"
-#include "mongo/scripting/mozjs/cursor.h"
-#include "mongo/scripting/mozjs/cursor_handle.h"
-#include "mongo/scripting/mozjs/db.h"
-#include "mongo/scripting/mozjs/dbcollection.h"
-#include "mongo/scripting/mozjs/dbpointer.h"
-#include "mongo/scripting/mozjs/dbquery.h"
-#include "mongo/scripting/mozjs/dbref.h"
-#include "mongo/scripting/mozjs/engine.h"
-#include "mongo/scripting/mozjs/error.h"
-#include "mongo/scripting/mozjs/freeOpToJSContext.h"
-#include "mongo/scripting/mozjs/global.h"
-#include "mongo/scripting/mozjs/internedstring.h"
-#include "mongo/scripting/mozjs/jsthread.h"
-#include "mongo/scripting/mozjs/maxkey.h"
-#include "mongo/scripting/mozjs/minkey.h"
-#include "mongo/scripting/mozjs/mongo.h"
-#include "mongo/scripting/mozjs/mongohelpers.h"
-#include "mongo/scripting/mozjs/nativefunction.h"
-#include "mongo/scripting/mozjs/numberdecimal.h"
-#include "mongo/scripting/mozjs/numberint.h"
-#include "mongo/scripting/mozjs/numberlong.h"
-#include "mongo/scripting/mozjs/object.h"
-#include "mongo/scripting/mozjs/oid.h"
-#include "mongo/scripting/mozjs/regexp.h"
-#include "mongo/scripting/mozjs/session.h"
-#include "mongo/scripting/mozjs/status.h"
-#include "mongo/scripting/mozjs/timestamp.h"
-#include "mongo/scripting/mozjs/uri.h"
-#include "mongo/stdx/unordered_set.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/scripting/mozjs/bindata.h"
+#include "monger/scripting/mozjs/bson.h"
+#include "monger/scripting/mozjs/code.h"
+#include "monger/scripting/mozjs/countdownlatch.h"
+#include "monger/scripting/mozjs/cursor.h"
+#include "monger/scripting/mozjs/cursor_handle.h"
+#include "monger/scripting/mozjs/db.h"
+#include "monger/scripting/mozjs/dbcollection.h"
+#include "monger/scripting/mozjs/dbpointer.h"
+#include "monger/scripting/mozjs/dbquery.h"
+#include "monger/scripting/mozjs/dbref.h"
+#include "monger/scripting/mozjs/engine.h"
+#include "monger/scripting/mozjs/error.h"
+#include "monger/scripting/mozjs/freeOpToJSContext.h"
+#include "monger/scripting/mozjs/global.h"
+#include "monger/scripting/mozjs/internedstring.h"
+#include "monger/scripting/mozjs/jsthread.h"
+#include "monger/scripting/mozjs/maxkey.h"
+#include "monger/scripting/mozjs/minkey.h"
+#include "monger/scripting/mozjs/monger.h"
+#include "monger/scripting/mozjs/mongerhelpers.h"
+#include "monger/scripting/mozjs/nativefunction.h"
+#include "monger/scripting/mozjs/numberdecimal.h"
+#include "monger/scripting/mozjs/numberint.h"
+#include "monger/scripting/mozjs/numberlong.h"
+#include "monger/scripting/mozjs/object.h"
+#include "monger/scripting/mozjs/oid.h"
+#include "monger/scripting/mozjs/regexp.h"
+#include "monger/scripting/mozjs/session.h"
+#include "monger/scripting/mozjs/status.h"
+#include "monger/scripting/mozjs/timestamp.h"
+#include "monger/scripting/mozjs/uri.h"
+#include "monger/stdx/unordered_set.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 /**
  * Implementation Scope for MozJS
  *
  * The Implementation scope holds the actual mozjs runtime and context objects,
- * along with a number of global prototypes for mongoDB specific types. Each
+ * along with a number of global prototypes for mongerDB specific types. Each
  * ImplScope requires it's own thread and cannot be accessed from any thread
  * other than the one it was created on (this is a detail inherited from the
  * JSRuntime). If you need a scope that can be accessed by different threads
  * over the course of it's lifetime, see MozJSProxyScope
  *
- * For more information about overriden fields, see mongo::Scope
+ * For more information about overriden fields, see monger::Scope
  */
 class MozJSImplScope final : public Scope {
     MozJSImplScope(const MozJSImplScope&) = delete;
@@ -237,13 +237,13 @@ public:
     template <typename T>
     typename std::enable_if<std::is_same<T, MongoExternalInfo>::value, WrapType<T>&>::type
     getProto() {
-        return _mongoExternalProto;
+        return _mongerExternalProto;
     }
 
     template <typename T>
     typename std::enable_if<std::is_same<T, MongoHelpersInfo>::value, WrapType<T>&>::type
     getProto() {
-        return _mongoHelpersProto;
+        return _mongerHelpersProto;
     }
 
     template <typename T>
@@ -445,8 +445,8 @@ private:
     WrapType<JSThreadInfo> _jsThreadProto;
     WrapType<MaxKeyInfo> _maxKeyProto;
     WrapType<MinKeyInfo> _minKeyProto;
-    WrapType<MongoExternalInfo> _mongoExternalProto;
-    WrapType<MongoHelpersInfo> _mongoHelpersProto;
+    WrapType<MongoExternalInfo> _mongerExternalProto;
+    WrapType<MongoHelpersInfo> _mongerHelpersProto;
     WrapType<NativeFunctionInfo> _nativeFunctionProto;
     WrapType<NumberDecimalInfo> _numberDecimalProto;
     WrapType<NumberIntInfo> _numberIntProto;
@@ -470,4 +470,4 @@ inline MozJSImplScope* getScope(js::FreeOp* fop) {
 
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

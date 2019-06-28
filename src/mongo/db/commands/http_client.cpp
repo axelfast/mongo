@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/http_client_gen.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/http_client.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/http_client_gen.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/operation_context.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/http_client.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 bool isLocalhostURI(StringData uri) {
@@ -141,4 +141,4 @@ public:
 MONGO_REGISTER_TEST_COMMAND(CmdHttpClient);
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

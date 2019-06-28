@@ -42,7 +42,7 @@
     const conn = MongoRunner.runMongod();
     session = conn.startSession({causalConsistency: false});
     sessionDb = session.getDatabase(dbName);
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
     session.startTransaction({readConcern: {level: "snapshot"}});
     assert.commandFailedWithCode(sessionDb.runCommand({find: collName}),
                                  ErrorCodes.IllegalOperation);

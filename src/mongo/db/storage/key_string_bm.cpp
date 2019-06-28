@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <benchmark/benchmark.h>
 #include <random>
 #include <vector>
 
-#include "mongo/db/storage/key_string.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/bufreader.h"
-#include "mongo/util/log.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/bufreader.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 std::mt19937_64 seedGen(1234);
@@ -173,4 +173,4 @@ BENCHMARK_CAPTURE(BM_KeyStringToBSON, V1_String, KeyString::Version::V1, STRING)
 BENCHMARK_CAPTURE(BM_KeyStringToBSON, V0_Array, KeyString::Version::V0, ARRAY);
 BENCHMARK_CAPTURE(BM_KeyStringToBSON, V1_Array, KeyString::Version::V1, ARRAY);
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

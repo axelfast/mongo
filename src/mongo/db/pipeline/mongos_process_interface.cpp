@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/mongos_process_interface.h"
+#include "monger/db/pipeline/mongers_process_interface.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/sharded_agg_helpers.h"
-#include "mongo/db/query/collation/collation_spec.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/s/scoped_collection_metadata.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
-#include "mongo/s/query/establish_cursors.h"
-#include "mongo/s/query/router_exec_stage.h"
-#include "mongo/util/fail_point.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/curop.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/sharded_agg_helpers.h"
+#include "monger/db/query/collation/collation_spec.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/s/scoped_collection_metadata.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/cluster_cursor_manager.h"
+#include "monger/s/query/establish_cursors.h"
+#include "monger/s/query/router_exec_stage.h"
+#include "monger/util/fail_point.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::shared_ptr;
@@ -185,7 +185,7 @@ boost::optional<Document> MongoSInterface::lookupSingleDocument(
             // Find by UUID and shard versioning do not work together (SERVER-31946).  In the
             // sharded case we've already checked the UUID, so find by namespace is safe.  In the
             // unlikely case that the collection has been deleted and a new collection with the same
-            // name created through a different mongos, the shard version will be detected as stale,
+            // name created through a different mongers, the shard version will be detected as stale,
             // as shard versions contain an 'epoch' field unique to the collection.
             findCmd = findCmd.addField(BSON("find" << nss.coll()).firstElement());
             findCmdIsByUuid = false;
@@ -301,7 +301,7 @@ MongoSInterface::ensureFieldsUniqueOrResolveDocumentKey(
     const NamespaceString& outputNs) const {
     invariant(expCtx->inMongos);
     uassert(
-        51179, "Received unexpected 'targetCollectionVersion' on mongos", !targetCollectionVersion);
+        51179, "Received unexpected 'targetCollectionVersion' on mongers", !targetCollectionVersion);
 
     if (fields) {
         // Convert 'fields' array to a set of FieldPaths.
@@ -317,14 +317,14 @@ MongoSInterface::ensureFieldsUniqueOrResolveDocumentKey(
 
     // In case there are multiple shards which will perform this stage in parallel, we need to
     // figure out and attach the collection's shard version to ensure each shard is talking about
-    // the same version of the collection. This mongos will coordinate that. We force a catalog
+    // the same version of the collection. This mongers will coordinate that. We force a catalog
     // refresh to do so because there is no shard versioning protocol on this namespace and so we
     // otherwise could not be sure this node is (or will become) at all recent. We will also
     // figure out and attach the 'joinFields' to send to the shards.
 
     // There are edge cases when the collection could be dropped or re-created during or near the
     // time of the operation (for example, during aggregation). This is okay - we are mostly
-    // paranoid that this mongos is very stale and want to prevent returning an error if the
+    // paranoid that this mongers is very stale and want to prevent returning an error if the
     // collection was dropped a long time ago. Because of this, we are okay with piggy-backing off
     // another thread's request to refresh the cache, simply waiting for that request to return
     // instead of forcing another refresh.
@@ -336,4 +336,4 @@ MongoSInterface::ensureFieldsUniqueOrResolveDocumentKey(
             targetCollectionVersion};
 }
 
-}  // namespace mongo
+}  // namespace monger

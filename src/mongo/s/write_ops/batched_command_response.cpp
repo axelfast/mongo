@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/write_ops/batched_command_response.h"
+#include "monger/s/write_ops/batched_command_response.h"
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/field_parser.h"
-#include "mongo/db/repl/bson_extract_optime.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/util/str.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/commands.h"
+#include "monger/db/field_parser.h"
+#include "monger/db/repl/bson_extract_optime.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::string;
@@ -509,4 +509,4 @@ const std::vector<std::string>& BatchedCommandResponse::getErrorLabels() const {
     return _errorLabels;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/db/s/collection_sharding_runtime.h"
-#include "mongo/db/s/migration_chunk_cloner_source.h"
-#include "mongo/s/request_types/move_chunk_request.h"
-#include "mongo/util/timer.h"
+#include "monger/db/s/collection_sharding_runtime.h"
+#include "monger/db/s/migration_chunk_cloner_source.h"
+#include "monger/s/request_types/move_chunk_request.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 struct ShardingStatistics;
@@ -196,7 +196,7 @@ private:
     /**
      * If this donation moves the first chunk to the recipient (i.e., the recipient didn't have any
      * chunks), this function writes a no-op message to the oplog, so that change stream will notice
-     * that and close the cursor in order to notify mongos to target the new shard as well.
+     * that and close the cursor in order to notify mongers to target the new shard as well.
      */
     void _notifyChangeStreamsOnRecipientFirstChunk(OperationContext* opCtx,
                                                    const ScopedCollectionMetadata& metadata);
@@ -248,4 +248,4 @@ private:
     boost::optional<CollectionCriticalSection> _critSec;
 };
 
-}  // namespace mongo
+}  // namespace monger

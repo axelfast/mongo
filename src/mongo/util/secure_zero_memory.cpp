@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/config.h"
+#include "monger/config.h"
 
 #if defined(MONGO_CONFIG_HAVE_MEMSET_S)
 #define __STDC_WANT_LIB_EXT1__ 1
 #endif
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstring>
 
-#include "mongo/util/assert_util.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 void secureZeroMemory(void* mem, size_t size) {
     if (mem == nullptr) {
@@ -63,4 +63,4 @@ void secureZeroMemory(void* mem, size_t size) {
 #endif
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "src/mongo/db/repl/replication_metrics.h"
+#include "src/monger/db/repl/replication_metrics.h"
 
-#include "mongo/db/commands/server_status.h"
+#include "monger/db/commands/server_status.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -52,4 +52,4 @@ public:
 } electionMetricsSSS;
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

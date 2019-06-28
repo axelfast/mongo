@@ -10,7 +10,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     const conn = MongoRunner.runMongod(x509_options);
 
     const shellOpts = [
-        "mongo",
+        "monger",
         "--host",
         conn.host,
         "--port",

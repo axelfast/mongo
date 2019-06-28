@@ -12,10 +12,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mongodb/mongo-tools-common/log"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/mongerdb/monger-tools-common/log"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 type CollectionInfo struct {
@@ -54,13 +54,13 @@ func (ci *CollectionInfo) GetUUID() string {
 // using the listIndexes command if available, or by falling back to querying
 // against system.indexes (pre-3.0 systems). nil is returned if the collection
 // does not exist.
-func GetIndexes(coll *mongo.Collection) (*mongo.Cursor, error) {
+func GetIndexes(coll *monger.Collection) (*monger.Cursor, error) {
 	return coll.Indexes().List(context.Background())
 }
 
-// Assumes that mongo.Database will normalize legacy names to omit database
+// Assumes that monger.Database will normalize legacy names to omit database
 // name as required by the Enumerate Collections spec
-func GetCollections(database *mongo.Database, name string) (*mongo.Cursor, error) {
+func GetCollections(database *monger.Database, name string) (*monger.Cursor, error) {
 	filter := bson.D{}
 	if len(name) > 0 {
 		filter = append(filter, primitive.E{"name", name})
@@ -74,7 +74,7 @@ func GetCollections(database *mongo.Database, name string) (*mongo.Cursor, error
 	return cursor, nil
 }
 
-func GetCollectionInfo(coll *mongo.Collection) (*CollectionInfo, error) {
+func GetCollectionInfo(coll *monger.Collection) (*CollectionInfo, error) {
 	iter, err := GetCollections(coll.Database(), coll.Name())
 	if err != nil {
 		return nil, err

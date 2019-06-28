@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -25,7 +25,7 @@
 # exception statement from all source files in the program, then also delete
 # it in the license file.
 #
-"""Validate that mongocryptd push tasks are correct in etc/evergreen.yml."""
+"""Validate that mongercryptd push tasks are correct in etc/evergreen.yml."""
 from __future__ import absolute_import, print_function, unicode_literals
 
 import argparse
@@ -42,7 +42,7 @@ from buildscripts.ciconfig.evergreen import parse_evergreen_file
 # pylint: enable=wrong-import-position
 
 # Name of map to search for in the variables map in evergreen.yml
-MONGOCRYPTD_VARIANTS = "mongocryptd_variants"
+MONGOCRYPTD_VARIANTS = "mongercryptd_variants"
 PUSH_TASK_NAME = "push"
 
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/keys_collection_cache.h"
-#include "mongo/db/keys_collection_client_sharded.h"
-#include "mongo/db/keys_collection_document.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/s/catalog/dist_lock_manager_mock.h"
-#include "mongo/s/config_server_test_fixture.h"
-#include "mongo/s/grid.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/keys_collection_cache.h"
+#include "monger/db/keys_collection_client_sharded.h"
+#include "monger/db/keys_collection_document.h"
+#include "monger/db/operation_context.h"
+#include "monger/s/catalog/dist_lock_manager_mock.h"
+#include "monger/s/config_server_test_fixture.h"
+#include "monger/s/grid.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CacheTest : public ConfigServerTestFixture {
@@ -269,4 +269,4 @@ TEST_F(CacheTest, RefreshCanIncrementallyGetNewKeys) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

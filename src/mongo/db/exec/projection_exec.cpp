@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/db/exec/projection_exec.h"
+#include "monger/db/exec/projection_exec.h"
 
-#include "mongo/bson/mutable/document.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/update/path_support.h"
-#include "mongo/util/str.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/update/path_support.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
-namespace mmb = mongo::mutablebson;
+namespace mmb = monger::mutablebson;
 
 ProjectionExec::ProjectionExec(OperationContext* opCtx,
                                const BSONObj& spec,
@@ -208,7 +208,7 @@ StatusWith<BSONObj> ProjectionExec::computeReturnKeyProjection(const BSONObj& in
     }
 
     // Must be possible to do both returnKey meta-projection and sortKey meta-projection so that
-    // mongos can support returnKey.
+    // mongers can support returnKey.
     for (auto fieldName : _sortKeyMetaFields)
         bob.append(fieldName, sortKey);
 
@@ -506,4 +506,4 @@ Status ProjectionExec::append(BSONObjBuilder* bob,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

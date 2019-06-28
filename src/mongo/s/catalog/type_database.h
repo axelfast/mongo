@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/s/database_version_gen.h"
-#include "mongo/s/shard_id.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/s/database_version_gen.h"
+#include "monger/s/shard_id.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class Status;
@@ -121,4 +121,4 @@ private:
     DatabaseVersion _version;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -4,19 +4,19 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package monger
 
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 // Database performs operations on a given database.
@@ -180,7 +180,7 @@ func (db *Database) RunCommandCursor(ctx context.Context, runCommand interface{}
 	return cursor, replaceErrors(err)
 }
 
-// Drop drops this database from mongodb.
+// Drop drops this database from mongerdb.
 func (db *Database) Drop(ctx context.Context) error {
 	if ctx == nil {
 		ctx = context.Background()
@@ -211,7 +211,7 @@ func (db *Database) Drop(ctx context.Context) error {
 	return nil
 }
 
-// ListCollections list collections from mongodb database.
+// ListCollections list collections from mongerdb database.
 func (db *Database) ListCollections(ctx context.Context, filter interface{}, opts ...*options.ListCollectionsOptions) (*Cursor, error) {
 	if ctx == nil {
 		ctx = context.Background()

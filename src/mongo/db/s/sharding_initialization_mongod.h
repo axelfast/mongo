@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <functional>
 
-#include "mongo/base/string_data.h"
-#include "mongo/client/replica_set_change_notifier.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/s/type_shard_identity.h"
+#include "monger/base/string_data.h"
+#include "monger/client/replica_set_change_notifier.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/s/type_shard_identity.h"
 
-namespace mongo {
+namespace monger {
 
 class ConnectionString;
 class OperationContext;
@@ -132,4 +132,4 @@ void initializeGlobalShardingStateForMongoD(OperationContext* opCtx,
                                             const ConnectionString& configCS,
                                             StringData distLockProcessId);
 
-}  // namespace mongo
+}  // namespace monger

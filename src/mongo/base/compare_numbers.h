@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <cmath>
 
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/assert_util.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * These functions compare numbers using the same rules as BSON. Care is taken to always give
@@ -178,4 +178,4 @@ inline int compareDoubleToDecimal(double lhs, Decimal128 rhs) {
     return -compareDecimalToDouble(rhs, lhs);
 }
 
-}  // namespace mongo
+}  // namespace monger

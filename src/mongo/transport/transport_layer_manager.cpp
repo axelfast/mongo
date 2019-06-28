@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/transport/transport_layer_manager.h"
+#include "monger/transport/transport_layer_manager.h"
 
 #include <iostream>
 #include <limits>
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/transport/service_executor_adaptive.h"
-#include "mongo/transport/service_executor_synchronous.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer_asio.h"
-#include "mongo/util/net/ssl_types.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/transport/service_executor_adaptive.h"
+#include "monger/transport/service_executor_synchronous.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer_asio.h"
+#include "monger/util/net/ssl_types.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace transport {
 
 TransportLayerManager::TransportLayerManager() = default;
@@ -158,4 +158,4 @@ std::unique_ptr<TransportLayer> TransportLayerManager::createWithConfig(
 }
 
 }  // namespace transport
-}  // namespace mongo
+}  // namespace monger

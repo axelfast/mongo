@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/string_data.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/shell/shell_options.h"
-#include "mongo/util/cmdline_utils/censor_cmdline.h"
+#include "monger/base/string_data.h"
+#include "monger/client/monger_uri.h"
+#include "monger/shell/shell_options.h"
+#include "monger/util/cmdline_utils/censor_cmdline.h"
 
-mongo::ShellGlobalParams mongo::shellGlobalParams;
+monger::ShellGlobalParams monger::shellGlobalParams;
 
-void mongo::redactPasswordOptions(int argc, char** argv) {
+void monger::redactPasswordOptions(int argc, char** argv) {
     cmdline_utils::censorArgvArray(argc, argv);
 
     for (int i = 0; i < argc; ++i) {

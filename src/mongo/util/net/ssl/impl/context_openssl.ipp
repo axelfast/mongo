@@ -20,8 +20,8 @@
 
 #include "asio/detail/throw_error.hpp"
 #include "asio/error.hpp"
-#include "mongo/util/net/ssl/context.hpp"
-#include "mongo/util/net/ssl/error.hpp"
+#include "monger/util/net/ssl/context.hpp"
+#include "monger/util/net/ssl/error.hpp"
 #include <cstring>
 
 #include "asio/detail/push_options.hpp"

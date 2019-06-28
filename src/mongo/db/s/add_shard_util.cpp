@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/add_shard_util.h"
+#include "monger/db/s/add_shard_util.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/add_shard_cmd_gen.h"
-#include "mongo/s/catalog/sharding_catalog_client.h"
-#include "mongo/s/cluster_identity_loader.h"
-#include "mongo/s/shard_id.h"
-#include "mongo/s/write_ops/batched_command_request.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/add_shard_cmd_gen.h"
+#include "monger/s/catalog/sharding_catalog_client.h"
+#include "monger/s/cluster_identity_loader.h"
+#include "monger/s/shard_id.h"
+#include "monger/s/write_ops/batched_command_request.h"
 
-namespace mongo {
+namespace monger {
 namespace add_shard_util {
 
 AddShard createAddShardCmd(OperationContext* opCtx, const ShardId& shardName) {
@@ -77,5 +77,5 @@ BSONObj createShardIdentityUpsertForAddShard(const AddShard& addShardCmd) {
     return request.toBSON();
 }
 
-}  // namespace mongo
+}  // namespace monger
 }  // namespace add_shard_util

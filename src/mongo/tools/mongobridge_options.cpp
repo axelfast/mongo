@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kBridge
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kBridge
 
-#include "mongo/tools/mongobridge_options.h"
+#include "monger/tools/mongerbridge_options.h"
 
 #include <algorithm>
 #include <iostream>
 
-#include "mongo/base/status.h"
-#include "mongo/platform/random.h"
-#include "mongo/util/log.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/base/status.h"
+#include "monger/platform/random.h"
+#include "monger/util/log.h"
+#include "monger/util/options_parser/startup_options.h"
 
-namespace mongo {
+namespace monger {
 
-MongoBridgeGlobalParams mongoBridgeGlobalParams;
+MongoBridgeGlobalParams mongerBridgeGlobalParams;
 
 void printMongoBridgeHelp(std::ostream* out) {
-    *out << "Usage: mongobridge --port <port> --dest <dest> [ --seed <seed> ] [ --verbose <vvv> ]"
+    *out << "Usage: mongerbridge --port <port> --dest <dest> [ --seed <seed> ] [ --verbose <vvv> ]"
             " [ --help ]"
          << std::endl;
     *out << moe::startupOptions.helpString();
@@ -71,9 +71,9 @@ Status storeMongoBridgeOptions(const moe::Environment& params,
 
     if (!params.count("seed")) {
         std::unique_ptr<SecureRandom> seedSource{SecureRandom::create()};
-        mongoBridgeGlobalParams.seed = seedSource->nextInt64();
+        mongerBridgeGlobalParams.seed = seedSource->nextInt64();
     } else {
-        mongoBridgeGlobalParams.seed = static_cast<int64_t>(params["seed"].as<long>());
+        mongerBridgeGlobalParams.seed = static_cast<int64_t>(params["seed"].as<long>());
     }
 
     if (params.count("verbose")) {
@@ -89,4 +89,4 @@ Status storeMongoBridgeOptions(const moe::Environment& params,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

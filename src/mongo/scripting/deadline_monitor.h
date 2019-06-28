@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,16 +30,16 @@
 
 #include <cstdint>
 
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/time_support.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 // Returns the current interrupt interval from the setParameter value
 int getScriptingEngineInterruptInterval();
@@ -78,7 +78,7 @@ public:
         // of this instance must be initialized before the thread is created.  As a result, we
         // should not create the thread in the initializer list.  Creating it there leaves us
         // vulnerable to errors introduced by rearranging the order of fields in the class.
-        _monitorThread = stdx::thread(&mongo::DeadlineMonitor<_Task>::deadlineMonitorThread, this);
+        _monitorThread = stdx::thread(&monger::DeadlineMonitor<_Task>::deadlineMonitorThread, this);
     }
 
     ~DeadlineMonitor() {
@@ -195,4 +195,4 @@ private:
     bool _inShutdown = false;
 };
 
-}  // namespace mongo
+}  // namespace monger

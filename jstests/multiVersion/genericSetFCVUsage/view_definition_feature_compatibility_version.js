@@ -1,8 +1,8 @@
 /**
- * Test that mongod will not allow creation of a view using new aggregation features when the
+ * Test that mongerd will not allow creation of a view using new aggregation features when the
  * feature compatibility version is older than the latest version.
  *
- * We restart mongod during the test and expect it to have the same data after restarting.
+ * We restart mongerd during the test and expect it to have the same data after restarting.
  * @tags: [requires_persistence]
  */
 
@@ -15,14 +15,14 @@
     const dbpath = MongoRunner.dataPath + testName;
 
     // The 'pipelinesWithNewFeatures' array should be populated with aggregation pipelines that use
-    // aggregation features new in the latest version of mongod. This test ensures that a view
+    // aggregation features new in the latest version of mongerd. This test ensures that a view
     // definition accepts the new aggregation feature when the feature compatibility version is the
     // latest version, and rejects it when the feature compatibility version is the last-stable
     // version.
     const pipelinesWithNewFeatures = [];
 
     let conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest"});
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
     let testDB = conn.getDB(testName);
 
     // Explicitly set feature compatibility version to the latest version.
@@ -75,11 +75,11 @@
 
     MongoRunner.stopMongod(conn);
 
-    // Starting up the last-stable version of mongod with new query features will succeed.
+    // Starting up the last-stable version of mongerd with new query features will succeed.
     conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
     assert.neq(null,
                conn,
-               `version ${MongoRunner.getBinVersionFor("last-stable")} of mongod was` +
+               `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd was` +
                    " unable to start up");
     testDB = conn.getDB(testName);
 
@@ -97,10 +97,10 @@
 
     MongoRunner.stopMongod(conn);
 
-    // Starting up the latest version of mongod should succeed, even though the feature
+    // Starting up the latest version of mongerd should succeed, even though the feature
     // compatibility version is still set to the last-stable version.
     conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest", noCleanData: true});
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
     testDB = conn.getDB(testName);
 
     // Read against an existing view using new query features should not fail.
@@ -140,7 +140,7 @@
         noCleanData: true,
         setParameter: "internalValidateFeaturesAsMaster=false"
     });
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
     testDB = conn.getDB(testName);
 
     pipelinesWithNewFeatures.forEach(function(pipe, i) {
@@ -163,11 +163,11 @@
 
     MongoRunner.stopMongod(conn);
 
-    // Starting up the last-stable version of mongod with new query features should succeed.
+    // Starting up the last-stable version of mongerd with new query features should succeed.
     conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
     assert.neq(null,
                conn,
-               `version ${MongoRunner.getBinVersionFor("last-stable")} of mongod was` +
+               `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd was` +
                    " unable to start up");
     testDB = conn.getDB(testName);
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/s/query/document_source_update_on_add_shard.h"
+#include "monger/s/query/document_source_update_on_add_shard.h"
 
 #include <algorithm>
 
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/async_results_merger_params_gen.h"
-#include "mongo/s/query/establish_cursors.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/async_results_merger_params_gen.h"
+#include "monger/s/query/establish_cursors.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // Returns true if the change stream document has an 'operationType' of 'newShardDetected'.
@@ -123,4 +123,4 @@ std::vector<RemoteCursor> DocumentSourceUpdateOnAddShard::establishShardCursorsO
                             allowPartialResults);
 }
 
-}  // namespace mongo
+}  // namespace monger

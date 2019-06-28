@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/metadata/client_metadata.h"
+#include "monger/rpc/metadata/client_metadata.h"
 
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/s/is_mongos.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/operation_context.h"
+#include "monger/s/is_mongers.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 constexpr auto kClientMetadataFieldName = "$client"_sd;
@@ -60,7 +60,7 @@ constexpr auto kName = "name"_sd;
 constexpr auto kType = "type"_sd;
 constexpr auto kVersion = "version"_sd;
 
-constexpr auto kMongoS = "mongos"_sd;
+constexpr auto kMongoS = "mongers"_sd;
 constexpr auto kHost = "host"_sd;
 constexpr auto kClient = "client"_sd;
 
@@ -295,7 +295,7 @@ Status ClientMetadata::validateOperatingSystemDocument(const BSONObj& doc) {
 }
 
 void ClientMetadata::setMongoSMetadata(StringData hostAndPort,
-                                       StringData mongosClient,
+                                       StringData mongersClient,
                                        StringData version) {
     BSONObjBuilder builder;
     builder.appendElements(_document);
@@ -303,7 +303,7 @@ void ClientMetadata::setMongoSMetadata(StringData hostAndPort,
     {
         auto sub = BSONObjBuilder(builder.subobjStart(kMongoS));
         sub.append(kHost, hostAndPort);
-        sub.append(kClient, mongosClient);
+        sub.append(kClient, mongersClient);
         sub.append(kVersion, version);
     }
 
@@ -444,4 +444,4 @@ StringData ClientMetadata::fieldName() {
     return kClientMetadataFieldName;
 }
 
-}  // namespace mongo
+}  // namespace monger

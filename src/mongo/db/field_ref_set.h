@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,11 +32,11 @@
 #include <set>
 #include <vector>
 
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/base/status.h"
-#include "mongo/db/field_ref.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/base/status.h"
+#include "monger/db/field_ref.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A FieldRefSet holds a number of unique FieldRefs - a set of dotted paths into a document.
@@ -181,4 +181,4 @@ private:
     FieldRefSet _fieldRefSet;
 };
 
-}  // namespace mongo
+}  // namespace monger

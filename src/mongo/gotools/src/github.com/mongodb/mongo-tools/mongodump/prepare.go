@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongodump
+package mongerdump
 
 import (
 	"bytes"
@@ -15,12 +15,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mongodb/mongo-tools-common/archive"
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/archive"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 type NilPos struct{}
@@ -171,7 +171,7 @@ func shouldSkipSystemNamespace(dbName, collName string) bool {
 }
 
 // shouldSkipCollection returns true when a collection name is excluded
-// by the mongodump options.
+// by the mongerdump options.
 func (dump *MongoDump) shouldSkipCollection(colName string) bool {
 	for _, excludedCollection := range dump.OutputOptions.ExcludedCollections {
 		if colName == excludedCollection {

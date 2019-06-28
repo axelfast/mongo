@@ -705,30 +705,30 @@ class FindLastActivated(unittest.TestCase):
 
     REVISION_BUILDS = {
         "rev1": {
-            "not_mongodb_mongo_master_variant1_build1": {"activated": False},  # force line break
-            "mongodb_mongo_unmaster_variant_build1": {"activated": True},
-            "mongodb_mongo_master_variant1_build1": {"activated": True},
-            "mongodb_mongo_master_variant2_build1": {"activated": False},
-            "mongodb_mongo_master_variant3_build1": {"activated": False}
+            "not_mongerdb_monger_master_variant1_build1": {"activated": False},  # force line break
+            "mongerdb_monger_unmaster_variant_build1": {"activated": True},
+            "mongerdb_monger_master_variant1_build1": {"activated": True},
+            "mongerdb_monger_master_variant2_build1": {"activated": False},
+            "mongerdb_monger_master_variant3_build1": {"activated": False}
         },
         "rev2": {
-            "not_mongodb_mongo_master_variant1_build1": {"activated": True},
-            "mongodb_mongo_unmaster_variant_build1": {"activated": True},
-            "mongodb_mongo_master_variant1_build1": {"activated": True},
-            "mongodb_mongo_master_variant2_build1": {"activated": False}
+            "not_mongerdb_monger_master_variant1_build1": {"activated": True},
+            "mongerdb_monger_unmaster_variant_build1": {"activated": True},
+            "mongerdb_monger_master_variant1_build1": {"activated": True},
+            "mongerdb_monger_master_variant2_build1": {"activated": False}
         },
         "rev3": {
-            "not_mongodb_mongo_master_variant1_build1": {"activated": True},
-            "mongodb_mongo_unmaster_variant_build1": {"activated": True},
-            "mongodb_mongo_master_variant1_build1": {"activated": True},
-            "mongodb_mongo_master_variant2_build1": {"activated": False},
+            "not_mongerdb_monger_master_variant1_build1": {"activated": True},
+            "mongerdb_monger_unmaster_variant_build1": {"activated": True},
+            "mongerdb_monger_master_variant1_build1": {"activated": True},
+            "mongerdb_monger_master_variant2_build1": {"activated": False},
         },
         "rev4": {
-            "not_mongodb_mongo_master_variant1_build1": {"activated": True},
-            "mongodb_mongo_unmaster_variant_build1": {"activated": True},
-            "mongodb_mongo_master_variant1_build1": {"activated": True},  # force line break
-            "mongodb_mongo_master_variant2_build1": {"activated": False},
-            "mongodb_mongo_master_variant3_build1": {"activated": True}
+            "not_mongerdb_monger_master_variant1_build1": {"activated": True},
+            "mongerdb_monger_unmaster_variant_build1": {"activated": True},
+            "mongerdb_monger_master_variant1_build1": {"activated": True},  # force line break
+            "mongerdb_monger_master_variant2_build1": {"activated": False},
+            "mongerdb_monger_master_variant3_build1": {"activated": True}
         },
     }
 
@@ -768,7 +768,7 @@ class FindLastActivated(unittest.TestCase):
                                        revisions=REVISION_BUILDS.keys()):
         with patch(BURN_IN + ".requests", MockRequests()),\
              patch(EVG_CLIENT + ".read_evg_config", return_value=None):
-            self.load_urls(burn_in.requests, "mongodb-mongo-master", self.REVISION_BUILDS)
+            self.load_urls(burn_in.requests, "mongerdb-monger-master", self.REVISION_BUILDS)
             last_revision = burn_in.find_last_activated_task(revisions, variant, branch)
         self.assertEqual(last_revision, revision)
 

@@ -151,19 +151,19 @@ function configExpandSuccess(config, test = null, opts = {}) {
         assert.eq(0, runMongoProgram("chmod", chmod.toString(8), configFile));
     }
 
-    const mongod = MongoRunner.runMongod(Object.assign({
+    const mongerd = MongoRunner.runMongod(Object.assign({
         configExpand: 'rest,exec',
         config: configFile,
     },
                                                        opts));
 
-    assert(mongod, "Mongod failed to start up with config: " + cat(configFile));
+    assert(mongerd, "Mongod failed to start up with config: " + cat(configFile));
     removeFile(configFile);
 
     if (test) {
-        test(mongod.getDB('admin'));
+        test(mongerd.getDB('admin'));
     }
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 }
 
 function configExpandFailure(config, test = null, opts = {}) {
@@ -186,7 +186,7 @@ function configExpandFailure(config, test = null, opts = {}) {
         port: allocatePort(),
     },
                                   opts);
-    let args = [MongoRunner.mongodPath];
+    let args = [MongoRunner.mongerdPath];
     for (let k in options) {
         args.push('--' + k);
         if (options[k] != '') {
@@ -195,13 +195,13 @@ function configExpandFailure(config, test = null, opts = {}) {
     }
 
     clearRawMongoProgramOutput();
-    const mongod = _startMongoProgram({args: args});
+    const mongerd = _startMongoProgram({args: args});
 
     assert.soon(function() {
         return rawMongoProgramOutput().match(test);
     });
-    if (mongod) {
-        stopMongoProgramByPid(mongod);
+    if (mongerd) {
+        stopMongoProgramByPid(mongerd);
     }
     removeFile(configFile);
 }

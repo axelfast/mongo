@@ -417,7 +417,7 @@ Reads from C<STDIN> and dumps colored structures to C<STDOUT>.
 
 =item *
 
-David Golden <david@mongodb.com>
+David Golden <david@mongerdb.com>
 
 =back
 

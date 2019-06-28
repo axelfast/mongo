@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_internal_split_pipeline.h"
+#include "monger/db/pipeline/document_source_internal_split_pipeline.h"
 
-namespace mongo {
+namespace monger {
 
 REGISTER_DOCUMENT_SOURCE(_internalSplitPipeline,
                          LiteParsedDocumentSourceDefault::parse,
@@ -64,7 +64,7 @@ boost::intrusive_ptr<DocumentSource> DocumentSourceInternalSplitPipeline::create
                 mergeType = HostTypeRequirement::kAnyShard;
             } else if ("primaryShard"_sd == mergeTypeString) {
                 mergeType = HostTypeRequirement::kPrimaryShard;
-            } else if ("mongos"_sd == mergeTypeString) {
+            } else if ("mongers"_sd == mergeTypeString) {
                 mergeType = HostTypeRequirement::kMongoS;
             } else {
                 uasserted(ErrorCodes::BadValue,
@@ -106,7 +106,7 @@ Value DocumentSourceInternalSplitPipeline::serialize(
             break;
 
         case HostTypeRequirement::kMongoS:
-            mergeTypeString = "mongos";
+            mergeTypeString = "mongers";
             break;
 
         case HostTypeRequirement::kNone:
@@ -120,4 +120,4 @@ Value DocumentSourceInternalSplitPipeline::serialize(
                                   mergeTypeString.empty() ? Value() : Value(mergeTypeString)}}}}});
 }
 
-}  // namesace mongo
+}  // namesace monger

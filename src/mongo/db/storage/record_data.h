@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <type_traits>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/util/shared_buffer.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/util/shared_buffer.h"
 
-namespace mongo {
+namespace monger {
 
 // TODO: Does this need to have move support?
 /**
@@ -103,4 +103,4 @@ private:
 MONGO_STATIC_ASSERT(std::is_nothrow_move_constructible_v<RecordData>);
 MONGO_STATIC_ASSERT(std::is_nothrow_move_assignable_v<RecordData>);
 
-}  // namespace mongo
+}  // namespace monger

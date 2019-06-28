@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cctype>
 
-#include "mongo/base/parse_number.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/str.h"
+#include "monger/base/parse_number.h"
+#include "monger/util/hex.h"
+#include "monger/util/str.h"
 
-namespace mongo::str {
+namespace monger::str {
 
 void splitStringDelim(const std::string& str, std::vector<std::string>* res, char delim) {
     if (str.empty())
@@ -243,4 +243,4 @@ std::string convertDoubleToString(double d, int prec) {
     return std::string(buffer);
 }
 
-}  // namespace mongo::str
+}  // namespace monger::str

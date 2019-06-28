@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/config/sharding_catalog_manager.h"
+#include "monger/db/s/config/sharding_catalog_manager.h"
 
-#include "mongo/db/operation_context.h"
-#include "mongo/db/s/balancer/type_migration.h"
-#include "mongo/s/catalog/config_server_version.h"
-#include "mongo/s/catalog/sharding_catalog_client.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_config_version.h"
-#include "mongo/s/catalog/type_lockpings.h"
-#include "mongo/s/catalog/type_locks.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog/type_tags.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/s/balancer/type_migration.h"
+#include "monger/s/catalog/config_server_version.h"
+#include "monger/s/catalog/sharding_catalog_client.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_config_version.h"
+#include "monger/s/catalog/type_lockpings.h"
+#include "monger/s/catalog/type_locks.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog/type_tags.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const WriteConcernOptions kNoWaitWriteConcern(1, WriteConcernOptions::SyncMode::UNSET, Seconds(0));
@@ -330,4 +330,4 @@ Lock::ExclusiveLock ShardingCatalogManager::lockZoneMutex(OperationContext* opCt
     return lk;
 }
 
-}  // namespace mongo
+}  // namespace monger

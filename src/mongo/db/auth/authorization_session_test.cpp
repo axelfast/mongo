@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,39 +27,39 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
 /**
  * Unit tests of the AuthorizationSession type.
  */
-#include "mongo/base/status.h"
-#include "mongo/bson/bson_depth.h"
-#include "mongo/crypto/mechanism_scram.h"
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_manager_impl.h"
-#include "mongo/db/auth/authorization_session_for_test.h"
-#include "mongo/db/auth/authz_manager_external_state_mock.h"
-#include "mongo/db/auth/authz_session_external_state_mock.h"
-#include "mongo/db/auth/restriction_environment.h"
-#include "mongo/db/auth/sasl_options.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer_mock.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/map_util.h"
+#include "monger/base/status.h"
+#include "monger/bson/bson_depth.h"
+#include "monger/crypto/mechanism_scram.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_manager_impl.h"
+#include "monger/db/auth/authorization_session_for_test.h"
+#include "monger/db/auth/authz_manager_external_state_mock.h"
+#include "monger/db/auth/authz_session_external_state_mock.h"
+#include "monger/db/auth/restriction_environment.h"
+#include "monger/db/auth/sasl_options.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer_mock.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/map_util.h"
 
 #define ASSERT_NULL(EXPR) ASSERT_FALSE(EXPR)
 #define ASSERT_NON_NULL(EXPR) ASSERT_TRUE(EXPR)
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class FailureCapableAuthzManagerExternalStateMock : public AuthzManagerExternalStateMock {
@@ -86,7 +86,7 @@ private:
     bool _findsShouldFail;
 };
 
-class AuthorizationSessionTest : public ::mongo::unittest::Test {
+class AuthorizationSessionTest : public ::monger::unittest::Test {
 public:
     FailureCapableAuthzManagerExternalStateMock* managerState;
     transport::TransportLayerMock transportLayer;
@@ -1368,4 +1368,4 @@ TEST_F(AuthorizationSessionTest, CanUseUUIDNamespacesWithPrivilege) {
 
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

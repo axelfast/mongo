@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/ssl_parameters.h"
+#include "monger/util/net/ssl_parameters.h"
 
-#include "mongo/config.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/net/ssl_parameters_gen.h"
+#include "monger/config.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/db/server_options.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/net/ssl_parameters_gen.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 std::string clusterAuthModeFormat() {
@@ -142,9 +142,9 @@ Status TLSModeServerParameter::setFromString(const std::string& strMode) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger
 
-mongo::Status mongo::validateOpensslCipherConfig(const std::string&) {
+monger::Status monger::validateOpensslCipherConfig(const std::string&) {
     if (!sslGlobalParams.sslCipherConfig.empty()) {
         return {ErrorCodes::BadValue,
                 "opensslCipherConfig setParameter is incompatible with net.tls.tlsCipherConfig"};
@@ -159,7 +159,7 @@ mongo::Status mongo::validateOpensslCipherConfig(const std::string&) {
     return Status::OK();
 }
 
-mongo::Status mongo::validateDisableNonTLSConnectionLogging(const bool&) {
+monger::Status monger::validateDisableNonTLSConnectionLogging(const bool&) {
     if (sslGlobalParams.disableNonSSLConnectionLoggingSet) {
         return {ErrorCodes::BadValue,
                 "Error parsing command line: Multiple occurrences of option "
@@ -168,7 +168,7 @@ mongo::Status mongo::validateDisableNonTLSConnectionLogging(const bool&) {
     return Status::OK();
 }
 
-mongo::Status mongo::onUpdateDisableNonTLSConnectionLogging(const bool&) {
+monger::Status monger::onUpdateDisableNonTLSConnectionLogging(const bool&) {
     // disableNonSSLConnectionLogging is a write-once setting.
     // Once we've updated it, we're not allowed to specify the set-param again.
     // Record that update in a second bool value.

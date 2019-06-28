@@ -1,6 +1,6 @@
 description: "Record max setVersion, even from primary without electionId"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

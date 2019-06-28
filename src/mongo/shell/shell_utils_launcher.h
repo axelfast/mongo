@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,21 +36,21 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/platform/process_id.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/stdx/unordered_set.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/platform/process_id.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/stdx/unordered_set.h"
 
-namespace mongo {
+namespace monger {
 
 class Scope;
 
 namespace shell_utils {
 
-// Scoped management of mongo program instances.  Simple implementation:
-// destructor kills all mongod instances created by the shell.
+// Scoped management of monger program instances.  Simple implementation:
+// destructor kills all mongerd instances created by the shell.
 struct MongoProgramScope {
     MongoProgramScope() {}  // Avoid 'unused variable' warning.
     ~MongoProgramScope();
@@ -122,7 +122,7 @@ public:
     /** @param args The program's arguments, including the program name.
      *  @param env Environment to run the program with, which will override any set by the local
      *             environment
-     * @param isMongo Indicator variable, true if runs as a mongo process.
+     * @param isMongo Indicator variable, true if runs as a monger process.
      */
     ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMongo);
     /** Launch the program. */
@@ -148,4 +148,4 @@ private:
     std::string _name;
 };
 }  // namespace shell_utils
-}  // namespace mongo
+}  // namespace monger

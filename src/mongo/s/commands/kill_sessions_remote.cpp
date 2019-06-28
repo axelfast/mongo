@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/commands/kill_sessions_remote.h"
-#include "mongo/s/commands/kill_sessions_remote_gen.h"
+#include "monger/s/commands/kill_sessions_remote.h"
+#include "monger/s/commands/kill_sessions_remote_gen.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/kill_sessions_common.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/async_multicaster.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
-#include "mongo/util/log.h"
+#include "monger/db/client.h"
+#include "monger/db/kill_sessions_common.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/async_multicaster.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/cluster_cursor_manager.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -114,7 +114,7 @@ Status killSessionsRemoteKillCursor(OperationContext* opCtx,
 }  // namespace
 
 /**
- * This kill function (meant for mongos), kills matching local ops first, then fans out to all other
+ * This kill function (meant for mongers), kills matching local ops first, then fans out to all other
  * nodes in the cluster to kill them as well.
  */
 SessionKiller::Result killSessionsRemote(OperationContext* opCtx,
@@ -132,4 +132,4 @@ SessionKiller::Result killSessionsRemote(OperationContext* opCtx,
     return parallelExec(opCtx, cmd.toBSON(), urbg);
 }
 
-}  // namespace mongo
+}  // namespace monger

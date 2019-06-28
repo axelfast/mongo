@@ -6,7 +6,7 @@ to the [Storage FAQ][]). This document gives a brief overview of the API, and pr
 to places with more detailed documentation. Where referencing code, links are to the version that
 was current at the time when the reference was made. Always compare with the latest version for
 changes not yet reflected here.  For questions on the API that are not addressed by this material,
-use the [mongodb-dev][] Google group. Everybody involved in the Storage Engine API will read your
+use the [mongerdb-dev][] Google group. Everybody involved in the Storage Engine API will read your
 post.
 
 Third-party storage engines are integrated through self-contained modules that can be dropped into
@@ -18,7 +18,7 @@ module would at least have the following files:
     SConscript       Scons build rules
     build.py         Module configuration script
 
-See <https://github.com/mongodb-partners/mongo-rocks> for a good example of the structure.
+See <https://github.com/mongerdb-partners/monger-rocks> for a good example of the structure.
 
 
 Concepts
@@ -123,9 +123,9 @@ details.
 * [ServerParameter](../server_parameters.h)
 
 
-[Concurrency FAQ]: http://docs.mongodb.org/manual/faq/concurrency/
-[initial sync]: http://docs.mongodb.org/manual/core/replica-set-sync/#replica-set-initial-sync
-[mongodb-dev]: https://groups.google.com/forum/#!forum/mongodb-dev
-[replica set]: http://docs.mongodb.org/manual/replication/
-[Storage FAQ]: http://docs.mongodb.org/manual/faq/storage
+[Concurrency FAQ]: http://docs.mongerdb.org/manual/faq/concurrency/
+[initial sync]: http://docs.mongerdb.org/manual/core/replica-set-sync/#replica-set-initial-sync
+[mongerdb-dev]: https://groups.google.com/forum/#!forum/mongerdb-dev
+[replica set]: http://docs.mongerdb.org/manual/replication/
+[Storage FAQ]: http://docs.mongerdb.org/manual/faq/storage
 [two-phase locking]: http://en.wikipedia.org/wiki/Two-phase_locking

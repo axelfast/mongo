@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/query_request.h"
+#include "monger/db/query/query_request.h"
 
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::unique_ptr;
@@ -701,7 +701,7 @@ StatusWith<int> QueryRequest::parseMaxTimeMS(BSONElement maxTimeMSElt) {
             (StringBuilder() << maxTimeMSElt.fieldNameStringData() << " is out of range").str());
     }
     double maxTimeMSDouble = maxTimeMSElt.numberDouble();
-    if (maxTimeMSElt.type() == mongo::NumberDouble && floor(maxTimeMSDouble) != maxTimeMSDouble) {
+    if (maxTimeMSElt.type() == monger::NumberDouble && floor(maxTimeMSDouble) != maxTimeMSDouble) {
         return StatusWith<int>(
             ErrorCodes::BadValue,
             (StringBuilder() << maxTimeMSElt.fieldNameStringData() << " has non-integral value")
@@ -713,7 +713,7 @@ StatusWith<int> QueryRequest::parseMaxTimeMS(BSONElement maxTimeMSElt) {
 // static
 bool QueryRequest::isTextScoreMeta(BSONElement elt) {
     // elt must be foo: {$meta: "textScore"}
-    if (mongo::Object != elt.type()) {
+    if (monger::Object != elt.type()) {
         return false;
     }
     BSONObj metaObj = elt.Obj();
@@ -726,7 +726,7 @@ bool QueryRequest::isTextScoreMeta(BSONElement elt) {
     if (metaElt.fieldNameStringData() != "$meta") {
         return false;
     }
-    if (mongo::String != metaElt.type()) {
+    if (monger::String != metaElt.type()) {
         return false;
     }
     if (QueryRequest::metaTextScore != metaElt.valuestr()) {
@@ -1139,4 +1139,4 @@ StatusWith<BSONObj> QueryRequest::asAggregationCommand() const {
     }
     return StatusWith<BSONObj>(aggregationBuilder.obj());
 }
-}  // namespace mongo
+}  // namespace monger

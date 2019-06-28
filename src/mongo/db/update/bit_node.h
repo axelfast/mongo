@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <memory>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/update/modifier_node.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/update/modifier_node.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Represents the application of a $bit to the value at the end of a path.
@@ -102,4 +102,4 @@ private:
     std::vector<BitwiseOp> _opList;
 };
 
-}  // namespace mongo
+}  // namespace monger

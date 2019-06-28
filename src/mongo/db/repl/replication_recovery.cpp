@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,33 +26,33 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 #define LOG_FOR_RECOVERY(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kStorageRecovery)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kStorageRecovery)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/replication_recovery.h"
+#include "monger/db/repl/replication_recovery.h"
 
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/apply_ops.h"
-#include "mongo/db/repl/oplog_applier_impl.h"
-#include "mongo/db/repl/oplog_buffer.h"
-#include "mongo/db/repl/replication_consistency_markers_impl.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/transaction_oplog_application.h"
-#include "mongo/db/server_recovery.h"
-#include "mongo/db/session.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/util/log.h"
-#include "mongo/util/timer.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/apply_ops.h"
+#include "monger/db/repl/oplog_applier_impl.h"
+#include "monger/db/repl/oplog_buffer.h"
+#include "monger/db/repl/replication_consistency_markers_impl.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/transaction_oplog_application.h"
+#include "monger/db/server_recovery.h"
+#include "monger/db/session.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/util/log.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -74,7 +74,7 @@ public:
             << " (inclusive)). Operations applied so far: " << _numOpsApplied;
 
         _numOpsApplied += batch.size();
-        if (shouldLog(::mongo::logger::LogComponent::kStorageRecovery,
+        if (shouldLog(::monger::logger::LogComponent::kStorageRecovery,
                       kRecoveryOperationLogLevel)) {
             std::size_t i = 0;
             for (const auto& entry : batch) {
@@ -527,4 +527,4 @@ void ReplicationRecoveryImpl::_truncateOplogIfNeededAndThenClearOplogTruncateAft
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

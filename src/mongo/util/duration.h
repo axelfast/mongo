@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,14 +34,14 @@
 #include <limits>
 #include <ratio>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/platform/overflow_arithmetic.h"
-#include "mongo/stdx/chrono.h"
-#include "mongo/stdx/type_traits.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/static_assert.h"
+#include "monger/platform/overflow_arithmetic.h"
+#include "monger/stdx/chrono.h"
+#include "monger/stdx/type_traits.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 template <typename Allocator>
 class StringBuilderImpl;
@@ -110,7 +110,7 @@ constexpr ToDuration duration_cast(const Duration<FromPeriod>& from) {
         typename ToDuration::rep toCount = 0;
         uassert(ErrorCodes::DurationOverflow,
                 "Overflow casting from a lower-precision duration to a higher-precision duration",
-                !mongoSignedMultiplyOverflow64(from.count(), FromOverTo::num, &toCount));
+                !mongerSignedMultiplyOverflow64(from.count(), FromOverTo::num, &toCount));
         return ToDuration{toCount};
     }
     return ToDuration{from.count() / FromOverTo::den};
@@ -281,7 +281,7 @@ public:
         }
         using OtherOverThis = std::ratio_divide<OtherPeriod, period>;
         rep otherCount;
-        if (mongoSignedMultiplyOverflow64(other.count(), OtherOverThis::num, &otherCount)) {
+        if (mongerSignedMultiplyOverflow64(other.count(), OtherOverThis::num, &otherCount)) {
             return other.count() < 0 ? 1 : -1;
         }
         if (count() < otherCount) {
@@ -329,14 +329,14 @@ public:
     Duration& operator+=(const Duration& other) {
         uassert(ErrorCodes::DurationOverflow,
                 str::stream() << "Overflow while adding " << other << " to " << *this,
-                !mongoSignedAddOverflow64(count(), other.count(), &_count));
+                !mongerSignedAddOverflow64(count(), other.count(), &_count));
         return *this;
     }
 
     Duration& operator-=(const Duration& other) {
         uassert(ErrorCodes::DurationOverflow,
                 str::stream() << "Overflow while subtracting " << other << " from " << *this,
-                !mongoSignedSubtractOverflow64(count(), other.count(), &_count));
+                !mongerSignedSubtractOverflow64(count(), other.count(), &_count));
         return *this;
     }
 
@@ -347,7 +347,7 @@ public:
             "Durations may only be multiplied by values of signed integral type");
         uassert(ErrorCodes::DurationOverflow,
                 str::stream() << "Overflow while multiplying " << *this << " by " << scale,
-                !mongoSignedMultiplyOverflow64(count(), scale, &_count));
+                !mongerSignedMultiplyOverflow64(count(), scale, &_count));
         return *this;
     }
 
@@ -446,4 +446,4 @@ Duration<Period> operator/(Duration<Period> d, const Rep2& scale) {
     return d;
 }
 
-}  // namespace mongo
+}  // namespace monger

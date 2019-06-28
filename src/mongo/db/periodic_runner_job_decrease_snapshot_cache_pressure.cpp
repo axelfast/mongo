@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/periodic_runner_job_decrease_snapshot_cache_pressure.h"
+#include "monger/db/periodic_runner_job_decrease_snapshot_cache_pressure.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/snapshot_window_options.h"
-#include "mongo/db/snapshot_window_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/periodic_runner.h"
+#include "monger/db/client.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/db/snapshot_window_options.h"
+#include "monger/db/snapshot_window_util.h"
+#include "monger/util/log.h"
+#include "monger/util/periodic_runner.h"
 
-namespace mongo {
+namespace monger {
 
 auto PeriodicThreadToDecreaseSnapshotHistoryIfNotNeeded::get(ServiceContext* serviceContext)
     -> PeriodicThreadToDecreaseSnapshotHistoryIfNotNeeded& {
@@ -105,4 +105,4 @@ void PeriodicThreadToDecreaseSnapshotHistoryIfNotNeeded::_init(ServiceContext* s
     });
 }
 
-}  // namespace mongo
+}  // namespace monger

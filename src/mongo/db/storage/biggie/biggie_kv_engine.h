@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,37 +33,37 @@
 #include <mutex>
 #include <set>
 
-#include "mongo/db/storage/biggie/biggie_record_store.h"
-#include "mongo/db/storage/biggie/biggie_sorted_impl.h"
-#include "mongo/db/storage/biggie/store.h"
-#include "mongo/db/storage/kv/kv_engine.h"
+#include "monger/db/storage/biggie/biggie_record_store.h"
+#include "monger/db/storage/biggie/biggie_sorted_impl.h"
+#include "monger/db/storage/biggie/store.h"
+#include "monger/db/storage/kv/kv_engine.h"
 
-namespace mongo {
+namespace monger {
 namespace biggie {
 
 class JournalListener;
 /**
  * The biggie storage engine is intended for unit and performance testing.
  */
-class KVEngine : public mongo::KVEngine {
+class KVEngine : public monger::KVEngine {
 public:
-    KVEngine() : mongo::KVEngine() {}
+    KVEngine() : monger::KVEngine() {}
 
     virtual ~KVEngine() {}
 
-    virtual mongo::RecoveryUnit* newRecoveryUnit();
+    virtual monger::RecoveryUnit* newRecoveryUnit();
 
     virtual Status createRecordStore(OperationContext* opCtx,
                                      StringData ns,
                                      StringData ident,
                                      const CollectionOptions& options);
 
-    virtual std::unique_ptr<mongo::RecordStore> getRecordStore(OperationContext* opCtx,
+    virtual std::unique_ptr<monger::RecordStore> getRecordStore(OperationContext* opCtx,
                                                                StringData ns,
                                                                StringData ident,
                                                                const CollectionOptions& options);
 
-    virtual std::unique_ptr<mongo::RecordStore> makeTemporaryRecordStore(OperationContext* opCtx,
+    virtual std::unique_ptr<monger::RecordStore> makeTemporaryRecordStore(OperationContext* opCtx,
                                                                          StringData ident) override;
 
     virtual Status createSortedDataInterface(OperationContext* opCtx,
@@ -71,7 +71,7 @@ public:
                                              StringData ident,
                                              const IndexDescriptor* desc);
 
-    virtual std::unique_ptr<mongo::SortedDataInterface> getSortedDataInterface(
+    virtual std::unique_ptr<monger::SortedDataInterface> getSortedDataInterface(
         OperationContext* opCtx, StringData ident, const IndexDescriptor* desc);
 
     virtual Status beginBackup(OperationContext* opCtx) {
@@ -133,7 +133,7 @@ public:
 
     virtual void cleanShutdown(){};
 
-    void setJournalListener(mongo::JournalListener* jl) final {}
+    void setJournalListener(monger::JournalListener* jl) final {}
 
     virtual Timestamp getAllCommittedTimestamp() const override {
         RecordId id = _visibilityManager->getAllCommittedRecord();
@@ -175,4 +175,4 @@ private:
     uint64_t _masterVersion = 0;
 };
 }  // namespace biggie
-}  // namespace mongo
+}  // namespace monger

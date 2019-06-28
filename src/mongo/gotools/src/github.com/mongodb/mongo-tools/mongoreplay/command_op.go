@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"encoding/json"
@@ -17,7 +17,7 @@ import (
 )
 
 // CommandOp is a struct for parsing OP_COMMAND as defined here:
-// https://github.com/mongodb/mongo/blob/master/src/mongo/rpc/command_request.h.
+// https://github.com/mongerdb/monger/blob/master/src/monger/rpc/command_request.h.
 type CommandOp struct {
 	Header MsgHeader
 	mgo.CommandOp

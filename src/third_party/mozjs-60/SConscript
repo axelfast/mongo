@@ -85,14 +85,14 @@ env.Prepend(CPPPATH=[
     'extract/mfbt',
     'extract/intl/icu/source/common',
     'include',
-    'mongo_sources',
+    'monger_sources',
     'platform/' + env["TARGET_ARCH"] + "/" + env["TARGET_OS"] + "/build",
     'platform/' + env["TARGET_ARCH"] + "/" + env["TARGET_OS"] + "/include",
 ])
 
 sources = [
-    "mongo_sources/mongoErrorReportToString.cpp",
-    "mongo_sources/freeOpToJSContext.cpp",
+    "monger_sources/mongerErrorReportToString.cpp",
+    "monger_sources/freeOpToJSContext.cpp",
     "extract/js/src/builtin/RegExp.cpp",
     "extract/js/src/frontend/Parser.cpp",
     "extract/js/src/gc/StoreBuffer.cpp",

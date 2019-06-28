@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <cstdint>
 #include <string>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/process_id.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/mutex.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/process_id.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 class ProcessInfo {
 public:
@@ -205,7 +205,7 @@ private:
 
         // On non-Solaris (ie, Linux, Darwin, *BSD) kernels, prefer msync.
         // Illumos kernels do O(N) scans in memory of the page table during msync which
-        // causes high CPU, Oracle Solaris 11.2 and later modified ZFS to workaround mongodb
+        // causes high CPU, Oracle Solaris 11.2 and later modified ZFS to workaround mongerdb
         // Oracle Solaris Bug:
         //  18658199 Speed up msync() on ZFS by 90000x with this one weird trick
         bool preferMsyncOverFSync;

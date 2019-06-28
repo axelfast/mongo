@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,16 +29,16 @@
 
 #pragma once
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/ops/write_ops_gen.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/ops/write_ops_gen.h"
 
 /**
- * Contains common functionality shared between the batch write commands in mongos and mongod.
+ * Contains common functionality shared between the batch write commands in mongers and mongerd.
  */
 
-namespace mongo {
+namespace monger {
 namespace auth {
 
 void checkAuthForInsertCommand(AuthorizationSession* authzSession,
@@ -52,4 +52,4 @@ void checkAuthForDeleteCommand(AuthorizationSession* authzSession,
                                const write_ops::Delete& op);
 
 }  // namespace auth
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,10 +27,10 @@
  *    it in the license file.
  */
 
-#include "mongo/db/handle_request_response.h"
-#include "mongo/base/transaction_error.h"
+#include "monger/db/handle_request_response.h"
+#include "monger/base/transaction_error.h"
 
-namespace mongo {
+namespace monger {
 
 BSONObj getErrorLabels(const OperationSessionInfoFromClient& sessionOptions,
                        const std::string& commandName,
@@ -58,4 +58,4 @@ BSONObj getErrorLabels(const OperationSessionInfoFromClient& sessionOptions,
     return (labelArray.arrSize() > 0) ? BSON("errorLabels" << labelArray.arr()) : BSONObj();
 }
 
-}  // namespace mongo
+}  // namespace monger

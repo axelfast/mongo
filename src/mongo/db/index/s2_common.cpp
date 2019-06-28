@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/db/index/s2_common.h"
+#include "monger/db/index/s2_common.h"
 
 #include <cstdlib>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/geo/geometry_container.h"
-#include "mongo/db/query/collation/collator_interface.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/geo/geometry_container.h"
+#include "monger/db/query/collation/collator_interface.h"
 #include "third_party/s2/s2cellid.h"
 #include "third_party/s2/s2regioncoverer.h"
 
-namespace mongo {
+namespace monger {
 
 // Points will only be indexed at this level
 const int kPointIndexedLevel = S2::kMaxCellLevel;
@@ -107,4 +107,4 @@ BSONObj S2CellIdToIndexKey(const S2CellId& cellId, S2IndexVersion indexVersion) 
     // Return a copy so its buffer size fits the object size.
     return b.obj().copy();
 }
-}  // namespace mongo
+}  // namespace monger

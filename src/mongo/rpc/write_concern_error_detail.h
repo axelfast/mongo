@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <string>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/string_data.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/string_data.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This class represents the layout and content of the error that occurs while trying
@@ -83,4 +83,4 @@ private:
     bool _isErrInfoSet;
 };
 
-}  // namespace mongo
+}  // namespace monger

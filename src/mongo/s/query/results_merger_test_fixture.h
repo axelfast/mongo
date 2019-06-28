@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/s/query/async_results_merger.h"
-#include "mongo/s/sharding_router_test_fixture.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/s/query/async_results_merger.h"
+#include "monger/s/sharding_router_test_fixture.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Test fixture which is useful to both the tests for AsyncResultsMerger and BlockingResultsMerger.
@@ -132,7 +132,7 @@ protected:
         BSONObjBuilder bob;
         bob.append("resolvedView", viewDefBob.obj());
         bob.append("ok", 0.0);
-        bob.append("errmsg", "Command on view must be executed by mongos");
+        bob.append("errmsg", "Command on view must be executed by mongers");
         bob.append("code", 169);
 
         std::vector<BSONObj> batch = {bob.obj()};
@@ -249,4 +249,4 @@ protected:
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

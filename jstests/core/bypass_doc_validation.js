@@ -53,7 +53,7 @@
         assert.commandWorked(myDb.runCommand({collMod: collName, validator: validator}));
 
         const isMongos = db.runCommand({isdbgrid: 1}).isdbgrid;
-        // Test applyOps with a simple insert if not on mongos.
+        // Test applyOps with a simple insert if not on mongers.
         if (!isMongos) {
             const op = [{op: 'i', ns: coll.getFullName(), o: {_id: 9}}];
             assertFailsValidation(myDb.runCommand({applyOps: op, bypassDocumentValidation: false}));
@@ -62,7 +62,7 @@
             assert.eq(1, coll.count({_id: 9}));
         }
 
-        // Test doTxn with a simple insert if a replica set, not on mongos and the storage engine
+        // Test doTxn with a simple insert if a replica set, not on mongers and the storage engine
         // is WiredTiger.
         if (FixtureHelpers.isReplSet(db) && !isMongos && isWiredTiger(db)) {
             const session = db.getMongo().startSession();

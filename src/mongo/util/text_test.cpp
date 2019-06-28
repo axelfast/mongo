@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 #include <string>
 #include <vector>
 
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/text.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/text.h"
 
-using namespace mongo;
+using namespace monger;
 
 static std::vector<std::string> svec(const char* first, ...) {
     std::vector<std::string> result;
@@ -71,22 +71,22 @@ TEST(WindowsCommandLineConstruction, ThingsToQuote) {
 
 TEST(WindowsCommandLineConstruction, RegressionSERVER_7252) {
     ASSERT_EQUALS(
-        "mongod \"--serviceName=My Service\" --serviceDescription \"My Service\" "
-        "--serviceDisplayName \"My Service\" --dbpath C:\\mongo\\data\\config "
-        "--port 20001 --logpath C:\\mongo\\logs\\mongo_config.log.txt "
+        "mongerd \"--serviceName=My Service\" --serviceDescription \"My Service\" "
+        "--serviceDisplayName \"My Service\" --dbpath C:\\monger\\data\\config "
+        "--port 20001 --logpath C:\\monger\\logs\\monger_config.log.txt "
         "--configsvr --service",
-        constructUtf8WindowsCommandLine(svec("mongod",
+        constructUtf8WindowsCommandLine(svec("mongerd",
                                              "--serviceName=My Service",
                                              "--serviceDescription",
                                              "My Service",
                                              "--serviceDisplayName",
                                              "My Service",
                                              "--dbpath",
-                                             "C:\\mongo\\data\\config",
+                                             "C:\\monger\\data\\config",
                                              "--port",
                                              "20001",
                                              "--logpath",
-                                             "C:\\mongo\\logs\\mongo_config.log.txt",
+                                             "C:\\monger\\logs\\monger_config.log.txt",
                                              "--configsvr",
                                              "--service",
                                              nullptr)));

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/bson/oid.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/client.h"
-#include "mongo/db/repl/optime.h"
+#include "monger/bson/oid.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/client.h"
+#include "monger/db/repl/optime.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 class Client;
@@ -82,4 +82,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

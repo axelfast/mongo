@@ -5,11 +5,11 @@
     var t = db.server18198;
     t.drop();
 
-    var mongo = db.getMongo();
+    var monger = db.getMongo();
 
     try {
         var commandsRan = [];
-        // hook in our patched mongo
+        // hook in our patched monger
         var mockMongo = {
             getSlaveOk: function() {
                 return true;
@@ -25,26 +25,26 @@
                 return "secondaryPreferred";
             },
             getMinWireVersion: function() {
-                return mongo.getMinWireVersion();
+                return monger.getMinWireVersion();
             },
             getMaxWireVersion: function() {
-                return mongo.getMaxWireVersion();
+                return monger.getMaxWireVersion();
             },
             isReplicaSetMember: function() {
-                return mongo.isReplicaSetMember();
+                return monger.isReplicaSetMember();
             },
             isMongos: function() {
-                return mongo.isMongos();
+                return monger.isMongos();
             },
             isCausalConsistency: function() {
                 return false;
             },
             getClusterTime: function() {
-                return mongo.getClusterTime();
+                return monger.getClusterTime();
             },
         };
 
-        db._mongo = mockMongo;
+        db._monger = mockMongo;
         db._session = new _DummyDriverSession(mockMongo);
 
         // this query should not get a read pref
@@ -61,7 +61,7 @@
         // check that it has a read preference
         assert(commandsRan[0].cmd.hasOwnProperty("$readPreference"));
     } finally {
-        db._mongo = mongo;
-        db._session = new _DummyDriverSession(mongo);
+        db._monger = monger;
+        db._session = new _DummyDriverSession(monger);
     }
 })();

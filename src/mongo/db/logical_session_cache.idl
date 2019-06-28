@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
 #
 
 global:
-  cpp_namespace: "mongo"
+  cpp_namespace: "monger"
 
 server_parameters:
 
@@ -56,13 +56,13 @@ server_parameters:
   TransactionRecordMinimumLifetimeMinutes:
     # The minimum lifetime for a transaction record is how long it has to have lived on the server
     # before we'll consider it for cleanup. This is effectively the window for how long it is
-    # permissible for a mongos to hang before we're willing to accept a failure of the retryable
+    # permissible for a mongers to hang before we're willing to accept a failure of the retryable
     # writes subsystem.
     #
-    # Specifically, we imagine that a client connects to one mongos on a session and performs a
-    # retryable write after which that mongos hangs. Then the client connects to a new mongos on the
+    # Specifically, we imagine that a client connects to one mongers on a session and performs a
+    # retryable write after which that mongers hangs. Then the client connects to a new mongers on the
     # same session and successfully executes its write.  After a day passes, the session will time
-    # out, cleaning up the retryable write. Then the original mongos wakes up, vivifies the session
+    # out, cleaning up the retryable write. Then the original mongers wakes up, vivifies the session
     # and executes the write (because all records of the session + transaction have been deleted).
     #
     # So the write is performed twice, which is unavoidable without losing session vivification

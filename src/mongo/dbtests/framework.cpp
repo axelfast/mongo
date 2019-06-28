@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/dbtests/framework.h"
+#include "monger/dbtests/framework.h"
 
 #include <string>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/status.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_impl.h"
-#include "mongo/db/catalog/database_holder_impl.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/lock_state.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/index/index_access_method_factory_impl.h"
-#include "mongo/db/index_builds_coordinator_mongod.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/storage_engine_init.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/dbtests/framework_options.h"
-#include "mongo/scripting/dbdirectclient_factory.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/periodic_runner_factory.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/version.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/status.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_impl.h"
+#include "monger/db/catalog/database_holder_impl.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/lock_state.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/index/index_access_method_factory_impl.h"
+#include "monger/db/index_builds_coordinator_mongerd.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/storage_engine_init.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/dbtests/framework_options.h"
+#include "monger/scripting/dbdirectclient_factory.h"
+#include "monger/scripting/engine.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/periodic_runner_factory.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 namespace dbtests {
 
 int runDbTests(int argc, char** argv) {
@@ -121,4 +121,4 @@ int runDbTests(int argc, char** argv) {
 
 }  // namespace dbtests
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/transaction_validation.h"
+#include "monger/db/transaction_validation.h"
 
 #include <fmt/format.h>
 
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/write_concern_options.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/write_concern_options.h"
 
-namespace mongo {
+namespace monger {
 
 using namespace fmt::literals;
 
@@ -98,4 +98,4 @@ void validateSessionOptions(const OperationSessionInfoFromClient& sessionOptions
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

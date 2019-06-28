@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,17 +32,17 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/s/async_requests_sender.h"
-#include "mongo/s/commands/strategy.h"
-#include "mongo/s/query/cluster_client_cursor_params.h"
-#include "mongo/s/query/document_source_merge_cursors.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/s/async_requests_sender.h"
+#include "monger/s/commands/strategy.h"
+#include "monger/s/query/cluster_client_cursor_params.h"
+#include "monger/s/query/document_source_merge_cursors.h"
 
-namespace mongo {
+namespace monger {
 
 class LiteParsedPipeline;
 class OperationContext;
@@ -62,7 +62,7 @@ public:
      * 'requestedNss' is the namespace aggregation will register cursors under. This is the
      * namespace which we will return in responses to aggregate / getMore commands, and it is the
      * namespace we expect users to hand us inside any subsequent getMores. 'executionNss' is the
-     * namespace we will run the mongod aggregate and subsequent getMore's against.
+     * namespace we will run the mongerd aggregate and subsequent getMore's against.
      */
     struct Namespaces {
         NamespaceString requestedNss;
@@ -114,4 +114,4 @@ private:
                                  BSONObjBuilder* result);
 };
 
-}  // namespace mongo
+}  // namespace monger

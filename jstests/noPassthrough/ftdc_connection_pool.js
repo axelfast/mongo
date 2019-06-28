@@ -1,5 +1,5 @@
 /**
- * The FTDC connection pool stats from mongos are a different structure than the connPoolStats
+ * The FTDC connection pool stats from mongers are a different structure than the connPoolStats
  * command, verify its contents.
  *
  * @tags: [requires_sharding]
@@ -11,7 +11,7 @@ load('jstests/libs/ftdc.js');
     const testPath = MongoRunner.toRealPath('ftdc_dir');
     const st = new ShardingTest({
         shards: 2,
-        mongos: {
+        mongers: {
             s0: {setParameter: {diagnosticDataCollectionDirectoryPath: testPath}},
         }
     });

@@ -15,21 +15,21 @@ import (
 	"strings"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/failpoint"
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/failpoint"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/util"
 )
 
 // BSONDump is a container for the user-specified options and
 // internal state used for running bsondump.
 type BSONDump struct {
-	// generic mongo tool options
+	// generic monger tool options
 	ToolOptions *options.ToolOptions
 
 	// OutputOptions defines options used to control how BSON data is displayed

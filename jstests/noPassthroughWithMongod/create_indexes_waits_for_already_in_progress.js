@@ -9,9 +9,9 @@
  * not exist.
  *
  * @tags: [
- *     # Uses failpoints that the mongos does not have.
- *     assumes_against_mongod_not_mongos,
- *     # Sets a failpoint on one mongod, so switching primaries would break the test.
+ *     # Uses failpoints that the mongers does not have.
+ *     assumes_against_mongerd_not_mongers,
+ *     # Sets a failpoint on one mongerd, so switching primaries would break the test.
  *     does_not_support_stepdowns,
  *     # A write takes a global exclusive lock on the mobile engine, so two concurrent writers
  *     # (index builds) are impossible.

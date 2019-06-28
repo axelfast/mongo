@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/db/repl/dbcheck_idl.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
+#include "monger/db/repl/dbcheck_idl.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
 
-namespace mongo {
+namespace monger {
 
 BSONKey BSONKey::parseFromBSON(const BSONElement& element) {
     return BSONKey(element);
@@ -119,4 +119,4 @@ bool BSONKey::operator>=(const BSONElement& other) const {
     return elem().woCompare(other, false) >= 0;
 }
 
-}  // namespace mongo
+}  // namespace monger

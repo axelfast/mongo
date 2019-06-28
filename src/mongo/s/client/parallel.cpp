@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/client/parallel.h"
+#include "monger/s/client/parallel.h"
 
-#include "mongo/client/constants.h"
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/client/dbclient_rs.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_connection.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_exception.h"
+#include "monger/client/constants.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/client/dbclient_rs.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/query/query_request.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_connection.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_exception.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 using std::map;
@@ -55,7 +55,7 @@ using std::set;
 using std::string;
 using std::vector;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 namespace {
 
@@ -368,7 +368,7 @@ void ParallelSortClusteredCursor::setupVersionAndHandleSlaveOk(
         if (!rsMonitor->isKnownToHaveGoodPrimary()) {
             state->conn->donotCheckVersion();
 
-            // A side effect of this short circuiting is the mongos will not be able figure out
+            // A side effect of this short circuiting is the mongers will not be able figure out
             // that the primary is now up on it's own and has to rely on other threads to refresh
             // node states.
 
@@ -1352,4 +1352,4 @@ void throwCursorStale(DBClientCursor* cursor) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

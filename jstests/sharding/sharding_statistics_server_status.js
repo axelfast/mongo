@@ -55,22 +55,22 @@
     }
 
     function runConcurrentMoveChunk(host, ns, toShard) {
-        const mongos = new Mongo(host);
-        return mongos.adminCommand({moveChunk: ns, find: {_id: 1}, to: toShard});
+        const mongers = new Mongo(host);
+        return mongers.adminCommand({moveChunk: ns, find: {_id: 1}, to: toShard});
     }
 
     function runConcurrentRead(host, dbName, collName) {
-        const mongos = new Mongo(host);
-        return mongos.getDB(dbName)[collName].find({_id: 5}).comment("concurrent read").itcount();
+        const mongers = new Mongo(host);
+        return mongers.getDB(dbName)[collName].find({_id: 5}).comment("concurrent read").itcount();
     }
 
     const dbName = "db";
     const collName = "coll";
 
-    const st = new ShardingTest({shards: 2, mongos: 1});
-    const mongos = st.s0;
-    const admin = mongos.getDB("admin");
-    const coll = mongos.getCollection(dbName + "." + collName);
+    const st = new ShardingTest({shards: 2, mongers: 1});
+    const mongers = st.s0;
+    const admin = mongers.getDB("admin");
+    const coll = mongers.getCollection(dbName + "." + collName);
     const numDocsToInsert = 3;
     const shardArr = [st.shard0, st.shard1];
     const stats = [new ShardStat(), new ShardStat()];
@@ -83,7 +83,7 @@
 
     // Move chunk from shard0 to shard1 without docs.
     assert.commandWorked(
-        mongos.adminCommand({moveChunk: coll + '', find: {_id: 1}, to: st.shard1.shardName}));
+        mongers.adminCommand({moveChunk: coll + '', find: {_id: 1}, to: st.shard1.shardName}));
     incrementStatsAndCheckServerShardStats(stats[0], stats[1], numDocsInserted);
 
     // Insert docs and then move chunk again from shard1 to shard0.
@@ -91,17 +91,17 @@
         assert.writeOK(coll.insert({_id: i}));
         ++numDocsInserted;
     }
-    assert.commandWorked(mongos.adminCommand(
+    assert.commandWorked(mongers.adminCommand(
         {moveChunk: coll + '', find: {_id: 1}, to: st.shard0.shardName, _waitForDelete: true}));
     incrementStatsAndCheckServerShardStats(stats[1], stats[0], numDocsInserted);
 
     // Check that numbers are indeed cumulative. Move chunk from shard0 to shard1.
-    assert.commandWorked(mongos.adminCommand(
+    assert.commandWorked(mongers.adminCommand(
         {moveChunk: coll + '', find: {_id: 1}, to: st.shard1.shardName, _waitForDelete: true}));
     incrementStatsAndCheckServerShardStats(stats[0], stats[1], numDocsInserted);
 
     // Move chunk from shard1 to shard0.
-    assert.commandWorked(mongos.adminCommand(
+    assert.commandWorked(mongers.adminCommand(
         {moveChunk: coll + '', find: {_id: 1}, to: st.shard0.shardName, _waitForDelete: true}));
     incrementStatsAndCheckServerShardStats(stats[1], stats[0], numDocsInserted);
 
@@ -128,7 +128,7 @@
     waitForMoveChunkStep(donorConn, moveChunkStepNames.reachedSteadyState);
 
     // Start a transaction and insert to the migrating chunk to block entering the critical section.
-    const session = mongos.startSession();
+    const session = mongers.startSession();
     session.startTransaction();
     assert.commandWorked(session.getDatabase(dbName)[collName].insert({_id: 5}));
 

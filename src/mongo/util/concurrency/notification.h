@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/db/operation_context.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/operation_context.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/duration.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Allows waiting for a result returned from an asynchronous operation.
@@ -144,4 +144,4 @@ private:
     Notification<bool> _notification;
 };
 
-}  // namespace mongo
+}  // namespace monger

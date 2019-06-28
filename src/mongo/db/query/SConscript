@@ -40,20 +40,20 @@ env.Library(
         env.Idlc("expression_index_knobs.idl")[0],
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
-        "$BUILD_DIR/mongo/db/bson/dotted_path_support",
-        "$BUILD_DIR/mongo/db/index/expression_params",
-        "$BUILD_DIR/mongo/db/index/key_generator",
-        "$BUILD_DIR/mongo/db/index_names",
-        "$BUILD_DIR/mongo/db/matcher/expressions",
-        "$BUILD_DIR/mongo/db/mongohasher",
+        "$BUILD_DIR/monger/base",
+        "$BUILD_DIR/monger/db/bson/dotted_path_support",
+        "$BUILD_DIR/monger/db/index/expression_params",
+        "$BUILD_DIR/monger/db/index/key_generator",
+        "$BUILD_DIR/monger/db/index_names",
+        "$BUILD_DIR/monger/db/matcher/expressions",
+        "$BUILD_DIR/monger/db/mongerhasher",
         "collation/collator_factory_interface",
         "collation/collator_interface",
         "command_request_response",
         "query_knobs",
     ],
     LIBDEPS_PRIVATE=[
-        "$BUILD_DIR/mongo/idl/server_parameter",
+        "$BUILD_DIR/monger/idl/server_parameter",
     ],
 )
 
@@ -63,11 +63,11 @@ env.Library(
         env.Idlc('distinct_command.idl')[0],
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/idl/idl_parser',
+        '$BUILD_DIR/monger/idl/idl_parser',
     ],
 )
 
-# Shared mongod/mongos query code.
+# Shared mongerd/mongers query code.
 env.Library(
     target="query_common",
     source=[
@@ -75,8 +75,8 @@ env.Library(
         "parsed_distinct.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
-        "$BUILD_DIR/mongo/util/fail_point",
+        "$BUILD_DIR/monger/base",
+        "$BUILD_DIR/monger/util/fail_point",
         "collation/collator_factory_icu",
         "collation/collator_icu",
         "datetime/init_timezone_data",
@@ -93,7 +93,7 @@ env.Library(
         "explain_options.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
+        "$BUILD_DIR/monger/base",
     ],
 )
 
@@ -112,16 +112,16 @@ env.Library(
         env.Idlc('count_command.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/db/common',
-        '$BUILD_DIR/mongo/db/namespace_string',
-        '$BUILD_DIR/mongo/db/ops/write_ops_parsers',
-        '$BUILD_DIR/mongo/db/repl/optime',
-        "$BUILD_DIR/mongo/idl/idl_parser",
-        '$BUILD_DIR/mongo/rpc/command_status',
-        '$BUILD_DIR/mongo/rpc/rpc',
-        '$BUILD_DIR/mongo/db/query/hint_parser',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/db/common',
+        '$BUILD_DIR/monger/db/namespace_string',
+        '$BUILD_DIR/monger/db/ops/write_ops_parsers',
+        '$BUILD_DIR/monger/db/repl/optime',
+        "$BUILD_DIR/monger/idl/idl_parser",
+        '$BUILD_DIR/monger/rpc/command_status',
+        '$BUILD_DIR/monger/rpc/rpc',
+        '$BUILD_DIR/monger/db/query/hint_parser',
         'query_request',
     ]
 )
@@ -134,10 +134,10 @@ env.Library(
         env.Idlc("tailable_mode.idl")[0],
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
-        "$BUILD_DIR/mongo/db/repl/read_concern_args",
-        "$BUILD_DIR/mongo/db/catalog/collection_catalog",
-        "$BUILD_DIR/mongo/db/pipeline/runtime_constants_idl"
+        "$BUILD_DIR/monger/base",
+        "$BUILD_DIR/monger/db/repl/read_concern_args",
+        "$BUILD_DIR/monger/db/catalog/collection_catalog",
+        "$BUILD_DIR/monger/db/pipeline/runtime_constants_idl"
     ],
 )
 
@@ -147,7 +147,7 @@ env.Library(
         env.Idlc('query_knobs.idl')[0]
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/idl/server_parameter'
+        '$BUILD_DIR/monger/idl/server_parameter'
     ]
 )
 
@@ -158,8 +158,8 @@ env.Library(
     ],
     LIBDEPS=[
         "collation/collator_factory_mock",
-        "$BUILD_DIR/mongo/db/logical_session_id",
-        "$BUILD_DIR/mongo/db/service_context",
+        "$BUILD_DIR/monger/db/logical_session_id",
+        "$BUILD_DIR/monger/db/service_context",
     ],
     LIBDEPS_PRIVATE=[
     ],
@@ -172,7 +172,7 @@ env.Library(
     ],
     LIBDEPS=[
         "query_planner_test_lib",
-        "$BUILD_DIR/mongo/unittest/unittest",
+        "$BUILD_DIR/monger/unittest/unittest",
     ],
 )
 
@@ -195,7 +195,7 @@ env.Library(
         env.Idlc('hint.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -237,14 +237,14 @@ env.CppUnitTest(
         "view_response_formatter_test.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/db/auth/authmocks",
-        "$BUILD_DIR/mongo/db/concurrency/lock_manager",
-        "$BUILD_DIR/mongo/db/pipeline/aggregation_request",
-        "$BUILD_DIR/mongo/db/query_exec",
-        "$BUILD_DIR/mongo/db/service_context_d",
-        "$BUILD_DIR/mongo/db/service_context_test_fixture",
-        "$BUILD_DIR/mongo/dbtests/mocklib",
-        "$BUILD_DIR/mongo/rpc/rpc",
+        "$BUILD_DIR/monger/db/auth/authmocks",
+        "$BUILD_DIR/monger/db/concurrency/lock_manager",
+        "$BUILD_DIR/monger/db/pipeline/aggregation_request",
+        "$BUILD_DIR/monger/db/query_exec",
+        "$BUILD_DIR/monger/db/service_context_d",
+        "$BUILD_DIR/monger/db/service_context_test_fixture",
+        "$BUILD_DIR/monger/dbtests/mocklib",
+        "$BUILD_DIR/monger/rpc/rpc",
         "collation/collator_factory_mock",
         "collation/collator_interface_mock",
         "command_request_response",

@@ -15,7 +15,7 @@
                   isSharded);
 
         // Fail with retryable error.
-        // Sharding tests require failInternalCommands: true, since the mongos appears to mongod to
+        // Sharding tests require failInternalCommands: true, since the mongers appears to mongerd to
         // be an internal client.
         const retryableError = ErrorCodes.InterruptedDueToReplStateChange;
         assert.commandWorked(st.rs0.getPrimary().adminCommand({

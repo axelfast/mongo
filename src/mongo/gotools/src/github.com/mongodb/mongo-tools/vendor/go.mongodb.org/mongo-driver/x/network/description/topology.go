@@ -10,10 +10,10 @@ import (
 	"sort"
 	"strings"
 
-	"go.mongodb.org/mongo-driver/x/network/address"
+	"go.mongerdb.org/monger-driver/x/network/address"
 )
 
-// Topology represents a description of a mongodb topology
+// Topology represents a description of a mongerdb topology
 type Topology struct {
 	Servers               []Server
 	Kind                  TopologyKind

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/util/file.h"
+#include "monger/util/file.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <cstdint>
@@ -43,14 +43,14 @@
 #include <sys/types.h>
 #endif
 
-#include "mongo/platform/basic.h"
-#include "mongo/util/allocator.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
+#include "monger/platform/basic.h"
+#include "monger/util/allocator.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 
 #if defined(_WIN32)
 

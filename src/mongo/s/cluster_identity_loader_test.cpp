@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/rpc/metadata/tracking_metadata.h"
-#include "mongo/s/catalog/config_server_version.h"
-#include "mongo/s/catalog/type_config_version.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_identity_loader.h"
-#include "mongo/s/sharding_router_test_fixture.h"
-#include "mongo/stdx/future.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/task_executor.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/rpc/metadata/tracking_metadata.h"
+#include "monger/s/catalog/config_server_version.h"
+#include "monger/s/catalog/type_config_version.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_identity_loader.h"
+#include "monger/s/sharding_router_test_fixture.h"
+#include "monger/stdx/future.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::NetworkInterfaceMock;
@@ -188,4 +188,4 @@ TEST_F(ClusterIdentityTest, BasicLoadFailureFollowedBySuccess) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

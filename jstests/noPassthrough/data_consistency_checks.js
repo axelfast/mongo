@@ -119,7 +119,7 @@ var db;
 
     (function testShardedClusterWithOneNodeCSRS() {
         const st = new ShardingTest({
-            mongos: 1,
+            mongers: 1,
             config: 1,
             configOptions: {
                 setParameter: {logComponentVerbosity: tojson({command: 1})},
@@ -149,7 +149,7 @@ var db;
 
     (function testShardedCluster() {
         const st = new ShardingTest({
-            mongos: 1,
+            mongers: 1,
             config: 3,
             configOptions: {
                 setParameter: {logComponentVerbosity: tojson({command: 1})},

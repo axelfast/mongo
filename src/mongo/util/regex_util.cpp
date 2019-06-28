@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,14 +26,14 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/regex_util.h"
+#include "monger/util/regex_util.h"
 
-#include "mongo/base/error_codes.h"
-#include "mongo/util/str.h"
+#include "monger/base/error_codes.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace regex_util {
 pcrecpp::RE_Options flagsToPcreOptions(StringData optionFlags,
                                        bool ignoreInvalidFlags,

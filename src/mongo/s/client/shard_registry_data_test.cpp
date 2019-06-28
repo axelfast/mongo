@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <utility>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/json.h"
-#include "mongo/client/remote_command_targeter_factory_mock.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/s/client/shard_factory.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/client/shard_remote.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/json.h"
+#include "monger/client/remote_command_targeter_factory_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/s/client/shard_factory.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/client/shard_remote.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
-class ShardRegistryDataTest : public mongo::unittest::Test {
+class ShardRegistryDataTest : public monger::unittest::Test {
 public:
     ShardFactory* shardFactory() {
         return _shardFactory.get();
@@ -95,4 +95,4 @@ TEST_F(ShardRegistryDataTest, AddConfigShard) {
 }
 
 }  // unnamed namespace
-}  // namespace mongo
+}  // namespace monger

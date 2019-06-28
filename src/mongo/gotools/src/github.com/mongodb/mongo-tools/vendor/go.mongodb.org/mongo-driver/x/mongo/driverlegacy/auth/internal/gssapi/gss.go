@@ -26,7 +26,7 @@ import (
 
 // New creates a new SaslClient. The target parameter should be a hostname with no port.
 func New(target, username, password string, passwordSet bool, props map[string]string) (*SaslClient, error) {
-	serviceName := "mongodb"
+	serviceName := "mongerdb"
 
 	for key, value := range props {
 		switch strings.ToUpper(key) {

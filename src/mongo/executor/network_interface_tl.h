@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,17 +31,17 @@
 
 #include <deque>
 
-#include "mongo/client/async_client.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/connection_pool.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/rpc/metadata/metadata_hook.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/transport/baton.h"
-#include "mongo/transport/transport_layer.h"
+#include "monger/client/async_client.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/connection_pool.h"
+#include "monger/executor/network_interface.h"
+#include "monger/rpc/metadata/metadata_hook.h"
+#include "monger/stdx/thread.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/transport/baton.h"
+#include "monger/transport/transport_layer.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 class NetworkInterfaceTL : public NetworkInterface {
@@ -173,4 +173,4 @@ private:
 };
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

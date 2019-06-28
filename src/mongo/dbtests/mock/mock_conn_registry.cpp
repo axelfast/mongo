@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/dbtests/mock/mock_conn_registry.h"
+#include "monger/dbtests/mock/mock_conn_registry.h"
 
-#include "mongo/base/init.h"
-#include "mongo/dbtests/mock/mock_dbclient_connection.h"
+#include "monger/base/init.h"
+#include "monger/dbtests/mock/mock_dbclient_connection.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -88,7 +88,7 @@ MockConnRegistry::MockConnHook::MockConnHook(MockConnRegistry* registry) : _regi
 
 MockConnRegistry::MockConnHook::~MockConnHook() {}
 
-std::unique_ptr<mongo::DBClientBase> MockConnRegistry::MockConnHook::connect(
+std::unique_ptr<monger::DBClientBase> MockConnRegistry::MockConnHook::connect(
     const ConnectionString& connString, std::string& errmsg, double socketTimeout) {
     const string hostName(connString.toString());
     auto conn = _registry->connect(hostName);
@@ -101,4 +101,4 @@ std::unique_ptr<mongo::DBClientBase> MockConnRegistry::MockConnHook::connect(
 
     return std::move(conn);
 }
-}  // namespace mongo
+}  // namespace monger

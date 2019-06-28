@@ -12,8 +12,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/text"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/text"
+	"github.com/mongerdb/monger-tools-common/util"
 )
 
 type ReaderConfig struct {
@@ -149,11 +149,11 @@ func getStorageEngine(stat *ServerStatus) string {
 	return val
 }
 
-// mongosProcessRE matches mongos not followed by any slashes before next whitespace
-var mongosProcessRE = regexp.MustCompile(`^.*\bmongos\b[^\\\/]*(\s.*)?$`)
+// mongersProcessRE matches mongers not followed by any slashes before next whitespace
+var mongersProcessRE = regexp.MustCompile(`^.*\bmongers\b[^\\\/]*(\s.*)?$`)
 
 func IsMongos(stat *ServerStatus) bool {
-	return stat.ShardCursorType != nil || mongosProcessRE.MatchString(stat.Process)
+	return stat.ShardCursorType != nil || mongersProcessRE.MatchString(stat.Process)
 }
 
 func HasLocks(stat *ServerStatus) bool {

@@ -1,4 +1,4 @@
-framework module mongoc_embedded [extern_c] {
-    header "mongoc_embedded.h"
+framework module mongerc_embedded [extern_c] {
+    header "mongerc_embedded.h"
     export *
 }

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/exec/collection_scan.h"
+#include "monger/db/exec/collection_scan.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/exec/collection_scan_common.h"
-#include "mongo/db/exec/filter.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/exec/collection_scan_common.h"
+#include "monger/db/exec/filter.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/repl/optime.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-#include "mongo/db/client.h"  // XXX-ERH
+#include "monger/db/client.h"  // XXX-ERH
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::vector;
@@ -255,4 +255,4 @@ const SpecificStats* CollectionScan::getSpecificStats() const {
     return &_specificStats;
 }
 
-}  // namespace mongo
+}  // namespace monger

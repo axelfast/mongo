@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
  */
 
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression.h"
 
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
@@ -40,20 +40,20 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/db/commands/feature_compatibility_version_documentation.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/datetime/date_time_support.h"
-#include "mongo/platform/bits.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/regex_util.h"
-#include "mongo/util/str.h"
-#include "mongo/util/string_map.h"
-#include "mongo/util/summation.h"
+#include "monger/db/commands/feature_compatibility_version_documentation.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/datetime/date_time_support.h"
+#include "monger/platform/bits.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/regex_util.h"
+#include "monger/util/str.h"
+#include "monger/util/string_map.h"
+#include "monger/util/summation.h"
 
-namespace mongo {
+namespace monger {
 using Parser = Expression::Parser;
 
 using boost::intrusive_ptr;
@@ -993,7 +993,7 @@ boost::optional<TimeZone> makeTimeZone(const TimeZoneDatabase* tzdb,
     invariant(tzdb);
 
     if (!timeZone) {
-        return mongo::TimeZoneDatabase::utcZone();
+        return monger::TimeZoneDatabase::utcZone();
     }
 
     auto timeZoneId = timeZone->evaluate(root, variables);
@@ -2568,7 +2568,7 @@ void ExpressionMeta::_doAddDependencies(DepsTracker* deps) const {
         deps->setNeedsMetadata(DepsTracker::MetadataType::TEXT_SCORE, true);
 
         // We do not add the dependencies for SEARCH_SCORE or SEARCH_HIGHLIGHTS because those values
-        // are not stored in the collection (or in mongod at all).
+        // are not stored in the collection (or in mongerd at all).
     }
 }
 
@@ -2661,7 +2661,7 @@ Value ExpressionMultiply::evaluate(const Document& root, Variables* variables) c
                 decimalProduct = decimalProduct.multiply(val.coerceToDecimal());
             } else {
                 doubleProduct *= val.coerceToDouble();
-                if (mongoSignedMultiplyOverflow64(longProduct, val.coerceToLong(), &longProduct)) {
+                if (mongerSignedMultiplyOverflow64(longProduct, val.coerceToLong(), &longProduct)) {
                     // The 'longProduct' would have overflowed, so we're abandoning it.
                     productType = NumberDouble;
                 }
@@ -5187,7 +5187,7 @@ public:
         table[BSONType::String][BSONType::Date] = [](
             const boost::intrusive_ptr<ExpressionContext>& expCtx, Value inputValue) {
             return Value(expCtx->timeZoneDatabase->fromString(inputValue.getStringData(),
-                                                              mongo::TimeZoneDatabase::utcZone()));
+                                                              monger::TimeZoneDatabase::utcZone()));
         };
         table[BSONType::String][BSONType::NumberInt] = &parseStringToNumber<int, 10>;
         table[BSONType::String][BSONType::NumberLong] = &parseStringToNumber<long long, 10>;
@@ -6084,7 +6084,7 @@ Value ExpressionRegexFindAll::evaluate(const Document& root, Variables* variable
         uassert(51151,
                 str::stream() << getOpName()
                               << ": the size of buffer to store output exceeded the 64MB limit",
-                totalDocSize <= mongo::BufferMaxSize);
+                totalDocSize <= monger::BufferMaxSize);
 
         output.push_back(matchObj);
         std::string matchStr = matchObj.getDocument().getField("match").getString();
@@ -6131,4 +6131,4 @@ Value ExpressionRegexMatch::evaluate(const Document& root, Variables* variables)
     return executionState.nullish() ? Value(false) : Value(execute(&executionState) > 0);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fmt/format.h>
 
-#include "mongo/db/server_options.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/db/server_options.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(HostAndPort, BasicLessThanComparison) {
@@ -131,7 +131,7 @@ TEST(HostAndPort, Fmt) {
         "1.2.3.4:123",       //
         "[1:2:3:4]",         //
         "[1:2:3:4]:123",     //
-        "/dev/mongod.sock",  //
+        "/dev/mongerd.sock",  //
     };
     for (const auto& spec : specs) {
         const HostAndPort hp(spec);
@@ -147,4 +147,4 @@ TEST(HostAndPort, Fmt) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

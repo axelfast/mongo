@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <boost/preprocessor/facilities/overload.hpp>
 #include <string>
 
-#include "mongo/platform/compiler.h"
-#include "mongo/util/debug_util.h"
+#include "monger/platform/compiler.h"
+#include "monger/util/debug_util.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * This include exists so that mongo/base/status_with.h can use the invariant macro without causing
+ * This include exists so that monger/base/status_with.h can use the invariant macro without causing
  * a circular include chain. It should never be included directly in any other file other than that
  * one (and assert_util.h).
  */
@@ -58,7 +58,7 @@ MONGO_COMPILER_NORETURN void invariantFailed(const char* expr,
 //       Invariant failure !condition some/file.cpp 528
 //
 #define MONGO_invariant_1(Expression) \
-    ::mongo::invariantWithLocation((Expression), #Expression, __FILE__, __LINE__)
+    ::monger::invariantWithLocation((Expression), #Expression, __FILE__, __LINE__)
 
 template <typename T>
 inline void invariantWithLocation(const T& testOK,
@@ -66,7 +66,7 @@ inline void invariantWithLocation(const T& testOK,
                                   const char* file,
                                   unsigned line) {
     if (MONGO_unlikely(!testOK)) {
-        ::mongo::invariantFailed(expr, file, line);
+        ::monger::invariantFailed(expr, file, line);
     }
 }
 
@@ -83,7 +83,7 @@ MONGO_COMPILER_NORETURN void invariantFailedWithMsg(const char* expr,
 //       Invariant failure !condition "hello!" some/file.cpp 528
 //
 #define MONGO_invariant_2(Expression, contextExpr)                                           \
-    ::mongo::invariantWithContextAndLocation((Expression),                                   \
+    ::monger::invariantWithContextAndLocation((Expression),                                   \
                                              #Expression,                                    \
                                              [&]() -> std::string { return (contextExpr); }, \
                                              __FILE__,                                       \
@@ -93,7 +93,7 @@ template <typename T, typename ContextExpr>
 inline void invariantWithContextAndLocation(
     const T& testOK, const char* expr, ContextExpr&& contextExpr, const char* file, unsigned line) {
     if (MONGO_unlikely(!testOK)) {
-        ::mongo::invariantFailedWithMsg(expr, contextExpr(), file, line);
+        ::monger::invariantFailedWithMsg(expr, contextExpr(), file, line);
     }
 }
 
@@ -111,4 +111,4 @@ inline void invariantWithContextAndLocation(
 
 #define dassert MONGO_dassert
 
-}  // namespace mongo
+}  // namespace monger

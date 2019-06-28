@@ -1,7 +1,7 @@
 // SERVER-13946: When possible, place skip stages before fetch stages to avoid unnecessarily
 // fetching documents that will be immediately discarded.
 
-// The skip operation in a sharded query always occurs in the mongoS, so this test doesn't make
+// The skip operation in a sharded query always occurs in the mongerS, so this test doesn't make
 // sense on a sharded collection.
 // @tags: [assumes_unsharded_collection, operations_longer_than_stepdown_interval_in_txns]
 

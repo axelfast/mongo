@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/stdx/trusted_hasher.h"
+#include "monger/stdx/trusted_hasher.h"
 
 #include <absl/container/node_hash_map.h>
 
-namespace mongo {
+namespace monger {
 namespace stdx {
 
 template <class Key, class Value, class Hasher = DefaultHasher<Key>, typename... Args>
 using unordered_map = absl::node_hash_map<Key, Value, EnsureTrustedHasher<Hasher, Key>, Args...>;
 
 }  // namespace stdx
-}  // namespace mongo
+}  // namespace monger

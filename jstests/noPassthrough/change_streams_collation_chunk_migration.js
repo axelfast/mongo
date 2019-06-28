@@ -9,7 +9,7 @@
 
     const st = new ShardingTest({
         shards: 2,
-        mongos: 1,
+        mongers: 1,
         rs: {
             nodes: 1,
         },

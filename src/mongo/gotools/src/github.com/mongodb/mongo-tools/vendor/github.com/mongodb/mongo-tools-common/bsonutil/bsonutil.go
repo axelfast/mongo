@@ -15,10 +15,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
 )
 
 var ErrNoSuchField = errors.New("no such field")

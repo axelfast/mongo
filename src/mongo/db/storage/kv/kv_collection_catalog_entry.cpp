@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/kv/kv_collection_catalog_entry.h"
+#include "monger/db/storage/kv/kv_collection_catalog_entry.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/durable_catalog_feature_tracker.h"
-#include "mongo/db/storage/kv/kv_engine.h"
-#include "mongo/db/storage/storage_engine_impl.h"
-#include "mongo/util/log.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/durable_catalog_feature_tracker.h"
+#include "monger/db/storage/kv/kv_engine.h"
+#include "monger/db/storage/storage_engine_impl.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -56,4 +56,4 @@ KVCollectionCatalogEntry::KVCollectionCatalogEntry(StorageEngineInterface* engin
       _ident(ident.toString()),
       _recordStore(std::move(rs)) {}
 
-}  // namespace mongo
+}  // namespace monger

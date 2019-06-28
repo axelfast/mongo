@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/bson/json.h"
+#include "monger/bson/json.h"
 
 #include <cstdint>
 #include <fmt/format.h>
 
-#include "mongo/base/parse_number.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/platform/strtoll.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/parse_number.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/decimal128.h"
+#include "monger/platform/strtoll.h"
+#include "monger/util/base64.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::ostringstream;
@@ -1317,4 +1317,4 @@ bool isArray(StringData str) {
     return parser.isArray();
 }
 
-} /* namespace mongo */
+} /* namespace monger */

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <memory>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/service_context.h"
+#include "monger/base/status.h"
+#include "monger/db/service_context.h"
 
-namespace mongo {
+namespace monger {
 
-constexpr StringData kLockFileBasename = "mongod.lock"_sd;
+constexpr StringData kLockFileBasename = "mongerd.lock"_sd;
 
 class StorageEngineLockFile {
     StorageEngineLockFile(const StorageEngineLockFile&) = delete;
@@ -70,7 +70,7 @@ public:
     bool createdByUncleanShutdown() const;
 
     /**
-     * Opens and locks 'mongod.lock' in 'dbpath' directory.
+     * Opens and locks 'mongerd.lock' in 'dbpath' directory.
      */
     Status open();
 
@@ -105,4 +105,4 @@ private:
     std::unique_ptr<LockFileHandle> _lockFileHandle;
 };
 
-}  // namespace mongo
+}  // namespace monger

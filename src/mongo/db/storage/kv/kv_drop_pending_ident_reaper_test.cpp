@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/concurrency/lock_state.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/db/storage/kv/kv_drop_pending_ident_reaper.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/concurrency/lock_state.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/db/storage/kv/kv_drop_pending_ident_reaper.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -331,4 +331,4 @@ DEATH_TEST_F(KVDropPendingIdentReaperTest,
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/write_concern.h"
+#include "monger/db/write_concern.h"
 
-#include "mongo/base/counter.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/stats/timer_stats.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/rpc/protocol.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/base/counter.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/stats/timer_stats.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/rpc/protocol.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using repl::OpTime;
@@ -243,4 +243,4 @@ Status waitForWriteConcern(OperationContext* opCtx,
     return replStatus.status;
 }
 
-}  // namespace mongo
+}  // namespace monger

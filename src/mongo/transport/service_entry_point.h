@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 
 #pragma once
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/transport/session.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/dbmessage.h"
+#include "monger/transport/session.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * This is the entrypoint from the transport layer into mongod or mongos.
+ * This is the entrypoint from the transport layer into mongerd or mongers.
  *
  * The ServiceEntryPoint accepts new Sessions from the TransportLayer, and is
  * responsible for running these Sessions in a get-Message, run-Message,
@@ -88,4 +88,4 @@ protected:
     ServiceEntryPoint() = default;
 };
 
-}  // namespace mongo
+}  // namespace monger

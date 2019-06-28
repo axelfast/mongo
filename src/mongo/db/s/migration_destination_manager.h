@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,24 +31,24 @@
 
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/oid.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/s/active_migrations_registry.h"
-#include "mongo/db/s/collection_sharding_runtime.h"
-#include "mongo/db/s/migration_session_id.h"
-#include "mongo/db/s/session_catalog_migration_destination.h"
-#include "mongo/s/shard_id.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/timer.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/oid.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/s/active_migrations_registry.h"
+#include "monger/db/s/collection_sharding_runtime.h"
+#include "monger/db/s/migration_session_id.h"
+#include "monger/db/s/session_catalog_migration_destination.h"
+#include "monger/s/shard_id.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class StartChunkCloneRequest;
@@ -221,4 +221,4 @@ private:
     stdx::condition_variable _stateChangedCV;
 };
 
-}  // namespace mongo
+}  // namespace monger

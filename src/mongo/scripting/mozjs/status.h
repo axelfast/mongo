@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/scripting/mozjs/wraptype.h"
+#include "monger/scripting/mozjs/wraptype.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 /**
  * The "MongoStatus" Javascript object.
  *
- * This type wraps the "Status" type in the server, allowing for lossless throwing of mongodb native
+ * This type wraps the "Status" type in the server, allowing for lossless throwing of mongerdb native
  * exceptions through javascript.  It can be created (albeit without sidecar) from javascript.
  * These are also created automatically when exceptions are thrown from native c++ functions.
  *
@@ -67,4 +67,4 @@ struct MongoStatusInfo : public BaseInfo {
 };
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
 #include <kms_message/kms_message.h>
 
 #include <stdlib.h>
 
-#include "mongo/base/init.h"
-#include "mongo/base/parse_number.h"
-#include "mongo/base/secure_allocator.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/shell/kms.h"
-#include "mongo/shell/kms_gen.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/sock.h"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/text.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/init.h"
+#include "monger/base/parse_number.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/json.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/shell/kms.h"
+#include "monger/shell/kms_gen.h"
+#include "monger/util/base64.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/sock.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/text.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -432,7 +432,7 @@ std::unique_ptr<KMSService> AWSKMSService::create(const AwsKMS& config) {
 }
 
 /**
- * Factory for AWSKMSService if user specifies aws config to mongo() JS constructor.
+ * Factory for AWSKMSService if user specifies aws config to monger() JS constructor.
  */
 class AWSKMSServiceFactory final : public KMSServiceFactory {
 public:
@@ -451,11 +451,11 @@ public:
 
 }  // namspace
 
-MONGO_INITIALIZER(KMSRegister)(::mongo::InitializerContext* context) {
+MONGO_INITIALIZER(KMSRegister)(::monger::InitializerContext* context) {
     kms_message_init();
     KMSServiceController::registerFactory(KMSProviderEnum::aws,
                                           std::make_unique<AWSKMSServiceFactory>());
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

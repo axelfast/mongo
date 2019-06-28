@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,30 +33,30 @@
 #include <iostream>
 #include <map>
 
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/multi_key_path_tracker.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/session.h"
-#include "mongo/db/session_catalog.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/single_transaction_stats.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/transaction_metrics_observer.h"
-#include "mongo/idl/mutable_observer_registry.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/str.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/multi_key_path_tracker.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/session.h"
+#include "monger/db/session_catalog.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/single_transaction_stats.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/transaction_metrics_observer.h"
+#include "monger/idl/mutable_observer_registry.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
@@ -926,4 +926,4 @@ private:
     } _p;
 };
 
-}  // namespace mongo
+}  // namespace monger

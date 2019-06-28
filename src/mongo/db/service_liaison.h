@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <functional>
 
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/session_killer.h"
-#include "mongo/util/periodic_runner.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/session_killer.h"
+#include "monger/util/periodic_runner.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class ServiceContext;
 
@@ -45,7 +45,7 @@ class ServiceContext;
  * current time, schedule periodic refresh jobs, and get a list of sessions
  * that are being used for long-running queries on the service context.
  *
- * Mongod and mongos implement their own classes to fulfill this interface.
+ * Mongod and mongers implement their own classes to fulfill this interface.
  */
 class ServiceLiaison {
 public:
@@ -97,4 +97,4 @@ protected:
     virtual ServiceContext* _context() = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

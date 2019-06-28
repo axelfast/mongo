@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/op_observer.h"
-#include "mongo/db/s/collection_sharding_runtime.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/s/collection_sharding_runtime.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * OpObserver which is installed on the op observers chain when the server is running as a shard
@@ -177,4 +177,4 @@ public:
     void onReplicationRollback(OperationContext* opCtx, const RollbackObserverInfo& rbInfo) {}
 };
 
-}  // namespace mongo
+}  // namespace monger

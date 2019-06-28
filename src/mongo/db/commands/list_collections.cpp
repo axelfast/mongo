@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,42 +27,42 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <vector>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_catalog_helper.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/list_collections_filter.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/queued_data_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/query/cursor_request.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/views/view_catalog.h"
+#include "monger/base/checked_cast.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_catalog_helper.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/list_collections_filter.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/queued_data_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/query/cursor_request.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/views/view_catalog.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::stringstream;
@@ -255,7 +255,7 @@ public:
         // Check for 'filter' argument.
         BSONElement filterElt = jsobj["filter"];
         if (!filterElt.eoo()) {
-            if (filterElt.type() != mongo::Object) {
+            if (filterElt.type() != monger::Object) {
                 uasserted(ErrorCodes::BadValue, "\"filter\" must be an object");
             }
             // The collator is null because collection objects are compared using binary comparison.
@@ -320,7 +320,7 @@ public:
                         }
                     }
                 } else {
-                    mongo::catalog::forEachCollectionFromDb(
+                    monger::catalog::forEachCollectionFromDb(
                         opCtx,
                         dbname,
                         MODE_IS,
@@ -342,7 +342,7 @@ public:
                 }
 
                 // Skipping views is only necessary for internal cloning operations.
-                bool skipViews = filterElt.type() == mongo::Object &&
+                bool skipViews = filterElt.type() == monger::Object &&
                     SimpleBSONObjComparator::kInstance.evaluate(
                         filterElt.Obj() == ListCollectionsFilter::makeTypeCollectionFilter());
                 if (!skipViews) {
@@ -409,4 +409,4 @@ public:
 } cmdListCollections;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

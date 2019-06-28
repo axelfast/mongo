@@ -1,7 +1,7 @@
 /**
  * Tests for shard aware initialization during process startup (for standalone) and transition
  * to primary (for replica set nodes).
- * Note: test will deliberately cause a mongod instance to terminate abruptly and mongod instance
+ * Note: test will deliberately cause a mongerd instance to terminate abruptly and mongerd instance
  * without journaling will complain about unclean shutdown.
  * @tags: [requires_persistence, requires_journaling]
  */
@@ -17,8 +17,8 @@
     };
 
     /**
-     * Runs a series of test on the mongod instance mongodConn is pointing to. Notes that the
-     * test can restart the mongod instance several times so mongodConn can end up with a broken
+     * Runs a series of test on the mongerd instance mongerdConn is pointing to. Notes that the
+     * test can restart the mongerd instance several times so mongerdConn can end up with a broken
      * connection after.
      *
      * awaitVersionUpdate is used with the replset invocation of this test to ensure that our
@@ -30,7 +30,7 @@
      *       after replication is started before reading our shard identity from
      *       admin.system.version
      */
-    var runTest = function(mongodConn, configConnStr, awaitVersionUpdate) {
+    var runTest = function(mongerdConn, configConnStr, awaitVersionUpdate) {
         var shardIdentityDoc = {
             _id: 'shardIdentity',
             configsvrConnectionString: configConnStr,
@@ -54,32 +54,32 @@
             var rsName = options.replSet;
             delete options.replSet;
             delete options.shardsvr;
-            var mongodConn = MongoRunner.runMongod(options);
-            waitForMaster(mongodConn);
+            var mongerdConn = MongoRunner.runMongod(options);
+            waitForMaster(mongerdConn);
 
-            var res = mongodConn.getDB('admin').system.version.update({_id: 'shardIdentity'},
+            var res = mongerdConn.getDB('admin').system.version.update({_id: 'shardIdentity'},
                                                                       shardIdentityDoc);
             assert.eq(1, res.nModified);
 
-            MongoRunner.stopMongod(mongodConn);
+            MongoRunner.stopMongod(mongerdConn);
 
             newMongodOptions.shardsvr = '';
             newMongodOptions.replSet = rsName;
-            mongodConn = MongoRunner.runMongod(newMongodOptions);
-            waitForMaster(mongodConn);
+            mongerdConn = MongoRunner.runMongod(newMongodOptions);
+            waitForMaster(mongerdConn);
 
-            res = mongodConn.getDB('admin').runCommand({shardingState: 1});
+            res = mongerdConn.getDB('admin').runCommand({shardingState: 1});
 
             assert(res.enabled);
             assert.eq(shardIdentityDoc.configsvrConnectionString, res.configServer);
             assert.eq(shardIdentityDoc.shardName, res.shardName);
             assert.eq(shardIdentityDoc.clusterId, res.clusterId);
 
-            return mongodConn;
+            return mongerdConn;
         };
 
         // Simulate the upsert that is performed by a config server on addShard.
-        assert.writeOK(mongodConn.getDB('admin').system.version.update(
+        assert.writeOK(mongerdConn.getDB('admin').system.version.update(
             {
               _id: shardIdentityDoc._id,
               shardName: shardIdentityDoc.shardName,
@@ -90,7 +90,7 @@
 
         awaitVersionUpdate();
 
-        var res = mongodConn.getDB('admin').runCommand({shardingState: 1});
+        var res = mongerdConn.getDB('admin').runCommand({shardingState: 1});
 
         assert(res.enabled);
         assert.eq(shardIdentityDoc.configsvrConnectionString, res.configServer);
@@ -98,24 +98,24 @@
         assert.eq(shardIdentityDoc.clusterId, res.clusterId);
         // Should not be allowed to remove the shardIdentity document
         assert.writeErrorWithCode(
-            mongodConn.getDB('admin').system.version.remove({_id: 'shardIdentity'}), 40070);
+            mongerdConn.getDB('admin').system.version.remove({_id: 'shardIdentity'}), 40070);
 
         //
         // Test normal startup
         //
 
-        var newMongodOptions = Object.extend(mongodConn.savedOptions, {
+        var newMongodOptions = Object.extend(mongerdConn.savedOptions, {
             restart: true,
             // disable snapshotting to force the stable timestamp forward with or without the
             // majority commit point.  This simplifies forcing out our corrupted write to
             // admin.system.version
             setParameter: {"failpoint.disableSnapshotting": "{'mode':'alwaysOn'}"}
         });
-        MongoRunner.stopMongod(mongodConn);
-        mongodConn = MongoRunner.runMongod(newMongodOptions);
-        waitForMaster(mongodConn);
+        MongoRunner.stopMongod(mongerdConn);
+        mongerdConn = MongoRunner.runMongod(newMongodOptions);
+        waitForMaster(mongerdConn);
 
-        res = mongodConn.getDB('admin').runCommand({shardingState: 1});
+        res = mongerdConn.getDB('admin').runCommand({shardingState: 1});
 
         assert(res.enabled);
         assert.eq(shardIdentityDoc.configsvrConnectionString, res.configServer);
@@ -127,19 +127,19 @@
         //
 
         // Note: modification of the shardIdentity is allowed only when not running with --shardsvr
-        MongoRunner.stopMongod(mongodConn);
+        MongoRunner.stopMongod(mongerdConn);
         // The manipulation of `--replSet` is explained in `restartAndFixShardIdentityDoc`.
         var rsName = newMongodOptions.replSet;
         delete newMongodOptions.replSet;
         delete newMongodOptions.shardsvr;
-        mongodConn = MongoRunner.runMongod(newMongodOptions);
-        waitForMaster(mongodConn);
+        mongerdConn = MongoRunner.runMongod(newMongodOptions);
+        waitForMaster(mongerdConn);
 
-        let writeResult = assert.commandWorked(mongodConn.getDB('admin').system.version.update(
+        let writeResult = assert.commandWorked(mongerdConn.getDB('admin').system.version.update(
             {_id: 'shardIdentity'}, {_id: 'shardIdentity', shardName: 'x', clusterId: ObjectId()}));
         assert.eq(writeResult.nModified, 1);
 
-        MongoRunner.stopMongod(mongodConn);
+        MongoRunner.stopMongod(mongerdConn);
 
         newMongodOptions.shardsvr = '';
         newMongodOptions.replSet = rsName;
@@ -150,22 +150,22 @@
 
         // We call MongoRunner.stopMongod() using a former connection to the server that is
         // configured with the same port in order to be able to assert on the server's exit code.
-        MongoRunner.stopMongod(mongodConn, undefined, {allowedExitCode: MongoRunner.EXIT_UNCAUGHT});
+        MongoRunner.stopMongod(mongerdConn, undefined, {allowedExitCode: MongoRunner.EXIT_UNCAUGHT});
 
         //
         // Test that it is possible to fix the invalid shardIdentity doc by not passing --shardsvr
         //
-        mongodConn = restartAndFixShardIdentityDoc(newMongodOptions);
-        res = mongodConn.getDB('admin').runCommand({shardingState: 1});
+        mongerdConn = restartAndFixShardIdentityDoc(newMongodOptions);
+        res = mongerdConn.getDB('admin').runCommand({shardingState: 1});
         assert(res.enabled);
     };
 
     var st = new ShardingTest({shards: 1});
 
     {
-        var mongod = MongoRunner.runMongod({shardsvr: ''});
-        runTest(mongod, st.configRS.getURL(), function() {});
-        MongoRunner.stopMongod(mongod);
+        var mongerd = MongoRunner.runMongod({shardsvr: ''});
+        runTest(mongerd, st.configRS.getURL(), function() {});
+        MongoRunner.stopMongod(mongerd);
     }
 
     {

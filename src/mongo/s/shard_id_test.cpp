@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/s/shard_id.h"
+#include "monger/s/shard_id.h"
 
-#include "mongo/base/string_data.h"
-#include "mongo/platform/basic.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/string_data.h"
+#include "monger/platform/basic.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::string;
-using namespace mongo;
+using namespace monger;
 
 TEST(ShardId, Valid) {
     ShardId shardId("my_shard_id");
@@ -106,4 +106,4 @@ TEST(ShardId, Equals) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

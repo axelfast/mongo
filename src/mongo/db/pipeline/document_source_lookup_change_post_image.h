@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Part of the change stream API machinery used to look up the post-image of a document. Uses the
@@ -63,9 +63,9 @@ public:
         invariant(pipeState != Pipeline::SplitState::kSplitForShards);
         StageConstraints constraints(StreamType::kStreaming,
                                      PositionRequirement::kNone,
-                                     // If this is parsed on mongos it should stay on mongos. If
+                                     // If this is parsed on mongers it should stay on mongers. If
                                      // we're not in a sharded cluster then it's okay to run on
-                                     // mongod.
+                                     // mongerd.
                                      HostTypeRequirement::kLocalOnly,
                                      DiskUseRequirement::kNoDiskUse,
                                      FacetRequirement::kNotAllowed,
@@ -127,4 +127,4 @@ private:
     NamespaceString assertValidNamespace(const Document& inputDoc) const;
 };
 
-}  // namespace mongo
+}  // namespace monger

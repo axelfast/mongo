@@ -1,6 +1,6 @@
 description: "setVersion is ignored if there is no electionId"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

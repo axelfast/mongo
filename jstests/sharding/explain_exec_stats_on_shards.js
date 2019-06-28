@@ -1,4 +1,4 @@
-// Tests for the mongos explain command to ensure that the 'executionStats' section of the explain
+// Tests for the mongers explain command to ensure that the 'executionStats' section of the explain
 // output is populated correctly for each shard.
 (function() {
     'use strict';

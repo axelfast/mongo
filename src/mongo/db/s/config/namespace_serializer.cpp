@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,22 +26,22 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
-#include "mongo/platform/basic.h"
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/config/namespace_serializer.h"
+#include "monger/db/s/config/namespace_serializer.h"
 
 #include <map>
 #include <memory>
 #include <string>
 
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/s/config/sharding_catalog_manager.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/s/config/sharding_catalog_manager.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 NamespaceSerializer::NamespaceSerializer() {}
 
@@ -80,4 +80,4 @@ NamespaceSerializer::ScopedLock NamespaceSerializer::lock(OperationContext* opCt
     return ScopedLock(nss, *this);
 }
 
-}  // namespace mongo
+}  // namespace monger

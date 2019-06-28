@@ -1,6 +1,6 @@
 description: "Unavailable seed"
 
-uri: "mongodb://a"
+uri: "mongerdb://a"
 
 phases: [
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/collection_options.h"
+#include "monger/db/catalog/collection_options.h"
 
 #include <limits>
 
-#include "mongo/db/json.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/json.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 void checkRoundTrip(const CollectionOptions& options1) {
     CollectionOptions options2;
@@ -380,4 +380,4 @@ TEST(CollectionOptions, NExtentsNumberLimits) {
     ASSERT_OK(options.parse(fromjson("{$nExtents: 9999999999999999999999999999999}")));
     ASSERT_EQ(options.initialNumExtents, LLONG_MAX);
 }
-}  // namespace mongo
+}  // namespace monger

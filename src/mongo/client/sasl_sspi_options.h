@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,9 +31,9 @@
 
 #include <string>
 
-#include "mongo/util/net/hostname_canonicalization.h"
+#include "monger/util/net/hostname_canonicalization.h"
 
-namespace mongo {
+namespace monger {
 
 class Status;
 
@@ -42,7 +42,7 @@ class OptionSection;
 class Environment;
 }  // namespace optionenvironment
 
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 
 struct SASLSSPIGlobalParams {
     // HostnameCanonicalizationMode to use for resolving SASL hostname into the SPN's hostname
@@ -57,4 +57,4 @@ extern SASLSSPIGlobalParams saslSSPIGlobalParams;
 Status addSASLSSPIOptions(moe::OptionSection* options);
 Status storeSASLSSPIOptions(const moe::Environment& params);
 
-}  // namespace mongo
+}  // namespace monger

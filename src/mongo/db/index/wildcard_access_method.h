@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/wildcard_key_generator.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/query/index_bounds.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/wildcard_key_generator.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/query/index_bounds.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Class which is responsible for generating and providing access to Wildcard index keys. Any index
@@ -104,4 +104,4 @@ private:
 
     const WildcardKeyGenerator _keyGen;
 };
-}  // namespace mongo
+}  // namespace monger

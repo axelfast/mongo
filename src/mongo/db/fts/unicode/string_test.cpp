@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cctype>
 
-#include "mongo/db/fts/unicode/string.h"
-#include "mongo/shell/linenoise_utf8.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/text.h"
+#include "monger/db/fts/unicode/string.h"
+#include "monger/shell/linenoise_utf8.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/text.h"
 
 #ifdef MSC_VER
 // Microsoft VS 2013 does not handle UTF-8 strings in char literal strings, error C4566
@@ -51,7 +51,7 @@
 // to avoid MSVC C4309: truncation of constant value
 #define C(x) static_cast<char>(static_cast<unsigned char>(x))
 
-namespace mongo {
+namespace monger {
 namespace unicode {
 
 using linenoise_utf8::copyString32to8;
@@ -267,4 +267,4 @@ TEST(UnicodeString, UTF32ToUTF8) {
 }
 
 }  // namespace unicode
-}  // namespace mongo
+}  // namespace monger

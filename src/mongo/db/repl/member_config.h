@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/db/repl/member_id.h"
-#include "mongo/db/repl/repl_set_tag.h"
-#include "mongo/db/repl/split_horizon.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/string_map.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status.h"
+#include "monger/db/repl/member_id.h"
+#include "monger/db/repl/repl_set_tag.h"
+#include "monger/db/repl/split_horizon.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/string_map.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 
@@ -228,4 +228,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

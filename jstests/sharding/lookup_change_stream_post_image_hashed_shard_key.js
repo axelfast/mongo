@@ -23,43 +23,43 @@
         }
     });
 
-    const mongosDB = st.s0.getDB(jsTestName());
-    const mongosColl = mongosDB['coll'];
+    const mongersDB = st.s0.getDB(jsTestName());
+    const mongersColl = mongersDB['coll'];
 
-    assert.commandWorked(mongosDB.dropDatabase());
+    assert.commandWorked(mongersDB.dropDatabase());
 
     // Enable sharding on the test DB and ensure its primary is st.shard0.shardName.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
-    st.ensurePrimaryShard(mongosDB.getName(), st.rs0.getURL());
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
+    st.ensurePrimaryShard(mongersDB.getName(), st.rs0.getURL());
 
     // Shard the test collection on the field "shardKey", and split it into two chunks.
-    assert.commandWorked(mongosDB.adminCommand({
-        shardCollection: mongosColl.getFullName(),
+    assert.commandWorked(mongersDB.adminCommand({
+        shardCollection: mongersColl.getFullName(),
         numInitialChunks: 2,
         key: {shardKey: "hashed"}
     }));
 
     // Make sure the negative chunk is on shard 0.
-    assert.commandWorked(mongosDB.adminCommand({
-        moveChunk: mongosColl.getFullName(),
+    assert.commandWorked(mongersDB.adminCommand({
+        moveChunk: mongersColl.getFullName(),
         bounds: [{shardKey: MinKey}, {shardKey: NumberLong("0")}],
         to: st.rs0.getURL()
     }));
 
     // Make sure the positive chunk is on shard 1.
-    assert.commandWorked(mongosDB.adminCommand({
-        moveChunk: mongosColl.getFullName(),
+    assert.commandWorked(mongersDB.adminCommand({
+        moveChunk: mongersColl.getFullName(),
         bounds: [{shardKey: NumberLong("0")}, {shardKey: MaxKey}],
         to: st.rs1.getURL()
     }));
 
-    const changeStream = mongosColl.aggregate([{$changeStream: {fullDocument: "updateLookup"}}]);
+    const changeStream = mongersColl.aggregate([{$changeStream: {fullDocument: "updateLookup"}}]);
 
     // Write enough documents that we likely have some on each shard.
     const nDocs = 1000;
     for (let id = 0; id < nDocs; ++id) {
-        assert.writeOK(mongosColl.insert({_id: id, shardKey: id}));
-        assert.writeOK(mongosColl.update({shardKey: id}, {$set: {updatedCount: 1}}));
+        assert.writeOK(mongersColl.insert({_id: id, shardKey: id}));
+        assert.writeOK(mongersColl.update({shardKey: id}, {$set: {updatedCount: 1}}));
     }
 
     for (let id = 0; id < nDocs; ++id) {

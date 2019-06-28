@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/s/client/sharding_network_connection_hook.h"
+#include "monger/s/client/sharding_network_connection_hook.h"
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/set_shard_version_request.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/server_options.h"
+#include "monger/db/wire_version.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/set_shard_version_request.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 Status ShardingNetworkConnectionHook::validateHost(
     const HostAndPort& remoteHost,
@@ -101,4 +101,4 @@ Status ShardingNetworkConnectionHook::handleReply(const HostAndPort& remoteHost,
                                                   executor::RemoteCommandResponse&& response) {
     MONGO_UNREACHABLE;
 }
-}  // namespace mongo
+}  // namespace monger

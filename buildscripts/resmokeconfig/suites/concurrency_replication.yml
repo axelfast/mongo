@@ -37,7 +37,7 @@ executor:
   - class: CleanupConcurrencyWorkloads
   fixture:
     class: ReplicaSetFixture
-    mongod_options:
+    mongerd_options:
       oplogSize: 1024
       set_parameters:
         enableTestCommands: 1

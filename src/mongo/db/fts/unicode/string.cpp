@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/db/fts/unicode/string.h"
+#include "monger/db/fts/unicode/string.h"
 
 #include <algorithm>
 #include <boost/algorithm/searching/boyer_moore.hpp>
 #include <boost/version.hpp>
 
-#include "mongo/db/fts/unicode/byte_vector.h"
-#include "mongo/platform/bits.h"
-#include "mongo/shell/linenoise_utf8.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/fts/unicode/byte_vector.h"
+#include "monger/platform/bits.h"
+#include "monger/shell/linenoise_utf8.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace unicode {
 
 namespace {
@@ -286,4 +286,4 @@ bool String::substrMatch(const std::string& str,
 }
 
 }  // namespace unicode
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/embedded/service_entry_point_embedded.h"
+#include "monger/embedded/service_entry_point_embedded.h"
 
-#include "mongo/db/read_concern.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
-#include "mongo/db/service_entry_point_common.h"
-#include "mongo/embedded/not_implemented.h"
-#include "mongo/embedded/periodic_runner_embedded.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
+#include "monger/db/service_entry_point_common.h"
+#include "monger/embedded/not_implemented.h"
+#include "monger/embedded/periodic_runner_embedded.h"
 
-namespace mongo {
+namespace monger {
 
 class ServiceEntryPointEmbedded::Hooks final : public ServiceEntryPointCommon::Hooks {
 public:
@@ -53,7 +53,7 @@ public:
         const auto prepareConflictBehavior = invocation->canIgnorePrepareConflicts()
             ? PrepareConflictBehavior::kIgnoreConflicts
             : PrepareConflictBehavior::kEnforce;
-        auto rcStatus = mongo::waitForReadConcern(opCtx,
+        auto rcStatus = monger::waitForReadConcern(opCtx,
                                                   repl::ReadConcernArgs::get(opCtx),
                                                   invocation->allowsAfterClusterTime(),
                                                   prepareConflictBehavior);
@@ -61,7 +61,7 @@ public:
     }
 
     void waitForSpeculativeMajorityReadConcern(OperationContext* opCtx) const override {
-        auto rcStatus = mongo::waitForSpeculativeMajorityReadConcern(
+        auto rcStatus = monger::waitForSpeculativeMajorityReadConcern(
             opCtx, repl::SpeculativeMajorityReadInfo::get(opCtx));
         uassertStatusOK(rcStatus);
     }
@@ -72,7 +72,7 @@ public:
                              BSONObjBuilder& commandResponseBuilder) const override {
         WriteConcernResult res;
         auto waitForWCStatus =
-            mongo::waitForWriteConcern(opCtx, lastOpBeforeRun, opCtx->getWriteConcern(), &res);
+            monger::waitForWriteConcern(opCtx, lastOpBeforeRun, opCtx->getWriteConcern(), &res);
 
         CommandHelpers::appendCommandWCStatus(commandResponseBuilder, waitForWCStatus, res);
     }
@@ -80,7 +80,7 @@ public:
     void waitForLinearizableReadConcern(OperationContext* opCtx) const override {
         if (repl::ReadConcernArgs::get(opCtx).getLevel() ==
             repl::ReadConcernLevel::kLinearizableReadConcern) {
-            uassertStatusOK(mongo::waitForLinearizableReadConcern(opCtx, 0));
+            uassertStatusOK(monger::waitForLinearizableReadConcern(opCtx, 0));
         }
     }
 
@@ -140,4 +140,4 @@ size_t ServiceEntryPointEmbedded::numOpenSessions() const {
     UASSERT_NOT_IMPLEMENTED;
 }
 
-}  // namespace mongo
+}  // namespace monger

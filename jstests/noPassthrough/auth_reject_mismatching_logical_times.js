@@ -32,7 +32,7 @@
     // Start the sharding test with auth on.
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     const st = new ShardingTest({
-        mongos: 1,
+        mongers: 1,
         manualAddShard: true,
         other: {keyFile: "jstests/libs/key1", shardAsReplicaSet: false}
     });

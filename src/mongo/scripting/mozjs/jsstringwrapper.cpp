@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/jsstringwrapper.h"
+#include "monger/scripting/mozjs/jsstringwrapper.h"
 
 #include <js/CharacterEncoding.h>
 #include <jsapi.h>
 #include <utility>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/scripting/mozjs/exception.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/error_codes.h"
+#include "monger/scripting/mozjs/exception.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 JSStringWrapper::JSStringWrapper(std::int32_t value) : _isSet(true) {
@@ -87,4 +87,4 @@ JSStringWrapper::operator bool() const {
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

@@ -10,7 +10,7 @@
 // guarantee.
 //
 // The packages within the 'private' directory would normally be put into an
-// 'internal' directory to prohibit their use outside the 'mongo' directory.
+// 'internal' directory to prohibit their use outside the 'monger' directory.
 // However, some MongoDB tools require very low-level access to the building
 // blocks of a driver, so we have placed them under 'private' to allow these
 // packages to be imported by projects that need them.

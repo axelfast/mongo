@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <functional>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/auth/authz_manager_external_state_local.h"
-#include "mongo/db/auth/role_graph.h"
-#include "mongo/db/auth/user_name.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/authz_manager_external_state_local.h"
+#include "monger/db/auth/role_graph.h"
+#include "monger/db/auth/user_name.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * The implementation of AuthzManagerExternalState functionality for mongod.
+ * The implementation of AuthzManagerExternalState functionality for mongerd.
  */
 class AuthzManagerExternalStateMongod : public AuthzManagerExternalStateLocal {
     AuthzManagerExternalStateMongod(const AuthzManagerExternalStateMongod&) = delete;
@@ -64,4 +64,4 @@ public:
                          const std::function<void(const BSONObj&)>& resultProcessor);
 };
 
-}  // namespace mongo
+}  // namespace monger

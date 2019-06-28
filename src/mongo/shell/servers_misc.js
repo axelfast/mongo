@@ -18,7 +18,7 @@ ToolTest.prototype.startDB = function(coll) {
 
     Object.extend(options, this.options);
 
-    this.m = startMongoProgram.apply(null, MongoRunner.arrOptions("mongod", options));
+    this.m = startMongoProgram.apply(null, MongoRunner.arrOptions("mongerd", options));
     this.db = this.m.getDB(this.baseName);
     if (coll)
         return this.db.getCollection(coll);
@@ -36,7 +36,7 @@ ToolTest.prototype.stop = function() {
 };
 
 ToolTest.prototype.runTool = function() {
-    var a = ["mongo" + arguments[0]];
+    var a = ["monger" + arguments[0]];
 
     var hasdbpath = false;
     var hasDialTimeout = false;
@@ -63,7 +63,7 @@ ToolTest.prototype.runTool = function() {
 };
 
 /**
- * Returns a port number that has not been given out to any other caller from the same mongo shell.
+ * Returns a port number that has not been given out to any other caller from the same monger shell.
  */
 var allocatePort;
 
@@ -104,7 +104,7 @@ var resetAllocatedPorts;
 
 /**
  * Returns a list of 'numPorts' port numbers that have not been given out to any other caller from
- * the same mongo shell.
+ * the same monger shell.
  */
 allocatePorts = function(numPorts) {
     var ports = [];
@@ -116,7 +116,7 @@ allocatePorts = function(numPorts) {
 };
 
 function startParallelShell(jsCode, port, noConnect) {
-    var shellPath = MongoRunner.mongoShellPath;
+    var shellPath = MongoRunner.mongerShellPath;
     var args = [shellPath];
 
     if (typeof db == "object") {

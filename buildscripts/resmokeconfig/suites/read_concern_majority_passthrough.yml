@@ -53,7 +53,7 @@ executor:
     n: 20
   fixture:
     class: ReplicaSetFixture
-    mongod_options:
+    mongerd_options:
       set_parameters:
         enableTestCommands: 1
         writePeriodicNoops: 1

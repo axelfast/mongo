@@ -74,7 +74,7 @@ Each YAML file has the following keys:
 Use as integration tests
 ========================
 
-Running these as integration tests will require a running mongod server. Each of
-these tests is valid against a standalone mongod, a replica set, and a sharded
+Running these as integration tests will require a running mongerd server. Each of
+these tests is valid against a standalone mongerd, a replica set, and a sharded
 system for server version 3.0 and later. Many of them will run against 2.6, but
 some will require conditional code.

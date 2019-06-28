@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -65,7 +65,7 @@ def generate_cpp_file(data_file_path, cpp_file_path):
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -80,14 +80,14 @@ def generate_cpp_file(data_file_path, cpp_file_path):
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <unicode/udata.h>
 
-#include "mongo/base/init.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/init.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // alignas() is used here to ensure 16-alignment of ICU data.  See the following excerpt from the
@@ -111,7 +111,7 @@ MONGO_INITIALIZER_GENERAL(LoadICUData, MONGO_NO_PREREQUISITES, ("BeginStartupOpt
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger
 '''
     decimal_encoded_data = ''
     with open(data_file_path, 'rb') as data_file:

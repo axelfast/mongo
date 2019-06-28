@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/index/wildcard_key_generator.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/db/query/planner_wildcard_helpers.h"
-#include "mongo/db/query/query_planner_test_fixture.h"
-#include "mongo/unittest/death_test.h"
+#include "monger/db/index/wildcard_key_generator.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/db/query/planner_wildcard_helpers.h"
+#include "monger/db/query/query_planner_test_fixture.h"
+#include "monger/unittest/death_test.h"
 
-namespace mongo {
+namespace monger {
 
-namespace wcp = ::mongo::wildcard_planning;
+namespace wcp = ::monger::wildcard_planning;
 
 const std::string kIndexName = "indexName";
 
@@ -1906,4 +1906,4 @@ TEST_F(QueryPlannerWildcardTest, StringComparisonWithEqualCollatorsAndWildcardIn
         "bounds: {'$_path': [['a','a',true,true]], 'a': [['','oof',true,false]]}}}}}");
 }
 
-}  // namespace mongo
+}  // namespace monger

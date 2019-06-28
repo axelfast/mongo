@@ -6,8 +6,8 @@
 
 package connection
 
-// Listener is a generic mongodb network protocol listener. It can return connections
-// that speak the mongodb wire protocol.
+// Listener is a generic mongerdb network protocol listener. It can return connections
+// that speak the mongerdb wire protocol.
 //
 // Multiple goroutines may invoke methods on a Listener simultaneously.
 //

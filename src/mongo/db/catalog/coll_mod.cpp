@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,38 +27,38 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/coll_mod.h"
+#include "monger/db/catalog/coll_mod.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -211,7 +211,7 @@ StatusWith<CollModRequest> parseCollModRequest(OperationContext* opCtx,
                 return Status(ErrorCodes::InvalidOptions,
                               "'pipeline' option only supported on a view");
             }
-            if (e.type() != mongo::Array) {
+            if (e.type() != monger::Array) {
                 return Status(ErrorCodes::InvalidOptions, "not a valid aggregation pipeline");
             }
             cmr.viewPipeLine = e;
@@ -220,7 +220,7 @@ StatusWith<CollModRequest> parseCollModRequest(OperationContext* opCtx,
                 return Status(ErrorCodes::InvalidOptions,
                               "'viewOn' option only supported on a view");
             }
-            if (e.type() != mongo::String) {
+            if (e.type() != monger::String) {
                 return Status(ErrorCodes::InvalidOptions, "'viewOn' option must be a string");
             }
             cmr.viewOn = e.str();
@@ -575,4 +575,4 @@ Status updateNonReplicatedUniqueIndexes(OperationContext* opCtx) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

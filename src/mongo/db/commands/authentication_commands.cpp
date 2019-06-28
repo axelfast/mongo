@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,42 +27,42 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/authentication_commands.h"
+#include "monger/db/commands/authentication_commands.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/client/sasl_client_authenticate.h"
-#include "mongo/config.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/sasl_options.h"
-#include "mongo/db/auth/security_key.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/platform/random.h"
-#include "mongo/rpc/metadata/client_metadata.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
-#include "mongo/transport/session.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/net/ssl_types.h"
-#include "mongo/util/text.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/client/sasl_client_authenticate.h"
+#include "monger/config.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/sasl_options.h"
+#include "monger/db/auth/security_key.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/operation_context.h"
+#include "monger/platform/random.h"
+#include "monger/rpc/metadata/client_metadata.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/transport/session.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_types.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 static bool _isX509AuthDisabled;
@@ -114,7 +114,7 @@ Status _authenticateX509(OperationContext* opCtx, const UserName& user, const BS
                 if (!clientMetadata->getApplicationName().empty() ||
                     (driverName != "MongoDB Internal Client" &&
                      driverName != "NetworkInterfaceTL")) {
-                    warning() << "Client isn't a mongod or mongos, but is connecting with a "
+                    warning() << "Client isn't a mongerd or mongers, but is connecting with a "
                                  "certificate with cluster membership";
                 }
             }
@@ -187,11 +187,11 @@ private:
  * Since that mechanism has been removed from MongoDB 3.8,
  * it is nominally no longer required.
  *
- * Unfortunately, mongo-tools uses a connection library
+ * Unfortunately, monger-tools uses a connection library
  * which optimistically invokes {getnonce: 1} upon connection
  * under the assumption that it will eventually be used as part
  * of "classic" authentication.
- * If the command dissapeared, then all of mongo-tools would
+ * If the command dissapeared, then all of monger-tools would
  * fail to connect, despite using SCRAM-SHA-1 or another valid
  * auth mechanism. Thus, we have to keep this command around for now.
  *
@@ -273,8 +273,8 @@ bool CmdAuthenticate::run(OperationContext* opCtx,
     if (getTestCommandsEnabled() && user.getDB() == "admin" &&
         user.getUser() == internalSecurity.user->getName().getUser()) {
         // Allows authenticating as the internal user against the admin database.  This is to
-        // support the auth passthrough test framework on mongos (since you can't use the local
-        // database on a mongos, so you can't auth as the internal user without this).
+        // support the auth passthrough test framework on mongers (since you can't use the local
+        // database on a mongers, so you can't auth as the internal user without this).
         user = internalSecurity.user->getName();
     }
 
@@ -343,8 +343,8 @@ public:
         if (getTestCommandsEnabled() && dbname == "admin") {
             // Allows logging out as the internal user against the admin database, however
             // this actually logs out of the local database as well. This is to
-            // support the auth passthrough test framework on mongos (since you can't use the
-            // local database on a mongos, so you can't logout as the internal user
+            // support the auth passthrough test framework on mongers (since you can't use the
+            // local database on a mongers, so you can't logout as the internal user
             // without this).
             authSession->logoutDatabase(opCtx, "local");
         }
@@ -360,4 +360,4 @@ void disableAuthMechanism(StringData authMechanism) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

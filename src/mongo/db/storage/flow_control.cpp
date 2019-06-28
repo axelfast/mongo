@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 #define DEBUG_LOG_LEVEL 4
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/flow_control.h"
+#include "monger/db/storage/flow_control.h"
 
 #include <algorithm>
 #include <fmt/format.h>
 #include <limits>
 
-#include "mongo/db/concurrency/flow_control_ticketholder.h"
-#include "mongo/db/concurrency/lock_manager_defs.h"
-#include "mongo/db/repl/member_data.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/storage/flow_control_parameters_gen.h"
-#include "mongo/util/background.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/db/concurrency/flow_control_ticketholder.h"
+#include "monger/db/concurrency/lock_manager_defs.h"
+#include "monger/db/repl/member_data.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/server_options.h"
+#include "monger/db/storage/flow_control_parameters_gen.h"
+#include "monger/util/background.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(flowControlTicketOverride);
 
@@ -492,4 +492,4 @@ int64_t FlowControl::_getLocksUsedLastPeriod() {
     return ret;
 }
 
-}  // namespace mongo
+}  // namespace monger

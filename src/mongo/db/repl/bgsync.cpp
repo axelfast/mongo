@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,43 +27,43 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/bgsync.h"
+#include "monger/db/repl/bgsync.h"
 
 #include <memory>
 
-#include "mongo/base/counter.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/connection_pool.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/repl/data_replicator_external_state_impl.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_interface_local.h"
-#include "mongo/db/repl/oplog_interface_remote.h"
-#include "mongo/db/repl/repl_server_parameters_gen.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_impl.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/rollback_source_impl.h"
-#include "mongo/db/repl/rs_rollback.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/s/shard_identity_rollback_notifier.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/counter.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/connection_pool.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/repl/data_replicator_external_state_impl.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_interface_local.h"
+#include "monger/db/repl/oplog_interface_remote.h"
+#include "monger/db/repl/repl_server_parameters_gen.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_impl.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/rollback_source_impl.h"
+#include "monger/db/repl/rs_rollback.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/s/shard_identity_rollback_notifier.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -224,9 +224,9 @@ void BackgroundSync::_produce() {
         // Currently we cannot block here or we prevent primaries from being fully elected since
         // we'll never call _signalNoNewDataForApplier.
         //        while (MONGO_FAIL_POINT(stopReplProducer) && !inShutdown()) {
-        //            mongo::sleepsecs(1);
+        //            monger::sleepsecs(1);
         //        }
-        mongo::sleepsecs(1);
+        monger::sleepsecs(1);
         return;
     }
 
@@ -320,7 +320,7 @@ void BackgroundSync::_produce() {
         error() << "too stale to catch up -- entering maintenance mode";
         log() << "Our newest OpTime : " << lastOpTimeFetched;
         log() << "Earliest OpTime available is " << syncSourceResp.earliestOpTimeSeen;
-        log() << "See http://dochub.mongodb.org/core/resyncingaverystalereplicasetmember";
+        log() << "See http://dochub.mongerdb.org/core/resyncingaverystalereplicasetmember";
 
         // Activate maintenance mode and transition to RECOVERING.
         auto status = _replCoord->setMaintenanceMode(true);
@@ -431,7 +431,7 @@ void BackgroundSync::_produce() {
         }
         _oplogFetcher = std::move(oplogFetcherPtr);
         oplogFetcher = _oplogFetcher.get();
-    } catch (const mongo::DBException&) {
+    } catch (const monger::DBException&) {
         fassertFailedWithStatus(34440, exceptionToStatus());
     }
 
@@ -577,7 +577,7 @@ void BackgroundSync::_runRollback(OperationContext* opCtx,
         log() << "rollback - rollbackHangBeforeStart fail point "
                  "enabled. Blocking until fail point is disabled.";
         while (MONGO_FAIL_POINT(rollbackHangBeforeStart) && !inShutdown()) {
-            mongo::sleepsecs(1);
+            monger::sleepsecs(1);
         }
     }
 
@@ -788,4 +788,4 @@ void BackgroundSync::startProducerIfStopped() {
 
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

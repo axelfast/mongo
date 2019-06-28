@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ftdc/file_reader.h"
+#include "monger/db/ftdc/file_reader.h"
 
 #include <boost/filesystem.hpp>
 #include <fstream>
 
-#include "mongo/base/data_range_cursor.h"
-#include "mongo/base/data_type_validated.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/util.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/rpc/object_check.h"
-#include "mongo/util/str.h"
+#include "monger/base/data_range_cursor.h"
+#include "monger/base/data_type_validated.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/util.h"
+#include "monger/db/jsobj.h"
+#include "monger/rpc/object_check.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 FTDCFileReader::~FTDCFileReader() {
     _stream.close();
@@ -230,4 +230,4 @@ Status FTDCFileReader::open(const boost::filesystem::path& file) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

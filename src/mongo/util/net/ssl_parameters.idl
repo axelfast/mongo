@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -27,10 +27,10 @@
 #
 
 global:
-  cpp_namespace: "mongo"
+  cpp_namespace: "monger"
   cpp_includes:
-    - "mongo/util/net/ssl_options.h"
-    - "mongo/util/net/ssl_parameters.h"
+    - "monger/util/net/ssl_options.h"
+    - "monger/util/net/ssl_parameters.h"
 
 server_parameters:
   opensslDiffieHellmanParameters:

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,16 +33,16 @@
 
 #include <boost/assert.hpp>
 
-namespace mongo {
+namespace monger {
 BoostAssertFuncs& BoostAssertFuncs::global() {
     static BoostAssertFuncs funcs;
     return funcs;
 }
-}  // namespace mongo
+}  // namespace monger
 
 namespace boost {
 void assertion_failed(char const* expr, char const* function, char const* file, long line) {
-    auto assertFunc = ::mongo::BoostAssertFuncs::global().assertFunc;
+    auto assertFunc = ::monger::BoostAssertFuncs::global().assertFunc;
     if (!assertFunc)
         std::terminate();
     assertFunc(expr, function, file, line);
@@ -50,7 +50,7 @@ void assertion_failed(char const* expr, char const* function, char const* file, 
 
 void assertion_failed_msg(
     char const* expr, char const* msg, char const* function, char const* file, long line) {
-    auto assertMsgFunc = ::mongo::BoostAssertFuncs::global().assertMsgFunc;
+    auto assertMsgFunc = ::monger::BoostAssertFuncs::global().assertMsgFunc;
     if (!assertMsgFunc)
         std::terminate();
     assertMsgFunc(expr, msg, function, file, line);

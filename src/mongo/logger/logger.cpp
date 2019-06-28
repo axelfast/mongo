@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/logger/logger.h"
+#include "monger/logger/logger.h"
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/platform/compiler.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/platform/compiler.h"
 
-namespace mongo {
+namespace monger {
 namespace logger {
 
 static LogManager* theGlobalLogManager;  // NULL at program start, before even static
@@ -62,4 +62,4 @@ MONGO_INITIALIZER_GENERAL(GlobalLogManager, ("ValidateLocale"), ("default"))(Ini
 }
 
 }  // namespace logger
-}  // namespace mongo
+}  // namespace monger

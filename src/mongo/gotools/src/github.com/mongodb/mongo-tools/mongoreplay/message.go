@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"fmt"
@@ -17,7 +17,7 @@ const MsgHeaderLen = 16
 // MaxMessageSize is the maximum message size as defined in the server
 const MaxMessageSize = 48 * 1000 * 1000
 
-// MsgHeader is the mongo MessageHeader
+// MsgHeader is the monger MessageHeader
 type MsgHeader struct {
 	// MessageLength is the total message size, including this header
 	MessageLength int32

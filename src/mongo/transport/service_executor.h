@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 
 #include <functional>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/platform/bitwise_enum_operators.h"
-#include "mongo/transport/service_executor_task_names.h"
-#include "mongo/transport/transport_mode.h"
-#include "mongo/util/duration.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/platform/bitwise_enum_operators.h"
+#include "monger/transport/service_executor_task_names.h"
+#include "monger/transport/transport_mode.h"
+#include "monger/util/duration.h"
 
-namespace mongo {
+namespace monger {
 // This needs to be forward declared here because the service_context.h is a circular dependency.
 class ServiceContext;
 
@@ -106,4 +106,4 @@ public:
 
 ENABLE_BITMASK_OPERATORS(transport::ServiceExecutor::ScheduleFlags)
 
-}  // namespace mongo
+}  // namespace monger

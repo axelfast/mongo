@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session_for_test.h"
+#include "monger/db/auth/authorization_session_for_test.h"
 
 #include <algorithm>
 #include <memory>
 
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/auth/user_set.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/auth/user_set.h"
 
-namespace mongo {
+namespace monger {
 constexpr StringData AuthorizationSessionForTest::kTestDBName;
 
 AuthorizationSessionForTest::~AuthorizationSessionForTest() {
@@ -78,4 +78,4 @@ void AuthorizationSessionForTest::revokeAllPrivileges() {
                                     }),
                      _testUsers.end());
 }
-}  // namespace mongo
+}  // namespace monger

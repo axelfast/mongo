@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ftdc/util.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/ftdc/util.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 void checkTime(int expected, int now_time, int period) {
     ASSERT_TRUE(Date_t::fromMillisSinceEpoch(expected) ==
@@ -51,18 +51,18 @@ TEST(FTDCUtilTest, TestRoundTime) {
 TEST(FTDCUtilTest, TestMongoSPath) {
 
     std::vector<std::pair<std::string, std::string>> testCases = {
-        {"/var/log/mongos.log", "/var/log/mongos.diagnostic.data"},
-        {"/var/log/mongos.foo.log", "/var/log/mongos.diagnostic.data"},
+        {"/var/log/mongers.log", "/var/log/mongers.diagnostic.data"},
+        {"/var/log/mongers.foo.log", "/var/log/mongers.diagnostic.data"},
         {"/var/log/log_file", "/var/log/log_file.diagnostic.data"},
-        {"./mongos.log", "./mongos.diagnostic.data"},
-        {"../mongos.log", "../mongos.diagnostic.data"},
-        {"c:\\var\\log\\mongos.log", "c:\\var\\log\\mongos.diagnostic.data"},
-        {"c:\\var\\log\\mongos.foo.log", "c:\\var\\log\\mongos.diagnostic.data"},
+        {"./mongers.log", "./mongers.diagnostic.data"},
+        {"../mongers.log", "../mongers.diagnostic.data"},
+        {"c:\\var\\log\\mongers.log", "c:\\var\\log\\mongers.diagnostic.data"},
+        {"c:\\var\\log\\mongers.foo.log", "c:\\var\\log\\mongers.diagnostic.data"},
         {"c:\\var\\log\\log_file", "c:\\var\\log\\log_file.diagnostic.data"},
-        {"/var/some.log/mongos.log", "/var/some.log/mongos.diagnostic.data"},
+        {"/var/some.log/mongers.log", "/var/some.log/mongers.diagnostic.data"},
         {"/var/some.log/log_file", "/var/some.log/log_file.diagnostic.data"},
 
-        {"foo/mongos.log", "foo/mongos.diagnostic.data"},
+        {"foo/mongers.log", "foo/mongers.diagnostic.data"},
     };
 
     for (const auto& p : testCases) {
@@ -70,4 +70,4 @@ TEST(FTDCUtilTest, TestMongoSPath) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

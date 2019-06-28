@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/queued_data_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/query/cursor_request.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/commands.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/queued_data_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/query/cursor_request.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::stringstream;
@@ -246,4 +246,4 @@ public:
 } cmdListIndexes;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

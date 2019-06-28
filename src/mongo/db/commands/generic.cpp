@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/log_process_details.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/ramlog.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/log_process_details.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/ramlog.h"
 
 #include <sstream>
 #include <string>
 #include <vector>
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::string;
@@ -192,4 +192,4 @@ public:
 } listCommandsCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

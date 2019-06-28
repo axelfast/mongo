@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/parse_number.h"
+#include "monger/base/parse_number.h"
 
 #include <algorithm>
 #include <cctype>
@@ -39,11 +39,11 @@
 #include <limits>
 #include <string>
 
-#include "mongo/base/status_with.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/platform/overflow_arithmetic.h"
+#include "monger/base/status_with.h"
+#include "monger/platform/decimal128.h"
+#include "monger/platform/overflow_arithmetic.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -142,9 +142,9 @@ inline StatusWith<uint64_t> parseMagnitudeFromStringWithBase(uint64_t base,
 
         // This block is (n = (n * base) + digitValue) with overflow checking at each step.
         uint64_t multiplied;
-        if (mongoUnsignedMultiplyOverflow64(n, base, &multiplied))
+        if (mongerUnsignedMultiplyOverflow64(n, base, &multiplied))
             return Status(ErrorCodes::Overflow, "Overflow");
-        if (mongoUnsignedAddOverflow64(multiplied, digitValue, &n))
+        if (mongerUnsignedAddOverflow64(multiplied, digitValue, &n))
             return Status(ErrorCodes::Overflow, "Overflow");
         ++charsConsumed;
     }
@@ -350,4 +350,4 @@ DEFINE_NUMBER_PARSER_OPERATOR(int8_t)
 DEFINE_NUMBER_PARSER_OPERATOR(uint8_t)
 DEFINE_NUMBER_PARSER_OPERATOR(double)
 DEFINE_NUMBER_PARSER_OPERATOR(Decimal128)
-}  // namespace mongo
+}  // namespace monger

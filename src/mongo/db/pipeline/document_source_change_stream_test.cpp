@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,39 +27,39 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <memory>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry_mock.h"
-#include "mongo/db/catalog/collection_mock.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/db/pipeline/document_source_change_stream_transform.h"
-#include "mongo/db/pipeline/document_source_check_resume_token.h"
-#include "mongo/db/pipeline/document_source_limit.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/document_source_mock.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/stub_mongo_process_interface.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/pipeline/value_comparator.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/json.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry_mock.h"
+#include "monger/db/catalog/collection_mock.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source_change_stream_transform.h"
+#include "monger/db/pipeline/document_source_check_resume_token.h"
+#include "monger/db/pipeline/document_source_limit.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/document_source_mock.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/stub_monger_process_interface.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/pipeline/value_comparator.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using boost::intrusive_ptr;
@@ -174,7 +174,7 @@ public:
         vector<intrusive_ptr<DocumentSource>> stages = makeStages(entry.toBSON(), spec);
         auto closeCursor = stages.back();
 
-        getExpCtx()->mongoProcessInterface =
+        getExpCtx()->mongerProcessInterface =
             std::make_unique<MockMongoInterface>(docKeyFields, transactionEntries);
 
         auto next = closeCursor->getNext();
@@ -201,7 +201,7 @@ public:
         list<intrusive_ptr<DocumentSource>> result =
             DSChangeStream::createFromBson(spec.firstElement(), getExpCtx());
         vector<intrusive_ptr<DocumentSource>> stages(std::begin(result), std::end(result));
-        getExpCtx()->mongoProcessInterface =
+        getExpCtx()->mongerProcessInterface =
             std::make_unique<MockMongoInterface>(std::vector<FieldPath>{});
 
         // This match stage is a DocumentSourceOplogMatch, which we explicitly disallow from
@@ -1115,7 +1115,7 @@ TEST_F(ChangeStreamStageTest, TransactionWithMultipleOplogEntries) {
     invariant(dynamic_cast<DocumentSourceChangeStreamTransform*>(transform) != nullptr);
 
     // Populate the MockTransactionHistoryEditor in reverse chronological order.
-    getExpCtx()->mongoProcessInterface = std::make_unique<MockMongoInterface>(
+    getExpCtx()->mongerProcessInterface = std::make_unique<MockMongoInterface>(
         std::vector<FieldPath>{},
         std::vector<repl::OplogEntry>{transactionEntry2, transactionEntry1});
 
@@ -1244,7 +1244,7 @@ TEST_F(ChangeStreamStageTest, PreparedTransactionWithMultipleOplogEntries) {
     invariant(dynamic_cast<DocumentSourceChangeStreamTransform*>(transform) != nullptr);
 
     // Populate the MockTransactionHistoryEditor in reverse chronological order.
-    getExpCtx()->mongoProcessInterface = std::make_unique<MockMongoInterface>(
+    getExpCtx()->mongerProcessInterface = std::make_unique<MockMongoInterface>(
         std::vector<FieldPath>{},
         std::vector<repl::OplogEntry>{commitEntry, transactionEntry2, transactionEntry1});
 
@@ -1690,7 +1690,7 @@ TEST_F(ChangeStreamStageTest, UsesResumeTokenAsSortKeyIfNeedsMergeIsFalse) {
 
     auto stages = makeStages(insert.toBSON(), kDefaultSpec);
 
-    getExpCtx()->mongoProcessInterface =
+    getExpCtx()->mongerProcessInterface =
         std::make_unique<MockMongoInterface>(std::vector<FieldPath>{{"x"}, {"_id"}});
 
     getExpCtx()->needsMerge = false;
@@ -2241,4 +2241,4 @@ TEST_F(ChangeStreamStageDBTest, StartAfterSucceedsEvenIfResumeTokenDoesNotContai
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,42 +27,42 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/transport/transport_layer_asio.h"
+#include "monger/transport/transport_layer_asio.h"
 
 #include <asio.hpp>
 #include <asio/system_timer.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "mongo/config.h"
+#include "monger/config.h"
 
-#include "mongo/base/system_error.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/transport/asio_utils.h"
-#include "mongo/transport/service_entry_point.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/sockaddr.h"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/net/ssl_options.h"
+#include "monger/base/system_error.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/transport/asio_utils.h"
+#include "monger/transport/service_entry_point.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/sockaddr.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_options.h"
 
 #ifdef MONGO_CONFIG_SSL
-#include "mongo/util/net/ssl.hpp"
+#include "monger/util/net/ssl.hpp"
 #endif
 
 // session_asio.h has some header dependencies that require it to be the last header.
 
 #ifdef __linux__
-#include "mongo/transport/baton_asio_linux.h"
+#include "monger/transport/baton_asio_linux.h"
 #endif
 
-#include "mongo/transport/session_asio.h"
+#include "monger/transport/session_asio.h"
 
-namespace mongo {
+namespace monger {
 namespace transport {
 
 MONGO_FAIL_POINT_DEFINE(transportLayerASIOasyncConnectTimesOut);
@@ -897,4 +897,4 @@ BatonHandle TransportLayerASIO::makeBaton(OperationContext* opCtx) const {
 #endif
 
 }  // namespace transport
-}  // namespace mongo
+}  // namespace monger

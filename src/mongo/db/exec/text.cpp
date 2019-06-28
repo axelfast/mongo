@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/db/exec/text.h"
+#include "monger/db/exec/text.h"
 
 #include <memory>
 #include <vector>
 
-#include "mongo/db/exec/fetch.h"
-#include "mongo/db/exec/filter.h"
-#include "mongo/db/exec/index_scan.h"
-#include "mongo/db/exec/or.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/text_match.h"
-#include "mongo/db/exec/text_or.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/fts/fts_index_format.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/query/internal_plans.h"
+#include "monger/db/exec/fetch.h"
+#include "monger/db/exec/filter.h"
+#include "monger/db/exec/index_scan.h"
+#include "monger/db/exec/or.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/text_match.h"
+#include "monger/db/exec/text_or.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/fts/fts_index_format.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/query/internal_plans.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::unique_ptr;
@@ -149,4 +149,4 @@ unique_ptr<PlanStage> TextStage::buildTextTree(OperationContext* opCtx,
     return textMatchStage;
 }
 
-}  // namespace mongo
+}  // namespace monger

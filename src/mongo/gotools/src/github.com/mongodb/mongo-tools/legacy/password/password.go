@@ -10,7 +10,7 @@ package password
 
 import (
 	"fmt"
-	"github.com/mongodb/mongo-tools/legacy/log"
+	"github.com/mongerdb/monger-tools/legacy/log"
 	"os"
 )
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/transport/message_compressor_registry.h"
+#include "monger/transport/message_compressor_registry.h"
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/transport/message_compressor_noop.h"
-#include "mongo/transport/message_compressor_snappy.h"
-#include "mongo/transport/message_compressor_zlib.h"
-#include "mongo/transport/message_compressor_zstd.h"
-#include "mongo/util/options_parser/option_section.h"
+#include "monger/base/init.h"
+#include "monger/transport/message_compressor_noop.h"
+#include "monger/transport/message_compressor_snappy.h"
+#include "monger/transport/message_compressor_zlib.h"
+#include "monger/transport/message_compressor_zstd.h"
+#include "monger/util/options_parser/option_section.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 constexpr auto kDisabledConfigValue = "disabled"_sd;
 }  // namespace
@@ -143,4 +143,4 @@ MONGO_INITIALIZER_GENERAL(NoopMessageCompressorInit,
 MONGO_INITIALIZER(AllCompressorsRegistered)(InitializerContext* context) {
     return MessageCompressorRegistry::get().finalizeSupportedCompressors();
 }
-}  // namespace mongo
+}  // namespace monger

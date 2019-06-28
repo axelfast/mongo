@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/logical_session_cache_factory_mongod.h"
+#include "monger/db/logical_session_cache_factory_mongerd.h"
 
 #include <memory>
 
-#include "mongo/db/logical_session_cache_impl.h"
-#include "mongo/db/service_liaison_mongod.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/sessions_collection_config_server.h"
-#include "mongo/db/sessions_collection_rs.h"
-#include "mongo/db/sessions_collection_sharded.h"
-#include "mongo/db/sessions_collection_standalone.h"
-#include "mongo/util/log.h"
+#include "monger/db/logical_session_cache_impl.h"
+#include "monger/db/service_liaison_mongerd.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/sessions_collection_config_server.h"
+#include "monger/db/sessions_collection_rs.h"
+#include "monger/db/sessions_collection_sharded.h"
+#include "monger/db/sessions_collection_standalone.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 std::unique_ptr<LogicalSessionCache> makeLogicalSessionCacheD(LogicalSessionCacheServer state) {
     auto liaison = std::make_unique<ServiceLiaisonMongod>();
@@ -68,4 +68,4 @@ std::unique_ptr<LogicalSessionCache> makeLogicalSessionCacheD(LogicalSessionCach
         std::move(liaison), std::move(sessionsColl), MongoDSessionCatalog::reapSessionsOlderThan);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -11,9 +11,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 // GetAuthVersion gets the authentication schema version of the connected server
@@ -32,7 +32,7 @@ func GetAuthVersion(sessionProvider *db.SessionProvider) (int, error) {
 	if err != nil {
 		errMessage := err.Error()
 		// as a necessary hack, if the error message takes a certain form,
-		// we can infer version 1. This is because early versions of mongodb
+		// we can infer version 1. This is because early versions of mongerdb
 		// had no concept of an "auth schema version", so asking for the
 		// authSchemaVersion value will return a "no option found" or "no such cmd"
 		if errMessage == "no option found to get" ||

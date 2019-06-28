@@ -65,7 +65,7 @@ var db;
     } = {}) {
         const conn =
             MongoRunner.runMongod({setParameter: {logComponentVerbosity: tojson({command: 1})}});
-        assert.neq(conn, "mongod was unable to start up");
+        assert.neq(conn, "mongerd was unable to start up");
 
         // Insert a document so the "validate" command has some actual work to do.
         assert.commandWorked(conn.getDB("test").mycoll.insert({}));
@@ -86,7 +86,7 @@ var db;
         const pattern = makePatternForValidate("test", "mycoll");
         assert.eq(1,
                   countMatches(pattern, output),
-                  "expected to find " + tojson(pattern) + " from mongod in the log output");
+                  "expected to find " + tojson(pattern) + " from mongerd in the log output");
 
         for (let [targetVersion, expectedCount] of[[lastStableFCV, expectedSetLastStableFCV],
                                                    [latestFCV, expectedSetLatestFCV]]) {
@@ -97,7 +97,7 @@ var db;
             const pattern = makePatternForSetFCV(targetVersion);
             assert.lte(expectedCount,
                        countMatches(pattern, output),
-                       "expected to find " + tojson(pattern) + " from mongod in the log output");
+                       "expected to find " + tojson(pattern) + " from mongerd in the log output");
         }
     }
 

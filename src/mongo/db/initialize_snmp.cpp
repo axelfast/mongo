@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/db/initialize_snmp.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/initialize_snmp.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 bool initSet = false;
 std::function<void()> snmpInitializer = [] {};
 }  // namespace
-}  // namespace mongo
+}  // namespace monger
 
-void mongo::registerSNMPInitializer(std::function<void()> init) {
+void monger::registerSNMPInitializer(std::function<void()> init) {
     invariant(!initSet);
     snmpInitializer = std::move(init);
     initSet = true;
 }
 
-void mongo::initializeSNMP() {
+void monger::initializeSNMP() {
     return snmpInitializer();
 }

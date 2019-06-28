@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/d_concurrency.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/db/concurrency/flow_control_ticketholder.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/service_context.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/str.h"
+#include "monger/db/concurrency/flow_control_ticketholder.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/service_context.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 Lock::TempRelease::TempRelease(Locker* lockState)
     : _lockState(lockState),
@@ -320,4 +320,4 @@ void Lock::ResourceLock::unlock() {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

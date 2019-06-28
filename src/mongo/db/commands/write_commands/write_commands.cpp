@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,35 +27,35 @@
  *    it in the license file.
  */
 
-#include "mongo/base/init.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/write_commands/write_commands_common.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/json.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/ops/delete_request.h"
-#include "mongo/db/ops/parsed_delete.h"
-#include "mongo/db/ops/parsed_update.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/ops/write_ops_exec.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/db/storage/duplicate_key_error_info.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/s/stale_exception.h"
+#include "monger/base/init.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/write_commands/write_commands_common.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/json.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/ops/delete_request.h"
+#include "monger/db/ops/parsed_delete.h"
+#include "monger/db/ops/parsed_update.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/ops/write_ops_exec.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/stats/counters.h"
+#include "monger/db/storage/duplicate_key_error_info.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/write_concern.h"
+#include "monger/s/stale_exception.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 void redactTooLongLog(mutablebson::Document* cmdObj, StringData fieldName) {
@@ -175,7 +175,7 @@ void serializeReply(OperationContext* opCtx,
     // writeConcernError field is handled by command processor.
 
     {
-        // Undocumented repl fields that mongos depends on.
+        // Undocumented repl fields that mongers depends on.
         auto* replCoord = repl::ReplicationCoordinator::get(opCtx->getServiceContext());
         const auto replMode = replCoord->getReplicationMode();
         if (replMode != repl::ReplicationCoordinator::modeNone) {
@@ -482,4 +482,4 @@ private:
 } cmdDelete;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <cctype>
@@ -40,38 +40,38 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mongo/base/init.h"
-#include "mongo/base/initializer.h"
-#include "mongo/base/status.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/log_process_details.h"
-#include "mongo/db/server_options.h"
-#include "mongo/logger/console_appender.h"
-#include "mongo/logger/logger.h"
-#include "mongo/logger/message_event_utf8_encoder.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/shell/linenoise.h"
-#include "mongo/shell/shell_options.h"
-#include "mongo/shell/shell_utils.h"
-#include "mongo/shell/shell_utils_launcher.h"
-#include "mongo/stdx/utility.h"
-#include "mongo/transport/transport_layer_asio.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/file.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/password.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/signal_handlers.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
-#include "mongo/util/version.h"
+#include "monger/base/init.h"
+#include "monger/base/initializer.h"
+#include "monger/base/status.h"
+#include "monger/client/monger_uri.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/log_process_details.h"
+#include "monger/db/server_options.h"
+#include "monger/logger/console_appender.h"
+#include "monger/logger/logger.h"
+#include "monger/logger/message_event_utf8_encoder.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/scripting/engine.h"
+#include "monger/shell/linenoise.h"
+#include "monger/shell/shell_options.h"
+#include "monger/shell/shell_utils.h"
+#include "monger/shell/shell_utils_launcher.h"
+#include "monger/stdx/utility.h"
+#include "monger/transport/transport_layer_asio.h"
+#include "monger/util/exit.h"
+#include "monger/util/file.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/password.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/signal_handlers.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
+#include "monger/util/version.h"
 
 #ifdef _WIN32
 #include <io.h>
@@ -83,7 +83,7 @@
 #endif
 
 using namespace std::literals::string_literals;
-using namespace mongo;
+using namespace monger;
 
 bool gotInterrupted = false;
 bool inMultiLine = false;
@@ -92,21 +92,21 @@ static AtomicWord<bool> atPrompt(false);  // can eval before getting to prompt
 namespace {
 const std::string kDefaultMongoHost = "127.0.0.1"s;
 const std::string kDefaultMongoPort = "27017"s;
-const std::string kDefaultMongoURL = "mongodb://"s + kDefaultMongoHost + ":"s + kDefaultMongoPort;
+const std::string kDefaultMongoURL = "mongerdb://"s + kDefaultMongoHost + ":"s + kDefaultMongoPort;
 
-// Initialize the featureCompatibilityVersion server parameter since the mongo shell does not have a
+// Initialize the featureCompatibilityVersion server parameter since the monger shell does not have a
 // featureCompatibilityVersion document from which to initialize the parameter. The parameter is set
-// to the latest version because there is no feature gating that currently occurs at the mongo shell
+// to the latest version because there is no feature gating that currently occurs at the monger shell
 // level. The server is responsible for rejecting usages of new features if its
 // featureCompatibilityVersion is lower.
 MONGO_INITIALIZER_WITH_PREREQUISITES(SetFeatureCompatibilityVersion42, ("EndStartupOptionSetup"))
 (InitializerContext* context) {
-    mongo::serverGlobalParams.featureCompatibility.setVersion(
+    monger::serverGlobalParams.featureCompatibility.setVersion(
         ServerGlobalParams::FeatureCompatibility::Version::kFullyUpgradedTo42);
     return Status::OK();
 }
 
-// Initialize the testCommandsEnabled server parameter to true since the mongo shell does not have
+// Initialize the testCommandsEnabled server parameter to true since the monger shell does not have
 // any test-only commands that could cause harm to the server, and it may be necessary to enable
 // this to test certain features, for example through benchRun (see SERVER-40419).
 MONGO_INITIALIZER_WITH_PREREQUISITES(EnableShellTestCommands, ("EndStartupOptionSetup"))
@@ -163,7 +163,7 @@ private:
 
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 enum ShellExitCode : int {
     kDBException = 1,
@@ -259,7 +259,7 @@ void killOps() {
 
     sleepmillis(10);  // give current op a chance to finish
 
-    mongo::shell_utils::connectionRegistry.killOperationsOnAllConnections(
+    monger::shell_utils::connectionRegistry.killOperationsOnAllConnections(
         !shellGlobalParams.autoKillOp);
 }
 
@@ -296,14 +296,14 @@ std::string getURIFromArgs(const std::string& arg,
         return kDefaultMongoURL;
     }
 
-    if ((str::startsWith(arg, "mongodb://") || str::startsWith(arg, "mongodb+srv://")) &&
+    if ((str::startsWith(arg, "mongerdb://") || str::startsWith(arg, "mongerdb+srv://")) &&
         host.empty() && port.empty()) {
-        // mongo mongodb://blah
+        // monger mongerdb://blah
         return arg;
     }
-    if ((str::startsWith(host, "mongodb://") || str::startsWith(host, "mongodb+srv://")) &&
+    if ((str::startsWith(host, "mongerdb://") || str::startsWith(host, "mongerdb+srv://")) &&
         arg.empty() && port.empty()) {
-        // mongo --host mongodb://blah
+        // monger --host mongerdb://blah
         return host;
     }
 
@@ -322,7 +322,7 @@ std::string getURIFromArgs(const std::string& arg,
         const auto hasReplSet = (slashPos > 0) && (slashPos != std::string::npos);
 
         std::ostringstream ss;
-        ss << "mongodb://";
+        ss << "mongerdb://";
 
         // Handle each sub-element of the connection string individually.
         // Comma separated list of host elements.
@@ -467,7 +467,7 @@ std::string finishCode(std::string code) {
     return code;
 }
 
-bool execPrompt(mongo::Scope& scope, const char* promptFunction, std::string& prompt) {
+bool execPrompt(monger::Scope& scope, const char* promptFunction, std::string& prompt) {
     std::string execStatement = std::string("__promptWrapper__(") + promptFunction + ");";
     scope.exec("delete __prompt__;", "", false, false, false, 0);
     scope.exec(execStatement, "", false, false, false, 0);
@@ -541,12 +541,12 @@ static void edit(const std::string& whatToEdit) {
 #ifdef _WIN32
         char tempFolder[MAX_PATH];
         GetTempPathA(sizeof tempFolder, tempFolder);
-        sb << tempFolder << "mongo_edit" << time(0) + i << ".js";
+        sb << tempFolder << "monger_edit" << time(0) + i << ".js";
 #else
-        sb << "/tmp/mongo_edit" << time(nullptr) + i << ".js";
+        sb << "/tmp/monger_edit" << time(nullptr) + i << ".js";
 #endif
         filename = sb.str();
-        if (!::mongo::shell_utils::fileExists(filename))
+        if (!::monger::shell_utils::fileExists(filename))
             break;
     }
     if (i == maxAttempts) {
@@ -650,7 +650,7 @@ bool mechanismRequiresPassword(const MongoURI& uri) {
 int _main(int argc, char* argv[], char** envp) {
     registerShutdownTask([] {
         // NOTE: This function may be called at any time. It must not
-        // depend on the prior execution of mongo initializers or the
+        // depend on the prior execution of monger initializers or the
         // existence of threads.
         ::killOps();
         ::shellHistoryDone();
@@ -663,9 +663,9 @@ int _main(int argc, char* argv[], char** envp) {
     logger::globalLogManager()->getGlobalDomain()->attachAppender(
         std::make_unique<ShellConsoleAppender>(
             std::make_unique<logger::MessageEventDetailsEncoder>()));
-    mongo::shell_utils::RecordMyLocation(argv[0]);
+    monger::shell_utils::RecordMyLocation(argv[0]);
 
-    mongo::runGlobalInitializersOrDie(argc, argv, envp);
+    monger::runGlobalInitializersOrDie(argc, argv, envp);
     setGlobalServiceContext(ServiceContext::make());
     // TODO This should use a TransportLayerManager or TransportLayerFactory
     auto serviceContext = getGlobalServiceContext();
@@ -684,8 +684,8 @@ int _main(int argc, char* argv[], char** envp) {
 
     ErrorExtraInfo::invariantHaveAllParsers();
 
-    if (!mongo::serverGlobalParams.quiet.load())
-        std::cout << mongoShellVersion(VersionInfoInterface::instance()) << std::endl;
+    if (!monger::serverGlobalParams.quiet.load())
+        std::cout << mongerShellVersion(VersionInfoInterface::instance()) << std::endl;
 
     logger::globalLogManager()
         ->getNamedDomain("javascriptOutput")
@@ -711,14 +711,14 @@ int _main(int argc, char* argv[], char** envp) {
         std::stringstream ss;
         ss << "DB.prototype._defaultAuthenticationMechanism = \""
            << str::escape(authMechanisms.get()) << "\";" << std::endl;
-        mongo::shell_utils::dbConnect += ss.str();
+        monger::shell_utils::dbConnect += ss.str();
     }
 
     if (const auto gssapiServiveName = parsedURI.getOption("gssapiServiceName")) {
         std::stringstream ss;
         ss << "DB.prototype._defaultGssapiServiceName = \"" << str::escape(gssapiServiveName.get())
            << "\";" << std::endl;
-        mongo::shell_utils::dbConnect += ss.str();
+        monger::shell_utils::dbConnect += ss.str();
     }
 
     if (!shellGlobalParams.nodb) {  // connect to db
@@ -733,7 +733,7 @@ int _main(int argc, char* argv[], char** envp) {
             if (!shellGlobalParams.password.empty()) {
                 parsedURI.setPassword(stdx::as_const(shellGlobalParams.password));
             } else {
-                parsedURI.setPassword(mongo::askPassword());
+                parsedURI.setPassword(monger::askPassword());
             }
         }
 
@@ -742,7 +742,7 @@ int _main(int argc, char* argv[], char** envp) {
         }
 
         std::stringstream ss;
-        if (mongo::serverGlobalParams.quiet.load()) {
+        if (monger::serverGlobalParams.quiet.load()) {
             ss << "__quiet = true;" << std::endl;
         }
 
@@ -755,37 +755,37 @@ int _main(int argc, char* argv[], char** envp) {
             ss << "db = db.getMongo().startSession().getDatabase(db.getName());" << std::endl;
         }
 
-        mongo::shell_utils::dbConnect += ss.str();
+        monger::shell_utils::dbConnect += ss.str();
     }
 
-    mongo::ScriptEngine::setConnectCallback(mongo::shell_utils::onConnect);
-    mongo::ScriptEngine::setup();
-    mongo::getGlobalScriptEngine()->setJSHeapLimitMB(shellGlobalParams.jsHeapLimitMB);
-    mongo::getGlobalScriptEngine()->setScopeInitCallback(mongo::shell_utils::initScope);
-    mongo::getGlobalScriptEngine()->enableJIT(!shellGlobalParams.nojit);
-    mongo::getGlobalScriptEngine()->enableJavaScriptProtection(
+    monger::ScriptEngine::setConnectCallback(monger::shell_utils::onConnect);
+    monger::ScriptEngine::setup();
+    monger::getGlobalScriptEngine()->setJSHeapLimitMB(shellGlobalParams.jsHeapLimitMB);
+    monger::getGlobalScriptEngine()->setScopeInitCallback(monger::shell_utils::initScope);
+    monger::getGlobalScriptEngine()->enableJIT(!shellGlobalParams.nojit);
+    monger::getGlobalScriptEngine()->enableJavaScriptProtection(
         shellGlobalParams.javascriptProtection);
 
     auto poolGuard = makeGuard([] { ScriptEngine::dropScopeCache(); });
 
-    std::unique_ptr<mongo::Scope> scope(mongo::getGlobalScriptEngine()->newScope());
+    std::unique_ptr<monger::Scope> scope(monger::getGlobalScriptEngine()->newScope());
     shellMainScope = scope.get();
 
-    if (shellGlobalParams.runShell && !mongo::serverGlobalParams.quiet.load())
+    if (shellGlobalParams.runShell && !monger::serverGlobalParams.quiet.load())
         std::cout << "type \"help\" for help" << std::endl;
 
-    // Load and execute /etc/mongorc.js before starting shell
+    // Load and execute /etc/mongerrc.js before starting shell
     std::string rcGlobalLocation;
 #ifndef _WIN32
-    rcGlobalLocation = "/etc/mongorc.js";
+    rcGlobalLocation = "/etc/mongerrc.js";
 #else
     wchar_t programDataPath[MAX_PATH];
     if (S_OK == SHGetFolderPathW(nullptr, CSIDL_COMMON_APPDATA, nullptr, 0, programDataPath)) {
         rcGlobalLocation = str::stream() << toUtf8String(programDataPath)
-                                         << "\\MongoDB\\mongorc.js";
+                                         << "\\MongoDB\\mongerrc.js";
     }
 #endif
-    if (!rcGlobalLocation.empty() && ::mongo::shell_utils::fileExists(rcGlobalLocation)) {
+    if (!rcGlobalLocation.empty() && ::monger::shell_utils::fileExists(rcGlobalLocation)) {
         if (!scope->execFile(rcGlobalLocation, false, true)) {
             std::cout << "The \"" << rcGlobalLocation << "\" file could not be executed"
                       << std::endl;
@@ -793,7 +793,7 @@ int _main(int argc, char* argv[], char** envp) {
     }
 
     if (!shellGlobalParams.script.empty()) {
-        mongo::shell_utils::MongoProgramScope s;
+        monger::shell_utils::MongoProgramScope s;
         if (!scope->exec(shellGlobalParams.script, "(shell eval)", false, true, false)) {
             error() << "exiting with code " << static_cast<int>(kEvalError);
             return kEvalError;
@@ -802,7 +802,7 @@ int _main(int argc, char* argv[], char** envp) {
     }
 
     for (size_t i = 0; i < shellGlobalParams.files.size(); ++i) {
-        mongo::shell_utils::MongoProgramScope s;
+        monger::shell_utils::MongoProgramScope s;
 
         if (shellGlobalParams.files.size() > 1)
             std::cout << "loading file: " << shellGlobalParams.files[i] << std::endl;
@@ -814,7 +814,7 @@ int _main(int argc, char* argv[], char** envp) {
         }
 
         // Check if the process left any running child processes.
-        std::vector<ProcessId> pids = mongo::shell_utils::getRunningMongoChildProcessIds();
+        std::vector<ProcessId> pids = monger::shell_utils::getRunningMongoChildProcessIds();
 
         if (!pids.empty()) {
             std::cout << "terminating the following processes started by "
@@ -822,7 +822,7 @@ int _main(int argc, char* argv[], char** envp) {
             std::copy(pids.begin(), pids.end(), std::ostream_iterator<ProcessId>(std::cout, " "));
             std::cout << std::endl;
 
-            if (mongo::shell_utils::KillMongoProgramInstances() != EXIT_SUCCESS) {
+            if (monger::shell_utils::KillMongoProgramInstances() != EXIT_SUCCESS) {
                 severe() << "one more more child processes exited with an error during "
                          << shellGlobalParams.files[i];
                 error() << "exiting with code " << static_cast<int>(kProcessTerminationError);
@@ -852,24 +852,24 @@ int _main(int argc, char* argv[], char** envp) {
 
     bool lastLineSuccessful = true;
     if (shellGlobalParams.runShell) {
-        mongo::shell_utils::MongoProgramScope s;
+        monger::shell_utils::MongoProgramScope s;
         // If they specify norc, assume it's not their first time
         bool hasMongoRC = shellGlobalParams.norc;
         std::string rcLocation;
         if (!shellGlobalParams.norc) {
 #ifndef _WIN32
             if (getenv("HOME") != nullptr)
-                rcLocation = str::stream() << getenv("HOME") << "/.mongorc.js";
+                rcLocation = str::stream() << getenv("HOME") << "/.mongerrc.js";
 #else
             if (getenv("HOMEDRIVE") != nullptr && getenv("HOMEPATH") != nullptr)
                 rcLocation = str::stream() << toUtf8String(_wgetenv(L"HOMEDRIVE"))
                                            << toUtf8String(_wgetenv(L"HOMEPATH"))
-                                           << "\\.mongorc.js";
+                                           << "\\.mongerrc.js";
 #endif
-            if (!rcLocation.empty() && ::mongo::shell_utils::fileExists(rcLocation)) {
+            if (!rcLocation.empty() && ::monger::shell_utils::fileExists(rcLocation)) {
                 hasMongoRC = true;
                 if (!scope->execFile(rcLocation, false, true)) {
-                    severe() << "The \".mongorc.js\" file located in your home folder could not be "
+                    severe() << "The \".mongerrc.js\" file located in your home folder could not be "
                                 "executed";
                     error() << "exiting with code " << static_cast<int>(kMongorcError);
                     return kMongorcError;
@@ -881,14 +881,14 @@ int _main(int argc, char* argv[], char** envp) {
             std::cout
                 << "Welcome to the MongoDB shell.\n"
                    "For interactive help, type \"help\".\n"
-                   "For more comprehensive documentation, see\n\thttp://docs.mongodb.org/\n"
-                   "Questions? Try the support group\n\thttp://groups.google.com/group/mongodb-user"
+                   "For more comprehensive documentation, see\n\thttp://docs.mongerdb.org/\n"
+                   "Questions? Try the support group\n\thttp://groups.google.com/group/mongerdb-user"
                 << std::endl;
             File f;
-            f.open(rcLocation.c_str(), false);  // Create empty .mongorc.js file
+            f.open(rcLocation.c_str(), false);  // Create empty .mongerrc.js file
         }
 
-        if (!shellGlobalParams.nodb && !mongo::serverGlobalParams.quiet.load() &&
+        if (!shellGlobalParams.nodb && !monger::serverGlobalParams.quiet.load() &&
             isatty(fileno(stdin))) {
             scope->exec(
                 "shellHelper( 'show', 'startupWarnings' )", "(shellwarnings)", false, true, false);
@@ -933,7 +933,7 @@ int _main(int argc, char* argv[], char** envp) {
             }
 
             if (!linePtr || (strlen(linePtr) == 4 && strstr(linePtr, "exit"))) {
-                if (!mongo::serverGlobalParams.quiet.load())
+                if (!monger::serverGlobalParams.quiet.load())
                     std::cout << "bye" << std::endl;
                 if (line)
                     free(line);
@@ -1043,7 +1043,7 @@ int wmain(int argc, wchar_t* argvW[], wchar_t* envpW[]) {
     try {
         WindowsCommandLine wcl(argc, argvW, envpW);
         returnCode = _main(argc, wcl.argv(), wcl.envp());
-    } catch (mongo::DBException& e) {
+    } catch (monger::DBException& e) {
         severe() << "exception: " << e.what();
         error() << "exiting with code " << static_cast<int>(kDBException);
         returnCode = kDBException;
@@ -1055,7 +1055,7 @@ int main(int argc, char* argv[], char** envp) {
     int returnCode;
     try {
         returnCode = _main(argc, argv, envp);
-    } catch (mongo::DBException& e) {
+    } catch (monger::DBException& e) {
         severe() << "exception: " << e.what();
         error() << "exiting with code " << static_cast<int>(kDBException);
         returnCode = kDBException;

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional/optional_io.hpp>
 #include <functional>
@@ -38,45 +38,45 @@
 #include <set>
 #include <vector>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/concurrency/lock_state.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/repl/bson_extract_optime.h"
-#include "mongo/db/repl/is_master_response.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/repl_set_request_votes_args.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_external_state_mock.h"
-#include "mongo/db/repl/replication_coordinator_impl.h"
-#include "mongo/db/repl/replication_coordinator_test_fixture.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/db/repl/update_position_args.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/rpc/metadata/oplog_query_metadata.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/stdx/future.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/barrier.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/ensure_fcv.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/timer.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/concurrency/lock_state.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/repl/bson_extract_optime.h"
+#include "monger/db/repl/is_master_response.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_external_state_mock.h"
+#include "monger/db/repl/replication_coordinator_impl.h"
+#include "monger/db/repl/replication_coordinator_test_fixture.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/db/repl/update_position_args.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/rpc/metadata/oplog_query_metadata.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/stdx/future.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/barrier.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/ensure_fcv.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/time_support.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -99,7 +99,7 @@ struct OpTimeWithTermOne {
     }
 
     OpTime asOpTime() const {
-        return this->operator mongo::repl::OpTime();
+        return this->operator monger::repl::OpTime();
     }
 
     Timestamp timestamp;
@@ -6637,4 +6637,4 @@ TEST_F(ReplCoordTest, NodeNodesNotGrantVoteIfInTerminalShutdown) {
 // TODO(schwerin): Unit test election id updating
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

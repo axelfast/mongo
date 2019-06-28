@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional/optional_io.hpp>
 #include <functional>
@@ -37,23 +37,23 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/lock_manager_test_help.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/storage/recovery_unit_noop.h"
-#include "mongo/stdx/future.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/concurrency/ticketholder.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/progress_meter.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/lock_manager_test_help.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/storage/recovery_unit_noop.h"
+#include "monger/stdx/future.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/concurrency/ticketholder.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/log.h"
+#include "monger/util/progress_meter.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const int kMaxStressThreads = 32;  // max number of threads to use for lock stress
@@ -2244,4 +2244,4 @@ TEST_F(DConcurrencyTestFixture, RSTLLockGuardResilientToExceptionThrownBeforeWai
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

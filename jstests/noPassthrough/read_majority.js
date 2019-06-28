@@ -215,7 +215,7 @@ load("jstests/libs/analyze_plan.js");
     }
 
     const conn = MongoRunner.runMongod();
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
     const db = conn.getDB("test");
     const supportsCommittedReads =
         assert.commandWorked(db.serverStatus()).storageEngine.supportsCommittedReads;

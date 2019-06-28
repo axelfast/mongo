@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,55 +35,55 @@
 #include <SafeInt.hpp>
 #endif
 
-namespace mongo {
+namespace monger {
 
 /**
  * Returns true if multiplying lhs by rhs would overflow. Otherwise, multiplies 64-bit signed
  * or unsigned integers lhs by rhs and stores the result in *product.
  */
-constexpr bool mongoSignedMultiplyOverflow64(int64_t lhs, int64_t rhs, int64_t* product);
-constexpr bool mongoUnsignedMultiplyOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* product);
+constexpr bool mongerSignedMultiplyOverflow64(int64_t lhs, int64_t rhs, int64_t* product);
+constexpr bool mongerUnsignedMultiplyOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* product);
 
 /**
  * Returns true if adding lhs and rhs would overflow. Otherwise, adds 64-bit signed or unsigned
  * integers lhs and rhs and stores the result in *sum.
  */
-constexpr bool mongoSignedAddOverflow64(int64_t lhs, int64_t rhs, int64_t* sum);
-constexpr bool mongoUnsignedAddOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* sum);
+constexpr bool mongerSignedAddOverflow64(int64_t lhs, int64_t rhs, int64_t* sum);
+constexpr bool mongerUnsignedAddOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* sum);
 
 /**
  * Returns true if subtracting rhs from lhs would overflow. Otherwise, subtracts 64-bit signed or
  * unsigned integers rhs from lhs and stores the result in *difference.
  */
-constexpr bool mongoSignedSubtractOverflow64(int64_t lhs, int64_t rhs, int64_t* difference);
-constexpr bool mongoUnsignedSubtractOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* difference);
+constexpr bool mongerSignedSubtractOverflow64(int64_t lhs, int64_t rhs, int64_t* difference);
+constexpr bool mongerUnsignedSubtractOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* difference);
 
 
 #ifdef _MSC_VER
 
 // The SafeInt functions return true on success, false on overflow.
 
-constexpr bool mongoSignedMultiplyOverflow64(int64_t lhs, int64_t rhs, int64_t* product) {
+constexpr bool mongerSignedMultiplyOverflow64(int64_t lhs, int64_t rhs, int64_t* product) {
     return !SafeMultiply(lhs, rhs, *product);
 }
 
-constexpr bool mongoUnsignedMultiplyOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* product) {
+constexpr bool mongerUnsignedMultiplyOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* product) {
     return !SafeMultiply(lhs, rhs, *product);
 }
 
-constexpr bool mongoSignedAddOverflow64(int64_t lhs, int64_t rhs, int64_t* sum) {
+constexpr bool mongerSignedAddOverflow64(int64_t lhs, int64_t rhs, int64_t* sum) {
     return !SafeAdd(lhs, rhs, *sum);
 }
 
-constexpr bool mongoUnsignedAddOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* sum) {
+constexpr bool mongerUnsignedAddOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* sum) {
     return !SafeAdd(lhs, rhs, *sum);
 }
 
-constexpr bool mongoSignedSubtractOverflow64(int64_t lhs, int64_t rhs, int64_t* difference) {
+constexpr bool mongerSignedSubtractOverflow64(int64_t lhs, int64_t rhs, int64_t* difference) {
     return !SafeSubtract(lhs, rhs, *difference);
 }
 
-constexpr bool mongoUnsignedSubtractOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* difference) {
+constexpr bool mongerUnsignedSubtractOverflow64(uint64_t lhs, uint64_t rhs, uint64_t* difference) {
     return !SafeSubtract(lhs, rhs, *difference);
 }
 
@@ -92,61 +92,61 @@ constexpr bool mongoUnsignedSubtractOverflow64(uint64_t lhs, uint64_t rhs, uint6
 // On GCC and CLANG we can use __builtin functions to perform these calculations. These return true
 // on overflow and false on success.
 
-constexpr bool mongoSignedMultiplyOverflow64(long lhs, long rhs, long* product) {
+constexpr bool mongerSignedMultiplyOverflow64(long lhs, long rhs, long* product) {
     return __builtin_mul_overflow(lhs, rhs, product);
 }
 
-constexpr bool mongoSignedMultiplyOverflow64(long long lhs, long long rhs, long long* product) {
+constexpr bool mongerSignedMultiplyOverflow64(long long lhs, long long rhs, long long* product) {
     return __builtin_mul_overflow(lhs, rhs, product);
 }
 
-constexpr bool mongoUnsignedMultiplyOverflow64(unsigned long lhs,
+constexpr bool mongerUnsignedMultiplyOverflow64(unsigned long lhs,
                                                unsigned long rhs,
                                                unsigned long* product) {
     return __builtin_mul_overflow(lhs, rhs, product);
 }
 
-constexpr bool mongoUnsignedMultiplyOverflow64(unsigned long long lhs,
+constexpr bool mongerUnsignedMultiplyOverflow64(unsigned long long lhs,
                                                unsigned long long rhs,
                                                unsigned long long* product) {
     return __builtin_mul_overflow(lhs, rhs, product);
 }
 
-constexpr bool mongoSignedAddOverflow64(long lhs, long rhs, long* sum) {
+constexpr bool mongerSignedAddOverflow64(long lhs, long rhs, long* sum) {
     return __builtin_add_overflow(lhs, rhs, sum);
 }
 
-constexpr bool mongoSignedAddOverflow64(long long lhs, long long rhs, long long* sum) {
+constexpr bool mongerSignedAddOverflow64(long long lhs, long long rhs, long long* sum) {
     return __builtin_add_overflow(lhs, rhs, sum);
 }
 
-constexpr bool mongoUnsignedAddOverflow64(unsigned long lhs,
+constexpr bool mongerUnsignedAddOverflow64(unsigned long lhs,
                                           unsigned long rhs,
                                           unsigned long* sum) {
     return __builtin_add_overflow(lhs, rhs, sum);
 }
 
-constexpr bool mongoUnsignedAddOverflow64(unsigned long long lhs,
+constexpr bool mongerUnsignedAddOverflow64(unsigned long long lhs,
                                           unsigned long long rhs,
                                           unsigned long long* sum) {
     return __builtin_add_overflow(lhs, rhs, sum);
 }
 
-constexpr bool mongoSignedSubtractOverflow64(long lhs, long rhs, long* difference) {
+constexpr bool mongerSignedSubtractOverflow64(long lhs, long rhs, long* difference) {
     return __builtin_sub_overflow(lhs, rhs, difference);
 }
 
-constexpr bool mongoSignedSubtractOverflow64(long long lhs, long long rhs, long long* difference) {
+constexpr bool mongerSignedSubtractOverflow64(long long lhs, long long rhs, long long* difference) {
     return __builtin_sub_overflow(lhs, rhs, difference);
 }
 
-constexpr bool mongoUnsignedSubtractOverflow64(unsigned long lhs,
+constexpr bool mongerUnsignedSubtractOverflow64(unsigned long lhs,
                                                unsigned long rhs,
                                                unsigned long* sum) {
     return __builtin_sub_overflow(lhs, rhs, sum);
 }
 
-constexpr bool mongoUnsignedSubtractOverflow64(unsigned long long lhs,
+constexpr bool mongerUnsignedSubtractOverflow64(unsigned long long lhs,
                                                unsigned long long rhs,
                                                unsigned long long* sum) {
     return __builtin_sub_overflow(lhs, rhs, sum);
@@ -154,4 +154,4 @@ constexpr bool mongoUnsignedSubtractOverflow64(unsigned long long lhs,
 
 #endif
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/store_possible_cursor.h"
+#include "monger/s/query/store_possible_cursor.h"
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/cluster_client_cursor_impl.h"
-#include "mongo/s/query/cluster_client_cursor_params.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
-#include "mongo/s/shard_id.h"
-#include "mongo/s/transaction_router.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/curop.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/cluster_client_cursor_impl.h"
+#include "monger/s/query/cluster_client_cursor_params.h"
+#include "monger/s/query/cluster_cursor_manager.h"
+#include "monger/s/shard_id.h"
+#include "monger/s/transaction_router.h"
 
-namespace mongo {
+namespace monger {
 
 StatusWith<BSONObj> storePossibleCursor(OperationContext* opCtx,
                                         const NamespaceString& requestedNss,
@@ -141,4 +141,4 @@ StatusWith<BSONObj> storePossibleCursor(OperationContext* opCtx,
     return outgoingCursorResponse.toBSON(CursorResponse::ResponseType::InitialResponse);
 }
 
-}  // namespace mongo
+}  // namespace monger

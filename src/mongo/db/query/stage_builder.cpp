@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,42 +27,42 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/stage_builder.h"
+#include "monger/db/query/stage_builder.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/exec/and_hash.h"
-#include "mongo/db/exec/and_sorted.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/count_scan.h"
-#include "mongo/db/exec/distinct_scan.h"
-#include "mongo/db/exec/ensure_sorted.h"
-#include "mongo/db/exec/fetch.h"
-#include "mongo/db/exec/geo_near.h"
-#include "mongo/db/exec/index_scan.h"
-#include "mongo/db/exec/limit.h"
-#include "mongo/db/exec/merge_sort.h"
-#include "mongo/db/exec/or.h"
-#include "mongo/db/exec/projection.h"
-#include "mongo/db/exec/shard_filter.h"
-#include "mongo/db/exec/skip.h"
-#include "mongo/db/exec/sort.h"
-#include "mongo/db/exec/sort_key_generator.h"
-#include "mongo/db/exec/text.h"
-#include "mongo/db/index/fts_access_method.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/util/log.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/exec/and_hash.h"
+#include "monger/db/exec/and_sorted.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/count_scan.h"
+#include "monger/db/exec/distinct_scan.h"
+#include "monger/db/exec/ensure_sorted.h"
+#include "monger/db/exec/fetch.h"
+#include "monger/db/exec/geo_near.h"
+#include "monger/db/exec/index_scan.h"
+#include "monger/db/exec/limit.h"
+#include "monger/db/exec/merge_sort.h"
+#include "monger/db/exec/or.h"
+#include "monger/db/exec/projection.h"
+#include "monger/db/exec/shard_filter.h"
+#include "monger/db/exec/skip.h"
+#include "monger/db/exec/sort.h"
+#include "monger/db/exec/sort_key_generator.h"
+#include "monger/db/exec/text.h"
+#include "monger/db/index/fts_access_method.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 
@@ -419,4 +419,4 @@ bool StageBuilder::build(OperationContext* opCtx,
     return nullptr != (*rootOut = buildStages(opCtx, collection, cq, solution, solutionNode, wsIn));
 }
 
-}  // namespace mongo
+}  // namespace monger

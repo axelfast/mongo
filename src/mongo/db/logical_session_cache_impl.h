@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/db/logical_session_cache.h"
-#include "mongo/db/service_liaison.h"
-#include "mongo/db/sessions_collection.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/functional.h"
+#include "monger/db/logical_session_cache.h"
+#include "monger/db/service_liaison.h"
+#include "monger/db/sessions_collection.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/functional.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A thread-safe cache structure for logical session records.
@@ -120,4 +120,4 @@ private:
     LogicalSessionCacheStats _stats;
 };
 
-}  // namespace mongo
+}  // namespace monger

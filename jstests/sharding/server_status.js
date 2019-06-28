@@ -1,6 +1,6 @@
 /**
  * Basic test for the 'sharding' section of the serverStatus response object for
- * both mongos and the shard.
+ * both mongers and the shard.
  */
 
 (function() {
@@ -34,11 +34,11 @@
         assert.neq(null, shardingSection.maxChunkSizeInBytes);
     };
 
-    var mongosServerStatus = testDB.adminCommand({serverStatus: 1});
-    checkShardingServerStatus(mongosServerStatus);
+    var mongersServerStatus = testDB.adminCommand({serverStatus: 1});
+    checkShardingServerStatus(mongersServerStatus);
 
-    var mongodServerStatus = st.rs0.getPrimary().getDB('admin').runCommand({serverStatus: 1});
-    checkShardingServerStatus(mongodServerStatus);
+    var mongerdServerStatus = st.rs0.getPrimary().getDB('admin').runCommand({serverStatus: 1});
+    checkShardingServerStatus(mongerdServerStatus);
 
     st.stop();
 })();

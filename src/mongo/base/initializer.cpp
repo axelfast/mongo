@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/initializer.h"
+#include "monger/base/initializer.h"
 
 #include <iostream>
 
-#include "mongo/base/deinitializer_context.h"
-#include "mongo/base/global_initializer.h"
-#include "mongo/base/initializer_context.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/quick_exit.h"
+#include "monger/base/deinitializer_context.h"
+#include "monger/base/global_initializer.h"
+#include "monger/base/initializer_context.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/quick_exit.h"
 
-namespace mongo {
+namespace monger {
 
 Initializer::Initializer() {}
 Initializer::~Initializer() {}
@@ -145,4 +145,4 @@ void runGlobalInitializersOrDie(int argc, const char* const* argv, const char* c
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

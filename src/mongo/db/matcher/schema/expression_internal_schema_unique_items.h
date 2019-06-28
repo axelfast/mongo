@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <utility>
 
-#include "mongo/bson/unordered_fields_bsonelement_comparator.h"
-#include "mongo/db/matcher/expression_array.h"
+#include "monger/bson/unordered_fields_bsonelement_comparator.h"
+#include "monger/db/matcher/expression_array.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Matches arrays whose elements are all unique. When comparing elements,
@@ -87,4 +87,4 @@ private:
     // The comparator to use when comparing BSONElements, which will never use a collation.
     UnorderedFieldsBSONElementComparator _comparator;
 };
-}  // namespace mongo
+}  // namespace monger

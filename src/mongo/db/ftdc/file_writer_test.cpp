@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/filesystem.hpp>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/file_reader.h"
-#include "mongo/db/ftdc/file_writer.h"
-#include "mongo/db/ftdc/ftdc_test.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/file_reader.h"
+#include "monger/db/ftdc/file_writer.h"
+#include "monger/db/ftdc/ftdc_test.h"
+#include "monger/db/jsobj.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 const char* kTestFile = "metrics.test";
 const char* kTestFileCopy = "metrics.test.copy";
@@ -359,4 +359,4 @@ TEST_F(FTDCFileTest, TestBadFile) {
     ASSERT_NOT_OK(sw);
 }
 
-}  // namespace mongo
+}  // namespace monger

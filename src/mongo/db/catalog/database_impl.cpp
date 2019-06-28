@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/database_impl.h"
+#include "monger/db/catalog/database_impl.h"
 
 #include <algorithm>
 #include <memory>
@@ -39,46 +39,46 @@
 
 #include <boost/filesystem/operations.hpp>
 
-#include "mongo/base/init.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_catalog_helper.h"
-#include "mongo/db/catalog/collection_impl.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/drop_indexes.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/introspect.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/operation_sharding_state.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/stats/top.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/storage/storage_engine_init.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/system_index.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/platform/random.h"
-#include "mongo/s/cannot_implicitly_create_collection_info.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/db/audit.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_catalog_helper.h"
+#include "monger/db/catalog/collection_impl.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/drop_indexes.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/introspect.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/operation_sharding_state.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/stats/top.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/storage/storage_engine_init.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/system_index.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/platform/random.h"
+#include "monger/s/cannot_implicitly_create_collection_info.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 MONGO_FAIL_POINT_DEFINE(hangBeforeLoggingCreateCollection);
@@ -150,7 +150,7 @@ void DatabaseImpl::init(OperationContext* const opCtx) const {
     // At construction time of the viewCatalog, the CollectionCatalog map wasn't initialized yet,
     // so no system.views collection would be found. Now we're sufficiently initialized, signal a
     // version change. Also force a reload, so if there are problems with the catalog contents as
-    // might be caused by incorrect mongod versions or similar, they are found right away.
+    // might be caused by incorrect mongerd versions or similar, they are found right away.
     auto views = ViewCatalog::get(this);
     views->invalidate();
     Status reloadStatus = views->reloadIfNeeded(opCtx);
@@ -795,7 +795,7 @@ void DatabaseImpl::checkForIdIndexesAndDropPendingCollections(OperationContext* 
         log() << "WARNING: the collection '" << nss << "' lacks a unique index on _id."
               << " This index is needed for replication to function properly" << startupWarningsLog;
         log() << "\t To fix this, you need to create a unique index on _id."
-              << " See http://dochub.mongodb.org/core/build-replica-set-indexes"
+              << " See http://dochub.mongerdb.org/core/build-replica-set-indexes"
               << startupWarningsLog;
     }
 }
@@ -898,4 +898,4 @@ Status DatabaseImpl::userCreateNS(OperationContext* opCtx,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

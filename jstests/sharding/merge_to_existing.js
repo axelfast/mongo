@@ -7,9 +7,9 @@
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 1}, config: 1});
 
-    const mongosDB = st.s0.getDB("source_db");
-    const sourceColl = mongosDB["source_coll"];
-    const outputCollSameDb = mongosDB[jsTestName() + "_merge"];
+    const mongersDB = st.s0.getDB("source_db");
+    const sourceColl = mongersDB["source_coll"];
+    const outputCollSameDb = mongersDB[jsTestName() + "_merge"];
 
     function testMerge(sourceColl, targetColl, shardedSource, shardedTarget) {
         jsTestLog(`Testing $merge from ${sourceColl.getFullName()} ` +

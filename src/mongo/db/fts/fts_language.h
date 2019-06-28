@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/fts/fts_basic_phrase_matcher.h"
-#include "mongo/db/fts/fts_phrase_matcher.h"
-#include "mongo/db/fts/fts_unicode_phrase_matcher.h"
-#include "mongo/db/fts/fts_util.h"
+#include "monger/base/status_with.h"
+#include "monger/db/fts/fts_basic_phrase_matcher.h"
+#include "monger/db/fts/fts_phrase_matcher.h"
+#include "monger/db/fts/fts_unicode_phrase_matcher.h"
+#include "monger/db/fts/fts_util.h"
 
 #include <string>
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
@@ -47,7 +47,7 @@ class FTSTokenizer;
 #define MONGO_FTS_LANGUAGE_DECLARE(language, name, version)                                    \
     BasicFTSLanguage language;                                                                 \
     MONGO_INITIALIZER_GENERAL(language, MONGO_NO_PREREQUISITES, ("FTSAllLanguagesRegistered")) \
-    (::mongo::InitializerContext * context) {                                                  \
+    (::monger::InitializerContext * context) {                                                  \
         FTSLanguage::registerLanguage(name, version, &language);                               \
         return Status::OK();                                                                   \
     }

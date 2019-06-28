@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"bytes"
@@ -18,7 +18,7 @@ import (
 
 	mgo "github.com/10gen/llmgo"
 	bson "github.com/10gen/llmgo/bson"
-	"github.com/mongodb/mongo-tools/legacy/json"
+	"github.com/mongerdb/monger-tools/legacy/json"
 )
 
 var (
@@ -220,7 +220,7 @@ func cacheKey(op *RecordedOp, response bool) string {
 	return fmt.Sprintf("%v:%v:%d:%v", src, dst, id, op.Generation)
 }
 
-// extractErrors inspects a bson doc and returns all of the mongodb errors contained within.
+// extractErrors inspects a bson doc and returns all of the mongerdb errors contained within.
 func extractErrorsFromDoc(doc *bson.D) []error {
 	// errors may exist in the following places in the returned document:
 	// - the "$err" field, which is set if bit #1 is set on the responseFlags

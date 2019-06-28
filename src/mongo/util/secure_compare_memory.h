@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,7 +31,7 @@
 
 #include <cstddef>
 
-namespace mongo {
+namespace monger {
 
 /**
  * Compare two arrays of bytes for equality in constant time.
@@ -45,4 +45,4 @@ bool consttimeMemEqual(volatile const unsigned char* s1,  // NOLINT - using vola
                        volatile const unsigned char* s2,  // NOLINT - disable compiler optimizations
                        size_t length);
 
-}  // namespace mongo
+}  // namespace monger

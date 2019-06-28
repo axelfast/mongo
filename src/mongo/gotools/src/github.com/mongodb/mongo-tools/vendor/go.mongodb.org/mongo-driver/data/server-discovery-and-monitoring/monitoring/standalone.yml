@@ -1,5 +1,5 @@
 description: "Monitoring a standalone connection"
-uri: "mongodb://a:27017"
+uri: "mongerdb://a:27017"
 phases:
   -
     responses:

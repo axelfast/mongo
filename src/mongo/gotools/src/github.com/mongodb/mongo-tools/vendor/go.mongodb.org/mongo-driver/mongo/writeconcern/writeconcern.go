@@ -4,15 +4,15 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package writeconcern // import "go.mongodb.org/mongo-driver/mongo/writeconcern"
+package writeconcern // import "go.mongerdb.org/monger-driver/monger/writeconcern"
 
 import (
 	"errors"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsontype"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
 )
 
 // ErrInconsistent indicates that an inconsistent write concern was specified.
@@ -28,7 +28,7 @@ var ErrNegativeW = errors.New("write concern `w` field cannot be a negative numb
 var ErrNegativeWTimeout = errors.New("write concern `wtimeout` field cannot be negative")
 
 // WriteConcern describes the level of acknowledgement requested from MongoDB for write operations
-// to a standalone mongod or to replica sets or to sharded clusters.
+// to a standalone mongerd or to replica sets or to sharded clusters.
 type WriteConcern struct {
 	w        interface{}
 	j        bool
@@ -49,7 +49,7 @@ func New(options ...Option) *WriteConcern {
 	return concern
 }
 
-// W requests acknowledgement that write operations propagate to the specified number of mongod
+// W requests acknowledgement that write operations propagate to the specified number of mongerd
 // instances.
 func W(w int) Option {
 	return func(concern *WriteConcern) {
@@ -57,7 +57,7 @@ func W(w int) Option {
 	}
 }
 
-// WMajority requests acknowledgement that write operations propagate to the majority of mongod
+// WMajority requests acknowledgement that write operations propagate to the majority of mongerd
 // instances.
 func WMajority() Option {
 	return func(concern *WriteConcern) {
@@ -65,7 +65,7 @@ func WMajority() Option {
 	}
 }
 
-// WTagSet requests acknowledgement that write operations propagate to the specified mongod
+// WTagSet requests acknowledgement that write operations propagate to the specified mongerd
 // instance.
 func WTagSet(tag string) Option {
 	return func(concern *WriteConcern) {

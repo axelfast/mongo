@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/request_types/move_chunk_request.h"
+#include "monger/s/request_types/move_chunk_request.h"
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/logger/redaction.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/logger/redaction.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const char kMoveChunk[] = "moveChunk";
@@ -133,7 +133,7 @@ StatusWith<MoveChunkRequest> MoveChunkRequest::createFromCommand(NamespaceString
         if (status.isOK() && takeDistLock) {
             return Status{ErrorCodes::IncompatibleShardingConfigVersion,
                           str::stream()
-                              << "Request received from an older, incompatible mongodb version"};
+                              << "Request received from an older, incompatible mongerdb version"};
         }
     }
 
@@ -193,4 +193,4 @@ std::string MoveChunkRequest::toString() const {
     return ss.str();
 }
 
-}  // namespace mongo
+}  // namespace monger

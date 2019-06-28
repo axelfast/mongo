@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <string>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/s/write_ops/write_error_detail.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/jsobj.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/s/write_ops/write_error_detail.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -62,7 +62,7 @@ TEST(BatchedCommandResponse, Basic) {
                     << BSON("a" << 1)));
 
     BSONObj origResponseObj =
-        BSON(BatchedCommandResponse::n(0) << "opTime" << mongo::Timestamp(1ULL)
+        BSON(BatchedCommandResponse::n(0) << "opTime" << monger::Timestamp(1ULL)
                                           << BatchedCommandResponse::writeErrors()
                                           << writeErrorsArray
                                           << BatchedCommandResponse::writeConcernError()
@@ -147,4 +147,4 @@ TEST(BatchedCommandResponse, TooManyBigErrors) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

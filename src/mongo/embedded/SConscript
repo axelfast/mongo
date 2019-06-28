@@ -8,7 +8,7 @@ Import("get_option")
 env = env.Clone()
 
 env.AppendUnique(
-    CPPPATH=["$BUILD_DIR/mongo/embedded"],
+    CPPPATH=["$BUILD_DIR/monger/embedded"],
 )
 
 # Inject this before we call the framework directory SConscripts so that
@@ -16,7 +16,7 @@ env.AppendUnique(
 
 frameworksEnv = env.Clone()
 
-def mongo_export_file_generator(target, source, env, for_signature):
+def monger_export_file_generator(target, source, env, for_signature):
     if env.ToolchainIs('msvc'):
         script = env.File(env.subst("${TARGET.base}.def", target=target))
         return script.get_csig() if for_signature else "/DEF:" + str(script)
@@ -28,7 +28,7 @@ def mongo_export_file_generator(target, source, env, for_signature):
         return script.get_csig() if for_signature else "-Wl,--version-script," + str(script)
     else:
         pass
-frameworksEnv['MONGO_EXPORT_FILE_SHLINKFLAGS'] = mongo_export_file_generator
+frameworksEnv['MONGO_EXPORT_FILE_SHLINKFLAGS'] = monger_export_file_generator
 
 # We need to set our bundle version in the plist file, but the format
 # is contrained to major.minor.patch. So trim off any '-pre' or '-rc'
@@ -48,8 +48,8 @@ for flag in frameworksEnv['CCFLAGS']:
 
 env.SConscript(
     dirs=[
-        'mongo_embedded',
-        'mongoc_embedded',
+        'monger_embedded',
+        'mongerc_embedded',
         'stitch_support',
     ],
     exports={
@@ -81,45 +81,45 @@ env.Library(
         env.Idlc('embedded_options.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/auth/auth',
-        '$BUILD_DIR/mongo/db/catalog/catalog_impl',
-        '$BUILD_DIR/mongo/db/command_can_run_here',
-        '$BUILD_DIR/mongo/db/commands',
-        '$BUILD_DIR/mongo/db/commands/fsync_locked',
-        '$BUILD_DIR/mongo/db/commands/mongod_fcv',
-        '$BUILD_DIR/mongo/db/commands/standalone',
-        '$BUILD_DIR/mongo/db/concurrency/lock_manager',
-        '$BUILD_DIR/mongo/db/index_builds_coordinator_interface',
-        '$BUILD_DIR/mongo/db/logical_session_cache',
-        '$BUILD_DIR/mongo/db/logical_session_cache_impl',
-        '$BUILD_DIR/mongo/db/op_observer_impl',
-        '$BUILD_DIR/mongo/db/pipeline/process_interface_standalone',
-        '$BUILD_DIR/mongo/db/repair_database_and_check_version',
-        '$BUILD_DIR/mongo/db/repl/repl_coordinator_interface',
-        '$BUILD_DIR/mongo/db/repl/replica_set_messages',
-        '$BUILD_DIR/mongo/db/repl/storage_interface_impl',
-        '$BUILD_DIR/mongo/db/rw_concern_d',
-        '$BUILD_DIR/mongo/db/s/sharding_api_d',
-        '$BUILD_DIR/mongo/db/s/sharding_runtime_d_embedded',
-        '$BUILD_DIR/mongo/db/server_options',
-        '$BUILD_DIR/mongo/db/server_options_base',
-        '$BUILD_DIR/mongo/db/service_context',
-        '$BUILD_DIR/mongo/db/service_entry_point_common',
-        '$BUILD_DIR/mongo/db/service_liaison_mongod',
-        '$BUILD_DIR/mongo/db/sessions_collection_standalone',
-        '$BUILD_DIR/mongo/db/storage/mobile/storage_mobile',
-        '$BUILD_DIR/mongo/db/storage/storage_engine_common',
-        '$BUILD_DIR/mongo/db/storage/storage_engine_lock_file',
-        '$BUILD_DIR/mongo/db/storage/storage_engine_metadata',
-        '$BUILD_DIR/mongo/db/storage/storage_init_d',
-        '$BUILD_DIR/mongo/db/storage/storage_options',
-        '$BUILD_DIR/mongo/db/wire_version',
-        '$BUILD_DIR/mongo/rpc/client_metadata',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
-        '$BUILD_DIR/mongo/util/version_impl',
+        '$BUILD_DIR/monger/db/auth/auth',
+        '$BUILD_DIR/monger/db/catalog/catalog_impl',
+        '$BUILD_DIR/monger/db/command_can_run_here',
+        '$BUILD_DIR/monger/db/commands',
+        '$BUILD_DIR/monger/db/commands/fsync_locked',
+        '$BUILD_DIR/monger/db/commands/mongerd_fcv',
+        '$BUILD_DIR/monger/db/commands/standalone',
+        '$BUILD_DIR/monger/db/concurrency/lock_manager',
+        '$BUILD_DIR/monger/db/index_builds_coordinator_interface',
+        '$BUILD_DIR/monger/db/logical_session_cache',
+        '$BUILD_DIR/monger/db/logical_session_cache_impl',
+        '$BUILD_DIR/monger/db/op_observer_impl',
+        '$BUILD_DIR/monger/db/pipeline/process_interface_standalone',
+        '$BUILD_DIR/monger/db/repair_database_and_check_version',
+        '$BUILD_DIR/monger/db/repl/repl_coordinator_interface',
+        '$BUILD_DIR/monger/db/repl/replica_set_messages',
+        '$BUILD_DIR/monger/db/repl/storage_interface_impl',
+        '$BUILD_DIR/monger/db/rw_concern_d',
+        '$BUILD_DIR/monger/db/s/sharding_api_d',
+        '$BUILD_DIR/monger/db/s/sharding_runtime_d_embedded',
+        '$BUILD_DIR/monger/db/server_options',
+        '$BUILD_DIR/monger/db/server_options_base',
+        '$BUILD_DIR/monger/db/service_context',
+        '$BUILD_DIR/monger/db/service_entry_point_common',
+        '$BUILD_DIR/monger/db/service_liaison_mongerd',
+        '$BUILD_DIR/monger/db/sessions_collection_standalone',
+        '$BUILD_DIR/monger/db/storage/mobile/storage_mobile',
+        '$BUILD_DIR/monger/db/storage/storage_engine_common',
+        '$BUILD_DIR/monger/db/storage/storage_engine_lock_file',
+        '$BUILD_DIR/monger/db/storage/storage_engine_metadata',
+        '$BUILD_DIR/monger/db/storage/storage_init_d',
+        '$BUILD_DIR/monger/db/storage/storage_options',
+        '$BUILD_DIR/monger/db/wire_version',
+        '$BUILD_DIR/monger/rpc/client_metadata',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/util/version_impl',
     ]
 )
 
@@ -129,37 +129,37 @@ env.Library(
         'embedded_options_helpers.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ],
 )
 
 if get_option('link-model') != 'dynamic-sdk':
-    mongoed = yamlEnv.Program(
-        target='mongoed',
+    mongered = yamlEnv.Program(
+        target='mongered',
         source=[
-            'mongoed_main.cpp',
+            'mongered_main.cpp',
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/db/commands/shell_protocol',
-            '$BUILD_DIR/mongo/db/mongod_options',
-            '$BUILD_DIR/mongo/db/repl/repl_set_status_commands',
-            '$BUILD_DIR/mongo/db/server_options',
-            '$BUILD_DIR/mongo/db/storage/wiredtiger/storage_wiredtiger' if get_option('wiredtiger') == 'on' else [],
-            '$BUILD_DIR/mongo/embedded/embedded',
-            '$BUILD_DIR/mongo/embedded/embedded_integration_helpers',
-            '$BUILD_DIR/mongo/transport/service_entry_point',
-            '$BUILD_DIR/mongo/transport/transport_layer_manager',
-            '$BUILD_DIR/mongo/util/signal_handlers',
+            '$BUILD_DIR/monger/db/commands/shell_protocol',
+            '$BUILD_DIR/monger/db/mongerd_options',
+            '$BUILD_DIR/monger/db/repl/repl_set_status_commands',
+            '$BUILD_DIR/monger/db/server_options',
+            '$BUILD_DIR/monger/db/storage/wiredtiger/storage_wiredtiger' if get_option('wiredtiger') == 'on' else [],
+            '$BUILD_DIR/monger/embedded/embedded',
+            '$BUILD_DIR/monger/embedded/embedded_integration_helpers',
+            '$BUILD_DIR/monger/transport/service_entry_point',
+            '$BUILD_DIR/monger/transport/transport_layer_manager',
+            '$BUILD_DIR/monger/util/signal_handlers',
         ],
         INSTALL_ALIAS=[
             'embedded-test',
         ],
     )
 
-    env.Alias('all', mongoed) # This ensures it compiles and links, but doesn't copy it anywhere.
+    env.Alias('all', mongered) # This ensures it compiles and links, but doesn't copy it anywhere.
 
     hygienic = get_option('install-mode') == 'hygienic'
 
     if not hygienic:
-        env.Install('#/', mongoed)
+        env.Install('#/', mongered)

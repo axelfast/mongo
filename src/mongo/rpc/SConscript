@@ -15,9 +15,9 @@ env.Library(
         'write_concern_error_detail.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/db/common',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/db/common',
     ],
 )
 
@@ -35,13 +35,13 @@ protoEnv.Library(
         'protocol.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/wire_version',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/wire_version',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/db/bson/dotted_path_support',
-        '$BUILD_DIR/mongo/db/server_options_core',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/db/bson/dotted_path_support',
+        '$BUILD_DIR/monger/db/server_options_core',
         '$BUILD_DIR/third_party/wiredtiger/wiredtiger_checksum' if wiredtiger else [],
     ],
 )
@@ -63,14 +63,14 @@ env.Library(
     LIBDEPS=[
         'metadata',
         'protocol',
-        '$BUILD_DIR/mongo/util/net/network',
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/dbmessage',
-        '$BUILD_DIR/mongo/db/server_options_core',
-        '$BUILD_DIR/mongo/s/common_s',
+        '$BUILD_DIR/monger/util/net/network',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/dbmessage',
+        '$BUILD_DIR/monger/db/server_options_core',
+        '$BUILD_DIR/monger/s/common_s',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/idl/server_parameter',
+        '$BUILD_DIR/monger/idl/server_parameter',
     ],
 )
 
@@ -91,12 +91,12 @@ env.Library(
     LIBDEPS=[
         'client_metadata',
         'metadata_impersonated_user',
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/client/read_preference',
-        '$BUILD_DIR/mongo/db/logical_time_validator',
-        '$BUILD_DIR/mongo/db/repl/optime',
-        '$BUILD_DIR/mongo/db/signed_logical_time',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/client/read_preference',
+        '$BUILD_DIR/monger/db/logical_time_validator',
+        '$BUILD_DIR/monger/db/repl/optime',
+        '$BUILD_DIR/monger/db/signed_logical_time',
     ],
 )
 
@@ -109,12 +109,12 @@ env.Library(
         env.Idlc('metadata/impersonated_user_metadata.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/service_context',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/service_context',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/auth/auth',
-        '$BUILD_DIR/mongo/db/server_options',
+        '$BUILD_DIR/monger/db/auth/auth',
+        '$BUILD_DIR/monger/db/server_options',
     ],
 )
 
@@ -126,13 +126,13 @@ env.Library(
         'metadata/client_metadata_ismaster.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/service_context',
-        '$BUILD_DIR/mongo/s/is_mongos',
-        '$BUILD_DIR/mongo/transport/transport_layer_common',
-        "$BUILD_DIR/mongo/util/concurrency/spin_lock",
-        '$BUILD_DIR/mongo/util/net/network',
-        "$BUILD_DIR/mongo/util/processinfo",
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/service_context',
+        '$BUILD_DIR/monger/s/is_mongers',
+        '$BUILD_DIR/monger/transport/transport_layer_common',
+        "$BUILD_DIR/monger/util/concurrency/spin_lock",
+        '$BUILD_DIR/monger/util/net/network',
+        "$BUILD_DIR/monger/util/processinfo",
     ],
 )
 
@@ -156,7 +156,7 @@ env.CppUnitTest(
         'reply_builder_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/client/clientdriver_minimal',
+        '$BUILD_DIR/monger/client/clientdriver_minimal',
         '$BUILD_DIR/third_party/wiredtiger/wiredtiger_checksum',
         'client_metadata',
         'metadata',
@@ -171,8 +171,8 @@ env.CppIntegrationTest(
     ],
     LIBDEPS=[
         'protocol',
-        '$BUILD_DIR/mongo/client/clientdriver_network',
-        '$BUILD_DIR/mongo/transport/transport_layer_egress_init',
-        '$BUILD_DIR/mongo/util/version_impl',
+        '$BUILD_DIR/monger/client/clientdriver_network',
+        '$BUILD_DIR/monger/transport/transport_layer_egress_init',
+        '$BUILD_DIR/monger/util/version_impl',
     ],
 )

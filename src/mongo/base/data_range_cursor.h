@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <cstring>
 #include <limits>
 
-#include "mongo/base/data_range.h"
-#include "mongo/base/data_type.h"
-#include "mongo/platform/endian.h"
-#include "mongo/util/str.h"
+#include "monger/base/data_range.h"
+#include "monger/base/data_type.h"
+#include "monger/platform/endian.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 class ConstDataRangeCursor : public ConstDataRange {
 public:
@@ -224,4 +224,4 @@ private:
     Status makeAdvanceStatus(size_t advance) const;
 };
 
-}  // namespace mongo
+}  // namespace monger

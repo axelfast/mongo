@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/oid.h"
-#include "mongo/stdx/chrono.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/oid.h"
+#include "monger/stdx/chrono.h"
 
-namespace mongo {
+namespace monger {
 
 using DistLockHandle = OID;
 class OperationContext;
@@ -183,4 +183,4 @@ protected:
     virtual Status checkStatus(OperationContext* opCtx, const DistLockHandle& lockHandle) = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

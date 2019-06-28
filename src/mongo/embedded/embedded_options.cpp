@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/embedded/embedded_options.h"
+#include "monger/embedded/embedded_options.h"
 
-#include "mongo/db/server_options_base.h"
-#include "mongo/db/server_options_helpers.h"
-#include "mongo/db/storage/mobile/mobile_options_gen.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/embedded/embedded_options_gen.h"
+#include "monger/db/server_options_base.h"
+#include "monger/db/server_options_helpers.h"
+#include "monger/db/storage/mobile/mobile_options_gen.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/embedded/embedded_options_gen.h"
 
 #include <boost/filesystem.hpp>
 #include <string>
 
-namespace mongo {
+namespace monger {
 namespace embedded {
 
 using std::string;
@@ -132,4 +132,4 @@ std::string storageDBPathDescription() {
 }
 
 }  // namespace embedded
-}  // namespace mongo
+}  // namespace monger

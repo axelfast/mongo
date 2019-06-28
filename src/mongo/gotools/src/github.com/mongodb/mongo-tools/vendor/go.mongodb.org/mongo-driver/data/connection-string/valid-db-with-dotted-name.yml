@@ -1,17 +1,17 @@
 tests:
     -
         description: "Multiple Unix domain sockets and auth DB resembling a socket (relative path)"
-        uri: "mongodb://rel%2Fmongodb-27017.sock,rel%2Fmongodb-27018.sock/admin.sock"
+        uri: "mongerdb://rel%2Fmongerdb-27017.sock,rel%2Fmongerdb-27018.sock/admin.sock"
         valid: true
         warning: false
         hosts:
             -
                 type: "unix"
-                host: "rel/mongodb-27017.sock"
+                host: "rel/mongerdb-27017.sock"
                 port: ~
             -
                 type: "unix"
-                host: "rel/mongodb-27018.sock"
+                host: "rel/mongerdb-27018.sock"
                 port: ~
         auth:
             username: ~
@@ -20,17 +20,17 @@ tests:
         options: ~
     -
         description: "Multiple Unix domain sockets with auth DB resembling a path (relative path)"
-        uri: "mongodb://rel%2Fmongodb-27017.sock,rel%2Fmongodb-27018.sock/admin.shoe"
+        uri: "mongerdb://rel%2Fmongerdb-27017.sock,rel%2Fmongerdb-27018.sock/admin.shoe"
         valid: true
         warning: false
         hosts:
             -
                 type: "unix"
-                host: "rel/mongodb-27017.sock"
+                host: "rel/mongerdb-27017.sock"
                 port: ~
             -
                 type: "unix"
-                host: "rel/mongodb-27018.sock"
+                host: "rel/mongerdb-27018.sock"
                 port: ~
         auth:
             username: ~
@@ -39,17 +39,17 @@ tests:
         options: ~
     -
         description: "Multiple Unix domain sockets and auth DB resembling a socket (absolute path)"
-        uri: "mongodb://%2Ftmp%2Fmongodb-27017.sock,%2Ftmp%2Fmongodb-27018.sock/admin.sock"
+        uri: "mongerdb://%2Ftmp%2Fmongerdb-27017.sock,%2Ftmp%2Fmongerdb-27018.sock/admin.sock"
         valid: true
         warning: false
         hosts:
             -
                 type: "unix"
-                host: "/tmp/mongodb-27017.sock"
+                host: "/tmp/mongerdb-27017.sock"
                 port: ~
             -
                 type: "unix"
-                host: "/tmp/mongodb-27018.sock"
+                host: "/tmp/mongerdb-27018.sock"
                 port: ~
         auth:
             username: ~
@@ -58,17 +58,17 @@ tests:
         options: ~
     -
         description: "Multiple Unix domain sockets with auth DB resembling a path (absolute path)"
-        uri: "mongodb://%2Ftmp%2Fmongodb-27017.sock,%2Ftmp%2Fmongodb-27018.sock/admin.shoe"
+        uri: "mongerdb://%2Ftmp%2Fmongerdb-27017.sock,%2Ftmp%2Fmongerdb-27018.sock/admin.shoe"
         valid: true
         warning: false
         hosts:
             -
                 type: "unix"
-                host: "/tmp/mongodb-27017.sock"
+                host: "/tmp/mongerdb-27017.sock"
                 port: ~
             -
                 type: "unix"
-                host: "/tmp/mongodb-27018.sock"
+                host: "/tmp/mongerdb-27018.sock"
                 port: ~
         auth:
             username: ~

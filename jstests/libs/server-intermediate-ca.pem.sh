@@ -4,7 +4,7 @@
 set -ev
 
 PREFIX="/C=US/ST=New York/L=New York City/O=MongoDB/OU=Kernel"
-OPENSSL="/opt/mongodbtoolchain/v3/bin/openssl"
+OPENSSL="/opt/mongerdbtoolchain/v3/bin/openssl"
 
 cd jstests/libs
 

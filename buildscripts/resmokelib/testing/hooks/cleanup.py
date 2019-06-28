@@ -8,7 +8,7 @@ from . import interface
 class CleanEveryN(interface.Hook):
     """Restart the fixture after it has ran 'n' tests.
 
-    On mongod-related fixtures, this will clear the dbpath.
+    On mongerd-related fixtures, this will clear the dbpath.
     """
 
     DEFAULT_N = 20

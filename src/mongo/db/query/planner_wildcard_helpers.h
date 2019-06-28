@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <set>
 
-#include "mongo/db/field_ref.h"
-#include "mongo/db/index/multikey_paths.h"
-#include "mongo/db/query/index_bounds_builder.h"
-#include "mongo/db/query/index_entry.h"
-#include "mongo/db/query/query_solution.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/index/multikey_paths.h"
+#include "monger/db/query/index_bounds_builder.h"
+#include "monger/db/query/index_entry.h"
+#include "monger/db/query/query_solution.h"
 
-namespace mongo {
+namespace monger {
 namespace wildcard_planning {
 
 using BoundsTightness = IndexBoundsBuilder::BoundsTightness;
@@ -92,4 +92,4 @@ bool isWildcardObjectSubpathScan(const IndexScanNode* node);
 bool requiresSubpathBounds(const OrderedIntervalList& intervals);
 
 }  // namespace wildcard_planning
-}  // namespace mongo
+}  // namespace monger

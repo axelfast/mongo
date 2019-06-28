@@ -15,9 +15,9 @@ import (
 var tmpl = `<!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta http-equiv="refresh" content="5; url=https://godoc.org/go.mongodb.org/mongo-driver/{{.}}">
-        <meta name=go-import content="go.mongodb.org/mongo-driver git https://github.com/mongodb/mongo-go-driver.git">
-        <meta name="go-source" content="go.mongodb.org/mongo-driver https://github.com/mongodb/mongo-go-driver https://github.com/mongodb/mongo-go-driver/tree/master{/dir} https://github.com/mongodb/mongo-go-driver/blob/master{/dir}/{file}#L{line}">
+        <meta http-equiv="refresh" content="5; url=https://godoc.org/go.mongerdb.org/monger-driver/{{.}}">
+        <meta name=go-import content="go.mongerdb.org/monger-driver git https://github.com/mongerdb/monger-go-driver.git">
+        <meta name="go-source" content="go.mongerdb.org/monger-driver https://github.com/mongerdb/monger-go-driver https://github.com/mongerdb/monger-go-driver/tree/master{/dir} https://github.com/mongerdb/monger-go-driver/blob/master{/dir}/{file}#L{line}">
     </head>
     <body>
         Redirecting to docs...
@@ -30,7 +30,7 @@ func main() {
 	var destination = "s3-website"
 	fs := flag.NewFlagSet("", flag.ExitOnError)
 	fs.Usage = func() {
-		fmt.Fprintln(fs.Output(), "docbuilder is used to create the static site for the import paths for go.mongodb.org.")
+		fmt.Fprintln(fs.Output(), "docbuilder is used to create the static site for the import paths for go.mongerdb.org.")
 		fmt.Fprintln(fs.Output(), "usage: docbuilder [flags] [destination]")
 		fs.PrintDefaults()
 	}
@@ -56,13 +56,13 @@ func main() {
 
 	dirs := make([]string, 1, len(pkgs)+1)
 	for _, pkg := range pkgs {
-		if !strings.HasPrefix(pkg.PkgPath, "go.mongodb.org") {
+		if !strings.HasPrefix(pkg.PkgPath, "go.mongerdb.org") {
 			continue
 		}
-		dirs = append(dirs, strings.TrimPrefix(pkg.PkgPath, "go.mongodb.org/mongo-driver"))
+		dirs = append(dirs, strings.TrimPrefix(pkg.PkgPath, "go.mongerdb.org/monger-driver"))
 	}
 
-	err = os.MkdirAll(filepath.Join(destination, "mongo-driver"), os.ModeDir|os.FileMode(0755))
+	err = os.MkdirAll(filepath.Join(destination, "monger-driver"), os.ModeDir|os.FileMode(0755))
 	if err != nil {
 		log.Fatalf("Could not make path: %v", err)
 	}
@@ -73,7 +73,7 @@ func main() {
 	}
 
 	for _, dir := range dirs {
-		directory := filepath.Join(destination, "mongo-driver", dir)
+		directory := filepath.Join(destination, "monger-driver", dir)
 		err = os.MkdirAll(directory, os.ModeDir|os.FileMode(0755))
 		if err != nil {
 			log.Fatalf("Could not create directory (%s): %v", directory, err)

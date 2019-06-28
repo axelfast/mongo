@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 
-#include "mongo/db/client.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/queue.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
-#include "mongo/util/thread_safe_string.h"
-#include "mongo/util/timer.h"
+#include "monger/db/client.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/util/base64.h"
+#include "monger/util/queue.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
+#include "monger/util/thread_safe_string.h"
+#include "monger/util/timer.h"
 
 namespace BasicTests {
 
@@ -67,12 +67,12 @@ public:
 
 private:
     void incRarely(int& c) {
-        static mongo::Rarely s;
+        static monger::Rarely s;
         if (s.tick())
             ++c;
     }
     void incRarely2(int& c) {
-        static mongo::Rarely s;
+        static monger::Rarely s;
         if (s.tick())
             ++c;
     }

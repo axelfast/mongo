@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
 #include <sqlite3.h>
 
-#include "mongo/db/storage/mobile/mobile_options.h"
-#include "mongo/db/storage/mobile/mobile_recovery_unit.h"
-#include "mongo/db/storage/mobile/mobile_sqlite_statement.h"
-#include "mongo/db/storage/mobile/mobile_util.h"
+#include "monger/db/storage/mobile/mobile_options.h"
+#include "monger/db/storage/mobile/mobile_recovery_unit.h"
+#include "monger/db/storage/mobile/mobile_sqlite_statement.h"
+#include "monger/db/storage/mobile/mobile_util.h"
 
-namespace mongo {
+namespace monger {
 namespace embedded {
 
 using std::string;
@@ -212,4 +212,4 @@ void configureSession(sqlite3* session, const MobileOptions& options) {
 }
 
 }  // namespace embedded
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,42 +27,42 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 #define LOG_FOR_ELECTION(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kReplicationElection)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kReplicationElection)
 #define LOG_FOR_HEARTBEATS(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kReplicationHeartbeats)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kReplicationHeartbeats)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <functional>
 
-#include "mongo/base/status.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/kill_sessions_local.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/logical_time_validator.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/heartbeat_response_action.h"
-#include "mongo/db/repl/repl_set_config_checks.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/repl_set_heartbeat_response.h"
-#include "mongo/db/repl/replication_coordinator_impl.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/db/repl/vote_requester.h"
-#include "mongo/db/service_context.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/kill_sessions_local.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/logical_time_validator.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/heartbeat_response_action.h"
+#include "monger/db/repl/repl_set_config_checks.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/repl_set_heartbeat_response.h"
+#include "monger/db/repl/replication_coordinator_impl.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/db/repl/vote_requester.h"
+#include "monger/db/service_context.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -300,7 +300,7 @@ stdx::unique_lock<stdx::mutex> ReplicationCoordinatorImpl::_handleHeartbeatRespo
                 _priorityTakeoverWhen = _replExecutor->now() + priorityTakeoverDelay + randomOffset;
                 LOG_FOR_ELECTION(0) << "Scheduling priority takeover at " << _priorityTakeoverWhen;
                 _priorityTakeoverCbh = _scheduleWorkAt(
-                    _priorityTakeoverWhen, [=](const mongo::executor::TaskExecutor::CallbackArgs&) {
+                    _priorityTakeoverWhen, [=](const monger::executor::TaskExecutor::CallbackArgs&) {
                         _startElectSelfIfEligibleV1(
                             TopologyCoordinator::StartElectionReason::kPriorityTakeover);
                     });
@@ -314,7 +314,7 @@ stdx::unique_lock<stdx::mutex> ReplicationCoordinatorImpl::_handleHeartbeatRespo
                 _catchupTakeoverWhen = _replExecutor->now() + catchupTakeoverDelay;
                 LOG_FOR_ELECTION(0) << "Scheduling catchup takeover at " << _catchupTakeoverWhen;
                 _catchupTakeoverCbh = _scheduleWorkAt(
-                    _catchupTakeoverWhen, [=](const mongo::executor::TaskExecutor::CallbackArgs&) {
+                    _catchupTakeoverWhen, [=](const monger::executor::TaskExecutor::CallbackArgs&) {
                         _startElectSelfIfEligibleV1(
                             TopologyCoordinator::StartElectionReason::kCatchupTakeover);
                     });
@@ -395,7 +395,7 @@ void ReplicationCoordinatorImpl::_stepDownFinish(
         };
 
         while (MONGO_FAIL_POINT(blockHeartbeatStepdown) && !inShutdown()) {
-            mongo::sleepsecs(1);
+            monger::sleepsecs(1);
         }
     }
 
@@ -850,7 +850,7 @@ void ReplicationCoordinatorImpl::_cancelAndRescheduleElectionTimeout_inlock() {
     LOG_FOR_ELECTION(4) << "Scheduling election timeout callback at " << when;
     _handleElectionTimeoutWhen = when;
     _handleElectionTimeoutCbh =
-        _scheduleWorkAt(when, [=](const mongo::executor::TaskExecutor::CallbackArgs&) {
+        _scheduleWorkAt(when, [=](const monger::executor::TaskExecutor::CallbackArgs&) {
             _startElectSelfIfEligibleV1(TopologyCoordinator::StartElectionReason::kElectionTimeout);
         });
 }
@@ -931,4 +931,4 @@ void ReplicationCoordinatorImpl::_startElectSelfIfEligibleV1(
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

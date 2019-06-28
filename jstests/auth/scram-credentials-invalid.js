@@ -4,10 +4,10 @@
 (function() {
     'use strict';
 
-    function runTest(mongod) {
-        assert(mongod);
-        const admin = mongod.getDB('admin');
-        const test = mongod.getDB('test');
+    function runTest(mongerd) {
+        assert(mongerd);
+        const admin = mongerd.getDB('admin');
+        const test = mongerd.getDB('test');
 
         admin.createUser({user: 'admin', pwd: 'pass', roles: jsTest.adminUserRoles});
         assert(admin.auth('admin', 'pass'));
@@ -38,7 +38,7 @@
         assert.eq(error, "Error: credential document SCRAM-SHA-1 failed validation");
     }
 
-    const mongod = MongoRunner.runMongod({auth: "", useLogFiles: true});
-    runTest(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod({auth: "", useLogFiles: true});
+    runTest(mongerd);
+    MongoRunner.stopMongod(mongerd);
 })();

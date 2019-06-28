@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/oid.h"
+#include "monger/bson/oid.h"
 
 #include <boost/functional/hash.hpp>
 #include <limits>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/random.h"
-#include "mongo/util/hex.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/random.h"
+#include "monger/util/hex.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 std::unique_ptr<AtomicWord<int64_t>> counter;
@@ -175,4 +175,4 @@ std::string OID::toIncString() const {
     return toHexLower(getIncrement().bytes, kIncrementSize);
 }
 
-}  // namespace mongo
+}  // namespace monger

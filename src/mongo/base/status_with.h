@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,16 +34,16 @@
 #include <type_traits>
 #include <utility>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/base/status.h"
-#include "mongo/platform/compiler.h"
+#include "monger/base/static_assert.h"
+#include "monger/base/status.h"
+#include "monger/platform/compiler.h"
 
 #define MONGO_INCLUDE_INVARIANT_H_WHITELISTED
-#include "mongo/util/invariant.h"
+#include "monger/util/invariant.h"
 #undef MONGO_INCLUDE_INVARIANT_H_WHITELISTED
 
 
-namespace mongo {
+namespace monger {
 
 // Including builder.h here would cause a cycle.
 template <typename Allocator>
@@ -62,7 +62,7 @@ extern constexpr bool isStatusWith<StatusWith<T>> = true;
 
 template <typename T>
 extern constexpr bool isStatusOrStatusWith =
-    std::is_same<T, mongo::Status>::value || isStatusWith<T>;
+    std::is_same<T, monger::Status>::value || isStatusWith<T>;
 
 template <typename T>
 using StatusOrStatusWith = std::conditional_t<std::is_void<T>::value, Status, StatusWith<T>>;
@@ -283,4 +283,4 @@ bool operator!=(const ErrorCodes::Error code, const StatusWith<T>& sw) {
     return !(code == sw);
 }
 
-}  // namespace mongo
+}  // namespace monger

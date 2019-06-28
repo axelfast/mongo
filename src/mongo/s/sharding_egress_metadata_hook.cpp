@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/service_context.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
-#include "mongo/rpc/metadata/config_server_metadata.h"
-#include "mongo/rpc/metadata/impersonated_user_metadata.h"
-#include "mongo/rpc/metadata/metadata_hook.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/sharding_egress_metadata_hook.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status.h"
+#include "monger/db/service_context.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/rpc/metadata/config_server_metadata.h"
+#include "monger/rpc/metadata/impersonated_user_metadata.h"
+#include "monger/rpc/metadata/metadata_hook.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/sharding_egress_metadata_hook.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 ShardingEgressMetadataHook::ShardingEgressMetadataHook(ServiceContext* serviceContext)
@@ -131,4 +131,4 @@ Status ShardingEgressMetadataHook::_advanceConfigOpTimeFromShard(OperationContex
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,18 +28,18 @@
  */
 #pragma once
 
-#include "mongo/bson/oid.h"
-#include "mongo/util/background.h"
+#include "monger/bson/oid.h"
+#include "monger/util/background.h"
 
 #include <string>
 
-namespace mongo {
+namespace monger {
 
 class AuthorizationManager;
 class OperationContext;
 
 /**
- * Background job that runs only in mongos and periodically checks in with the config servers
+ * Background job that runs only in mongers and periodically checks in with the config servers
  * to determine whether any authorization information has changed, and if so causes the
  * AuthorizationManager to throw out its in-memory cache of User objects (which contains the
  * users' credentials, roles, privileges, etc).
@@ -62,4 +62,4 @@ private:
 
 Status userCacheInvalidationIntervalSecsNotify(const int& newValue);
 
-}  // namespace mongo
+}  // namespace monger

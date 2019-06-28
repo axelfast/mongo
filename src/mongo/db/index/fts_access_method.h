@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/db/fts/fts_spec.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/status.h"
+#include "monger/db/fts/fts_spec.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 class FTSAccessMethod : public AbstractIndexAccessMethod {
 public:
@@ -60,4 +60,4 @@ private:
     fts::FTSSpec _ftsSpec;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <map>
 #include <string>
 
-#include "mongo/bson/timestamp.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/s/ns_targeter.h"
-#include "mongo/s/write_ops/batched_command_request.h"
-#include "mongo/s/write_ops/batched_command_response.h"
+#include "monger/bson/timestamp.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/repl/optime.h"
+#include "monger/s/ns_targeter.h"
+#include "monger/s/write_ops/batched_command_request.h"
+#include "monger/s/write_ops/batched_command_response.h"
 
-namespace mongo {
+namespace monger {
 
 class BatchWriteExecStats;
 class OperationContext;
@@ -110,4 +110,4 @@ private:
     HostOpTimeMap _writeOpTimes;
 };
 
-}  // namespace mongo
+}  // namespace monger

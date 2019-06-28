@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/index/index_descriptor.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/index/index_descriptor.h"
 
 #include <algorithm>
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/util/log.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using IndexVersion = IndexDescriptor::IndexVersion;
 
@@ -221,4 +221,4 @@ BSONObj IndexDescriptor::renameNsInIndexSpec(BSONObj spec, const NamespaceString
     return builder.obj();
 }
 
-}  // namespace mongo
+}  // namespace monger

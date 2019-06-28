@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/query/plan_enumerator.h"
+#include "monger/db/query/plan_enumerator.h"
 
 #include <set>
 
-#include "mongo/db/query/index_tag.h"
-#include "mongo/db/query/indexability.h"
-#include "mongo/util/log.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/query/index_tag.h"
+#include "monger/db/query/indexability.h"
+#include "monger/util/log.h"
+#include "monger/util/string_map.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 using std::unique_ptr;
 using std::endl;
 using std::set;
@@ -253,7 +253,7 @@ void tagForSort(MatchExpression* tree) {
 }  // namespace
 
 
-namespace mongo {
+namespace monger {
 
 PlanEnumerator::PlanEnumerator(const PlanEnumeratorParams& params)
     : _root(params.root),
@@ -1683,4 +1683,4 @@ bool PlanEnumerator::nextMemo(size_t id) {
     return false;
 }
 
-}  // namespace mongo
+}  // namespace monger

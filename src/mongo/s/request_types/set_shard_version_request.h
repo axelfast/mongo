@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/client/connection_string.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/shard_id.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/namespace_string.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/shard_id.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 template <typename T>
@@ -54,7 +54,7 @@ public:
      * Constructs a new set shard version request, which is of the "init" type, meaning it has no
      * namespace or version information associated with it and the init flag is set.
      * The constructed request will not contain the "noConnectionVersioning" field, which means that
-     * the entire connection will be marked as "versioned" on the mongod side. DO NOT USE when
+     * the entire connection will be marked as "versioned" on the mongerd side. DO NOT USE when
      * sending through the TaskExecutor, which pools connections without consideration for which
      * are marked as sharded.
      */
@@ -67,7 +67,7 @@ public:
      * both initialization data and namespace and version information associated with it.
      *
      * The constructed request will not contain the "noConnectionVersioning" field, which means that
-     * the entire connection will be marked as "versioned" on the mongod side. DO NOT USE when
+     * the entire connection will be marked as "versioned" on the mongerd side. DO NOT USE when
      * sending through the TaskExecutor, which pools connections without consideration for which
      * are marked as sharded.
      */
@@ -193,4 +193,4 @@ private:
     boost::optional<ChunkVersion> _version;
 };
 
-}  // namespace mongo
+}  // namespace monger

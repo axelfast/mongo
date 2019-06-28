@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,16 +34,16 @@
 #include <list>
 #include <memory>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_cursor.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/query/plan_executor.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_cursor.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/query/plan_executor.h"
 
-namespace mongo {
+namespace monger {
 /**
  * Like DocumentSourceCursor, this stage returns Documents from BSONObjs produced by a PlanExecutor,
  * but does extra work to compute distances to satisfy a $near or $nearSphere query.
@@ -94,4 +94,4 @@ private:
     // radian distances into meters by multiplying by the radius of the Earth.
     double _distanceMultiplier = 1.0;
 };
-}  // namespace mongo
+}  // namespace monger

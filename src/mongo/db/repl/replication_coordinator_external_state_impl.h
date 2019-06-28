@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,18 +31,18 @@
 
 #include <deque>
 
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/repl/bgsync.h"
-#include "mongo/db/repl/oplog_applier.h"
-#include "mongo/db/repl/replication_coordinator_external_state.h"
-#include "mongo/db/repl/sync_source_feedback.h"
-#include "mongo/db/repl/task_runner.h"
-#include "mongo/db/storage/journal_listener.h"
-#include "mongo/db/storage/snapshot_manager.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/thread_pool.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/repl/bgsync.h"
+#include "monger/db/repl/oplog_applier.h"
+#include "monger/db/repl/replication_coordinator_external_state.h"
+#include "monger/db/repl/sync_source_feedback.h"
+#include "monger/db/repl/task_runner.h"
+#include "monger/db/storage/journal_listener.h"
+#include "monger/db/storage/snapshot_manager.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/thread_pool.h"
 
-namespace mongo {
+namespace monger {
 class ServiceContext;
 
 namespace repl {
@@ -204,4 +204,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

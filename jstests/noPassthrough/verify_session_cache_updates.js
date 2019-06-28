@@ -61,13 +61,13 @@
     }
 
     {
-        var mongod = MongoRunner.runMongod({nojournal: ""});
-        runTest(mongod);
-        MongoRunner.stopMongod(mongod);
+        var mongerd = MongoRunner.runMongod({nojournal: ""});
+        runTest(mongerd);
+        MongoRunner.stopMongod(mongerd);
     }
 
     {
-        var st = new ShardingTest({shards: 1, mongos: 1, config: 1});
+        var st = new ShardingTest({shards: 1, mongers: 1, config: 1});
         st.rs0.getPrimary().getDB("admin").runCommand({refreshLogicalSessionCacheNow: 1});
 
         runTest(st.s0);

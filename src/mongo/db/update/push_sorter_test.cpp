@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/db/update/push_sorter.h"
+#include "monger/db/update/push_sorter.h"
 
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
-using mongo::mutablebson::Element;
-using mongo::mutablebson::sortChildren;
+using monger::mutablebson::Element;
+using monger::mutablebson::sortChildren;
 
-class ObjectArray : public mongo::unittest::Test {
+class ObjectArray : public monger::unittest::Test {
 public:
     ObjectArray() : _doc(), _size(0) {}
 
@@ -59,7 +59,7 @@ public:
         _objs[_size] = obj;
         _size++;
 
-        ASSERT_OK(_doc.root()["x"].appendObject(mongo::StringData(), obj));
+        ASSERT_OK(_doc.root()["x"].appendObject(monger::StringData(), obj));
     }
 
     BSONObj getOrigObj(size_t i) {
@@ -198,4 +198,4 @@ TEST_F(ObjectArray, SortRespectsCollation) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -67,8 +67,8 @@ class ErrorCode:
             if not split[0]:
                 die("Error for %s with extra info %s: fully qualified namespaces aren't supported" %
                     (name, extra))
-            if split[0] == "mongo":
-                die("Error for %s with extra info %s: don't include the mongo namespace" % (name,
+            if split[0] == "monger":
+                die("Error for %s with extra info %s: don't include the monger namespace" % (name,
                                                                                             extra))
             if len(split) > 1:
                 self.extra_class = split.pop()

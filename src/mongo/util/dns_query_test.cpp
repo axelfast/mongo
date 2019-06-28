@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,15 +26,15 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/util/dns_query.h"
+#include "monger/util/dns_query.h"
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
 using namespace std::literals::string_literals;
 
 namespace {
 std::string getFirstARecord(const std::string& service) {
-    auto res = mongo::dns::lookupARecords(service);
+    auto res = monger::dns::lookupARecords(service);
     if (res.empty())
         return "";
     return res.front();
@@ -90,7 +90,7 @@ TEST(MongoDnsQuery, basic) {
             resolution_count += resolution;
         }
         // Failure to resolve is okay, but not great -- print a warning
-        catch (const mongo::DBException& ex) {
+        catch (const monger::DBException& ex) {
             std::cerr << "Warning: Did not resolve " << test.dns << " at all: " << ex.what()
                       << std::endl;
         }
@@ -103,10 +103,10 @@ TEST(MongoDnsQuery, basic) {
 }
 
 TEST(MongoDnsQuery, srvRecords) {
-    const auto kMongodbSRVPrefix = "_mongodb._tcp."s;
+    const auto kMongodbSRVPrefix = "_mongerdb._tcp."s;
     const struct {
         std::string query;
-        std::vector<mongo::dns::SRVHostEntry> result;
+        std::vector<monger::dns::SRVHostEntry> result;
     } tests[] = {
         {"test1.test.build.10gen.cc.",
          {
@@ -136,13 +136,13 @@ TEST(MongoDnsQuery, srvRecords) {
     for (const auto& test : tests) {
         const auto& expected = test.result;
         if (expected.empty()) {
-            ASSERT_THROWS_CODE(mongo::dns::lookupSRVRecords(kMongodbSRVPrefix + test.query),
-                               mongo::DBException,
-                               mongo::ErrorCodes::DNSHostNotFound);
+            ASSERT_THROWS_CODE(monger::dns::lookupSRVRecords(kMongodbSRVPrefix + test.query),
+                               monger::DBException,
+                               monger::ErrorCodes::DNSHostNotFound);
             continue;
         }
 
-        auto witness = mongo::dns::lookupSRVRecords(kMongodbSRVPrefix + test.query);
+        auto witness = monger::dns::lookupSRVRecords(kMongodbSRVPrefix + test.query);
         std::sort(begin(witness), end(witness));
 
         for (const auto& entry : witness) {
@@ -180,15 +180,15 @@ TEST(MongoDnsQuery, txtRecords) {
 
     for (const auto& test : tests) {
         try {
-            auto witness = mongo::dns::getTXTRecords(test.query);
+            auto witness = monger::dns::getTXTRecords(test.query);
             std::sort(begin(witness), end(witness));
 
             const auto& expected = test.result;
 
             ASSERT_TRUE(std::equal(begin(witness), end(witness), begin(expected), end(expected)));
             ASSERT_EQ(witness.size(), expected.size());
-        } catch (const mongo::DBException& ex) {
-            if (ex.code() != mongo::ErrorCodes::DNSHostNotFound)
+        } catch (const monger::DBException& ex) {
+            if (ex.code() != monger::ErrorCodes::DNSHostNotFound)
                 throw;
             ASSERT_TRUE(test.result.empty());
         }

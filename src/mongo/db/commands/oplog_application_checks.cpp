@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,16 +26,16 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/util/bson_check.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/oplog_application_checks.h"
+#include "monger/bson/util/bson_check.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/oplog_application_checks.h"
 
-namespace mongo {
+namespace monger {
 UUID OplogApplicationChecks::getUUIDFromOplogEntry(const BSONObj& oplogEntry) {
     BSONElement uiElem = oplogEntry["ui"];
     return uassertStatusOK(UUID::parse(uiElem));
@@ -165,7 +165,7 @@ Status OplogApplicationChecks::checkOperation(const BSONElement& e) {
         return {ErrorCodes::IllegalOperation,
                 str::stream() << "op does not contain required \"op\" field: " << e.fieldName()};
     }
-    if (opElement.type() != mongo::String) {
+    if (opElement.type() != monger::String) {
         return {ErrorCodes::IllegalOperation,
                 str::stream() << "\"op\" field is not a string: " << e.fieldName()};
     }
@@ -183,7 +183,7 @@ Status OplogApplicationChecks::checkOperation(const BSONElement& e) {
         return {ErrorCodes::IllegalOperation,
                 str::stream() << "op does not contain required \"ns\" field: " << e.fieldName()};
     }
-    if (nsElement.type() != mongo::String) {
+    if (nsElement.type() != monger::String) {
         return {ErrorCodes::IllegalOperation,
                 str::stream() << "\"ns\" field is not a string: " << e.fieldName()};
     }
@@ -264,4 +264,4 @@ Status OplogApplicationChecks::checkAuthForCommand(OperationContext* opCtx,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

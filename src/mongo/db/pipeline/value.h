@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/base/static_assert.h"
-#include "mongo/base/string_data.h"
-#include "mongo/db/pipeline/value_internal.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/static_assert.h"
+#include "monger/base/string_data.h"
+#include "monger/db/pipeline/value_internal.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 class BSONElement;
 
 /** A variant type that can hold any type of data representable in BSON
@@ -373,7 +373,7 @@ private:
 };
 MONGO_STATIC_ASSERT(sizeof(Value) == 16);
 
-inline void swap(mongo::Value& lhs, mongo::Value& rhs) {
+inline void swap(monger::Value& lhs, monger::Value& rhs) {
     lhs.swap(rhs);
 }
 
@@ -400,7 +400,7 @@ public:
 
 /* ======================= INLINED IMPLEMENTATIONS ========================== */
 
-namespace mongo {
+namespace monger {
 
 inline size_t Value::getArrayLength() const {
     verify(getType() == Array);
@@ -487,4 +487,4 @@ inline BSONBinData Value::getBinData() const {
     auto stringData = _storage.getString();
     return BSONBinData(stringData.rawData(), stringData.size(), _storage.binDataType());
 }
-}  // namespace mongo
+}  // namespace monger

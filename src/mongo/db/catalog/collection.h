@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,27 +35,27 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/mutable/damage_vector.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/catalog/collection_info_cache.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/storage/capped_callback.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/snapshot.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/mutable/damage_vector.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/catalog/collection_info_cache.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/record_id.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/storage/capped_callback.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/snapshot.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 class CappedCallback;
 class CollectionCatalogEntry;
 class ExtentManager;
@@ -496,4 +496,4 @@ public:
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

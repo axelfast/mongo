@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,25 +35,25 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/base/secure_allocator.h"
-#include "mongo/base/shim.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/bson/oid.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/privilege_format.h"
-#include "mongo/db/auth/resource_pattern.h"
-#include "mongo/db/auth/role_graph.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/server_options.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/base/shim.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/bson/oid.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/privilege_format.h"
+#include "monger/db/auth/resource_pattern.h"
+#include "monger/db/auth/role_graph.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/server_options.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
 
-namespace mongo {
+namespace monger {
 
 class AuthorizationSession;
 class AuthzManagerExternalState;
@@ -113,8 +113,8 @@ public:
     static const NamespaceString usersBackupCollectionNamespace;
     static const NamespaceString usersCollectionNamespace;
     static const NamespaceString versionCollectionNamespace;
-    static const NamespaceString defaultTempUsersCollectionNamespace;  // for mongorestore
-    static const NamespaceString defaultTempRolesCollectionNamespace;  // for mongorestore
+    static const NamespaceString defaultTempUsersCollectionNamespace;  // for mongerrestore
+    static const NamespaceString defaultTempRolesCollectionNamespace;  // for mongerrestore
 
 
     /**
@@ -332,4 +332,4 @@ public:
     virtual std::vector<CachedUserInfo> getUserCacheInfo() const = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

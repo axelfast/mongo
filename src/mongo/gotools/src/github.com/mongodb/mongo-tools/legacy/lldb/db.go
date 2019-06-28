@@ -11,8 +11,8 @@ package lldb
 import (
 	mgo "github.com/10gen/llmgo"
 	"github.com/10gen/llmgo/bson"
-	"github.com/mongodb/mongo-tools/legacy/options"
-	"github.com/mongodb/mongo-tools/legacy/password"
+	"github.com/mongerdb/monger-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/legacy/password"
 
 	"fmt"
 	"io"
@@ -47,7 +47,7 @@ const (
 	ErrLostConnection     = "lost connection to server"
 	ErrNoReachableServers = "no reachable servers"
 	ErrNsNotFound         = "ns not found"
-	// replication errors list the replset name if we are talking to a mongos,
+	// replication errors list the replset name if we are talking to a mongers,
 	// so we can only check for this universal prefix
 	ErrReplTimeoutPrefix            = "waiting for replication timed out"
 	ErrCouldNotContactPrimaryPrefix = "could not contact primary for replica set"

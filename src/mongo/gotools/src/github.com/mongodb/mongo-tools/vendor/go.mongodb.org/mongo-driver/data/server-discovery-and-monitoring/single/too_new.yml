@@ -1,5 +1,5 @@
 description: "Standalone with large minWireVersion"
-uri: "mongodb://a"
+uri: "mongerdb://a"
 phases: [
     {
         responses: [

@@ -12,7 +12,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -28,9 +28,9 @@
 #
 
 global:
-  cpp_namespace: "mongo"
+  cpp_namespace: "monger"
   cpp_includes:
-    - "mongo/s/mongos_options.h"
+    - "monger/s/mongers_options.h"
   configs:
     section: "Sharding options"
     source: [ yaml, cli, ini ]
@@ -54,12 +54,12 @@ configs:
     source: [ cli, ini ]
 #
 # Javascript Options
-# As a general rule, js enable/disable options are ignored for mongos.
+# As a general rule, js enable/disable options are ignored for mongers.
 # However, we define and hide these options so that if someone
 # were to use these args in a set of options meant for both
-# mongos and mongod runs, the mongos won't fail on an unknown argument.
+# mongers and mongerd runs, the mongers won't fail on an unknown argument.
 #
-# These options have no affect on how the mongos runs.
+# These options have no affect on how the mongers runs.
 # Setting either or both to *any* value will provoke a warning message
 # and nothing more.
 #

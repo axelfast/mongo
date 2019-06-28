@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,20 +33,20 @@
 #include <functional>
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/repl/multiapplier.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_applier.h"
-#include "mongo/db/repl/oplog_buffer.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/replication_consistency_markers.h"
-#include "mongo/db/repl/session_update_tracker.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/thread_pool.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/repl/multiapplier.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_applier.h"
+#include "monger/db/repl/oplog_buffer.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/replication_consistency_markers.h"
+#include "monger/db/repl/session_update_tracker.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/thread_pool.h"
 
-namespace mongo {
+namespace monger {
 
 class Database;
 class OperationContext;
@@ -289,4 +289,4 @@ Status multiSyncApply(OperationContext* opCtx,
                       WorkerMultikeyPathInfo* workerMultikeyPathInfo);
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

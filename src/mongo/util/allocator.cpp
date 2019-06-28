@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstdlib>
 
-#include "mongo/util/signal_handlers_synchronous.h"
+#include "monger/util/signal_handlers_synchronous.h"
 
-namespace mongo {
+namespace monger {
 
-void* mongoMalloc(size_t size) {
+void* mongerMalloc(size_t size) {
     void* x = std::malloc(size);
     if (x == nullptr) {
         reportOutOfMemoryErrorAndExit();
@@ -43,7 +43,7 @@ void* mongoMalloc(size_t size) {
     return x;
 }
 
-void* mongoRealloc(void* ptr, size_t size) {
+void* mongerRealloc(void* ptr, size_t size) {
     void* x = std::realloc(ptr, size);
     if (x == nullptr) {
         reportOutOfMemoryErrorAndExit();
@@ -51,4 +51,4 @@ void* mongoRealloc(void* ptr, size_t size) {
     return x;
 }
 
-}  // namespace mongo
+}  // namespace monger

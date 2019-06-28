@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,17 +26,17 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/index_entry_comparison.h"
+#include "monger/db/storage/index_entry_comparison.h"
 
 #include <ostream>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/storage/duplicate_key_error_info.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/storage/duplicate_key_error_info.h"
 
-namespace mongo {
+namespace monger {
 
 std::ostream& operator<<(std::ostream& stream, const IndexKeyEntry& entry) {
     return stream << entry.key << '@' << entry.loc;
@@ -198,4 +198,4 @@ Status buildDupKeyErrorStatus(const BSONObj& key,
     return Status(DuplicateKeyErrorInfo(keyPattern, key), sb.str());
 }
 
-}  // namespace mongo
+}  // namespace monger

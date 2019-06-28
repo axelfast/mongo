@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,25 +31,25 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/field_parser.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/field_parser.h"
+#include "monger/db/jsobj.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/time_support.h"
 
 namespace {
 
-using mongo::BSONArray;
-using mongo::BSONField;
-using mongo::BSONObj;
-using mongo::BSONObjBuilder;
-using mongo::Date_t;
-using mongo::FieldParser;
-using mongo::OID;
+using monger::BSONArray;
+using monger::BSONField;
+using monger::BSONObj;
+using monger::BSONObjBuilder;
+using monger::Date_t;
+using monger::FieldParser;
+using monger::OID;
 using std::map;
 using std::string;
 using std::vector;
 
-class ExtractionFixture : public mongo::unittest::Test {
+class ExtractionFixture : public monger::unittest::Test {
 protected:
     BSONObj doc;
 

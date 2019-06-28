@@ -68,7 +68,7 @@ How to generate a certificate with a custom extension:
 2. Make a copy of the system openssl.cnf and append this text to the file
     On Redhat/Fedora, openssl.cnf is in /etc/pki/tls
 
-See jstests\libs\mongodbauthorizationgrant.cnf for how to generate the text with the
+See jstests\libs\mongerdbauthorizationgrant.cnf for how to generate the text with the
 'openssl asn1parse' command.
 
 [MongoDBAuthorizationGrant]
@@ -82,7 +82,7 @@ Example Commands
 openssl req -config openssl.cnf -newkey rsa:2048 -nodes -keyout roles.key -out roles.csr
 
 Example with subject name:
-openssl req -config openssl.cnf -newkey rsa:2048 -nodes -keyout roles.key -out roles.csr -subj "/C=US/ST=New York/L=New York City/O=MongoDB/OU=KernelUser/CN=client/emailAddress=example@mongodb.com"
+openssl req -config openssl.cnf -newkey rsa:2048 -nodes -keyout roles.key -out roles.csr -subj "/C=US/ST=New York/L=New York City/O=MongoDB/OU=KernelUser/CN=client/emailAddress=example@mongerdb.com"
 
 openssl x509 -req -sha256 -in roles.csr -days 3650 -out roles.pem -extfile openssl.cnf -extensions MongoDBAuthorizationGrant -CA jstests/libs/ca.pem -CAcreateserial
 

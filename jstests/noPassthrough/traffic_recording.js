@@ -108,7 +108,7 @@
     {
         let shardTest = new ShardingTest({
             config: 1,
-            mongos: 1,
+            mongers: 1,
             shards: 0,
         });
 

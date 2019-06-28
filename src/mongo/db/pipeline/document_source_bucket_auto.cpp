@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_bucket_auto.h"
+#include "monger/db/pipeline/document_source_bucket_auto.h"
 
-#include "mongo/db/pipeline/accumulation_statement.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/pipeline/accumulation_statement.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::pair;
@@ -511,7 +511,7 @@ intrusive_ptr<DocumentSource> DocumentSourceBucketAuto::createFromBson(
         pExpCtx, groupByExpression, numBuckets.get(), accumulationStatements, granularityRounder);
 }
 
-}  // namespace mongo
+}  // namespace monger
 
-#include "mongo/db/sorter/sorter.cpp"
+#include "monger/db/sorter/sorter.cpp"
 // Explicit instantiation unneeded since we aren't exposing Sorter outside of this file.

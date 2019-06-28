@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplicationInitialSync
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplicationInitialSync
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include "initial_syncer.h"
 
@@ -37,43 +37,43 @@
 #include <memory>
 #include <utility>
 
-#include "mongo/base/counter.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/fetcher.h"
-#include "mongo/client/remote_command_retry_scheduler.h"
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/databases_cloner.h"
-#include "mongo/db/repl/initial_sync_state.h"
-#include "mongo/db/repl/member_state.h"
-#include "mongo/db/repl/oplog_buffer.h"
-#include "mongo/db/repl/oplog_fetcher.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/repl_server_parameters_gen.h"
-#include "mongo/db/repl/replication_consistency_markers.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/sync_source_selector.h"
-#include "mongo/db/repl/transaction_oplog_application.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/executor/thread_pool_task_executor.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/timer.h"
+#include "monger/base/counter.h"
+#include "monger/base/status.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/fetcher.h"
+#include "monger/client/remote_command_retry_scheduler.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/databases_cloner.h"
+#include "monger/db/repl/initial_sync_state.h"
+#include "monger/db/repl/member_state.h"
+#include "monger/db/repl/oplog_buffer.h"
+#include "monger/db/repl/oplog_fetcher.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/repl_server_parameters_gen.h"
+#include "monger/db/repl/replication_consistency_markers.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/sync_source_selector.h"
+#include "monger/db/repl/transaction_oplog_application.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/executor/task_executor.h"
+#include "monger/executor/thread_pool_task_executor.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 // Failpoint for initial sync
@@ -622,7 +622,7 @@ void InitialSyncer::_chooseSyncSourceCallback(
                  "enabled. Blocking until fail point is disabled.";
         lock.unlock();
         while (MONGO_FAIL_POINT(initialSyncHangBeforeCreatingOplog) && !_isShuttingDown()) {
-            mongo::sleepsecs(1);
+            monger::sleepsecs(1);
         }
         lock.lock();
     }
@@ -703,9 +703,9 @@ Status InitialSyncer::_scheduleGetBeginFetchingOpTime_inlock(
         _syncSource,
         NamespaceString::kSessionTransactionsTableNamespace.db().toString(),
         cmd.obj(),
-        [=](const StatusWith<mongo::Fetcher::QueryResponse>& response,
-            mongo::Fetcher::NextAction*,
-            mongo::BSONObjBuilder*) mutable {
+        [=](const StatusWith<monger::Fetcher::QueryResponse>& response,
+            monger::Fetcher::NextAction*,
+            monger::BSONObjBuilder*) mutable {
             _getBeginFetchingOpTimeCallback(response, onCompletionGuard);
         },
         ReadPreferenceSetting::secondaryPreferredMetadata(),
@@ -779,9 +779,9 @@ void InitialSyncer::_getBeginFetchingOpTimeCallback(
     }
 
     status = _scheduleLastOplogEntryFetcher_inlock(
-        [=](const StatusWith<mongo::Fetcher::QueryResponse>& response,
-            mongo::Fetcher::NextAction*,
-            mongo::BSONObjBuilder*) mutable {
+        [=](const StatusWith<monger::Fetcher::QueryResponse>& response,
+            monger::Fetcher::NextAction*,
+            monger::BSONObjBuilder*) mutable {
             _lastOplogEntryFetcherCallbackForBeginApplyingTimestamp(
                 response, onCompletionGuard, beginFetchingOpTime);
         });
@@ -830,9 +830,9 @@ void InitialSyncer::_lastOplogEntryFetcherCallbackForBeginApplyingTimestamp(
         _syncSource,
         NamespaceString::kServerConfigurationNamespace.db().toString(),
         queryBob.obj(),
-        [=](const StatusWith<mongo::Fetcher::QueryResponse>& response,
-            mongo::Fetcher::NextAction*,
-            mongo::BSONObjBuilder*) mutable {
+        [=](const StatusWith<monger::Fetcher::QueryResponse>& response,
+            monger::Fetcher::NextAction*,
+            monger::BSONObjBuilder*) mutable {
             _fcvFetcherCallback(response, onCompletionGuard, lastOpTime, beginFetchingOpTime);
         },
         ReadPreferenceSetting::secondaryPreferredMetadata(),
@@ -909,7 +909,7 @@ void InitialSyncer::_fcvFetcherCallback(const StatusWith<Fetcher::QueryResponse>
     // - data cloning and applier
     auto listDatabasesFilter = [](BSONObj dbInfo) {
         std::string name;
-        auto status = mongo::bsonExtractStringField(dbInfo, "name", &name);
+        auto status = monger::bsonExtractStringField(dbInfo, "name", &name);
         if (!status.isOK()) {
             error() << "listDatabases filter failed to parse database name from " << redact(dbInfo)
                     << ": " << redact(status);
@@ -1005,7 +1005,7 @@ void InitialSyncer::_fcvFetcherCallback(const StatusWith<Fetcher::QueryResponse>
         log() << "initial sync - initialSyncHangBeforeCopyingDatabases fail point "
                  "enabled. Blocking until fail point is disabled.";
         while (MONGO_FAIL_POINT(initialSyncHangBeforeCopyingDatabases) && !_isShuttingDown()) {
-            mongo::sleepsecs(1);
+            monger::sleepsecs(1);
         }
         lock.lock();
     }
@@ -1077,7 +1077,7 @@ void InitialSyncer::_databasesClonerCallback(const Status& databaseClonerFinishS
         log() << "initial sync - initialSyncHangAfterDataCloning fail point "
                  "enabled. Blocking until fail point is disabled.";
         while (MONGO_FAIL_POINT(initialSyncHangAfterDataCloning) && !_isShuttingDown()) {
-            mongo::sleepsecs(1);
+            monger::sleepsecs(1);
         }
     }
 
@@ -1090,9 +1090,9 @@ void InitialSyncer::_databasesClonerCallback(const Status& databaseClonerFinishS
     }
 
     status = _scheduleLastOplogEntryFetcher_inlock(
-        [=](const StatusWith<mongo::Fetcher::QueryResponse>& status,
-            mongo::Fetcher::NextAction*,
-            mongo::BSONObjBuilder*) {
+        [=](const StatusWith<monger::Fetcher::QueryResponse>& status,
+            monger::Fetcher::NextAction*,
+            monger::BSONObjBuilder*) {
             _lastOplogEntryFetcherCallbackForStopTimestamp(status, onCompletionGuard);
         });
     if (!status.isOK()) {
@@ -1306,9 +1306,9 @@ void InitialSyncer::_multiApplierCallback(const Status& multiApplierStatus,
         _initialSyncState->fetchedMissingDocs += fetchCount;
         _fetchCount.store(0);
         status = _scheduleLastOplogEntryFetcher_inlock(
-            [=](const StatusWith<mongo::Fetcher::QueryResponse>& response,
-                mongo::Fetcher::NextAction*,
-                mongo::BSONObjBuilder*) {
+            [=](const StatusWith<monger::Fetcher::QueryResponse>& response,
+                monger::Fetcher::NextAction*,
+                monger::BSONObjBuilder*) {
                 return _lastOplogEntryFetcherCallbackAfterFetchingMissingDocuments(
                     response, onCompletionGuard);
             });
@@ -1409,7 +1409,7 @@ void InitialSyncer::_finishInitialSyncAttempt(const StatusWith<OpTimeAndWallTime
     auto result = lastApplied;
     auto finishCallbackGuard = makeGuard([this, &result] {
         auto scheduleResult = _exec->scheduleWork(
-            [=](const mongo::executor::TaskExecutor::CallbackArgs&) { _finishCallback(result); });
+            [=](const monger::executor::TaskExecutor::CallbackArgs&) { _finishCallback(result); });
         if (!scheduleResult.isOK()) {
             warning() << "Unable to schedule initial syncer completion task due to "
                       << redact(scheduleResult.getStatus())
@@ -1506,7 +1506,7 @@ void InitialSyncer::_finishCallback(StatusWith<OpTimeAndWallTime> lastApplied) {
         log() << "initial sync - initialSyncHangBeforeFinish fail point "
                  "enabled. Blocking until fail point is disabled.";
         while (MONGO_FAIL_POINT(initialSyncHangBeforeFinish) && !_isShuttingDown()) {
-            mongo::sleepsecs(1);
+            monger::sleepsecs(1);
         }
     }
 
@@ -1834,4 +1834,4 @@ void InitialSyncer::InitialSyncAttemptInfo::append(BSONObjBuilder* builder) cons
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

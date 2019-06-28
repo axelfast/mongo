@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
 #if defined(_WIN32)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/range/size.hpp>
 
-#include "mongo/util/ntservice.h"
+#include "monger/util/ntservice.h"
 
-#include "mongo/stdx/chrono.h"
-#include "mongo/stdx/future.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/options_parser/environment.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/signal_handlers.h"
-#include "mongo/util/text.h"
-#include "mongo/util/winutil.h"
+#include "monger/stdx/chrono.h"
+#include "monger/stdx/future.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/options_parser/environment.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/signal_handlers.h"
+#include "monger/util/text.h"
+#include "monger/util/winutil.h"
 
 using std::string;
 using std::wstring;
 
-namespace mongo {
+namespace monger {
 
 namespace ntservice {
 namespace {
@@ -205,7 +205,7 @@ void configureService(ServiceCallback serviceCallback,
     }
 }
 
-// This implementation assumes that inputArgv was a valid argv to mongod.  That is, it assumes
+// This implementation assumes that inputArgv was a valid argv to mongerd.  That is, it assumes
 // that options that take arguments received them, and options that do not take arguments did
 // not.
 std::vector<std::string> constructServiceArgv(const std::vector<std::string>& inputArgv) {
@@ -385,11 +385,11 @@ void installServiceOrDie(const wstring& serviceName,
 #if 1
     if (!serviceInstalled) {
 #else
-    // This code sets the mongod service to auto-restart, forever. This might be a fine thing to do
-    // except that when mongod or Windows has a crash, the mongo.lock file is still around, so any
+    // This code sets the mongerd service to auto-restart, forever. This might be a fine thing to do
+    // except that when mongerd or Windows has a crash, the monger.lock file is still around, so any
     // attempt at a restart will immediately fail.  With auto-restart, we go into a loop, crashing
     // and restarting, crashing and restarting, until someone comes in and disables the service or
-    // deletes the mongod.lock file.
+    // deletes the mongerd.lock file.
     //
     // I'm leaving the old code here for now in case we solve this and are able to turn
     // SC_ACTION_RESTART
@@ -626,6 +626,6 @@ void startService() {
 }
 
 }  // namspace ntservice
-}  // namespace mongo
+}  // namespace monger
 
 #endif

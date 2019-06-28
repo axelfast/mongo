@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/countdownlatch.h"
+#include "monger/scripting/mozjs/countdownlatch.h"
 
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const char* const CountDownLatchInfo::className = "CountDownLatch";
@@ -195,4 +195,4 @@ void CountDownLatchInfo::postInstall(JSContext* cx,
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

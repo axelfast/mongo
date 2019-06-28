@@ -9,12 +9,12 @@ package driverlegacy
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/session"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/topology"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/uuid"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/session"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/topology"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/uuid"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 // DropDatabase handles the full cycle dispatch and execution of a dropDatabase

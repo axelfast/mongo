@@ -1,10 +1,10 @@
-# Test that all the operations go to the same mongos.
+# Test that all the operations go to the same mongers.
 #
 # In tests that don't include command-started events the assertion is implicit:
 # that all the read operations succeed. If the driver does not properly pin to
-# a single mongos then one of the operations in a transaction will eventually
-# be sent to a different mongos, which is unaware of the transaction, and the
-# mongos will return a command error. An example of such an error is:
+# a single mongers then one of the operations in a transaction will eventually
+# be sent to a different mongers, which is unaware of the transaction, and the
+# mongers will return a command error. An example of such an error is:
 # {
 #   'ok': 0.0,
 #   'errmsg': 'cannot continue txnId -1 for session 28938f50-9d29-4ca5-8de5-ddaf261267c4 - 47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU= with txnId 1',
@@ -376,8 +376,8 @@ tests:
         result:
           errorLabelsContain: ["TransientTransactionError"]
           errorLabelsOmit: ["UnknownTransactionCommitResult"]
-      # Session unpins from the first mongos after the insert error and
-      # abortTransaction succeeds immediately on any mongos.
+      # Session unpins from the first mongers after the insert error and
+      # abortTransaction succeeds immediately on any mongers.
       - name: abortTransaction
         object: session0
 
@@ -435,14 +435,14 @@ tests:
   # the transactions API allows it and this test confirms unpinning behavior.
   # In a sharded cluster, a transient error within a transaction unpins the
   # session. This way a subsequent abort can "succeed" immediately instead of
-  # blocking for serverSelectionTimeoutMS in the case the mongos went down.
+  # blocking for serverSelectionTimeoutMS in the case the mongers went down.
   # However since the abortTransaction helper ignores errors, this test uses
   # commitTransaction to prove the session was unpinned.
   - description: unpin after transient error within a transaction and commit
     useMultipleMongoses: true
     clientOptions:
       # Increase heartbeatFrequencyMS to avoid the race condition where an in
-      # flight heartbeat refreshes the first mongoes' SDAM state in between
+      # flight heartbeat refreshes the first mongeres' SDAM state in between
       # the insert connection error and the single commit attempt.
       heartbeatFrequencyMS: 30000
     operations:
@@ -482,14 +482,14 @@ tests:
         result:
           errorLabelsContain: ["TransientTransactionError"]
           errorLabelsOmit: ["UnknownTransactionCommitResult"]
-      # Session unpins from the first mongos after the insert error and
-      # commitTransaction selects the second mongos which is unaware of the
+      # Session unpins from the first mongers after the insert error and
+      # commitTransaction selects the second mongers which is unaware of the
       # transaction and therefore fails with NoSuchTransaction error. If this
       # commit succeeds it indicates a bug, either:
       # - the driver mistakenly remained pinned even after the insert error, or
-      # - the test client was initialized with a single mongos seed
+      # - the test client was initialized with a single mongers seed
       #
-      # Note that the commit attempt should not select the original mongos
+      # Note that the commit attempt should not select the original mongers
       # because that server's SDAM state is reset by the connection error,
       # heartbeatFrequencyMS is high, and subsequent isMaster heartbeats
       # should fail.

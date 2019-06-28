@@ -23,7 +23,7 @@
      * The expectation is that the metadata salvage will be successful, and that the collection will
      * be recreated with all of its data.
      */
-    let runTest = function(mongodOptions) {
+    let runTest = function(mongerdOptions) {
         // Unfortunately using --nojournal triggers a WT_PANIC and aborts in debug builds, which the
         // following test case can exercise.
         // TODO: This return can be removed once WT-4310 is completed.
@@ -34,25 +34,25 @@
         }
 
         resetDbpath(dbpath);
-        jsTestLog("Running test with args: " + tojson(mongodOptions));
+        jsTestLog("Running test with args: " + tojson(mongerdOptions));
 
         const turtleFile = dbpath + "WiredTiger.turtle";
         const turtleFileWithoutCollection = dbpath + "WiredTiger.turtle.1";
 
-        let mongod = startMongodOnExistingPath(dbpath, mongodOptions);
+        let mongerd = startMongodOnExistingPath(dbpath, mongerdOptions);
 
         // Force a checkpoint and make a copy of the turtle file.
-        assert.commandWorked(mongod.getDB(baseName).adminCommand({fsync: 1}));
+        assert.commandWorked(mongerd.getDB(baseName).adminCommand({fsync: 1}));
         jsTestLog("Making copy of metadata file before creating the collection: " +
                   turtleFileWithoutCollection);
         copyFile(turtleFile, turtleFileWithoutCollection);
 
-        let testColl = mongod.getDB(baseName)[collName];
+        let testColl = mongerd.getDB(baseName)[collName];
         assert.commandWorked(testColl.insert({a: 1}));
 
         // Force another checkpoint before a clean shutdown.
-        assert.commandWorked(mongod.getDB(baseName).adminCommand({fsync: 1}));
-        MongoRunner.stopMongod(mongod);
+        assert.commandWorked(mongerd.getDB(baseName).adminCommand({fsync: 1}));
+        MongoRunner.stopMongod(mongerd);
 
         // Guarantee the turtle files changed between checkpoints.
         assert.neq(md5sumFile(turtleFileWithoutCollection), md5sumFile(turtleFile));
@@ -63,10 +63,10 @@
 
         // This test characterizes the current WiredTiger salvage behaviour, which may be subject to
         // change in the future. See SERVER-41667.
-        assertRepairSucceeds(dbpath, mongod.port, mongodOptions);
+        assertRepairSucceeds(dbpath, mongerd.port, mongerdOptions);
 
-        mongod = startMongodOnExistingPath(dbpath, mongodOptions);
-        testColl = mongod.getDB(baseName)[collName];
+        mongerd = startMongodOnExistingPath(dbpath, mongerdOptions);
+        testColl = mongerd.getDB(baseName)[collName];
 
         // The collection exists despite using an older turtle file because salvage is able to find
         // the table in the WiredTiger.wt file.
@@ -74,11 +74,11 @@
         // We can assert that the data exists because the salvage only took place on the metadata,
         // not the data.
         assert.eq(testColl.find({}).itcount(), 1);
-        MongoRunner.stopMongod(mongod);
+        MongoRunner.stopMongod(mongerd);
 
         // Corrupt the .turtle file in a very specific way such that the log sequence numbers are
         // invalid.
-        if (mongodOptions.hasOwnProperty('journal')) {
+        if (mongerdOptions.hasOwnProperty('journal')) {
             // TODO: This return can be removed once WT-4459 is completed.
             if (_isAddressSanitizerActive()) {
                 jsTestLog("Skipping log file corruption because the address sanitizer is active.");
@@ -95,10 +95,10 @@
             removeFile(turtleFile);
             writeFile(turtleFile, newData, true /* useBinaryMode */);
 
-            assertRepairSucceeds(dbpath, mongod.port, mongodOptions);
+            assertRepairSucceeds(dbpath, mongerd.port, mongerdOptions);
 
-            mongod = startMongodOnExistingPath(dbpath, mongodOptions);
-            testColl = mongod.getDB(baseName)[collName];
+            mongerd = startMongodOnExistingPath(dbpath, mongerdOptions);
+            testColl = mongerd.getDB(baseName)[collName];
 
             // The collection exists despite using a salvaged turtle file because salvage is able to
             // find the table in the WiredTiger.wt file.
@@ -107,7 +107,7 @@
             // We can assert that the data exists because the salvage only took place on the
             // metadata, not the data.
             assert.eq(testColl.find({}).itcount(), 1);
-            MongoRunner.stopMongod(mongod);
+            MongoRunner.stopMongod(mongerd);
         }
     };
 

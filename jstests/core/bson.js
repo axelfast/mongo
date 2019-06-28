@@ -1,5 +1,5 @@
 /**
- * This tests mongo shell functions bsonWoCompare & bsonBinaryEqual.
+ * This tests monger shell functions bsonWoCompare & bsonBinaryEqual.
  */
 
 (function() {

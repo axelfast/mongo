@@ -22,14 +22,14 @@
                              "listCommands should work pre-auth");
     }
 
-    const mongod = MongoRunner.runMongod({auth: ""});
-    runTest(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod({auth: ""});
+    runTest(mongerd);
+    MongoRunner.stopMongod(mongerd);
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     const st = new ShardingTest({
         shards: 1,
-        mongos: 1,
+        mongers: 1,
         config: 1,
         other: {keyFile: 'jstests/libs/key1', shardAsReplicaSet: false}
     });

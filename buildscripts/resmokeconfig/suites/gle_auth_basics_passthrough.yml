@@ -27,7 +27,7 @@ executor:
       readMode: commands
   fixture:
     class: MongoDFixture
-    mongod_options:
+    mongerd_options:
       auth: ''
       keyFile: *keyFile
       set_parameters:

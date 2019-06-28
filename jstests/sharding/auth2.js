@@ -12,9 +12,9 @@
         },
     });
 
-    var mongos = st.s;
-    var adminDB = mongos.getDB('admin');
-    var db = mongos.getDB('test');
+    var mongers = st.s;
+    var adminDB = mongers.getDB('admin');
+    var db = mongers.getDB('test');
 
     adminDB.createUser({user: 'admin', pwd: 'password', roles: jsTest.adminUserRoles});
 
@@ -22,7 +22,7 @@
 
     // Test for SERVER-6549, make sure that repeatedly logging in always passes.
     for (var i = 0; i < 100; i++) {
-        adminDB = new Mongo(mongos.host).getDB('admin');
+        adminDB = new Mongo(mongers.host).getDB('admin');
         assert(adminDB.auth('admin', 'password'), "Auth failed on attempt #: " + i);
     }
 

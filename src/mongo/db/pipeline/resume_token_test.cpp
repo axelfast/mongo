@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/pipeline/resume_token.h"
+#include "monger/db/pipeline/resume_token.h"
 
 #include <algorithm>
 #include <boost/optional/optional_io.hpp>
 #include <random>
 
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -361,4 +361,4 @@ TEST(ResumeToken, StringEncodingSortsCorrectly) {
 }
 
 }  // namspace
-}  // namspace mongo
+}  // namspace monger

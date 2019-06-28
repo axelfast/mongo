@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,35 +27,35 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/index_builds_coordinator.h"
+#include "monger/db/index_builds_coordinator.h"
 
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_build_entry_gen.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index_build_entry_helpers.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/member_state.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/database_sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_build_entry_gen.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index_build_entry_helpers.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/member_state.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/database_sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using namespace indexbuildentryhelpers;
 
@@ -1168,4 +1168,4 @@ std::vector<BSONObj> IndexBuildsCoordinator::_addDefaultsAndFilterExistingIndexe
     return filteredSpecs;
 }
 
-}  // namespace mongo
+}  // namespace monger

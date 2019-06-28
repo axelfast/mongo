@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,19 +35,19 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/data_range.h"
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/data_view.h"
-#include "mongo/base/string_data_comparator_interface.h"
-#include "mongo/bson/bson_comparator_interface_base.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/oid.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/config.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/platform/strnlen.h"
+#include "monger/base/data_range.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/data_view.h"
+#include "monger/base/string_data_comparator_interface.h"
+#include "monger/bson/bson_comparator_interface_base.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/oid.h"
+#include "monger/bson/timestamp.h"
+#include "monger/config.h"
+#include "monger/platform/decimal128.h"
+#include "monger/platform/strnlen.h"
 
-namespace mongo {
+namespace monger {
 class BSONObj;
 class BSONElement;
 class BSONObjBuilder;
@@ -106,13 +106,13 @@ public:
         std::string foo = obj["foo"].String(); // std::exception if not a std::string type or DNE
     */
     std::string String() const {
-        return chk(mongo::String).str();
+        return chk(monger::String).str();
     }
     const StringData checkAndGetStringData() const {
-        return chk(mongo::String).valueStringData();
+        return chk(monger::String).valueStringData();
     }
     Date_t Date() const {
-        return chk(mongo::Date).date();
+        return chk(monger::Date).date();
     }
     double Number() const {
         uassert(13118,
@@ -135,10 +135,10 @@ public:
         return chk(NumberInt)._numberInt();
     }
     bool Bool() const {
-        return chk(mongo::Bool).boolean();
+        return chk(monger::Bool).boolean();
     }
     std::vector<BSONElement> Array() const;  // see implementation for detailed comments
-    mongo::OID OID() const {
+    monger::OID OID() const {
         return chk(jstOID).__oid();
     }
 
@@ -166,7 +166,7 @@ public:
         v = Bool();
     }
     void Val(BSONObj& v) const;
-    void Val(mongo::OID& v) const {
+    void Val(monger::OID& v) const {
         v = OID();
     }
     void Val(int& v) const {
@@ -288,7 +288,7 @@ public:
     }
 
     bool isBoolean() const {
-        return type() == mongo::Bool;
+        return type() == monger::Bool;
     }
 
     /** @return value of a boolean element.
@@ -405,7 +405,7 @@ public:
 
     /** Retrieve the object ID stored in the object.
         You must ensure the element is of type jstOID first. */
-    mongo::OID __oid() const {
+    monger::OID __oid() const {
         return OID::from(value());
     }
 
@@ -415,7 +415,7 @@ public:
     }
 
     /** Size of a BSON String element.
-        Requires that type() == mongo::String.
+        Requires that type() == monger::String.
         @return String size including its null-termination.
     */
     int valuestrsize() const {
@@ -434,13 +434,13 @@ public:
         return value() + 4;
     }
 
-    /** Like valuestr, but returns a valid empty string if `type() != mongo::String`. */
+    /** Like valuestr, but returns a valid empty string if `type() != monger::String`. */
     const char* valuestrsafe() const {
-        return type() == mongo::String ? valuestr() : "";
+        return type() == monger::String ? valuestr() : "";
     }
     /** Like valuestrsafe, but returns StringData. */
     StringData valueStringDataSafe() const {
-        return type() == mongo::String ? StringData(valuestr(), valuestrsize() - 1) : StringData();
+        return type() == monger::String ? StringData(valuestr(), valuestrsize() - 1) : StringData();
     }
     /** Like valuestrsafe, but returns std::string. */
     std::string str() const {
@@ -621,7 +621,7 @@ public:
     bool mayEncapsulate() const {
         switch (type()) {
             case Object:
-            case mongo::Array:
+            case monger::Array:
             case CodeWScope:
                 return true;
             default:
@@ -633,7 +633,7 @@ public:
     bool isABSONObj() const {
         switch (type()) {
             case Object:
-            case mongo::Array:
+            case monger::Array:
                 return true;
             default:
                 return false;
@@ -641,7 +641,7 @@ public:
     }
 
     Timestamp timestamp() const {
-        if (type() == mongo::Date || type() == bsonTimestamp) {
+        if (type() == monger::Date || type() == bsonTimestamp) {
             return Timestamp(ConstDataView(value()).read<LittleEndian<unsigned long long>>().value);
         }
         return Timestamp();
@@ -695,11 +695,11 @@ public:
         return value() + 4;
     }
 
-    const mongo::OID dbrefOID() const {
+    const monger::OID dbrefOID() const {
         uassert(10064, "not a dbref", type() == DBRef);
         const char* start = value();
         start += 4 + ConstDataView(start).read<LittleEndian<int>>();
-        return mongo::OID::from(start);
+        return monger::OID::from(start);
     }
 
     // @param maxLen don't scan more than maxLen bytes
@@ -793,7 +793,7 @@ inline bool BSONElement::trueValue() const {
             return _numberDecimal().isNotEqual(Decimal128(0));
         case NumberInt:
             return _numberInt() != 0;
-        case mongo::Bool:
+        case monger::Bool:
             return boolean();
         case EOO:
         case jstNULL:

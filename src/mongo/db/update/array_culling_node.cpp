@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/array_culling_node.h"
+#include "monger/db/update/array_culling_node.h"
 
-namespace mongo {
+namespace monger {
 
 ModifierNode::ModifyResult ArrayCullingNode::updateExistingElement(
     mutablebson::Element* element, std::shared_ptr<FieldRef> elementPath) const {
     invariant(element->ok());
     uassert(ErrorCodes::BadValue,
             "Cannot apply $pull to a non-array value",
-            element->getType() == mongo::Array);
+            element->getType() == monger::Array);
 
     size_t numRemoved = 0;
     auto cursor = element->leftChild();
@@ -67,4 +67,4 @@ void ArrayCullingNode::validateUpdate(mutablebson::ConstElement updatedElement,
     // override validateUpdate to do nothing.
 }
 
-}  // namespace mongo
+}  // namespace monger

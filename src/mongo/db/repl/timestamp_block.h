@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/operation_context.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/operation_context.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * TimestampBlock is an raii type that sets a commit timestamp on the RecoveryUnit at construction
@@ -52,4 +52,4 @@ private:
     Timestamp _ts;
 };
 
-}  // namespace mongo
+}  // namespace monger

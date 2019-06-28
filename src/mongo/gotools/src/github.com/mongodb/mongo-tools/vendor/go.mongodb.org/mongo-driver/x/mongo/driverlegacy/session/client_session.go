@@ -4,18 +4,18 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package session // import "go.mongodb.org/mongo-driver/x/mongo/driverlegacy/session"
+package session // import "go.mongerdb.org/monger-driver/x/monger/driverlegacy/session"
 
 import (
 	"errors"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/uuid"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/uuid"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 // ErrSessionEnded is returned when a client session is used after a call to endSession().
@@ -356,7 +356,7 @@ func (c *Client) ApplyCommand(desc description.Server) {
 	}
 	if c.state == Starting {
 		c.state = InProgress
-		// If this is in a transaction and the server is a mongos, pin it
+		// If this is in a transaction and the server is a mongers, pin it
 		if desc.Kind == description.Mongos {
 			c.PinnedServer = &desc
 		}

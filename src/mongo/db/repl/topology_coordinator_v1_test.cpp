@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 
-#include "mongo/bson/json.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/repl/heartbeat_response_action.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/repl_set_heartbeat_response.h"
-#include "mongo/db/repl/repl_set_request_votes_args.h"
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/logger/logger.h"
-#include "mongo/rpc/metadata/oplog_query_metadata.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/time_support.h"
+#include "monger/bson/json.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/repl/heartbeat_response_action.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/repl_set_heartbeat_response.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/db/server_options.h"
+#include "monger/executor/task_executor.h"
+#include "monger/logger/logger.h"
+#include "monger/rpc/metadata/oplog_query_metadata.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/time_support.h"
 
 #define ASSERT_NO_ACTION(EXPRESSION) \
-    ASSERT_EQUALS(mongo::repl::HeartbeatResponseAction::NoAction, (EXPRESSION))
+    ASSERT_EQUALS(monger::repl::HeartbeatResponseAction::NoAction, (EXPRESSION))
 
 using std::unique_ptr;
-using mongo::rpc::ReplSetMetadata;
-using mongo::rpc::OplogQueryMetadata;
+using monger::rpc::ReplSetMetadata;
+using monger::rpc::OplogQueryMetadata;
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -71,7 +71,7 @@ bool stringContains(const std::string& haystack, const std::string& needle) {
     return haystack.find(needle) != std::string::npos;
 }
 
-class TopoCoordTest : public mongo::unittest::Test {
+class TopoCoordTest : public monger::unittest::Test {
 public:
     virtual void setUp() {
         _options = TopologyCoordinator::Options{};
@@ -1888,7 +1888,7 @@ TEST_F(TopoCoordTest, ReplSetGetStatusIPs) {
         return elem.isNull() ? "null" : elem.String();
     };
 
-    // We can't rely on any hostname like mongodb.org that requires DNS from the CI machine, test
+    // We can't rely on any hostname like mongerdb.org that requires DNS from the CI machine, test
     // localhost and IP literals.
     enableIPv6(false);
     ASSERT_EQUALS("127.0.0.1", testIP("localhost:1234"));
@@ -6407,4 +6407,4 @@ TEST_F(HeartbeatResponseHighVerbosityTestV1,
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

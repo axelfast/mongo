@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/initialize_server_global_state.h"
-#include "mongo/db/initialize_server_global_state_gen.h"
+#include "monger/db/initialize_server_global_state.h"
+#include "monger/db/initialize_server_global_state_gen.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <iostream>
@@ -45,24 +45,24 @@
 #include <syslog.h>
 #endif
 
-#include "mongo/base/init.h"
-#include "mongo/config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/logger/console_appender.h"
-#include "mongo/logger/logger.h"
-#include "mongo/logger/message_event.h"
-#include "mongo/logger/message_event_utf8_encoder.h"
-#include "mongo/logger/ramlog.h"
-#include "mongo/logger/rotatable_file_appender.h"
-#include "mongo/logger/rotatable_file_manager.h"
-#include "mongo/logger/rotatable_file_writer.h"
-#include "mongo/logger/syslog_appender.h"
-#include "mongo/platform/process_id.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/signal_handlers_synchronous.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/config.h"
+#include "monger/db/server_options.h"
+#include "monger/logger/console_appender.h"
+#include "monger/logger/logger.h"
+#include "monger/logger/message_event.h"
+#include "monger/logger/message_event_utf8_encoder.h"
+#include "monger/logger/ramlog.h"
+#include "monger/logger/rotatable_file_appender.h"
+#include "monger/logger/rotatable_file_manager.h"
+#include "monger/logger/rotatable_file_writer.h"
+#include "monger/logger/syslog_appender.h"
+#include "monger/platform/process_id.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/signal_handlers_synchronous.h"
+#include "monger/util/str.h"
 
 #if defined(__APPLE__)
 #include <TargetConditionals.h>
@@ -70,7 +70,7 @@
 
 namespace fs = boost::filesystem;
 
-namespace mongo {
+namespace monger {
 
 using std::cerr;
 using std::cout;
@@ -327,7 +327,7 @@ MONGO_INITIALIZER_GENERAL(
  * case, to avoid static-destructor problems in the server, this exits the
  * process immediately with code EXIT_FAILURE.
  *
- * TODO: Remove once exit() executes safely in mongo server processes.
+ * TODO: Remove once exit() executes safely in monger server processes.
  */
 static void shortCircuitExit() {
     quickExit(EXIT_FAILURE);
@@ -378,4 +378,4 @@ bool initializeServerGlobalState(ServiceContext* service, PidFileWrite pidWrite)
     return true;
 }
 
-}  // namespace mongo
+}  // namespace monger

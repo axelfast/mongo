@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,15 +34,15 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/lru_cache.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/lru_cache.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 /**
  * This class implements an LRU cache that stores Key -> std::unique_ptr<Value> and will return
  * std::shared_ptr<Value> for a given Key. The returned shared_ptr will be returned to the cache
@@ -362,4 +362,4 @@ private:
     Invalidator _invalidator;
 };
 
-}  // namespace mongo
+}  // namespace monger

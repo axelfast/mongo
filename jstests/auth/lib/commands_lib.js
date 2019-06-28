@@ -214,7 +214,7 @@ var authCommandsLib = {
                   configsvrConnectionString: "foobarbaz/host:20022,host:20023,host:20024"
               }
           },
-          skipSharded: true,  // Command doesn't exist on mongos
+          skipSharded: true,  // Command doesn't exist on mongers
           testcases: [
               {
                 runOnDb: adminDbName,
@@ -4112,7 +4112,7 @@ var authCommandsLib = {
         {
           testname: "fsyncUnlock",
           command: {fsyncUnlock: 1},
-          skipSharded: true,  // TODO: remove when fsyncUnlock is implemented in mongos
+          skipSharded: true,  // TODO: remove when fsyncUnlock is implemented in mongers
           testcases: [
               {
                 runOnDb: adminDbName,
@@ -4165,7 +4165,7 @@ var authCommandsLib = {
         {
           testname: "getDatabaseVersion",
           command: {getDatabaseVersion: "test"},
-          skipSharded: true,  // only available on mongod
+          skipSharded: true,  // only available on mongerd
           testcases: [
               {
                 runOnDb: adminDbName,
@@ -4192,7 +4192,7 @@ var authCommandsLib = {
                     {
                       resource: {cluster: true},
                       actions: ["connPoolStats"]
-                    },  // Only needed against mongos
+                    },  // Only needed against mongers
                 ]
               },
               {runOnDb: firstDbName, roles: {}},
@@ -5134,7 +5134,7 @@ var authCommandsLib = {
           ]
         },
         {
-          testname: "profile_mongos",
+          testname: "profile_mongers",
           command: {profile: 0, slowms: 10, sampleRate: 0.5},
           skipUnlessSharded: true,
           testcases: [
@@ -5151,7 +5151,7 @@ var authCommandsLib = {
           ]
         },
         {
-          testname: "profileGetLevel_mongos",
+          testname: "profileGetLevel_mongers",
           command: {profile: -1},
           skipUnlessSharded: true,
           testcases: [
@@ -6001,7 +6001,7 @@ var authCommandsLib = {
           ],
           setup: function(db) {
               // Configure the $searchBeta stage to always return EOF so we can avoid the hassle
-              // of giving mongod a host and port for mongot.
+              // of giving mongerd a host and port for mongert.
               const cmd = {configureFailPoint: "searchBetaReturnEofImmediately", mode: "alwaysOn"};
               FixtureHelpers.runCommandOnEachPrimary({db: db.getSiblingDB("admin"), cmdObj: cmd});
           },
@@ -6037,7 +6037,7 @@ var authCommandsLib = {
     /************* SHARED TEST LOGIC ****************/
 
     /**
-     * Returns true if conn is a connection to mongos,
+     * Returns true if conn is a connection to mongers,
      * and false otherwise.
      */
     isMongos: function(conn) {
@@ -6050,7 +6050,7 @@ var authCommandsLib = {
      * The actual implementation must be provided in "impls".
      *
      * Parameters:
-     *   conn -- a connection to either mongod or mongos
+     *   conn -- a connection to either mongerd or mongers
      *   t -- a single test object from the tests array above
      *
      * Returns:

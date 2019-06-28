@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iterator>
 
-#include "mongo/client/connection_pool.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/client/dbclient_mockcursor.h"
-#include "mongo/db/client.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/oplog_interface_mock.h"
-#include "mongo/db/repl/oplog_interface_remote.h"
-#include "mongo/db/repl/roll_back_local_operations.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/connection_pool.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/client/dbclient_mockcursor.h"
+#include "monger/db/client.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/oplog_interface_mock.h"
+#include "monger/db/repl/oplog_interface_remote.h"
+#include "monger/db/repl/roll_back_local_operations.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 
 BSONObj makeOp(long long seconds, long long term = 1LL) {
     auto uuid = unittest::assertGet(UUID::parse("b4c66a44-c1ca-4d86-8d25-12e82fa2de5b"));

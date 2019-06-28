@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 
 #include <set>
 
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/storage/index_entry_comparison.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/db/storage/mobile/mobile_sqlite_statement.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/platform/basic.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/storage/index_entry_comparison.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/db/storage/mobile/mobile_sqlite_statement.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/platform/basic.h"
 
-namespace mongo {
+namespace monger {
 
 class MobileIndex : public SortedDataInterface {
 public:
@@ -190,4 +190,4 @@ protected:
 
     const bool _isPartial = false;
 };
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/sessions_collection_standalone.h"
+#include "monger/db/sessions_collection_standalone.h"
 
-#include "mongo/client/query.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/rpc/get_status_from_command_result.h"
+#include "monger/client/query.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/operation_context.h"
+#include "monger/rpc/get_status_from_command_result.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -123,4 +123,4 @@ StatusWith<LogicalSessionIdSet> SessionsCollectionStandalone::findRemovedSession
                          makeFindFnForCommand(NamespaceString::kLogicalSessionsNamespace, &client));
 }
 
-}  // namespace mongo
+}  // namespace monger

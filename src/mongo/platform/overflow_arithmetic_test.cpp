@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <limits>
 
-#include "mongo/platform/overflow_arithmetic.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/platform/overflow_arithmetic.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 
@@ -49,34 +49,34 @@ namespace {
     } while (false)
 
 #define assertSignedMultiplyNoOverflow(LHS, RHS, EXPECTED) \
-    assertArithOverflow(int64_t, mongoSignedMultiplyOverflow64, LHS, RHS, false, EXPECTED)
+    assertArithOverflow(int64_t, mongerSignedMultiplyOverflow64, LHS, RHS, false, EXPECTED)
 #define assertSignedMultiplyWithOverflow(LHS, RHS) \
-    assertArithOverflow(int64_t, mongoSignedMultiplyOverflow64, LHS, RHS, true, 0)
+    assertArithOverflow(int64_t, mongerSignedMultiplyOverflow64, LHS, RHS, true, 0)
 
 #define assertUnsignedMultiplyNoOverflow(LHS, RHS, EXPECTED) \
-    assertArithOverflow(uint64_t, mongoUnsignedMultiplyOverflow64, LHS, RHS, false, EXPECTED)
+    assertArithOverflow(uint64_t, mongerUnsignedMultiplyOverflow64, LHS, RHS, false, EXPECTED)
 #define assertUnsignedMultiplyWithOverflow(LHS, RHS) \
-    assertArithOverflow(uint64_t, mongoUnsignedMultiplyOverflow64, LHS, RHS, true, 0)
+    assertArithOverflow(uint64_t, mongerUnsignedMultiplyOverflow64, LHS, RHS, true, 0)
 
 #define assertSignedAddNoOverflow(LHS, RHS, EXPECTED) \
-    assertArithOverflow(int64_t, mongoSignedAddOverflow64, LHS, RHS, false, EXPECTED)
+    assertArithOverflow(int64_t, mongerSignedAddOverflow64, LHS, RHS, false, EXPECTED)
 #define assertSignedAddWithOverflow(LHS, RHS) \
-    assertArithOverflow(int64_t, mongoSignedAddOverflow64, LHS, RHS, true, 0)
+    assertArithOverflow(int64_t, mongerSignedAddOverflow64, LHS, RHS, true, 0)
 
 #define assertUnsignedAddNoOverflow(LHS, RHS, EXPECTED) \
-    assertArithOverflow(uint64_t, mongoUnsignedAddOverflow64, LHS, RHS, false, EXPECTED)
+    assertArithOverflow(uint64_t, mongerUnsignedAddOverflow64, LHS, RHS, false, EXPECTED)
 #define assertUnsignedAddWithOverflow(LHS, RHS) \
-    assertArithOverflow(uint64_t, mongoUnsignedAddOverflow64, LHS, RHS, true, 0)
+    assertArithOverflow(uint64_t, mongerUnsignedAddOverflow64, LHS, RHS, true, 0)
 
 #define assertSignedSubtractNoOverflow(LHS, RHS, EXPECTED) \
-    assertArithOverflow(int64_t, mongoSignedSubtractOverflow64, LHS, RHS, false, EXPECTED)
+    assertArithOverflow(int64_t, mongerSignedSubtractOverflow64, LHS, RHS, false, EXPECTED)
 #define assertSignedSubtractWithOverflow(LHS, RHS) \
-    assertArithOverflow(int64_t, mongoSignedSubtractOverflow64, LHS, RHS, true, 0)
+    assertArithOverflow(int64_t, mongerSignedSubtractOverflow64, LHS, RHS, true, 0)
 
 #define assertUnsignedSubtractNoOverflow(LHS, RHS, EXPECTED) \
-    assertArithOverflow(uint64_t, mongoUnsignedSubtractOverflow64, LHS, RHS, false, EXPECTED)
+    assertArithOverflow(uint64_t, mongerUnsignedSubtractOverflow64, LHS, RHS, false, EXPECTED)
 #define assertUnsignedSubtractWithOverflow(LHS, RHS) \
-    assertArithOverflow(uint64_t, mongoUnsignedSubtractOverflow64, LHS, RHS, true, 0)
+    assertArithOverflow(uint64_t, mongerUnsignedSubtractOverflow64, LHS, RHS, true, 0)
 
 TEST(OverflowArithmetic, SignedMultiplicationTests) {
     using limits = std::numeric_limits<int64_t>;
@@ -181,4 +181,4 @@ TEST(OverflowArithmetic, UnsignedSubtractionTests) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

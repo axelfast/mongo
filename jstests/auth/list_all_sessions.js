@@ -9,10 +9,10 @@
     // implicit sessions.
     TestData.disableImplicitSessions = true;
 
-    function runListAllSessionsTest(mongod) {
-        assert(mongod);
-        const admin = mongod.getDB("admin");
-        const config = mongod.getDB("config");
+    function runListAllSessionsTest(mongerd) {
+        assert(mongerd);
+        const admin = mongerd.getDB("admin");
+        const config = mongerd.getDB("config");
 
         const pipeline = [{'$listSessions': {allUsers: true}}];
         function listSessions() {
@@ -52,12 +52,12 @@
         assertErrorCode(admin.system.collections, pipeline, ErrorCodes.InvalidNamespace);
     }
 
-    const mongod = MongoRunner.runMongod({auth: ""});
-    runListAllSessionsTest(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod({auth: ""});
+    runListAllSessionsTest(mongerd);
+    MongoRunner.stopMongod(mongerd);
 
     const st =
-        new ShardingTest({shards: 1, mongos: 1, config: 1, other: {keyFile: 'jstests/libs/key1'}});
+        new ShardingTest({shards: 1, mongers: 1, config: 1, other: {keyFile: 'jstests/libs/key1'}});
 
     // Ensure that the sessions collection exists.
     st.c0.getDB("admin").runCommand({refreshLogicalSessionCacheNow: 1});

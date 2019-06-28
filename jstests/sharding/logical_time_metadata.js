@@ -1,5 +1,5 @@
 /**
- * Basic test that checks that mongos includes the cluster time metatadata in it's response.
+ * Basic test that checks that mongers includes the cluster time metatadata in it's response.
  * This does not test cluster time propagation via the shell as there are many back channels
  * where the cluster time metadata can propagated, making it inherently racy.
  */

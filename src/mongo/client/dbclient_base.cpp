@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,47 +31,47 @@
  * Connect to a Mongo database as a database, from C++.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_base.h"
+#include "monger/client/dbclient_base.h"
 
 #include <algorithm>
 #include <utility>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/authenticate.h"
-#include "mongo/client/constants.h"
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/config.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/killcursors_request.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/metadata.h"
-#include "mongo/rpc/metadata/client_metadata.h"
-#include "mongo/rpc/reply_interface.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/password_digest.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/authenticate.h"
+#include "monger/client/constants.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/config.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/commands.h"
+#include "monger/db/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/killcursors_request.h"
+#include "monger/db/wire_version.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/metadata.h"
+#include "monger/rpc/metadata/client_metadata.h"
+#include "monger/rpc/reply_interface.h"
+#include "monger/s/stale_exception.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/log.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/password_digest.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::endl;
@@ -158,8 +158,8 @@ rpc::UniqueReply DBClientBase::parseCommandReplyMessage(const std::string& host,
 
     // StaleConfig is thrown because clients acting as routers handle the exception at a higher
     // level. Routing clients only expect StaleConfig from shards, so the exception should not be
-    // thrown when connected to a mongos, which allows StaleConfig to be returned to clients that
-    // connect to a mongos with DBClient, e.g. the shell.
+    // thrown when connected to a mongers, which allows StaleConfig to be returned to clients that
+    // connect to a mongers with DBClient, e.g. the shell.
     if (!isMongos()) {
         auto status = getStatusFromCommandResult(commandReply->getCommandReply());
         if (status == ErrorCodes::StaleConfig) {
@@ -407,7 +407,7 @@ string DBClientBase::getLastErrorString(const BSONObj& info) {
 }
 
 string DBClientBase::createPasswordDigest(const string& username, const string& clearTextPassword) {
-    return mongo::createPasswordDigest(username, clearTextPassword);
+    return monger::createPasswordDigest(username, clearTextPassword);
 }
 
 namespace {
@@ -949,4 +949,4 @@ string nsGetCollection(const string& ns) {
 }
 
 
-}  // namespace mongo
+}  // namespace monger

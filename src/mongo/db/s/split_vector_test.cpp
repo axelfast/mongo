@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/s/split_vector.h"
-#include "mongo/s/shard_server_test_fixture.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/s/split_vector.h"
+#include "monger/s/shard_server_test_fixture.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const NamespaceString kNss = NamespaceString("foo", "bar");
@@ -348,4 +348,4 @@ TEST_F(SplitVectorJumboTest, JumboChunk) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

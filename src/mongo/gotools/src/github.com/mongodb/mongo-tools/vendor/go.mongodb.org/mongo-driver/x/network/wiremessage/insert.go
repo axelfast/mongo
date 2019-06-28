@@ -6,7 +6,7 @@
 
 package wiremessage
 
-import "go.mongodb.org/mongo-driver/bson"
+import "go.mongerdb.org/monger-driver/bson"
 
 // Insert represents the OP_INSERT message of the MongoDB wire protocol.
 type Insert struct {

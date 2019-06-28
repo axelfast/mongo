@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <functional>
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/matcher/match_details.h"
-#include "mongo/db/matcher/matchable.h"
-#include "mongo/db/pipeline/dependencies.h"
-#include "mongo/util/fail_point_service.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/matcher/match_details.h"
+#include "monger/db/matcher/matchable.h"
+#include "monger/db/pipeline/dependencies.h"
+#include "monger/util/fail_point_service.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Enabling the disableMatchExpressionOptimization fail point will stop match expressions from

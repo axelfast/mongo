@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,62 +27,62 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/sync_tail.h"
+#include "monger/db/repl/sync_tail.h"
 
 #include "third_party/murmurhash3/MurmurHash3.h"
 #include <boost/functional/hash.hpp>
 #include <memory>
 
-#include "mongo/base/counter.h"
-#include "mongo/bson/bsonelement_comparator.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/fsync.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/lock_state.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/multi_key_path_tracker.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/repl/applier_helpers.h"
-#include "mongo/db/repl/apply_ops.h"
-#include "mongo/db/repl/bgsync.h"
-#include "mongo/db/repl/initial_syncer.h"
-#include "mongo/db/repl/multiapplier.h"
-#include "mongo/db/repl/oplogreader.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/transaction_oplog_application.h"
-#include "mongo/db/session.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/stats/timer_stats.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/transaction_participant_gen.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_exception.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/base/counter.h"
+#include "monger/bson/bsonelement_comparator.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/fsync.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/lock_state.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/multi_key_path_tracker.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/repl/applier_helpers.h"
+#include "monger/db/repl/apply_ops.h"
+#include "monger/db/repl/bgsync.h"
+#include "monger/db/repl/initial_syncer.h"
+#include "monger/db/repl/multiapplier.h"
+#include "monger/db/repl/oplogreader.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/transaction_oplog_application.h"
+#include "monger/db/session.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/stats/timer_stats.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/transaction_participant_gen.h"
+#include "monger/util/exit.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_exception.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -870,7 +870,7 @@ BSONObj SyncTail::getMissingDoc(OperationContext* opCtx, const OplogEntry& oplog
         log() << "initial sync - initialSyncHangBeforeGettingMissingDocument fail point enabled. "
                  "Blocking until fail point is disabled.";
         while (MONGO_FAIL_POINT(initialSyncHangBeforeGettingMissingDocument)) {
-            mongo::sleepsecs(1);
+            monger::sleepsecs(1);
         }
     }
 
@@ -1437,4 +1437,4 @@ StatusWith<OpTime> SyncTail::multiApply(OperationContext* opCtx,
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

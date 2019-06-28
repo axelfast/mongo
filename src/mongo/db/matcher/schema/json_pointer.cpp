@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/matcher/schema/json_pointer.h"
+#include "monger/db/matcher/schema/json_pointer.h"
 
-#include "mongo/bson/bsontypes.h"
-#include "mongo/util/assert_util.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/util/assert_util.h"
 
 namespace {
 
@@ -63,7 +63,7 @@ std::string replaceEscapeChars(std::string str) {
 }
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 JSONPointer::JSONPointer(std::string ptr) {
     // Check if pointer specifies root.
@@ -114,4 +114,4 @@ BSONElement JSONPointer::evaluate(const BSONObj& obj) const {
     return BSONElement();
 }
 
-}  // namespace mongo
+}  // namespace monger

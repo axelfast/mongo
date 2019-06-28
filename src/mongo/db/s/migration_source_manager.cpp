@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,47 +27,47 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/migration_source_manager.h"
+#include "monger/db/s/migration_source_manager.h"
 
 #include <memory>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/read_concern.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/migration_chunk_cloner_source_legacy.h"
-#include "mongo/db/s/migration_util.h"
-#include "mongo/db/s/shard_filtering_metadata_refresh.h"
-#include "mongo/db/s/shard_metadata_util.h"
-#include "mongo/db/s/sharding_logging.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/s/sharding_state_recovery.h"
-#include "mongo/db/s/sharding_statistics.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_shard_collection.h"
-#include "mongo/s/catalog_cache_loader.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/commit_chunk_migration_request_type.h"
-#include "mongo/s/request_types/set_shard_version_request.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/elapsed_tracker.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/migration_chunk_cloner_source_legacy.h"
+#include "monger/db/s/migration_util.h"
+#include "monger/db/s/shard_filtering_metadata_refresh.h"
+#include "monger/db/s/shard_metadata_util.h"
+#include "monger/db/s/sharding_logging.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/s/sharding_state_recovery.h"
+#include "monger/db/s/sharding_statistics.h"
+#include "monger/executor/task_executor.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_shard_collection.h"
+#include "monger/s/catalog_cache_loader.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/commit_chunk_migration_request_type.h"
+#include "monger/s/request_types/set_shard_version_request.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/util/duration.h"
+#include "monger/util/elapsed_tracker.h"
+#include "monger/util/exit.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 using namespace shardmetadatautil;
 
@@ -339,7 +339,7 @@ Status MigrationSourceManager::enterCriticalSection(OperationContext* opCtx) {
 
     // Persist a signal to secondaries that we've entered the critical section. This is will cause
     // secondaries to refresh their routing table when next accessed, which will block behind the
-    // critical section. This ensures causal consistency by preventing a stale mongos with a cluster
+    // critical section. This ensures causal consistency by preventing a stale mongers with a cluster
     // time inclusive of the migration config commit update from accessing secondary data.
     // Note: this write must occur after the critSec flag is set, to ensure the secondary refresh
     // will stall behind the flag.
@@ -772,4 +772,4 @@ BSONObj MigrationSourceManager::getMigrationStatusReport() const {
                                                       _args.getMaxKey());
 }
 
-}  // namespace mongo
+}  // namespace monger

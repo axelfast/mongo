@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/mutable/mutable_bson_test_utils.h"
+#include "monger/bson/mutable/mutable_bson_test_utils.h"
 
 #include <algorithm>
 #include <ostream>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/const_element.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/const_element.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace mutablebson {
 
 namespace {
@@ -78,8 +78,8 @@ bool checkDocNoOrderingImpl(ConstElement lhs, ConstElement rhs) {
     const BSONType lhsType = lhs.getType();
     const BSONType rhsType = rhs.getType();
 
-    if (lhsType == mongo::Object) {
-        if (rhsType != mongo::Object)
+    if (lhsType == monger::Object) {
+        if (rhsType != monger::Object)
             return false;
 
         // For objects, sort the children by field name, then compare in that order.
@@ -114,8 +114,8 @@ bool checkDocNoOrderingImpl(ConstElement lhs, ConstElement rhs) {
 
         return true;
 
-    } else if (lhsType == mongo::Array) {
-        if (rhsType != mongo::Array)
+    } else if (lhsType == monger::Array) {
+        if (rhsType != monger::Array)
             return false;
 
         // For arrays, since they are ordered, we don't need the sorting step.
@@ -217,4 +217,4 @@ std::ostream& operator<<(std::ostream& stream, const UnorderedWrapper_Obj& uw_o)
 }
 
 }  // namespace mutablebson
-}  // namespace mongo
+}  // namespace monger

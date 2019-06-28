@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/bson_comparator_interface_base.h"
+#include "monger/bson/bson_comparator_interface_base.h"
 
 #include <boost/functional/hash.hpp>
 
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
 
-namespace mongo {
+namespace monger {
 
 template <typename T>
 void BSONComparatorInterfaceBase<T>::hashCombineBSONObj(
@@ -73,27 +73,27 @@ void BSONComparatorInterfaceBase<T>::hashCombineBSONElement(
     }
 
     switch (elemToHash.type()) {
-        case mongo::EOO:
-        case mongo::Undefined:
-        case mongo::jstNULL:
-        case mongo::MaxKey:
-        case mongo::MinKey:
+        case monger::EOO:
+        case monger::Undefined:
+        case monger::jstNULL:
+        case monger::MaxKey:
+        case monger::MinKey:
             // These are valueless types
             break;
 
-        case mongo::Bool:
+        case monger::Bool:
             boost::hash_combine(hash, elemToHash.boolean());
             break;
 
-        case mongo::bsonTimestamp:
+        case monger::bsonTimestamp:
             boost::hash_combine(hash, elemToHash.timestamp().asULL());
             break;
 
-        case mongo::Date:
+        case monger::Date:
             boost::hash_combine(hash, elemToHash.date().asInt64());
             break;
 
-        case mongo::NumberDecimal: {
+        case monger::NumberDecimal: {
             const Decimal128 dcml = elemToHash.numberDecimal();
             if (dcml.toAbs().isGreater(Decimal128(std::numeric_limits<double>::max(),
                                                   Decimal128::kRoundTo34Digits,
@@ -110,9 +110,9 @@ void BSONComparatorInterfaceBase<T>::hashCombineBSONElement(
             // At this point the decimal fits into the range of doubles, is infinity, or is NaN,
             // which doubles have a cheaper representation for.
         }
-        case mongo::NumberDouble:
-        case mongo::NumberLong:
-        case mongo::NumberInt: {
+        case monger::NumberDouble:
+        case monger::NumberLong:
+        case monger::NumberInt: {
             // This converts all numbers to doubles, which ignores the low-order bits of
             // NumberLongs > 2**53 and precise decimal numbers without double representations,
             // but that is ok since the hash will still be the same for equal numbers and is
@@ -129,11 +129,11 @@ void BSONComparatorInterfaceBase<T>::hashCombineBSONElement(
             break;
         }
 
-        case mongo::jstOID:
+        case monger::jstOID:
             elemToHash.__oid().hash_combine(hash);
             break;
 
-        case mongo::String: {
+        case monger::String: {
             if (stringComparator) {
                 stringComparator->hash_combine(hash, elemToHash.valueStringData());
             } else {
@@ -143,32 +143,32 @@ void BSONComparatorInterfaceBase<T>::hashCombineBSONElement(
             break;
         }
 
-        case mongo::Code:
-        case mongo::Symbol:
+        case monger::Code:
+        case monger::Symbol:
             SimpleStringDataComparator::kInstance.hash_combine(hash, elemToHash.valueStringData());
             break;
 
-        case mongo::Object:
-        case mongo::Array:
+        case monger::Object:
+        case monger::Array:
             hashCombineBSONObj(hash,
                                elemToHash.embeddedObject(),
                                rules | ComparisonRules::kConsiderFieldName,
                                stringComparator);
             break;
 
-        case mongo::DBRef:
-        case mongo::BinData:
+        case monger::DBRef:
+        case monger::BinData:
             // All bytes of the value are required to be identical.
             SimpleStringDataComparator::kInstance.hash_combine(
                 hash, StringData(elemToHash.value(), elemToHash.valuesize()));
             break;
 
-        case mongo::RegEx:
+        case monger::RegEx:
             SimpleStringDataComparator::kInstance.hash_combine(hash, elemToHash.regex());
             SimpleStringDataComparator::kInstance.hash_combine(hash, elemToHash.regexFlags());
             break;
 
-        case mongo::CodeWScope: {
+        case monger::CodeWScope: {
             SimpleStringDataComparator::kInstance.hash_combine(
                 hash, StringData(elemToHash.codeWScopeCode(), elemToHash.codeWScopeCodeLen()));
             hashCombineBSONObj(hash,
@@ -183,4 +183,4 @@ void BSONComparatorInterfaceBase<T>::hashCombineBSONElement(
 template class BSONComparatorInterfaceBase<BSONObj>;
 template class BSONComparatorInterfaceBase<BSONElement>;
 
-}  // namespace mongo
+}  // namespace monger

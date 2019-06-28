@@ -10,11 +10,11 @@ import (
 	"context"
 	"fmt"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"go.mongodb.org/mongo-driver/x/network/result"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/x/network/result"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 // IsMaster represents the isMaster command.

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,9 +36,9 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
+#include "monger/base/status.h"
 
-namespace mongo {
+namespace monger {
 
 class BenchRunConfig;
 
@@ -49,7 +49,7 @@ class Environment;
 
 }  // namespace optionenvironment
 
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 
 struct MongoeBenchGlobalParams {
     std::unique_ptr<BenchRunConfig> preConfig;
@@ -57,7 +57,7 @@ struct MongoeBenchGlobalParams {
     boost::filesystem::path outputFile;
 };
 
-extern MongoeBenchGlobalParams mongoeBenchGlobalParams;
+extern MongoeBenchGlobalParams mongereBenchGlobalParams;
 
 Status addMongoeBenchOptions(moe::OptionSection* options);
 
@@ -73,4 +73,4 @@ bool handlePreValidationMongoeBenchOptions(const moe::Environment& params);
 Status storeMongoeBenchOptions(const moe::Environment& params,
                                const std::vector<std::string>& args);
 
-}  // namespace mongo
+}  // namespace monger

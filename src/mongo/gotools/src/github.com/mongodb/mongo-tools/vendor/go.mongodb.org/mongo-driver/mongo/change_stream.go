@@ -4,24 +4,24 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package monger
 
 import (
 	"context"
 	"errors"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/session"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/session"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 const errorInterrupted int32 = 11601
@@ -139,9 +139,9 @@ func getSession(ctx context.Context, client *Client) (Session, error) {
 		return nil, err
 	}
 
-	var mongoSess Session
+	var mongerSess Session
 	if sess != nil {
-		mongoSess = &sessionImpl{
+		mongerSess = &sessionImpl{
 			Client: sess,
 		}
 	} else {
@@ -151,12 +151,12 @@ func getSession(ctx context.Context, client *Client) (Session, error) {
 			return nil, err
 		}
 
-		mongoSess = &sessionImpl{
+		mongerSess = &sessionImpl{
 			Client: newSess,
 		}
 	}
 
-	return mongoSess, nil
+	return mongerSess, nil
 }
 
 func parseOptions(csType StreamType, opts *options.ChangeStreamOptions, registry *bsoncodec.Registry) (bsonx.Doc,

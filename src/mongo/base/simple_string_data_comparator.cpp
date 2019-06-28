@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/simple_string_data_comparator.h"
+#include "monger/base/simple_string_data_comparator.h"
 
 #include <third_party/murmurhash3/MurmurHash3.h>
 
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/data_view.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/data_view.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -69,4 +69,4 @@ void SimpleStringDataComparator::hash_combine(size_t& seed, StringData stringToH
     seed = murmur3<sizeof(size_t)>(stringToHash, seed);
 }
 
-}  // namespace mongo
+}  // namespace monger

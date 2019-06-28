@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,12 +28,12 @@
  */
 #pragma once
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_array.h"
-#include "mongo/db/matcher/expression_with_placeholder.h"
+#include "monger/base/string_data.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_array.h"
+#include "monger/db/matcher/expression_with_placeholder.h"
 
-namespace mongo {
+namespace monger {
 /**
  * A match expression similar to $elemMatch, but only matches arrays for which every element
  * matches the sub-expression.
@@ -86,4 +86,4 @@ private:
     long long _index;
     std::unique_ptr<ExpressionWithPlaceholder> _expression;
 };
-}  // namespace mongo
+}  // namespace monger

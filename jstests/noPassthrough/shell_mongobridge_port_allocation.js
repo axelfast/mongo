@@ -1,6 +1,6 @@
 /**
- * Tests that the ports assigned to the mongobridge and mongod/mongos processes make it easy to
- * reason about which mongobridge process corresponds to a particular mongod/mongos process in the
+ * Tests that the ports assigned to the mongerbridge and mongerd/mongers processes make it easy to
+ * reason about which mongerbridge process corresponds to a particular mongerd/mongers process in the
  * logs.
  *
  * @tags: [requires_replication, requires_sharding]
@@ -14,15 +14,15 @@
             assert.commandWorked(node.adminCommand({getCmdLineOpts: 1})).parsed.net.port;
         assert.neq(bridgePort,
                    serverPort,
-                   node + " is a connection to " + processType + " rather than to mongobridge");
+                   node + " is a connection to " + processType + " rather than to mongerbridge");
         assert.eq(bridgePort + MongoBridge.kBridgeOffset,
                   serverPort,
-                  "corresponding mongobridge and " + processType +
+                  "corresponding mongerbridge and " + processType +
                       " ports should be staggered by a multiple of 10");
     }
 
     // We use >5 nodes to ensure that allocating twice as many ports doesn't interfere with having
-    // the corresponding mongobridge and mongod ports staggered by a multiple of 10.
+    // the corresponding mongerbridge and mongerd ports staggered by a multiple of 10.
     const rst = new ReplSetTest({nodes: 7, useBridge: true});
     rst.startSet();
 
@@ -36,20 +36,20 @@
     rst.initiate(replSetConfig);
 
     for (let node of rst.nodes) {
-        checkBridgeOffset(node, "mongod");
+        checkBridgeOffset(node, "mongerd");
     }
 
     rst.stopSet();
 
-    // We run ShardingTest under mongobridge with both 1-node replica set shards and stand-alone
-    // mongod shards.
+    // We run ShardingTest under mongerbridge with both 1-node replica set shards and stand-alone
+    // mongerd shards.
     for (let options of[{rs: {nodes: 1}}, {rs: false, shardAsReplicaSet: false}]) {
         resetAllocatedPorts();
 
         const numMongos = 5;
         const numShards = 5;
         const st = new ShardingTest(Object.assign({
-            mongos: numMongos,
+            mongers: numMongos,
             shards: numShards,
             config: {nodes: 1},
             useBridge: true,
@@ -57,7 +57,7 @@
                                                   options));
 
         for (let i = 0; i < numMongos; ++i) {
-            checkBridgeOffset(st["s" + i], "mongos");
+            checkBridgeOffset(st["s" + i], "mongers");
         }
 
         for (let configServer of st.configRS.nodes) {

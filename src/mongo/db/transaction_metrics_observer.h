@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/curop.h"
-#include "mongo/db/server_transactions_metrics.h"
-#include "mongo/db/single_transaction_stats.h"
-#include "mongo/db/stats/top.h"
+#include "monger/db/curop.h"
+#include "monger/db/server_transactions_metrics.h"
+#include "monger/db/single_transaction_stats.h"
+#include "monger/db/stats/top.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Updates transaction metrics (per-transaction metrics and server-wide transactions metrics) upon
@@ -138,4 +138,4 @@ private:
     SingleTransactionStats _singleTransactionStats;
 };
 
-}  // namespace mongo
+}  // namespace monger

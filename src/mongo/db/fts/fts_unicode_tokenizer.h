@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/fts/fts_tokenizer.h"
-#include "mongo/db/fts/stemmer.h"
-#include "mongo/db/fts/tokenizer.h"
-#include "mongo/db/fts/unicode/string.h"
+#include "monger/base/string_data.h"
+#include "monger/db/fts/fts_tokenizer.h"
+#include "monger/db/fts/stemmer.h"
+#include "monger/db/fts/tokenizer.h"
+#include "monger/db/fts/unicode/string.h"
 
-namespace mongo {
+namespace monger {
 namespace fts {
 
 class FTSLanguage;
@@ -47,7 +47,7 @@ class StopWords;
  * Unicode delimiters (see gen_delimiter_list.py)
  * Uses
  * - A list of Unicode delimiters for tokenizing words (see gen_delimiter_list.py).
- * - tolower from mongo::unicode, which supports UTF-8 simple and Turkish case folding
+ * - tolower from monger::unicode, which supports UTF-8 simple and Turkish case folding
  * - Stemmer (ie, Snowball Stemmer) to stem words.
  * - Embeded stop word lists for each language in StopWord class
  *
@@ -90,4 +90,4 @@ private:
 };
 
 }  // namespace fts
-}  // namespace mongo
+}  // namespace monger

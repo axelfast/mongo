@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/transport/message_compressor_manager.h"
+#include "monger/transport/message_compressor_manager.h"
 
-#include "mongo/base/data_range_cursor.h"
-#include "mongo/base/data_type_endian.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/rpc/message.h"
-#include "mongo/transport/message_compressor_registry.h"
-#include "mongo/transport/session.h"
-#include "mongo/util/log.h"
+#include "monger/base/data_range_cursor.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/rpc/message.h"
+#include "monger/transport/message_compressor_registry.h"
+#include "monger/transport/session.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // TODO(JBR): This should be changed so it 's closer to the MSGHEADER View/ConstView classes
@@ -291,4 +291,4 @@ MessageCompressorManager& MessageCompressorManager::forSession(
     return getForSession(session.get());
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -25,7 +25,7 @@ class GennyTestCase(interface.ProcessTestCase):
     def configure(self, fixture, *args, **kwargs):
         """Configure GennyTestCase."""
         interface.ProcessTestCase.configure(self, fixture, *args, **kwargs)
-        self.genny_options["mongo-uri"] = self.fixture.get_driver_connection_url()
+        self.genny_options["monger-uri"] = self.fixture.get_driver_connection_url()
 
         output_directory = "./genny_results"
         output_file = os.path.join(output_directory, self.short_name() + ".csv")

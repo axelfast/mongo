@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/rpc/message.h"
-#include "mongo/rpc/protocol.h"
-#include "mongo/rpc/reply_builder_interface.h"
+#include "monger/base/status.h"
+#include "monger/bson/util/builder.h"
+#include "monger/rpc/message.h"
+#include "monger/rpc/protocol.h"
+#include "monger/rpc/reply_builder_interface.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 class LegacyReplyBuilder : public ReplyBuilderInterface {
@@ -73,4 +73,4 @@ private:
 };
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

@@ -4,21 +4,21 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoimport
+package mongerimport
 
 import (
 	"fmt"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
 )
 
 var Usage = `<options> <file>
 
-Import CSV, TSV or JSON data into MongoDB. If no file is provided, mongoimport reads from stdin.
+Import CSV, TSV or JSON data into MongoDB. If no file is provided, mongerimport reads from stdin.
 
-See http://docs.mongodb.org/manual/reference/program/mongoimport/ for more information.`
+See http://docs.mongerdb.org/manual/reference/program/mongerimport/ for more information.`
 
 // InputOptions defines the set of options for reading input data.
 type InputOptions struct {
@@ -69,8 +69,8 @@ type IngestOptions struct {
 	// Sets the number of insertion routines to use
 	NumInsertionWorkers int `short:"j" value-name:"<number>" long:"numInsertionWorkers" description:"number of insert operations to run concurrently (defaults to 1)" default:"1" default-mask:"-"`
 
-	// Forces mongoimport to halt the import operation at the first insert or upsert error.
-	StopOnError bool `long:"stopOnError" description:"halt after encountering any error during importing. By default, mongoimport will attempt to continue through document validation and DuplicateKey errors, but with this option enabled, the tool will stop instead. A small number of documents may be inserted after encountering an error even with this option enabled; use --maintainInsertionOrder to halt immediately after an error"`
+	// Forces mongerimport to halt the import operation at the first insert or upsert error.
+	StopOnError bool `long:"stopOnError" description:"halt after encountering any error during importing. By default, mongerimport will attempt to continue through document validation and DuplicateKey errors, but with this option enabled, the tool will stop instead. A small number of documents may be inserted after encountering an error even with this option enabled; use --maintainInsertionOrder to halt immediately after an error"`
 
 	// Modify the import process.
 	// Always insert the documents if they are new (do NOT match --upsertFields).
@@ -86,7 +86,7 @@ type IngestOptions struct {
 	UpsertFields string `long:"upsertFields" value-name:"<field>[,<field>]*" description:"comma-separated fields for the query part when --mode is set to upsert or merge"`
 
 	// Sets write concern level for write operations.
-	// By default mongoimport uses a write concern of 'majority'.
+	// By default mongerimport uses a write concern of 'majority'.
 	// Cannot be used simultaneously with write concern options in a URI.
 	WriteConcern string `long:"writeConcern" value-name:"<write-concern-specifier>" default-mask:"-" description:"write concern options e.g. --writeConcern majority, --writeConcern '{w: 3, wtimeout: 500, fsync: true, j: true}'"`
 
@@ -104,7 +104,7 @@ func (_ *IngestOptions) Name() string {
 	return "ingest"
 }
 
-// Options contains all the possible options that can be used to configure mongoimport.
+// Options contains all the possible options that can be used to configure mongerimport.
 type Options struct {
 	*options.ToolOptions
 	*InputOptions
@@ -112,9 +112,9 @@ type Options struct {
 	ParsedArgs []string
 }
 
-// ParseOptions reads command line arguments and converts them into options used to configure mongoimport.
+// ParseOptions reads command line arguments and converts them into options used to configure mongerimport.
 func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, error) {
-	opts := options.New("mongoimport", versionStr, gitCommit, Usage,
+	opts := options.New("mongerimport", versionStr, gitCommit, Usage,
 		options.EnabledOptions{Auth: true, Connection: true, Namespace: true, URI: true})
 	inputOpts := &InputOptions{}
 	ingestOpts := &IngestOptions{}

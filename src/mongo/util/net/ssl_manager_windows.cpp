@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_manager.h"
 
 #include <asio.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -41,29 +41,29 @@
 #include <tuple>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/base/initializer_context.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/private/ssl_expiration.h"
-#include "mongo/util/net/sockaddr.h"
-#include "mongo/util/net/socket_exception.h"
-#include "mongo/util/net/ssl.hpp"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/net/ssl_types.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/init.h"
+#include "monger/base/initializer_context.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/util/builder.h"
+#include "monger/config.h"
+#include "monger/db/server_options.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/net/private/ssl_expiration.h"
+#include "monger/util/net/sockaddr.h"
+#include "monger/util/net/socket_exception.h"
+#include "monger/util/net/ssl.hpp"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/net/ssl_types.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 extern SSLManagerInterface* theSSLManager;
 
@@ -220,7 +220,7 @@ using UniqueCertificateWithPrivateKey = std::tuple<UniqueCertificate, UniqueCryp
 
 
 StatusWith<stdx::unordered_set<RoleName>> parsePeerRoles(PCCERT_CONTEXT cert) {
-    PCERT_EXTENSION extension = CertFindExtension(mongodbRolesOID.identifier.c_str(),
+    PCERT_EXTENSION extension = CertFindExtension(mongerdbRolesOID.identifier.c_str(),
                                                   cert->pCertInfo->cExtension,
                                                   cert->pCertInfo->rgExtension);
 
@@ -1869,4 +1869,4 @@ StatusWith<SSLPeerInfo> SSLManagerWindows::parseAndValidatePeerCertificate(
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

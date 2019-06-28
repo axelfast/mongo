@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/s/namespace_metadata_change_notifications.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/tick_source_mock.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/s/namespace_metadata_change_notifications.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/tick_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const NamespaceString kNss("foo.bar");
@@ -108,4 +108,4 @@ TEST_F(NamespaceMetadataChangeNotificationsTest, MoveConstructionWaitForNotify) 
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

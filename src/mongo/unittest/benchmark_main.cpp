@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <benchmark/benchmark.h>
 
-#include "mongo/base/initializer.h"
-#include "mongo/config.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/log.h"
-#include "mongo/util/signal_handlers_synchronous.h"
+#include "monger/base/initializer.h"
+#include "monger/config.h"
+#include "monger/db/service_context.h"
+#include "monger/util/log.h"
+#include "monger/util/signal_handlers_synchronous.h"
 
 
 int main(int argc, char** argv, char** envp) {
-    ::mongo::clearSignalMask();
-    ::mongo::setupSynchronousSignalHandlers();
+    ::monger::clearSignalMask();
+    ::monger::setupSynchronousSignalHandlers();
 
-    ::mongo::runGlobalInitializersOrDie(argc, argv, envp);
-    ::mongo::setGlobalServiceContext(::mongo::ServiceContext::make());
+    ::monger::runGlobalInitializersOrDie(argc, argv, envp);
+    ::monger::setGlobalServiceContext(::monger::ServiceContext::make());
 
     // Copied from the BENCHMARK_MAIN macro.
     ::benchmark::Initialize(&argc, argv);
@@ -53,7 +53,7 @@ int main(int argc, char** argv, char** envp) {
         return 1;
 
 #ifndef MONGO_CONFIG_OPTIMIZED_BUILD
-    ::mongo::log() << "***WARNING*** MongoDB was built with --opt=off. Function timings may be "
+    ::monger::log() << "***WARNING*** MongoDB was built with --opt=off. Function timings may be "
                       "affected. Always verify any code change against the production environment "
                       "(e.g. --opt=on).";
 #endif

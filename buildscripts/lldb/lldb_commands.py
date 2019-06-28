@@ -6,10 +6,10 @@ def __lldb_init_module(debugger, dict):
     # register custom commands #
     ############################
     debugger.HandleCommand(
-        "command script add -f lldb_commands.PrintGlobalServiceContext mongodb-service-context")
+        "command script add -f lldb_commands.PrintGlobalServiceContext mongerdb-service-context")
     debugger.HandleCommand(
-        "command script add -f lldb_commands.PrintGlobalServiceContext mongodb-dump-locks")
-    debugger.HandleCommand("command alias mongodb-help help")
+        "command script add -f lldb_commands.PrintGlobalServiceContext mongerdb-dump-locks")
+    debugger.HandleCommand("command alias mongerdb-help help")
 
 
 #######################
@@ -26,5 +26,5 @@ def PrintGlobalServiceContext(debugger, *args):
 
 
 def MongoDBDumpLocks(debugger, *args):
-    """Dump locks in the mongod process."""
+    """Dump locks in the mongerd process."""
     debugger.HandleCommand("call globalLockManager.dump()")

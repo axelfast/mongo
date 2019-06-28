@@ -19,7 +19,7 @@ class ExternalFixture(interface.Fixture):
     def get_internal_connection_string(self):
         """Return the internal connection string."""
         # Reconfiguring the external fixture isn't supported so there's no reason to attempt to
-        # parse the mongodb:// connection string the user specified via the command line into the
+        # parse the mongerdb:// connection string the user specified via the command line into the
         # internal format used by the server.
         raise NotImplementedError("ExternalFixture can only be used with a MongoDB connection URI")
 

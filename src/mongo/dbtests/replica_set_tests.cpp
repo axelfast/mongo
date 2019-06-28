@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/last_vote.h"
-#include "mongo/db/repl/replication_consistency_markers_impl.h"
-#include "mongo/db/repl/replication_coordinator_external_state_impl.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/replication_recovery.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/service_context.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/client.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/last_vote.h"
+#include "monger/db/repl/replication_consistency_markers_impl.h"
+#include "monger/db/repl/replication_coordinator_external_state_impl.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/replication_recovery.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/service_context.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 ServiceContext::UniqueOperationContext makeOpCtx() {
     return cc().makeOperationContext();
 }
 
-class ReplicaSetTest : public mongo::unittest::Test {
+class ReplicaSetTest : public monger::unittest::Test {
 protected:
     void setUp() {
         auto opCtx = makeOpCtx();
@@ -164,4 +164,4 @@ TEST_F(ReplicaSetTest, ReplCoordExternalStateDoesNotStoreLastVoteWithEqualTerm) 
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

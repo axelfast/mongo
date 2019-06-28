@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package gridfs // import "go.mongodb.org/mongo-driver/mongo/gridfs"
+package gridfs // import "go.mongerdb.org/monger-driver/monger/gridfs"
 
 import (
 	"bytes"
@@ -16,16 +16,16 @@ import (
 
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/bsontype"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/bsonx/bsoncore"
 )
 
 // TODO: add sessions options
@@ -38,9 +38,9 @@ var ErrFileNotFound = errors.New("file with given parameters not found")
 
 // Bucket represents a GridFS bucket.
 type Bucket struct {
-	db         *mongo.Database
-	chunksColl *mongo.Collection // collection to store file chunks
-	filesColl  *mongo.Collection // collection to store file metadata
+	db         *monger.Database
+	chunksColl *monger.Collection // collection to store file chunks
+	filesColl  *monger.Collection // collection to store file metadata
 
 	name      string
 	chunkSize int32
@@ -63,7 +63,7 @@ type Upload struct {
 }
 
 // NewBucket creates a GridFS bucket.
-func NewBucket(db *mongo.Database, opts ...*options.BucketOptions) (*Bucket, error) {
+func NewBucket(db *monger.Database, opts ...*options.BucketOptions) (*Bucket, error) {
 	b := &Bucket{
 		name:      "fs",
 		chunkSize: DefaultChunkSize,
@@ -256,7 +256,7 @@ func (b *Bucket) Delete(fileID interface{}) error {
 }
 
 // Find returns the files collection documents that match the given filter.
-func (b *Bucket) Find(filter interface{}, opts ...*options.GridFSFindOptions) (*mongo.Cursor, error) {
+func (b *Bucket) Find(filter interface{}, opts ...*options.GridFSFindOptions) (*monger.Cursor, error) {
 	ctx, cancel := deadlineContext(b.readDeadline)
 	if cancel != nil {
 		defer cancel()
@@ -399,7 +399,7 @@ func (b *Bucket) deleteChunks(ctx context.Context, fileID interface{}) error {
 	return err
 }
 
-func (b *Bucket) findFile(ctx context.Context, filter interface{}, opts ...*options.FindOptions) (*mongo.Cursor, error) {
+func (b *Bucket) findFile(ctx context.Context, filter interface{}, opts ...*options.FindOptions) (*monger.Cursor, error) {
 	cursor, err := b.filesColl.Find(ctx, filter, opts...)
 	if err != nil {
 		return nil, err
@@ -413,7 +413,7 @@ func (b *Bucket) findFile(ctx context.Context, filter interface{}, opts ...*opti
 	return cursor, nil
 }
 
-func (b *Bucket) findChunks(ctx context.Context, fileID interface{}) (*mongo.Cursor, error) {
+func (b *Bucket) findChunks(ctx context.Context, fileID interface{}) (*monger.Cursor, error) {
 	id, err := convertFileID(fileID)
 	if err != nil {
 		return nil, err
@@ -429,7 +429,7 @@ func (b *Bucket) findChunks(ctx context.Context, fileID interface{}) (*mongo.Cur
 }
 
 // Create an index if it doesn't already exist
-func createIndexIfNotExists(ctx context.Context, iv mongo.IndexView, model mongo.IndexModel) error {
+func createIndexIfNotExists(ctx context.Context, iv monger.IndexView, model monger.IndexModel) error {
 	c, err := iv.List(ctx)
 	if err != nil {
 		return err
@@ -478,7 +478,7 @@ func (b *Bucket) createIndexes(ctx context.Context) error {
 	docRes := cloned.FindOne(ctx, bsonx.Doc{}, options.FindOne().SetProjection(bsonx.Doc{{"_id", bsonx.Int32(1)}}))
 
 	_, err = docRes.DecodeBytes()
-	if err != mongo.ErrNoDocuments {
+	if err != monger.ErrNoDocuments {
 		// nil, or error that occured during the FindOne operation
 		return err
 	}
@@ -486,14 +486,14 @@ func (b *Bucket) createIndexes(ctx context.Context) error {
 	filesIv := b.filesColl.Indexes()
 	chunksIv := b.chunksColl.Indexes()
 
-	filesModel := mongo.IndexModel{
+	filesModel := monger.IndexModel{
 		Keys: bson.D{
 			{"filename", int32(1)},
 			{"uploadDate", int32(1)},
 		},
 	}
 
-	chunksModel := mongo.IndexModel{
+	chunksModel := monger.IndexModel{
 		Keys: bson.D{
 			{"files_id", int32(1)},
 			{"n", int32(1)},

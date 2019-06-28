@@ -1,6 +1,6 @@
 description: "Member removed by reconfig"
 
-uri: "mongodb://a,b/?replicaSet=rs"
+uri: "mongerdb://a,b/?replicaSet=rs"
 
 phases: [
 

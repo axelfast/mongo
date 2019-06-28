@@ -42,7 +42,7 @@ function runTest(conn) {
     }
 
     /**
-     * Returns true if conn is a connection to mongos,
+     * Returns true if conn is a connection to mongers,
      * and false otherwise.
      */
     function isMongos(db) {
@@ -114,7 +114,7 @@ function runTest(conn) {
             var passed = true;
             try {
                 var opid;
-                if (isMongos(db)) {  // opid format different between mongos and mongod
+                if (isMongos(db)) {  // opid format different between mongers and mongerd
                     opid = "shard0000:1234";
                 } else {
                     opid = 1234;
@@ -133,7 +133,7 @@ function runTest(conn) {
 
     (function testUnlock() {
         if (isMongos(db)) {
-            return;  // unlock doesn't work on mongos
+            return;  // unlock doesn't work on mongers
         }
 
         jsTestLog("Testing unlock");

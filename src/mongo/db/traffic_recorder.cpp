@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/traffic_recorder.h"
-#include "mongo/db/traffic_recorder_gen.h"
+#include "monger/db/traffic_recorder.h"
+#include "monger/db/traffic_recorder_gen.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <fstream>
 
-#include "mongo/base/data_builder.h"
-#include "mongo/base/data_type_terminated.h"
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/commands/server_status.h"
-#include "mongo/db/service_context.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/producer_consumer_queue.h"
-#include "mongo/util/str.h"
+#include "monger/base/data_builder.h"
+#include "monger/base/data_type_terminated.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/db/service_context.h"
+#include "monger/rpc/factory.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/producer_consumer_queue.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -390,4 +390,4 @@ public:
     }
 } trafficRecorderStats;
 
-}  // namespace mongo
+}  // namespace monger

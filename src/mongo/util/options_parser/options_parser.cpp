@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/util/options_parser/options_parser.h"
+#include "monger/util/options_parser/options_parser.h"
 
 #include <algorithm>
 #include <boost/filesystem.hpp>
@@ -50,27 +50,27 @@
 #include <io.h>
 #endif
 
-#include "mongo/base/init.h"
-#include "mongo/base/parse_number.h"
-#include "mongo/base/status.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/http_client.h"
-#include "mongo/util/options_parser/constraints.h"
-#include "mongo/util/options_parser/environment.h"
-#include "mongo/util/options_parser/option_description.h"
-#include "mongo/util/options_parser/option_section.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/shell_exec.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
+#include "monger/base/init.h"
+#include "monger/base/parse_number.h"
+#include "monger/base/status.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/http_client.h"
+#include "monger/util/options_parser/constraints.h"
+#include "monger/util/options_parser/environment.h"
+#include "monger/util/options_parser/option_description.h"
+#include "monger/util/options_parser/option_section.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/shell_exec.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 namespace optionenvironment {
 
 namespace po = boost::program_options;
@@ -577,10 +577,10 @@ std::string runYAMLRestExpansion(StringData url, Seconds timeout) {
 /* Attempts to parse configuration expansion directives from a config block.
  *
  * If a __rest configuration expansion directive is found,
- * mongo::HttpClient will be invoked to fetch the resource via GET request.
+ * monger::HttpClient will be invoked to fetch the resource via GET request.
  *
  * If an __exec configuration expansion directive is found,
- * mongo::shellExec() will be invoked to execute the process.
+ * monger::shellExec() will be invoked to execute the process.
  *
  * See the comment for class ConfigExpandNode for more details.
  */
@@ -1629,7 +1629,7 @@ StatusWith<std::vector<std::string>> transformImplicitOptions(
                     // i.e., it is impossible to have "--option=''" on the command line as some
                     // non-empty string must follow the equal sign.
                     // This specific case is only known to affect "verbose" in the long form in
-                    // mongod and mongos which makes it a breaking change for this one specific
+                    // mongerd and mongers which makes it a breaking change for this one specific
                     // change. Users can get similar behavior by removing both the option and the
                     // original string in this case.
                     if (stringStatus.isOK() && !defaultStr.empty()) {
@@ -1895,4 +1895,4 @@ Status OptionsParser::parseConfigFile(const OptionSection& options,
 }
 
 }  // namespace optionenvironment
-}  // namespace mongo
+}  // namespace monger

@@ -88,12 +88,12 @@
         // particlar case, the entire pipeline is sent to each shard. Lets assume that shard0 has
         // processed its single document with {_id: 3} and raised a DuplicateKey error, whilst
         // shard1 hasn't performed any writes yet (or even hasn't started reading from the cursor).
-        // The mongos, after receiving the DuplicateKey, will stop pulling data from the shards
+        // The mongers, after receiving the DuplicateKey, will stop pulling data from the shards
         // and will kill the cursors open on the remaining shards. Shard1, eventually, will throw
         // a CursorKilled during an interrupt check, and so no writes will be done into the target
         // collection. To workaround this scenario and guarantee that the writes will always be
         // performed, we will sort the documents by _id in ascending order. In this case, the
-        // pipeline will be split and we will pull everything to mongos before doing the $merge.
+        // pipeline will be split and we will pull everything to mongers before doing the $merge.
         // This also ensures that documents with {_id: 1 } and {_id: 2} will be inserted first
         // before the DuplicateKey error is raised.
         const error = assert.throws(() => source.aggregate([

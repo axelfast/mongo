@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/isself.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/repl/isself.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -82,4 +82,4 @@ TEST_F(ServiceContextTest, DetectsSameHostIPv6) {
 }  // namespace
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

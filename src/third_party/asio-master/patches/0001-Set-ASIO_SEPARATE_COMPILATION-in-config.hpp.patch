@@ -1,5 +1,5 @@
 From 24ecbd03f7045da0b1cd6ddf98b11f6198b3c6a9 Mon Sep 17 00:00:00 2001
-From: Spencer Jackson <spencer.jackson@mongodb.com>
+From: Spencer Jackson <spencer.jackson@mongerdb.com>
 Date: Mon, 5 Jun 2017 10:37:25 -0400
 Subject: [PATCH] Set ASIO_SEPARATE_COMPILATION in config.hpp
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <benchmark/benchmark.h>
 
-#include "mongo/util/assert_util.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/time_support.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // This is a trivial test case to sanity check that "benchmark" runs.
@@ -66,7 +66,7 @@ void BM_CpuLoad(benchmark::State& state) {
 }
 
 // This Benchmark is adapted from the `cpuload` command:
-// https://github.com/mongodb/mongo/blob/r3.7.2/src/mongo/db/commands/cpuload.cpp
+// https://github.com/mongerdb/monger/blob/r3.7.2/src/monger/db/commands/cpuload.cpp
 BENCHMARK(BM_CpuLoad)->Threads(1)->ThreadPerCpu();
 
 
@@ -158,4 +158,4 @@ BENCHMARK_REGISTER_F(CacheLatencyTest, BM_CacheLatency)
     ->ThreadRange(1, ProcessInfo::getNumAvailableCores());
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

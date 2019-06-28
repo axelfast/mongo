@@ -61,7 +61,7 @@ a notice will be included in
 [ICU4]: http://site.icu-project.org/download/
 [Intel Decimal FP Library]: https://software.intel.com/en-us/articles/intel-decimal-floating-point-math-library
 [JSON-Schema-Test-Suite]: https://github.com/json-schema-org/JSON-Schema-Test-Suite
-[kms-message]: https://github.com/mongodb-labs/kms-message
+[kms-message]: https://github.com/mongerdb-labs/kms-message
 [libstemmer]: https://github.com/snowballstem/snowball
 [linenoise]: https://github.com/antirez/linenoise
 [MozJS]: https://www.mozilla.org/en-US/security/known-vulnerabilities/firefox-esr
@@ -118,9 +118,9 @@ license notices are included in the `THIRD-PARTY-NOTICES.gotools` file.
 | [gopherjs](https://github.com/gopherjs/gopherjs)                    |
 | [llmgo](https://github.com/10gen/llmgo)                             |
 | [mgo](https://github.com/10gen/mgo)                                 |
-| [mongo-go-driver](https://github.com/mongodb/mongo-go-driver)       |
-| [mongo-lint](https://github.com/3rf/mongo-lint)                     |
-| [mongo-tools-common](https://github.com/mongodb/mongo-tools-common) |
+| [monger-go-driver](https://github.com/mongerdb/monger-go-driver)       |
+| [monger-lint](https://github.com/3rf/monger-lint)                     |
+| [monger-tools-common](https://github.com/mongerdb/monger-tools-common) |
 | [openssl](https://github.com/10gen/openssl)                         |
 | [oglematchers](https://github.com/jacobsa/oglematchers)             |
 | [scram](https://github.com/xdg/scram)                               |

@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package connstring // import "go.mongodb.org/mongo-driver/x/network/connstring"
+package connstring // import "go.mongerdb.org/monger-driver/x/network/connstring"
 
 import (
 	"errors"
@@ -16,9 +16,9 @@ import (
 	"strings"
 	"time"
 
-	"go.mongodb.org/mongo-driver/internal"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/internal"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 // Parse parses the provided uri and returns a URI object.
@@ -31,7 +31,7 @@ func Parse(s string) (ConnString, error) {
 	return p.ConnString, err
 }
 
-// ConnString represents a connection string to mongodb.
+// ConnString represents a connection string to mongerdb.
 type ConnString struct {
 	Original                           string
 	AppName                            string
@@ -118,15 +118,15 @@ func (p *parser) parse(original string) error {
 
 	var err error
 	var isSRV bool
-	if strings.HasPrefix(uri, "mongodb+srv://") {
+	if strings.HasPrefix(uri, "mongerdb+srv://") {
 		isSRV = true
 		// remove the scheme
 		uri = uri[14:]
-	} else if strings.HasPrefix(uri, "mongodb://") {
+	} else if strings.HasPrefix(uri, "mongerdb://") {
 		// remove the scheme
 		uri = uri[10:]
 	} else {
-		return fmt.Errorf("scheme must be \"mongodb\" or \"mongodb+srv\"")
+		return fmt.Errorf("scheme must be \"mongerdb\" or \"mongerdb+srv\"")
 	}
 
 	if idx := strings.Index(uri, "@"); idx != -1 {
@@ -285,19 +285,19 @@ func (p *parser) setDefaultAuthParams(dbName string) error {
 	case "gssapi":
 		if p.AuthMechanismProperties == nil {
 			p.AuthMechanismProperties = map[string]string{
-				"SERVICE_NAME": "mongodb",
+				"SERVICE_NAME": "mongerdb",
 			}
 		} else if v, ok := p.AuthMechanismProperties["SERVICE_NAME"]; !ok || v == "" {
-			p.AuthMechanismProperties["SERVICE_NAME"] = "mongodb"
+			p.AuthMechanismProperties["SERVICE_NAME"] = "mongerdb"
 		}
 		fallthrough
-	case "mongodb-x509":
+	case "mongerdb-x509":
 		if p.AuthSource == "" {
 			p.AuthSource = "$external"
 		} else if p.AuthSource != "$external" {
 			return fmt.Errorf("auth source must be $external")
 		}
-	case "mongodb-cr":
+	case "mongerdb-cr":
 		fallthrough
 	case "scram-sha-1":
 		fallthrough
@@ -323,7 +323,7 @@ func (p *parser) setDefaultAuthParams(dbName string) error {
 
 func (p *parser) validateAuth() error {
 	switch strings.ToLower(p.AuthMechanism) {
-	case "mongodb-cr":
+	case "mongerdb-cr":
 		if p.Username == "" {
 			return fmt.Errorf("username required for MONGO-CR")
 		}
@@ -333,7 +333,7 @@ func (p *parser) validateAuth() error {
 		if p.AuthMechanismProperties != nil {
 			return fmt.Errorf("MONGO-CR cannot have mechanism properties")
 		}
-	case "mongodb-x509":
+	case "mongerdb-x509":
 		if p.Password != "" {
 			return fmt.Errorf("password cannot be specified for MONGO-X509")
 		}
@@ -397,7 +397,7 @@ func fetchSeedlistFromSRV(host string) ([]string, error) {
 		return nil, fmt.Errorf("URI with srv must not include a port number")
 	}
 
-	_, addresses, err := net.LookupSRV("mongodb", "tcp", host)
+	_, addresses, err := net.LookupSRV("mongerdb", "tcp", host)
 	if err != nil {
 		return nil, err
 	}

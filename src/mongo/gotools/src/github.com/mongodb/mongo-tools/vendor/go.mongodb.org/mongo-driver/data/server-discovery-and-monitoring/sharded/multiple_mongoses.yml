@@ -1,6 +1,6 @@
-description: "Multiple mongoses"
+description: "Multiple mongerses"
 
-uri: "mongodb://a,b"
+uri: "mongerdb://a,b"
 
 phases: [
 

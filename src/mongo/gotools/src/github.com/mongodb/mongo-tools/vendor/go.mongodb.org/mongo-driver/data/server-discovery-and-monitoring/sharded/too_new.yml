@@ -1,5 +1,5 @@
-description: "Multiple mongoses with large minWireVersion"
-uri: "mongodb://a,b"
+description: "Multiple mongerses with large minWireVersion"
+uri: "mongerdb://a,b"
 phases: [
     {
         responses: [

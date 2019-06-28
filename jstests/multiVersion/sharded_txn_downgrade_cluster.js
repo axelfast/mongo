@@ -54,8 +54,8 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     downgradeUniqueIndexesScript(st.s.getDB("test"));
 
-    // Downgrade the mongos servers first.
-    jsTestLog("Downgrading mongos servers.");
+    // Downgrade the mongers servers first.
+    jsTestLog("Downgrading mongers servers.");
     st.upgradeCluster("last-stable",
                       {upgradeConfigs: false, upgradeMongos: true, upgradeShards: false});
 

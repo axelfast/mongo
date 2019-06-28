@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/legacy_reply.h"
-#include "mongo/rpc/legacy_reply_builder.h"
-#include "mongo/rpc/op_msg_rpc_impls.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/legacy_reply.h"
+#include "monger/rpc/legacy_reply_builder.h"
+#include "monger/rpc/op_msg_rpc_impls.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 template <typename T>
 void testRoundTrip(rpc::ReplyBuilderInterface& replyBuilder, bool unifiedBodyAndMetadata);
@@ -88,7 +88,7 @@ BSONObj buildMetadata() {
 
 BSONObj buildEmptyCommand() {
     const char text[] = "{ ok: 1.0, cursor: { firstBatch: [] } }";
-    mongo::BSONObj obj = mongo::fromjson(text);
+    monger::BSONObj obj = monger::fromjson(text);
     return obj;
 }
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/client/dbclient_base.h"
-#include "mongo/scripting/mozjs/wraptype.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/scripting/mozjs/wraptype.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 using EncryptedDBClientCallback = std::unique_ptr<DBClientBase>(std::unique_ptr<DBClientBase>,
@@ -114,4 +114,4 @@ public:
 void setEncryptionCallbacks(DBClientBase* conn, EncryptionCallbacks* callbacks);
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

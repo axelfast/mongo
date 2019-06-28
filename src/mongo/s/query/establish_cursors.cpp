@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/establish_cursors.h"
+#include "monger/s/query/establish_cursors.h"
 
-#include "mongo/client/remote_command_retry_scheduler.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/db/cursor_id.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/killcursors_request.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/multi_statement_transaction_requests_sender.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/remote_command_retry_scheduler.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/db/cursor_id.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/killcursors_request.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/s/grid.h"
+#include "monger/s/multi_statement_transaction_requests_sender.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 std::vector<RemoteCursor> establishCursors(OperationContext* opCtx,
                                            executor::TaskExecutor* executor,
@@ -167,4 +167,4 @@ void killRemoteCursor(OperationContext* opCtx,
     executor->scheduleRemoteCommand(request, [](auto const&) {}).getStatus().ignore();
 }
 
-}  // namespace mongo
+}  // namespace monger

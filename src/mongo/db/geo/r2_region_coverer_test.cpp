@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kGeo
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kGeo
 
 #include <chrono>
 #include <memory>
 #include <random>
 
-#include "mongo/db/geo/r2_region_coverer.h"
+#include "monger/db/geo/r2_region_coverer.h"
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/db/geo/geometry_container.h"
-#include "mongo/platform/random.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/db/geo/geometry_container.h"
+#include "monger/platform/random.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
 
 namespace {
 
-using namespace mongo;
-using mongo::Polygon;  // "windows.h" has another Polygon for Windows GDI.
+using namespace monger;
+using monger::Polygon;  // "windows.h" has another Polygon for Windows GDI.
 
 std::default_random_engine generator;
 

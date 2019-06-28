@@ -4,14 +4,14 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoexport
+package mongerexport
 
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/json"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/json"
+	"go.mongerdb.org/monger-driver/bson"
 	"io"
 	"reflect"
 	"strconv"

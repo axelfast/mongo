@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <queue>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/authenticate.h"
-#include "mongo/config.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/md5.hpp"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/password_digest.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/authenticate.h"
+#include "monger/config.h"
+#include "monger/db/jsobj.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/base64.h"
+#include "monger/util/md5.hpp"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/password_digest.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 /**
  * Utility class to support tests in this file.  Allows caller to load
  * with pre-made responses and requests to interject into authentication methods.
  */
-class AuthClientTest : public mongo::unittest::Test {
+class AuthClientTest : public monger::unittest::Test {
 public:
     AuthClientTest()
         : _mockHost(),
@@ -175,7 +175,7 @@ public:
 };
 
 TEST_F(AuthClientTest, MongoCR) {
-    // This test excludes the MONGODB-CR support found in mongo/shell/mongodbcr.cpp
+    // This test excludes the MONGODB-CR support found in monger/shell/mongerdbcr.cpp
     // so it should fail to auth.
     // jstests exist to ensure MONGODB-CR continues to work from the client.
     auto params = loadMongoCRConversation();

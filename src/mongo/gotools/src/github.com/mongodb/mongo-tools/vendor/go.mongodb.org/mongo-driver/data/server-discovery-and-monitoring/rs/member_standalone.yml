@@ -1,6 +1,6 @@
 description: "Member brought up as standalone"
 
-uri: "mongodb://a,b"
+uri: "mongerdb://a,b"
 
 phases: [
 

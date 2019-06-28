@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/shard_filter.h"
+#include "monger/db/exec/shard_filter.h"
 
 #include <memory>
 
-#include "mongo/db/exec/filter.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/util/log.h"
+#include "monger/db/exec/filter.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 using std::unique_ptr;
@@ -126,4 +126,4 @@ const SpecificStats* ShardFilterStage::getSpecificStats() const {
     return &_specificStats;
 }
 
-}  // namespace mongo
+}  // namespace monger

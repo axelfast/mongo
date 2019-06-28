@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/drop_database.h"
+#include "monger/db/catalog/drop_database.h"
 
 #include <algorithm>
 
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/util/duration.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(dropDatabaseHangBeforeLog);
 MONGO_FAIL_POINT_DEFINE(dropDatabaseHangAfterAllCollectionsDrop);
@@ -255,7 +255,7 @@ Status dropDatabase(OperationContext* opCtx, const std::string& dbName) {
 
         // This is used to wait for the collection drops to replicate to a majority of the replica
         // set. Note: Even though we're setting UNSET here, kMajority implies JOURNAL if journaling
-        // is supported by mongod and writeConcernMajorityJournalDefault is set to true in the
+        // is supported by mongerd and writeConcernMajorityJournalDefault is set to true in the
         // ReplSetConfig.
         const WriteConcernOptions dropDatabaseWriteConcern(
             WriteConcernOptions::kMajority, WriteConcernOptions::SyncMode::UNSET, wTimeout);
@@ -326,4 +326,4 @@ Status dropDatabase(OperationContext* opCtx, const std::string& dbName) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

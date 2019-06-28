@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <string>
 
-#include "mongo/db/geo/shapes.h"
+#include "monger/db/geo/shapes.h"
 #include "third_party/s2/s2regionunion.h"
 
-namespace mongo {
+namespace monger {
 
 class GeometryContainer {
     GeometryContainer(const GeometryContainer&) = delete;
@@ -163,4 +163,4 @@ private:
     std::unique_ptr<R2Region> _r2Region;
 };
 
-}  // namespace mongo
+}  // namespace monger

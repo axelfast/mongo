@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <memory>
 
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/fts/fts_matcher.h"
-#include "mongo/db/fts/fts_query_impl.h"
-#include "mongo/db/fts/fts_spec.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/fts/fts_matcher.h"
+#include "monger/db/fts/fts_query_impl.h"
+#include "monger/db/fts/fts_spec.h"
 
-namespace mongo {
+namespace monger {
 
 using fts::FTSMatcher;
 using fts::FTSQueryImpl;
@@ -88,4 +88,4 @@ private:
 
     TextMatchStats _specificStats;
 };
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,20 +31,20 @@
 
 #include <functional>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_leaf.h"
-#include "mongo/db/matcher/expression_tree.h"
-#include "mongo/db/matcher/expression_type.h"
-#include "mongo/db/matcher/expression_with_placeholder.h"
-#include "mongo/db/matcher/extensions_callback.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_allowed_properties.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/expression_context.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_leaf.h"
+#include "monger/db/matcher/expression_tree.h"
+#include "monger/db/matcher/expression_type.h"
+#include "monger/db/matcher/expression_with_placeholder.h"
+#include "monger/db/matcher/extensions_callback.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/matcher/schema/expression_internal_schema_allowed_properties.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression_context.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
@@ -125,4 +125,4 @@ public:
         const ExtensionsCallback& extensionsCallback = ExtensionsCallbackNoop(),
         AllowedFeatureSet allowedFeatures = kDefaultSpecialFeatures);
 };
-}  // namespace mongo
+}  // namespace monger

@@ -2,11 +2,11 @@
 (function() {
     'use strict';
 
-    var st = new ShardingTest({shards: 2, mongos: 1});
+    var st = new ShardingTest({shards: 2, mongers: 1});
 
-    var mongos = st.s;
-    var config = mongos.getDB("config");
-    var coll = mongos.getCollection(jsTestName() + ".coll1");
+    var mongers = st.s;
+    var config = mongers.getDB("config");
+    var coll = mongers.getCollection(jsTestName() + ".coll1");
     var shard0 = st.shard0;
 
     assert.commandWorked(config.adminCommand({enableSharding: coll.getDB() + ""}));

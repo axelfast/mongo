@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <set>
 
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/s/catalog_cache_test_fixture.h"
-#include "mongo/s/chunk_manager.h"
-#include "mongo/util/log.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/s/catalog_cache_test_fixture.h"
+#include "monger/s/chunk_manager.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const NamespaceString kNss("TestDB", "TestColl");
@@ -489,4 +489,4 @@ TEST_F(ChunkManagerQueryTest, SimpleCollationNumbersMultiShard) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

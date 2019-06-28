@@ -1,4 +1,4 @@
-"""Unit tests for the validate_mongocryptd script."""
+"""Unit tests for the validate_mongercryptd script."""
 
 from __future__ import absolute_import
 
@@ -6,11 +6,11 @@ import unittest
 
 from mock import MagicMock, patch
 
-from buildscripts import validate_mongocryptd as under_test
+from buildscripts import validate_mongercryptd as under_test
 
 # pylint: disable=missing-docstring,no-self-use
 
-NS = "buildscripts.validate_mongocryptd"
+NS = "buildscripts.validate_mongercryptd"
 
 
 def ns(relative_name):  # pylint: disable=invalid-name

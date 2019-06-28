@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,22 +32,22 @@
 #include <functional>
 #include <memory>
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/data_replicator_external_state.h"
-#include "mongo/db/repl/oplog_applier.h"
-#include "mongo/db/repl/oplog_buffer.h"
-#include "mongo/db/repl/oplog_fetcher.h"
-#include "mongo/db/repl/oplog_interface_remote.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/rollback_impl.h"
-#include "mongo/db/repl/sync_source_resolver.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status_with.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/data_replicator_external_state.h"
+#include "monger/db/repl/oplog_applier.h"
+#include "monger/db/repl/oplog_buffer.h"
+#include "monger/db/repl/oplog_fetcher.h"
+#include "monger/db/repl/oplog_interface_remote.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/rollback_impl.h"
+#include "monger/db/repl/sync_source_resolver.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 class DBClientBase;
 class OperationContext;
@@ -264,4 +264,4 @@ private:
 
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

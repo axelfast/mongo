@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,43 +27,43 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands.h"
+#include "monger/db/commands.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/client.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
-#include "mongo/rpc/op_msg_rpc_impls.h"
-#include "mongo/rpc/protocol.h"
-#include "mongo/rpc/write_concern_error_detail.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/invariant.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/timestamp.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/client.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/curop.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/rpc/op_msg_rpc_impls.h"
+#include "monger/rpc/protocol.h"
+#include "monger/rpc/write_concern_error_detail.h"
+#include "monger/s/stale_exception.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/invariant.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using logger::LogComponent;
 
@@ -73,7 +73,7 @@ const char kWriteConcernField[] = "writeConcern";
 const WriteConcernOptions kMajorityWriteConcern(
     WriteConcernOptions::kMajority,
     // Note: Even though we're setting UNSET here, kMajority implies JOURNAL if journaling is
-    // supported by the mongod.
+    // supported by the mongerd.
     WriteConcernOptions::SyncMode::UNSET,
     WriteConcernOptions::kWriteConcernTimeoutUserCommand);
 
@@ -220,7 +220,7 @@ std::string CommandHelpers::parseNsFullyQualified(const BSONObj& cmdObj) {
     BSONElement first = cmdObj.firstElement();
     uassert(ErrorCodes::BadValue,
             str::stream() << "collection name has invalid type " << typeName(first.type()),
-            first.canonicalType() == canonicalizeBSONType(mongo::String));
+            first.canonicalType() == canonicalizeBSONType(monger::String));
     const NamespaceString nss(first.valueStringData());
     uassert(ErrorCodes::InvalidNamespace,
             str::stream() << "Invalid namespace specified '" << nss.ns() << "'",
@@ -233,7 +233,7 @@ NamespaceString CommandHelpers::parseNsCollectionRequired(StringData dbname,
     // Accepts both BSON String and Symbol for collection name per SERVER-16260
     // TODO(kangas) remove Symbol support in MongoDB 3.0 after Ruby driver audit
     BSONElement first = cmdObj.firstElement();
-    const bool isUUID = (first.canonicalType() == canonicalizeBSONType(mongo::BinData) &&
+    const bool isUUID = (first.canonicalType() == canonicalizeBSONType(monger::BinData) &&
                          first.binDataType() == BinDataType::newUUID);
     uassert(ErrorCodes::InvalidNamespace,
             str::stream() << "Collection name must be provided. UUID is not valid in this "
@@ -241,7 +241,7 @@ NamespaceString CommandHelpers::parseNsCollectionRequired(StringData dbname,
             !isUUID);
     uassert(ErrorCodes::InvalidNamespace,
             str::stream() << "collection name has invalid type " << typeName(first.type()),
-            first.canonicalType() == canonicalizeBSONType(mongo::String));
+            first.canonicalType() == canonicalizeBSONType(monger::String));
     const NamespaceString nss(dbname, first.valueStringData());
     uassert(ErrorCodes::InvalidNamespace,
             str::stream() << "Invalid namespace specified '" << nss.ns() << "'",
@@ -265,7 +265,7 @@ NamespaceStringOrUUID CommandHelpers::parseNsOrUUID(StringData dbname, const BSO
 
 std::string CommandHelpers::parseNsFromCommand(StringData dbname, const BSONObj& cmdObj) {
     BSONElement first = cmdObj.firstElement();
-    if (first.type() != mongo::String)
+    if (first.type() != monger::String)
         return dbname.toString();
     return str::stream() << dbname << '.' << cmdObj.firstElement().valueStringData();
 }
@@ -437,7 +437,7 @@ Status CommandHelpers::canUseTransactions(StringData dbName, StringData cmdName)
     if (cmdName == "count"_sd) {
         return {ErrorCodes::OperationNotSupportedInTransaction,
                 "Cannot run 'count' in a multi-document transaction. Please see "
-                "http://dochub.mongodb.org/core/transaction-count for a recommended alternative."};
+                "http://dochub.mongerdb.org/core/transaction-count for a recommended alternative."};
     }
 
     if (txnCmdWhitelist.find(cmdName) == txnCmdWhitelist.cend()) {
@@ -734,4 +734,4 @@ CommandRegistry* globalCommandRegistry() {
     return reg;
 }
 
-}  // namespace mongo
+}  // namespace monger

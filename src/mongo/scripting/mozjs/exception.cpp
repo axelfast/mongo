@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/exception.h"
+#include "monger/scripting/mozjs/exception.h"
 
 #include <jsfriendapi.h>
 #include <limits>
 
 
-#include "mongo/base/static_assert.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/jsstringwrapper.h"
-#include "mongo/scripting/mozjs/mongoErrorReportToString.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/valuewriter.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/static_assert.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/jsstringwrapper.h"
+#include "monger/scripting/mozjs/mongerErrorReportToString.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/valuewriter.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
-void mongoToJSException(JSContext* cx) {
+void mongerToJSException(JSContext* cx) {
     auto status = exceptionToStatus();
 
     if (status.code() != ErrorCodes::JSUncatchableError) {
@@ -83,7 +83,7 @@ Status JSErrorReportToStatus(JSContext* cx,
                              JSErrorReport* report,
                              ErrorCodes::Error altCode,
                              StringData altReason) {
-    JSStringWrapper jsstr(cx, mongoErrorReportToString(cx, report));
+    JSStringWrapper jsstr(cx, mongerErrorReportToString(cx, report));
     if (!jsstr)
         return Status(altCode, altReason);
 
@@ -140,4 +140,4 @@ Status jsExceptionToStatus(JSContext* cx,
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

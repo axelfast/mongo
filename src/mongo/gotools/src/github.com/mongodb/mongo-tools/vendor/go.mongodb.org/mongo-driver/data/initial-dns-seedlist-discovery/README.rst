@@ -21,26 +21,26 @@ these tests::
   localhost.sub.test.build.10gen.cc.        86400  IN A    127.0.0.1
 
   Record                                    TTL    Class   Port   Target
-  _mongodb._tcp.test1.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test1.test.build.10gen.cc.  86400  IN SRV  27018  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test2.test.build.10gen.cc.  86400  IN SRV  27018  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test2.test.build.10gen.cc.  86400  IN SRV  27019  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test3.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test5.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test6.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test7.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test8.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test10.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test11.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.cc.
-  _mongodb._tcp.test12.test.build.10gen.cc. 86400  IN SRV  27017  localhost.build.10gen.cc.
-  _mongodb._tcp.test13.test.build.10gen.cc. 86400  IN SRV  27017  test.build.10gen.cc.
-  _mongodb._tcp.test14.test.build.10gen.cc. 86400  IN SRV  27017  localhost.not-test.build.10gen.cc.
-  _mongodb._tcp.test15.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.not-build.10gen.cc.
-  _mongodb._tcp.test16.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.not-10gen.cc.
-  _mongodb._tcp.test17.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.not-cc.
-  _mongodb._tcp.test18.test.build.10gen.cc. 86400  IN SRV  27017  localhost.sub.test.build.10gen.cc.
-  _mongodb._tcp.test19.test.build.10gen.cc. 86400  IN SRV  27017  localhost.evil.build.10gen.cc.
-  _mongodb._tcp.test19.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test1.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test1.test.build.10gen.cc.  86400  IN SRV  27018  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test2.test.build.10gen.cc.  86400  IN SRV  27018  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test2.test.build.10gen.cc.  86400  IN SRV  27019  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test3.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test5.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test6.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test7.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test8.test.build.10gen.cc.  86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test10.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test11.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.cc.
+  _mongerdb._tcp.test12.test.build.10gen.cc. 86400  IN SRV  27017  localhost.build.10gen.cc.
+  _mongerdb._tcp.test13.test.build.10gen.cc. 86400  IN SRV  27017  test.build.10gen.cc.
+  _mongerdb._tcp.test14.test.build.10gen.cc. 86400  IN SRV  27017  localhost.not-test.build.10gen.cc.
+  _mongerdb._tcp.test15.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.not-build.10gen.cc.
+  _mongerdb._tcp.test16.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.not-10gen.cc.
+  _mongerdb._tcp.test17.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.not-cc.
+  _mongerdb._tcp.test18.test.build.10gen.cc. 86400  IN SRV  27017  localhost.sub.test.build.10gen.cc.
+  _mongerdb._tcp.test19.test.build.10gen.cc. 86400  IN SRV  27017  localhost.evil.build.10gen.cc.
+  _mongerdb._tcp.test19.test.build.10gen.cc. 86400  IN SRV  27017  localhost.test.build.10gen.cc.
 
   Record                                    TTL    Class   Text
   test5.test.build.10gen.cc.                86400  IN TXT  "replicaSet=repl0&authSource=thisDB"
@@ -68,7 +68,7 @@ Test Format and Use
 
 These YAML and JSON files contain the following fields:
 
-- ``uri``: a mongodb+srv connection string
+- ``uri``: a mongerdb+srv connection string
 - ``seeds``: the expected set of initial seeds discovered from the SRV record
 - ``hosts``: the discovered topology's list of hosts once SDAM completes a scan
 - ``options``: the parsed connection string options as discovered from URI and
@@ -77,7 +77,7 @@ These YAML and JSON files contain the following fields:
   contents of the SRV or TXT records included errors.
 - ``comment``: a comment to indicate why a test would fail.
 
-For each file, create MongoClient initialized with the mongodb+srv connection
+For each file, create MongoClient initialized with the mongerdb+srv connection
 string. You SHOULD verify that the client's initial seed list matches the list of
 seeds. You MUST verify that the set of ServerDescriptions in the client's
 TopologyDescription eventually matches the list of hosts. You MUST verify that

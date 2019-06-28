@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <string>
 #include <vector>
 
-#include "mongo/client/replica_set_change_notifier.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/string_map.h"
+#include "monger/client/replica_set_change_notifier.h"
+#include "monger/executor/task_executor.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 class ConnectionString;
@@ -119,4 +119,4 @@ private:
     bool _isShutdown{false};
 };
 
-}  // namespace mongo
+}  // namespace monger

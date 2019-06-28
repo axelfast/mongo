@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,16 +29,16 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/mobile/mobile_options.h"
-#include "mongo/db/storage/record_store.h"
+#include "monger/base/status.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/mobile/mobile_options.h"
+#include "monger/db/storage/record_store.h"
 
 #define MOBILE_LOG_LEVEL_LOW 2
 #define MOBILE_LOG_LEVEL_HIGH 5
 #define MOBILE_TRACE_LEVEL MOBILE_LOG_LEVEL_HIGH
 
-namespace mongo {
+namespace monger {
 namespace embedded {
 
 /**
@@ -76,4 +76,4 @@ void doValidate(OperationContext* opCtx, ValidateResults* results);
 void configureSession(sqlite3* session, const MobileOptions& options);
 
 }  // namespace embedded
-}  // namespace mongo
+}  // namespace monger

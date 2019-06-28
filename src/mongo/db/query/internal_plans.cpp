@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/internal_plans.h"
+#include "monger/db/query/internal_plans.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/eof.h"
-#include "mongo/db/exec/fetch.h"
-#include "mongo/db/exec/idhack.h"
-#include "mongo/db/exec/index_scan.h"
-#include "mongo/db/exec/update_stage.h"
-#include "mongo/db/query/get_executor.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/eof.h"
+#include "monger/db/exec/fetch.h"
+#include "monger/db/exec/idhack.h"
+#include "monger/db/exec/index_scan.h"
+#include "monger/db/exec/update_stage.h"
+#include "monger/db/query/get_executor.h"
 
-namespace mongo {
+namespace monger {
 
 std::unique_ptr<PlanExecutor, PlanExecutor::Deleter> InternalPlanner::collectionScan(
     OperationContext* opCtx,
@@ -227,4 +227,4 @@ std::unique_ptr<PlanStage> InternalPlanner::_indexScan(OperationContext* opCtx,
     return root;
 }
 
-}  // namespace mongo
+}  // namespace monger

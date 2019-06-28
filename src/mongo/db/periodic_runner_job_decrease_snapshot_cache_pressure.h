@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <memory>
 
-#include "mongo/db/service_context.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/periodic_runner.h"
+#include "monger/db/service_context.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/periodic_runner.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Periodically checks whether there has been any storage engine cache pressure and SnapshotTooOld
@@ -44,7 +44,7 @@ namespace mongo {
  * then the target window size will be decrease. Maintaining too much snapshot and write history can
  * slow down the system. Runs once every decreaseHistoryIfNotNeededPeriodSeconds.
  *
- * This function should only ever be called once, during mongod server startup (db.cpp).
+ * This function should only ever be called once, during mongerd server startup (db.cpp).
  * The PeriodicRunner will handle shutting down the job on shutdown, no extra handling necessary.
  */
 class PeriodicThreadToDecreaseSnapshotHistoryIfNotNeeded {
@@ -64,4 +64,4 @@ private:
     std::shared_ptr<PeriodicJobAnchor> _anchor;
 };
 
-}  // namespace mongo
+}  // namespace monger

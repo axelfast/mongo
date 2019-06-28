@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/storage/record_store.h"
+#include "monger/base/status_with.h"
+#include "monger/db/storage/record_store.h"
 
-namespace mongo {
+namespace monger {
 
 /**
   * Compacts collection.
@@ -42,4 +42,4 @@ StatusWith<CompactStats> compactCollection(OperationContext* opCtx,
                                            const NamespaceString& collectionNss,
                                            const CompactOptions* options);
 
-}  // namespace mongo
+}  // namespace monger

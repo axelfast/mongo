@@ -15,15 +15,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/password"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	mopt "go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/x/network/connection"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/password"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
+	mopt "go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/x/network/connection"
 )
 
 type (
@@ -54,7 +54,7 @@ const (
 	ErrLostConnection     = "lost connection to server"
 	ErrNoReachableServers = "no reachable servers"
 	ErrNsNotFound         = "ns not found"
-	// replication errors list the replset name if we are talking to a mongos,
+	// replication errors list the replset name if we are talking to a mongers,
 	// so we can only check for this universal prefix
 	ErrReplTimeoutPrefix            = "waiting for replication timed out"
 	ErrCouldNotContactPrimaryPrefix = "could not contact primary for replica set"
@@ -81,7 +81,7 @@ type SessionProvider struct {
 	sync.Mutex
 
 	// the master client used for operations
-	client *mongo.Client
+	client *monger.Client
 }
 
 // ApplyOpsResponse represents the response from an 'applyOps' command.
@@ -105,9 +105,9 @@ type Oplog struct {
 	PrevOpTime bson.Raw            `bson:"prevOpTime,omitempty"`
 }
 
-// Returns a mongo.Client connected to the database server for which the
+// Returns a monger.Client connected to the database server for which the
 // session provider is configured.
-func (sp *SessionProvider) GetSession() (*mongo.Client, error) {
+func (sp *SessionProvider) GetSession() (*monger.Client, error) {
 	sp.Lock()
 	defer sp.Unlock()
 
@@ -129,7 +129,7 @@ func (sp *SessionProvider) Close() {
 }
 
 // DB provides a database with the default read preference
-func (sp *SessionProvider) DB(name string) *mongo.Database {
+func (sp *SessionProvider) DB(name string) *monger.Database {
 	return sp.client.Database(name)
 }
 
@@ -158,7 +158,7 @@ func NewSessionProvider(opts options.ToolOptions) (*SessionProvider, error) {
 }
 
 // configure the client according to the options set in the uri and in the provided ToolOptions, with ToolOptions having precedence.
-func configureClient(opts options.ToolOptions) (*mongo.Client, error) {
+func configureClient(opts options.ToolOptions) (*monger.Client, error) {
 	clientopt := mopt.Client()
 
 	if opts.URI == nil || opts.URI.ConnectionString == "" {
@@ -245,7 +245,7 @@ func configureClient(opts options.ToolOptions) (*mongo.Client, error) {
 		clientopt.SetTLSConfig(tlsConfig.Config)
 	}
 
-	return mongo.NewClient(uriOpts, clientopt)
+	return monger.NewClient(uriOpts, clientopt)
 }
 
 // FilterError determines whether an error needs to be propagated back to the user or can be continued through. If an
@@ -258,7 +258,7 @@ func FilterError(stopOnError bool, err error) error {
 
 	if !stopOnError && CanIgnoreError(err) {
 		// Just log the error but don't propagate it.
-		if bwe, ok := err.(mongo.BulkWriteException); ok {
+		if bwe, ok := err.(monger.BulkWriteException); ok {
 			for _, be := range bwe.WriteErrors {
 				log.Logvf(log.Always, continueThroughErrorFormat, be.Message)
 			}
@@ -278,24 +278,24 @@ func CanIgnoreError(err error) bool {
 		return true
 	}
 
-	switch mongoErr := err.(type) {
-	case mongo.WriteError:
-		_, ok := ignorableWriteErrorCodes[mongoErr.Code]
+	switch mongerErr := err.(type) {
+	case monger.WriteError:
+		_, ok := ignorableWriteErrorCodes[mongerErr.Code]
 		return ok
-	case mongo.BulkWriteException:
-		for _, writeErr := range mongoErr.WriteErrors {
+	case monger.BulkWriteException:
+		for _, writeErr := range mongerErr.WriteErrors {
 			if _, ok := ignorableWriteErrorCodes[writeErr.Code]; !ok {
 				return false
 			}
 		}
 
-		if mongoErr.WriteConcernError != nil {
-			log.Logvf(log.Always, "write concern error when inserting documents: %v", mongoErr.WriteConcernError)
+		if mongerErr.WriteConcernError != nil {
+			log.Logvf(log.Always, "write concern error when inserting documents: %v", mongerErr.WriteConcernError)
 			return false
 		}
 		return true
-	case mongo.CommandError:
-		_, ok := ignorableWriteErrorCodes[int(mongoErr.Code)]
+	case monger.CommandError:
+		_, ok := ignorableWriteErrorCodes[int(mongerErr.Code)]
 		return ok
 	}
 

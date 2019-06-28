@@ -1,22 +1,22 @@
 /**
- * Tests whether new sharding is detected on insert by mongos
+ * Tests whether new sharding is detected on insert by mongers
  */
 (function() {
     'use strict';
 
     // TODO: SERVER-33830 remove shardAsReplicaSet: false
-    var st = new ShardingTest({shards: 10, mongos: 3, other: {shardAsReplicaSet: false}});
+    var st = new ShardingTest({shards: 10, mongers: 3, other: {shardAsReplicaSet: false}});
 
-    var mongosA = st.s0;
-    var mongosB = st.s1;
-    var mongosC = st.s2;
+    var mongersA = st.s0;
+    var mongersB = st.s1;
+    var mongersC = st.s2;
 
-    var admin = mongosA.getDB("admin");
-    var config = mongosA.getDB("config");
+    var admin = mongersA.getDB("admin");
+    var config = mongersA.getDB("config");
 
-    var collA = mongosA.getCollection("foo.bar");
-    var collB = mongosB.getCollection("" + collA);
-    var collC = mongosB.getCollection("" + collA);
+    var collA = mongersA.getCollection("foo.bar");
+    var collB = mongersB.getCollection("" + collA);
+    var collC = mongersB.getCollection("" + collA);
 
     var shards = [
         st.shard0,
@@ -44,8 +44,8 @@
             admin.runCommand({moveChunk: "" + collA, find: {_id: i}, to: shards[i].shardName}));
     }
 
-    mongosB.getDB("admin").runCommand({flushRouterConfig: 1});
-    mongosC.getDB("admin").runCommand({flushRouterConfig: 1});
+    mongersB.getDB("admin").runCommand({flushRouterConfig: 1});
+    mongersC.getDB("admin").runCommand({flushRouterConfig: 1});
 
     printjson(collB.count());
     printjson(collC.count());
@@ -59,8 +59,8 @@
         }));
     }
 
-    // Make sure mongos A is up-to-date
-    mongosA.getDB("admin").runCommand({flushRouterConfig: 1});
+    // Make sure mongers A is up-to-date
+    mongersA.getDB("admin").runCommand({flushRouterConfig: 1});
 
     jsTestLog("Running count!");
 

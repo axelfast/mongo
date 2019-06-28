@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class ServiceContext;
@@ -100,4 +100,4 @@ private:
     bool _inShutdown;  // used to synchronize shutdown of the ticket refresher job
 };
 
-}  // namespace mongo
+}  // namespace monger

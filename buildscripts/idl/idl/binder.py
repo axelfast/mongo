@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -820,8 +820,8 @@ def _bind_globals(parsed_spec):
     else:
         ast_global = ast.Global("<implicit>", 0, 0)
 
-        # If no namespace has been set, default it do "mongo"
-        ast_global.cpp_namespace = "mongo"
+        # If no namespace has been set, default it do "monger"
+        ast_global.cpp_namespace = "monger"
 
     return ast_global
 

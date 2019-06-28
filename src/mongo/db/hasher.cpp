@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
  * Defines a simple hash function class.
  */
 
-#include "mongo/db/hasher.h"
+#include "monger/db/hasher.h"
 
 
-#include "mongo/db/jsobj.h"
-#include "mongo/util/md5.hpp"
+#include "monger/db/jsobj.h"
+#include "monger/util/md5.hpp"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 
@@ -148,4 +148,4 @@ long long int BSONElementHasher::hash64(const BSONElement& e, HashSeed seed) {
     return digestView.read<LittleEndian<long long int>>();
 }
 
-}  // namespace mongo
+}  // namespace monger

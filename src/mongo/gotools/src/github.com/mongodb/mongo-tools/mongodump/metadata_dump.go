@@ -4,17 +4,17 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongodump
+package mongerdump
 
 import (
 	"context"
 	"fmt"
 	"io"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 // Metadata holds information about a collection's options and indexes.
@@ -37,7 +37,7 @@ func (dump *MongoDump) dumpMetadata(intent *intents.Intent, buffer resettableOut
 	meta := Metadata{
 		// We have to initialize Indexes to an empty slice, not nil, so that an empty
 		// array is marshalled into json instead of null. That is, {indexes:[]} is okay
-		// but {indexes:null} will cause assertions in our legacy C++ mongotools
+		// but {indexes:null} will cause assertions in our legacy C++ mongertools
 		Indexes: []bson.D{},
 	}
 

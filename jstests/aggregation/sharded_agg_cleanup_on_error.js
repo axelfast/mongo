@@ -20,11 +20,11 @@
     const st = new ShardingTest({shards: 2});
     const kDBName = "test";
     const kDivideByZeroErrCode = 16608;
-    const mongosDB = st.s.getDB(kDBName);
+    const mongersDB = st.s.getDB(kDBName);
     const shard0DB = st.shard0.getDB(kDBName);
     const shard1DB = st.shard1.getDB(kDBName);
 
-    let coll = mongosDB.sharded_agg_cleanup_on_error;
+    let coll = mongersDB.sharded_agg_cleanup_on_error;
 
     for (let i = 0; i < 10; i++) {
         assert.writeOK(coll.insert({_id: i}));
@@ -34,20 +34,20 @@
     st.ensurePrimaryShard(kDBName, st.shard0.name);
 
     function assertFailsAndCleansUpCursors({pipeline, errCode}) {
-        let cmdRes = mongosDB.runCommand(
+        let cmdRes = mongersDB.runCommand(
             {aggregate: coll.getName(), pipeline: pipeline, cursor: {batchSize: 0}});
         assert.commandWorked(cmdRes);
         assert.neq(0, cmdRes.cursor.id);
         assert.eq(coll.getFullName(), cmdRes.cursor.ns);
         assert.eq(0, cmdRes.cursor.firstBatch.length);
 
-        cmdRes = mongosDB.runCommand({getMore: cmdRes.cursor.id, collection: coll.getName()});
+        cmdRes = mongersDB.runCommand({getMore: cmdRes.cursor.id, collection: coll.getName()});
         assert.commandFailedWithCode(cmdRes, errCode);
 
-        // Neither mongos or the shards should leave cursors open. By the time we get here, the
+        // Neither mongers or the shards should leave cursors open. By the time we get here, the
         // cursor which was hanging on shard 1 will have been marked interrupted, but isn't
         // guaranteed to be deleted yet. Thus, we use an assert.soon().
-        assert.eq(mongosDB.serverStatus().metrics.cursor.open.total, 0);
+        assert.eq(mongersDB.serverStatus().metrics.cursor.open.total, 0);
         assert.eq(shard0DB.serverStatus().metrics.cursor.open.total, 0);
         assert.soon(() => shard1DB.serverStatus().metrics.cursor.open.pinned == 0);
     }
@@ -59,11 +59,11 @@
 
         // Issue an aggregregation that will fail during a getMore on shard 0, and make sure that
         // this correctly kills the hanging cursor on shard 1. Use $_internalSplitPipeline to ensure
-        // that this pipeline merges on mongos.
+        // that this pipeline merges on mongers.
         assertFailsAndCleansUpCursors({
             pipeline: [
                 {$project: {out: {$divide: ["$_id", 0]}}},
-                {$_internalSplitPipeline: {mergeType: "mongos"}}
+                {$_internalSplitPipeline: {mergeType: "mongers"}}
             ],
             errCode: kDivideByZeroErrCode
         });
@@ -86,7 +86,7 @@
     // shard cursors.
     try {
         // Enable the failpoint to fail on establishing a merging shard cursor.
-        assert.commandWorked(mongosDB.adminCommand({
+        assert.commandWorked(mongersDB.adminCommand({
             configureFailPoint: "clusterAggregateFailToEstablishMergingShardCursor",
             mode: "alwaysOn"
         }));
@@ -95,13 +95,13 @@
         // the failpoint.
         assertErrorCode(coll, [{$out: "target"}], ErrorCodes.FailPointEnabled);
 
-        // Neither mongos or the shards should leave cursors open.
-        assert.eq(mongosDB.serverStatus().metrics.cursor.open.total, 0);
+        // Neither mongers or the shards should leave cursors open.
+        assert.eq(mongersDB.serverStatus().metrics.cursor.open.total, 0);
         assert.soon(() => shard0DB.serverStatus().metrics.cursor.open.total == 0);
         assert.soon(() => shard1DB.serverStatus().metrics.cursor.open.total == 0);
 
     } finally {
-        assert.commandWorked(mongosDB.adminCommand({
+        assert.commandWorked(mongersDB.adminCommand({
             configureFailPoint: "clusterAggregateFailToEstablishMergingShardCursor",
             mode: "off"
         }));
@@ -109,7 +109,7 @@
 
     // Test that aggregations involving $exchange correctly clean up the producer cursors.
     try {
-        assert.commandWorked(mongosDB.adminCommand({
+        assert.commandWorked(mongersDB.adminCommand({
             configureFailPoint: "clusterAggregateFailToDispatchExchangeConsumerPipeline",
             mode: "alwaysOn"
         }));
@@ -118,22 +118,22 @@
         // the failpoint. Add a $group stage to force an exchange-eligible split of the pipeline
         // before the $merge. Without the $group we won't use the exchange optimization and instead
         // will send the $merge to each shard.
-        st.shardColl(mongosDB.target, {_id: 1}, {_id: 0}, {_id: 1}, kDBName, false);
+        st.shardColl(mongersDB.target, {_id: 1}, {_id: 0}, {_id: 1}, kDBName, false);
 
         assertMergeFailsForAllModesWithCode({
             source: coll,
-            target: mongosDB.target,
+            target: mongersDB.target,
             prevStages: [{$group: {_id: "$fakeShardKey"}}],
             errorCodes: ErrorCodes.FailPointEnabled
         });
 
-        // Neither mongos or the shards should leave cursors open.
-        assert.eq(mongosDB.serverStatus().metrics.cursor.open.total, 0);
+        // Neither mongers or the shards should leave cursors open.
+        assert.eq(mongersDB.serverStatus().metrics.cursor.open.total, 0);
         assert.soon(() => shard0DB.serverStatus().metrics.cursor.open.total == 0);
         assert.soon(() => shard1DB.serverStatus().metrics.cursor.open.total == 0);
 
     } finally {
-        assert.commandWorked(mongosDB.adminCommand({
+        assert.commandWorked(mongersDB.adminCommand({
             configureFailPoint: "clusterAggregateFailToDispatchExchangeConsumerPipeline",
             mode: "off"
         }));

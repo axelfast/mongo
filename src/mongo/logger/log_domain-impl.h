@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <algorithm>
 #include <cstdlib>
 
-#include "mongo/base/status.h"
-#include "mongo/logger/log_domain.h"
+#include "monger/base/status.h"
+#include "monger/logger/log_domain.h"
 
 /*
  * Implementation of LogDomain<E>.  Include this in cpp files to instantiate new LogDomain types.
  * See message_log_domain.h, e.g.
  */
 
-namespace mongo {
+namespace monger {
 namespace logger {
 
 template <typename E>
@@ -95,4 +95,4 @@ void LogDomain<E>::clearAppenders() {
 }
 
 }  // namespace logger
-}  // namespace mongo
+}  // namespace monger

@@ -10,13 +10,13 @@ env.Library(
         'deferred_writer.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/catalog/collection',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/catalog/collection',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/catalog/catalog_helpers',
-        '$BUILD_DIR/mongo/db/db_raii',
-        '$BUILD_DIR/mongo/util/concurrency/thread_pool',
+        '$BUILD_DIR/monger/db/catalog/catalog_helpers',
+        '$BUILD_DIR/monger/db/db_raii',
+        '$BUILD_DIR/monger/util/concurrency/thread_pool',
     ],
 )
 
@@ -27,12 +27,12 @@ env.Library(
         env.Idlc('write_conflict_exception.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/idl/server_parameter',
-        '$BUILD_DIR/mongo/util/fail_point',
-        '$BUILD_DIR/mongo/util/log_and_backoff',
+        '$BUILD_DIR/monger/idl/server_parameter',
+        '$BUILD_DIR/monger/util/fail_point',
+        '$BUILD_DIR/monger/util/log_and_backoff',
     ],
 )
 
@@ -46,16 +46,16 @@ env.Library(
         'replication_state_transition_lock_guard.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/service_context',
-        '$BUILD_DIR/mongo/util/background_job',
-        '$BUILD_DIR/mongo/util/concurrency/spin_lock',
-        '$BUILD_DIR/mongo/util/concurrency/ticketholder',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/service_context',
+        '$BUILD_DIR/monger/util/background_job',
+        '$BUILD_DIR/monger/util/concurrency/spin_lock',
+        '$BUILD_DIR/monger/util/concurrency/ticketholder',
         '$BUILD_DIR/third_party/shim_boost',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/catalog/collection_catalog',
-        '$BUILD_DIR/mongo/db/concurrency/flow_control_ticketholder',
+        '$BUILD_DIR/monger/db/catalog/collection_catalog',
+        '$BUILD_DIR/monger/db/concurrency/flow_control_ticketholder',
     ],
 )
 
@@ -65,7 +65,7 @@ env.Library(
         'flow_control_ticketholder.cpp',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -88,10 +88,10 @@ env.CppUnitTest(
         'lock_stats_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/auth/authmocks',
-        '$BUILD_DIR/mongo/db/curop',
-        '$BUILD_DIR/mongo/db/service_context_d_test_fixture',
-        '$BUILD_DIR/mongo/util/progress_meter',
+        '$BUILD_DIR/monger/db/auth/authmocks',
+        '$BUILD_DIR/monger/db/curop',
+        '$BUILD_DIR/monger/db/service_context_d_test_fixture',
+        '$BUILD_DIR/monger/util/progress_meter',
         'lock_manager',
         'write_conflict_exception',
     ]

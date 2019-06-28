@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/s/database_version_gen.h"
+#include "monger/s/database_version_gen.h"
 
-namespace mongo {
+namespace monger {
 namespace databaseVersion {
 
 DatabaseVersion makeNew();
@@ -43,4 +43,4 @@ bool equal(const DatabaseVersion& dbv1, const DatabaseVersion& dbv2);
 bool isFixed(const DatabaseVersion& dbv);
 
 }  // namespace databaseVersion
-}  // namespace mongo
+}  // namespace monger

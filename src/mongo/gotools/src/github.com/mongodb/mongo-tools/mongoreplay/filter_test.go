@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"bytes"
@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/10gen/llmgo/bson"
-	"github.com/mongodb/mongo-tools/legacy/testtype"
+	"github.com/mongerdb/monger-tools/legacy/testtype"
 )
 
 func TestRemoveDriverOpsFromFile(t *testing.T) {

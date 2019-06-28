@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/single_write_result_gen.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/s/stale_exception.h"
+#include "monger/base/status_with.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/single_write_result_gen.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/s/stale_exception.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * The result of performing a single write, possibly within a batch.
@@ -70,4 +70,4 @@ WriteResult performInserts(OperationContext* opCtx,
 WriteResult performUpdates(OperationContext* opCtx, const write_ops::Update& op);
 WriteResult performDeletes(OperationContext* opCtx, const write_ops::Delete& op);
 
-}  // namespace mongo
+}  // namespace monger

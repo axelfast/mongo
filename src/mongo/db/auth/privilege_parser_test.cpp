@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
  * Unit tests of the ParsedPrivilege class.
  */
 
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/privilege_parser.h"
-#include "mongo/db/server_options.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/privilege_parser.h"
+#include "monger/db/server_options.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(PrivilegeParserTest, IsValidTest) {
@@ -268,4 +268,4 @@ TEST(PrivilegeParserTest, ParseInvalidActionsTest) {
     ASSERT_EQUALS("fakeAction", unrecognizedActions[0]);
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

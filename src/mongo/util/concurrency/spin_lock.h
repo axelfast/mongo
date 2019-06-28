@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,16 +30,16 @@
 #pragma once
 
 #ifdef _WIN32
-#include "mongo/platform/windows_basic.h"
+#include "monger/platform/windows_basic.h"
 #else
 #include <atomic>
 #endif
 
-#include "mongo/config.h"
-#include "mongo/platform/compiler.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/config.h"
+#include "monger/platform/compiler.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 #if defined(_WIN32)
 class SpinLock {
@@ -126,4 +126,4 @@ private:
 
 using scoped_spinlock = stdx::lock_guard<SpinLock>;
 
-}  // namespace mongo
+}  // namespace monger

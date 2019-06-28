@@ -1,5 +1,5 @@
 description: "Monitoring a replica set with non member"
-uri: "mongodb://a,b/"
+uri: "mongerdb://a,b/"
 phases:
   -
     responses:

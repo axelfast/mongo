@@ -35,7 +35,7 @@
 
         jsTest.log("Waiting until the index build begins.");
         // Note that we cannot use checkLog here to wait for the failpoint logging because this test
-        // shares a mongod with other tests that might have already provoked identical failpoint
+        // shares a mongerd with other tests that might have already provoked identical failpoint
         // logging.
         IndexBuildTest.waitForIndexBuildToStart(testDB);
 
@@ -63,7 +63,7 @@
                   "expected to find an 'b_1' index build:" + tojson(collStatsRes));
     } finally {
         // Ensure the failpoint is unset, even if there are assertion failures, so that we do not
-        // hang the test/mongod.
+        // hang the test/mongerd.
         assert.commandWorked(db.adminCommand(
             {configureFailPoint: "hangAfterStartingIndexBuildUnlocked", mode: "off"}));
         awaitParallelShell();

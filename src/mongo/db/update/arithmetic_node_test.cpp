@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/arithmetic_node.h"
+#include "monger/db/update/arithmetic_node.h"
 
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/mutable_bson_test_utils.h"
-#include "mongo/db/json.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/update/update_node_test_fixture.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/mutable_bson_test_utils.h"
+#include "monger/db/json.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/update/update_node_test_fixture.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using ArithmeticNodeTest = UpdateNodeTest;
-using mongo::mutablebson::Element;
-using mongo::mutablebson::countChildren;
+using monger::mutablebson::Element;
+using monger::mutablebson::countChildren;
 
 DEATH_TEST(ArithmeticNodeTest, InitFailsForEmptyElement, "Invariant failure modExpr.ok()") {
     auto update = fromjson("{$inc: {}}");
@@ -459,13 +459,13 @@ TEST_F(ArithmeticNodeTest, OverflowIntToLong) {
 
     const int initialValue = std::numeric_limits<int>::max();
     mutablebson::Document doc(BSON("a" << initialValue));
-    ASSERT_EQUALS(mongo::NumberInt, doc.root()["a"].getType());
+    ASSERT_EQUALS(monger::NumberInt, doc.root()["a"].getType());
     setPathTaken("a");
     addIndexedPath("a");
     auto result = node.apply(getApplyParams(doc.root()["a"]), getUpdateNodeApplyParams());
     ASSERT_FALSE(result.noop);
     ASSERT_TRUE(result.indexesAffected);
-    ASSERT_EQUALS(mongo::NumberLong, doc.root()["a"].getType());
+    ASSERT_EQUALS(monger::NumberLong, doc.root()["a"].getType());
     ASSERT_EQUALS(BSON("a" << static_cast<long long>(initialValue) + 1), doc);
     ASSERT_FALSE(doc.isInPlaceModeEnabled());
     ASSERT_EQUALS(getModifiedPaths(), "{a}");
@@ -479,13 +479,13 @@ TEST_F(ArithmeticNodeTest, UnderflowIntToLong) {
 
     const int initialValue = std::numeric_limits<int>::min();
     mutablebson::Document doc(BSON("a" << initialValue));
-    ASSERT_EQUALS(mongo::NumberInt, doc.root()["a"].getType());
+    ASSERT_EQUALS(monger::NumberInt, doc.root()["a"].getType());
     setPathTaken("a");
     addIndexedPath("a");
     auto result = node.apply(getApplyParams(doc.root()["a"]), getUpdateNodeApplyParams());
     ASSERT_FALSE(result.noop);
     ASSERT_TRUE(result.indexesAffected);
-    ASSERT_EQUALS(mongo::NumberLong, doc.root()["a"].getType());
+    ASSERT_EQUALS(monger::NumberLong, doc.root()["a"].getType());
     ASSERT_EQUALS(BSON("a" << static_cast<long long>(initialValue) - 1), doc);
     ASSERT_FALSE(doc.isInPlaceModeEnabled());
     ASSERT_EQUALS(getModifiedPaths(), "{a}");
@@ -1115,4 +1115,4 @@ TEST_F(ArithmeticNodeTest, ApplyToDeserializedDocNestedNotNoop) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,22 +30,22 @@
 #pragma once
 
 // Keeping this first to ensure it compiles by itself
-#include "mongo/util/future_impl.h"
+#include "monger/util/future_impl.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <type_traits>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/stdx/type_traits.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/if_constexpr.h"
-#include "mongo/util/interruptible.h"
-#include "mongo/util/intrusive_counter.h"
-#include "mongo/util/out_of_line_executor.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/stdx/type_traits.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/if_constexpr.h"
+#include "monger/util/interruptible.h"
+#include "monger/util/intrusive_counter.h"
+#include "monger/util/out_of_line_executor.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * SemiFuture<T> is logically a possibly-deferred StatusWith<T> (or Status when T is void).
@@ -624,14 +624,14 @@ public:
     TEMPLATE(typename Func)
     REQUIRES(future_details::isCallable<Func, T>)
     auto then(Func&& func) && noexcept {
-        return mongo::ExecutorFuture(
+        return monger::ExecutorFuture(
             std::move(_exec), std::move(this->_impl).then(wrapCB<T>(std::forward<Func>(func))));
     }
 
     TEMPLATE(typename Func)
     REQUIRES(future_details::isCallable<Func, StatusOrStatusWith<T>>)
     auto onCompletion(Func&& func) && noexcept {
-        return mongo::ExecutorFuture(
+        return monger::ExecutorFuture(
             std::move(_exec),
             std::move(this->_impl)
                 .onCompletion(wrapCB<StatusOrStatusWith<T>>(std::forward<Func>(func))));
@@ -640,7 +640,7 @@ public:
     TEMPLATE(typename Func)
     REQUIRES(future_details::isCallableR<T, Func, Status>)
     ExecutorFuture<T> onError(Func&& func) && noexcept {
-        return mongo::ExecutorFuture(
+        return monger::ExecutorFuture(
             std::move(_exec),
             std::move(this->_impl).onError(wrapCB<Status>(std::forward<Func>(func))));
     }
@@ -648,7 +648,7 @@ public:
     TEMPLATE(ErrorCodes::Error code, typename Func)
     REQUIRES(future_details::isCallableR<T, Func, Status>)
     ExecutorFuture<T> onError(Func&& func) && noexcept {
-        return mongo::ExecutorFuture(
+        return monger::ExecutorFuture(
             std::move(_exec),
             std::move(this->_impl)
                 .template onError<code>(wrapCB<Status>(std::forward<Func>(func))));
@@ -657,7 +657,7 @@ public:
     TEMPLATE(ErrorCategory category, typename Func)
     REQUIRES(future_details::isCallableR<T, Func, Status>)
     ExecutorFuture<T> onErrorCategory(Func&& func) && noexcept {
-        return mongo::ExecutorFuture(
+        return monger::ExecutorFuture(
             std::move(_exec),
             std::move(this->_impl)
                 .template onErrorCategory<category>(wrapCB<Status>(std::forward<Func>(func))));
@@ -1184,4 +1184,4 @@ template <typename T>
     return Out(SharedStateHolder<FakeVoidToVoid<T>>(std::move(_shared)));
 }
 
-}  // namespace mongo
+}  // namespace monger

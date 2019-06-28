@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/compiler.h"
+#include "monger/platform/compiler.h"
 
-namespace mongo {
+namespace monger {
 
 /** This function will call ::_exit and not return. Use this instead of calling ::_exit
  *  directly:
@@ -41,4 +41,4 @@ namespace mongo {
  */
 MONGO_COMPILER_NORETURN void quickExit(int);
 
-}  // namespace mongo
+}  // namespace monger

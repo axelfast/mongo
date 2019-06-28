@@ -16,14 +16,14 @@
     const nDocsToInsert = 300;
     const worksPerYield = 50;
 
-    // Start a mongod that will yield every 50 work cycles.
-    const mongod = MongoRunner.runMongod({
+    // Start a mongerd that will yield every 50 work cycles.
+    const mongerd = MongoRunner.runMongod({
         setParameter: `internalQueryExecYieldIterations=${worksPerYield}`,
         profile: 2,
     });
-    assert.neq(null, mongod, 'mongod was unable to start up');
+    assert.neq(null, mongerd, 'mongerd was unable to start up');
 
-    const coll = mongod.getDB('test').yield_during_writes;
+    const coll = mongerd.getDB('test').yield_during_writes;
     coll.drop();
 
     for (let i = 0; i < nDocsToInsert; i++) {
@@ -39,5 +39,5 @@
     assert.writeOK(coll.remove({}, {multi: true}));
     assert.gt(countOpYields(coll, 'remove'), (nDocsToInsert / worksPerYield) - 2);
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 })();

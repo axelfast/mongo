@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/multiapplier.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_entry.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/multiapplier.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_entry.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Apply `commitTransaction` oplog entry.
@@ -79,4 +79,4 @@ Status applyPrepareTransaction(OperationContext* opCtx,
  * the operations. Called at the end of rollback, startup recovery and initial sync.
  */
 void reconstructPreparedTransactions(OperationContext* opCtx, repl::OplogApplication::Mode mode);
-}  // namespace mongo
+}  // namespace monger

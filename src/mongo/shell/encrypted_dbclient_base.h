@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,35 +27,35 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/data_cursor.h"
-#include "mongo/base/data_type_validated.h"
-#include "mongo/bson/bson_depth.h"
-#include "mongo/client/dbclient_base.h"
-#include "mongo/crypto/aead_encryption.h"
-#include "mongo/crypto/symmetric_crypto.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/matcher/schema/encrypt_schema_gen.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/rpc/object_check.h"
-#include "mongo/rpc/op_msg_rpc_impls.h"
-#include "mongo/scripting/mozjs/bindata.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/maxkey.h"
-#include "mongo/scripting/mozjs/minkey.h"
-#include "mongo/scripting/mozjs/mongo.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/scripting/mozjs/valuewriter.h"
-#include "mongo/shell/encrypted_shell_options.h"
-#include "mongo/shell/kms.h"
-#include "mongo/shell/kms_gen.h"
-#include "mongo/shell/shell_options.h"
-#include "mongo/util/lru_cache.h"
+#include "monger/base/data_cursor.h"
+#include "monger/base/data_type_validated.h"
+#include "monger/bson/bson_depth.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/crypto/aead_encryption.h"
+#include "monger/crypto/symmetric_crypto.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/matcher/schema/encrypt_schema_gen.h"
+#include "monger/db/namespace_string.h"
+#include "monger/rpc/object_check.h"
+#include "monger/rpc/op_msg_rpc_impls.h"
+#include "monger/scripting/mozjs/bindata.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/maxkey.h"
+#include "monger/scripting/mozjs/minkey.h"
+#include "monger/scripting/mozjs/monger.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/scripting/mozjs/valuewriter.h"
+#include "monger/shell/encrypted_shell_options.h"
+#include "monger/shell/kms.h"
+#include "monger/shell/kms_gen.h"
+#include "monger/shell/shell_options.h"
+#include "monger/util/lru_cache.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr std::size_t kEncryptedDBCacheSize = 50;
 
@@ -168,4 +168,4 @@ using ImplicitEncryptedDBClientCallback =
 void setImplicitEncryptedDBClientCallback(ImplicitEncryptedDBClientCallback* callback);
 
 
-}  // namespace mongo
+}  // namespace monger

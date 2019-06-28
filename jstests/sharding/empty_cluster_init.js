@@ -1,6 +1,6 @@
 //
-// Tests initialization of an empty cluster with multiple mongoses.
-// Starts a bunch of mongoses in parallel, and ensures that there's only a single config
+// Tests initialization of an empty cluster with multiple mongerses.
+// Starts a bunch of mongerses in parallel, and ensures that there's only a single config
 // version initialization.
 //
 
@@ -11,67 +11,67 @@ replConfig.configsvr = true;
 configRS.initiate(replConfig);
 
 //
-// Start a bunch of mongoses which will probably interfere
+// Start a bunch of mongerses which will probably interfere
 //
 
-jsTest.log("Starting first set of mongoses in parallel...");
+jsTest.log("Starting first set of mongerses in parallel...");
 
-var mongoses = [];
+var mongerses = [];
 for (var i = 0; i < 3; i++) {
-    var mongos = MongoRunner.runMongos(
+    var mongers = MongoRunner.runMongos(
         {binVersion: "latest", configdb: configRS.getURL(), waitForConnect: false});
-    mongoses.push(mongos);
+    mongerses.push(mongers);
 }
 
-// Eventually connect to a mongo host, to be sure that the config upgrade happened
+// Eventually connect to a monger host, to be sure that the config upgrade happened
 // (This can take longer on extremely slow bbots or VMs)
-var mongosConn = null;
+var mongersConn = null;
 assert.soon(function() {
     try {
-        mongosConn = new Mongo(mongoses[0].host);
+        mongersConn = new Mongo(mongerses[0].host);
         return true;
     } catch (e) {
         print("Waiting for connect...");
         printjson(e);
         return false;
     }
-}, "Mongos " + mongoses[0].host + " did not start.", 5 * 60 * 1000);
+}, "Mongos " + mongerses[0].host + " did not start.", 5 * 60 * 1000);
 
-var version = mongosConn.getCollection("config.version").findOne();
+var version = mongersConn.getCollection("config.version").findOne();
 
 //
-// Start a second set of mongoses which should respect the initialized version
+// Start a second set of mongerses which should respect the initialized version
 //
 
-jsTest.log("Starting second set of mongoses...");
+jsTest.log("Starting second set of mongerses...");
 
 for (var i = 0; i < 3; i++) {
-    var mongos = MongoRunner.runMongos(
+    var mongers = MongoRunner.runMongos(
         {binVersion: "latest", configdb: configRS.getURL(), waitForConnect: false});
-    mongoses.push(mongos);
+    mongerses.push(mongers);
 }
 
 var connectToMongos = function(host) {
     // Eventually connect to a host
     assert.soon(function() {
         try {
-            mongosConn = new Mongo(host);
+            mongersConn = new Mongo(host);
             return true;
         } catch (e) {
             print("Waiting for connect to " + host);
             printjson(e);
             return false;
         }
-    }, "mongos " + host + " did not start.", 5 * 60 * 1000);
+    }, "mongers " + host + " did not start.", 5 * 60 * 1000);
 };
 
-for (var i = 0; i < mongoses.length; i++) {
-    connectToMongos(mongoses[i].host);
+for (var i = 0; i < mongerses.length; i++) {
+    connectToMongos(mongerses[i].host);
 }
 
-// Shut down our mongoses now that we've tested them
-for (var i = 0; i < mongoses.length; i++) {
-    MongoRunner.stopMongos(mongoses[i]);
+// Shut down our mongerses now that we've tested them
+for (var i = 0; i < mongerses.length; i++) {
+    MongoRunner.stopMongos(mongerses[i]);
 }
 
 //

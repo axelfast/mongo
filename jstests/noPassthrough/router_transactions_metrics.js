@@ -1,4 +1,4 @@
-// Tests multi-statement transactions metrics in the serverStatus output from mongos in various
+// Tests multi-statement transactions metrics in the serverStatus output from mongers in various
 // basic cases.
 // @tags: [uses_transactions, uses_multi_shard_transaction]
 (function() {
@@ -182,7 +182,7 @@
     const collName = "foo";
     const ns = dbName + '.' + collName;
 
-    const st = new ShardingTest({shards: 2, mongos: 2, config: 1});
+    const st = new ShardingTest({shards: 2, mongers: 2, config: 1});
 
     const session = st.s.startSession();
     const sessionDB = session.getDatabase(dbName);
@@ -279,7 +279,7 @@
             assert.commandWorked(otherRouterSession.abortTransaction_forTesting());
         }
 
-        // The stats on the main mongos shouldn't have changed.
+        // The stats on the main mongers shouldn't have changed.
         verifyServerStatusValues(st, expectedStats);
 
         return resWithRecoveryToken.recoveryToken;
@@ -486,7 +486,7 @@
             assert.commandWorked(otherRouterSessionDB.runCommand({find: collName}));
         assert.commandWorked(otherRouterSession.commitTransaction_forTesting());
 
-        // The stats on the main mongos shouldn't have changed.
+        // The stats on the main mongers shouldn't have changed.
         verifyServerStatusValues(st, expectedStats);
 
         assert.commandFailedWithCode(st.s.adminCommand({

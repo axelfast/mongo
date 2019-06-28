@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -58,13 +58,13 @@
 #include "vm/JSObject-inl.h"
 #include "vm/SavedStacks-inl.h"
 
-#include "mongo/scripting/mozjs/mongoErrorReportToString.h"
+#include "monger/scripting/mozjs/mongerErrorReportToString.h"
 
 using namespace js;
 using namespace js::gc;
 
 JSString*
-mongoErrorReportToString(JSContext* cx, JSErrorReport* reportp)
+mongerErrorReportToString(JSContext* cx, JSErrorReport* reportp)
 {
     /*
      * We do NOT want to use GetErrorTypeName() here because it will not do the

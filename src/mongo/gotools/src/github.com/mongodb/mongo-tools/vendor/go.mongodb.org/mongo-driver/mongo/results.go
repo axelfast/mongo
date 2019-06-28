@@ -4,13 +4,13 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package monger
 
 import (
 	"fmt"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/x/network/result"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/x/network/result"
 )
 
 // BulkWriteResult holds the result of a bulk write operation.

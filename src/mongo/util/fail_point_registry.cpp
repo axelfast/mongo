@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/util/fail_point_registry.h"
+#include "monger/util/fail_point_registry.h"
 
-#include "mongo/bson/json.h"
-#include "mongo/util/fail_point_server_parameter_gen.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/map_util.h"
-#include "mongo/util/str.h"
+#include "monger/bson/json.h"
+#include "monger/util/fail_point_server_parameter_gen.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/map_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr auto kFailPointServerParameterPrefix = "failpoint."_sd;
 
@@ -105,4 +105,4 @@ Status FailPointServerParameter::setFromString(const std::string& str) {
 
     return Status::OK();
 }
-}  // namespace mongo
+}  // namespace monger

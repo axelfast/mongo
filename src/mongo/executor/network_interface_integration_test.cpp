@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,38 +27,38 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <exception>
 #include <memory>
 
-#include "mongo/base/status_with.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/executor/network_connection_hook.h"
-#include "mongo/executor/network_interface_integration_fixture.h"
-#include "mongo/executor/test_network_connection_hook.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/message.h"
-#include "mongo/stdx/future.h"
-#include "mongo/unittest/integration_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/status_with.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/wire_version.h"
+#include "monger/executor/network_connection_hook.h"
+#include "monger/executor/network_interface_integration_fixture.h"
+#include "monger/executor/test_network_connection_hook.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/message.h"
+#include "monger/stdx/future.h"
+#include "monger/unittest/integration_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 namespace {
 
 bool pingCommandMissing(const RemoteCommandResponse& result) {
     if (result.isOK()) {
-        // On mongos, there is no sleep command, so just check that the command failed with
+        // On mongers, there is no sleep command, so just check that the command failed with
         // a "Command not found" error code
         ASSERT_EQ(result.data["ok"].Double(), 0.0);
         ASSERT_EQ(result.data["code"].Int(), 59);
@@ -109,7 +109,7 @@ TEST_F(NetworkInterfaceIntegrationFixture, HookHangs) {
     startNet(std::make_unique<HangingHook>());
 
     /**
-     *  Since mongos's have no ping command, we effectively skip this test by returning
+     *  Since mongers's have no ping command, we effectively skip this test by returning
      *  ExceededTimeLimit above. (That ErrorCode is used heavily in repl and sharding code.)
      *  If we return NetworkInterfaceExceededTimeLimit, it will make the ConnectionPool
      *  attempt to reform the connection, which can lead to an accepted but unfortunate
@@ -282,7 +282,7 @@ TEST_F(NetworkInterfaceTest, AsyncOpTimeout) {
 
     auto result = deferred.get();
 
-    // mongos doesn't implement the ping command, so ignore the response there, otherwise
+    // mongers doesn't implement the ping command, so ignore the response there, otherwise
     // check that we've timed out.
     if (!pingCommandMissing(result)) {
         ASSERT_EQ(ErrorCodes::NetworkInterfaceExceededTimeLimit, result.status);
@@ -386,4 +386,4 @@ TEST_F(NetworkInterfaceTest, IsMasterRequestMissingInternalClientInfoWhenNotInte
 
 }  // namespace
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

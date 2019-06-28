@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/embedded/embedded_options.h"
+#include "monger/embedded/embedded_options.h"
 
-#include "mongo/util/options_parser/startup_option_init.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/util/options_parser/startup_option_init.h"
+#include "monger/util/options_parser/startup_options.h"
 
-namespace mongo {
+namespace monger {
 namespace embedded {
 
 MONGO_GENERAL_STARTUP_OPTIONS_REGISTER(EmbeddedOptions)(InitializerContext* context) {
@@ -75,4 +75,4 @@ GlobalInitializerRegisterer embeddedOptionsStore("EmbeddedOptions_Store",
                                                  {"EndStartupOptionStorage"});
 
 }  // namespace embedded
-}  // namespace mongo
+}  // namespace monger

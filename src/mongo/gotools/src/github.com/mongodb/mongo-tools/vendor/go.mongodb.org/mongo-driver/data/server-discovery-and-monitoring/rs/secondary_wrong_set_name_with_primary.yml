@@ -1,6 +1,6 @@
 description: "Secondary wrong setName with primary"
 
-uri: "mongodb://a,b/?replicaSet=rs"
+uri: "mongerdb://a,b/?replicaSet=rs"
 
 phases: [
 

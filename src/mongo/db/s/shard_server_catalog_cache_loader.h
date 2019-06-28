@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/db/operation_context_group.h"
-#include "mongo/db/s/namespace_metadata_change_notifications.h"
-#include "mongo/s/catalog_cache_loader.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/util/concurrency/thread_pool.h"
+#include "monger/db/operation_context_group.h"
+#include "monger/db/s/namespace_metadata_change_notifications.h"
+#include "monger/s/catalog_cache_loader.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/util/concurrency/thread_pool.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Shard implementation of the CatalogCacheLoader used by the CatalogCache. Retrieves chunk metadata
@@ -499,4 +499,4 @@ private:
     DbTaskLists _dbTaskLists;
 };
 
-}  // namespace mongo
+}  // namespace monger

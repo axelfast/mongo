@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/haystack_access_method.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/find_common.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/commands.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/haystack_access_method.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_names.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/find_common.h"
 
 /**
  * Examines all documents in a given radius of a given point.
  * Returns all documents that match a given search restriction.
- * See http://dochub.mongodb.org/core/haystackindexes
+ * See http://dochub.mongerdb.org/core/haystackindexes
  *
  * Use when you want to look for restaurants within 25 miles with a certain name.
  * Don't use when you want to find the closest open restaurants.
  */
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::vector;
@@ -152,4 +152,4 @@ public:
     }
 } nameSearchCommand;
 
-}  // namespace mongo
+}  // namespace monger

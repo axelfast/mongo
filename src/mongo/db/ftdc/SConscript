@@ -21,10 +21,10 @@ ftdcEnv.Library(
         'varint.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/db/server_options_core',
-        '$BUILD_DIR/mongo/db/service_context',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/db/server_options_core',
+        '$BUILD_DIR/monger/db/service_context',
         '$BUILD_DIR/third_party/s2/s2', # For VarInt
         '$BUILD_DIR/third_party/shim_zlib',
     ],
@@ -34,11 +34,11 @@ platform_libs = []
 
 if env.TargetOSIs('linux'):
     platform_libs = [
-        '$BUILD_DIR/mongo/util/procparser'
+        '$BUILD_DIR/monger/util/procparser'
     ]
 elif env.TargetOSIs('windows'):
     platform_libs = [
-        '$BUILD_DIR/mongo/util/perfctr_collect'
+        '$BUILD_DIR/monger/util/perfctr_collect'
     ]
 
 env.Library(
@@ -50,43 +50,43 @@ env.Library(
         'ftdc_system_stats_${TARGET_OS}.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/commands',
-        '$BUILD_DIR/mongo/util/processinfo',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/commands',
+        '$BUILD_DIR/monger/util/processinfo',
         'ftdc'
     ] + platform_libs,
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/idl/server_parameter',
+        '$BUILD_DIR/monger/idl/server_parameter',
     ],
 )
 
 env.Library(
-    target='ftdc_mongod',
+    target='ftdc_mongerd',
     source=[
         'ftdc_commands.cpp',
-        'ftdc_mongod.cpp',
+        'ftdc_mongerd.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/repl/repl_coordinator_interface',
-        '$BUILD_DIR/mongo/db/storage/storage_options',
+        '$BUILD_DIR/monger/db/repl/repl_coordinator_interface',
+        '$BUILD_DIR/monger/db/storage/storage_options',
         'ftdc_server'
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/auth/auth',
-        '$BUILD_DIR/mongo/db/auth/authprivilege',
+        '$BUILD_DIR/monger/db/auth/auth',
+        '$BUILD_DIR/monger/db/auth/authprivilege',
     ],
 )
 
 env.Library(
-    target='ftdc_mongos',
+    target='ftdc_mongers',
     source=[
-        'ftdc_mongos.cpp',
+        'ftdc_mongers.cpp',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/client/clientdriver_minimal',
-        '$BUILD_DIR/mongo/executor/task_executor_pool',
-        '$BUILD_DIR/mongo/idl/server_parameter',
-        '$BUILD_DIR/mongo/s/grid',
+        '$BUILD_DIR/monger/client/clientdriver_minimal',
+        '$BUILD_DIR/monger/executor/task_executor_pool',
+        '$BUILD_DIR/monger/idl/server_parameter',
+        '$BUILD_DIR/monger/s/grid',
         'ftdc_server',
     ],
 )
@@ -103,8 +103,8 @@ env.CppUnitTest(
         'varint_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/service_context_test_fixture',
-        '$BUILD_DIR/mongo/util/clock_source_mock',
+        '$BUILD_DIR/monger/db/service_context_test_fixture',
+        '$BUILD_DIR/monger/util/clock_source_mock',
         'ftdc',
     ],
 )

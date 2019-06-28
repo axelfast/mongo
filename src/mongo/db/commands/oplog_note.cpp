@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands.h"
+#include "monger/db/commands.h"
 
-#include "mongo/base/init.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/resource_pattern.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/resource_pattern.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 Status _performNoopWrite(OperationContext* opCtx, BSONObj msgObj, StringData note) {
     repl::ReplicationCoordinator* const replCoord = repl::ReplicationCoordinator::get(opCtx);
@@ -157,4 +157,4 @@ MONGO_INITIALIZER(RegisterAppendOpLogNoteCmd)(InitializerContext* context) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

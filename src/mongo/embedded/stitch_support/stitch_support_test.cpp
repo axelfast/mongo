@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,18 +33,18 @@
 
 #include "stitch_support/stitch_support.h"
 
-#include "mongo/base/initializer.h"
-#include "mongo/bson/json.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/initializer.h"
+#include "monger/bson/json.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/scopeguard.h"
 
 namespace {
 
-using mongo::makeGuard;
-using mongo::ScopeGuard;
+using monger::makeGuard;
+using monger::ScopeGuard;
 
-class StitchSupportTest : public mongo::unittest::Test {
+class StitchSupportTest : public monger::unittest::Test {
 protected:
     void setUp() override {
         status = stitch_support_v1_status_create();
@@ -75,7 +75,7 @@ protected:
      * governs the lifetime of the uint8_t*.
      */
     auto toBSONForAPI(const char* json) {
-        auto bson = mongo::fromjson(json);
+        auto bson = monger::fromjson(json);
         return std::make_pair(static_cast<const uint8_t*>(static_cast<const void*>(bson.objdata())),
                               bson);
     }
@@ -85,8 +85,8 @@ protected:
      * stitch_support_v1 uses for BSON.
      */
     auto fromBSONForAPI(const uint8_t* bson) {
-        return mongo::tojson(
-            mongo::BSONObj(static_cast<const char*>(static_cast<const void*>(bson))));
+        return monger::tojson(
+            monger::BSONObj(static_cast<const char*>(static_cast<const void*>(bson))));
     }
 
     auto checkMatch(const char* filterJSON,
@@ -605,23 +605,23 @@ TEST_F(StitchSupportTest, TestUpsertProducesProperStatus) {
 // calling runGlobalInitializers(), which is called both from the regular unit test main() and from
 // the Stitch Support Library intializer function that gets tested here.
 int main(const int argc, const char* const* const argv) {
-    // See comment by the same code block in mongo_embedded_test.cpp
+    // See comment by the same code block in monger_embedded_test.cpp
     const char* null_argv[1] = {nullptr};
-    auto ret = mongo::runGlobalInitializers(0, null_argv, nullptr);
+    auto ret = monger::runGlobalInitializers(0, null_argv, nullptr);
     if (!ret.isOK()) {
         std::cerr << "Global initilization failed";
         return EXIT_FAILURE;
     }
 
-    ret = mongo::runGlobalDeinitializers();
+    ret = monger::runGlobalDeinitializers();
     if (!ret.isOK()) {
         std::cerr << "Global deinitilization failed";
         return EXIT_FAILURE;
     }
 
-    const auto result = ::mongo::unittest::Suite::run(std::vector<std::string>(), "", 1);
+    const auto result = ::monger::unittest::Suite::run(std::vector<std::string>(), "", 1);
 
-    // This is the standard exit path for Mongo processes. See the mongo::quickExit() declaration
+    // This is the standard exit path for Mongo processes. See the monger::quickExit() declaration
     // for more information.
-    mongo::quickExit(result);
+    monger::quickExit(result);
 }

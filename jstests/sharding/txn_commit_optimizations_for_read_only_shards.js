@@ -59,7 +59,7 @@
         // Create shards with more than one node because we test for writeConcern majority failing.
         config: 1,
         other: {
-            mongosOptions: {verbose: 3},
+            mongersOptions: {verbose: 3},
             rs0: {nodes: [{}, {rsConfig: {priority: 0}}]},
             rs1: {nodes: [{}, {rsConfig: {priority: 0}}]},
             rs2: {nodes: [{}, {rsConfig: {priority: 0}}]},

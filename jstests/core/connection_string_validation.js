@@ -20,7 +20,7 @@ var goodStrings = [
 var missingConnString = /^Missing connection string$/;
 var incorrectType = /^Incorrect type/;
 var emptyConnString = /^Empty connection string$/;
-var badHost = /^Failed to parse mongodb/;
+var badHost = /^Failed to parse mongerdb/;
 var emptyHost = /^Empty host component/;
 var noPort = /^No digits/;
 var invalidPort = /^Port number \d+ out of range/;
@@ -37,20 +37,20 @@ var badStrings = [
     {s: "/test", r: badHost},
     {s: ":/", r: emptyHost},
     {s: ":/test", r: emptyHost},
-    {s: "mongodb://:" + port + "/", r: emptyHost},
-    {s: "mongodb://:" + port + "/test", r: emptyHost},
-    {s: "mongodb://localhost:/test", r: noPort},
-    {s: "mongodb://127.0.0.1:/test", r: noPort},
-    {s: "mongodb://127.0.0.1:cat/test", c: ErrorCodes.FailedToParse},
-    {s: "mongodb://127.0.0.1:1cat/test", c: ErrorCodes.FailedToParse},
-    {s: "mongodb://127.0.0.1:123456/test", r: invalidPort},
-    {s: "mongodb://127.0.0.1:65536/test", r: invalidPort},
-    {s: "mongodb://::1:65536/test", r: multipleColon},
-    {s: "mongodb://::1:" + port + "/", r: multipleColon}
+    {s: "mongerdb://:" + port + "/", r: emptyHost},
+    {s: "mongerdb://:" + port + "/test", r: emptyHost},
+    {s: "mongerdb://localhost:/test", r: noPort},
+    {s: "mongerdb://127.0.0.1:/test", r: noPort},
+    {s: "mongerdb://127.0.0.1:cat/test", c: ErrorCodes.FailedToParse},
+    {s: "mongerdb://127.0.0.1:1cat/test", c: ErrorCodes.FailedToParse},
+    {s: "mongerdb://127.0.0.1:123456/test", r: invalidPort},
+    {s: "mongerdb://127.0.0.1:65536/test", r: invalidPort},
+    {s: "mongerdb://::1:65536/test", r: multipleColon},
+    {s: "mongerdb://::1:" + port + "/", r: multipleColon}
 ];
 
 function testGoodAsURI(i, uri) {
-    uri = "mongodb://" + uri;
+    uri = "mongerdb://" + uri;
     print("\nTesting good uri " + i + " (\"" + uri + "\") ...");
     var gotException = false;
     var exception;

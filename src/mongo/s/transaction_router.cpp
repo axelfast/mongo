@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,34 +27,34 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kTransaction
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kTransaction
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/transaction_router.h"
+#include "monger/s/transaction_router.h"
 
-#include "mongo/client/read_preference.h"
-#include "mongo/client/remote_command_retry_scheduler.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/commands/txn_two_phase_commit_cmds_gen.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/async_requests_sender.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/multi_statement_transaction_requests_sender.h"
-#include "mongo/s/router_transactions_metrics.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/remote_command_retry_scheduler.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/commands/txn_two_phase_commit_cmds_gen.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/async_requests_sender.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/s/multi_statement_transaction_requests_sender.h"
+#include "monger/s/router_transactions_metrics.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // TODO SERVER-39704: Remove this fail point once the router can safely retry within a transaction
@@ -173,7 +173,7 @@ bool isRetryableWritesError(ErrorCodes::Error code) {
 // meaningful work.
 //
 // The "UnknownTransactionCommitResult" specification:
-// https://github.com/mongodb/specifications/blob/master/source/transactions/transactions.rst#unknowntransactioncommitresult.
+// https://github.com/mongerdb/specifications/blob/master/source/transactions/transactions.rst#unknowntransactioncommitresult.
 bool isCommitResultUnknown(const Status& commitStatus, const Status& commitWCStatus) {
     if (!commitStatus.isOK()) {
         return isRetryableWritesError(commitStatus.code()) ||
@@ -875,7 +875,7 @@ BSONObj TransactionRouter::Router::_commitTransaction(
     }
 
     if (o().participants.empty()) {
-        // The participants list can be empty if a transaction was began on mongos, but it never
+        // The participants list can be empty if a transaction was began on mongers, but it never
         // ended up targeting any hosts. Such cases are legal for example if a find is issued
         // against a non-existent database.
         uassert(ErrorCodes::IllegalOperation,
@@ -1340,4 +1340,4 @@ Microseconds TransactionRouter::TimingStats::getCommitDuration(TickSource* tickS
     return tickSource->ticksTo<Microseconds>(endTime - commitStartTime);
 }
 
-}  // namespace mongo
+}  // namespace monger

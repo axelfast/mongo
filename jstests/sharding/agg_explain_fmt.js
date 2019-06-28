@@ -1,12 +1,12 @@
-// This test ensuexplain an explain of an aggregate through mongos has the intended format.
+// This test ensuexplain an explain of an aggregate through mongers has the intended format.
 (function() {
     "use strict";
 
     load('jstests/libs/analyze_plan.js');  // For planHasStage.
 
     const st = new ShardingTest({shards: 2});
-    const mongosDB = st.s.getDB("test");
-    const coll = mongosDB.agg_explain_fmt;
+    const mongersDB = st.s.getDB("test");
+    const coll = mongersDB.agg_explain_fmt;
     // Insert documents with {_id: -5} to {_id: 4}.
     assert.commandWorked(coll.insert(Array.from({length: 10}, (_, i) => ({_id: i - 5}))));
 
@@ -33,9 +33,9 @@
                shardExplain);
     }
 
-    // Do a sharded explain from a mongod, not mongos, to ensure that it does not have a
+    // Do a sharded explain from a mongerd, not mongers, to ensure that it does not have a
     // SHARDING_FILTER stage.");
-    const shardDB = st.shard0.getDB(mongosDB.getName());
+    const shardDB = st.shard0.getDB(mongersDB.getName());
     explain = shardDB[coll.getName()].explain().aggregate([{$match: {}}]);
     assert(!planHasStage(shardDB, explain.queryPlanner.winningPlan, "SHARDING_FILTER"), explain);
     st.stop();

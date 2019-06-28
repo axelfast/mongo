@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,28 +31,28 @@
  * Unit tests of the UserDocumentParser type.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/status.h"
-#include "mongo/crypto/mechanism_scram.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/sasl_options.h"
-#include "mongo/db/auth/user_document_parser.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/base/status.h"
+#include "monger/crypto/mechanism_scram.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/sasl_options.h"
+#include "monger/db/auth/user_document_parser.h"
+#include "monger/db/jsobj.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/net/socket_utils.h"
 
 #define ASSERT_NULL(EXPR) ASSERT_FALSE(EXPR)
 #define ASSERT_NON_NULL(EXPR) ASSERT_TRUE(EXPR)
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::unique_ptr;
 
-class V2UserDocumentParsing : public ::mongo::unittest::Test {
+class V2UserDocumentParsing : public ::monger::unittest::Test {
 public:
     V2UserDocumentParsing() {}
 
@@ -525,4 +525,4 @@ TEST_F(V2UserDocumentParsing, V2AuthenticationRestrictionsExtractionAndRetreival
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

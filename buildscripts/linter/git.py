@@ -9,15 +9,15 @@ from buildscripts import git as _git
 from buildscripts import moduleconfig
 from buildscripts.resmokelib.utils import globstar
 
-# Path to the modules in the mongodb source tree
+# Path to the modules in the mongerdb source tree
 # Has to match the string in SConstruct
-MODULE_DIR = "src/mongo/db/modules"
+MODULE_DIR = "src/monger/db/modules"
 
 
 def get_base_dir():
     # type: () -> str
     """
-    Get the base directory for mongo repo.
+    Get the base directory for monger repo.
 
     This script assumes that it is running in buildscripts/, and uses
     that to find the base directory.
@@ -36,10 +36,10 @@ def get_repos():
 
     # Get a list of modules
     # TODO: how do we filter rocks, does it matter?
-    mongo_modules = moduleconfig.discover_module_directories(
+    monger_modules = moduleconfig.discover_module_directories(
         os.path.join(base_dir, MODULE_DIR), None)
 
-    paths = [os.path.join(base_dir, MODULE_DIR, m) for m in mongo_modules]
+    paths = [os.path.join(base_dir, MODULE_DIR, m) for m in monger_modules]
 
     paths.append(base_dir)
 
@@ -85,7 +85,7 @@ class Repo(_git.Repository):
         gito = self.git_ls_files(args)
 
         # This allows us to pick all the interesting files
-        # in the mongo and mongo-enterprise repos
+        # in the monger and monger-enterprise repos
         file_list = [line.rstrip() for line in gito.splitlines() if filter_function(line.rstrip())]
 
         return file_list

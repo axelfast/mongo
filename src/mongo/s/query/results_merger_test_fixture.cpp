@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/remote_command_targeter_factory_mock.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/query/results_merger_test_fixture.h"
+#include "monger/client/remote_command_targeter_factory_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/query/results_merger_test_fixture.h"
 
-namespace mongo {
+namespace monger {
 const HostAndPort ResultsMergerTestFixture::kTestConfigShardHost =
     HostAndPort("FakeConfigHost", 12345);
 const std::vector<ShardId> ResultsMergerTestFixture::kTestShardIds = {
@@ -74,4 +74,4 @@ void ResultsMergerTestFixture::setUp() {
     setupShards(shards);
 }
 
-}  // namespace mongo
+}  // namespace monger

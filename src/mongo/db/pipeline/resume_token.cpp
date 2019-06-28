@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/resume_token.h"
+#include "monger/db/pipeline/resume_token.h"
 
 #include <boost/optional/optional_io.hpp>
 #include <limits>
 
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/pipeline/document_source_change_stream_gen.h"
-#include "mongo/db/pipeline/value_comparator.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/util/hex.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/pipeline/document_source_change_stream_gen.h"
+#include "monger/db/pipeline/value_comparator.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/util/hex.h"
 
-namespace mongo {
+namespace monger {
 constexpr StringData ResumeToken::kDataFieldName;
 constexpr StringData ResumeToken::kTypeBitsFieldName;
 
@@ -238,4 +238,4 @@ bool ResumeToken::isHighWaterMarkToken(const ResumeTokenData& tokenData) {
     return tokenData == makeHighWaterMarkResumeTokenData(tokenData.clusterTime, tokenData.uuid);
 }
 
-}  // namespace mongo
+}  // namespace monger

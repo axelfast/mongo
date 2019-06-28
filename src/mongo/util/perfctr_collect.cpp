@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kFTDC
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kFTDC
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/perfctr_collect.h"
+#include "monger/util/perfctr_collect.h"
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -514,4 +514,4 @@ Status PerfCounterCollector::collect(BSONObjBuilder* builder) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

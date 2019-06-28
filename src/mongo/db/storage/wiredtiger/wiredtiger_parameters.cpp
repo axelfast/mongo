@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,16 +26,16 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/wiredtiger/wiredtiger_parameters_gen.h"
-#include "mongo/logger/parse_log_component_settings.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_parameters_gen.h"
+#include "monger/logger/parse_log_component_settings.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -132,4 +132,4 @@ Status WiredTigerMaxCacheOverflowSizeGBParameter::setFromString(const std::strin
     return applyMaxCacheOverflowSizeGBParameter(*this, value);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/keypattern.h"
-#include "mongo/db/s/balancer/balancer_policy.h"
-#include "mongo/platform/random.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/s/balancer/balancer_policy.h"
+#include "monger/platform/random.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::map;
@@ -761,4 +761,4 @@ TEST(DistributionStatus, ChunkTagsSelectorWithMinMaxKeys) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

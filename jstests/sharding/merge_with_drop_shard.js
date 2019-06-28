@@ -7,12 +7,12 @@
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 1}});
 
-    const mongosDB = st.s.getDB(jsTestName());
-    const sourceColl = mongosDB["source"];
-    const targetColl = mongosDB["target"];
+    const mongersDB = st.s.getDB(jsTestName());
+    const sourceColl = mongersDB["source"];
+    const targetColl = mongersDB["target"];
 
-    assert.commandWorked(st.s.getDB("admin").runCommand({enableSharding: mongosDB.getName()}));
-    st.ensurePrimaryShard(mongosDB.getName(), st.shard1.name);
+    assert.commandWorked(st.s.getDB("admin").runCommand({enableSharding: mongersDB.getName()}));
+    st.ensurePrimaryShard(mongersDB.getName(), st.shard1.name);
 
     function setAggHang(mode) {
         assert.commandWorked(st.shard0.adminCommand(
@@ -35,7 +35,7 @@
         }, "removeShard never completed for shard " + shard.shardName);
 
         // Drop the test database on the removed shard so it does not interfere with addShard later.
-        assert.commandWorked(shard.getDB(mongosDB.getName()).dropDatabase());
+        assert.commandWorked(shard.getDB(mongersDB.getName()).dropDatabase());
 
         st.configRS.awaitLastOpCommitted();
         assert.commandWorked(st.s.adminCommand({flushRouterConfig: 1}));
@@ -81,7 +81,7 @@
 
         // Wait for the parallel shell to hit the failpoint.
         assert.soon(
-            () => mongosDB
+            () => mongersDB
                       .currentOp({
                           $or: [
                               {op: "command", "command.comment": comment},
@@ -89,7 +89,7 @@
                           ]
                       })
                       .inprog.length >= 1,
-            () => tojson(mongosDB.currentOp().inprog));
+            () => tojson(mongersDB.currentOp().inprog));
 
         if (dropShard) {
             removeShard(st.shard0);
@@ -104,10 +104,10 @@
     }
 
     // Shard the source collection with shard key {shardKey: 1} and split into 2 chunks.
-    st.shardColl(sourceColl.getName(), {shardKey: 1}, {shardKey: 0}, false, mongosDB.getName());
+    st.shardColl(sourceColl.getName(), {shardKey: 1}, {shardKey: 0}, false, mongersDB.getName());
 
     // Shard the output collection with shard key {shardKey: 1} and split into 2 chunks.
-    st.shardColl(targetColl.getName(), {shardKey: 1}, {shardKey: 0}, false, mongosDB.getName());
+    st.shardColl(targetColl.getName(), {shardKey: 1}, {shardKey: 0}, false, mongersDB.getName());
 
     // Write two documents in the source collection that should target the two chunks in the target
     // collection.

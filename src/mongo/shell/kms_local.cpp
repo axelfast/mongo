@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,18 +31,18 @@
 
 #include <stdlib.h>
 
-#include "mongo/base/init.h"
-#include "mongo/base/secure_allocator.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/json.h"
-#include "mongo/crypto/aead_encryption.h"
-#include "mongo/crypto/symmetric_crypto.h"
-#include "mongo/crypto/symmetric_key.h"
-#include "mongo/shell/kms.h"
-#include "mongo/shell/kms_gen.h"
-#include "mongo/util/base64.h"
+#include "monger/base/init.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/json.h"
+#include "monger/crypto/aead_encryption.h"
+#include "monger/crypto/symmetric_crypto.h"
+#include "monger/crypto/symmetric_key.h"
+#include "monger/shell/kms.h"
+#include "monger/shell/kms_gen.h"
+#include "monger/util/base64.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -124,7 +124,7 @@ std::unique_ptr<KMSService> LocalKMSService::create(const LocalKMS& config) {
 }
 
 /**
- * Factory for LocalKMSService if user specifies local config to mongo() JS constructor.
+ * Factory for LocalKMSService if user specifies local config to monger() JS constructor.
  */
 class LocalKMSServiceFactory final : public KMSServiceFactory {
 public:
@@ -144,10 +144,10 @@ public:
 
 }  // namspace
 
-MONGO_INITIALIZER(LocalKMSRegister)(::mongo::InitializerContext* context) {
+MONGO_INITIALIZER(LocalKMSRegister)(::monger::InitializerContext* context) {
     KMSServiceController::registerFactory(KMSProviderEnum::local,
                                           std::make_unique<LocalKMSServiceFactory>());
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

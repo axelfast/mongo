@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,28 +26,28 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kFTDC
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kFTDC
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ftdc/ftdc_mongos.h"
+#include "monger/db/ftdc/ftdc_mongers.h"
 
 #include <boost/filesystem.hpp>
 
-#include "mongo/client/connpool.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/client/global_conn_pool.h"
-#include "mongo/db/ftdc/controller.h"
-#include "mongo/db/ftdc/ftdc_server.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/executor/connection_pool_stats.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/grid.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/log.h"
-#include "mongo/util/synchronized_value.h"
+#include "monger/client/connpool.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/client/global_conn_pool.h"
+#include "monger/db/ftdc/controller.h"
+#include "monger/db/ftdc/ftdc_server.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/executor/connection_pool_stats.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/grid.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/log.h"
+#include "monger/util/synchronized_value.h"
 
-namespace mongo {
+namespace monger {
 
 class ConnPoolStatsCollector : public FTDCCollectorInterface {
 public:
@@ -121,4 +121,4 @@ void stopMongoSFTDC() {
     stopFTDC();
 }
 
-}  // namespace mongo
+}  // namespace monger

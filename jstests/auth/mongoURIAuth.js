@@ -35,13 +35,13 @@
         var uri;
 
         if (uriMech) {
-            uri = "mongodb://user:password@localhost:" + conn.port + "/admin?authMechanism=" +
+            uri = "mongerdb://user:password@localhost:" + conn.port + "/admin?authMechanism=" +
                 authMechanism;
         } else {
-            uri = "mongodb://user:password@localhost:" + conn.port;
+            uri = "mongerdb://user:password@localhost:" + conn.port;
         }
 
-        var shell = runMongoProgram('./mongo', uri, "--eval", "db.getName()");
+        var shell = runMongoProgram('./monger', uri, "--eval", "db.getName()");
         assert.eq(shell, 0, "Should be able to connect with specified params.");
 
         const log = adminDB.runCommand({getLog: "global"});

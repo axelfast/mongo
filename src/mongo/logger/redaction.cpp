@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/logger/redaction.h"
+#include "monger/logger/redaction.h"
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -87,4 +87,4 @@ std::string redact(const DBException& exceptionToRedact) {
     return ss.str();
 }
 
-}  // namespace mongo
+}  // namespace monger

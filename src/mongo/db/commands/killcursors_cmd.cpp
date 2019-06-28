@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/commands/killcursors_common.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/query/killcursors_request.h"
-#include "mongo/db/stats/top.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/commands/killcursors_common.h"
+#include "monger/db/curop.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/query/killcursors_request.h"
+#include "monger/db/stats/top.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 class KillCursorsCmd final : public KillCursorsCmdBase {
     KillCursorsCmd(const KillCursorsCmd&) = delete;
@@ -87,4 +87,4 @@ private:
     }
 } killCursorsCmd;
 
-}  // namespace mongo
+}  // namespace monger

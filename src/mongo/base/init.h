@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,20 +35,20 @@
  * Initializers are arranged in an acyclic directed dependency graph.  Declaring
  * a cycle will lead to a runtime error.
  *
- * Initializer functions take a parameter of type ::mongo::InitializerContext*, and return
+ * Initializer functions take a parameter of type ::monger::InitializerContext*, and return
  * a Status.  Any status other than Status::OK() is considered a failure that will stop further
  * intializer processing.
  */
 
 #pragma once
 
-#include "mongo/base/deinitializer_context.h"
-#include "mongo/base/global_initializer.h"
-#include "mongo/base/global_initializer_registerer.h"
-#include "mongo/base/initializer.h"
-#include "mongo/base/initializer_context.h"
-#include "mongo/base/initializer_function.h"
-#include "mongo/base/status.h"
+#include "monger/base/deinitializer_context.h"
+#include "monger/base/global_initializer.h"
+#include "monger/base/global_initializer_registerer.h"
+#include "monger/base/initializer.h"
+#include "monger/base/initializer_context.h"
+#include "monger/base/initializer_function.h"
+#include "monger/base/status.h"
 
 /**
  * Convenience parameter representing an empty set of prerequisites for an initializer function.
@@ -63,7 +63,7 @@
 /**
  * Convenience parameter representing the default set of dependents for initializer functions.
  */
-#define MONGO_DEFAULT_PREREQUISITES (::mongo::defaultInitializerName().c_str())
+#define MONGO_DEFAULT_PREREQUISITES (::monger::defaultInitializerName().c_str())
 
 /**
  * Macro to define an initializer function named "NAME" with the default prerequisites, and
@@ -72,7 +72,7 @@
  * See MONGO_INITIALIZER_GENERAL.
  *
  * Usage:
- *     MONGO_INITIALIZER(myModule)(::mongo::InitializerContext* context) {
+ *     MONGO_INITIALIZER(myModule)(::monger::InitializerContext* context) {
  *         ...
  *     }
  */
@@ -88,7 +88,7 @@
  * Usage:
  *     MONGO_INITIALIZER_WITH_PREREQUISITES(myGlobalStateChecker,
  *                                         ("globalStateInitialized", "stacktraces"))(
- *            ::mongo::InitializerContext* context) {
+ *            ::monger::InitializerContext* context) {
  *    }
  */
 #define MONGO_INITIALIZER_WITH_PREREQUISITES(NAME, PREREQUISITES) \
@@ -105,14 +105,14 @@
  * DEPENDENTS is a tuple of 0 or more std::string literals.
  *
  * At run time, the full set of prerequisites for NAME will be computed as the union of the
- * explicit PREREQUISITES and the set of all other mongo initializers that name NAME in their
+ * explicit PREREQUISITES and the set of all other monger initializers that name NAME in their
  * list of dependents.
  *
  * Usage:
  *    MONGO_INITIALIZER_GENERAL(myInitializer,
  *                             ("myPrereq1", "myPrereq2", ...),
  *                             ("myDependent1", "myDependent2", ...))(
- *            ::mongo::InitializerContext* context) {
+ *            ::monger::InitializerContext* context) {
  *    }
  *
  * TODO: May want to be able to name the initializer separately from the function name.
@@ -120,16 +120,16 @@
  * of the function to declare would be options.
  */
 #define MONGO_INITIALIZER_GENERAL(NAME, PREREQUISITES, DEPENDENTS)                        \
-    ::mongo::Status MONGO_INITIALIZER_FUNCTION_NAME_(NAME)(::mongo::InitializerContext*); \
+    ::monger::Status MONGO_INITIALIZER_FUNCTION_NAME_(NAME)(::monger::InitializerContext*); \
     namespace {                                                                           \
-    ::mongo::GlobalInitializerRegisterer _mongoInitializerRegisterer_##NAME(              \
+    ::monger::GlobalInitializerRegisterer _mongerInitializerRegisterer_##NAME(              \
         std::string(#NAME),                                                               \
-        mongo::InitializerFunction(MONGO_INITIALIZER_FUNCTION_NAME_(NAME)),               \
-        mongo::DeinitializerFunction(nullptr),                                            \
+        monger::InitializerFunction(MONGO_INITIALIZER_FUNCTION_NAME_(NAME)),               \
+        monger::DeinitializerFunction(nullptr),                                            \
         std::vector<std::string>{MONGO_INITIALIZER_STRIP_PARENS_ PREREQUISITES},          \
         std::vector<std::string>{MONGO_INITIALIZER_STRIP_PARENS_ DEPENDENTS});            \
     }                                                                                     \
-    ::mongo::Status MONGO_INITIALIZER_FUNCTION_NAME_(NAME)
+    ::monger::Status MONGO_INITIALIZER_FUNCTION_NAME_(NAME)
 
 /**
  * Macro to define an initializer group.
@@ -139,12 +139,12 @@
  * global parameters initialized".
  */
 #define MONGO_INITIALIZER_GROUP(NAME, PREREQUISITES, DEPENDENTS)                               \
-    MONGO_INITIALIZER_GENERAL(NAME, PREREQUISITES, DEPENDENTS)(::mongo::InitializerContext*) { \
-        return ::mongo::Status::OK();                                                          \
+    MONGO_INITIALIZER_GENERAL(NAME, PREREQUISITES, DEPENDENTS)(::monger::InitializerContext*) { \
+        return ::monger::Status::OK();                                                          \
     }
 
 /**
- * Macro to produce a name for a mongo initializer function for an initializer operation
+ * Macro to produce a name for a monger initializer function for an initializer operation
  * named "NAME".
  */
-#define MONGO_INITIALIZER_FUNCTION_NAME_(NAME) _mongoInitializerFunction_##NAME
+#define MONGO_INITIALIZER_FUNCTION_NAME_(NAME) _mongerInitializerFunction_##NAME

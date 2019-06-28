@@ -4,8 +4,8 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongorestore writes BSON data to a MongoDB instance.
-package mongorestore
+// Package mongerrestore writes BSON data to a MongoDB instance.
+package mongerrestore
 
 import (
 	"compress/gzip"
@@ -17,16 +17,16 @@ import (
 	"sync"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/archive"
-	"github.com/mongodb/mongo-tools-common/auth"
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/progress"
-	"github.com/mongodb/mongo-tools-common/util"
-	"github.com/mongodb/mongo-tools/mongorestore/ns"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/mongerdb/monger-tools-common/archive"
+	"github.com/mongerdb/monger-tools-common/auth"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/progress"
+	"github.com/mongerdb/monger-tools-common/util"
+	"github.com/mongerdb/monger-tools/mongerrestore/ns"
+	"go.mongerdb.org/monger-driver/bson/primitive"
 )
 
 const (
@@ -35,7 +35,7 @@ const (
 )
 
 // MongoRestore is a container for the user-specified options and
-// internal state used for running mongorestore.
+// internal state used for running mongerrestore.
 type MongoRestore struct {
 	ToolOptions   *options.ToolOptions
 	InputOptions  *InputOptions
@@ -318,7 +318,7 @@ func (restore *MongoRestore) ParseAndValidateOptions() error {
 	return nil
 }
 
-// Restore runs the mongorestore program.
+// Restore runs the mongerrestore program.
 func (restore *MongoRestore) Restore() Result {
 	var target archive.DirLike
 	err := restore.ParseAndValidateOptions()
@@ -365,19 +365,19 @@ func (restore *MongoRestore) Restore() Result {
 		target, err = newActualPath(restore.TargetDirectory)
 		if err != nil {
 			if usedDefaultTarget {
-				log.Logv(log.Always, util.ShortUsage("mongorestore"))
+				log.Logv(log.Always, util.ShortUsage("mongerrestore"))
 			}
-			return Result{Err: fmt.Errorf("mongorestore target '%v' invalid: %v", restore.TargetDirectory, err)}
+			return Result{Err: fmt.Errorf("mongerrestore target '%v' invalid: %v", restore.TargetDirectory, err)}
 		}
 		// handle cases where the user passes in a file instead of a directory
 		if !target.IsDir() {
-			log.Logv(log.DebugLow, "mongorestore target is a file, not a directory")
+			log.Logv(log.DebugLow, "mongerrestore target is a file, not a directory")
 			err = restore.handleBSONInsteadOfDirectory(restore.TargetDirectory)
 			if err != nil {
 				return Result{Err: err}
 			}
 		} else {
-			log.Logv(log.DebugLow, "mongorestore target is a directory, not a file")
+			log.Logv(log.DebugLow, "mongerrestore target is a directory, not a file")
 		}
 	}
 	if restore.NSOptions.Collection != "" &&
@@ -452,7 +452,7 @@ func (restore *MongoRestore) Restore() Result {
 		}
 	}
 	if restore.InputOptions.OplogReplay && restore.manager.Oplog() == nil {
-		return Result{Err: fmt.Errorf("no oplog file to replay; make sure you run mongodump with --oplog")}
+		return Result{Err: fmt.Errorf("no oplog file to replay; make sure you run mongerdump with --oplog")}
 	}
 	if restore.manager.GetOplogConflict() {
 		return Result{Err: fmt.Errorf("cannot provide both an oplog.bson file and an oplog file with --oplogFile, " +

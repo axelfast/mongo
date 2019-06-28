@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/string_map.h"
+#include "monger/util/string_map.h"
 
 #include <absl/container/flat_hash_map.h>
 #include <absl/container/node_hash_map.h>
@@ -41,7 +41,7 @@
 #include <unordered_map>
 
 
-namespace mongo {
+namespace monger {
 namespace {
 
 constexpr uint32_t kMaxContainerSize = 1000000;
@@ -280,4 +280,4 @@ BENCHMARK_TEMPLATE(BM_Insert, AbslFlatHashMapString)->Apply(Range<1>);
 BENCHMARK_TEMPLATE(BM_Insert, AbslNodeHashMapString)->Apply(Range<1>);
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

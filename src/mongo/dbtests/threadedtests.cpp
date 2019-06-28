@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/version.hpp>
 #include <functional>
 #include <iostream>
 
-#include "mongo/config.h"
-#include "mongo/db/client.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/bits.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/concurrency/ticketholder.h"
-#include "mongo/util/log.h"
-#include "mongo/util/timer.h"
+#include "monger/config.h"
+#include "monger/db/client.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/bits.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/concurrency/ticketholder.h"
+#include "monger/util/log.h"
+#include "monger/util/timer.h"
 
 namespace ThreadedTests {
 
@@ -278,7 +278,7 @@ private:
             _hotel.checkOut();
 
             if ((i % (checkIns / 10)) == 0)
-                mongo::unittest::log() << "checked in " << i << " times..." << endl;
+                monger::unittest::log() << "checked in " << i << " times..." << endl;
         }
     }
 

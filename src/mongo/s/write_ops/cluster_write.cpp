@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/write_ops/cluster_write.h"
+#include "monger/s/write_ops/cluster_write.h"
 
 #include <algorithm>
 
-#include "mongo/base/status.h"
-#include "mongo/client/connpool.h"
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/s/balancer_configuration.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/chunk_writes_tracker.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/config_server_client.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/shard_util.h"
-#include "mongo/s/write_ops/chunk_manager_targeter.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/client/connpool.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/s/balancer_configuration.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/chunk_writes_tracker.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/config_server_client.h"
+#include "monger/s/grid.h"
+#include "monger/s/shard_util.h"
+#include "monger/s/write_ops/chunk_manager_targeter.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 void toBatchError(const Status& status, BatchedCommandResponse* response) {
@@ -118,4 +118,4 @@ void ClusterWriter::write(OperationContext* opCtx,
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

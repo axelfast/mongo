@@ -9,9 +9,9 @@
 
 #include "MurmurHash3.h"
 
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/data_view.h"
-#include "mongo/platform/endian.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/data_view.h"
+#include "monger/platform/endian.h"
 
 //-----------------------------------------------------------------------------
 // Platform-specific functions and macros
@@ -63,14 +63,14 @@ inline uint64_t rotl64 ( uint64_t x, int8_t r )
 
 FORCE_INLINE inline uint32_t getblock ( const uint32_t * p, int i )
 {
-    return mongo::ConstDataView(reinterpret_cast<const char*>(p))
-        .read<mongo::ReverseLittleEndian<uint32_t>>(i * sizeof(uint32_t));
+    return monger::ConstDataView(reinterpret_cast<const char*>(p))
+        .read<monger::ReverseLittleEndian<uint32_t>>(i * sizeof(uint32_t));
 }
 
 FORCE_INLINE inline uint64_t getblock ( const uint64_t * p, int i )
 {
-    return mongo::ConstDataView(reinterpret_cast<const char*>(p))
-        .read<mongo::ReverseLittleEndian<uint64_t>>(i * sizeof(uint64_t));
+    return monger::ConstDataView(reinterpret_cast<const char*>(p))
+        .read<monger::ReverseLittleEndian<uint64_t>>(i * sizeof(uint64_t));
 }
 
 //-----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void MurmurHash3_x86_32 ( const void * key, int len,
 
   h1 = fmix(h1);
 
-  *(uint32_t*)out = mongo::endian::nativeToLittle(h1);
+  *(uint32_t*)out = monger::endian::nativeToLittle(h1);
 } 
 
 //-----------------------------------------------------------------------------
@@ -255,10 +255,10 @@ void MurmurHash3_x86_128 ( const void * key, const int len,
   h1 += h2; h1 += h3; h1 += h4;
   h2 += h1; h3 += h1; h4 += h1;
 
-  ((uint32_t*)out)[0] = mongo::endian::nativeToLittle(h1);
-  ((uint32_t*)out)[1] = mongo::endian::nativeToLittle(h2);
-  ((uint32_t*)out)[2] = mongo::endian::nativeToLittle(h3);
-  ((uint32_t*)out)[3] = mongo::endian::nativeToLittle(h4);
+  ((uint32_t*)out)[0] = monger::endian::nativeToLittle(h1);
+  ((uint32_t*)out)[1] = monger::endian::nativeToLittle(h2);
+  ((uint32_t*)out)[2] = monger::endian::nativeToLittle(h3);
+  ((uint32_t*)out)[3] = monger::endian::nativeToLittle(h4);
 }
 
 //-----------------------------------------------------------------------------
@@ -338,8 +338,8 @@ void MurmurHash3_x64_128 ( const void * key, const int len,
   h1 += h2;
   h2 += h1;
 
-  ((uint64_t*)out)[0] = mongo::endian::nativeToLittle(h1);
-  ((uint64_t*)out)[1] = mongo::endian::nativeToLittle(h2);
+  ((uint64_t*)out)[0] = monger::endian::nativeToLittle(h1);
+  ((uint64_t*)out)[1] = monger::endian::nativeToLittle(h2);
 }
 
 //-----------------------------------------------------------------------------

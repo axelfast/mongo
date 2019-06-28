@@ -5,7 +5,7 @@
 
     function test(ssp, succeed) {
         const result =
-            runMongoProgram('./mongo', '--setShellParameter', ssp, '--nodb', '--eval', ';');
+            runMongoProgram('./monger', '--setShellParameter', ssp, '--nodb', '--eval', ';');
         assert.eq(0 == result,
                   succeed,
                   '--setShellParameter ' + ssp + 'worked/didn\'t-work unexpectedly');

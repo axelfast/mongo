@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/rpc/message.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/polymorphic_scoped.h"
+#include "monger/base/status.h"
+#include "monger/db/commands.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/operation_context.h"
+#include "monger/rpc/message.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/polymorphic_scoped.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DECLARE(rsStopGetMore);
 MONGO_FAIL_POINT_DECLARE(respondWithNotPrimaryInCommandDispatch);
@@ -105,4 +105,4 @@ struct ServiceEntryPointCommon {
     static BSONObj getRedactedCopyForLogging(const Command* command, const BSONObj& cmdObj);
 };
 
-}  // namespace mongo
+}  // namespace monger

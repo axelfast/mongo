@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/flow_control_ticketholder.h"
-#include "mongo/db/concurrency/lock_manager_defs.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/storage/flow_control.h"
-#include "mongo/db/storage/flow_control_parameters_gen.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/flow_control_ticketholder.h"
+#include "monger/db/concurrency/lock_manager_defs.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/storage/flow_control.h"
+#include "monger/db/storage/flow_control_parameters_gen.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 class FlowControlTest : public ServiceContextMongoDTest {
 public:
@@ -245,4 +245,4 @@ TEST_F(FlowControlTest, CalculatingTickets) {
                                                       currLag,
                                                       thresholdLag));
 }
-}  // namespace mongo
+}  // namespace monger

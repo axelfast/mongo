@@ -43,7 +43,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
             shards: 3,
             rs0: {nodes: numCoordinatorNodes},
             causallyConsistent: true,
-            other: {mongosOptions: {verbose: 3}}
+            other: {mongersOptions: {verbose: 3}}
         });
 
         let coordinatorReplSetTest = st.rs0;

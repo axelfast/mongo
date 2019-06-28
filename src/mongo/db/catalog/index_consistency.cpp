@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,25 +30,25 @@
 #include <algorithm>
 #include <third_party/murmurhash3/MurmurHash3.h>
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog/index_consistency.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/util/elapsed_tracker.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog/index_consistency.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_names.h"
+#include "monger/db/server_options.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/util/elapsed_tracker.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -329,4 +329,4 @@ uint32_t IndexConsistency::_hashKeyString(const KeyString& ks, uint32_t indexNam
     MurmurHash3_x86_32(ks.getBuffer(), ks.getSize(), indexNameHash, &indexNameHash);
     return indexNameHash % kNumHashBuckets;
 }
-}  // namespace mongo
+}  // namespace monger

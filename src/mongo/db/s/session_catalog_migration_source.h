@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,18 +32,18 @@
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/notification.h"
-#include "mongo/util/concurrency/with_lock.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/notification.h"
+#include "monger/util/concurrency/with_lock.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class ScopedSession;
@@ -266,4 +266,4 @@ private:
     std::shared_ptr<Notification<bool>> _newOplogNotification;
 };
 
-}  // namespace mongo
+}  // namespace monger

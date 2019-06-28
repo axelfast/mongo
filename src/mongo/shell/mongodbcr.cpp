@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/authenticate.h"
+#include "monger/client/authenticate.h"
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/rpc/unique_message.h"
-#include "mongo/util/password_digest.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/rpc/unique_message.h"
+#include "monger/util/password_digest.h"
 
-namespace mongo {
+namespace monger {
 namespace auth {
 namespace {
 
@@ -143,4 +143,4 @@ MONGO_INITIALIZER(RegisterAuthMongoCR)(InitializerContext* context) {
 
 }  // namespace
 }  // namespace auth
-}  // namespace mongo
+}  // namespace monger

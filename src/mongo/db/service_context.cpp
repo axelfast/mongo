@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/service_context.h"
+#include "monger/db/service_context.h"
 
 #include <list>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/locker_noop.h"
-#include "mongo/db/default_baton.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/recovery_unit_noop.h"
-#include "mongo/transport/service_entry_point.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/system_clock_source.h"
-#include "mongo/util/system_tick_source.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/locker_noop.h"
+#include "monger/db/default_baton.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/recovery_unit_noop.h"
+#include "monger/transport/service_entry_point.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/system_clock_source.h"
+#include "monger/util/system_tick_source.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using ConstructorActionList = std::list<ServiceContext::ConstructorDestructorActions>;
@@ -412,4 +412,4 @@ BatonHandle ServiceContext::makeBaton(OperationContext* opCtx) const {
     return baton;
 }
 
-}  // namespace mongo
+}  // namespace monger

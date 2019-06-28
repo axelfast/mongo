@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/cursor_manager.h"
+#include "monger/db/cursor_manager.h"
 
 #include <memory>
 
-#include "mongo/base/data_cursor.h"
-#include "mongo/base/init.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/cursor_server_params.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/kill_sessions_common.h"
-#include "mongo/db/logical_session_cache.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/random.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
+#include "monger/base/data_cursor.h"
+#include "monger/base/init.h"
+#include "monger/db/audit.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/client.h"
+#include "monger/db/cursor_server_params.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/kill_sessions_common.h"
+#include "monger/db/logical_session_cache.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/random.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr int CursorManager::kNumPartitions;
 
@@ -414,4 +414,4 @@ Status CursorManager::checkAuthForKillCursors(OperationContext* opCtx, CursorId 
     return as->checkAuthForKillCursors(cursor->nss(), cursor->getAuthenticatedUsers());
 }
 
-}  // namespace mongo
+}  // namespace monger

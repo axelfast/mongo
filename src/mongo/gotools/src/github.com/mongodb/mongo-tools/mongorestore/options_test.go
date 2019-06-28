@@ -4,12 +4,12 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
-	"github.com/mongodb/mongo-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/testtype"
 	. "github.com/smartystreets/goconvey/convey"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
 
 	"testing"
 )
@@ -27,7 +27,7 @@ func TestWriteConcernOptionParsing(t *testing.T) {
 
 		Convey("Parsing with URI with no write concern specified in it should set a majority write concern", func() {
 			args := []string{
-				"--uri", "mongodb://localhost:27017/test",
+				"--uri", "mongerdb://localhost:27017/test",
 			}
 			opts, err := ParseOptions(args, "", "")
 
@@ -37,7 +37,7 @@ func TestWriteConcernOptionParsing(t *testing.T) {
 
 		Convey("Parsing with writeconcern only in URI should set it correctly", func() {
 			args := []string{
-				"--uri", "mongodb://localhost:27017/test?w=2",
+				"--uri", "mongerdb://localhost:27017/test?w=2",
 			}
 			opts, err := ParseOptions(args, "", "")
 

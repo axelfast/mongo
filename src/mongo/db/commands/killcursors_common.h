@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/db/commands.h"
-#include "mongo/db/cursor_id.h"
+#include "monger/db/commands.h"
+#include "monger/db/cursor_id.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Base class for the killCursors command, which attempts to kill all given cursors.  Contains code
- * common to mongos and mongod implementations.
+ * common to mongers and mongerd implementations.
  */
 class KillCursorsCmdBase : public BasicCommand {
 public:
@@ -94,4 +94,4 @@ private:
                                CursorId cursorId) const = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

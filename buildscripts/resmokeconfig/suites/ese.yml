@@ -2,9 +2,9 @@ test_kind: js_test
 
 selector:
   roots:
-  - src/mongo/db/modules/*/jstests/encryptdb/*.js
+  - src/monger/db/modules/*/jstests/encryptdb/*.js
 
-# Encrypted storage engine tests start their own mongod processes
+# Encrypted storage engine tests start their own mongerd processes
 executor:
   config:
     shell_options:

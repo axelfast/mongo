@@ -4,24 +4,24 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongotop provides a method to track the amount of time a MongoDB instance spends reading and writing data.
-package mongotop
+// Package mongertop provides a method to track the amount of time a MongoDB instance spends reading and writing data.
+package mongertop
 
 import (
 	"fmt"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/x/bsonx"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/x/bsonx"
 )
 
 // MongoTop is a container for the user-specified options and
-// internal state used for running mongotop.
+// internal state used for running mongertop.
 type MongoTop struct {
-	// Generic mongo tool options
+	// Generic monger tool options
 	Options *options.ToolOptions
 
 	// Mongotop-specific output options
@@ -101,7 +101,7 @@ func (mt *MongoTop) runServerStatusDiff() (outDiff FormattableDiff, err error) {
 	return outDiff, nil
 }
 
-// Run executes the mongotop program.
+// Run executes the mongertop program.
 func (mt *MongoTop) Run() error {
 	hasData := false
 	numPrinted := 0

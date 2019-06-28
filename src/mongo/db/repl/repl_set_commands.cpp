@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,48 +27,48 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 #define LOG_FOR_HEARTBEATS(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kReplicationHeartbeats)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kReplicationHeartbeats)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/algorithm/string.hpp>
 
-#include "mongo/db/repl/repl_set_command.h"
+#include "monger/db/repl/repl_set_command.h"
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/repl_set_heartbeat_response.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_external_state_impl.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/update_position_args.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/repl_set_heartbeat_response.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_external_state_impl.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/update_position_args.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/executor/network_interface.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 using std::string;
@@ -176,7 +176,7 @@ public:
     std::string help() const override {
         return "Returns the current replica set configuration"
                "{ replSetGetConfig : 1 }\n"
-               "http://dochub.mongodb.org/core/replicasetcommands";
+               "http://dochub.mongerdb.org/core/replicasetcommands";
     }
     CmdReplSetGetConfig() : ReplSetCommand("replSetGetConfig") {}
     virtual bool run(OperationContext* opCtx,
@@ -288,7 +288,7 @@ public:
     CmdReplSetInitiate() : ReplSetCommand("replSetInitiate") {}
     std::string help() const override {
         return "Initiate/christen a replica set.\n"
-               "http://dochub.mongodb.org/core/replicasetcommands";
+               "http://dochub.mongerdb.org/core/replicasetcommands";
     }
     virtual bool run(OperationContext* opCtx,
                      const string&,
@@ -364,7 +364,7 @@ public:
     std::string help() const override {
         return "Adjust configuration of a replica set\n"
                "{ replSetReconfig : config_object }\n"
-               "http://dochub.mongodb.org/core/replicasetcommands";
+               "http://dochub.mongerdb.org/core/replicasetcommands";
     }
 
     bool run(OperationContext* opCtx,
@@ -419,7 +419,7 @@ public:
                "expires.\n"
                "You can call again with {replSetFreeze:0} to unfreeze sooner.\n"
                "A process restart unfreezes the member also.\n"
-               "http://dochub.mongodb.org/core/replicasetcommands";
+               "http://dochub.mongerdb.org/core/replicasetcommands";
     }
     CmdReplSetFreeze() : ReplSetCommand("replSetFreeze") {}
     virtual bool run(OperationContext* opCtx,
@@ -448,7 +448,7 @@ public:
                "(1 minute if no numeric secs value specified, or secs is 0).\n"
                "(If another member with same priority takes over in the meantime, it will stay "
                "primary.)\n"
-               "http://dochub.mongodb.org/core/replicasetcommands";
+               "http://dochub.mongerdb.org/core/replicasetcommands";
     }
     CmdReplSetStepDown() : ReplSetCommand("replSetStepDown") {}
     virtual bool run(OperationContext* opCtx,
@@ -758,4 +758,4 @@ private:
 } cmdReplSetAbortPrimaryCatchUp;
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

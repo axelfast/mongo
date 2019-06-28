@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_merge.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/process_interface_standalone.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_merge.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/process_interface_standalone.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using boost::intrusive_ptr;
@@ -82,7 +82,7 @@ public:
 class DocumentSourceMergeTest : public AggregationContextFixture {
 public:
     DocumentSourceMergeTest() : AggregationContextFixture() {
-        getExpCtx()->mongoProcessInterface = std::make_shared<MongoProcessInterfaceForTest>();
+        getExpCtx()->mongerProcessInterface = std::make_shared<MongoProcessInterfaceForTest>();
     }
 
     intrusive_ptr<DocumentSourceMerge> createMergeStage(BSONObj spec) {
@@ -917,4 +917,4 @@ TEST_F(DocumentSourceMergeTest, OnlyObjectCanBeUsedAsLetVariables) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,22 +29,22 @@
 
 #include <utility>
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/db/query/index_bounds_builder.h"
-#include "mongo/db/query/index_entry.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/json.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/db/query/index_bounds_builder.h"
+#include "monger/db/query/index_entry.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 /**
  * Make a minimal IndexEntry from just a key pattern. A dummy name will be added.

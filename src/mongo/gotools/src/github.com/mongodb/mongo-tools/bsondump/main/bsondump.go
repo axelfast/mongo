@@ -10,10 +10,10 @@ package main
 import (
 	"os"
 
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/signals"
-	"github.com/mongodb/mongo-tools-common/util"
-	"github.com/mongodb/mongo-tools/bsondump"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/signals"
+	"github.com/mongerdb/monger-tools-common/util"
+	"github.com/mongerdb/monger-tools/bsondump"
 )
 
 var (

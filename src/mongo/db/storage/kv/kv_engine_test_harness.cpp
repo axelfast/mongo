@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/db/storage/kv/kv_engine_test_harness.h"
+#include "monger/db/storage/kv/kv_engine_test_harness.h"
 
-#include "mongo/db/catalog/collection_catalog_entry_mock.h"
-#include "mongo/db/catalog/collection_impl.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/storage/durable_catalog_test_fixture.h"
-#include "mongo/db/storage/kv/kv_engine.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/catalog/collection_catalog_entry_mock.h"
+#include "monger/db/catalog/collection_impl.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/storage/durable_catalog_test_fixture.h"
+#include "monger/db/storage/kv/kv_engine.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 std::function<std::unique_ptr<KVHarnessHelper>()> basicFactory =
@@ -735,4 +735,4 @@ void KVHarnessHelper::registerFactory(std::function<std::unique_ptr<KVHarnessHel
     basicFactory = std::move(factory);
 };
 
-}  // namespace mongo
+}  // namespace monger

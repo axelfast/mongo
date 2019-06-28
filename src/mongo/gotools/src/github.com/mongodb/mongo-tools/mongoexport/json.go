@@ -4,14 +4,14 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoexport
+package mongerexport
 
 import (
 	"bytes"
 	"io"
 
-	"github.com/mongodb/mongo-tools-common/json"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/json"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 // JSONExportOutput is an implementation of ExportOutput that writes documents

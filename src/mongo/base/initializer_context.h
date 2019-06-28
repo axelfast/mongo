@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,17 +29,17 @@
 
 #pragma once
 
-#include "mongo/db/service_context_fwd.h"
+#include "monger/db/service_context_fwd.h"
 
 #include <map>
 #include <string>
 #include <vector>
 
-namespace mongo {
+namespace monger {
 /**
  * Context of an initialization process.  Passed as a parameter to initialization functions.
  *
- * See mongo/base/initializer.h and mongo/base/initializer_dependency_graph.h for more details.
+ * See monger/base/initializer.h and monger/base/initializer_dependency_graph.h for more details.
  */
 class InitializerContext {
     InitializerContext(const InitializerContext&) = delete;
@@ -64,4 +64,4 @@ private:
     EnvironmentMap _env;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,15 +31,15 @@
 
 #include <string>
 
-#include "mongo/stdx/thread.h"
-#include "mongo/util/timer.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
 /**
- * Utility class, which is used to periodically record in the config server's metadata the mongos
+ * Utility class, which is used to periodically record in the config server's metadata the mongers
  * instances, which are connected to the given config server and their uptime.
  *
  * NOTE: Not thread-safe, so it should not be used from more than one thread at a time.
@@ -62,4 +62,4 @@ private:
     stdx::thread _thread;
 };
 
-}  // namespace mongo
+}  // namespace monger

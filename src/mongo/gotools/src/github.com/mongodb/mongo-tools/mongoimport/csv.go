@@ -4,15 +4,15 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoimport
+package mongerimport
 
 import (
 	gocsv "encoding/csv"
 	"fmt"
 	"io"
 
-	"github.com/mongodb/mongo-tools/mongoimport/csv"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools/mongerimport/csv"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 // CSVInputReader implements the InputReader interface for CSV input types.

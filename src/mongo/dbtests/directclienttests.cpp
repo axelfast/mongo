@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 
-#include "mongo/db/client.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/json.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/util/timer.h"
+#include "monger/db/client.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/json.h"
+#include "monger/db/lasterror.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/util/timer.h"
 
 namespace DirectClientTests {
 
@@ -47,10 +47,10 @@ using std::vector;
 class ClientBase {
 public:
     ClientBase() {
-        mongo::LastError::get(cc()).reset();
+        monger::LastError::get(cc()).reset();
     }
     virtual ~ClientBase() {
-        mongo::LastError::get(cc()).reset();
+        monger::LastError::get(cc()).reset();
     }
 };
 

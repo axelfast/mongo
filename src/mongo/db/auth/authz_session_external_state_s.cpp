@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authz_session_external_state_s.h"
+#include "monger/db/auth/authz_session_external_state_s.h"
 
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/status.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 AuthzSessionExternalStateMongos::AuthzSessionExternalStateMongos(AuthorizationManager* authzManager)
     : AuthzSessionExternalStateServerCommon(authzManager) {}
@@ -51,4 +51,4 @@ MONGO_REGISTER_SHIM(AuthzSessionExternalState::create)
     return std::make_unique<AuthzSessionExternalStateMongos>(authzManager);
 }
 
-}  // namespace mongo
+}  // namespace monger

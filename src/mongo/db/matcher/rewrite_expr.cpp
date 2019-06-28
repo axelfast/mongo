@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/matcher/rewrite_expr.h"
+#include "monger/db/matcher/rewrite_expr.h"
 
-#include "mongo/db/matcher/expression_internal_expr_eq.h"
-#include "mongo/db/matcher/expression_leaf.h"
-#include "mongo/db/matcher/expression_tree.h"
-#include "mongo/util/log.h"
+#include "monger/db/matcher/expression_internal_expr_eq.h"
+#include "monger/db/matcher/expression_leaf.h"
+#include "monger/db/matcher/expression_tree.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using CmpOp = ExpressionCompare::CmpOp;
 
@@ -197,4 +197,4 @@ bool RewriteExpr::_canRewriteComparison(
 
     return hasFieldPath;
 }
-}  // namespace mongo
+}  // namespace monger

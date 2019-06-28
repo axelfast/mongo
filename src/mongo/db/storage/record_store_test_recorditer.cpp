@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/record_store_test_harness.h"
+#include "monger/db/storage/record_store_test_harness.h"
 
 #include <algorithm>
 
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/storage/record_data.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/record_id.h"
+#include "monger/db/storage/record_data.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::unique_ptr;
@@ -484,4 +484,4 @@ TEST(RecordStoreTestHarness, SeekExactForMissingRecordReturnsNone) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

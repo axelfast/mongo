@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/shell/bench.h"
+#include "monger/shell/bench.h"
 
 #include <pcrecpp.h>
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/scripting/bson_template_evaluator.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/log.h"
-#include "mongo/util/md5.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/timer.h"
-#include "mongo/util/version.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/query_request.h"
+#include "monger/scripting/bson_template_evaluator.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/log.h"
+#include "monger/util/md5.h"
+#include "monger/util/time_support.h"
+#include "monger/util/timer.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const std::map<OpType, std::string> kOpTypeNames{{OpType::NONE, "none"},
@@ -832,7 +832,7 @@ BenchRunWorker::BenchRunWorker(size_t id,
 BenchRunWorker::~BenchRunWorker() {
     try {
         // We explicitly call join() on the started thread to ensure that any thread-local variables
-        // (e.g. 'currentClient' when running through mongoebench) have been destructed before
+        // (e.g. 'currentClient' when running through mongerebench) have been destructed before
         // returning from BenchRunWorker's destructor.
         _thread.join();
     } catch (...) {
@@ -1569,4 +1569,4 @@ BSONObj BenchRunner::benchFinish(const BSONObj& argsFake, void* data) {
     return BSON("" << finalObj);
 }
 
-}  // namespace mongo
+}  // namespace monger

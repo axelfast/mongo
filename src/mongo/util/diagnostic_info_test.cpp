@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #include <string>
 
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/diagnostic_info.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/diagnostic_info.h"
 
-namespace mongo {
+namespace monger {
 TEST(DiagnosticInfo, BasicSingleThread) {
     // set up serviceContext and clock source
     auto serviceContext = ServiceContext::make();

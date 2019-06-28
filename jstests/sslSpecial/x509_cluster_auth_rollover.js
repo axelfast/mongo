@@ -65,7 +65,7 @@
             // Start a shell that connects to the server with the current CA/cert configuration
             // and ensure that it's able to connect and authenticate with x509.
             const shellArgs = [
-                'mongo',
+                'monger',
                 primary.name,
                 '--eval',
                 ';',

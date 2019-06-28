@@ -32,7 +32,7 @@ Keep in mind that the fail point only triggers for transaction writes (i.e. writ
 commands including ``txnNumber`` and ``lsid`` fields). See `SERVER-29606`_ for
 more information.
 
-.. _SERVER-29606: https://jira.mongodb.org/browse/SERVER-29606
+.. _SERVER-29606: https://jira.mongerdb.org/browse/SERVER-29606
 
 The fail point may be configured like so::
 
@@ -80,7 +80,7 @@ Network Error Tests
 ===================
 
 Network error tests are expressed in YAML and should be run against a replica
-set. These tests cannot be run against a shard cluster because mongos does not
+set. These tests cannot be run against a shard cluster because mongers does not
 support the necessary fail point.
 
 The tests exercise the following scenarios:
@@ -221,8 +221,8 @@ allows a primary to keep its client connections open after a step down. This
 fail point operates by hanging the step down procedure (i.e. ``replSetStepDown``
 command) until the fail point is later deactivated.
 
-.. _d4eb562: https://github.com/mongodb/mongo/commit/d4eb562ac63717904f24de4a22e395070687bc62
-.. _SERVER-31355: https://jira.mongodb.org/browse/SERVER-31355
+.. _d4eb562: https://github.com/mongerdb/monger/commit/d4eb562ac63717904f24de4a22e395070687bc62
+.. _SERVER-31355: https://jira.mongerdb.org/browse/SERVER-31355
 
 The following test requires three MongoClient instances and will generally
 require two execution contexts (async drivers may get by with a single thread).
@@ -241,8 +241,8 @@ down primary's state change via SDAM, it must be configured with a large
 also need to set `serverSelectionTryOnce`_ to ``false`` to ensure that server
 selection for the retry attempt waits until a new primary is elected.
 
-.. _heartbeatFrequencyMS: https://github.com/mongodb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#heartbeatfrequencyms
-.. _serverSelectionTryOnce: https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#serverselectiontryonce
+.. _heartbeatFrequencyMS: https://github.com/mongerdb/specifications/blob/master/source/server-discovery-and-monitoring/server-discovery-and-monitoring.rst#heartbeatfrequencyms
+.. _serverSelectionTryOnce: https://github.com/mongerdb/specifications/blob/master/source/server-selection/server-selection.rst#serverselectiontryonce
 
 The test proceeds as follows:
 

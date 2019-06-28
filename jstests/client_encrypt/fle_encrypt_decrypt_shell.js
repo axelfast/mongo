@@ -44,7 +44,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     const encryptionAlgorithms = [randomAlgorithm, deterministicAlgorithm];
 
     const passTestCases = [
-        "mongo",
+        "monger",
         NumberLong(13),
         NumberInt(23),
         UUID(),
@@ -53,7 +53,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
         BinData(2, '1234'),
         new Timestamp(1, 2),
         new ObjectId(),
-        new DBPointer("mongo", new ObjectId()),
+        new DBPointer("monger", new ObjectId()),
         /test/
     ];
 
@@ -63,7 +63,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
         12,
         NumberDecimal(0.1234),
         ["this is an array"],
-        {"value": "mongo"},
+        {"value": "monger"},
         Code("function() { return true; }")
     ];
 
@@ -78,8 +78,8 @@ load('jstests/ssl/libs/ssl_helpers.js');
             collection.drop();
 
             assert.writeOK(
-                keyVault.createKey(kmsType, "arn:aws:kms:us-east-1:fake:fake:fake", ['mongoKey']));
-            const keyId = keyVault.getKeyByAltName("mongoKey").toArray()[0]._id;
+                keyVault.createKey(kmsType, "arn:aws:kms:us-east-1:fake:fake:fake", ['mongerKey']));
+            const keyId = keyVault.getKeyByAltName("mongerKey").toArray()[0]._id;
 
             let pass;
             let fail;

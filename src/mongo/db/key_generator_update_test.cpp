@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <set>
 #include <string>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/key_generator.h"
-#include "mongo/db/keys_collection_client_sharded.h"
-#include "mongo/db/keys_collection_document.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/s/catalog/dist_lock_manager_mock.h"
-#include "mongo/s/config_server_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/fail_point_service.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/key_generator.h"
+#include "monger/db/keys_collection_client_sharded.h"
+#include "monger/db/keys_collection_document.h"
+#include "monger/db/logical_clock.h"
+#include "monger/s/catalog/dist_lock_manager_mock.h"
+#include "monger/s/config_server_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/fail_point_service.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class KeyGeneratorUpdateTest : public ConfigServerTestFixture {
@@ -418,4 +418,4 @@ TEST_F(KeyGeneratorUpdateTest, ShouldNotCreateKeysWithDisableKeyGenerationFailPo
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -181,7 +181,7 @@ class Distro(object):
     @staticmethod
     def pkgbase():
         """Return pkgbase."""
-        return "mongodb"
+        return "mongerdb"
 
     def archname(self, arch):
         """Return the packaging system's architecture name.
@@ -221,20 +221,20 @@ class Distro(object):
 
         Examples:
 
-        repo/apt/ubuntu/dists/precise/mongodb-org/2.5/multiverse/binary-amd64
-        repo/apt/ubuntu/dists/precise/mongodb-org/2.5/multiverse/binary-i386
+        repo/apt/ubuntu/dists/precise/mongerdb-org/2.5/multiverse/binary-amd64
+        repo/apt/ubuntu/dists/precise/mongerdb-org/2.5/multiverse/binary-i386
 
-        repo/apt/ubuntu/dists/trusty/mongodb-org/2.5/multiverse/binary-amd64
-        repo/apt/ubuntu/dists/trusty/mongodb-org/2.5/multiverse/binary-i386
+        repo/apt/ubuntu/dists/trusty/mongerdb-org/2.5/multiverse/binary-amd64
+        repo/apt/ubuntu/dists/trusty/mongerdb-org/2.5/multiverse/binary-i386
 
-        repo/apt/debian/dists/wheezy/mongodb-org/2.5/main/binary-amd64
-        repo/apt/debian/dists/wheezy/mongodb-org/2.5/main/binary-i386
+        repo/apt/debian/dists/wheezy/mongerdb-org/2.5/main/binary-amd64
+        repo/apt/debian/dists/wheezy/mongerdb-org/2.5/main/binary-i386
 
-        repo/yum/redhat/6/mongodb-org/2.5/x86_64
-        yum/redhat/6/mongodb-org/2.5/i386
+        repo/yum/redhat/6/mongerdb-org/2.5/x86_64
+        yum/redhat/6/mongerdb-org/2.5/i386
 
-        repo/zypper/suse/11/mongodb-org/2.5/x86_64
-        zypper/suse/11/mongodb-org/2.5/i386
+        repo/zypper/suse/11/mongerdb-org/2.5/x86_64
+        zypper/suse/11/mongerdb-org/2.5/i386
         """
 
         repo_directory = ""
@@ -245,14 +245,14 @@ class Distro(object):
             repo_directory = spec.branch()
 
         if re.search("^(debian|ubuntu)", self.dname):
-            return "repo/apt/%s/dists/%s/mongodb-org/%s/%s/binary-%s/" % (
+            return "repo/apt/%s/dists/%s/mongerdb-org/%s/%s/binary-%s/" % (
                 self.dname, self.repo_os_version(build_os), repo_directory, self.repo_component(),
                 self.archname(arch))
         elif re.search("(redhat|fedora|centos|amazon)", self.dname):
-            return "repo/yum/%s/%s/mongodb-org/%s/%s/RPMS/" % (
+            return "repo/yum/%s/%s/mongerdb-org/%s/%s/RPMS/" % (
                 self.dname, self.repo_os_version(build_os), repo_directory, self.archname(arch))
         elif re.search("(suse)", self.dname):
-            return "repo/zypper/%s/%s/mongodb-org/%s/%s/RPMS/" % (
+            return "repo/zypper/%s/%s/mongerdb-org/%s/%s/RPMS/" % (
                 self.dname, self.repo_os_version(build_os), repo_directory, self.archname(arch))
         else:
             raise Exception("BUG: unsupported platform?")
@@ -462,7 +462,7 @@ def backtick(argv):
 
 def tarfile(build_os, arch, spec):
     """Return the location where we store the downloaded tarball for this package."""
-    return "dl/mongodb-linux-%s-%s-%s.tar.gz" % (spec.version(), build_os, arch)
+    return "dl/mongerdb-linux-%s-%s-%s.tar.gz" % (spec.version(), build_os, arch)
 
 
 def setupdir(distro, build_os, arch, spec):
@@ -471,8 +471,8 @@ def setupdir(distro, build_os, arch, spec):
     # distro's packaging tools (e.g., package metadata files, init
     # scripts, etc), along with the already-built binaries).  In case
     # the following format string is unclear, an example setupdir
-    # would be dst/x86_64/debian-sysvinit/wheezy/mongodb-org-unstable/
-    # or dst/x86_64/redhat/rhel55/mongodb-org-unstable/
+    # would be dst/x86_64/debian-sysvinit/wheezy/mongerdb-org-unstable/
+    # or dst/x86_64/redhat/rhel55/mongerdb-org-unstable/
     return "dst/%s/%s/%s/%s%s-%s/" % (arch, distro.name(), build_os, distro.pkgbase(),
                                       spec.suffix(), spec.pversion(distro))
 
@@ -488,7 +488,7 @@ def unpack_binaries_into(build_os, arch, spec, where):
     os.chdir(where)
     try:
         sysassert(["tar", "xvzf", rootdir + "/" + tarfile(build_os, arch, spec)])
-        release_dir = glob('mongodb-linux-*')[0]
+        release_dir = glob('mongerdb-linux-*')[0]
         for releasefile in "bin", "LICENSE-Community.txt", "README", "THIRD-PARTY-NOTICES", "THIRD-PARTY-NOTICES.gotools", "MPL-2":
             print("moving file: %s/%s" % (release_dir, releasefile))
             os.rename("%s/%s" % (release_dir, releasefile), releasefile)
@@ -522,10 +522,10 @@ def make_package(distro, build_os, arch, spec, srcdir):
     # packaging infrastructure will move the files to wherever they
     # need to go.
     unpack_binaries_into(build_os, arch, spec, sdir)
-    # Remove the mongoreplay binary due to libpcap dynamic
+    # Remove the mongerreplay binary due to libpcap dynamic
     # linkage.
-    if os.path.exists(sdir + "bin/mongoreplay"):
-        os.unlink(sdir + "bin/mongoreplay")
+    if os.path.exists(sdir + "bin/mongerreplay"):
+        os.unlink(sdir + "bin/mongerreplay")
     return distro.make_pkg(build_os, arch, spec, srcdir)
 
 
@@ -548,20 +548,20 @@ def make_deb(distro, build_os, arch, spec, srcdir):
     suffix = spec.suffix()
     sdir = setupdir(distro, build_os, arch, spec)
     if re.search("debian", distro.name()):
-        os.unlink(sdir + "debian/mongod.upstart")
-        os.link(sdir + "debian/mongod.service",
-                sdir + "debian/%s%s-server.mongod.service" % (distro.pkgbase(), suffix))
+        os.unlink(sdir + "debian/mongerd.upstart")
+        os.link(sdir + "debian/mongerd.service",
+                sdir + "debian/%s%s-server.mongerd.service" % (distro.pkgbase(), suffix))
         os.unlink(sdir + "debian/init.d")
     elif re.search("ubuntu", distro.name()):
         os.unlink(sdir + "debian/init.d")
         if build_os in ("ubuntu1204", "ubuntu1404", "ubuntu1410"):
-            os.link(sdir + "debian/mongod.upstart",
-                    sdir + "debian/%s%s-server.mongod.upstart" % (distro.pkgbase(), suffix))
-            os.unlink(sdir + "debian/mongod.service")
+            os.link(sdir + "debian/mongerd.upstart",
+                    sdir + "debian/%s%s-server.mongerd.upstart" % (distro.pkgbase(), suffix))
+            os.unlink(sdir + "debian/mongerd.service")
         else:
-            os.link(sdir + "debian/mongod.service",
-                    sdir + "debian/%s%s-server.mongod.service" % (distro.pkgbase(), suffix))
-            os.unlink(sdir + "debian/mongod.upstart")
+            os.link(sdir + "debian/mongerd.service",
+                    sdir + "debian/%s%s-server.mongerd.service" % (distro.pkgbase(), suffix))
+            os.unlink(sdir + "debian/mongerd.upstart")
     else:
         raise Exception("unknown debianoid flavor: not debian or ubuntu?")
     # Rewrite the control and rules files
@@ -622,10 +622,10 @@ def make_deb_repo(repo, distro, build_os):
     # Notes: the Release{,.gpg} files must live in a special place,
     # and must be created after all the Packages.gz files have been
     # done.
-    s1 = """Origin: mongodb
-Label: mongodb
+    s1 = """Origin: mongerdb
+Label: mongerdb
 Suite: %s
-Codename: %s/mongodb-org
+Codename: %s/mongerdb-org
 Architectures: amd64 arm64 s390x
 Components: %s
 Description: MongoDB packages
@@ -723,12 +723,12 @@ def write_debian_changelog(path, spec, srcdir):
     finally:
         os.chdir(oldcwd)
     lines = sb.split("\n")
-    # If the first line starts with "mongodb", it's not a revision
+    # If the first line starts with "mongerdb", it's not a revision
     # preamble, and so frob the version number.
-    lines[0] = re.sub("^mongodb \\(.*\\)", "mongodb (%s)" % (spec.pversion(Distro("debian"))),
+    lines[0] = re.sub("^mongerdb \\(.*\\)", "mongerdb (%s)" % (spec.pversion(Distro("debian"))),
                       lines[0])
-    # Rewrite every changelog entry starting in mongodb<space>
-    lines = [re.sub("^mongodb ", "mongodb%s " % (spec.suffix()), line) for line in lines]
+    # Rewrite every changelog entry starting in mongerdb<space>
+    lines = [re.sub("^mongerdb ", "mongerdb%s " % (spec.suffix()), line) for line in lines]
     lines = [re.sub("^  --", " --", line) for line in lines]
     sb = "\n".join(lines)
     with open(path, 'w') as fh:
@@ -740,12 +740,12 @@ def make_rpm(distro, build_os, arch, spec, srcdir):  # pylint: disable=too-many-
     suffix = spec.suffix()
     sdir = setupdir(distro, build_os, arch, spec)
 
-    specfile = srcdir + "rpm/mongodb%s.spec" % suffix
+    specfile = srcdir + "rpm/mongerdb%s.spec" % suffix
     init_spec = specfile.replace(".spec", "-init.spec")
 
     # The Debian directory is here for the manpages so we we need to remove the service file
     # from it so that RPM packages don't end up with the Debian file.
-    os.unlink(sdir + "debian/mongod.service")
+    os.unlink(sdir + "debian/mongerd.service")
 
     # Swap out systemd files, different systemd spec files, and init scripts as needed based on
     # underlying os version. Arranged so that new distros moving forward automatically use
@@ -753,8 +753,8 @@ def make_rpm(distro, build_os, arch, spec, srcdir):  # pylint: disable=too-many-
     # distros.
     #
     if distro.name() == "suse" and distro.repo_os_version(build_os) in ("10", "11"):
-        os.unlink(sdir + "rpm/init.d-mongod")
-        os.link(sdir + "rpm/init.d-mongod.suse", sdir + "rpm/init.d-mongod")
+        os.unlink(sdir + "rpm/init.d-mongerd")
+        os.link(sdir + "rpm/init.d-mongerd.suse", sdir + "rpm/init.d-mongerd")
 
         os.unlink(specfile)
         os.link(init_spec, specfile)
@@ -827,7 +827,7 @@ def make_rpm(distro, build_os, arch, spec, srcdir):  # pylint: disable=too-many-
     try:
         sysassert([
             "tar", "-cpzf",
-            topdir + "SOURCES/mongodb%s-%s.tar.gz" % (suffix, spec.pversion(distro)),
+            topdir + "SOURCES/mongerdb%s-%s.tar.gz" % (suffix, spec.pversion(distro)),
             os.path.basename(os.path.dirname(sdir))
         ])
     finally:
@@ -853,7 +853,7 @@ def make_rpm(distro, build_os, arch, spec, srcdir):  # pylint: disable=too-many-
         ])
 
     sysassert(["rpmbuild", "-ba", "--target", distro_arch] + flags +
-              ["%s/SPECS/mongodb%s.spec" % (topdir, suffix)])
+              ["%s/SPECS/mongerdb%s.spec" % (topdir, suffix)])
     repo_dir = distro.repodir(arch, build_os, spec)
     ensure_dir(repo_dir)
     # FIXME: see if some combination of shutil.copy<hoohah> and glob

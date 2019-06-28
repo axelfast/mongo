@@ -1,4 +1,4 @@
-uri: "mongodb+srv://test14.test.build.10gen.cc/"
+uri: "mongerdb+srv://test14.test.build.10gen.cc/"
 seeds: []
 hosts: []
 error: true

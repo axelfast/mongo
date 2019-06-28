@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,22 +26,22 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog.h"
 
 #include <algorithm>
 #include <boost/optional/optional_io.hpp>
 
-#include "mongo/db/catalog/catalog_test_fixture.h"
-#include "mongo/db/catalog/collection_catalog_entry_mock.h"
-#include "mongo/db/catalog/collection_catalog_helper.h"
-#include "mongo/db/catalog/collection_mock.h"
-#include "mongo/db/concurrency/lock_manager_defs.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/catalog/catalog_test_fixture.h"
+#include "monger/db/catalog/collection_catalog_entry_mock.h"
+#include "monger/db/catalog/collection_catalog_helper.h"
+#include "monger/db/catalog/collection_mock.h"
+#include "monger/db/concurrency/lock_manager_defs.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
-using namespace mongo;
+using namespace monger;
 
 /**
  * A test fixture that creates a CollectionCatalog and Collection* pointer to store in it.

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <limits>
 #include <wiredtiger.h>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 class OperationContext;
@@ -53,7 +53,7 @@ inline bool wt_keeptxnopen() {
 Status wtRCToStatus_slow(int retCode, const char* prefix);
 
 /**
- * converts wiredtiger return codes to mongodb statuses.
+ * converts wiredtiger return codes to mongerdb statuses.
  */
 inline Status wtRCToStatus(int retCode, const char* prefix = nullptr) {
     if (MONGO_likely(retCode == 0))
@@ -318,4 +318,4 @@ ResultType WiredTigerUtil::_castStatisticsValue(uint64_t statisticsValue,
         : static_cast<ResultType>(statisticsValue);
 }
 
-}  // namespace mongo
+}  // namespace monger

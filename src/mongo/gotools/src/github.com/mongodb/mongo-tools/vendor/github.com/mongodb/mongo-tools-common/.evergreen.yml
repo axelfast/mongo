@@ -7,24 +7,24 @@ command_type: system
 # run the same task in the previous revision if the current task fails
 stepback: true
 
-mongo_tools_variables:
+monger_tools_variables:
 
-## Common mongodb arguments
-  mongod_arguments:
-    default: &mongod_default_startup_args
-      mongod_args: ""
-      mongod_port: 33333
-    ssl: &mongod_ssl_startup_args
-      mongod_args: "--sslMode requireSSL --sslCAFile db/testdata/ca.pem --sslPEMKeyFile db/testdata/server.pem"
-      mongod_port: 33333
+## Common mongerdb arguments
+  mongerd_arguments:
+    default: &mongerd_default_startup_args
+      mongerd_args: ""
+      mongerd_port: 33333
+    ssl: &mongerd_ssl_startup_args
+      mongerd_args: "--sslMode requireSSL --sslCAFile db/testdata/ca.pem --sslPEMKeyFile db/testdata/server.pem"
+      mongerd_port: 33333
 
-  mongo_arguments:
-    default: &mongo_default_startup_args
-      mongo_args: &mongo_default_startup_args_string "--port 33333"
-      mongod_port: 33333
-    ssl: &mongo_ssl_startup_args
-      mongo_args: "--port 33333 --ssl --sslCAFile ./db/testdata/ca.pem --sslPEMKeyFile ./db/testdata/server.pem --sslAllowInvalidCertificates"
-      mongod_port: 33333
+  monger_arguments:
+    default: &monger_default_startup_args
+      monger_args: &monger_default_startup_args_string "--port 33333"
+      mongerd_port: 33333
+    ssl: &monger_ssl_startup_args
+      monger_args: "--port 33333 --ssl --sslCAFile ./db/testdata/ca.pem --sslPEMKeyFile ./db/testdata/server.pem --sslAllowInvalidCertificates"
+      mongerd_port: 33333
 
 functions:
 
@@ -33,7 +33,7 @@ functions:
       type: system
       params:
         files:
-          - "src/github.com/mongodb/mongo-tools-common/testing_output/*.suite"
+          - "src/github.com/mongerdb/monger-tools-common/testing_output/*.suite"
   "fetch source" :
     - command: shell.exec
       params:
@@ -41,72 +41,72 @@ functions:
           set -x
           set -v
           set -e
-          mkdir -p src/github.com/mongodb
+          mkdir -p src/github.com/mongerdb
     - command: git.get_project
       params:
-        directory: src/github.com/mongodb/mongo-tools-common
+        directory: src/github.com/mongerdb/monger-tools-common
 
-  "download mongod":
+  "download mongerd":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools-common
+      working_dir: src/github.com/mongerdb/monger-tools-common
       script: |
         set -x
         set -v
         set -e
-        mongotarget=$(if [ "${mongo_target}" ]; then echo "${mongo_target}"; else echo "${mongo_os}"; fi)
-        mongoversion=$(if [ "${mongo_version_always_use_latest}" ]; then echo "latest"; else echo "${mongo_version}"; fi)
-        dlurl=$(python binaryurl.py --edition=${mongo_edition} --target=$mongotarget --version=$mongoversion --arch=${mongo_arch|x86_64})
+        mongertarget=$(if [ "${monger_target}" ]; then echo "${monger_target}"; else echo "${monger_os}"; fi)
+        mongerversion=$(if [ "${monger_version_always_use_latest}" ]; then echo "latest"; else echo "${monger_version}"; fi)
+        dlurl=$(python binaryurl.py --edition=${monger_edition} --target=$mongertarget --version=$mongerversion --arch=${monger_arch|x86_64})
         filename=$(echo $dlurl | sed -e "s_.*/__")
         mkdir -p bin
         curl -s $dlurl --output $filename
         ${decompress} $filename
         rm $filename
         if [ "${only_shell}" ]; then
-          mv -f ./mongodb-*/bin/mongo${extension} ./bin/
+          mv -f ./mongerdb-*/bin/monger${extension} ./bin/
         else
-          mv -f ./mongodb-*/bin/mongo${extension} ./bin/
-          mv -f ./mongodb-*/bin/mongos${extension} ./bin/
-          mv -f ./mongodb-*/bin/mongod${extension} ./bin/
+          mv -f ./mongerdb-*/bin/monger${extension} ./bin/
+          mv -f ./mongerdb-*/bin/mongers${extension} ./bin/
+          mv -f ./mongerdb-*/bin/mongerd${extension} ./bin/
         fi
         chmod +x ./bin/*
-        rm -rf ./mongodb-*
+        rm -rf ./mongerdb-*
 
-  "start mongod":
+  "start mongerd":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools-common
+      working_dir: src/github.com/mongerdb/monger-tools-common
       background: true
       script: |
         set -x
         set -v
         set -e
-        rm -rf mongodb/db_files mongodb/${logfile|run.log}
-        mkdir -p mongodb/db_files
-        echo "Starting mongod..."
-        PATH=$PWD/bin:$PATH ./bin/mongod${extension}  --port ${mongod_port} ${mongod_args} ${additional_args} --dbpath mongodb/db_files --setParameter=enableTestCommands=1
+        rm -rf mongerdb/db_files mongerdb/${logfile|run.log}
+        mkdir -p mongerdb/db_files
+        echo "Starting mongerd..."
+        PATH=$PWD/bin:$PATH ./bin/mongerd${extension}  --port ${mongerd_port} ${mongerd_args} ${additional_args} --dbpath mongerdb/db_files --setParameter=enableTestCommands=1
 
-  "wait for mongod to be ready":
+  "wait for mongerd to be ready":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools-common
+      working_dir: src/github.com/mongerdb/monger-tools-common
       script: |
         set -x
         set -v
         SECS=0
         while true ; do
             set -o verbose
-            ./bin/mongo${extension} ${mongo_args} --eval 'true;'
+            ./bin/monger${extension} ${monger_args} --eval 'true;'
             if [ "$?" = "0" ]; then
-                echo "mongod ready";
+                echo "mongerd ready";
                 exit 0
             else
                 SECS=`expr $SECS + 1`
                 if [ $SECS -gt 20 ]; then
-                    echo "mongod not ready after 20 seconds"
+                    echo "mongerd not ready after 20 seconds"
                     exit 1
                 fi
-                echo "waiting for mongod ( ${mongo_args} ) to be ready..."  ;
+                echo "waiting for mongerd ( ${monger_args} ) to be ready..."  ;
                 sleep 1 ;
             fi
         done
@@ -114,9 +114,9 @@ functions:
   "setup kerberos integration test":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools-common
+      working_dir: src/github.com/mongerdb/monger-tools-common
       # Set up Kerberos stuff: run kinit if necessary, and add KDC to registry
-      # on Windows (see https://wiki.mongodb.com/display/DH/Testing+Kerberos)
+      # on Windows (see https://wiki.mongerdb.com/display/DH/Testing+Kerberos)
       script: |
         set -e
         # export sensitive info before `set -x`
@@ -141,7 +141,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools-common
+      working_dir: src/github.com/mongerdb/monger-tools-common
       script: |
         set -x
         set -v
@@ -168,7 +168,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools-common
+      working_dir: src/github.com/mongerdb/monger-tools-common
       script: |
         # export sensitive info before `set -x`
         if [ "Windows_NT" = "$OS" ]; then
@@ -193,10 +193,10 @@ functions:
         if [ "${KERBEROS_TEST}" = "true" ]; then
           export TOOLS_TESTING_KERBEROS="true"
         fi;
-        if [ "${create_mongod_users_command}" != "" ]; then
+        if [ "${create_mongerd_users_command}" != "" ]; then
           export TOOLS_TESTING_AUTH_USERNAME=${auth_username}
           export TOOLS_TESTING_AUTH_PASSWORD=${auth_password}
-          echo "${create_mongod_users_command}" | ./bin/mongo${extension} ${mongo_args} admin
+          echo "${create_mongerd_users_command}" | ./bin/monger${extension} ${monger_args} admin
         fi;
         export ON_EVERGREEN="true"
         ./runTests.sh -v
@@ -218,11 +218,11 @@ tasks:
   commands:
     - func: "fetch source"
     - command: expansions.update
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.0"
-    - func: "start mongod"
-    - func: "wait for mongod to be ready"
+        monger_version: "4.0"
+    - func: "start mongerd"
+    - func: "wait for mongerd to be ready"
     - func: "run tool integration tests"
       vars:
           INT_TEST: "true" 
@@ -235,19 +235,19 @@ tasks:
     - command: expansions.update
       params:
         updates:
-          - key: "mongod_args"
+          - key: "mongerd_args"
             concat: " --auth"
           - key: "auth_username"
             value: "passwordIsTaco"
           - key: "auth_password"
             value: "Taco"
-          - key: "create_mongod_users_command"
+          - key: "create_mongerd_users_command"
             value: "db.createUser({ user: '${auth_username}', pwd: '${auth_password}', roles: [{ role: '__system', db: 'admin' }] });"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.0"
-    - func: "start mongod"
-    - func: "wait for mongod to be ready"
+        monger_version: "4.0"
+    - func: "start mongerd"
+    - func: "wait for mongerd to be ready"
     - func: "run tool integration tests"
       vars:
           INT_TEST: "true"
@@ -274,7 +274,7 @@ tasks:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools-common
+        working_dir: src/github.com/mongerdb/monger-tools-common
         script: |
           set -x
           set -v
@@ -291,7 +291,7 @@ tasks:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools-common
+        working_dir: src/github.com/mongerdb/monger-tools-common
         script: |
           set -x
           set -v
@@ -391,10 +391,10 @@ buildvariants:
   run_on:
   - macos-1012
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "osx"
-    mongo_target: "osx-ssl"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "osx"
+    monger_target: "osx-ssl"
   tasks:
   - name: unit
   - name: integration-4.0
@@ -405,10 +405,10 @@ buildvariants:
   run_on:
   - macos-1012
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "osx"
-    mongo_target: "osx-ssl"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "osx"
+    monger_target: "osx-ssl"
     build_tags: "ssl"
     excludes: requires_many_files
     USE_SSL: "true"
@@ -426,10 +426,10 @@ buildvariants:
   run_on:
   - rhel62-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel62"
-    mongo_edition: "targeted"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel62"
+    monger_edition: "targeted"
     build_tags: ""
   tasks:
   - name: unit
@@ -441,10 +441,10 @@ buildvariants:
   run_on:
   - rhel62-test
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "rhel62"
-    mongo_edition: "enterprise"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "rhel62"
+    monger_edition: "enterprise"
     build_tags: "ssl"
     edition: ssl
     smoke_use_ssl: --use-ssl
@@ -459,10 +459,10 @@ buildvariants:
   run_on:
   - rhel62-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel62"
-    mongo_edition: "enterprise"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel62"
+    monger_edition: "enterprise"
     build_tags: "ssl sasl"
     edition: enterprise
     run_kinit: true
@@ -541,10 +541,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "targeted"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "targeted"
     build_tags: ""
   tasks:
   - name: unit
@@ -556,10 +556,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "enterprise"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "enterprise"
     build_tags: "ssl"
     edition: ssl
     USE_SSL: "true"
@@ -573,10 +573,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "enterprise"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "enterprise"
     build_tags: "ssl sasl"
     edition: enterprise
     run_kinit: true
@@ -613,10 +613,10 @@ buildvariants:
   run_on:
   - windows-64-vs2013-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "windows-64"
-    mongo_target: "windows_x86_64-2008plus-ssl"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "windows-64"
+    monger_target: "windows_x86_64-2008plus-ssl"
     extension: .exe
   tasks:
   - name: unit
@@ -628,10 +628,10 @@ buildvariants:
   run_on:
   - windows-64-vs2013-compile
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "windows-64"
-    mongo_target: "windows_x86_64-2008plus-ssl"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "windows-64"
+    monger_target: "windows_x86_64-2008plus-ssl"
     build_tags: "ssl"
     edition: ssl
     extension: .exe
@@ -646,11 +646,11 @@ buildvariants:
   run_on:
   - windows-64-vs2013-compile
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "windows-64"
-    mongo_edition: "enterprise"
-    mongo_target: "windows"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "windows-64"
+    monger_edition: "enterprise"
+    monger_target: "windows"
     build_tags: "sasl ssl"
     edition: enterprise
     extension: .exe
@@ -671,11 +671,11 @@ buildvariants:
   stepback: false
   batchtime: 10080 # weekly
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "targeted"
-    mongo_arch: "arm64"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "targeted"
+    monger_arch: "arm64"
     build_tags: "ssl"
     edition: ssl
     USE_SSL: "true"
@@ -695,11 +695,11 @@ buildvariants:
   stepback: false
   batchtime: 10080 # weekly
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel71"
-    mongo_edition: "enterprise"
-    mongo_arch: "ppc64le"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel71"
+    monger_edition: "enterprise"
+    monger_arch: "ppc64le"
     build_tags: 'ssl sasl'
     edition: enterprise
     run_kinit: true
@@ -730,11 +730,11 @@ buildvariants:
   stepback: false
   batchtime: 10080 # weekly
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel67"
-    mongo_edition: "enterprise"
-    mongo_arch: "s390x"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel67"
+    monger_edition: "enterprise"
+    monger_arch: "s390x"
     build_tags: "sasl ssl"
     edition: enterprise
     run_kinit: true
@@ -766,10 +766,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "enterprise"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "enterprise"
     build_tags: "sasl ssl"
     args: "-race"
   tasks:

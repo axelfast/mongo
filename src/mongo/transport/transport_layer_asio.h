@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,18 +33,18 @@
 #include <memory>
 #include <string>
 
-#include "mongo/base/status_with.h"
-#include "mongo/config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/transport/transport_mode.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/net/ssl_options.h"
-#include "mongo/util/net/ssl_types.h"
+#include "monger/base/status_with.h"
+#include "monger/config.h"
+#include "monger/db/server_options.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/transport/transport_mode.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/net/ssl_options.h"
+#include "monger/util/net/ssl_types.h"
 
 namespace asio {
 class io_context;
@@ -61,7 +61,7 @@ class context;
 }  // namespace ssl
 }  // namespace asio
 
-namespace mongo {
+namespace monger {
 
 class ServiceContext;
 class ServiceEntryPoint;
@@ -206,4 +206,4 @@ private:
 };
 
 }  // namespace transport
-}  // namespace mongo
+}  // namespace monger

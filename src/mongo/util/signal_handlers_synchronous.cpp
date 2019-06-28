@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/signal_handlers_synchronous.h"
+#include "monger/util/signal_handlers_synchronous.h"
 
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/exception/exception.hpp>
@@ -42,22 +42,22 @@
 #include <streambuf>
 #include <typeinfo>
 
-#include "mongo/base/string_data.h"
-#include "mongo/logger/log_domain.h"
-#include "mongo/logger/logger.h"
-#include "mongo/platform/compiler.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/debugger.h"
-#include "mongo/util/exception_filter_win32.h"
-#include "mongo/util/exit_code.h"
-#include "mongo/util/log.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/text.h"
+#include "monger/base/string_data.h"
+#include "monger/logger/log_domain.h"
+#include "monger/logger/logger.h"
+#include "monger/platform/compiler.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/debugger.h"
+#include "monger/util/exception_filter_win32.h"
+#include "monger/util/exit_code.h"
+#include "monger/util/log.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -349,4 +349,4 @@ void clearSignalMask() {
     invariant(sigprocmask(SIG_SETMASK, &unblockSignalMask, nullptr) == 0);
 #endif
 }
-}  // namespace mongo
+}  // namespace monger

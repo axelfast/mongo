@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/auth"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/connection"
-	"go.mongodb.org/mongo-driver/x/network/connstring"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/auth"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/connection"
+	"go.mongerdb.org/monger-driver/x/network/connstring"
 )
 
 // Option is a configuration option for a topology.

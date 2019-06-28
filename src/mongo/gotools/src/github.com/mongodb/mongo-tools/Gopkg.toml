@@ -24,15 +24,15 @@
 #   go-tests = true
 #   unused-packages = true
 
-# mongo-lint is a custom linter that is not called in any of the go code.
-required = ["github.com/3rf/mongo-lint"]
+# monger-lint is a custom linter that is not called in any of the go code.
+required = ["github.com/3rf/monger-lint"]
 
 [[constraint]]
-  name = "github.com/mongodb/mongo-tools-common"
+  name = "github.com/mongerdb/monger-tools-common"
   branch = "master"
 
 [[constraint]]
-  name = "go.mongodb.org/mongo-driver"
+  name = "go.mongerdb.org/monger-driver"
   revision = "bb984ba94a90e2bdf108128bf6bef0c0505a4bc7"
 
 [[constraint]]
@@ -98,7 +98,7 @@ required = ["github.com/3rf/mongo-lint"]
   revision = "287b4346dc4e71a038c346375a9d572453bc469b"
 
 [[override]]
-  name = "github.com/3rf/mongo-lint"
+  name = "github.com/3rf/monger-lint"
   revision = "3550fdcf1f43b89aaeabaa4559eaae6dc4407e42"
 
 [[override]]

@@ -1,6 +1,6 @@
 /**
  * Tests that temporary collections are not dropped when a member of a replica set is started up as
- * a stand-alone mongod, i.e. without the --replSet parameter.
+ * a stand-alone mongerd, i.e. without the --replSet parameter.
  *
  * @tags: [requires_persistence, requires_majority_read_concern, requires_replication]
  */
@@ -59,7 +59,7 @@
               "'temp_collection' wasn't created as temporary on the secondary: " +
                   tojson(secondaryCollectionInfos[0].options));
 
-    // Shut down the secondary and restart it as a stand-alone mongod.
+    // Shut down the secondary and restart it as a stand-alone mongerd.
     var secondaryNodeId = rst.getNodeId(secondaryDB.getMongo());
     rst.stop(secondaryNodeId);
 
@@ -73,7 +73,7 @@
     } else {
         secondaryConn = MongoRunner.runMongod({dbpath: secondaryConn.dbpath, noCleanData: true});
     }
-    assert.neq(null, secondaryConn, "secondary failed to start up as a stand-alone mongod");
+    assert.neq(null, secondaryConn, "secondary failed to start up as a stand-alone mongerd");
     secondaryDB = secondaryConn.getDB("test");
 
     // Verify that the temporary collection still exists on the secondary and has temp=true.

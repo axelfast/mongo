@@ -39,12 +39,12 @@
     const batchSize = 100;
     const batch = randomBatch(batchSize);
 
-    var mongod = MongoRunner.runMongod({
+    var mongerd = MongoRunner.runMongod({
         storageEngine: 'inMemory',
         inMemoryEngineConfigString: 'cache_size=' + cacheMB + "M,",
     });
-    assert.neq(null, mongod, "mongod failed to started up with --inMemoryEngineConfigString");
-    var db = mongod.getDB("test");
+    assert.neq(null, mongerd, "mongerd failed to started up with --inMemoryEngineConfigString");
+    var db = mongerd.getDB("test");
     var t = db.large;
 
     // Insert documents until full.

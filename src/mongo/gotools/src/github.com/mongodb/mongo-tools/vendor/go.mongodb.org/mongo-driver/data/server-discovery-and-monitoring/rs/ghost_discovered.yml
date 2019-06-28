@@ -1,6 +1,6 @@
 description: "Ghost discovered"
 
-uri: "mongodb://a,b/?replicaSet=rs"
+uri: "mongerdb://a,b/?replicaSet=rs"
 
 phases: [
 

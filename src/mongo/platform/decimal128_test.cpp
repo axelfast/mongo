@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/decimal128.h"
+#include "monger/platform/decimal128.h"
 
 #include <array>
 #include <cmath>
@@ -35,10 +35,10 @@
 #include <string>
 #include <utility>
 
-#include "mongo/config.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/config.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 // Tests for Decimal128 constructors
 TEST(Decimal128Test, TestDefaultConstructor) {
@@ -1685,4 +1685,4 @@ TEST(Decimal128Test, TestTanh) {
     assertDecimal128ApproxEqual(Decimal128("5.75958653158").tanh(), Decimal128("0.99998012476"));
     assertDecimal128ApproxEqual(Decimal128("6.28318530718").tanh(), Decimal128("0.99999302534"));
 }
-}  // namespace mongo
+}  // namespace monger

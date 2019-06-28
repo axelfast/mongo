@@ -14,9 +14,9 @@ import (
 	"fmt"
 	"net"
 
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/auth/internal/gssapi"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/auth/internal/gssapi"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 // GSSAPI is the mechanism name for GSSAPI.

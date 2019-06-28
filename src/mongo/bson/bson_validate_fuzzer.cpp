@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/bson/bson_validate.h"
+#include "monger/bson/bson_validate.h"
 
 extern "C" int LLVMFuzzerTestOneInput(const char* Data, size_t Size) {
-    mongo::Status ret = mongo::validateBSON(Data, Size, mongo::BSONVersion::kLatest);
+    monger::Status ret = monger::validateBSON(Data, Size, monger::BSONVersion::kLatest);
     return 0;
 }

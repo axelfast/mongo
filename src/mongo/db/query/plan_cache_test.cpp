@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,34 +28,34 @@
  */
 
 /**
- * This file contains tests for mongo/db/query/plan_cache.h
+ * This file contains tests for monger/db/query/plan_cache.h
  */
 
-#include "mongo/db/query/plan_cache.h"
+#include "monger/db/query/plan_cache.h"
 
 #include <algorithm>
 #include <memory>
 #include <ostream>
 
-#include "mongo/db/index/wildcard_key_generator.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/query/canonical_query_encoder.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/db/query/plan_ranker.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_planner_test_lib.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/db/index/wildcard_key_generator.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/query/canonical_query_encoder.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/db/query/plan_ranker.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_planner_test_lib.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 
-using namespace mongo;
+using namespace monger;
 
 using unittest::assertGet;
 
@@ -883,7 +883,7 @@ TEST(PlanCacheTest, GetMatchingStatsMatchesAndSerializesCorrectly) {
  * a full-blown QuerySolution. Finally, assert that the query solution
  * recovered from the cache is identical to the original "best solution".
  */
-class CachePlanSelectionTest : public mongo::unittest::Test {
+class CachePlanSelectionTest : public monger::unittest::Test {
 protected:
     void setUp() {
         params.options = QueryPlannerParams::INCLUDE_COLLSCAN;

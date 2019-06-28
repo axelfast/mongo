@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,10 +28,10 @@
  *    it in the license file.
  */
 
-package com.mongodb.embedded.capi;
+package com.mongerdb.embedded.capi;
 
 /**
- * LogLevel represents the supported logging levels for the embedded mongod
+ * LogLevel represents the supported logging levels for the embedded mongerd
  */
 public enum LogLevel {
     /**
@@ -50,7 +50,7 @@ public enum LogLevel {
     STDERR(2),
 
     /**
-     * Log via the {@code org.mongodb.embedded.capi} logger
+     * Log via the {@code org.mongerdb.embedded.capi} logger
      */
     LOGGER(4);
 

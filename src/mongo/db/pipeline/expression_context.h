@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,24 +35,24 @@
 #include <string>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/document_comparator.h"
-#include "mongo/db/pipeline/mongo_process_interface.h"
-#include "mongo/db/pipeline/value_comparator.h"
-#include "mongo/db/pipeline/variables.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/datetime/date_time_support.h"
-#include "mongo/db/query/explain_options.h"
-#include "mongo/db/query/tailable_mode.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/intrusive_counter.h"
-#include "mongo/util/string_map.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/document_comparator.h"
+#include "monger/db/pipeline/monger_process_interface.h"
+#include "monger/db/pipeline/value_comparator.h"
+#include "monger/db/pipeline/variables.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/datetime/date_time_support.h"
+#include "monger/db/query/explain_options.h"
+#include "monger/db/query/tailable_mode.h"
+#include "monger/db/server_options.h"
+#include "monger/util/intrusive_counter.h"
+#include "monger/util/string_map.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 class ExpressionContext : public RefCountable {
 public:
@@ -103,7 +103,7 @@ public:
     ExpressionContext(OperationContext* opCtx,
                       const AggregationRequest& request,
                       std::unique_ptr<CollatorInterface> collator,
-                      std::shared_ptr<MongoProcessInterface> mongoProcessInterface,
+                      std::shared_ptr<MongoProcessInterface> mongerProcessInterface,
                       StringMap<ExpressionContext::ResolvedNamespace> resolvedNamespaces,
                       boost::optional<UUID> collUUID);
 
@@ -215,15 +215,15 @@ public:
     // If known, the UUID of the execution namespace for this aggregation command.
     boost::optional<UUID> uuid;
 
-    std::string tempDir;  // Defaults to empty to prevent external sorting in mongos.
+    std::string tempDir;  // Defaults to empty to prevent external sorting in mongers.
 
     OperationContext* opCtx;
 
     // An interface for accessing information or performing operations that have different
-    // implementations on mongod and mongos, or that only make sense on one of the two.
+    // implementations on mongerd and mongers, or that only make sense on one of the two.
     // Additionally, putting some of this functionality behind an interface prevents aggregation
     // libraries from having large numbers of dependencies. This pointer is always non-null.
-    std::shared_ptr<MongoProcessInterface> mongoProcessInterface;
+    std::shared_ptr<MongoProcessInterface> mongerProcessInterface;
 
     const TimeZoneDatabase* timeZoneDatabase;
 
@@ -285,4 +285,4 @@ protected:
     int _interruptCounter = kInterruptCheckPeriod;
 };
 
-}  // namespace mongo
+}  // namespace monger

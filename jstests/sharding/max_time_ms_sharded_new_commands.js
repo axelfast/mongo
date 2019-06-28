@@ -4,14 +4,14 @@
     load("./jstests/libs/feature_compatibility_version.js");
     var st = new ShardingTest({shards: 2});
 
-    var mongos = st.s0;
+    var mongers = st.s0;
     var shards = [st.shard0, st.shard1];
-    var coll = mongos.getCollection("foo.bar");
-    var admin = mongos.getDB("admin");
+    var coll = mongers.getCollection("foo.bar");
+    var admin = mongers.getDB("admin");
     var cursor;
     var res;
 
-    // Helper function to configure "maxTimeAlwaysTimeOut" fail point on shards, which forces mongod
+    // Helper function to configure "maxTimeAlwaysTimeOut" fail point on shards, which forces mongerd
     // to throw if it receives an operation with a max time.  See fail point declaration for
     // complete description.
     var configureMaxTimeAlwaysTimeOut = function(mode) {
@@ -34,12 +34,12 @@
     assert.commandWorked(
         admin.runCommand(
             {setFeatureCompatibilityVersion: lastStableFCV, maxTimeMS: 1000 * 60 * 60 * 24}),
-        "expected setFeatureCompatibilityVersion to not hit time limit in mongod");
+        "expected setFeatureCompatibilityVersion to not hit time limit in mongerd");
 
     assert.commandWorked(
         admin.runCommand(
             {setFeatureCompatibilityVersion: latestFCV, maxTimeMS: 1000 * 60 * 60 * 24}),
-        "expected setFeatureCompatibilityVersion to not hit time limit in mongod");
+        "expected setFeatureCompatibilityVersion to not hit time limit in mongerd");
 
     st.stop();
 })();

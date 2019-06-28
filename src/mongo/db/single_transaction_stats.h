@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/db/curop.h"
-#include "mongo/rpc/metadata/client_metadata.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/db/curop.h"
+#include "monger/rpc/metadata/client_metadata.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Tracks metrics for a single multi-document transaction.
@@ -278,4 +278,4 @@ private:
     boost::optional<TickSource::Tick> _preparedStartTime{boost::none};
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,28 +29,28 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/db/server_options.h"
-#include "mongo/s/is_mongos.h"
-#include "mongo/util/options_parser/environment.h"
-#include "mongo/util/options_parser/option_section.h"
+#include "monger/base/status.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/server_options.h"
+#include "monger/s/is_mongers.h"
+#include "monger/util/options_parser/environment.h"
+#include "monger/util/options_parser/option_section.h"
 
-namespace mongo {
+namespace monger {
 
 namespace optionenvironment {
 class OptionSection;
 class Environment;
 }  // namespace optionenvironment
 
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 
 struct MongosGlobalParams {
     // The config server connection string
     ConnectionString configdbs;
 };
 
-extern MongosGlobalParams mongosGlobalParams;
+extern MongosGlobalParams mongersGlobalParams;
 
 void printMongosHelp(const moe::OptionSection& options);
 
@@ -63,14 +63,14 @@ bool handlePreValidationMongosOptions(const moe::Environment& params,
                                       const std::vector<std::string>& args);
 
 /**
- * Handle custom validation of mongos options that can not currently be done by using
+ * Handle custom validation of mongers options that can not currently be done by using
  * Constraints in the Environment.  See the "validate" function in the Environment class for
  * more details.
  */
 Status validateMongosOptions(const moe::Environment& params);
 
 /**
- * Canonicalize mongos options for the given environment.
+ * Canonicalize mongers options for the given environment.
  *
  * For example, the options "dur", "nodur", "journal", "nojournal", and
  * "storage.journaling.enabled" should all be merged into "storage.journaling.enabled".

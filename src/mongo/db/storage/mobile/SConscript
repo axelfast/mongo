@@ -20,41 +20,41 @@ env.Library(
         env.Idlc('mobile_options.idl')[0],
         ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/catalog/collection_options',
-        '$BUILD_DIR/mongo/db/concurrency/lock_manager',
-        '$BUILD_DIR/mongo/db/concurrency/write_conflict_exception',
-        '$BUILD_DIR/mongo/db/index/index_descriptor',
-        '$BUILD_DIR/mongo/db/namespace_string',
-        '$BUILD_DIR/mongo/db/repl/repl_coordinator_interface',
-        '$BUILD_DIR/mongo/db/storage/index_entry_comparison',
-        '$BUILD_DIR/mongo/db/storage/journal_listener',
-        '$BUILD_DIR/mongo/db/storage/key_string',
-        '$BUILD_DIR/mongo/db/storage/recovery_unit_base',
-        '$BUILD_DIR/mongo/db/storage/kv/kv_prefix',
-        '$BUILD_DIR/mongo/db/storage/oplog_hack',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/catalog/collection_options',
+        '$BUILD_DIR/monger/db/concurrency/lock_manager',
+        '$BUILD_DIR/monger/db/concurrency/write_conflict_exception',
+        '$BUILD_DIR/monger/db/index/index_descriptor',
+        '$BUILD_DIR/monger/db/namespace_string',
+        '$BUILD_DIR/monger/db/repl/repl_coordinator_interface',
+        '$BUILD_DIR/monger/db/storage/index_entry_comparison',
+        '$BUILD_DIR/monger/db/storage/journal_listener',
+        '$BUILD_DIR/monger/db/storage/key_string',
+        '$BUILD_DIR/monger/db/storage/recovery_unit_base',
+        '$BUILD_DIR/monger/db/storage/kv/kv_prefix',
+        '$BUILD_DIR/monger/db/storage/oplog_hack',
         '$BUILD_DIR/third_party/shim_sqlite',
         ],
     LIBDEPS_PRIVATE= [
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
         ],
     )
 
 serveronlyProgDepsDependents = []
 if mobile_se:
     serveronlyProgDepsDependents = [
-        '$BUILD_DIR/mongo/mongod',
-        '$BUILD_DIR/mongo/dbtests/dbtest',
+        '$BUILD_DIR/monger/mongerd',
+        '$BUILD_DIR/monger/dbtests/dbtest',
         ]
         
     env.Library(
-        target='mobile_options_mongod',
+        target='mobile_options_mongerd',
         source=[
-            'mobile_options_mongod.cpp',
+            'mobile_options_mongerd.cpp',
         ],
         PROGDEPS_DEPENDENTS=serveronlyProgDepsDependents,
         LIBDEPS=[
-            '$BUILD_DIR/mongo/util/options_parser/options_parser',
+            '$BUILD_DIR/monger/util/options_parser/options_parser',
         ],
         LIBDEPS_PRIVATE=[
             'storage_mobile_core',
@@ -69,11 +69,11 @@ env.Library(
     PROGDEPS_DEPENDENTS=serveronlyProgDepsDependents,
     LIBDEPS=[
         'storage_mobile_core',
-        '$BUILD_DIR/mongo/db/storage/durable_catalog_impl',
-        '$BUILD_DIR/mongo/db/storage/storage_engine_impl',
+        '$BUILD_DIR/monger/db/storage/durable_catalog_impl',
+        '$BUILD_DIR/monger/db/storage/storage_engine_impl',
         ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/storage/storage_engine_common',
+        '$BUILD_DIR/monger/db/storage/storage_engine_common',
     ],
 )
 '''
@@ -84,7 +84,7 @@ env.CppUnitTest(
     ],
     LIBDEPS=[
         'storage_mobile_core',
-        '$BUILD_DIR/mongo/db/storage/sorted_data_interface_test_harness'
+        '$BUILD_DIR/monger/db/storage/sorted_data_interface_test_harness'
         ]
     )
 '''
@@ -96,9 +96,9 @@ env.CppUnitTest(
     ],
     LIBDEPS=[
         'storage_mobile_core',
-        '$BUILD_DIR/mongo/db/storage/record_store_test_harness',
-        '$BUILD_DIR/mongo/db/concurrency/write_conflict_exception',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/db/storage/record_store_test_harness',
+        '$BUILD_DIR/monger/db/concurrency/write_conflict_exception',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ]
 )
 
@@ -108,11 +108,11 @@ env.CppUnitTest(
         'mobile_kv_engine_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/storage/kv/kv_engine_test_harness',
-        '$BUILD_DIR/mongo/db/storage/storage_options',
+        '$BUILD_DIR/monger/db/storage/kv/kv_engine_test_harness',
+        '$BUILD_DIR/monger/db/storage/storage_options',
         'storage_mobile_core',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/auth/authmocks',
+        '$BUILD_DIR/monger/db/auth/authmocks',
     ],
 )

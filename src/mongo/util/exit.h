@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/platform/compiler.h"
-#include "mongo/util/exit_code.h"
-#include "mongo/util/functional.h"
+#include "monger/platform/compiler.h"
+#include "monger/util/exit_code.h"
+#include "monger/util/functional.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * ShutdownTaskArgs holds any arguments we might like to pass from a manual invocation of the
@@ -51,7 +51,7 @@ struct ShutdownTaskArgs {
  *
  * Calling this function is deprecated because modules that consult it
  * cannot engage in an orderly, coordinated shutdown. Instead, such
- * modules tend to just stop working at some point after mongo::shutdown() is
+ * modules tend to just stop working at some point after monger::shutdown() is
  * invoked, without regard to whether modules that depend on them have
  * already shut down.
  */
@@ -100,4 +100,4 @@ MONGO_COMPILER_NORETURN inline void exitCleanly(ExitCode code) {
     shutdown(code);
 }
 
-}  // namespace mongo
+}  // namespace monger

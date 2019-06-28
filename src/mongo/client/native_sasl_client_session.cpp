@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/native_sasl_client_session.h"
+#include "monger/client/native_sasl_client_session.h"
 
-#include "mongo/base/init.h"
-#include "mongo/client/sasl_client_conversation.h"
-#include "mongo/client/sasl_plain_client_conversation.h"
-#include "mongo/client/sasl_scram_client_conversation.h"
-#include "mongo/client/scram_client_cache.h"
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/client/sasl_client_conversation.h"
+#include "monger/client/sasl_plain_client_conversation.h"
+#include "monger/client/sasl_scram_client_conversation.h"
+#include "monger/client/scram_client_cache.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 SaslClientSession* createNativeSaslClientSession(const std::string mech) {

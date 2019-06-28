@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,19 +31,19 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/db/namespace_string.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/database_version_gen.h"
-#include "mongo/util/concurrency/notification.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/namespace_string.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/database_version_gen.h"
+#include "monger/util/concurrency/notification.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
 /**
- * A decoration on OperationContext representing per-operation shard version metadata sent to mongod
- * from mongos as a command parameter.
+ * A decoration on OperationContext representing per-operation shard version metadata sent to mongerd
+ * from mongers as a command parameter.
  *
  * The metadata for a particular operation can be retrieved using the get() method.
  *
@@ -206,4 +206,4 @@ private:
     boost::optional<Status> _shardingOperationFailedStatus;
 };
 
-}  // namespace mongo
+}  // namespace monger

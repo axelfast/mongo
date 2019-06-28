@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"bytes"
@@ -46,7 +46,7 @@ type OpStat struct {
 	PlayedAt *time.Time `json:"played_at,omitempty"`
 
 	// PlayAt is the time that this operation is scheduled to be played. It represents the time
-	// that it is supposed to be played by mongoreplay, but can be different from
+	// that it is supposed to be played by mongerreplay, but can be different from
 	// PlayedAt if the playback is lagging for any reason
 	PlayAt *time.Time `json:"play_at,omitempty"`
 
@@ -74,7 +74,7 @@ type OpStat struct {
 	// Seen is the time that this operation was originally seen.
 	Seen *time.Time `json:"seen,omitempty"`
 
-	// RequestID is the ID of the mongodb operation as taken from the header.
+	// RequestID is the ID of the mongerdb operation as taken from the header.
 	// The RequestID for a request operation is the same as the ResponseID for
 	// the corresponding reply, so this field will be the same for request/reply pairs.
 	RequestID int32 `json:"request_id,omitempty"`

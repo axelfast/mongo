@@ -4,13 +4,13 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongotop
+package mongertop
 
 var Usage = `<options> <polling interval in seconds>
 
 Monitor basic usage statistics for each collection.
 
-See http://docs.mongodb.org/manual/reference/program/mongotop/ for more information.`
+See http://docs.mongerdb.org/manual/reference/program/mongertop/ for more information.`
 
 // Output defines the set of options to use in displaying data from the server.
 type Output struct {

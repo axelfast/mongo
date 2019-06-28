@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/transport/message_compressor_base.h"
-#include "mongo/util/string_map.h"
+#include "monger/base/status.h"
+#include "monger/transport/message_compressor_base.h"
+#include "monger/util/string_map.h"
 
 #include <array>
 #include <limits>
@@ -40,14 +40,14 @@
 #include <string>
 #include <vector>
 
-namespace mongo {
+namespace monger {
 
 namespace optionenvironment {
 class OptionSection;
 class Environment;
 }  // namespace option environment
 
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 
 /*
  * The MessageCompressorRegistry holds the global registrations of compressors for a process.
@@ -120,4 +120,4 @@ private:
 
 Status storeMessageCompressionOptions(const std::string& compressors);
 void appendMessageCompressionStats(BSONObjBuilder* b);
-}  // namespace mongo
+}  // namespace monger

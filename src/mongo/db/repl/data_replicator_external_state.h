@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,21 +29,21 @@
 
 #pragma once
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/repl/multiapplier.h"
-#include "mongo/db/repl/oplog_applier.h"
-#include "mongo/db/repl/oplog_buffer.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/optime_with.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_consistency_markers.h"
-#include "mongo/rpc/metadata/oplog_query_metadata.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status_with.h"
+#include "monger/db/repl/multiapplier.h"
+#include "monger/db/repl/oplog_applier.h"
+#include "monger/db/repl/oplog_buffer.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/optime_with.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_consistency_markers.h"
+#include "monger/rpc/metadata/oplog_query_metadata.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 namespace executor {
 class TaskExecutor;
@@ -95,7 +95,7 @@ public:
      * sync source (from metadata); and whether this sync source has a sync source (also from
      * metadata).
      *
-     * TODO (SERVER-27668): Make OplogQueryMetadata non-optional in mongodb 3.8.
+     * TODO (SERVER-27668): Make OplogQueryMetadata non-optional in mongerdb 3.8.
      */
     virtual bool shouldStopFetching(const HostAndPort& source,
                                     const rpc::ReplSetMetadata& replMetadata,
@@ -125,4 +125,4 @@ public:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

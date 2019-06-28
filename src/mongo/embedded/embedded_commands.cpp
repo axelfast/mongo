@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands.h"
+#include "monger/db/commands.h"
 
-namespace mongo {
+namespace monger {
 
 class CmdTrimMemory : public BasicCommand {
 public:
@@ -64,7 +64,7 @@ public:
              const BSONObj& jsobj,
              BSONObjBuilder& result) override {
 
-        // TODO: Implement trimMemory https://jira.mongodb.org/browse/SERVER-34131
+        // TODO: Implement trimMemory https://jira.mongerdb.org/browse/SERVER-34131
 
         std::string mode = jsobj[getName()].String();
         if (mode == "aggressive") {
@@ -113,7 +113,7 @@ public:
              const BSONObj& jsobj,
              BSONObjBuilder& result) override {
 
-        // TODO: Implement setBatteryLevel https://jira.mongodb.org/browse/SERVER-34132
+        // TODO: Implement setBatteryLevel https://jira.mongerdb.org/browse/SERVER-34132
 
         std::string mode = jsobj[getName()].String();
         if (mode == "low") {
@@ -128,4 +128,4 @@ public:
 
 } cmdBatteryLevel;
 
-}  // namespace mongo
+}  // namespace monger

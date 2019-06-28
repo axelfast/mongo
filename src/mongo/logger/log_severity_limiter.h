@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/logger/log_severity.h"
-#include "mongo/logger/logstream_builder.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/time_support.h"
+#include "monger/logger/log_severity.h"
+#include "monger/logger/logstream_builder.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/time_support.h"
 
-namespace mongo::logger {
+namespace monger::logger {
 
 /**
  * A thread-safe widget to chose a lower severity for a given key once every T milliseconds.
@@ -104,8 +104,8 @@ private:
 #define MONGO_GET_LIMITED_SEVERITY(KEY, PERIOD, LIMITED, NORMAL)                                \
     [&] {                                                                                       \
         using KeyT = std::decay_t<decltype(KEY)>;                                               \
-        static auto limiter = mongo::logger::LogSeverityLimiter<KeyT>(PERIOD, LIMITED, NORMAL); \
+        static auto limiter = monger::logger::LogSeverityLimiter<KeyT>(PERIOD, LIMITED, NORMAL); \
         return limiter.nextFor(KEY);                                                            \
     }()
 
-}  // namespace mongo::logger
+}  // namespace monger::logger

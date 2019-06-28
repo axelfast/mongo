@@ -34,18 +34,18 @@
         {user: 'admin', pwd: 'x', roles: ['clusterAdmin', 'userAdminAnyDatabase']});
     shardAdmin.auth('admin', 'x');
 
-    var mongos = st.s0;
-    var mongosAdmin = mongos.getDB('admin');
-    var coll = mongos.getCollection('foo.bar');
+    var mongers = st.s0;
+    var mongersAdmin = mongers.getDB('admin');
+    var coll = mongers.getCollection('foo.bar');
 
-    mongosAdmin.createUser(
+    mongersAdmin.createUser(
         {user: 'admin', pwd: 'x', roles: ['clusterAdmin', 'userAdminAnyDatabase']});
-    mongosAdmin.auth('admin', 'x');
+    mongersAdmin.auth('admin', 'x');
 
-    assert.commandWorked(mongosAdmin.runCommand({enableSharding: coll.getDB().getName()}));
+    assert.commandWorked(mongersAdmin.runCommand({enableSharding: coll.getDB().getName()}));
 
     assert.commandWorked(
-        mongosAdmin.runCommand({shardCollection: coll.getFullName(), key: {_id: 'hashed'}}));
+        mongersAdmin.runCommand({shardCollection: coll.getFullName(), key: {_id: 'hashed'}}));
 
     // cleanupOrphaned requires auth as admin user.
     assert.commandWorked(shardAdmin.logout());

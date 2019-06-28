@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/index_catalog_entry.h"
+#include "monger/db/catalog/index_catalog_entry.h"
 
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
 
-namespace mongo {
+namespace monger {
 
 const IndexCatalogEntry* IndexCatalogEntryContainer::find(const IndexDescriptor* desc) const {
     if (desc->_cachedEntry)
@@ -93,4 +93,4 @@ std::shared_ptr<IndexCatalogEntry> IndexCatalogEntryContainer::release(
     return nullptr;
 }
 
-}  // namespace mongo
+}  // namespace monger

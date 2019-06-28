@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <memory>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/base/string_data_comparator_interface.h"
-#include "mongo/bson/bsonobj_comparator_interface.h"
-#include "mongo/db/query/collation/collation_spec.h"
+#include "monger/base/string_data.h"
+#include "monger/base/string_data_comparator_interface.h"
+#include "monger/bson/bsonobj_comparator_interface.h"
+#include "monger/db/query/collation/collation_spec.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * An interface for ordering and matching according to a collation. Instances should be retrieved
@@ -168,4 +168,4 @@ private:
     const CollationSpec _spec;
 };
 
-}  // namespace mongo
+}  // namespace monger

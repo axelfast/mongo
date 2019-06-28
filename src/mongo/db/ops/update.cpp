@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kWrite
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kWrite
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ops/update.h"
+#include "monger/db/ops/update.h"
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/exec/update_stage.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/update/update_driver.h"
-#include "mongo/db/update_index_data.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/client.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/exec/update_stage.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/update/update_driver.h"
+#include "monger/db/update_index_data.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 UpdateResult update(OperationContext* opCtx, Database* db, const UpdateRequest& request) {
     invariant(db);
@@ -128,4 +128,4 @@ BSONObj applyUpdateOperators(OperationContext* opCtx,
     return doc.getObject();
 }
 
-}  // namespace mongo
+}  // namespace monger

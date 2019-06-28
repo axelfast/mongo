@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/async_client.h"
+#include "monger/client/async_client.h"
 
 #include <memory>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/client/authenticate.h"
-#include "mongo/config.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/executor/egress_tag_closer_manager.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/legacy_request_builder.h"
-#include "mongo/rpc/metadata/client_metadata.h"
-#include "mongo/rpc/reply_interface.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/version.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/client/authenticate.h"
+#include "monger/config.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/server_options.h"
+#include "monger/db/wire_version.h"
+#include "monger/executor/egress_tag_closer_manager.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/legacy_request_builder.h"
+#include "monger/rpc/metadata/client_metadata.h"
+#include "monger/rpc/reply_interface.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 
 Future<AsyncDBClient::Handle> AsyncDBClient::connect(const HostAndPort& peer,
                                                      transport::ConnectSSLMode sslMode,
@@ -77,7 +77,7 @@ BSONObj AsyncDBClient::_buildIsMasterRequest(const std::string& appName,
 
     if (getTestCommandsEnabled()) {
         // Only include the host:port of this process in the isMaster command request if test
-        // commands are enabled. mongobridge uses this field to identify the process opening a
+        // commands are enabled. mongerbridge uses this field to identify the process opening a
         // connection to it.
         StringBuilder sb;
         sb << getHostNameCached() << ':' << serverGlobalParams.port;
@@ -272,4 +272,4 @@ const HostAndPort& AsyncDBClient::local() const {
     return _session->local();
 }
 
-}  // namespace mongo
+}  // namespace monger

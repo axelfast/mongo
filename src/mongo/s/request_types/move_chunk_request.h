@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <string>
 
-#include "mongo/client/connection_string.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/request_types/migration_secondary_throttle_options.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/namespace_string.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/request_types/migration_secondary_throttle_options.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 template <typename T>
@@ -155,4 +155,4 @@ private:
     bool _waitForDelete;
 };
 
-}  // namespace mongo
+}  // namespace monger

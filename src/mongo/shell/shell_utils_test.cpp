@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/shell/shell_utils.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/shell/shell_utils.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(ShellUtils, BalancedTest) {
@@ -78,4 +78,4 @@ TEST(ShellUtils, BalancedTest) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

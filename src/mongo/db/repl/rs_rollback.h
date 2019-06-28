@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <functional>
 
-#include "mongo/base/status.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/status.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/record_id.h"
+#include "monger/db/repl/optime.h"
+#include "monger/util/time_support.h"
+#include "monger/util/uuid.h"
 
 /**
  * This rollback algorithm is used when the storage engine does not support recovering to a stable
@@ -121,7 +121,7 @@
  * 6.   Transition node R from RECOVERING to SECONDARY state.
  */
 
-namespace mongo {
+namespace monger {
 
 class DBClientConnection;
 class OperationContext;
@@ -140,7 +140,7 @@ class RollbackSource;
  * rolling back. If we successfully enter ROLLBACK, we will only exit this function fatally or
  * after transition to RECOVERING.
  *
- * 'sleepSecsFn' is an optional testing-only argument for overriding mongo::sleepsecs().
+ * 'sleepSecsFn' is an optional testing-only argument for overriding monger::sleepsecs().
  */
 
 void rollback(OperationContext* opCtx,
@@ -381,4 +381,4 @@ void syncFixUp(OperationContext* opCtx,
                ReplicationProcess* replicationProcess);
 }  // namespace rollback_internal
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

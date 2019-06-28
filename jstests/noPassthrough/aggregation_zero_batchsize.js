@@ -5,9 +5,9 @@
 (function() {
     "use strict";
 
-    const mongodOptions = {};
-    const conn = MongoRunner.runMongod(mongodOptions);
-    assert.neq(null, conn, "mongod failed to start with options " + tojson(mongodOptions));
+    const mongerdOptions = {};
+    const conn = MongoRunner.runMongod(mongerdOptions);
+    assert.neq(null, conn, "mongerd failed to start with options " + tojson(mongerdOptions));
 
     const testDB = conn.getDB("test");
     const coll = testDB[jsTest.name];

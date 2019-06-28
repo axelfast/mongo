@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/capped_utils.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/query/find.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/capped_utils.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/query/find.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CmdCloneCollectionAsCapped : public ErrmsgCommandDeprecated {
@@ -178,4 +178,4 @@ public:
 } cmdConvertToCapped;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

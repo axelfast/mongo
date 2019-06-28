@@ -10,9 +10,9 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 // MarshalD is a wrapper for bson.D that allows unmarshalling

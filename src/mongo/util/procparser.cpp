@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kFTDC
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kFTDC
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/procparser.h"
+#include "monger/util/procparser.h"
 
 #include <algorithm>
 #include <array>
@@ -45,16 +45,16 @@
 #include <type_traits>
 #include <unistd.h>
 
-#include "mongo/base/parse_number.h"
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
-namespace mongo {
+#include "monger/base/parse_number.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
+namespace monger {
 
 namespace {
 
@@ -714,4 +714,4 @@ std::vector<std::string> findPhysicalDisks(StringData sysBlockPath) {
 }
 
 }  // namespace procparser
-}  // namespace mongo
+}  // namespace monger

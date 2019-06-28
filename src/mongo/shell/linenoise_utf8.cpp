@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/shell/linenoise_utf8.h"
+#include "monger/shell/linenoise_utf8.h"
 
 #ifdef _WIN32
-#include "mongo/platform/windows_basic.h"
-#include "mongo/util/text.h"
+#include "monger/platform/windows_basic.h"
+#include "monger/util/text.h"
 #include <io.h>
 #else
 #include <unistd.h>
@@ -322,7 +322,7 @@ int write32(int fileHandle, const UChar32* string32, unsigned int sourceLengthIn
                                           sourceLengthInCharacters);
 #if defined(_WIN32)
     if (_isatty(fileHandle)) {
-        bool success = mongo::writeUtf8ToWindowsConsole(tempCharString.get(), count);
+        bool success = monger::writeUtf8ToWindowsConsole(tempCharString.get(), count);
         if (!success) {
             return -1;
         }

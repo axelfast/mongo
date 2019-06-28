@@ -5,16 +5,16 @@ Import("env")
 env = env.Clone()
 
 env.Library(
-    target='views_mongod',
+    target='views_mongerd',
     source=[
         'durable_view_catalog.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/dbhelpers',
-        '$BUILD_DIR/mongo/db/views/views',
+        '$BUILD_DIR/monger/db/dbhelpers',
+        '$BUILD_DIR/monger/db/views/views',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/catalog/database_holder',
+        '$BUILD_DIR/monger/db/catalog/database_holder',
     ],
 )
 
@@ -27,10 +27,10 @@ env.Library(
     ],
     LIBDEPS=[
         'resolved_view',
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/pipeline/aggregation',
-        '$BUILD_DIR/mongo/db/repl/repl_coordinator_interface',
-        '$BUILD_DIR/mongo/db/query/collation/collator_factory_interface',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/pipeline/aggregation',
+        '$BUILD_DIR/monger/db/repl/repl_coordinator_interface',
+        '$BUILD_DIR/monger/db/query/collation/collator_factory_interface',
     ]
 )
 
@@ -40,7 +40,7 @@ env.Library(
         'resolved_view.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ]
 )
 
@@ -54,11 +54,11 @@ env.CppUnitTest(
     ],
     LIBDEPS=[
         'views',
-        '$BUILD_DIR/mongo/db/auth/authmocks',
-        '$BUILD_DIR/mongo/db/query/collation/collator_interface_mock',
-        '$BUILD_DIR/mongo/db/query/query_test_service_context',
-        '$BUILD_DIR/mongo/db/repl/replmocks',
-        '$BUILD_DIR/mongo/s/is_mongos',
-        '$BUILD_DIR/mongo/unittest/unittest',
+        '$BUILD_DIR/monger/db/auth/authmocks',
+        '$BUILD_DIR/monger/db/query/collation/collator_interface_mock',
+        '$BUILD_DIR/monger/db/query/query_test_service_context',
+        '$BUILD_DIR/monger/db/repl/replmocks',
+        '$BUILD_DIR/monger/s/is_mongers',
+        '$BUILD_DIR/monger/unittest/unittest',
     ],
 )

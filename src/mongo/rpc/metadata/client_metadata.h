@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
 
-namespace mongo {
+namespace monger {
 
 class Client;
 class OperationContext;
@@ -66,7 +66,7 @@ constexpr auto kMetadataDocumentName = "client"_sd;
  *            "architecture" : "string", // Optional, Informational Only
  *            "version" : "string"       // Optional, Informational Only
  *        }
- *        "mongos" : {                   // Optional, Informational Only
+ *        "mongers" : {                   // Optional, Informational Only
  *            "host" : "string",         // Optional, Informational Only
  *            "client" : "string",       // Optional, Informational Only
  *            "version" : "string"       // Optional, Informational Only
@@ -155,19 +155,19 @@ public:
                             BSONObjBuilder* builder);
 
     /**
-     * Modify the existing client metadata document to include a mongos section.
+     * Modify the existing client metadata document to include a mongers section.
      *
      * hostAndPort is "host:port" of the running MongoS.
      * monogsClient is "host:port" of the connected driver.
      * version is the version string of MongoS.
      *
-     * "mongos" : {
+     * "mongers" : {
      *     "host" : "string",
      *     "client" : "string",
      *     "version" : "string"
      * }
      */
-    void setMongoSMetadata(StringData hostAndPort, StringData mongosClient, StringData version);
+    void setMongoSMetadata(StringData hostAndPort, StringData mongersClient, StringData version);
 
     /**
      * Get the Application Name for the client metadata document.
@@ -252,4 +252,4 @@ private:
     StringData _appName;
 };
 
-}  // namespace mongo
+}  // namespace monger

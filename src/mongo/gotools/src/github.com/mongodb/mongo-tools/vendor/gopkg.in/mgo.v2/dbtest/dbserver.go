@@ -64,7 +64,7 @@ func (dbs *DBServer) start() {
 		"--nojournal",
 	}
 	dbs.tomb = tomb.Tomb{}
-	dbs.server = exec.Command("mongod", args...)
+	dbs.server = exec.Command("mongerd", args...)
 	dbs.server.Stdout = &dbs.output
 	dbs.server.Stderr = &dbs.output
 	err = dbs.server.Start()
@@ -79,16 +79,16 @@ func (dbs *DBServer) monitor() error {
 	dbs.server.Process.Wait()
 	if dbs.tomb.Alive() {
 		// Present some debugging information.
-		fmt.Fprintf(os.Stderr, "---- mongod process died unexpectedly:\n")
+		fmt.Fprintf(os.Stderr, "---- mongerd process died unexpectedly:\n")
 		fmt.Fprintf(os.Stderr, "%s", dbs.output.Bytes())
-		fmt.Fprintf(os.Stderr, "---- mongod processes running right now:\n")
-		cmd := exec.Command("/bin/sh", "-c", "ps auxw | grep mongod")
+		fmt.Fprintf(os.Stderr, "---- mongerd processes running right now:\n")
+		cmd := exec.Command("/bin/sh", "-c", "ps auxw | grep mongerd")
 		cmd.Stdout = os.Stderr
 		cmd.Stderr = os.Stderr
 		cmd.Run()
 		fmt.Fprintf(os.Stderr, "----------------------------------------\n")
 
-		panic("mongod process died unexpectedly")
+		panic("mongerd process died unexpectedly")
 	}
 	return nil
 }
@@ -115,7 +115,7 @@ func (dbs *DBServer) Stop() {
 		select {
 		case <-dbs.tomb.Dead():
 		case <-time.After(5 * time.Second):
-			panic("timeout waiting for mongod process to die")
+			panic("timeout waiting for mongerd process to die")
 		}
 		dbs.server = nil
 	}

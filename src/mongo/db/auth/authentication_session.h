@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,9 +31,9 @@
 
 #include <memory>
 
-#include "mongo/db/auth/sasl_mechanism_registry.h"
+#include "monger/db/auth/sasl_mechanism_registry.h"
 
-namespace mongo {
+namespace monger {
 
 class Client;
 
@@ -71,4 +71,4 @@ private:
     std::unique_ptr<ServerMechanismBase> _mech;
 };
 
-}  // namespace mongo
+}  // namespace monger

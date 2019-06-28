@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/rpc/metadata/oplog_query_metadata.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/time_support.h"
+#include "monger/rpc/metadata/oplog_query_metadata.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class Timestamp;
@@ -86,7 +86,7 @@ public:
      *
      * OplogQueryMetadata is optional for compatibility with 3.4 servers that do not know to
      * send OplogQueryMetadata.
-     * TODO (SERVER-27668): Make OplogQueryMetadata non-optional in mongodb 3.8.
+     * TODO (SERVER-27668): Make OplogQueryMetadata non-optional in mongerdb 3.8.
      */
     virtual bool shouldChangeSyncSource(const HostAndPort& currentSource,
                                         const rpc::ReplSetMetadata& replMetadata,
@@ -94,4 +94,4 @@ public:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

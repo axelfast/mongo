@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,11 +34,11 @@
 #include <memory>
 #include <string>
 
-#include "mongo/client/connection_string.h"
-#include "mongo/client/remote_command_targeter_factory.h"
-#include "mongo/s/client/shard.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/remote_command_targeter_factory.h"
+#include "monger/s/client/shard.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * An object factory for creating Shard instances via calling registered builders.
@@ -79,4 +79,4 @@ private:
     std::unique_ptr<RemoteCommandTargeterFactory> _targeterFactory;
 };
 
-}  // namespace mongo
+}  // namespace monger

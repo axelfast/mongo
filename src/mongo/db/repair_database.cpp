@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,38 +27,38 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 
-#include "mongo/db/repair_database.h"
+#include "monger/db/repair_database.h"
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bson_validate.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog/index_key_validate.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog/index_key_validate.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 StatusWith<IndexNameObjs> getIndexNameObjs(OperationContext* opCtx,
                                            CollectionCatalogEntry* cce,
@@ -102,7 +102,7 @@ StatusWith<IndexNameObjs> getIndexNameObjs(OperationContext* opCtx,
                         << spec
                         << ": "
                         << keyStatus.reason()
-                        << " For more info see http://dochub.mongodb.org/core/index-validation");
+                        << " For more info see http://dochub.mongerdb.org/core/index-validation");
             }
         }
     }
@@ -230,4 +230,4 @@ Status repairDatabase(OperationContext* opCtx, StorageEngine* engine, const std:
     return status;
 }
 
-}  // namespace mongo
+}  // namespace monger

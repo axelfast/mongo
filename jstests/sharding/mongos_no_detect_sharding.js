@@ -1,21 +1,21 @@
-// Tests whether new sharding is detected on insert by mongos
+// Tests whether new sharding is detected on insert by mongers
 (function() {
 
-    var st = new ShardingTest({name: "mongos_no_detect_sharding", shards: 1, mongos: 2});
+    var st = new ShardingTest({name: "mongers_no_detect_sharding", shards: 1, mongers: 2});
 
-    var mongos = st.s;
-    var config = mongos.getDB("config");
+    var mongers = st.s;
+    var config = mongers.getDB("config");
 
     print("Creating unsharded connection...");
 
-    var mongos2 = st._mongos[1];
+    var mongers2 = st._mongers[1];
 
-    var coll = mongos2.getCollection("test.foo");
+    var coll = mongers2.getCollection("test.foo");
     assert.writeOK(coll.insert({i: 0}));
 
     print("Sharding collection...");
 
-    var admin = mongos.getDB("admin");
+    var admin = mongers.getDB("admin");
 
     assert.eq(coll.getShardVersion().ok, 0);
 

@@ -7,10 +7,10 @@ command_type: system
 # run the same task in the previous revision if the current task fails
 stepback: true
 
-mongo_tools_variables:
+monger_tools_variables:
 
 ## List of tests to run on each buildvariant
-  mongo_tools_task_lists:
+  monger_tools_task_lists:
     mac_task_list: &macos_tasks
       - name: dist
       - name: integration-4.0
@@ -325,26 +325,26 @@ mongo_tools_variables:
       - name: replay-dist
 
 
-## Common mongodb arguments
-  mongod_arguments:
-    default: &mongod_default_startup_args
-      mongod_args: ""
-      mongod_port: 33333
-    ssl: &mongod_ssl_startup_args
-      mongod_args: "--sslMode requireSSL --sslCAFile testdata/certs/ca.pem --sslPEMKeyFile testdata/certs/server.pem"
-      mongod_port: 33333
+## Common mongerdb arguments
+  mongerd_arguments:
+    default: &mongerd_default_startup_args
+      mongerd_args: ""
+      mongerd_port: 33333
+    ssl: &mongerd_ssl_startup_args
+      mongerd_args: "--sslMode requireSSL --sslCAFile testdata/certs/ca.pem --sslPEMKeyFile testdata/certs/server.pem"
+      mongerd_port: 33333
     # Set storage engine as mmapv1 for 32 bit variants because WiredTiger requires 64 bit support.
-    win32: &mongod_win32_startup_args
-      mongod_args: "--storageEngine=mmapv1"
-      mongod_port: 33333
+    win32: &mongerd_win32_startup_args
+      mongerd_args: "--storageEngine=mmapv1"
+      mongerd_port: 33333
 
-  mongo_arguments:
-    default: &mongo_default_startup_args
-      mongo_args: &mongo_default_startup_args_string "--port 33333"
-      mongod_port: 33333
-    ssl: &mongo_ssl_startup_args
-      mongo_args: "--port 33333 --ssl --sslCAFile ./testdata/certs/ca.pem --sslPEMKeyFile ./testdata/certs/server.pem --sslAllowInvalidCertificates"
-      mongod_port: 33333
+  monger_arguments:
+    default: &monger_default_startup_args
+      monger_args: &monger_default_startup_args_string "--port 33333"
+      mongerd_port: 33333
+    ssl: &monger_ssl_startup_args
+      monger_args: "--port 33333 --ssl --sslCAFile ./testdata/certs/ca.pem --sslPEMKeyFile ./testdata/certs/server.pem --sslAllowInvalidCertificates"
+      mongerd_port: 33333
 
 functions:
 
@@ -352,7 +352,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -360,13 +360,13 @@ functions:
         chmod +x bin/*
         mv bin/* ${test_path}/
         cd ${test_path}
-        python buildscripts/smoke.py ${smoke_use_ssl} --with-cleanbb --mongod ./mongod --mongo ./mongo --report-file ../../report.json --continue-on-failure --buildlogger-builder MCI_${build_variant} --buildlogger-buildnum ${builder_num|} --buildlogger-credentials ./mci.buildlogger --buildlogger-phase ${task_name}_${execution} ${smoke_args} tool
+        python buildscripts/smoke.py ${smoke_use_ssl} --with-cleanbb --mongerd ./mongerd --monger ./monger --report-file ../../report.json --continue-on-failure --buildlogger-builder MCI_${build_variant} --buildlogger-buildnum ${builder_num|} --buildlogger-credentials ./mci.buildlogger --buildlogger-phase ${task_name}_${execution} ${smoke_args} tool
 
   "run qa-tests":
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -382,7 +382,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -406,31 +406,31 @@ functions:
         go build $(buildflags) -ldflags "$(print_ldflags)" ${args} -tags "$(print_tags failpoints ${build_tags})" -o bin/${tool} ${tool}/main/${tool}.go
         ./bin/${tool} --version
 
-  "download mongod":
+  "download mongerd":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
         set -e
-        mongotarget=$(if [ "${mongo_target}" ]; then echo "${mongo_target}"; else echo "${mongo_os}"; fi)
-        mongoversion=$(if [ "${mongo_version_always_use_latest}" ]; then echo "latest"; else echo "${mongo_version}"; fi)
-        dlurl=$(python binaryurl.py --edition=${mongo_edition} --target=$mongotarget --version=$mongoversion --arch=${mongo_arch|x86_64})
+        mongertarget=$(if [ "${monger_target}" ]; then echo "${monger_target}"; else echo "${monger_os}"; fi)
+        mongerversion=$(if [ "${monger_version_always_use_latest}" ]; then echo "latest"; else echo "${monger_version}"; fi)
+        dlurl=$(python binaryurl.py --edition=${monger_edition} --target=$mongertarget --version=$mongerversion --arch=${monger_arch|x86_64})
         filename=$(echo $dlurl | sed -e "s_.*/__")
         mkdir -p bin
         curl -s $dlurl --output $filename
         ${decompress} $filename
         rm $filename
         if [ "${only_shell}" ]; then
-          mv -f ./mongodb-*/bin/mongo${extension} ./bin/
+          mv -f ./mongerdb-*/bin/monger${extension} ./bin/
         else
-          mv -f ./mongodb-*/bin/mongo${extension} ./bin/
-          mv -f ./mongodb-*/bin/mongos${extension} ./bin/
-          mv -f ./mongodb-*/bin/mongod${extension} ./bin/
+          mv -f ./mongerdb-*/bin/monger${extension} ./bin/
+          mv -f ./mongerdb-*/bin/mongers${extension} ./bin/
+          mv -f ./mongerdb-*/bin/mongerd${extension} ./bin/
         fi
         chmod +x ./bin/*
-        rm -rf ./mongodb-*
+        rm -rf ./mongerdb-*
 
   "fetch tool" :
     command: s3.get
@@ -438,14 +438,14 @@ functions:
       bucket: mciuploads
       aws_key: ${aws_key}
       aws_secret: ${aws_secret}
-      local_file: src/github.com/mongodb/mongo-tools/bin/${tool}${extension}
-      remote_file: mongo-tools/binaries/${build_id}/${edition|community}/${tool}${extension}
+      local_file: src/github.com/mongerdb/monger-tools/bin/${tool}${extension}
+      remote_file: monger-tools/binaries/${build_id}/${edition|community}/${tool}${extension}
 
   "generate coverage html + text":
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -467,7 +467,7 @@ functions:
   "move coverage data":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -480,7 +480,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         # export sensitive info before `set -x`
         export MONGODB_KERBEROS_PASSWORD=${kerberos_password}
@@ -502,9 +502,9 @@ functions:
   "setup integration test":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       # Set up Kerberos stuff: run kinit if necessary, and add KDC to registry
-      # on Windows (see https://wiki.mongodb.com/display/DH/Testing+Kerberos)
+      # on Windows (see https://wiki.mongerdb.com/display/DH/Testing+Kerberos)
       script: |
         set -e
         # export sensitive info before `set -x`
@@ -529,7 +529,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -554,7 +554,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         # export sensitive info before `set -x`
         if [ "Windows_NT" = "$OS" ]; then
@@ -578,10 +578,10 @@ functions:
         if [ "${INT_TEST}" = "true" ]; then
           export TOOLS_TESTING_INTEGRATION="true"
         fi;
-        if [ "${create_mongod_users_command}" != "" ]; then
+        if [ "${create_mongerd_users_command}" != "" ]; then
           export TOOLS_TESTING_AUTH_USERNAME=${auth_username}
           export TOOLS_TESTING_AUTH_PASSWORD=${auth_password}
-          echo "${create_mongod_users_command}" | ./bin/mongo${extension} ${mongo_args} admin
+          echo "${create_mongerd_users_command}" | ./bin/monger${extension} ${monger_args} admin
         fi;
         export ON_EVERGREEN="true"
         export TOOLS_BUILD_TAGS="${build_tags}"
@@ -593,7 +593,7 @@ functions:
     command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -608,9 +608,9 @@ functions:
 
         # XXX Need to fix up use of 'src' below somehow; for now commented out
         # because we're using an actual GOPATH instead of a hack and replaced with a copy
-        for i in mongoimport mongoexport mongostat mongorestore mongodump mongofiles; do
+        for i in mongerimport mongerexport mongerstat mongerrestore mongerdump mongerfiles; do
             cd $i
-            # perl -pe 's/.*src/github.com\/mongodb\/mongo-tools/' coverage_$i.out > coverage_$i_rewrite.out
+            # perl -pe 's/.*src/github.com\/mongerdb\/monger-tools/' coverage_$i.out > coverage_$i_rewrite.out
             go tool cover -html=coverage_$i.out -o coverage_$i.html
             go tool cover -func=coverage_$i.out -o coverage_$i.txt
             cd ..
@@ -621,8 +621,8 @@ functions:
     params:
       aws_key: ${aws_key}
       aws_secret: ${aws_secret}
-      local_file: src/github.com/mongodb/mongo-tools/${coverage_pkg}/coverage_${coverage_pkg}.html
-      remote_file: mongo-tools/coverage/${coverage_pkg}/${task_id}.html
+      local_file: src/github.com/mongerdb/monger-tools/${coverage_pkg}/coverage_${coverage_pkg}.html
+      remote_file: monger-tools/coverage/${coverage_pkg}/${task_id}.html
       bucket: mciuploads
       permissions: public-read
       content_type: text/html
@@ -634,8 +634,8 @@ functions:
     params:
       aws_key: ${aws_key}
       aws_secret: ${aws_secret}
-      local_file: src/github.com/mongodb/mongo-tools/${coverage_pkg}/coverage_${coverage_pkg}.txt
-      remote_file: mongo-tools/coverage/${coverage_pkg}/${task_id}.txt
+      local_file: src/github.com/mongerdb/monger-tools/${coverage_pkg}/coverage_${coverage_pkg}.txt
+      remote_file: monger-tools/coverage/${coverage_pkg}/${task_id}.txt
       bucket: mciuploads
       permissions: public-read
       content_type: text/plain
@@ -645,7 +645,7 @@ functions:
   "setup credentials" :
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       silent: true
       script: |
         set -x
@@ -662,41 +662,41 @@ functions:
         # we run resmoke from.
         cp mci.buildlogger test/qa-tests
 
-  "start mongod":
+  "start mongerd":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       background: true
       script: |
         set -x
         set -v
         set -e
-        rm -rf mongodb/db_files mongodb/${logfile|run.log}
-        mkdir -p mongodb/db_files
-        echo "Starting mongod..."
-        PATH=$PWD/bin:$PATH ./bin/mongod${extension}  --port ${mongod_port} ${mongod_args} ${additional_args} --dbpath mongodb/db_files --setParameter=enableTestCommands=1
+        rm -rf mongerdb/db_files mongerdb/${logfile|run.log}
+        mkdir -p mongerdb/db_files
+        echo "Starting mongerd..."
+        PATH=$PWD/bin:$PATH ./bin/mongerd${extension}  --port ${mongerd_port} ${mongerd_args} ${additional_args} --dbpath mongerdb/db_files --setParameter=enableTestCommands=1
 
-  "wait for mongod to be ready":
+  "wait for mongerd to be ready":
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
         SECS = 0
         while true ; do
             set -o verbose
-            ./bin/mongo${extension} ${mongo_args} --eval 'true;'
+            ./bin/monger${extension} ${monger_args} --eval 'true;'
             if [ "$?" = "0" ]; then
-                echo "mongod ready";
+                echo "mongerd ready";
                 exit 0
             else
                 SECS=`expr $SECS + 1`
                 if [ $SECS -gt 20 ]; then
-                    echo "mongod not ready after 20 seconds"
+                    echo "mongerd not ready after 20 seconds"
                     exit 1
                 fi
-                echo "waiting for mongod ( ${mongo_args} ) to be ready..."  ;
+                echo "waiting for mongerd ( ${monger_args} ) to be ready..."  ;
                 sleep 1 ;
             fi
         done
@@ -706,8 +706,8 @@ functions:
     params:
       aws_key: ${aws_key}
       aws_secret: ${aws_secret}
-      local_file: src/github.com/mongodb/mongo-tools/bin/${tool}
-      remote_file: mongo-tools/binaries/${build_id}/${edition|community}/${tool}${extension}
+      local_file: src/github.com/mongerdb/monger-tools/bin/${tool}
+      remote_file: monger-tools/binaries/${build_id}/${edition|community}/${tool}${extension}
       bucket: mciuploads
       permissions: public-read
       content_type: application/octet-stream
@@ -720,16 +720,16 @@ functions:
           set -x
           set -v
           set -e
-          mkdir -p src/github.com/mongodb
+          mkdir -p src/github.com/mongerdb
     - command: git.get_project
       params:
-        directory: src/github.com/mongodb/mongo-tools
+        directory: src/github.com/mongerdb/monger-tools
     - command: git.apply_patch
       params:
-        directory: src/github.com/mongodb/mongo-tools
+        directory: src/github.com/mongerdb/monger-tools
     - command: shell.exec
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
@@ -741,8 +741,8 @@ functions:
     params:
       aws_key: ${aws_key}
       aws_secret: ${aws_secret}
-      local_file: src/github.com/mongodb/mongo-tools/${filename}
-      remote_file: mongo-tools/mongoreplay/archive/${build_id}/${filename}
+      local_file: src/github.com/mongerdb/monger-tools/${filename}
+      remote_file: monger-tools/mongerreplay/archive/${build_id}/${filename}
       bucket: mciuploads
       permissions: public-read
       content_type: application/gzip
@@ -751,22 +751,22 @@ functions:
   "create timeseries" :
     command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
         set -e
         git clone git@github.com:10gen/support-tools
         sudo pip install argparse python-dateutil pytz
-        python support-tools/timeseries/timeseries.py /data/mongoreplay/diagnostic.data --html timeseries.html
+        python support-tools/timeseries/timeseries.py /data/mongerreplay/diagnostic.data --html timeseries.html
 
   "upload timeseries" :
     command: s3.put
     params:
       aws_key: ${aws_key}
       aws_secret: ${aws_secret}
-      local_file: src/github.com/mongodb/mongo-tools/timeseries.html
-      remote_file: mongo-tools/mongoreplay/timeseries/${build_id}/timeseries.html
+      local_file: src/github.com/mongerdb/monger-tools/timeseries.html
+      remote_file: monger-tools/mongerreplay/timeseries/${build_id}/timeseries.html
       bucket: mciuploads
       permissions: public-read
       content_type: text/html
@@ -778,14 +778,14 @@ functions:
         bucket: boxes.10gen.com
         aws_key: ${aws_key}
         aws_secret: ${aws_secret}
-        local_file: src/github.com/mongodb/mongo-tools/mongoreplay/testPcap/${pcapFname}
-        remote_file: build/mongotape/${pcapFname}
+        local_file: src/github.com/mongerdb/monger-tools/mongerreplay/testPcap/${pcapFname}
+        remote_file: build/mongertape/${pcapFname}
 
   "fetch ftdc" :
   - command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -796,7 +796,7 @@ functions:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
@@ -806,17 +806,17 @@ functions:
   "create auth_user" :
   - command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
         set -e
-        ./bin/mongo --port ${mongod_port} admin --eval "db.createUser({user:\"authorizedUser\", pwd: \"authorizedPwd\", roles:[\"readWriteAnyDatabase\", \"clusterManager\"]});"
+        ./bin/monger --port ${mongerd_port} admin --eval "db.createUser({user:\"authorizedUser\", pwd: \"authorizedPwd\", roles:[\"readWriteAnyDatabase\", \"clusterManager\"]});"
 
   "create sharded_cluster" :
     - command: shell.exec
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         background: true
         script: |
           set -x
@@ -824,20 +824,20 @@ functions:
           set -e
           echo "starting sharded cluster"
           mkdir -p /data/db/
-          PATH=./bin:$PATH ./bin/mongo --nodb --eval 'var d = new ShardingTest({shards:3, mongos:[{port:${mongod_port}}]}); while(true){sleep(1000)}' 
+          PATH=./bin:$PATH ./bin/monger --nodb --eval 'var d = new ShardingTest({shards:3, mongers:[{port:${mongerd_port}}]}); while(true){sleep(1000)}' 
     - command: shell.exec
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
           set -e
-          ./bin/mongo --nodb --eval 'var d; assert.soon(function(x){try{d = new Mongo("localhost:${mongod_port}"); return true} catch(e){return false}}, "timed out connection");d.setLogLevel(5, "write");'
+          ./bin/monger --nodb --eval 'var d; assert.soon(function(x){try{d = new Mongo("localhost:${mongerd_port}"); return true} catch(e){return false}}, "timed out connection");d.setLogLevel(5, "write");'
 
   "create repl_set" :
     - command: shell.exec
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         background: true
         script: |
           set -x
@@ -845,21 +845,21 @@ functions:
           set -e
           echo "starting repl set"
           mkdir -p /data/db/
-          PATH=./bin:$PATH ./bin/mongo --nodb --eval 'TestData = new Object(); TestData.minPort="${mongod_port}"; var repl = new ReplSetTest({nodes:3, name:"repltester"});repl.startSet();repl.initiate();repl.awaitSecondaryNodes();while(true){sleep(1000);}'
+          PATH=./bin:$PATH ./bin/monger --nodb --eval 'TestData = new Object(); TestData.minPort="${mongerd_port}"; var repl = new ReplSetTest({nodes:3, name:"repltester"});repl.startSet();repl.initiate();repl.awaitSecondaryNodes();while(true){sleep(1000);}'
     - command: shell.exec
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
           set -e
-          ./bin/mongo --nodb --eval 'assert.soon(function(x){try{var d = new Mongo("localhost:${mongod_port}"); return true} catch(e){return false}}, "timed out connection")'
+          ./bin/monger --nodb --eval 'assert.soon(function(x){try{var d = new Mongo("localhost:${mongerd_port}"); return true} catch(e){return false}}, "timed out connection")'
 
   "run replay go_test" :
   - command: shell.exec
     type: test
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -880,7 +880,7 @@ pre:
       script: |
         set -x
           set -v
-        ${killall_mci|pkill -9 mongo; pkill -9 mongodump; pkill -9 mongoexport; pkill -9 mongoimport; pkill -9 mongofiles; pkill -9 mongorestore; pkill -9 mongostat; pkill -9 mongotop; pkill -9 mongod; pkill -9 mongos; pkill -f buildlogger.py; pkill -f smoke.py} >/dev/null 2>&1
+        ${killall_mci|pkill -9 monger; pkill -9 mongerdump; pkill -9 mongerexport; pkill -9 mongerimport; pkill -9 mongerfiles; pkill -9 mongerrestore; pkill -9 mongerstat; pkill -9 mongertop; pkill -9 mongerd; pkill -9 mongers; pkill -f buildlogger.py; pkill -f smoke.py} >/dev/null 2>&1
         rm -rf src /data/db/*
         exit 0
 
@@ -888,17 +888,17 @@ post:
     # attach.results works for jstests, gotest.parse_files for golang tests
   - command: attach.results
     params:
-      file_location: src/github.com/mongodb/mongo-tools/report.json
+      file_location: src/github.com/mongerdb/monger-tools/report.json
   - command: gotest.parse_files
     params:
-      files: ["src/github.com/mongodb/mongo-tools/testing_output/*.suite"]
+      files: ["src/github.com/mongerdb/monger-tools/testing_output/*.suite"]
   - command: shell.exec
     params:
       silent: true
       script: |
         set -x
         set -v
-        ${killall_mci|pkill -9 mongo; pkill -9 mongodump; pkill -9 mongoexport; pkill -9 mongoimport; pkill -9 mongofiles; pkill -9 mongorestore; pkill -9 mongostat; pkill -9 mongotop; pkill -9 mongod; pkill -9 mongos; pkill -f buildlogger.py; pkill -f smoke.py} >/dev/null 2>&1
+        ${killall_mci|pkill -9 monger; pkill -9 mongerdump; pkill -9 mongerexport; pkill -9 mongerimport; pkill -9 mongerfiles; pkill -9 mongerrestore; pkill -9 mongerstat; pkill -9 mongertop; pkill -9 mongerd; pkill -9 mongers; pkill -f buildlogger.py; pkill -f smoke.py} >/dev/null 2>&1
         exit 0
   - command: shell.exec
     params:
@@ -918,7 +918,7 @@ timeout:
         # don't attempt to abort on any distro which has a special way of
         # killing everything (i.e. using taskkill on Windows)
         if [ "${killall_mci}" = "" ]; then
-          all_tools="bsondump mongodump mongoexport mongofiles mongoimport mongorestore mongostat mongotop"
+          all_tools="bsondump mongerdump mongerexport mongerfiles mongerimport mongerrestore mongerstat mongertop"
           # send SIGABRT to print a stacktrace for any hung tool
           pkill -ABRT "^($(echo -n $all_tools | tr ' ' '|'))\$"
           # git the processes a second or two to dump their stacks
@@ -938,65 +938,65 @@ tasks:
     - func: "upload tool"
       vars:
         tool: bsondump
-    # mongodump
+    # mongerdump
     - func: "build tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "upload tool"
       vars:
-        tool: mongodump
-    # mongoexport
+        tool: mongerdump
+    # mongerexport
     - func: "build tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "upload tool"
       vars:
-        tool: mongoexport
-    # mongofiles
+        tool: mongerexport
+    # mongerfiles
     - func: "build tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "upload tool"
       vars:
-        tool: mongofiles
-    # mongoimport
+        tool: mongerfiles
+    # mongerimport
     - func: "build tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "upload tool"
       vars:
-        tool: mongoimport
-    # mongorestore
+        tool: mongerimport
+    # mongerrestore
     - func: "build tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "upload tool"
       vars:
-        tool: mongorestore
-    # mongostat
+        tool: mongerrestore
+    # mongerstat
     - func: "build tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "upload tool"
       vars:
-        tool: mongostat
-    # mongotop
+        tool: mongerstat
+    # mongertop
     - func: "build tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "upload tool"
       vars:
-        tool: mongotop
+        tool: mongertop
 
 - name: integration-4.0
   commands:
     - func: "fetch source"
     - command: expansions.update
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.0"
-    - func: "start mongod"
-    - func: "wait for mongod to be ready"
+        monger_version: "4.0"
+    - func: "start mongerd"
+    - func: "wait for mongerd to be ready"
     - func: "run tool integration tests"
       vars:
           INT_TEST: "true" 
@@ -1008,19 +1008,19 @@ tasks:
     - command: expansions.update
       params:
         updates:
-          - key: "mongod_args"
+          - key: "mongerd_args"
             concat: " --auth"
           - key: "auth_username"
             value: "passwordIsTaco"
           - key: "auth_password"
             value: "Taco"
-          - key: "create_mongod_users_command"
+          - key: "create_mongerd_users_command"
             value: "db.createUser({ user: '${auth_username}', pwd: '${auth_password}', roles: [{ role: '__system', db: 'admin' }] });"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.0"
-    - func: "start mongod"
-    - func: "wait for mongod to be ready"
+        monger_version: "4.0"
+    - func: "start mongerd"
+    - func: "wait for mongerd to be ready"
     - func: "run tool integration tests"
       vars:
           INT_TEST: "true"
@@ -1030,11 +1030,11 @@ tasks:
   commands:
     - func: "fetch source"
     - command: expansions.update
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.2"
-    - func: "start mongod"
-    - func: "wait for mongod to be ready"
+        monger_version: "4.2"
+    - func: "start mongerd"
+    - func: "wait for mongerd to be ready"
     - func: "run tool integration tests"
       vars:
           INT_TEST: "true" 
@@ -1046,19 +1046,19 @@ tasks:
     - command: expansions.update
       params:
         updates:
-          - key: "mongod_args"
+          - key: "mongerd_args"
             concat: " --auth"
           - key: "auth_username"
             value: "passwordIsTaco"
           - key: "auth_password"
             value: "Taco"
-          - key: "create_mongod_users_command"
+          - key: "create_mongerd_users_command"
             value: "db.createUser({ user: '${auth_username}', pwd: '${auth_password}', roles: [{ role: '__system', db: 'admin' }] });"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.2"
-    - func: "start mongod"
-    - func: "wait for mongod to be ready"
+        monger_version: "4.2"
+    - func: "start mongerd"
+    - func: "wait for mongerd to be ready"
     - func: "run tool integration tests"
       vars:
           INT_TEST: "true"
@@ -1085,27 +1085,27 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "3.0"
+        monger_version: "3.0"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "run legacy tests"
       vars:
         test_path: "test/legacy30"
@@ -1118,7 +1118,7 @@ tasks:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
@@ -1134,14 +1134,14 @@ tasks:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
           set -e
           . ./set_goenv.sh
           GOROOT="" set_goenv || exit
-          retVal=$(go run vendor/github.com/3rf/mongo-lint/golint/golint.go mongo* bson* legacy/*);
+          retVal=$(go run vendor/github.com/3rf/monger-lint/golint/golint.go monger* bson* legacy/*);
           if [ "$retVal" = "" ]; then exit 0; else echo $retVal; exit 1; fi;
 
 - name: lint-js
@@ -1150,7 +1150,7 @@ tasks:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
@@ -1166,37 +1166,37 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "latest"
+        monger_version: "latest"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "fetch tool"
       vars:
         tool: bsondump
     - func: "run qa-tests"
       vars:
         resmoke_suite: "core${resmoke_use_ssl}"
-        excludes: "requires_mongo_26,${excludes}"
+        excludes: "requires_monger_26,${excludes}"
 
 - name: qa-tests-4.2
   depends_on:
@@ -1205,37 +1205,37 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.2"
+        monger_version: "4.2"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "fetch tool"
       vars:
         tool: bsondump
     - func: "run qa-tests"
       vars:
         resmoke_suite: "core${resmoke_use_ssl}"
-        excludes: "requires_mongo_26,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_unstable,${excludes}"
 
 - name: qa-tests-4.0
   depends_on:
@@ -1244,37 +1244,37 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.0"
+        monger_version: "4.0"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "fetch tool"
       vars:
         tool: bsondump
     - func: "run qa-tests"
       vars:
         resmoke_suite: "core${resmoke_use_ssl}"
-        excludes: "requires_mongo_26,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_unstable,${excludes}"
 
 - name: qa-tests-3.6
   depends_on:
@@ -1283,37 +1283,37 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "3.6"
+        monger_version: "3.6"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "fetch tool"
       vars:
         tool: bsondump
     - func: "run qa-tests"
       vars:
         resmoke_suite: "core${resmoke_use_ssl}"
-        excludes: "requires_mongo_26,requires_mongo_40,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_monger_40,requires_unstable,${excludes}"
 
 - name: qa-tests-3.4
   depends_on:
@@ -1322,37 +1322,37 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "3.4"
+        monger_version: "3.4"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "fetch tool"
       vars:
         tool: bsondump
     - func: "run qa-tests"
       vars:
         resmoke_suite: "core${resmoke_use_ssl}"
-        excludes: "requires_mongo_26,requires_mongo_36,requires_mongo_40,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_monger_36,requires_monger_40,requires_unstable,${excludes}"
 
 - name: qa-tests-3.2
   depends_on:
@@ -1361,37 +1361,37 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "3.2"
+        monger_version: "3.2"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "fetch tool"
       vars:
         tool: bsondump
     - func: "run qa-tests"
       vars:
         resmoke_suite: "core${resmoke_use_ssl}"
-        excludes: "requires_mongo_26,requires_mongo_34,requires_mongo_36,requires_mongo_40,requires_unstable,,${excludes}"
+        excludes: "requires_monger_26,requires_monger_34,requires_monger_36,requires_monger_40,requires_unstable,,${excludes}"
 
 - name: native-cert-ssl-4.2
   depends_on:
@@ -1400,37 +1400,37 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.2"
+        monger_version: "4.2"
     - func: "fetch tool"
       vars:
-        tool: mongoimport
+        tool: mongerimport
     - func: "fetch tool"
       vars:
-        tool: mongoexport
+        tool: mongerexport
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "fetch tool"
       vars:
-        tool: mongostat
+        tool: mongerstat
     - func: "fetch tool"
       vars:
-        tool: mongotop
+        tool: mongertop
     - func: "fetch tool"
       vars:
-        tool: mongofiles
+        tool: mongerfiles
     - func: "fetch tool"
       vars:
         tool: bsondump
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools/test/qa-tests
+        working_dir: src/github.com/mongerdb/monger-tools/test/qa-tests
         script: |
           set -x
           set -v
@@ -1447,19 +1447,19 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.2"
+        monger_version: "4.2"
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "run qa-tests"
       vars:
         resmoke_suite: "restore_archive"
-        excludes: "requires_mongo_26,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_unstable,${excludes}"
 
 - name: qa-dump-restore-archiving-3.2
   depends_on:
@@ -1468,19 +1468,19 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "3.2"
+        monger_version: "3.2"
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "run qa-tests"
       vars:
         resmoke_suite: "restore_archive"
-        excludes: "requires_mongo_26,requires_mongo_34,requires_mongo_36,requires_mongo_40,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_monger_34,requires_monger_36,requires_monger_40,requires_unstable,${excludes}"
 
 - name: qa-dump-restore-gzip-4.2
   depends_on:
@@ -1489,19 +1489,19 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "4.2"
+        monger_version: "4.2"
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "run qa-tests"
       vars:
         resmoke_suite: "restore_gzip"
-        excludes: "requires_mongo_26,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_unstable,${excludes}"
 
 - name: qa-dump-restore-gzip-3.2
   depends_on:
@@ -1510,19 +1510,19 @@ tasks:
     - func: "fetch source"
     - func: "get buildnumber"
     - func: "setup credentials"
-    - func: "download mongod"
+    - func: "download mongerd"
       vars:
-        mongo_version: "3.2"
+        monger_version: "3.2"
     - func: "fetch tool"
       vars:
-        tool: mongodump
+        tool: mongerdump
     - func: "fetch tool"
       vars:
-        tool: mongorestore
+        tool: mongerrestore
     - func: "run qa-tests"
       vars:
         resmoke_suite: "restore_gzip"
-        excludes: "requires_mongo_26,requires_mongo_34,requires_mongo_36,requires_mongo_40,requires_unstable,${excludes}"
+        excludes: "requires_monger_26,requires_monger_34,requires_monger_36,requires_monger_40,requires_unstable,${excludes}"
 
 - name: unit
   commands:
@@ -1537,35 +1537,35 @@ tasks:
       params:
         updates:
           - key: "coverage_pkg"
-            value: "mongoimport"
+            value: "mongerimport"
     - func: "upload html coverage"
     - func: "upload text coverage"
     - command: expansions.update
       params:
         updates:
           - key: "coverage_pkg"
-            value: "mongoexport"
+            value: "mongerexport"
     - func: "upload html coverage"
     - func: "upload text coverage"
     - command: expansions.update
       params:
         updates:
           - key: "coverage_pkg"
-            value: "mongostat"
+            value: "mongerstat"
     - func: "upload html coverage"
     - func: "upload text coverage"
     - command: expansions.update
       params:
         updates:
           - key: "coverage_pkg"
-            value: "mongodump"
+            value: "mongerdump"
     - func: "upload html coverage"
     - func: "upload text coverage"
     - command: expansions.update
       params:
         updates:
           - key: "coverage_pkg"
-            value: "mongorestore"
+            value: "mongerrestore"
     - func: "upload html coverage"
     - func: "upload text coverage"
 
@@ -1575,22 +1575,22 @@ tasks:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/github.com/mongodb/mongo-tools
+        working_dir: src/github.com/mongerdb/monger-tools
         script: |
           set -x
           set -v
           set -e
-          go tool vet bsondump legacy mongo*
+          go tool vet bsondump legacy monger*
 
 - name: replay-dist
   commands:
   - func: "fetch source"
   - func: "build tool"
     vars:
-      tool: mongoreplay
+      tool: mongerreplay
   - func: "upload tool"
     vars:
-      tool: mongoreplay
+      tool: mongerreplay
   - func: "build tool"
 
 - name: replay-sanity_check-4.2
@@ -1600,22 +1600,22 @@ tasks:
   - func: "fetch source"
   - func: "fetch tool"
     vars:
-      tool: mongoreplay
-  - func: "download mongod"
+      tool: mongerreplay
+  - func: "download mongerd"
     vars:
-      mongo_version: "4.2"
-  - func: "start mongod"
-  - func: "wait for mongod to be ready"
+      monger_version: "4.2"
+  - func: "start mongerd"
+  - func: "wait for mongerd to be ready"
   - command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
         set -e
-        chmod +x bin/mongoreplay
+        chmod +x bin/mongerreplay
         echo "Running sanity check"
-        PATH=$PATH:$PWD/bin ./mongoreplay/sanity_check.sh -p ${mongod_port}
+        PATH=$PATH:$PWD/bin ./mongerreplay/sanity_check.sh -p ${mongerd_port}
 
 - name: replay-go_test-4.2
   depends_on:
@@ -1624,23 +1624,23 @@ tasks:
   - func: "fetch source"
   - func: "fetch tool"
     vars:
-      tool: mongoreplay
+      tool: mongerreplay
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_multi_channel.pcap
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_single_channel.pcap
-  - func: "download mongod"
+  - func: "download mongerd"
     vars:
-      mongo_version: "4.2"
-  - func: "start mongod"
-  - func: "wait for mongod to be ready"
+      monger_version: "4.2"
+  - func: "start mongerd"
+  - func: "wait for mongerd to be ready"
   - func: "run replay go_test"
     vars:
         filename: playtest
-        environment_vars: DB_PORT=${mongod_port}
-        additional_args: github.com/mongodb/mongo-tools/mongoreplay
+        environment_vars: DB_PORT=${mongerd_port}
+        additional_args: github.com/mongerdb/monger-tools/mongerreplay
         TESTING_REPLAY: true
 
 - name: replay-sharded_test-4.2
@@ -1650,22 +1650,22 @@ tasks:
   - func: "fetch source"
   - func: "fetch tool"
     vars:
-      tool: mongoreplay
+      tool: mongerreplay
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_multi_channel.pcap
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_single_channel.pcap
-  - func: "download mongod"
+  - func: "download mongerd"
     vars:
-      mongo_version: "4.2"
+      monger_version: "4.2"
   - func: "create sharded_cluster"
   - func: "run replay go_test"
     vars:
         filename: sharded
-        environment_vars: DB_PORT=${mongod_port}
-        additional_args: github.com/mongodb/mongo-tools/mongoreplay --run "LiveDB"
+        environment_vars: DB_PORT=${mongerd_port}
+        additional_args: github.com/mongerdb/monger-tools/mongerreplay --run "LiveDB"
         TESTING_REPLAY: true
 
 - name: replay-auth_test-4.2
@@ -1675,28 +1675,28 @@ tasks:
   - func: "fetch source"
   - func: "fetch tool"
     vars:
-      tool: mongoreplay
+      tool: mongerreplay
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_multi_channel.pcap
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_single_channel.pcap
-  - func: "download mongod"
+  - func: "download mongerd"
     vars:
-      mongo_version: "4.2"
-  - func: "start mongod"
+      monger_version: "4.2"
+  - func: "start mongerd"
     vars:
         additional_args: --auth
-  - func: "wait for mongod to be ready"
+  - func: "wait for mongerd to be ready"
   - func: "create auth_user"
     vars:
-        mongod_port: ${mongod_port}
+        mongerd_port: ${mongerd_port}
   - func: "run replay go_test"
     vars:
         filename: authtest
-        environment_vars: AUTH=1 DB_PORT=${mongod_port}
-        additional_args: github.com/mongodb/mongo-tools/mongoreplay --run "(LiveDB)|(Authed)"
+        environment_vars: AUTH=1 DB_PORT=${mongerd_port}
+        additional_args: github.com/mongerdb/monger-tools/mongerreplay --run "(LiveDB)|(Authed)"
         TESTING_REPLAY: true
 
 - name: replay-repl_test-4.2
@@ -1706,24 +1706,24 @@ tasks:
   - func: "fetch source"
   - func: "fetch tool"
     vars:
-      tool: mongoreplay
+      tool: mongerreplay
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_multi_channel.pcap
   - func: "fetch pcap"
     vars:
       pcapFname: getmore_single_channel.pcap
-  - func: "download mongod"
+  - func: "download mongerd"
     vars:
-      mongo_version: "4.2"
+      monger_version: "4.2"
   - func: "create repl_set"
     vars:
-        mongod_port: ${mongod_port}
+        mongerd_port: ${mongerd_port}
   - func: "run replay go_test"
     vars:
         filename: repltest
-        environment_vars: DB_PORT=${mongod_port}
-        additional_args: github.com/mongodb/mongo-tools/mongoreplay --run "LiveDB"
+        environment_vars: DB_PORT=${mongerd_port}
+        additional_args: github.com/mongerdb/monger-tools/mongerreplay --run "LiveDB"
         TESTING_REPLAY: true
 
 - name: replay-replay_test-4.2
@@ -1733,24 +1733,24 @@ tasks:
   - func: "fetch source"
   - func: "fetch tool"
     vars:
-      tool: mongoreplay
-  - func: "download mongod"
+      tool: mongerreplay
+  - func: "download mongerd"
     vars:
-      mongo_version: "4.2"
+      monger_version: "4.2"
   - func: "fetch ftdc"
   - command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
         set -e
-        chmod +x bin/mongoreplay
+        chmod +x bin/mongerreplay
         echo "Running replay test"
-        PATH=$PATH:$PWD/bin:$PWD/vendor/bin ./mongoreplay/replay_test.sh --verbose --explicit --keep
+        PATH=$PATH:$PWD/bin:$PWD/vendor/bin ./mongerreplay/replay_test.sh --verbose --explicit --keep
   - command: shell.exec
     params:
-      working_dir: src/github.com/mongodb/mongo-tools
+      working_dir: src/github.com/mongerdb/monger-tools
       script: |
         set -x
         set -v
@@ -1861,10 +1861,10 @@ buildvariants:
   run_on:
   - macos-1014
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "osx"
-    mongo_target: "osx-ssl"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "osx"
+    monger_target: "osx-ssl"
     arch: "osx/x86_64"
     excludes: requires_many_files
   tasks: *macos_tasks
@@ -1874,10 +1874,10 @@ buildvariants:
   run_on:
   - macos-1014
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "osx"
-    mongo_target: "osx-ssl"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "osx"
+    monger_target: "osx-ssl"
     arch: "osx/x86_64"
     build_tags: "ssl"
     excludes: requires_many_files
@@ -1892,10 +1892,10 @@ buildvariants:
   run_on:
   - rhel62-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel62"
-    mongo_edition: "targeted"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel62"
+    monger_edition: "targeted"
     build_tags: ""
     arch: "linux/x86_64"
     integration_test_args: integration
@@ -1907,10 +1907,10 @@ buildvariants:
   run_on:
   - rhel62-test
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "rhel62"
-    mongo_edition: "enterprise"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "rhel62"
+    monger_edition: "enterprise"
     build_tags: "ssl"
     edition: ssl
     arch: "linux/x86_64"
@@ -1927,10 +1927,10 @@ buildvariants:
   run_on:
   - rhel62-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel62"
-    mongo_edition: "enterprise"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel62"
+    monger_edition: "enterprise"
     build_tags: "ssl sasl gssapi"
     smoke_use_ssl: --use-ssl
     resmoke_use_ssl: _ssl
@@ -2014,10 +2014,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "targeted"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "targeted"
     build_tags: ""
     arch: "linux/x86_64"
     integration_test_args: integration
@@ -2029,10 +2029,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "enterprise"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "enterprise"
     build_tags: "ssl"
     edition: ssl
     arch: "linux/x86_64"
@@ -2048,10 +2048,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "enterprise"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "enterprise"
     build_tags: "ssl sasl gssapi"
     smoke_use_ssl: --use-ssl
     resmoke_use_ssl: _ssl
@@ -2091,10 +2091,10 @@ buildvariants:
   run_on:
   - windows-64-vs2013-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "windows-64"
-    mongo_target: "windows_x86_64-2008plus-ssl"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "windows-64"
+    monger_target: "windows_x86_64-2008plus-ssl"
     resmoke_args: --jobs $(grep -c ^processor /proc/cpuinfo)
     excludes: requires_large_ram
     extension: .exe
@@ -2108,16 +2108,16 @@ buildvariants:
   run_on:
   - windows-64-vs2013-compile
   expansions:
-    <<: *mongod_ssl_startup_args
-    <<: *mongo_ssl_startup_args
-    mongo_os: "windows-64"
-    mongo_target: "windows_x86_64-2008plus-ssl"
+    <<: *mongerd_ssl_startup_args
+    <<: *monger_ssl_startup_args
+    monger_os: "windows-64"
+    monger_target: "windows_x86_64-2008plus-ssl"
     build_tags: "ssl"
     edition: ssl
     smoke_use_ssl: --use-ssl
     resmoke_use_ssl: _ssl
     resmoke_args: --jobs $(grep -c ^processor /proc/cpuinfo)
-    excludes: requires_large_ram,requires_mongo_24
+    excludes: requires_large_ram,requires_monger_24
     extension: .exe
     arch: "win32/x86_64"
     preproc_gpm: "perl -pi -e 's/\\r\\n/\\n/g' "
@@ -2130,16 +2130,16 @@ buildvariants:
   run_on:
   - windows-64-vs2013-compile
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "windows-64"
-    mongo_edition: "enterprise"
-    mongo_target: "windows"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "windows-64"
+    monger_edition: "enterprise"
+    monger_target: "windows"
     build_tags: "sasl gssapi ssl"
     smoke_use_ssl: --use-ssl
     resmoke_args: --jobs $(grep -c ^processor /proc/cpuinfo)
     resmoke_use_ssl: _ssl
-    excludes: requires_large_ram,requires_mongo_24
+    excludes: requires_large_ram,requires_monger_24
     edition: enterprise
     extension: .exe
     arch: "win32/x86_64"
@@ -2159,14 +2159,14 @@ buildvariants:
   stepback: false
   batchtime: 10080 # weekly
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "targeted"
-    mongo_arch: "arm64"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "targeted"
+    monger_arch: "arm64"
     build_tags: "ssl"
     resmoke_use_ssl: _ssl
-    excludes: requires_mmap_available,requires_large_ram,requires_mongo_24,requires_mongo_26,requires_mongo_30
+    excludes: requires_mmap_available,requires_large_ram,requires_monger_24,requires_monger_26,requires_monger_30
     resmoke_args: -j 2
     arch: "linux/arm64"
     edition: ssl
@@ -2182,14 +2182,14 @@ buildvariants:
   stepback: false
   batchtime: 10080 # weekly
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1804"
-    mongo_edition: "targeted"
-    mongo_arch: "aarch64"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1804"
+    monger_edition: "targeted"
+    monger_arch: "aarch64"
     build_tags: "ssl"
     resmoke_use_ssl: _ssl
-    excludes: requires_mmap_available,requires_large_ram,requires_mongo_24,requires_mongo_26,requires_mongo_30
+    excludes: requires_mmap_available,requires_large_ram,requires_monger_24,requires_monger_26,requires_monger_30
     resmoke_args: -j 2
     arch: "linux/arm64"
     edition: ssl
@@ -2208,15 +2208,15 @@ buildvariants:
   stepback: false
   batchtime: 10080 # weekly
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel71"
-    mongo_edition: "enterprise"
-    mongo_arch: "ppc64le"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel71"
+    monger_edition: "enterprise"
+    monger_arch: "ppc64le"
     build_tags: 'ssl sasl gssapi'
     resmoke_use_ssl: _ssl
     resmoke_args: -j 4
-    excludes: requires_mmap_available,requires_large_ram,requires_mongo_24,requires_mongo_26,requires_mongo_30
+    excludes: requires_mmap_available,requires_large_ram,requires_monger_24,requires_monger_26,requires_monger_30
     arch: "linux/ppc64le"
     edition: enterprise
     run_kinit: true
@@ -2260,14 +2260,14 @@ buildvariants:
   stepback: false
   batchtime: 10080 # weekly
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "rhel67"
-    mongo_edition: "enterprise"
-    mongo_arch: "s390x"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "rhel67"
+    monger_edition: "enterprise"
+    monger_arch: "s390x"
     build_tags: "sasl gssapi ssl"
     resmoke_use_ssl: _ssl
-    excludes: requires_mmap_available,requires_mongo_24,requires_mongo_26,requires_mongo_30
+    excludes: requires_mmap_available,requires_monger_24,requires_monger_26,requires_monger_30
     resmoke_args: -j 2
     arch: "linux/s390x"
     edition: enterprise
@@ -2310,10 +2310,10 @@ buildvariants:
   run_on:
   - ubuntu1604-test
   expansions:
-    <<: *mongod_default_startup_args
-    <<: *mongo_default_startup_args
-    mongo_os: "ubuntu1604"
-    mongo_edition: "enterprise"
+    <<: *mongerd_default_startup_args
+    <<: *monger_default_startup_args
+    monger_os: "ubuntu1604"
+    monger_edition: "enterprise"
     build_tags: "sasl gssapi ssl"
     arch: "linux/x86_64"
     args: "-buildmode=default -race"

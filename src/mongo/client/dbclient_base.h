@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,30 +32,30 @@
 #include <cstdint>
 #include <functional>
 
-#include "mongo/base/string_data.h"
-#include "mongo/client/authenticate.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/client/index_spec.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/client/query.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/logger/log_severity.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/rpc/message.h"
-#include "mongo/rpc/metadata.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/rpc/protocol.h"
-#include "mongo/rpc/unique_message.h"
-#include "mongo/transport/message_compressor_manager.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/client/authenticate.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/client/index_spec.h"
+#include "monger/client/monger_uri.h"
+#include "monger/client/query.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/logger/log_severity.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/rpc/message.h"
+#include "monger/rpc/metadata.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/rpc/protocol.h"
+#include "monger/rpc/unique_message.h"
+#include "monger/transport/message_compressor_manager.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace executor {
 struct RemoteCommandResponse;
@@ -308,10 +308,10 @@ public:
      *     "user": The std::string name of the user to authenticate.  Mandatory.
      *     "db": The database target of the auth command, which identifies the location
      *         of the credential information for the user.  May be "$external" if
-     *         credential information is stored outside of the mongo cluster.  Mandatory.
+     *         credential information is stored outside of the monger cluster.  Mandatory.
      *     "pwd": The password data.
      *     "digestPassword": Boolean, set to true if the "pwd" is undigested (default).
-     *     "serviceName": The GSSAPI service name to use.  Defaults to "mongodb".
+     *     "serviceName": The GSSAPI service name to use.  Defaults to "mongerdb".
      *     "serviceHostname": The GSSAPI hostname to use.  Defaults to the name of the remote
      *          host.
      *
@@ -344,7 +344,7 @@ public:
      *
      * @param dbname the database to logout from.
      * @param info the result object for the logout command (provided for backwards
-     *     compatibility with mongo shell)
+     *     compatibility with monger shell)
      */
     virtual void logout(const std::string& dbname, BSONObj& info);
 
@@ -736,4 +736,4 @@ private:
 BSONElement getErrField(const BSONObj& result);
 bool hasErrField(const BSONObj& result);
 
-}  // namespace mongo
+}  // namespace monger

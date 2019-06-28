@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,7 +28,7 @@
  */
 
 #ifndef MONGO_UTIL_DNS_QUERY_PLATFORM_INCLUDE_WHITELIST
-#error Do not include the DNS Query platform implementation headers.  Please use "mongo/util/dns_query.h" instead.
+#error Do not include the DNS Query platform implementation headers.  Please use "monger/util/dns_query.h" instead.
 #endif
 
 // DNS Headers for POSIX/libresolv have to be included in a specific order
@@ -54,7 +54,7 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace mongo {
+namespace monger {
 namespace dns {
 // The anonymous namespace is safe, in this header, as it is not really a header.  It is only used
 // in the `dns_query.cpp` TU.
@@ -348,4 +348,4 @@ private:
 };
 }  // namespace
 }  // namespace dns
-}  // namespace mongo
+}  // namespace monger

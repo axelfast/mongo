@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/logger/redaction.h"
+#include "monger/logger/redaction.h"
 
-#include "mongo/db/jsobj.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
+#include "monger/db/jsobj.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const std::string kRedactionDefaultMask = "###";
@@ -150,4 +150,4 @@ TEST(RedactBSONTest, BSONWithArrays) {
     testBSONVector(testCases);
 }*/
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

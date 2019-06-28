@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,43 +26,43 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kFTDC
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kFTDC
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <list>
 #include <vector>
 
-#include "mongo/client/connpool.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/db/auth/sasl_mechanism_registry.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/server_status.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/is_master_response.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplogreader.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/rpc/metadata/client_metadata.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/map_util.h"
+#include "monger/client/connpool.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/db/auth/sasl_mechanism_registry.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/server_status.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/is_master_response.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplogreader.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/wire_version.h"
+#include "monger/executor/network_interface.h"
+#include "monger/rpc/metadata/client_metadata.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/map_util.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(waitInIsMaster);
 
@@ -290,7 +290,7 @@ public:
         }
 
         // Parse the optional 'internalClient' field. This is provided by incoming connections from
-        // mongod and mongos.
+        // mongerd and mongers.
         auto internalClientElement = cmdObj["internalClient"];
         if (internalClientElement) {
             sessionTagsToSet |= transport::Session::kInternalClient;
@@ -315,7 +315,7 @@ public:
                                           << typeName(elem.type()),
                             elem.type() == BSONType::NumberInt);
 
-                    // All incoming connections from mongod/mongos of earlier versions should be
+                    // All incoming connections from mongerd/mongers of earlier versions should be
                     // closed if the featureCompatibilityVersion is bumped to 3.6.
                     if (elem.numberInt() >=
                         WireSpec::instance().incomingInternalClient.maxWireVersion) {
@@ -346,7 +346,7 @@ public:
         if (session) {
             session->mutateTags(
                 [sessionTagsToSet, sessionTagsToUnset](transport::Session::TagMask originalTags) {
-                    // After a mongos sends the initial "isMaster" command with its mongos client
+                    // After a mongers sends the initial "isMaster" command with its mongers client
                     // information, it sometimes sends another "isMaster" command that is forwarded
                     // from its client. Once kInternalClient has been set, we assume that any future
                     // "isMaster" commands are forwarded in this manner, and we do not update the
@@ -410,4 +410,4 @@ OpCounterServerStatusSection replOpCounterServerStatusSection("opcountersRepl", 
 }  // namespace
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

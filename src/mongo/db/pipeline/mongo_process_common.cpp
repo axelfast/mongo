@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/mongo_process_common.h"
+#include "monger/db/pipeline/monger_process_common.h"
 
-#include "mongo/bson/mutable/document.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/curop.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/service_context.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/grid.h"
+#include "monger/util/net/socket_utils.h"
 
-namespace mongo {
+namespace monger {
 
 std::vector<BSONObj> MongoProcessCommon::getCurrentOps(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
@@ -75,7 +75,7 @@ std::vector<BSONObj> MongoProcessCommon::getCurrentOps(
             continue;
         }
 
-        // Delegate to the mongoD- or mongoS-specific implementation of _reportCurrentOpForClient.
+        // Delegate to the mongerD- or mongerS-specific implementation of _reportCurrentOpForClient.
         ops.emplace_back(_reportCurrentOpForClient(opCtx, client, truncateMode));
     }
 
@@ -92,7 +92,7 @@ std::vector<BSONObj> MongoProcessCommon::getCurrentOps(
             if (auto lsid = cursor.getLsid()) {
                 cursorObj.append("lsid", lsid->toBSON());
             }
-            if (auto planSummaryData = cursor.getPlanSummary()) {  // Not present on mongos.
+            if (auto planSummaryData = cursor.getPlanSummary()) {  // Not present on mongers.
                 cursorObj.append("planSummary", *planSummaryData);
             }
 
@@ -105,7 +105,7 @@ std::vector<BSONObj> MongoProcessCommon::getCurrentOps(
         }
     }
 
-    // If we need to report on idle Sessions, defer to the mongoD or mongoS implementations.
+    // If we need to report on idle Sessions, defer to the mongerD or mongerS implementations.
     if (sessionMode == CurrentOpSessionsMode::kIncludeIdle) {
         _reportCurrentOpsForIdleSessions(opCtx, userMode, &ops);
     }
@@ -180,4 +180,4 @@ std::set<FieldPath> MongoProcessCommon::_convertToFieldPaths(
     return fieldPaths;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -85,9 +85,9 @@ func BuildURI(host, port string) string {
 
 	hostpairs := strings.Join(seedlist, ",")
 	if setname != "" {
-		return fmt.Sprintf("mongodb://%s/?replicaSet=%s", hostpairs, setname)
+		return fmt.Sprintf("mongerdb://%s/?replicaSet=%s", hostpairs, setname)
 	}
-	return fmt.Sprintf("mongodb://%s/", hostpairs)
+	return fmt.Sprintf("mongerdb://%s/", hostpairs)
 }
 
 // SplitNamespace splits a namespace path into a database and collection,
@@ -124,7 +124,7 @@ func SplitAndValidateNamespace(namespace string) (string, string, error) {
 	return database, collection, nil
 }
 
-// ValidateFullNamespace validates a full mongodb namespace (database +
+// ValidateFullNamespace validates a full mongerdb namespace (database +
 // collection), returning an error if it is invalid.
 func ValidateFullNamespace(namespace string) error {
 
@@ -176,7 +176,7 @@ func ValidateFullNamespace(namespace string) error {
 
 }
 
-// ValidateDBName validates that a string is a valid name for a mongodb
+// ValidateDBName validates that a string is a valid name for a mongerdb
 // database. An error is returned if it is not valid.
 func ValidateDBName(database string) error {
 
@@ -196,7 +196,7 @@ func ValidateDBName(database string) error {
 	return nil
 }
 
-// ValidateCollectionName validates that a string is a valid name for a mongodb
+// ValidateCollectionName validates that a string is a valid name for a mongerdb
 // collection. An error is returned if it is not valid.
 func ValidateCollectionName(collection string) error {
 	// collection names cannot begin with 'system.'

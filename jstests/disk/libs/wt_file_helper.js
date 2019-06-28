@@ -24,7 +24,7 @@ let corruptFile = function(file) {
 };
 
 /**
- * Starts a mongod on the provided data path without clearing data. Accepts 'options' as parameters
+ * Starts a mongerd on the provided data path without clearing data. Accepts 'options' as parameters
  * to runMongod.
  */
 let startMongodOnExistingPath = function(dbpath, options) {
@@ -49,7 +49,7 @@ let assertQueryUsesIndex = function(coll, query, indexName) {
  * Assert that running MongoDB with --repair on the provided dbpath exits cleanly.
  */
 let assertRepairSucceeds = function(dbpath, port, opts) {
-    let args = ["mongod", "--repair", "--port", port, "--dbpath", dbpath, "--bind_ip_all"];
+    let args = ["mongerd", "--repair", "--port", port, "--dbpath", dbpath, "--bind_ip_all"];
     for (let a in opts) {
         if (opts.hasOwnProperty(a))
             args.push("--" + a);
@@ -69,7 +69,7 @@ let assertRepairFailsWithFailpoint = function(dbpath, port, failpoint) {
     assert.eq(
         MongoRunner.EXIT_ABRUPT,
         runMongoProgram(
-            "mongod", "--repair", "--port", port, "--dbpath", dbpath, "--setParameter", param));
+            "mongerd", "--repair", "--port", port, "--dbpath", dbpath, "--setParameter", param));
 };
 
 /**
@@ -157,18 +157,18 @@ let assertStartInReplSet = function(replSet, originalNode, cleanData, expectResy
 let assertErrorOnStartupWhenFilesAreCorruptOrMissing = function(
     dbpath, dbName, collName, deleteOrCorruptFunc, errmsg) {
     // Start a MongoDB instance, create the collection file.
-    const mongod = MongoRunner.runMongod({dbpath: dbpath, cleanData: true});
-    const testColl = mongod.getDB(dbName)[collName];
+    const mongerd = MongoRunner.runMongod({dbpath: dbpath, cleanData: true});
+    const testColl = mongerd.getDB(dbName)[collName];
     const doc = {a: 1};
     assert.commandWorked(testColl.insert(doc));
 
     // Stop MongoDB and corrupt/delete certain files.
-    deleteOrCorruptFunc(mongod, testColl);
+    deleteOrCorruptFunc(mongerd, testColl);
 
     // Restart the MongoDB instance and get an expected error message.
     clearRawMongoProgramOutput();
     assert.eq(MongoRunner.EXIT_ABRUPT,
-              runMongoProgram("mongod", "--port", mongod.port, "--dbpath", dbpath));
+              runMongoProgram("mongerd", "--port", mongerd.port, "--dbpath", dbpath));
     assert.gte(rawMongoProgramOutput().indexOf(errmsg), 0);
 };
 
@@ -178,23 +178,23 @@ let assertErrorOnStartupWhenFilesAreCorruptOrMissing = function(
 let assertErrorOnRequestWhenFilesAreCorruptOrMissing = function(
     dbpath, dbName, collName, deleteOrCorruptFunc, requestFunc, errmsg) {
     // Start a MongoDB instance, create the collection file.
-    mongod = MongoRunner.runMongod({dbpath: dbpath, cleanData: true});
-    testColl = mongod.getDB(dbName)[collName];
+    mongerd = MongoRunner.runMongod({dbpath: dbpath, cleanData: true});
+    testColl = mongerd.getDB(dbName)[collName];
     const doc = {a: 1};
     assert.commandWorked(testColl.insert(doc));
 
     // Stop MongoDB and corrupt/delete certain files.
-    deleteOrCorruptFunc(mongod, testColl);
+    deleteOrCorruptFunc(mongerd, testColl);
 
     // Restart the MongoDB instance.
     clearRawMongoProgramOutput();
-    mongod = MongoRunner.runMongod({dbpath: dbpath, port: mongod.port, noCleanData: true});
+    mongerd = MongoRunner.runMongod({dbpath: dbpath, port: mongerd.port, noCleanData: true});
 
     // This request crashes the server.
-    testColl = mongod.getDB(dbName)[collName];
+    testColl = mongerd.getDB(dbName)[collName];
     requestFunc(testColl);
 
     // Get an expected error message.
     assert.gte(rawMongoProgramOutput().indexOf(errmsg), 0);
-    MongoRunner.stopMongod(mongod, 9, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
+    MongoRunner.stopMongod(mongerd, 9, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
 };

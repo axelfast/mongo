@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/unclean_shutdown.h"
+#include "monger/db/unclean_shutdown.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 // The bool decoration will be initialized to false, as primitive decorations undergo value
 // initialization.
 const auto startingUnclean = ServiceContext::declareDecoration<bool>();
 }  // namespace
-}  // namespace mongo
+}  // namespace monger
 
-bool& mongo::startingAfterUncleanShutdown(ServiceContext* serviceCtx) {
+bool& monger::startingAfterUncleanShutdown(ServiceContext* serviceCtx) {
     return startingUnclean(serviceCtx);
 }

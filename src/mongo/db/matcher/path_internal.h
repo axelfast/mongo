@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <cstdint>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/string_data.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 bool isAllDigits(StringData str);
 
@@ -49,4 +49,4 @@ BSONElement getFieldDottedOrArray(const BSONObj& doc,
                                   size_t* idxPath,
                                   size_t startIndex = 0);
 
-}  // namespace mongo
+}  // namespace monger

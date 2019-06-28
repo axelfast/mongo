@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/catalog_cache_test_fixture.h"
-#include "mongo/s/commands/strategy.h"
+#include "monger/s/catalog_cache_test_fixture.h"
+#include "monger/s/commands/strategy.h"
 
-namespace mongo {
+namespace monger {
 
 using InspectionCallback = std::function<void(const executor::RemoteCommandRequest& request)>;
 
@@ -69,7 +69,7 @@ protected:
     void runTxnCommandMaxErrors(BSONObj cmd, ErrorCodes::Error code, bool isTargeted);
 
     /**
-     * Verifies that running the given commands through mongos will succeed.
+     * Verifies that running the given commands through mongers will succeed.
      */
     void testNoErrors(BSONObj targetedCmd, BSONObj scatterGatherCmd = BSONObj());
 
@@ -117,4 +117,4 @@ private:
     std::unique_ptr<FailPointEnableBlock> _staleVersionAndSnapshotRetriesBlock;
 };
 
-}  // namespace mongo
+}  // namespace monger

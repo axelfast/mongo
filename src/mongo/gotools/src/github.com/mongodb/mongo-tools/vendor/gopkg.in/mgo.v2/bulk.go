@@ -19,7 +19,7 @@ import (
 //
 // Relevant documentation:
 //
-//   http://blog.mongodb.org/post/84922794768/mongodbs-new-bulk-api
+//   http://blog.mongerdb.org/post/84922794768/mongerdbs-new-bulk-api
 //
 type Bulk struct {
 	c       *Collection

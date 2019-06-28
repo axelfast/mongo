@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kFTDC
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kFTDC
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ftdc/file_manager.h"
+#include "monger/db/ftdc/file_manager.h"
 
 #include <boost/filesystem.hpp>
 #include <memory>
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/client.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/constants.h"
-#include "mongo/db/ftdc/file_reader.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/string_data.h"
+#include "monger/db/client.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/constants.h"
+#include "monger/db/ftdc/file_reader.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 FTDCFileManager::FTDCFileManager(const FTDCConfig* config,
                                  const boost::filesystem::path& path,
@@ -340,4 +340,4 @@ Status FTDCFileManager::close() {
     return _writer.close();
 }
 
-}  // namespace mongo
+}  // namespace monger

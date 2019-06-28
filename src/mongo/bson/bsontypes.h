@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <iosfwd>
 
-#include "mongo/config.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/string_map.h"
+#include "monger/config.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONArrayBuilder;
 class BSONElement;
@@ -193,20 +193,20 @@ inline int canonicalizeBSONType(BSONType type) {
         case NumberInt:
         case NumberLong:
             return 10;
-        case mongo::String:
+        case monger::String:
         case Symbol:
             return 15;
         case Object:
             return 20;
-        case mongo::Array:
+        case monger::Array:
             return 25;
         case BinData:
             return 30;
         case jstOID:
             return 35;
-        case mongo::Bool:
+        case monger::Bool:
             return 40;
-        case mongo::Date:
+        case monger::Date:
             return 45;
         case bsonTimestamp:
             return 47;

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/op_observer_noop.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/mock_repl_coord_server_fixture.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/server_transactions_metrics.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/stdx/future.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/op_observer_noop.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/mock_repl_coord_server_fixture.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/server_options.h"
+#include "monger/db/server_transactions_metrics.h"
+#include "monger/db/service_context.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/stdx/future.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/net/socket_utils.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const NamespaceString kNss("TestDB", "TestColl");
@@ -737,4 +737,4 @@ TEST_F(ShardTxnParticipantRetryableWritesTest,
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

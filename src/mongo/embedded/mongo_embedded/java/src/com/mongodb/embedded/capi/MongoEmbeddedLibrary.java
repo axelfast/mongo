@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,7 +28,7 @@
  *    it in the license file.
  */
 
-package com.mongodb.embedded.capi;
+package com.mongerdb.embedded.capi;
 
 /**
  * The embedded Mongo library
@@ -39,12 +39,12 @@ public interface MongoEmbeddedLibrary {
      * Create a new instance
      *
      * @param yamlConfig the yaml configuration for the instance
-     * @return the mongo embedded instance
+     * @return the monger embedded instance
      */
     MongoEmbeddedInstance createInstance(String yamlConfig);
 
     /**
-     * Closes the embedded mongodb, all databases must be closed before calling this.
+     * Closes the embedded mongerdb, all databases must be closed before calling this.
      */
     void close();
 }

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,16 +29,16 @@
 
 /** Unit tests for MatchExpression operator implementations in match_operators.{h,cpp}. */
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
 #include <memory>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_geo.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_geo.h"
 
-namespace mongo {
+namespace monger {
 
 TEST(ExpressionGeoTest, Geo1) {
     BSONObj query = fromjson("{loc:{$within:{$box:[{x: 4, y:4},[6,6]]}}}");

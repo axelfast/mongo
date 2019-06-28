@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/create_collection.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/uuid.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/create_collection.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/uuid.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 class CreateCollectionTest : public ServiceContextMongoDTest {
 private:
@@ -60,7 +60,7 @@ protected:
 };
 
 void CreateCollectionTest::setUp() {
-    // Set up mongod.
+    // Set up mongerd.
     ServiceContextMongoDTest::setUp();
 
     auto service = getServiceContext();
@@ -76,7 +76,7 @@ void CreateCollectionTest::setUp() {
 void CreateCollectionTest::tearDown() {
     _storage = {};
 
-    // Tear down mongod.
+    // Tear down mongerd.
     ServiceContextMongoDTest::tearDown();
 }
 

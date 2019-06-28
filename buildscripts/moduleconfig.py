@@ -16,8 +16,8 @@ Once discovered, modules are configured by the configure_modules() function, and
 integrates their SConscript files into the rest of the build.
 
 MongoDB module build.py files implement a single function, configure(conf, env), which they may use
-to configure the supplied "env" object.  The configure functions may add extra LIBDEPS to mongod,
-mongos and the mongo shell (TODO: other mongo tools and the C++ client), and through those libraries
+to configure the supplied "env" object.  The configure functions may add extra LIBDEPS to mongerd,
+mongers and the monger shell (TODO: other monger tools and the C++ client), and through those libraries
 alter those programs' behavior.
 
 MongoDB module SConscript files can describe libraries, programs and unit tests, just as other

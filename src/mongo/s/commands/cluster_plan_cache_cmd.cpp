@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/init.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/collation/collation_spec.h"
-#include "mongo/s/commands/strategy.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/stale_exception.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/init.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/collation/collation_spec.h"
+#include "monger/s/commands/strategy.h"
+#include "monger/s/grid.h"
+#include "monger/s/stale_exception.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::string;
@@ -45,7 +45,7 @@ using std::stringstream;
 using std::vector;
 
 /**
- * Base class for mongos plan cache commands.
+ * Base class for mongers plan cache commands.
  * Cluster plan cache commands don't do much more than
  * forwarding the commands to all shards and combining the results.
  */
@@ -173,4 +173,4 @@ MONGO_INITIALIZER(RegisterPlanCacheCommands)(InitializerContext* context) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

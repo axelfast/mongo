@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <string>
 
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/rpc/message.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/rpc/message.h"
 
-namespace mongo {
+namespace monger {
 
 class NamespaceString;
 class OperationContext;
@@ -105,4 +105,4 @@ std::string runQuery(OperationContext* opCtx,
                      const NamespaceString& ns,
                      Message& result);
 
-}  // namespace mongo
+}  // namespace monger

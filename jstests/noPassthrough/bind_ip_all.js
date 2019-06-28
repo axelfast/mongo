@@ -9,9 +9,9 @@
 
     function runTest(config, opt, expectStar, expectLocalhost) {
         clearRawMongoProgramOutput();
-        const mongod =
-            runMongoProgram('./mongod', '--port', port, '--config', config, opt, '--outputConfig');
-        assert.eq(mongod, 0);
+        const mongerd =
+            runMongoProgram('./mongerd', '--port', port, '--config', config, opt, '--outputConfig');
+        assert.eq(mongerd, 0);
         const output = rawMongoProgramOutput();
         assert.eq(output.search(/bindIp: "\*"/) >= 0, expectStar, output);
         assert.eq(output.search(/bindIp: localhost/) >= 0, expectLocalhost, output);

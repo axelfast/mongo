@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,20 +31,20 @@
  * Tests for json.{h,cpp} code and BSONObj::jsonString()
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fmt/format.h>
 #include <fmt/printf.h>
 #include <limits>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/platform/decimal128.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
 
 namespace {
 
@@ -122,13 +122,13 @@ TEST(JsonStringTest, NumberLongStrictNegative) {
 
 TEST(JsonStringTest, NumberDecimal) {
     BSONObjBuilder b;
-    b.append("a", mongo::Decimal128("123456789.12345"));
+    b.append("a", monger::Decimal128("123456789.12345"));
     ASSERT_EQUALS("{ \"a\" : NumberDecimal(\"123456789.12345\") }", b.done().jsonString(TenGen));
 }
 
 TEST(JsonStringTest, NumberDecimalStrict) {
     BSONObjBuilder b;
-    b.append("a", mongo::Decimal128("123456789.12345"));
+    b.append("a", monger::Decimal128("123456789.12345"));
     ASSERT_EQUALS("{ \"a\" : { \"$numberDecimal\" : \"123456789.12345\" } }",
                   b.done().jsonString(Strict));
 }
@@ -452,14 +452,14 @@ void assertEquals(const std::string& json,
                   const char* msg) {
     const bool bad = expected.woCompare(actual);
     if (bad) {
-        ::mongo::log() << "want:" << expected.jsonString() << " size: " << expected.objsize()
+        ::monger::log() << "want:" << expected.jsonString() << " size: " << expected.objsize()
                        << std::endl;
-        ::mongo::log() << "got :" << actual.jsonString() << " size: " << actual.objsize()
+        ::monger::log() << "got :" << actual.jsonString() << " size: " << actual.objsize()
                        << std::endl;
-        ::mongo::log() << expected.hexDump() << std::endl;
-        ::mongo::log() << actual.hexDump() << std::endl;
-        ::mongo::log() << msg << std::endl;
-        ::mongo::log() << "orig json:" << json;
+        ::monger::log() << expected.hexDump() << std::endl;
+        ::monger::log() << actual.hexDump() << std::endl;
+        ::monger::log() << msg << std::endl;
+        ::monger::log() << "orig json:" << json;
     }
     ASSERT(!bad);
 }

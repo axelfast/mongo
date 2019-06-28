@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
 #
 
 global:
-  cpp_namespace: "mongo"
+  cpp_namespace: "monger"
   cpp_includes:
-    - "mongo/db/auth/user_name.h"
-    - "mongo/db/auth/role_name.h"
+    - "monger/db/auth/user_name.h"
+    - "monger/db/auth/role_name.h"
 
 imports:
-  - "mongo/idl/basic_types.idl"
+  - "monger/idl/basic_types.idl"
 
 types:
   UserName:
     bson_serialization_type: any
     description: "A struct representing a UserName"
     cpp_type: "UserName"
-    deserializer: "mongo::UserName::parseFromBSON"
-    serializer: "mongo::UserName::serializeToBSON"
+    deserializer: "monger::UserName::parseFromBSON"
+    serializer: "monger::UserName::serializeToBSON"
 
   RoleName:
     bson_serialization_type: any
     description: "A struct representing a Role"
     cpp_type: "RoleName"
-    deserializer: "mongo::RoleName::parseFromBSON"
-    serializer: "mongo::RoleName::serializeToBSON"
+    deserializer: "monger::RoleName::parseFromBSON"
+    serializer: "monger::RoleName::serializeToBSON"

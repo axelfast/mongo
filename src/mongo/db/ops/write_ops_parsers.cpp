@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ops/write_ops_parsers.h"
+#include "monger/db/ops/write_ops_parsers.h"
 
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using write_ops::Insert;
 using write_ops::Update;
@@ -259,4 +259,4 @@ void write_ops::UpdateModification::serializeToBSON(StringData fieldName,
     arrayBuilder.doneFast();
 }
 
-}  // namespace mongo
+}  // namespace monger

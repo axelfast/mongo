@@ -1,4 +1,4 @@
-package mongoreplay
+package mongerreplay
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 )
 
 // MsgOp is a struct for parsing OP_MSG as defined here:
-// https://github.com/mongodb/mongo/blob/master/src/mongo/rpc/command_request.h.
+// https://github.com/mongerdb/monger/blob/master/src/monger/rpc/command_request.h.
 type MsgOp struct {
 	Header MsgHeader
 	mgo.MsgOp

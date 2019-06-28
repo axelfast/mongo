@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/query_planner.h"
+#include "monger/db/query/query_planner.h"
 
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/index/wildcard_key_generator.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/matcher/expression_algo.h"
-#include "mongo/db/matcher/expression_geo.h"
-#include "mongo/db/matcher/expression_text.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/collation/collation_index_key.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/plan_cache.h"
-#include "mongo/db/query/plan_enumerator.h"
-#include "mongo/db/query/planner_access.h"
-#include "mongo/db/query/planner_analysis.h"
-#include "mongo/db/query/planner_ixselect.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/util/log.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/index/wildcard_key_generator.h"
+#include "monger/db/index_names.h"
+#include "monger/db/matcher/expression_algo.h"
+#include "monger/db/matcher/expression_geo.h"
+#include "monger/db/matcher/expression_text.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/collation/collation_index_key.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/plan_cache.h"
+#include "monger/db/query/plan_enumerator.h"
+#include "monger/db/query/planner_access.h"
+#include "monger/db/query/planner_analysis.h"
+#include "monger/db/query/planner_ixselect.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::numeric_limits;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 // Copied verbatim from db/index.h
 static bool isIdIndex(const BSONObj& pattern) {
@@ -1013,4 +1013,4 @@ StatusWith<std::vector<std::unique_ptr<QuerySolution>>> QueryPlanner::plan(
     return {std::move(out)};
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/periodic_runner_factory.h"
+#include "monger/util/periodic_runner_factory.h"
 
-#include "mongo/db/service_context.h"
-#include "mongo/util/periodic_runner_impl.h"
+#include "monger/db/service_context.h"
+#include "monger/util/periodic_runner_impl.h"
 
-namespace mongo {
+namespace monger {
 
 std::unique_ptr<PeriodicRunner> makePeriodicRunner(ServiceContext* svc) {
     return std::make_unique<PeriodicRunnerImpl>(svc, svc->getPreciseClockSource());

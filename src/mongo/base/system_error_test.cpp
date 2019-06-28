@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <system_error>
 
-#include "mongo/base/system_error.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/system_error.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(SystemError, Category) {
-    ASSERT(make_error_code(ErrorCodes::AuthenticationFailed).category() == mongoErrorCategory());
-    ASSERT(std::error_code(ErrorCodes::AlreadyInitialized, mongoErrorCategory()).category() ==
-           mongoErrorCategory());
+    ASSERT(make_error_code(ErrorCodes::AuthenticationFailed).category() == mongerErrorCategory());
+    ASSERT(std::error_code(ErrorCodes::AlreadyInitialized, mongerErrorCategory()).category() ==
+           mongerErrorCategory());
     ASSERT(make_error_condition(ErrorCodes::AuthenticationFailed).category() ==
-           mongoErrorCategory());
+           mongerErrorCategory());
     ASSERT(std::error_condition(ErrorCodes::AuthenticationFailed).category() ==
-           mongoErrorCategory());
+           mongerErrorCategory());
 }
 
 TEST(SystemError, Conversions) {
     ASSERT(make_error_code(ErrorCodes::AlreadyInitialized) == ErrorCodes::AlreadyInitialized);
-    ASSERT(std::error_code(ErrorCodes::AlreadyInitialized, mongoErrorCategory()) ==
+    ASSERT(std::error_code(ErrorCodes::AlreadyInitialized, mongerErrorCategory()) ==
            ErrorCodes::AlreadyInitialized);
     ASSERT(make_error_condition(ErrorCodes::AlreadyInitialized) == ErrorCodes::AlreadyInitialized);
     ASSERT(std::error_condition(ErrorCodes::AlreadyInitialized) == ErrorCodes::AlreadyInitialized);
@@ -61,4 +61,4 @@ TEST(SystemError, Equivalence) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

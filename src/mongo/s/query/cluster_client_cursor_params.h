@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,20 +34,20 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/cursor_id.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/tailable_mode.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/query/async_results_merger_params_gen.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/cursor_id.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/tailable_mode.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/query/async_results_merger_params_gen.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 class TaskExecutor;
 }
@@ -157,4 +157,4 @@ struct ClusterClientCursorParams {
     boost::optional<bool> isAutoCommit;
 };
 
-}  // mongo
+}  // monger

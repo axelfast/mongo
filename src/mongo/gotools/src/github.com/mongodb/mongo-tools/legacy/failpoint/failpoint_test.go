@@ -11,7 +11,7 @@ package failpoint
 import (
 	"testing"
 
-	"github.com/mongodb/mongo-tools/legacy/testtype"
+	"github.com/mongerdb/monger-tools/legacy/testtype"
 	. "github.com/smartystreets/goconvey/convey"
 )
 

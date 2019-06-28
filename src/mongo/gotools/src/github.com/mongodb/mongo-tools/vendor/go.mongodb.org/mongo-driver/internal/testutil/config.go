@@ -18,13 +18,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"go.mongodb.org/mongo-driver/event"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/mongo/driverlegacy/topology"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/connection"
-	"go.mongodb.org/mongo-driver/x/network/connstring"
-	"go.mongodb.org/mongo-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/event"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/monger/driverlegacy/topology"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/connection"
+	"go.mongerdb.org/monger-driver/x/network/connstring"
+	"go.mongerdb.org/monger-driver/x/network/description"
 )
 
 var connectionString connstring.ConnString
@@ -227,16 +227,16 @@ func ColName(t *testing.T) string {
 func ConnString(t *testing.T) connstring.ConnString {
 	connectionStringOnce.Do(func() {
 		connectionString, connectionStringErr = GetConnString()
-		mongodbURI := os.Getenv("MONGODB_URI")
-		if mongodbURI == "" {
-			mongodbURI = "mongodb://localhost:27017"
+		mongerdbURI := os.Getenv("MONGODB_URI")
+		if mongerdbURI == "" {
+			mongerdbURI = "mongerdb://localhost:27017"
 		}
 
-		mongodbURI = AddTLSConfigToURI(mongodbURI)
-		mongodbURI = AddCompressorToUri(mongodbURI)
+		mongerdbURI = AddTLSConfigToURI(mongerdbURI)
+		mongerdbURI = AddCompressorToUri(mongerdbURI)
 
 		var err error
-		connectionString, err = connstring.Parse(mongodbURI)
+		connectionString, err = connstring.Parse(mongerdbURI)
 		if err != nil {
 			connectionStringErr = err
 		}
@@ -249,14 +249,14 @@ func ConnString(t *testing.T) connstring.ConnString {
 }
 
 func GetConnString() (connstring.ConnString, error) {
-	mongodbURI := os.Getenv("MONGODB_URI")
-	if mongodbURI == "" {
-		mongodbURI = "mongodb://localhost:27017"
+	mongerdbURI := os.Getenv("MONGODB_URI")
+	if mongerdbURI == "" {
+		mongerdbURI = "mongerdb://localhost:27017"
 	}
 
-	mongodbURI = AddTLSConfigToURI(mongodbURI)
+	mongerdbURI = AddTLSConfigToURI(mongerdbURI)
 
-	cs, err := connstring.Parse(mongodbURI)
+	cs, err := connstring.Parse(mongerdbURI)
 	if err != nil {
 		return connstring.ConnString{}, err
 	}
@@ -274,7 +274,7 @@ func GetDBName(cs connstring.ConnString) string {
 		return cs.Database
 	}
 
-	return fmt.Sprintf("mongo-go-driver-%d", os.Getpid())
+	return fmt.Sprintf("monger-go-driver-%d", os.Getpid())
 }
 
 // Integration should be called at the beginning of integration

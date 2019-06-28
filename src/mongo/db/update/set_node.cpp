@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/set_node.h"
+#include "monger/db/update/set_node.h"
 
-#include "mongo/db/update/path_support.h"
+#include "monger/db/update/path_support.h"
 
-namespace mongo {
+namespace monger {
 
 Status SetNode::init(BSONElement modExpr, const boost::intrusive_ptr<ExpressionContext>& expCtx) {
     invariant(modExpr.ok());
@@ -59,4 +59,4 @@ void SetNode::setValueForNewElement(mutablebson::Element* element) const {
     invariant(element->setValueBSONElement(val));
 }
 
-}  // namespace mongo
+}  // namespace monger

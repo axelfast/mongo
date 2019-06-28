@@ -10,10 +10,10 @@ import (
 	"context"
 	"errors"
 
-	"go.mongodb.org/mongo-driver/internal/testutil"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/internal/testutil"
+	"go.mongerdb.org/monger-driver/monger"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/x/bsonx"
 )
 
 const (
@@ -23,12 +23,12 @@ const (
 	largeData             = "large_doc.json"
 )
 
-func getClientDB(ctx context.Context) (*mongo.Database, error) {
+func getClientDB(ctx context.Context) (*monger.Database, error) {
 	cs, err := testutil.GetConnString()
 	if err != nil {
 		return nil, err
 	}
-	client, err := mongo.NewClient(options.Client().ApplyURI(cs.String()))
+	client, err := monger.NewClient(options.Client().ApplyURI(cs.String()))
 	if err != nil {
 		return nil, err
 	}

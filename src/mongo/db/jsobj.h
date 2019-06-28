@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -38,15 +38,15 @@
 
 #pragma once
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/oid.h"
-#include "mongo/bson/ordering.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/bson/util/builder.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/oid.h"
+#include "monger/bson/ordering.h"
+#include "monger/bson/timestamp.h"
+#include "monger/bson/util/builder.h"

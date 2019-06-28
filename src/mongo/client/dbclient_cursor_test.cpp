@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -442,4 +442,4 @@ TEST_F(DBClientCursorTest, DBClientCursorPassesReadOnceFlag) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,7 +32,7 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class NamespaceString;
@@ -67,4 +67,4 @@ StatusWith<std::vector<BSONObj>> splitVector(OperationContext* opCtx,
                                              boost::optional<long long> maxChunkSize,
                                              boost::optional<long long> maxChunkSizeBytes);
 
-}  // namespace mongo
+}  // namespace monger

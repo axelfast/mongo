@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/db/client.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/dbtests/mock/mock_conn_registry.h"
-#include "mongo/dbtests/mock/mock_dbclient_connection.h"
-#include "mongo/s/client/shard_connection.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/net/socket_exception.h"
+#include "monger/db/client.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/dbtests/mock/mock_conn_registry.h"
+#include "monger/dbtests/mock/mock_dbclient_connection.h"
+#include "monger/s/client/shard_connection.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/net/socket_exception.h"
 
 /**
  * Tests for ShardConnection, particularly in connection pool management.
@@ -45,7 +45,7 @@
  * the internal connections together, like in client/scoped_db_conn_test.cpp.
  */
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const std::string TARGET_HOST = "$dummy:27017";
@@ -53,21 +53,21 @@ const std::string TARGET_HOST = "$dummy:27017";
 class ShardConnFixture : public ServiceContextTest {
 public:
     void setUp() {
-        _maxPoolSizePerHost = mongo::shardConnectionPool.getMaxPoolSize();
+        _maxPoolSizePerHost = monger::shardConnectionPool.getMaxPoolSize();
 
-        mongo::ConnectionString::setConnectionHook(
-            mongo::MockConnRegistry::get()->getConnStrHook());
+        monger::ConnectionString::setConnectionHook(
+            monger::MockConnRegistry::get()->getConnStrHook());
         _dummyServer = new MockRemoteDBServer(TARGET_HOST);
-        mongo::MockConnRegistry::get()->addServer(_dummyServer);
+        monger::MockConnRegistry::get()->addServer(_dummyServer);
     }
 
     void tearDown() {
         ShardConnection::clearPool();
 
-        mongo::MockConnRegistry::get()->removeServer(_dummyServer->getServerAddress());
+        monger::MockConnRegistry::get()->removeServer(_dummyServer->getServerAddress());
         delete _dummyServer;
 
-        mongo::shardConnectionPool.setMaxPoolSize(_maxPoolSizePerHost);
+        monger::shardConnectionPool.setMaxPoolSize(_maxPoolSizePerHost);
     }
 
     void killServer() {
@@ -117,7 +117,7 @@ protected:
             newConnList.emplace_back(std::move(newConn));
         }
 
-        const uint64_t oldCreationTime = mongo::curTimeMicros64();
+        const uint64_t oldCreationTime = monger::curTimeMicros64();
 
         for (auto& conn : newConnList) {
             conn->done();
@@ -168,12 +168,12 @@ TEST_F(ShardConnFixture, InvalidateBadConnInPool) {
     conn1.done();
     conn3.done();
 
-    const uint64_t badCreationTime = mongo::curTimeMicros64();
+    const uint64_t badCreationTime = monger::curTimeMicros64();
     killServer();
 
     try {
-        conn2.get()->query(NamespaceString("test.user"), mongo::Query());
-    } catch (const mongo::NetworkException&) {
+        conn2.get()->query(NamespaceString("test.user"), monger::Query());
+    } catch (const monger::NetworkException&) {
     }
 
     conn2.done();
@@ -191,8 +191,8 @@ TEST_F(ShardConnFixture, DontReturnKnownBadConnToPool) {
     killServer();
 
     try {
-        conn3.get()->query(NamespaceString("test.user"), mongo::Query());
-    } catch (const mongo::NetworkException&) {
+        conn3.get()->query(NamespaceString("test.user"), monger::Query());
+    } catch (const monger::NetworkException&) {
     }
 
     restartServer();
@@ -214,8 +214,8 @@ TEST_F(ShardConnFixture, BadConnClearsPoolWhenKilled) {
     killServer();
 
     try {
-        conn3.get()->query(NamespaceString("test.user"), mongo::Query());
-    } catch (const mongo::NetworkException&) {
+        conn3.get()->query(NamespaceString("test.user"), monger::Query());
+    } catch (const monger::NetworkException&) {
     }
 
     restartServer();
@@ -254,7 +254,7 @@ TEST_F(ShardConnFixture, KilledGoodConnShouldNotClearPool) {
 }
 
 TEST_F(ShardConnFixture, InvalidateBadConnEvenWhenPoolIsFull) {
-    mongo::shardConnectionPool.setMaxPoolSize(2);
+    monger::shardConnectionPool.setMaxPoolSize(2);
 
     ShardConnection conn1(_opCtx, ConnectionString(HostAndPort(TARGET_HOST)), "test.user");
     ShardConnection conn2(_opCtx, ConnectionString(HostAndPort(TARGET_HOST)), "test.user");
@@ -263,12 +263,12 @@ TEST_F(ShardConnFixture, InvalidateBadConnEvenWhenPoolIsFull) {
     conn1.done();
     conn3.done();
 
-    const uint64_t badCreationTime = mongo::curTimeMicros64();
+    const uint64_t badCreationTime = monger::curTimeMicros64();
     killServer();
 
     try {
-        conn2.get()->query(NamespaceString("test.user"), mongo::Query());
-    } catch (const mongo::NetworkException&) {
+        conn2.get()->query(NamespaceString("test.user"), monger::Query());
+    } catch (const monger::NetworkException&) {
     }
 
     conn2.done();
@@ -303,4 +303,4 @@ TEST_F(ShardConnFixture, DontReturnConnGoneBadToPool) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

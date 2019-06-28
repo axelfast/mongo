@@ -13,10 +13,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/db"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
 )
 
 var ErrBufferClosed = errors.New("transaction buffer already closed")

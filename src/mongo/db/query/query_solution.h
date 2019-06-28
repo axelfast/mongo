@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,16 +31,16 @@
 
 #include <memory>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj_comparator_interface.h"
-#include "mongo/db/fts/fts_query.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/query/index_bounds.h"
-#include "mongo/db/query/plan_cache.h"
-#include "mongo/db/query/stage_types.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj_comparator_interface.h"
+#include "monger/db/fts/fts_query.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/query/index_bounds.h"
+#include "monger/db/query/plan_cache.h"
+#include "monger/db/query/stage_types.h"
 
-namespace mongo {
+namespace monger {
 
 class GeoNearExpression;
 
@@ -1024,4 +1024,4 @@ struct EnsureSortedNode : public QuerySolutionNode {
     BSONObj pattern;
 };
 
-}  // namespace mongo
+}  // namespace monger

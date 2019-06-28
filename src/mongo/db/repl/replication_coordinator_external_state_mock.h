@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,18 +31,18 @@
 
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/oid.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/last_vote.h"
-#include "mongo/db/repl/replication_coordinator_external_state.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/oid.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/last_vote.h"
+#include "monger/db/repl/replication_coordinator_external_state.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 class ServiceContext;
 
@@ -205,4 +205,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@ import (
 	"fmt"
 
 	"github.com/10gen/openssl"
-	"github.com/mongodb/mongo-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/legacy/options"
 )
 
 func init() {

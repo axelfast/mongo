@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,15 +28,15 @@
  */
 #pragma once
 
-#include "mongo/db/index/index_descriptor_fwd.h"
-#include "mongo/db/storage/biggie/store.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/db/storage/sorted_data_interface.h"
+#include "monger/db/index/index_descriptor_fwd.h"
+#include "monger/db/storage/biggie/store.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/db/storage/sorted_data_interface.h"
 
-namespace mongo {
+namespace monger {
 namespace biggie {
 
-class SortedDataBuilderInterface : public ::mongo::SortedDataBuilderInterface {
+class SortedDataBuilderInterface : public ::monger::SortedDataBuilderInterface {
 public:
     SortedDataBuilderInterface(OperationContext* opCtx,
                                bool unique,
@@ -71,7 +71,7 @@ private:
     int64_t _lastRID;
 };
 
-class SortedDataInterface : public ::mongo::SortedDataInterface {
+class SortedDataInterface : public ::monger::SortedDataInterface {
 public:
     // Truncate is not required at the time of writing but will be when the truncate command is
     // created
@@ -97,14 +97,14 @@ public:
                                    double scale) const override;
     virtual long long getSpaceUsedBytes(OperationContext* opCtx) const override;
     virtual bool isEmpty(OperationContext* opCtx) override;
-    virtual std::unique_ptr<mongo::SortedDataInterface::Cursor> newCursor(
+    virtual std::unique_ptr<monger::SortedDataInterface::Cursor> newCursor(
         OperationContext* opCtx, bool isForward = true) const override;
     virtual Status initAsEmpty(OperationContext* opCtx) override;
 
     /*
      * This is the cursor class required by the sorted data interface.
      */
-    class Cursor final : public ::mongo::SortedDataInterface::Cursor {
+    class Cursor final : public ::monger::SortedDataInterface::Cursor {
     public:
         // All the following public functions just implement the interface.
         Cursor(OperationContext* opCtx,
@@ -201,4 +201,4 @@ private:
     bool _isPartial;
 };
 }  // namespace biggie
-}  // namespace mongo
+}  // namespace monger

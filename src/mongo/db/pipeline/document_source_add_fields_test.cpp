@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/bson/bson_depth.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_add_fields.h"
-#include "mongo/db/pipeline/document_source_mock.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/bson/bson_depth.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_add_fields.h"
+#include "monger/db/pipeline/document_source_mock.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::vector;
@@ -260,4 +260,4 @@ TEST_F(AddFieldsTest, CannotAddNestedDocumentExceedingDepthLimit) {
         ErrorCodes::Overflow);
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

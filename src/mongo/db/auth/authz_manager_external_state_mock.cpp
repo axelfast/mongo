@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authz_manager_external_state_mock.h"
+#include "monger/db/auth/authz_manager_external_state_mock.h"
 
 #include <memory>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/db/auth/authz_session_external_state_mock.h"
-#include "mongo/db/auth/privilege_parser.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/update/update_driver.h"
-#include "mongo/util/map_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/db/auth/authz_session_external_state_mock.h"
+#include "monger/db/auth/privilege_parser.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/update/update_driver.h"
+#include "monger/util/map_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_REGISTER_SHIM(AuthzManagerExternalState::create)
 ()->std::unique_ptr<AuthzManagerExternalState> {
@@ -316,4 +316,4 @@ Status AuthzManagerExternalStateMock::_queryVector(
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <memory>
 #include <string>
 
-#include "mongo/executor/connection_pool.h"
-#include "mongo/executor/network_connection_hook.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/rpc/metadata/metadata_hook.h"
+#include "monger/executor/connection_pool.h"
+#include "monger/executor/network_connection_hook.h"
+#include "monger/executor/network_interface.h"
+#include "monger/rpc/metadata/metadata_hook.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 /**
@@ -55,4 +55,4 @@ std::unique_ptr<NetworkInterface> makeNetworkInterface(
     ConnectionPool::Options options = ConnectionPool::Options());
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

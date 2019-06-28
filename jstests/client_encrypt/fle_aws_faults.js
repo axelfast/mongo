@@ -50,8 +50,8 @@ load('jstests/ssl/libs/ssl_helpers.js');
             const keyVault = shell.getKeyVault();
 
             assert.throws(() => keyVault.createKey(
-                              "aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongoKey"]));
-            assert.eq(keyVault.getKeys("mongoKey").toArray().length, 0);
+                              "aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongerKey"]));
+            assert.eq(keyVault.getKeys("mongerKey").toArray().length, 0);
         });
     }
 
@@ -67,7 +67,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
             let error =
                 assert.throws(() => keyVault.createKey(
-                                  "aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongoKey"]));
+                                  "aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongerKey"]));
             assert.commandFailedWithCode(error, [51224]);
             assert.eq(
                 error,
@@ -83,9 +83,9 @@ load('jstests/ssl/libs/ssl_helpers.js');
         runKMS(mock_kms, (shell) => {
             const keyVault = shell.getKeyVault();
             assert.writeOK(
-                keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongoKey"]));
-            const keyId = keyVault.getKeys("mongoKey").toArray()[0]._id;
-            const str = "mongo";
+                keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongerKey"]));
+            const keyId = keyVault.getKeys("mongerKey").toArray()[0]._id;
+            const str = "monger";
             assert.throws(() => {
                 const encStr = shell.getClientEncryption().encrypt(keyId, str, randomAlgorithm);
             });
@@ -101,9 +101,9 @@ load('jstests/ssl/libs/ssl_helpers.js');
             const keyVault = shell.getKeyVault();
 
             assert.writeOK(
-                keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongoKey"]));
-            const keyId = keyVault.getKeys("mongoKey").toArray()[0]._id;
-            const str = "mongo";
+                keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongerKey"]));
+            const keyId = keyVault.getKeys("mongerKey").toArray()[0]._id;
+            const str = "monger";
             const encStr = shell.getClientEncryption().encrypt(keyId, str, randomAlgorithm);
 
             mock_kms.enableFaults();
@@ -123,9 +123,9 @@ load('jstests/ssl/libs/ssl_helpers.js');
         runKMS(mock_kms, (shell) => {
             const keyVault = shell.getKeyVault();
             assert.writeOK(
-                keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongoKey"]));
-            const keyId = keyVault.getKeys("mongoKey").toArray()[0]._id;
-            const str = "mongo";
+                keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ["mongerKey"]));
+            const keyId = keyVault.getKeys("mongerKey").toArray()[0]._id;
+            const str = "monger";
             let error = assert.throws(() => {
                 const encStr = shell.getClientEncryption().encrypt(keyId, str, randomAlgorithm);
             });

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,35 +27,35 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/capped_utils.h"
+#include "monger/db/catalog/capped_utils.h"
 
-#include "mongo/base/error_codes.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/create_collection.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog/drop_collection.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog/rename_collection.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/plan_yield_policy.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/error_codes.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/create_collection.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog/drop_collection.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog/rename_collection.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/plan_yield_policy.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 Status emptyCapped(OperationContext* opCtx, const NamespaceString& collectionName) {
     AutoGetDb autoDb(opCtx, collectionName.db(), MODE_X);
@@ -279,4 +279,4 @@ void convertToCapped(OperationContext* opCtx,
     uassertStatusOK(renameCollection(opCtx, longTmpName, collectionName, options));
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -8,14 +8,14 @@
     load("jstests/noPassthrough/libs/server_parameter_helpers.js");  // For setParameterOnAllHosts.
     load("jstests/libs/discover_topology.js");                       // For findDataBearingNodes.
 
-    const st = new ShardingTest({shards: 2, config: 1, mongos: 1});
+    const st = new ShardingTest({shards: 2, config: 1, mongers: 1});
     const testName = "lookup_sharded";
 
     const nodeList = DiscoverTopology.findNonConfigNodes(st.s);
     setParameterOnAllHosts(nodeList, "internalQueryAllowShardedLookup", true);
 
-    const mongosDB = st.s0.getDB(testName);
-    assert.commandWorked(mongosDB.dropDatabase());
+    const mongersDB = st.s0.getDB(testName);
+    assert.commandWorked(mongersDB.dropDatabase());
 
     // Used by testPipeline to sort result documents. All _ids must be primitives.
     function compareId(a, b) {
@@ -549,19 +549,19 @@
     //
     // Test unsharded local collection and unsharded foreign collection.
     //
-    mongosDB.lookUp.drop();
-    mongosDB.from.drop();
-    mongosDB.thirdColl.drop();
-    mongosDB.fourthColl.drop();
+    mongersDB.lookUp.drop();
+    mongersDB.from.drop();
+    mongersDB.thirdColl.drop();
+    mongersDB.fourthColl.drop();
 
-    runTest(mongosDB.lookUp, mongosDB.from, mongosDB.thirdColl, mongosDB.fourthColl);
+    runTest(mongersDB.lookUp, mongersDB.from, mongersDB.thirdColl, mongersDB.fourthColl);
 
     // Verify that the command is sent only to the primary shard when both the local and foreign
     // collections are unsharded.
     assert(!assert
-                .commandWorked(mongosDB.lookup.explain().aggregate([{
+                .commandWorked(mongersDB.lookup.explain().aggregate([{
                     $lookup: {
-                        from: mongosDB.from.getName(),
+                        from: mongersDB.from.getName(),
                         localField: "a",
                         foreignField: "b",
                         as: "results"
@@ -569,33 +569,33 @@
                 }]))
                 .hasOwnProperty("shards"));
     // Enable sharding on the test DB and ensure its primary is shard0000.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
-    st.ensurePrimaryShard(mongosDB.getName(), st.shard0.shardName);
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
+    st.ensurePrimaryShard(mongersDB.getName(), st.shard0.shardName);
 
     //
     // Test unsharded local collection and sharded foreign collection.
     //
 
     // Shard the foreign collection on _id.
-    st.shardColl(mongosDB.from, {_id: 1}, {_id: 0}, {_id: 1}, mongosDB.getName());
-    runTest(mongosDB.lookUp, mongosDB.from, mongosDB.thirdColl, mongosDB.fourthColl);
+    st.shardColl(mongersDB.from, {_id: 1}, {_id: 0}, {_id: 1}, mongersDB.getName());
+    runTest(mongersDB.lookUp, mongersDB.from, mongersDB.thirdColl, mongersDB.fourthColl);
 
     //
     // Test sharded local collection and unsharded foreign collection.
     //
-    assert(mongosDB.from.drop());
+    assert(mongersDB.from.drop());
 
     // Shard the local collection on _id.
-    st.shardColl(mongosDB.lookup, {_id: 1}, {_id: 0}, {_id: 1}, mongosDB.getName());
-    runTest(mongosDB.lookUp, mongosDB.from, mongosDB.thirdColl, mongosDB.fourthColl);
+    st.shardColl(mongersDB.lookup, {_id: 1}, {_id: 0}, {_id: 1}, mongersDB.getName());
+    runTest(mongersDB.lookUp, mongersDB.from, mongersDB.thirdColl, mongersDB.fourthColl);
 
     //
     // Test sharded local and foreign collections.
     //
 
     // Shard the foreign collection on _id.
-    st.shardColl(mongosDB.from, {_id: 1}, {_id: 0}, {_id: 1}, mongosDB.getName());
-    runTest(mongosDB.lookUp, mongosDB.from, mongosDB.thirdColl, mongosDB.fourthColl);
+    st.shardColl(mongersDB.from, {_id: 1}, {_id: 0}, {_id: 1}, mongersDB.getName());
+    runTest(mongersDB.lookUp, mongersDB.from, mongersDB.thirdColl, mongersDB.fourthColl);
 
     // Test that a $lookup from an unsharded collection followed by a $merge to a sharded collection
     // is allowed.
@@ -624,7 +624,7 @@
     setParameterOnAllHosts(nodeList, "internalQueryAllowShardedLookup", false);
 
     // Re shard the foreign collection on _id.
-    st.shardColl(mongosDB.from, {_id: 1}, {_id: 0}, {_id: 1}, mongosDB.getName());
+    st.shardColl(mongersDB.from, {_id: 1}, {_id: 0}, {_id: 1}, mongersDB.getName());
 
     let err = assert.throws(() => sourceColl
                                       .aggregate([{

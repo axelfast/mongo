@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/db/matcher/schema/expression_internal_schema_num_array_items.h"
+#include "monger/db/matcher/schema/expression_internal_schema_num_array_items.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * MatchExpression for $_internalSchemaMinItems keyword. Takes an integer argument that indicates
@@ -57,4 +57,4 @@ public:
         return std::move(minItems);
     }
 };
-}  // namespace mongo
+}  // namespace monger

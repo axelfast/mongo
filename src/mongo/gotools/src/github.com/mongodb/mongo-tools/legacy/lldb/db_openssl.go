@@ -9,8 +9,8 @@
 package lldb
 
 import (
-	"github.com/mongodb/mongo-tools/legacy/lldb/openssl"
-	"github.com/mongodb/mongo-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/legacy/lldb/openssl"
+	"github.com/mongerdb/monger-tools/legacy/options"
 )
 
 func init() {

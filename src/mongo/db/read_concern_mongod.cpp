@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/db/read_concern.h"
-#include "mongo/base/status.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/read_concern_mongod_gen.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/storage/recovery_unit.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/concurrency/notification.h"
-#include "mongo/util/log.h"
+#include "monger/db/read_concern.h"
+#include "monger/base/status.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/read_concern_mongerd_gen.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/server_options.h"
+#include "monger/db/storage/recovery_unit.h"
+#include "monger/s/grid.h"
+#include "monger/util/concurrency/notification.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -478,4 +478,4 @@ MONGO_REGISTER_SHIM(waitForSpeculativeMajorityReadConcern)
 }
 
 
-}  // namespace mongo
+}  // namespace monger

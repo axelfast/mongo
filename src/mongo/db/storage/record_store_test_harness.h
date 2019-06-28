@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,11 +32,11 @@
 #include <cstdint>
 #include <memory>
 
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/test_harness_helper.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/test_harness_helper.h"
 
-namespace mongo {
+namespace monger {
 
 class RecordStore;
 class RecoveryUnit;
@@ -66,4 +66,4 @@ public:
 inline std::unique_ptr<RecordStoreHarnessHelper> newRecordStoreHarnessHelper() {
     return dynamic_ptr_cast<RecordStoreHarnessHelper>(newHarnessHelper());
 }
-}  // namespace mongo
+}  // namespace monger

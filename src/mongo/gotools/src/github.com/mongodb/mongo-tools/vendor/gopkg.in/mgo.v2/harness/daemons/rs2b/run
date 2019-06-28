@@ -2,7 +2,7 @@
 
 . ../.env
 
-exec mongod $COMMONDOPTS \
+exec mongerd $COMMONDOPTS \
 	--shardsvr \
 	--replSet rs2 \
 	--port 40022

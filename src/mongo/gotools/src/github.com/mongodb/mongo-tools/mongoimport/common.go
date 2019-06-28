@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoimport
+package mongerimport
 
 import (
 	"bufio"
@@ -17,10 +17,10 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
 	"gopkg.in/tomb.v2"
 )
 
@@ -76,7 +76,7 @@ type importWorker struct {
 	tomb *tomb.Tomb
 }
 
-// an interface for tracking the number of bytes, which is used in mongoimport to feed
+// an interface for tracking the number of bytes, which is used in mongerimport to feed
 // the progress bar.
 type sizeTracker interface {
 	Size() int64

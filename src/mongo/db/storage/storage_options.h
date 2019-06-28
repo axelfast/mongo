@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,37 +32,37 @@
 #include <atomic>
 #include <string>
 
-#include "mongo/platform/atomic_proxy.h"
-#include "mongo/platform/atomic_word.h"
+#include "monger/platform/atomic_proxy.h"
+#include "monger/platform/atomic_word.h"
 
 /*
  * This file defines the storage for options that come from the command line related to data file
- * persistence.  Many executables that can access data files directly such as mongod and certain
+ * persistence.  Many executables that can access data files directly such as mongerd and certain
  * tools use these variables, but each executable may have a different set of command line flags
  * that allow the user to change a different subset of these options.
  */
 
-namespace mongo {
+namespace monger {
 
 struct StorageGlobalParams {
     StorageGlobalParams();
     void reset();
 
-    // Default data directory for mongod when running in non-config server mode.
+    // Default data directory for mongerd when running in non-config server mode.
     static const char* kDefaultDbPath;
 
-    // Default data directory for mongod when running as the config database of
+    // Default data directory for mongerd when running as the config database of
     // a sharded cluster.
     static const char* kDefaultConfigDbPath;
 
     // --storageEngine
-    // storage engine for this instance of mongod.
+    // storage engine for this instance of mongerd.
     std::string engine;
 
     // True if --storageEngine was passed on the command line, and false otherwise.
     bool engineSetByUser;
 
-    // The directory where the mongod instance stores its data.
+    // The directory where the mongerd instance stores its data.
     std::string dbpath;
 
     // --upgrade
@@ -116,4 +116,4 @@ struct StorageGlobalParams {
 
 extern StorageGlobalParams storageGlobalParams;
 
-}  // namespace mongo
+}  // namespace monger

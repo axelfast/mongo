@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fstream>
 
-#include "mongo/logger/rotatable_file_writer.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/logger/rotatable_file_writer.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
-using namespace mongo;
-using namespace mongo::logger;
+using namespace monger;
+using namespace monger::logger;
 
 const std::string logFileName("LogTest_RotatableFileAppender.txt");
 const std::string logFileNameRotated("LogTest_RotatableFileAppender_Rotated.txt");
 
 // TODO(schwerin): Create a safe, uniform mechanism by which unit tests may read and write
 // temporary files.
-class RotatableFileWriterTest : public mongo::unittest::Test {
+class RotatableFileWriterTest : public monger::unittest::Test {
 public:
     RotatableFileWriterTest() {
         unlink(logFileName.c_str());
@@ -143,4 +143,4 @@ TEST_F(RotatableFileWriterTest, RotationTest) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

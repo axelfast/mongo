@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/db/query/canonical_query_encoder.h"
+#include "monger/db/query/canonical_query_encoder.h"
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::unique_ptr;
@@ -283,4 +283,4 @@ TEST(CanonicalQueryEncoderTest, CheckCollationIsEncoded) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

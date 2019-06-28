@@ -1,5 +1,5 @@
 commit 05c07409ae777669aad8f972f54de6b6a18347ae
-Author: Henrik Edin <henrik.edin@mongodb.com>
+Author: Henrik Edin <henrik.edin@mongerdb.com>
 Date:   Fri Apr 12 14:16:17 2019 -0400
 
     SERVER-40544 Disable injection of on_process_term() at process exit
@@ -50,11 +50,11 @@ M	configure.ac
 M	src/common.cc
 
 commit 85c56a9d6499570267193f6e30d1deb5d47d6e94
-Author: Mark Benvenuto <mark.benvenuto@mongodb.com>
+Author: Mark Benvenuto <mark.benvenuto@mongerdb.com>
 Date:	Fri Feb 9 11:15:43 2018 -0500
 
     Cherry-pick of
-    https://github.com/mongodb/mongo/commit/ba957823288d674f34c8345059f35f34cb4dd055
+    https://github.com/mongerdb/monger/commit/ba957823288d674f34c8345059f35f34cb4dd055
 
     SERVER-30114 Add simple slow spinlock monitoring
 
@@ -63,11 +63,11 @@ M	src/base/spinlock.h
 M	src/tcmalloc.cc
 
 commit 403cc37b712202da306ab25757c9d3ae7dfdcb86
-Author: Mark Benvenuto <mark.benvenuto@mongodb.com>
+Author: Mark Benvenuto <mark.benvenuto@mongerdb.com>
 Date:	Tue Apr 12 08:41:55 2016 -0400
 
     Cherry-pick of
-    https://github.com/mongodb/mongo/commit/952aa37f0adf19f0470eb4d86ffbd9318aa93cf4
+    https://github.com/mongerdb/monger/commit/952aa37f0adf19f0470eb4d86ffbd9318aa93cf4
 
     SERVER-17788 [GPerfTools-2.2 Patch] improve tcmalloc freelist stats
 
@@ -85,7 +85,7 @@ M	src/malloc_extension.cc
 M	src/tcmalloc.cc
 
 commit 89dd5a5bd538e8d7cc8df357001311126ad54cdb
-Author: Henrik Edin <henrik.edin@mongodb.com>
+Author: Henrik Edin <henrik.edin@mongerdb.com>
 Date:	Thu Feb 7 14:39:26 2019 -0500
 
     Always define TCMALLOC_MAX_SIZE_KB, even for default.
@@ -108,7 +108,7 @@ commit 61c8a436f13f2f813dd0530be2f77c720d119f07
 Author: henrikedin <henke.edin@gmail.com>
 Date:	Thu Feb 7 10:04:29 2019 -0500
 
-    Configurable max size mongodb (#4)
+    Configurable max size mongerdb (#4)
 
     Allow kMaxSize to be configurable, limit available options to
     power-of-2 sizes.
@@ -118,19 +118,19 @@ M	src/common.h
 M	src/windows/config.h
 
 commit 9eaf061c650346e63f485c57c81cec8f96da5faa
-Author: Billy Donahue <billy.donahue@mongodb.com>
+Author: Billy Donahue <billy.donahue@mongerdb.com>
 Date:	Wed Feb 6 17:41:18 2019 -0500
 
     Aggressive size classes merging
 
-    (reviewed https://mongodbcr.appspot.com/228820001/)
+    (reviewed https://mongerdbcr.appspot.com/228820001/)
 
 M	configure.ac
 M	src/common.cc
 M	src/windows/config.h
 
 commit cdd7e592960d875e9493ebb83c719628c9b0ee5e
-Author: Henrik Edin <henrik.edin@mongodb.com>
+Author: Henrik Edin <henrik.edin@mongerdb.com>
 Date:	Wed Feb 6 10:55:09 2019 -0500
 
     Add --disable-libc-override (#2)
@@ -773,7 +773,7 @@ M	src/windows/gperftools/tcmalloc.h
 M	src/windows/gperftools/tcmalloc.h.in
 
 commit 7a6e25f3b143c35ed6fff8bb2c0f8de1ab348a39
-Author: Andrew Morrow <acm@mongodb.com>
+Author: Andrew Morrow <acm@mongerdb.com>
 Date:	Tue Nov 7 15:57:17 2017 -0500
 
     Add new statistics for the PageHeap
@@ -2006,7 +2006,7 @@ M	src/tcmalloc.cc
 M	src/tests/tcmalloc_unittest.cc
 
 commit b0abefd93834d9d9c7ffaae2d23bd48ed8e96477
-Author: Andrew Morrow <acm@mongodb.com>
+Author: Andrew Morrow <acm@mongerdb.com>
 Date:	Sat Dec 17 13:57:41 2016 -0500
 
     Fix a typo in the page fence flag declaration
@@ -2831,7 +2831,7 @@ Date:	Fri Jan 29 18:17:16 2016 -0800
 M	src/gperftools/malloc_hook.h
 
 commit c69721b2b2ceae426c36de191dd0a6fa443c5c7a
-Author: Andrew Morrow <acm@mongodb.com>
+Author: Andrew Morrow <acm@mongerdb.com>
 Date:	Sun Nov 22 15:19:12 2015 -0500
 
     Add support for obtaining cache size of the current thread and

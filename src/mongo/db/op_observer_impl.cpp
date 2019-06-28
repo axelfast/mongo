@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,44 +27,44 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/op_observer_impl.h"
+#include "monger/db/op_observer_impl.h"
 
 #include <limits>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/commands/feature_compatibility_version.h"
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/logical_time_validator.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer_util.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_entry_gen.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/transaction_participant_gen.h"
-#include "mongo/db/views/durable_view_catalog.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point_service.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/commands/feature_compatibility_version.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/logical_time_validator.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer_util.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_entry_gen.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/server_options.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/transaction_participant_gen.h"
+#include "monger/db/views/durable_view_catalog.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/scripting/engine.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point_service.h"
 
-namespace mongo {
+namespace monger {
 using repl::OplogEntry;
 
 namespace {
@@ -1468,4 +1468,4 @@ void OpObserverImpl::onReplicationRollback(OperationContext* opCtx,
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

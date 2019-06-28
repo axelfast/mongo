@@ -12,9 +12,9 @@
         shards: 2,
         other: {enableBalancer: true, shardAsReplicaSet: false}
     });
-    var mongos = st.s;
-    var admin = mongos.getDB("admin");
-    var db = mongos.getDB("test");
+    var mongers = st.s;
+    var admin = mongers.getDB("admin");
+    var db = mongers.getDB("test");
     var coll = db.getCollection("stuff");
 
     assert.commandWorked(admin.runCommand({enablesharding: coll.getDB().getName()}));
@@ -43,11 +43,11 @@
     st.printShardingStatus();
 
     assert.lt(
-        5, mongos.getDB("config").chunks.find({ns: "test.stuff"}).count(), "not enough chunks");
+        5, mongers.getDB("config").chunks.find({ns: "test.stuff"}).count(), "not enough chunks");
 
     assert.soon(() => {
         let res =
-            mongos.getDB("config")
+            mongers.getDB("config")
                 .chunks
                 .aggregate(
                     [{$match: {ns: "test.stuff"}}, {$group: {_id: "$shard", nChunks: {$sum: 1}}}])

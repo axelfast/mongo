@@ -93,7 +93,7 @@ class HookTestArchival(object):
         # Normalize test path from a test or hook name.
         test_path = \
             test_name.replace("/", "_").replace("\\", "_").replace(".", "_").replace(":", "_")
-        file_name = "mongo-data-{}-{}-{}-{}.tgz".format(config.EVERGREEN_TASK_ID, test_path,
+        file_name = "monger-data-{}-{}-{}-{}.tgz".format(config.EVERGREEN_TASK_ID, test_path,
                                                         config.EVERGREEN_EXECUTION,
                                                         self._tests_repeat[test_name])
         # Retrieve root directory for all dbPaths from fixture.

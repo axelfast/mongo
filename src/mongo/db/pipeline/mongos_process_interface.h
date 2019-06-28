@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,18 +29,18 @@
 
 #pragma once
 
-#include "mongo/db/exec/shard_filterer.h"
-#include "mongo/db/pipeline/mongo_process_common.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/s/async_requests_sender.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/query/cluster_aggregation_planner.h"
-#include "mongo/s/query/owned_remote_cursor.h"
+#include "monger/db/exec/shard_filterer.h"
+#include "monger/db/pipeline/monger_process_common.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/s/async_requests_sender.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/query/cluster_aggregation_planner.h"
+#include "monger/s/query/owned_remote_cursor.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * Class to provide access to mongos-specific implementations of methods required by some
+ * Class to provide access to mongers-specific implementations of methods required by some
  * document sources.
  */
 class MongoSInterface : public MongoProcessCommon {
@@ -161,7 +161,7 @@ public:
 
     std::unique_ptr<Pipeline, PipelineDeleter> attachCursorSourceToPipelineForLocalRead(
         const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* pipeline) final {
-        // It is not meaningful to perform a "local read" on mongos.
+        // It is not meaningful to perform a "local read" on mongers.
         MONGO_UNREACHABLE;
     }
 
@@ -186,7 +186,7 @@ public:
 
     /**
      * The following methods only make sense for data-bearing nodes and should never be called on
-     * a mongos.
+     * a mongers.
      */
     BackupCursorState openBackupCursor(OperationContext* opCtx) final {
         MONGO_UNREACHABLE;
@@ -203,9 +203,9 @@ public:
     }
 
     /**
-     * Mongos does not have a plan cache, so this method should never be called on mongos. Upstream
+     * Mongos does not have a plan cache, so this method should never be called on mongers. Upstream
      * checks are responsible for generating an error if a user attempts to introspect the plan
-     * cache on mongos.
+     * cache on mongers.
      */
     std::vector<BSONObj> getMatchingPlanCacheEntryStats(OperationContext*,
                                                         const NamespaceString&,
@@ -241,9 +241,9 @@ protected:
     void _reportCurrentOpsForIdleSessions(OperationContext* opCtx,
                                           CurrentOpUserMode userMode,
                                           std::vector<BSONObj>* ops) const final {
-        // This implementation is a no-op, since mongoS does not maintain a SessionCatalog or
+        // This implementation is a no-op, since mongerS does not maintain a SessionCatalog or
         // hold stashed locks for idle sessions.
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -7,10 +7,10 @@
 package options
 
 import (
-	"github.com/mongodb/mongo-tools/legacy/connstring"
+	"github.com/mongerdb/monger-tools/legacy/connstring"
 	. "github.com/smartystreets/goconvey/convey"
 
-	"github.com/mongodb/mongo-tools/legacy/testtype"
+	"github.com/mongerdb/monger-tools/legacy/testtype"
 	"runtime"
 	"testing"
 	"time"
@@ -379,8 +379,8 @@ func TestParseAndSetOptions(t *testing.T) {
 			for _, testCase := range testCases {
 				t.Log("Test Case:", testCase.Name)
 
-				testCase.OptsIn.URI.ConnectionString = "mongodb://dummy"
-				testCase.OptsExpected.URI.ConnectionString = "mongodb://dummy"
+				testCase.OptsIn.URI.ConnectionString = "mongerdb://dummy"
+				testCase.OptsExpected.URI.ConnectionString = "mongerdb://dummy"
 
 				BuiltWithSSL = testCase.WithSSL
 				BuiltWithGSSAPI = testCase.WithGSSAPI

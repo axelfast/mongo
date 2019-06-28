@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,18 +29,18 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_change_stream_gen.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/document_source_single_document_transformation.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/resume_token.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_change_stream_gen.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/document_source_single_document_transformation.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/resume_token.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * The $changeStream stage is an alias for a cursor on oplog followed by a $match stage and a
- * transform stage on mongod.
+ * transform stage on mongerd.
  */
 class DocumentSourceChangeStream final {
 public:
@@ -145,7 +145,7 @@ public:
     static constexpr StringData kRenameCollectionOpType = "rename"_sd;
     static constexpr StringData kDropDatabaseOpType = "dropDatabase"_sd;
     static constexpr StringData kInvalidateOpType = "invalidate"_sd;
-    // Internal op type to signal mongos to open cursors on new shards.
+    // Internal op type to signal mongers to open cursors on new shards.
     static constexpr StringData kNewShardDetectedOpType = "kNewShardDetected"_sd;
 
     enum class ChangeStreamType { kSingleCollection, kSingleDatabase, kAllChangesForCluster };
@@ -231,4 +231,4 @@ private:
     DocumentSourceOplogMatch(BSONObj filter, const boost::intrusive_ptr<ExpressionContext>& expCtx);
 };
 
-}  // namespace mongo
+}  // namespace monger

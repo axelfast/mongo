@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/stdx/future.h"
-#include "mongo/unittest/integration_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/system_clock_source.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/stdx/future.h"
+#include "monger/unittest/integration_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/system_clock_source.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 // Obtain a pointer to the global system clock. Used to enforce timeouts in the parallel thread.
 auto* const clock = SystemClockSource::get();
@@ -98,7 +98,7 @@ TEST(CurrentOpExhaustCursorTest, CanSeeEachExhaustCursorPseudoGetMoreInCurrentOp
     const auto parallelWaitTimeoutMS = Milliseconds(5 * 60 * 1000);
 
     // We need to set failpoints around getMore which cause it to hang, so only test against a
-    // single server rather than a replica set or mongoS.
+    // single server rather than a replica set or mongerS.
     if (conn->isReplicaSetMember() || conn->isMongos()) {
         return;
     }
@@ -183,4 +183,4 @@ TEST(CurrentOpExhaustCursorTest, CanSeeEachExhaustCursorPseudoGetMoreInCurrentOp
         setWaitBeforeUnpinningOrDeletingCursorAfterGetMoreBatchFailpoint(conn.get(), false);
     }
 }
-}  // namespace mongo
+}  // namespace monger

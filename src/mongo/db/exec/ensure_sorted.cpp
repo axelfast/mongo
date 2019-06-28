@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/ensure_sorted.h"
+#include "monger/db/exec/ensure_sorted.h"
 
 #include <memory>
 
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/working_set_computed_data.h"
-#include "mongo/db/query/find_common.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/working_set_computed_data.h"
+#include "monger/db/query/find_common.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 
@@ -102,4 +102,4 @@ bool EnsureSortedStage::isInOrder(const BSONObj& lhsSortKey, const BSONObj& rhsS
     return lhsSortKey.woCompare(rhsSortKey, _pattern, /*considerFieldName*/ false) <= 0;
 }
 
-}  // namespace mongo
+}  // namespace monger

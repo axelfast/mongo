@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/db/s/active_move_primaries_registry.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/db/client.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/s/request_types/move_primary_gen.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/s/active_move_primaries_registry.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/db/client.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/s/request_types/move_primary_gen.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using unittest::assertGet;
@@ -109,4 +109,4 @@ TEST_F(MovePrimaryRegistration, SecondMovePrimaryWithSameArgumentsJoinsFirst) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,11 +36,11 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/optional.hpp>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/stdx/type_traits.h"
-#include "mongo/util/if_constexpr.h"
+#include "monger/base/static_assert.h"
+#include "monger/stdx/type_traits.h"
+#include "monger/util/if_constexpr.h"
 
-namespace mongo {
+namespace monger {
 
 namespace detail {
 
@@ -291,4 +291,4 @@ boost::optional<Output> representAs(const Decimal128& number) try {
     return {};
 }
 
-}  // namespace mongo
+}  // namespace monger

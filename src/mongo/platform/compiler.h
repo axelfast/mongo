@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,7 +30,7 @@
 #pragma once
 
 /**
- * Include "mongo/platform/compiler.h" to get compiler-targeted macro definitions and utilities.
+ * Include "monger/platform/compiler.h" to get compiler-targeted macro definitions and utilities.
  *
  * The following macros are provided in all compiler environments:
  *
@@ -162,9 +162,9 @@
 
 
 #if defined(_MSC_VER)
-#include "mongo/platform/compiler_msvc.h"
+#include "monger/platform/compiler_msvc.h"
 #elif defined(__GNUC__)
-#include "mongo/platform/compiler_gcc.h"
+#include "monger/platform/compiler_gcc.h"
 #else
 #error "Unsupported compiler family"
 #endif

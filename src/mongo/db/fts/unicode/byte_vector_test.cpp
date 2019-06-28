@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 #include <iterator>
 #include <numeric>
 
-#include "mongo/db/fts/unicode/byte_vector.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/fts/unicode/byte_vector.h"
+#include "monger/unittest/unittest.h"
 
 #ifdef MONGO_HAVE_FAST_BYTE_VECTOR
-namespace mongo {
+namespace monger {
 namespace unicode {
 
 TEST(ByteVector, LoadStoreUnaligned) {
@@ -176,7 +176,7 @@ TEST(ByteVector, BitAndAssign) {
 }
 
 }  // namespace unicode
-}  // namespace mongo
+}  // namespace monger
 #else
 // Our unittest framework gets angry if there are no tests. If we don't have ByteVector, give it a
 // dummy test to make it happy.

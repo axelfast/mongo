@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,18 +26,18 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/stdx/chrono.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/alarm.h"
-#include "mongo/util/alarm_runner_background_thread.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/log.h"
+#include "monger/stdx/chrono.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/alarm.h"
+#include "monger/util/alarm_runner_background_thread.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 TEST(AlarmScheduler, BasicSingleThread) {
     auto clockSource = std::make_unique<ClockSourceMock>();
@@ -165,4 +165,4 @@ TEST(AlarmRunner, SeveralSchedulers) {
     runner.shutdown();
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

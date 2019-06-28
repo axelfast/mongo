@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/change_stream_constants.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/db/pipeline/document_source_change_stream_gen.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/resume_token.h"
-#include "mongo/db/query/query_knobs_gen.h"
+#include "monger/db/pipeline/change_stream_constants.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source_change_stream_gen.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/resume_token.h"
+#include "monger/db/query/query_knobs_gen.h"
 
-namespace mongo {
+namespace monger {
 /**
  * This checks for resumability on a single shard in the sharded case. The rules are
  *
@@ -119,8 +119,8 @@ public:
     StageConstraints constraints(Pipeline::SplitState) const final {
         return {StreamType::kStreaming,
                 PositionRequirement::kNone,
-                // If this is parsed on mongos it should stay on mongos. If we're not in a sharded
-                // cluster then it's okay to run on mongod.
+                // If this is parsed on mongers it should stay on mongers. If we're not in a sharded
+                // cluster then it's okay to run on mongerd.
                 HostTypeRequirement::kLocalOnly,
                 DiskUseRequirement::kNoDiskUse,
                 FacetRequirement::kNotAllowed,
@@ -131,7 +131,7 @@ public:
 
     boost::optional<DistributedPlanLogic> distributedPlanLogic() final {
         DistributedPlanLogic logic;
-        // This stage must run on mongos to ensure it sees the resume token, which could have come
+        // This stage must run on mongers to ensure it sees the resume token, which could have come
         // from any shard.  We also must include a mergingPresorted $sort stage to communicate to
         // the AsyncResultsMerger that we need to merge the streams in a particular order.
         logic.mergingStage = this;
@@ -158,4 +158,4 @@ private:
     ResumeTokenData _tokenFromClient;
 };
 
-}  // namespace mongo
+}  // namespace monger

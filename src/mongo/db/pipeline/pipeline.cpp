@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/pipeline.h"
 
 #include <algorithm>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/accumulator.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_geo_near.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/document_source_merge.h"
-#include "mongo/db/pipeline/document_source_out.h"
-#include "mongo/db/pipeline/document_source_project.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/document_source_unwind.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/str.h"
+#include "monger/base/error_codes.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/accumulator.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_geo_near.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/document_source_merge.h"
+#include "monger/db/pipeline/document_source_out.h"
+#include "monger/db/pipeline/document_source_project.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/document_source_unwind.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Enabling the disablePipelineOptimization fail point will stop the aggregate command from
@@ -68,7 +68,7 @@ using std::ostringstream;
 using std::string;
 using std::vector;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 using ChangeStreamRequirement = StageConstraints::ChangeStreamRequirement;
 using HostTypeRequirement = StageConstraints::HostTypeRequirement;
@@ -250,9 +250,9 @@ void Pipeline::validateCommon() const {
         }
         ++i;
 
-        // Verify that we are not attempting to run a mongoS-only stage on mongoD.
+        // Verify that we are not attempting to run a mongerS-only stage on mongerD.
         uassert(40644,
-                str::stream() << stage->getSourceName() << " can only be run on mongoS",
+                str::stream() << stage->getSourceName() << " can only be run on mongerS",
                 !(constraints.hostRequirement == HostTypeRequirement::kMongoS && !pCtx->inMongos));
 
         if (pCtx->inMultiDocumentTransaction) {
@@ -319,7 +319,7 @@ bool Pipeline::aggHasWriteStage(const BSONObj& cmd) {
 
 void Pipeline::detachFromOperationContext() {
     pCtx->opCtx = nullptr;
-    pCtx->mongoProcessInterface->setOperationContext(nullptr);
+    pCtx->mongerProcessInterface->setOperationContext(nullptr);
 
     for (auto&& source : _sources) {
         source->detachFromOperationContext();
@@ -328,7 +328,7 @@ void Pipeline::detachFromOperationContext() {
 
 void Pipeline::reattachToOperationContext(OperationContext* opCtx) {
     pCtx->opCtx = opCtx;
-    pCtx->mongoProcessInterface->setOperationContext(opCtx);
+    pCtx->mongerProcessInterface->setOperationContext(opCtx);
 
     for (auto&& source : _sources) {
         source->reattachToOperationContext(opCtx);
@@ -405,23 +405,23 @@ bool Pipeline::requiredToRunOnMongos() const {
     invariant(_splitState != SplitState::kSplitForShards);
 
     for (auto&& stage : _sources) {
-        // If this pipeline is capable of splitting before the mongoS-only stage, then the pipeline
-        // as a whole is not required to run on mongoS.
+        // If this pipeline is capable of splitting before the mongerS-only stage, then the pipeline
+        // as a whole is not required to run on mongerS.
         if (_splitState == SplitState::kUnsplit && stage->distributedPlanLogic()) {
             return false;
         }
 
         auto hostRequirement = stage->constraints(_splitState).resolvedHostTypeRequirement(pCtx);
 
-        // If a mongoS-only stage occurs before a splittable stage, or if the pipeline is already
-        // split, this entire pipeline must run on mongoS.
+        // If a mongerS-only stage occurs before a splittable stage, or if the pipeline is already
+        // split, this entire pipeline must run on mongerS.
         if (hostRequirement == HostTypeRequirement::kMongoS) {
-            // Verify that the remainder of this pipeline can run on mongoS.
-            auto mongosRunStatus = _pipelineCanRunOnMongoS();
+            // Verify that the remainder of this pipeline can run on mongerS.
+            auto mongersRunStatus = _pipelineCanRunOnMongoS();
 
-            uassertStatusOKWithContext(mongosRunStatus,
+            uassertStatusOKWithContext(mongersRunStatus,
                                        str::stream() << stage->getSourceName()
-                                                     << " must run on mongoS, but cannot");
+                                                     << " must run on mongerS, but cannot");
 
             return true;
         }
@@ -622,7 +622,7 @@ Status Pipeline::_pipelineCanRunOnMongoS() const {
         const bool needsToBlock = (constraints.streamType == StreamType::kBlocking);
         const bool blockingIsPermitted = !internalQueryProhibitBlockingMergeOnMongoS.load();
 
-        // If nothing prevents this stage from running on mongoS, continue to the next stage.
+        // If nothing prevents this stage from running on mongerS, continue to the next stage.
         if (!needsShard && !needsDisk && (!needsToBlock || blockingIsPermitted)) {
             continue;
         }
@@ -634,7 +634,7 @@ Status Pipeline::_pipelineCanRunOnMongoS() const {
         if (needsShard) {
             ss << " must run on a shard";
         } else if (needsToBlock && !blockingIsPermitted) {
-            ss << " is a blocking stage; running these stages on mongoS is disabled";
+            ss << " is a blocking stage; running these stages on mongerS is disabled";
         } else if (mustWriteToDisk) {
             ss << " must write to disk";
         } else if (mayWriteTmpDataAndDiskUseIsAllowed) {
@@ -697,4 +697,4 @@ boost::intrusive_ptr<DocumentSource> Pipeline::popFrontWithNameAndCriteria(
     return popFront();
 }
 
-}  // namespace mongo
+}  // namespace monger

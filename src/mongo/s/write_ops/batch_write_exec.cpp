@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/write_ops/batch_write_exec.h"
+#include "monger/s/write_ops/batch_write_exec.h"
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/owned_pointer_map.h"
-#include "mongo/base/status.h"
-#include "mongo/base/transaction_error.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/multi_statement_transaction_requests_sender.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/s/write_ops/batch_write_op.h"
-#include "mongo/s/write_ops/write_error_detail.h"
-#include "mongo/util/log.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/owned_pointer_map.h"
+#include "monger/base/status.h"
+#include "monger/base/transaction_error.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/multi_statement_transaction_requests_sender.h"
+#include "monger/s/transaction_router.h"
+#include "monger/s/write_ops/batch_write_op.h"
+#include "monger/s/write_ops/write_error_detail.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const ReadPreferenceSetting kPrimaryOnlyReadPreference(ReadPreference::PrimaryOnly);
@@ -124,7 +124,7 @@ void BatchWriteExec::executeBatch(OperationContext* opCtx,
         // Targeting errors can be caused by remote metadata changing (the collection could have
         // been dropped and recreated, for example with a new shard key).  If a remote metadata
         // change occurs *before* a client sends us a batch, we need to make sure that we don't
-        // error out just because we're staler than the client - otherwise mongos will be have
+        // error out just because we're staler than the client - otherwise mongers will be have
         // unpredictable behavior.
         //
         // (If a metadata change happens *during* or *after* a client sends us a batch, however,

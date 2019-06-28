@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/repl/reporter.h"
-#include "mongo/db/repl/update_position_args.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/unittest/task_executor_proxy.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/repl/reporter.h"
+#include "monger/db/repl/update_position_args.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/unittest/task_executor_proxy.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 using executor::NetworkInterfaceMock;
 using executor::RemoteCommandRequest;
 using executor::RemoteCommandResponse;

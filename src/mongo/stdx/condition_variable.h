@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,11 +33,11 @@
 #include <condition_variable>
 #include <list>
 
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/with_lock.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/with_lock.h"
 
-namespace mongo {
+namespace monger {
 
 namespace stdx {
 class condition_variable;
@@ -130,7 +130,7 @@ public:
     using std::condition_variable::native_handle;  // NOLINT
 
 private:
-    friend class ::mongo::Waitable;
+    friend class ::monger::Waitable;
 
     /**
      * Runs the callback with the Notifyable registered on the condvar.  This ensures that for the
@@ -213,4 +213,4 @@ private:
 };
 
 }  // namespace stdx
-}  // namespace mongo
+}  // namespace monger

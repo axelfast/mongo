@@ -4,21 +4,21 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
 	"fmt"
 	"strconv"
 	"strings"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/progress"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/progress"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 // oplogMaxCommandSize sets the maximum size for multiple buffered ops in the
@@ -115,7 +115,7 @@ func (restore *MongoRestore) RestoreOplog() error {
 
 // ApplyOps is a wrapper for the applyOps database command, we pass in
 // a session to avoid opening a new connection for a few inserts at a time.
-func (restore *MongoRestore) ApplyOps(session *mongo.Client, entries []interface{}) error {
+func (restore *MongoRestore) ApplyOps(session *monger.Client, entries []interface{}) error {
 	singleRes := session.Database("admin").RunCommand(nil, bson.D{{"applyOps", entries}})
 	if err := singleRes.Err(); err != nil {
 		return fmt.Errorf("applyOps: %v", err)
@@ -130,7 +130,7 @@ func (restore *MongoRestore) ApplyOps(session *mongo.Client, entries []interface
 }
 
 // TimestampBeforeLimit returns true if the given timestamp is allowed to be
-// applied to mongorestore's target database.
+// applied to mongerrestore's target database.
 func (restore *MongoRestore) TimestampBeforeLimit(ts primitive.Timestamp) bool {
 	if restore.oplogLimit.T == 0 && restore.oplogLimit.I == 0 {
 		// always valid if there is no --oplogLimit set

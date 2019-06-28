@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/s/async_requests_sender.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/query/cluster_aggregation_planner.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/s/async_requests_sender.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/query/cluster_aggregation_planner.h"
 
-namespace mongo {
+namespace monger {
 class CachedCollectionRoutingInfo;
 
 namespace sharded_agg_helpers {
@@ -135,4 +135,4 @@ std::unique_ptr<Pipeline, PipelineDeleter> targetShardsAndAddMergeCursors(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* ownedPipeline);
 
 }  // namespace sharded_agg_helpers
-}  // namespace mongo
+}  // namespace monger

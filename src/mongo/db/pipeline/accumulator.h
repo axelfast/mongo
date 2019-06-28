@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,23 +29,23 @@
 
 #pragma once
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <boost/optional.hpp>
 #include <functional>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/pipeline/value_comparator.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/summation.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/pipeline/value_comparator.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/summation.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This enum indicates which documents an accumulator needs to see in order to compute its output.

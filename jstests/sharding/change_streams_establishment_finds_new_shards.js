@@ -17,29 +17,29 @@
         setParameter: {periodicNoopIntervalSecs: 1, writePeriodicNoops: true}
     };
     const st =
-        new ShardingTest({shards: 1, mongos: 1, rs: {nodes: 1}, other: {rsOptions: rsNodeOptions}});
+        new ShardingTest({shards: 1, mongers: 1, rs: {nodes: 1}, other: {rsOptions: rsNodeOptions}});
 
     jsTestLog("Starting new shard (but not adding to shard set yet)");
     const newShard = new ReplSetTest({name: "newShard", nodes: 1, nodeOptions: rsNodeOptions});
     newShard.startSet({shardsvr: ''});
     newShard.initiate();
 
-    const mongos = st.s;
-    const mongosColl = mongos.getCollection('test.foo');
-    const mongosDB = mongos.getDB("test");
+    const mongers = st.s;
+    const mongersColl = mongers.getCollection('test.foo');
+    const mongersDB = mongers.getDB("test");
 
-    // Enable sharding to inform mongos of the database, allowing us to open a cursor.
-    assert.commandWorked(mongos.adminCommand({enableSharding: mongosDB.getName()}));
+    // Enable sharding to inform mongers of the database, allowing us to open a cursor.
+    assert.commandWorked(mongers.adminCommand({enableSharding: mongersDB.getName()}));
 
     // Shard the collection.
     assert.commandWorked(
-        mongos.adminCommand({shardCollection: mongosColl.getFullName(), key: {_id: 1}}));
+        mongers.adminCommand({shardCollection: mongersColl.getFullName(), key: {_id: 1}}));
 
     // Split the collection into two chunks: [MinKey, 10) and [10, MaxKey].
-    assert.commandWorked(mongos.adminCommand({split: mongosColl.getFullName(), middle: {_id: 10}}));
+    assert.commandWorked(mongers.adminCommand({split: mongersColl.getFullName(), middle: {_id: 10}}));
 
     // Enable the failpoint.
-    assert.commandWorked(mongos.adminCommand({
+    assert.commandWorked(mongers.adminCommand({
         configureFailPoint: "clusterAggregateHangBeforeEstablishingShardCursors",
         mode: "alwaysOn"
     }));
@@ -52,7 +52,7 @@
         assert.commandWorked(
             db.adminCommand({addShard: "${newShard.getURL()}", name: "${newShard.name}"}));
         // Migrate the [10, MaxKey] chunk to "newShard".
-        assert.commandWorked(db.adminCommand({moveChunk: "${mongosColl.getFullName()}",
+        assert.commandWorked(db.adminCommand({moveChunk: "${mongersColl.getFullName()}",
                                               find: {_id: 20},
                                               to: "${newShard.name}",
                                               _waitForDelete: true}));
@@ -60,18 +60,18 @@
             db.adminCommand(
                 {configureFailPoint: "clusterAggregateHangBeforeEstablishingShardCursors",
                  mode: "off"}));`,
-                                             mongos.port);
+                                             mongers.port);
 
     jsTestLog("Opening $changeStream cursor");
-    const changeStream = mongosColl.aggregate([{$changeStream: {}}]);
+    const changeStream = mongersColl.aggregate([{$changeStream: {}}]);
     assert(!changeStream.hasNext(), "Do not expect any results yet");
 
     // Clean up the parallel shell.
     awaitNewShard();
 
     // Insert two documents in different shards.
-    assert.writeOK(mongosColl.insert({_id: 0}, {writeConcern: {w: "majority"}}));
-    assert.writeOK(mongosColl.insert({_id: 20}, {writeConcern: {w: "majority"}}));
+    assert.writeOK(mongersColl.insert({_id: 0}, {writeConcern: {w: "majority"}}));
+    assert.writeOK(mongersColl.insert({_id: 20}, {writeConcern: {w: "majority"}}));
 
     // Expect to see them both.
     for (let id of[0, 20]) {

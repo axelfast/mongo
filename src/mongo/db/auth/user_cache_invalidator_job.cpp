@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/user_cache_invalidator_job.h"
+#include "monger/db/auth/user_cache_invalidator_job.h"
 
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/client/connpool.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/user_cache_invalidator_job_parameters_gen.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/platform/compiler.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/grid.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/background.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/client/connpool.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/user_cache_invalidator_job_parameters_gen.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/platform/compiler.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/grid.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/background.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/duration.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ThreadSleepInterval {
@@ -151,7 +151,7 @@ void UserCacheInvalidator::initialize(OperationContext* opCtx) {
     if (currentGeneration.getStatus().code() == ErrorCodes::CommandNotFound) {
         warning() << "_getUserCacheGeneration command not found while fetching initial user "
                      "cache generation from the config server(s).  This most likely means you are "
-                     "running an outdated version of mongod on the config servers";
+                     "running an outdated version of mongerd on the config servers";
     } else {
         warning() << "An error occurred while fetching initial user cache generation from "
                      "config servers: "
@@ -176,7 +176,7 @@ void UserCacheInvalidator::run() {
         if (!currentGeneration.isOK()) {
             if (currentGeneration.getStatus().code() == ErrorCodes::CommandNotFound) {
                 warning() << "_getUserCacheGeneration command not found on config server(s), "
-                             "this most likely means you are running an outdated version of mongod "
+                             "this most likely means you are running an outdated version of mongerd "
                              "on the config servers";
             } else {
                 warning() << "An error occurred while fetching current user cache generation "
@@ -210,4 +210,4 @@ std::string UserCacheInvalidator::name() const {
     return "UserCacheInvalidatorThread";
 }
 
-}  // namespace mongo
+}  // namespace monger

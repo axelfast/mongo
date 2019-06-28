@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,61 +27,61 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/sharding_mongod_test_fixture.h"
+#include "monger/s/sharding_mongerd_test_fixture.h"
 
 #include <algorithm>
 #include <memory>
 #include <vector>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/status_with.h"
-#include "mongo/client/remote_command_targeter_factory_mock.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_consistency_markers_mock.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/replication_recovery_mock.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/s/config_server_op_observer.h"
-#include "mongo/db/s/op_observer_sharding_impl.h"
-#include "mongo/db/s/shard_server_op_observer.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/s/balancer_configuration.h"
-#include "mongo/s/catalog/dist_lock_catalog.h"
-#include "mongo/s/catalog/dist_lock_manager.h"
-#include "mongo/s/catalog/sharding_catalog_client.h"
-#include "mongo/s/catalog/type_changelog.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/catalog_cache_loader.h"
-#include "mongo/s/client/shard_factory.h"
-#include "mongo/s/client/shard_local.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/client/shard_remote.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
-#include "mongo/s/request_types/set_shard_version_request.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/tick_source_mock.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/status_with.h"
+#include "monger/client/remote_command_targeter_factory_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_consistency_markers_mock.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/replication_recovery_mock.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/s/config_server_op_observer.h"
+#include "monger/db/s/op_observer_sharding_impl.h"
+#include "monger/db/s/shard_server_op_observer.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/s/balancer_configuration.h"
+#include "monger/s/catalog/dist_lock_catalog.h"
+#include "monger/s/catalog/dist_lock_manager.h"
+#include "monger/s/catalog/sharding_catalog_client.h"
+#include "monger/s/catalog/type_changelog.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/catalog_cache_loader.h"
+#include "monger/s/client/shard_factory.h"
+#include "monger/s/client/shard_local.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/client/shard_remote.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/cluster_cursor_manager.h"
+#include "monger/s/request_types/set_shard_version_request.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/tick_source_mock.h"
 
-namespace mongo {
+namespace monger {
 
 using executor::NetworkInterfaceMock;
 using executor::NetworkTestEnv;
@@ -361,4 +361,4 @@ RemoteCommandTargeterFactoryMock* ShardingMongodTestFixture::targeterFactory() c
     return _targeterFactory;
 }
 
-}  // namespace mongo
+}  // namespace monger

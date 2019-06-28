@@ -22,5 +22,5 @@ phases:
           setName: rs
           minWireVersion: 0
           maxWireVersion: 6
-uri: 'mongodb://localhost:27017/?replicaSet=rs'
+uri: 'mongerdb://localhost:27017/?replicaSet=rs'
 

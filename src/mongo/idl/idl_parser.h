@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/namespace_string.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/namespace_string.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * IDLParserErrorContext manages the current parser context for parsing BSON documents.
@@ -239,4 +239,4 @@ std::vector<std::string> transformVector(const std::vector<StringData>& input);
 std::vector<ConstDataRange> transformVector(const std::vector<std::vector<std::uint8_t>>& input);
 std::vector<std::vector<std::uint8_t>> transformVector(const std::vector<ConstDataRange>& input);
 
-}  // namespace mongo
+}  // namespace monger

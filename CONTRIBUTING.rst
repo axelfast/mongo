@@ -6,4 +6,4 @@ give to help make MongoDB better.
 
 For more information about how to contribute, please read `the MongoDB Wiki on GitHub`_.
 
-.. _the MongoDB Wiki on GitHub: https://github.com/mongodb/mongo/wiki
+.. _the MongoDB Wiki on GitHub: https://github.com/mongerdb/monger/wiki

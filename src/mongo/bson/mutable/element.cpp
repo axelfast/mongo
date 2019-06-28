@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/mutable/element.h"
+#include "monger/bson/mutable/element.h"
 
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
 
-namespace mongo {
+namespace monger {
 namespace mutablebson {
 
 // Many of the methods of Element are actually implemented in document.cpp, since they need
@@ -80,7 +80,7 @@ Status Element::appendArray(StringData fieldName, const BSONObj& value) {
 
 Status Element::appendBinary(StringData fieldName,
                              uint32_t len,
-                             mongo::BinDataType binType,
+                             monger::BinDataType binType,
                              const void* data) {
     return pushBack(getDocument().makeElementBinary(fieldName, len, binType, data));
 }
@@ -167,9 +167,9 @@ std::string Element::toString() const {
     const BSONType type = getType();
 
     // The only types that sometimes don't have a value are Object and Array nodes.
-    dassert((type == mongo::Object) || (type == mongo::Array));
+    dassert((type == monger::Object) || (type == monger::Array));
 
-    if (type == mongo::Object) {
+    if (type == monger::Object) {
         BSONObjBuilder builder;
         writeTo(&builder);
         BSONObj obj = builder.obj();
@@ -186,4 +186,4 @@ std::string Element::toString() const {
 }
 
 }  // namespace mutablebson
-}  // namespace mongo
+}  // namespace monger

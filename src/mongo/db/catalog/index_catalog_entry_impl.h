@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,18 +32,18 @@
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/bson/ordering.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/index/multikey_paths.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/bson/ordering.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/index/multikey_paths.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/record_id.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 class CollectionCatalogEntry;
@@ -243,4 +243,4 @@ private:
     // The earliest snapshot that is allowed to read this index.
     boost::optional<Timestamp> _minVisibleSnapshot;
 };
-}  // namespace mongo
+}  // namespace monger

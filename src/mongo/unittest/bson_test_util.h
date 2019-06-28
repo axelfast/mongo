@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/unittest/unittest.h"
 
 /**
  * BSON comparison utility macro. Do not use directly.
  */
 #define ASSERT_BSON_COMPARISON(NAME, a, b, astr, bstr) \
-    ::mongo::unittest::assertComparison_##NAME(__FILE__, __LINE__, astr, bstr, a, b)
+    ::monger::unittest::assertComparison_##NAME(__FILE__, __LINE__, astr, bstr, a, b)
 
 /**
  * Use to compare two instances of type BSONObj under the default comparator in unit tests.
@@ -59,7 +59,7 @@
 #define ASSERT_BSONELT_GTE(a, b) ASSERT_BSON_COMPARISON(BSONElementGTE, a, b, #a, #b)
 #define ASSERT_BSONELT_NE(a, b) ASSERT_BSON_COMPARISON(BSONElementNE, a, b, #a, #b)
 
-namespace mongo {
+namespace monger {
 namespace unittest {
 
 #define DECLARE_BSON_CMP_FUNC(BSONTYPE, NAME)                          \
@@ -86,4 +86,4 @@ DECLARE_BSON_CMP_FUNC(BSONElement, NE);
 #undef DECLARE_BSON_CMP_FUNC
 
 }  // namespace unittest
-}  // namespace mongo
+}  // namespace monger

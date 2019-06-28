@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 #include <type_traits>
 #include <utility>
 
-#include "mongo/stdx/type_traits.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/lru_cache.h"
+#include "monger/stdx/type_traits.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/lru_cache.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 
@@ -144,7 +144,7 @@ const std::array<int, 7> kTestSizes{1, 2, 3, 4, 5, 10, 1000};
 using SizedTest = std::function<void(int)>;
 void runWithDifferentSizes(SizedTest test) {
     for (auto size : kTestSizes) {
-        mongo::unittest::log() << "\t\tTesting cache size of " << size;
+        monger::unittest::log() << "\t\tTesting cache size of " << size;
         test(size);
     }
 }

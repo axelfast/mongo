@@ -10,9 +10,9 @@
 
     // TODO (SERVER-38673): Remove this once BACKPORT-3428, BACKPORT-3429 are completed.
     if (!jsTestOptions().enableMajorityReadConcern &&
-        jsTestOptions().mongosBinVersion === 'last-stable') {
+        jsTestOptions().mongersBinVersion === 'last-stable') {
         jsTestLog(
-            "Skipping test since 'last-stable' mongos doesn't support speculative majority update lookup queries.");
+            "Skipping test since 'last-stable' mongers doesn't support speculative majority update lookup queries.");
         return;
     }
 
@@ -29,26 +29,26 @@
         rs: {nodes: 1, setParameter: {periodicNoopIntervalSecs: 1, writePeriodicNoops: true}}
     });
 
-    const mongosDB = st.s0.getDB(jsTestName());
-    const mongosColl = mongosDB[jsTestName()];
+    const mongersDB = st.s0.getDB(jsTestName());
+    const mongersColl = mongersDB[jsTestName()];
 
     // Enable sharding, shard on _id, and insert a test document which will be updated later.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
     assert.commandWorked(
-        mongosDB.adminCommand({shardCollection: mongosColl.getFullName(), key: {_id: 1}}));
-    assert.writeOK(mongosColl.insert({_id: 1}));
+        mongersDB.adminCommand({shardCollection: mongersColl.getFullName(), key: {_id: 1}}));
+    assert.writeOK(mongersColl.insert({_id: 1}));
 
-    // Verify that the pipeline splits and merges on mongoS despite only targeting a single shard.
+    // Verify that the pipeline splits and merges on mongerS despite only targeting a single shard.
     const explainPlan = assert.commandWorked(
-        mongosColl.explain().aggregate([{$changeStream: {fullDocument: "updateLookup"}}]));
+        mongersColl.explain().aggregate([{$changeStream: {fullDocument: "updateLookup"}}]));
     assert.neq(explainPlan.splitPipeline, null);
-    assert.eq(explainPlan.mergeType, "mongos");
+    assert.eq(explainPlan.mergeType, "mongers");
 
     // Open a $changeStream on the collection with 'updateLookup' and update the test doc.
-    const stream = mongosColl.watch([], {fullDocument: "updateLookup"});
-    const wholeDbStream = mongosDB.watch([], {fullDocument: "updateLookup"});
+    const stream = mongersColl.watch([], {fullDocument: "updateLookup"});
+    const wholeDbStream = mongersDB.watch([], {fullDocument: "updateLookup"});
 
-    mongosColl.update({_id: 1}, {$set: {updated: true}});
+    mongersColl.update({_id: 1}, {$set: {updated: true}});
 
     // Verify that the document is successfully retrieved from the single-collection and whole-db
     // change streams.

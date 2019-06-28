@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,15 +31,15 @@
 
 #include <vector>
 
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/db/logical_session_cache.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_list_sessions_gen.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/db/logical_session_cache.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_list_sessions_gen.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
 
-namespace mongo {
+namespace monger {
 
 ListSessionsSpec listSessionsParseSpec(StringData stageName, const BSONElement& spec);
 PrivilegeVector listSessionsRequiredPrivileges(const ListSessionsSpec& spec);
@@ -133,4 +133,4 @@ private:
     std::vector<LogicalSessionId> _ids;
 };
 
-}  // namespace mongo
+}  // namespace monger

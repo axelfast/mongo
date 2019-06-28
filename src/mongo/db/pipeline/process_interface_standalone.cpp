@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/process_interface_standalone.h"
+#include "monger/db/pipeline/process_interface_standalone.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/pipeline/document_source_cursor.h"
-#include "mongo/db/pipeline/lite_parsed_pipeline.h"
-#include "mongo/db/pipeline/pipeline_d.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/session_catalog.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/stats/fill_locker_info.h"
-#include "mongo/db/stats/storage_stats.h"
-#include "mongo/db/storage/backup_cursor_hooks.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/query/document_source_merge_cursors.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/curop.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/pipeline/document_source_cursor.h"
+#include "monger/db/pipeline/lite_parsed_pipeline.h"
+#include "monger/db/pipeline/pipeline_d.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/session_catalog.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/stats/fill_locker_info.h"
+#include "monger/db/stats/storage_stats.h"
+#include "monger/db/storage/backup_cursor_hooks.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/query/document_source_merge_cursors.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::shared_ptr;
@@ -410,11 +410,11 @@ boost::optional<Document> MongoInterfaceStandalone::lookupSingleDocument(
     const Document& documentKey,
     boost::optional<BSONObj> readConcern,
     bool allowSpeculativeMajorityRead) {
-    invariant(!readConcern);  // We don't currently support a read concern on mongod - it's only
-                              // expected to be necessary on mongos.
+    invariant(!readConcern);  // We don't currently support a read concern on mongerd - it's only
+                              // expected to be necessary on mongers.
     invariant(!allowSpeculativeMajorityRead);  // We don't expect 'allowSpeculativeMajorityRead' on
-                                               // mongod - it's only expected to be necessary on
-                                               // mongos.
+                                               // mongerd - it's only expected to be necessary on
+                                               // mongers.
 
     std::unique_ptr<Pipeline, PipelineDeleter> pipeline;
     try {
@@ -628,18 +628,18 @@ MongoInterfaceStandalone::ensureFieldsUniqueOrResolveDocumentKey(
     const NamespaceString& outputNs) const {
     if (targetCollectionVersion) {
         uassert(51123, "Unexpected target chunk version specified", expCtx->fromMongos);
-        // If mongos has sent us a target shard version, we need to be sure we are prepared to
-        // act as a router which is at least as recent as that mongos.
+        // If mongers has sent us a target shard version, we need to be sure we are prepared to
+        // act as a router which is at least as recent as that mongers.
         checkRoutingInfoEpochOrThrow(expCtx, outputNs, *targetCollectionVersion);
     }
 
     if (!fields) {
-        uassert(51124, "Expected fields to be provided from mongos", !expCtx->fromMongos);
+        uassert(51124, "Expected fields to be provided from mongers", !expCtx->fromMongos);
         return {std::set<FieldPath>{"_id"}, targetCollectionVersion};
     }
 
     // Make sure the 'fields' array has a supporting index. Skip this check if the command is sent
-    // from mongos since the 'fields' check would've happened already.
+    // from mongers since the 'fields' check would've happened already.
     auto fieldPaths = _convertToFieldPaths(*fields);
     if (!expCtx->fromMongos) {
         uassert(51183,
@@ -649,4 +649,4 @@ MongoInterfaceStandalone::ensureFieldsUniqueOrResolveDocumentKey(
     return {fieldPaths, targetCollectionVersion};
 }
 
-}  // namespace mongo
+}  // namespace monger

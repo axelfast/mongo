@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/stats/read_concern_stats_gen.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/service_context.h"
+#include "monger/db/stats/read_concern_stats_gen.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Container for server-wide statistics on readConcern levels used by operations.
@@ -68,4 +68,4 @@ private:
     AtomicWord<unsigned long long> _noLevelCount{0};
 };
 
-}  // namespace mongo
+}  // namespace monger

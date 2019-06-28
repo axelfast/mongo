@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/legacy_reply.h"
+#include "monger/rpc/legacy_reply.h"
 
 #include <tuple>
 #include <utility>
 
-#include "mongo/bson/bson_validate.h"
-#include "mongo/rpc/legacy_reply_builder.h"
-#include "mongo/rpc/metadata.h"
-#include "mongo/rpc/object_check.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/rpc/legacy_reply_builder.h"
+#include "monger/rpc/metadata.h"
+#include "monger/rpc/object_check.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 LegacyReply::LegacyReply(const Message* message) {
@@ -112,4 +112,4 @@ Protocol LegacyReply::getProtocol() const {
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

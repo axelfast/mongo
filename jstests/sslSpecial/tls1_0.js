@@ -47,8 +47,8 @@
             serverOpts.sslDisabledProtocols = serverDP;
         }
         clearRawMongoProgramOutput();
-        const mongod = MongoRunner.runMongod(serverOpts);
-        if (!mongod) {
+        const mongerd = MongoRunner.runMongod(serverOpts);
+        if (!mongerd) {
             assert(!shouldSucceed);
             return;
         }
@@ -57,10 +57,10 @@
         if (clientDP !== null) {
             clientOpts = ['--sslDisabledProtocols', clientDP];
         }
-        const didSucceed = (0 == runMongoProgram('mongo',
+        const didSucceed = (0 == runMongoProgram('monger',
                                                  '--ssl',
                                                  '--port',
-                                                 mongod.port,
+                                                 mongerd.port,
                                                  '--sslPEMKeyFile',
                                                  'jstests/libs/client.pem',
                                                  '--sslCAFile',
@@ -69,7 +69,7 @@
                                                  '--eval',
                                                  ';'));
 
-        MongoRunner.stopMongod(mongod);
+        MongoRunner.stopMongod(mongerd);
 
         // Exit code based success/failure.
         assert.eq(

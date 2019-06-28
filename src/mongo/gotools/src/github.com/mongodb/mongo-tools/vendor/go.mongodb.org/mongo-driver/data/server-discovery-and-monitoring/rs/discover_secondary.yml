@@ -1,6 +1,6 @@
 description: "Replica set discovery from secondary"
 
-uri: "mongodb://b/?replicaSet=rs"
+uri: "mongerdb://b/?replicaSet=rs"
 
 phases: [
 

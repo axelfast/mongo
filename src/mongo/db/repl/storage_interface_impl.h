@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,15 +30,15 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/storage_interface.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/storage_interface.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 class StorageInterfaceImpl : public StorageInterface {
@@ -197,4 +197,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

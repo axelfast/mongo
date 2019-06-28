@@ -37,8 +37,8 @@
             [{x: 1}, {x: 2}, {x: 3}, {x: 4}, {x: 5}, {x: 6}], {writeConcern: {w: "majority"}}));
 
         jsTestLog("Unprepared Abort Setup");
-        const mongo1 = new Mongo(primary.host);
-        const session1 = mongo1.startSession();
+        const monger1 = new Mongo(primary.host);
+        const session1 = monger1.startSession();
         const sessionDB1 = session1.getDatabase(dbName);
         session1.startTransaction({
             writeConcern: {w: "majority", wtimeout: successTimeoutMS},
@@ -48,8 +48,8 @@
         printjson(assert.commandWorked(sessionDB1.runCommand(fruitlessUpdate1)));
 
         jsTestLog("Prepared Abort Setup");
-        const mongo2 = new Mongo(primary.host);
-        const session2 = mongo2.startSession();
+        const monger2 = new Mongo(primary.host);
+        const session2 = monger2.startSession();
         const sessionDB2 = session2.getDatabase(dbName);
         session2.startTransaction({
             writeConcern: {w: "majority", wtimeout: failTimeoutMS},
@@ -60,8 +60,8 @@
         PrepareHelpers.prepareTransaction(session2);
 
         jsTestLog("Prepare Setup");
-        const mongo3 = new Mongo(primary.host);
-        const session3 = mongo3.startSession();
+        const monger3 = new Mongo(primary.host);
+        const session3 = monger3.startSession();
         const sessionDB3 = session3.getDatabase(dbName);
         session3.startTransaction({
             writeConcern: {w: "majority", wtimeout: failTimeoutMS},
@@ -71,8 +71,8 @@
         printjson(assert.commandWorked(sessionDB3.runCommand(fruitlessUpdate3)));
 
         jsTestLog("Unprepared Commit Setup");
-        const mongo4 = new Mongo(primary.host);
-        const session4 = mongo4.startSession();
+        const monger4 = new Mongo(primary.host);
+        const session4 = monger4.startSession();
         const sessionDB4 = session4.getDatabase(dbName);
         session4.startTransaction({
             writeConcern: {w: "majority", wtimeout: failTimeoutMS},
@@ -82,8 +82,8 @@
         printjson(assert.commandWorked(sessionDB4.runCommand(fruitlessUpdate4)));
 
         jsTestLog("Prepared Commit Setup");
-        const mongo5 = new Mongo(primary.host);
-        const session5 = mongo5.startSession();
+        const monger5 = new Mongo(primary.host);
+        const session5 = monger5.startSession();
         const sessionDB5 = session5.getDatabase(dbName);
         session5.startTransaction({
             writeConcern: {w: "majority", wtimeout: failTimeoutMS},

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,10 +33,10 @@
 #include <tuple>
 #include <utility>
 
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/assert_util.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 using DoubleDouble = std::pair<double, double>;
 
@@ -152,4 +152,4 @@ private:
     // using compensated addition.
     double _special = 0.0;
 };
-}  // namespace mongo
+}  // namespace monger

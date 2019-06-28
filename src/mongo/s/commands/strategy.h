@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <atomic>
 
-#include "mongo/client/connection_string.h"
-#include "mongo/db/query/explain_options.h"
-#include "mongo/s/client/shard.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/query/explain_options.h"
+#include "monger/s/client/shard.h"
 
-namespace mongo {
+namespace monger {
 
 class DbMessage;
 struct DbResponse;
@@ -88,7 +88,7 @@ public:
      * Helper to run an explain of a find operation on the shards. Fills 'out' with the result of
      * the of the explain command on success. On failure, throws and does not modify 'out'.
      *
-     * Used both if mongos receives an explain command and if it receives an OP_QUERY find with the
+     * Used both if mongers receives an explain command and if it receives an OP_QUERY find with the
      * $explain modifier.
      */
     static void explainFind(OperationContext* opCtx,
@@ -128,4 +128,4 @@ public:
                           std::vector<CommandResult>* results);
 };
 
-}  // namespace mongo
+}  // namespace monger

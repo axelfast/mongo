@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <memory>
 #include <queue>
 
-#include "mongo/db/exec/requires_all_indices_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/query_planner_params.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/db/record_id.h"
+#include "monger/db/exec/requires_all_indices_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/query_planner_params.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/db/record_id.h"
 
-namespace mongo {
+namespace monger {
 
 class PlanYieldPolicy;
 
@@ -140,4 +140,4 @@ private:
     CachedPlanStats _specificStats;
 };
 
-}  // namespace mongo
+}  // namespace monger

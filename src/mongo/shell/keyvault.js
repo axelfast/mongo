@@ -1,4 +1,4 @@
-//  Class that allows the mongo shell to talk to the mongodb KeyVault.
+//  Class that allows the monger shell to talk to the mongerdb KeyVault.
 //  Loaded only into the enterprise module.
 
 Mongo.prototype.getKeyVault = function() {
@@ -6,9 +6,9 @@ Mongo.prototype.getKeyVault = function() {
 };
 
 class KeyVault {
-    constructor(mongo) {
-        this.mongo = mongo;
-        var collection = mongo.getDataKeyCollection();
+    constructor(monger) {
+        this.monger = monger;
+        var collection = monger.getDataKeyCollection();
         this.keyColl = collection;
         this.keyColl.createIndex(
             {keyAltNames: 1},
@@ -24,7 +24,7 @@ class KeyVault {
             return "TypeError: customer master key must be of String type.";
         }
 
-        var masterKeyAndMaterial = this.mongo.generateDataKey(kmsProvider, customerMasterKey);
+        var masterKeyAndMaterial = this.monger.generateDataKey(kmsProvider, customerMasterKey);
         var masterKey = masterKeyAndMaterial.masterKey;
 
         var current = ISODate();
@@ -106,16 +106,16 @@ class KeyVault {
 }
 
 class ClientEncryption {
-    constructor(mongo) {
-        this.mongo = mongo;
+    constructor(monger) {
+        this.monger = monger;
     }
 
     encrypt() {
-        return this.mongo.encrypt.apply(this.mongo, arguments);
+        return this.monger.encrypt.apply(this.monger, arguments);
     }
 
     decrypt() {
-        return this.mongo.decrypt.apply(this.mongo, arguments);
+        return this.monger.decrypt.apply(this.monger, arguments);
     }
 }
 

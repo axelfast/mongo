@@ -13,36 +13,36 @@ load('jstests/libs/sessions_collection.js');
     var configSvr = st.configRS.getPrimary();
     var configAdmin = configSvr.getDB("admin");
 
-    var mongos = st.s;
-    var mongosAdmin = mongos.getDB("admin");
-    var mongosConfig = mongos.getDB("config");
+    var mongers = st.s;
+    var mongersAdmin = mongers.getDB("admin");
+    var mongersConfig = mongers.getDB("config");
 
     // Test that we can use sessions on the config server before we add any shards.
     {
         validateSessionsCollection(configSvr, false, false);
-        validateSessionsCollection(mongos, false, false);
+        validateSessionsCollection(mongers, false, false);
 
         assert.commandWorked(configAdmin.runCommand({startSession: 1}));
 
         validateSessionsCollection(configSvr, false, false);
-        validateSessionsCollection(mongos, false, false);
+        validateSessionsCollection(mongers, false, false);
     }
 
-    // Test that we can use sessions on a mongos before we add any shards.
+    // Test that we can use sessions on a mongers before we add any shards.
     {
         validateSessionsCollection(configSvr, false, false);
-        validateSessionsCollection(mongos, false, false);
+        validateSessionsCollection(mongers, false, false);
 
-        assert.commandWorked(mongosAdmin.runCommand({startSession: 1}));
+        assert.commandWorked(mongersAdmin.runCommand({startSession: 1}));
 
         validateSessionsCollection(configSvr, false, false);
-        validateSessionsCollection(mongos, false, false);
+        validateSessionsCollection(mongers, false, false);
     }
 
     // Test that the config server does not create the sessions collection
     // if there are not any shards.
     {
-        assert.eq(mongosConfig.shards.count(), 0);
+        assert.eq(mongersConfig.shards.count(), 0);
 
         assert.commandWorked(configAdmin.runCommand({refreshLogicalSessionCacheNow: 1}));
 
@@ -64,8 +64,8 @@ load('jstests/libs/sessions_collection.js');
         shardConfig.system.sessions.insert({"hey": "you"});
         validateSessionsCollection(shard, true, false);
 
-        assert.commandWorked(mongosAdmin.runCommand({addShard: rs.getURL()}));
-        assert.eq(mongosConfig.shards.count(), 1);
+        assert.commandWorked(mongersAdmin.runCommand({addShard: rs.getURL()}));
+        assert.eq(mongersConfig.shards.count(), 1);
         validateSessionsCollection(shard, false, false);
     }
 
@@ -81,18 +81,18 @@ load('jstests/libs/sessions_collection.js');
         validateSessionsCollection(shard, false, false);
     }
 
-    // Test that we can use sessions from a mongos before the sessions collection
+    // Test that we can use sessions from a mongers before the sessions collection
     // is set up by the config servers.
     {
         validateSessionsCollection(configSvr, false, false);
         validateSessionsCollection(shard, false, false);
-        validateSessionsCollection(mongos, false, false);
+        validateSessionsCollection(mongers, false, false);
 
-        assert.commandWorked(mongosAdmin.runCommand({startSession: 1}));
+        assert.commandWorked(mongersAdmin.runCommand({startSession: 1}));
 
         validateSessionsCollection(configSvr, false, false);
         validateSessionsCollection(shard, false, false);
-        validateSessionsCollection(mongos, false, false);
+        validateSessionsCollection(mongers, false, false);
     }
 
     // Test that if we do a refresh (write) from a shard server while there
@@ -126,8 +126,8 @@ load('jstests/libs/sessions_collection.js');
         assert.commandWorked(shardAdmin.runCommand({refreshLogicalSessionCacheNow: 1}));
         assert.eq(shardConfig.system.sessions.count(), 2, "did not flush shard's sessions");
 
-        assert.commandWorked(mongosAdmin.runCommand({refreshLogicalSessionCacheNow: 1}));
-        assert.eq(shardConfig.system.sessions.count(), 4, "did not flush mongos' sessions");
+        assert.commandWorked(mongersAdmin.runCommand({refreshLogicalSessionCacheNow: 1}));
+        assert.eq(shardConfig.system.sessions.count(), 4, "did not flush mongers' sessions");
     }
 
     // Test that if we drop the index on the sessions collection, only a refresh on the config
@@ -148,7 +148,7 @@ load('jstests/libs/sessions_collection.js');
 
     // Test that if we drop the collection, it will be recreated only by the config server.
     {
-        assertDropCollection(mongosConfig, "system.sessions");
+        assertDropCollection(mongersConfig, "system.sessions");
         validateSessionsCollection(shard, false, false);
 
         assert.commandWorked(shardAdmin.runCommand({refreshLogicalSessionCacheNow: 1}));

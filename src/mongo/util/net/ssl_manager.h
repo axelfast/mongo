@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,19 +33,19 @@
 #include <memory>
 #include <string>
 
-#include "mongo/config.h"
+#include "monger/config.h"
 
 #ifdef MONGO_CONFIG_SSL
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/decorable.h"
-#include "mongo/util/net/sock.h"
-#include "mongo/util/net/ssl/apple.hpp"
-#include "mongo/util/net/ssl_types.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/decorable.h"
+#include "monger/util/net/sock.h"
+#include "monger/util/net/ssl/apple.hpp"
+#include "monger/util/net/ssl_types.h"
+#include "monger/util/time_support.h"
 
 // SChannel implementation
 #if MONGO_CONFIG_SSL_PROVIDER == MONGO_CONFIG_SSL_PROVIDER_OPENSSL
@@ -54,7 +54,7 @@
 #endif
 #endif  // #ifdef MONGO_CONFIG_SSL
 
-namespace mongo {
+namespace monger {
 /*
  * @return the SSL version std::string prefixed with prefix and suffixed with suffix
  */
@@ -72,7 +72,7 @@ Status validateDisableNonTLSConnectionLogging(const bool&);
 }
 
 #ifdef MONGO_CONFIG_SSL
-namespace mongo {
+namespace monger {
 struct SSLParams;
 
 #if MONGO_CONFIG_SSL_PROVIDER == MONGO_CONFIG_SSL_PROVIDER_OPENSSL
@@ -160,7 +160,7 @@ public:
     std::string shortDescription;  // A brief description of the entity associated with the OID
     std::string longDescription;   // A long form description of the entity associated with the OID
 };
-const ASN1OID mongodbRolesOID("1.3.6.1.4.1.34601.2.1.1",
+const ASN1OID mongerdbRolesOID("1.3.6.1.4.1.34601.2.1.1",
                               "MongoRoles",
                               "Sequence of MongoDB Database Roles");
 
@@ -321,5 +321,5 @@ StatusWith<TLSVersion> mapTLSVersion(SSLConnectionType conn);
 void recordTLSVersion(TLSVersion version, const HostAndPort& hostForLogging);
 
 
-}  // namespace mongo
+}  // namespace monger
 #endif  // #ifdef MONGO_CONFIG_SSL

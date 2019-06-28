@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/oplog_buffer_collection.h"
-#include "mongo/db/repl/oplog_interface_local.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/repl/sync_tail_test_fixture.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/unittest/barrier.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/oplog_buffer_collection.h"
+#include "monger/db/repl/oplog_interface_local.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/repl/sync_tail_test_fixture.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/unittest/barrier.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 
 class OplogBufferCollectionTest : public ServiceContextMongoDTest {
 protected:

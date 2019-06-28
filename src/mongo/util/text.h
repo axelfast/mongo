@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,10 +32,10 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/config.h"
+#include "monger/base/string_data.h"
+#include "monger/config.h"
 
-namespace mongo {
+namespace monger {
 
 class StringSplitter {
 public:
@@ -119,4 +119,4 @@ public:
  */
 std::string constructUtf8WindowsCommandLine(const std::vector<std::string>& argv);
 
-}  // namespace mongo
+}  // namespace monger

@@ -72,7 +72,7 @@
 
     gle = db.runCommand({getLastError: 1});
     assert(gle.ok, tojson(gle));
-    // For legacy writes, mongos sends the bulk as one while the shell sends the write individually.
+    // For legacy writes, mongers sends the bulk as one while the shell sends the write individually.
     assert.gte(gle.n, 1, tojson(gle));
 
     // Batch with error at last should call resetError.

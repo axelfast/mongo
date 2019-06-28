@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <memory>
 #include <string>
 
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/storage/mobile/mobile_sqlite_statement.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/platform/atomic_word.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/storage/mobile/mobile_sqlite_statement.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/platform/atomic_word.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A RecordStore that stores all data in SQLite.
@@ -204,4 +204,4 @@ private:
     mutable bool _isDataSizeInitialized = false;
 };
 
-}  // namespace mongo
+}  // namespace monger

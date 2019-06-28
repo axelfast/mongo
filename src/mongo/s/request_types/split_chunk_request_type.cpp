@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/request_types/split_chunk_request_type.h"
+#include "monger/s/request_types/split_chunk_request_type.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/util/bson_extract.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/util/bson_extract.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::vector;
@@ -84,7 +84,7 @@ StatusWith<SplitChunkRequest> SplitChunkRequest::parseFromConfigCommand(const BS
     {
         BSONElement splitPointsElem;
         auto splitPointsElemStatus =
-            bsonExtractTypedField(cmdObj, kSplitPoints, mongo::Array, &splitPointsElem);
+            bsonExtractTypedField(cmdObj, kSplitPoints, monger::Array, &splitPointsElem);
 
         if (!splitPointsElemStatus.isOK()) {
             return splitPointsElemStatus;
@@ -172,4 +172,4 @@ Status SplitChunkRequest::_validate() {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

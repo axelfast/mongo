@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/s/router_transactions_stats_gen.h"
-#include "mongo/s/transaction_router.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/s/router_transactions_stats_gen.h"
+#include "monger/s/transaction_router.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Container for router-wide multi-document transaction statistics.
@@ -114,7 +114,7 @@ private:
     // Total number of shard participants included in a participant list at commit.
     AtomicWord<std::int64_t> _totalParticipantsAtCommit{0};
 
-    // Total number of network requests targeted by mongos as part of a transaction.
+    // Total number of network requests targeted by mongers as part of a transaction.
     AtomicWord<std::int64_t> _totalRequestsTargeted{0};
 
     // Structs with metrics for each type of commit a router can use.
@@ -133,4 +133,4 @@ private:
     std::map<std::string, std::int64_t> _abortCauseMap;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -1,6 +1,6 @@
 description: "Non-Mongos server in sharded cluster"
 
-uri: "mongodb://a,b"
+uri: "mongerdb://a,b"
 
 phases: [
 

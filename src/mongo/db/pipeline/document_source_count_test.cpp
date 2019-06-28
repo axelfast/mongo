@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source_count.h"
-#include "mongo/db/pipeline/document_source_group.h"
-#include "mongo/db/pipeline/document_source_single_document_transformation.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/value.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source_count.h"
+#include "monger/db/pipeline/document_source_group.h"
+#include "monger/db/pipeline/document_source_single_document_transformation.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/value.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 using boost::intrusive_ptr;
 using std::list;
@@ -135,4 +135,4 @@ TEST_F(InvalidCountSpec, PeriodInStringSpec) {
     ASSERT_THROWS_CODE(createCount(spec), AssertionException, 40160);
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

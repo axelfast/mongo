@@ -1,6 +1,6 @@
 /**
  * The OverrideHelpers object defines convenience methods for overriding commands and functions in
- * the mongo shell.
+ * the monger shell.
  */
 var OverrideHelpers = (function() {
     "use strict";
@@ -73,8 +73,8 @@ var OverrideHelpers = (function() {
     }
 
     function overrideRunCommand(overrideFunc) {
-        const mongoRunCommandOriginal = Mongo.prototype.runCommand;
-        const mongoRunCommandWithMetadataOriginal = Mongo.prototype.runCommandWithMetadata;
+        const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+        const mongerRunCommandWithMetadataOriginal = Mongo.prototype.runCommandWithMetadata;
 
         Mongo.prototype.runCommand = function(dbName, commandObj, options) {
             const commandName = Object.keys(commandObj)[0];
@@ -82,7 +82,7 @@ var OverrideHelpers = (function() {
                                 dbName,
                                 commandName,
                                 commandObj,
-                                mongoRunCommandOriginal,
+                                mongerRunCommandOriginal,
                                 (commandObj) => [dbName, commandObj, options]);
         };
 
@@ -92,7 +92,7 @@ var OverrideHelpers = (function() {
                                 dbName,
                                 commandName,
                                 commandArgs,
-                                mongoRunCommandWithMetadataOriginal,
+                                mongerRunCommandWithMetadataOriginal,
                                 (commandArgs) => [dbName, metadata, commandArgs]);
         };
     }

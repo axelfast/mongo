@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/client/sasl_client_authenticate.h"
+#include "monger/client/sasl_client_authenticate.h"
 
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/util/base64.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 Future<void> (*saslClientAuthenticate)(auth::RunCommandHook runCommand,
                                        const HostAndPort& hostname,
@@ -71,4 +71,4 @@ Status saslExtractPayload(const BSONObj& cmdObj, std::string* payload, BSONType*
 
     return Status::OK();
 }
-}  // namespace mongo
+}  // namespace monger

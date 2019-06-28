@@ -88,7 +88,7 @@
             'env',
             "HOSTALIASES=" + hostsFile,
             "SSL_CERT_FILE=jstests/libs/splithorizon-ca.pem",
-            './mongo',
+            './monger',
             url,
             '--eval',
             ("assert(db.runCommand({isMaster: 1})['hosts'][" + memberIndex + "] == '" +
@@ -98,7 +98,7 @@
     };
 
     // Using localhost should use the default horizon
-    var defaultURL = `mongodb://${node0localHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
+    var defaultURL = `mongerdb://${node0localHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
     jsTestLog(`URL without horizon: ${defaultURL}`);
     assert.eq(checkExpectedHorizon(defaultURL, 0, node0localHostname),
               0,
@@ -108,7 +108,7 @@
               "localhost does not return horizon");
 
     // Using 'splithorizon1' should use that horizon
-    var horizonURL = `mongodb://${node0horizonHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
+    var horizonURL = `mongerdb://${node0horizonHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
     jsTestLog(`URL with horizon: ${horizonURL}`);
     assert.eq(checkExpectedHorizon(horizonURL, 0, node0horizonHostname),
               0,
@@ -119,7 +119,7 @@
 
     // Using 'splithorizon2' does not have a horizon so it should return default
     var horizonMissingURL =
-        `mongodb://${node0horizonMissingHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
+        `mongerdb://${node0horizonMissingHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
     jsTestLog(`URL with horizon: ${horizonMissingURL}`);
     assert.eq(checkExpectedHorizon(horizonMissingURL, 0, node0localHostname),
               0,
@@ -137,7 +137,7 @@
 
     // Using 'splithorizon2' should now return the new horizon
     var horizonMissingURL =
-        `mongodb://${node0horizonMissingHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
+        `mongerdb://${node0horizonMissingHostname}/admin?replicaSet=${replTest.name}&ssl=true`;
     jsTestLog(`URL with horizon: ${horizonMissingURL}`);
     assert.eq(checkExpectedHorizon(horizonMissingURL, 0, node0horizonMissingHostname),
               0,
@@ -158,7 +158,7 @@
 
     // Build the connection URL, do not set replicaSet as that will trigger the ReplicaSetMonitor
     // which will fail as we can't actually connect now (port is wrong)
-    var horizonDifferentPortURL = `mongodb://${node0horizonHostname}/admin?ssl=true`;
+    var horizonDifferentPortURL = `mongerdb://${node0horizonHostname}/admin?ssl=true`;
     jsTestLog(`URL with horizon using different port: ${horizonDifferentPortURL}`);
     assert.eq(checkExpectedHorizon(horizonDifferentPortURL, 0, node0horizonHostnameDifferentPort),
               0,

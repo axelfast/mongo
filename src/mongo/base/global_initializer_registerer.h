@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,10 +32,10 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/initializer_function.h"
-#include "mongo/base/status.h"
+#include "monger/base/initializer_function.h"
+#include "monger/base/status.h"
 
-namespace mongo {
+namespace monger {
 
 // The name of the "default" global initializer.
 // Global initializers with no explicit prerequisites depends on it by default.
@@ -45,8 +45,8 @@ extern const std::string& defaultInitializerName();
  * Type representing the registration of a global intialization function.
  *
  * Create a nonlocal static storage duration instance of this type to register a new initializer, to
- * be run by a call to a variant of mongo::runGlobalInitializers().  See "mongo/base/initializer.h",
- * "mongo/base/init.h', and "mongo/base/initializer_dependency_graph.h" for details.
+ * be run by a call to a variant of monger::runGlobalInitializers().  See "monger/base/initializer.h",
+ * "monger/base/init.h', and "monger/base/initializer_dependency_graph.h" for details.
  */
 class GlobalInitializerRegisterer {
 public:
@@ -82,7 +82,7 @@ public:
     *
     *
     * At run time, the full set of prerequisites for `name` will be computed as the union of the
-    * `prerequisites` (which can be defaulted) and all other mongo initializers that list `name` in
+    * `prerequisites` (which can be defaulted) and all other monger initializers that list `name` in
     * their `dependents`.
     *
     * A non-null `deinitFn` will tag the initializer as supporting re-initialization.
@@ -97,4 +97,4 @@ public:
     GlobalInitializerRegisterer& operator=(const GlobalInitializerRegisterer&) = delete;
 };
 
-}  // namespace mongo
+}  // namespace monger

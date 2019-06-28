@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/db/exec/working_set.h"
+#include "monger/db/exec/working_set.h"
 
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/service_context.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/service_context.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 WorkingSet::MemberHolder::MemberHolder() : member(nullptr) {}
 WorkingSet::MemberHolder::~MemberHolder() {}
@@ -214,4 +214,4 @@ size_t WorkingSetMember::getMemUsage() const {
     return memUsage;
 }
 
-}  // namespace mongo
+}  // namespace monger

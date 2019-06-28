@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <memory>
 
-#include "mongo/base/clonable_ptr.h"
-#include "mongo/db/update/modifier_node.h"
+#include "monger/base/clonable_ptr.h"
+#include "monger/db/update/modifier_node.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * An ArrayCullingNode represents an update modifier that removes elements from an array that match
@@ -86,4 +86,4 @@ private:
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

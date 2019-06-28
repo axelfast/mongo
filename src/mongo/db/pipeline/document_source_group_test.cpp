@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <deque>
@@ -36,26 +36,26 @@
 #include <string>
 #include <vector>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/dependencies.h"
-#include "mongo/db/pipeline/document_source_group.h"
-#include "mongo/db/pipeline/document_source_mock.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/pipeline/value_comparator.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/json.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/dependencies.h"
+#include "monger/db/pipeline/document_source_group.h"
+#include "monger/db/pipeline/document_source_mock.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/pipeline/value_comparator.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 using boost::intrusive_ptr;
@@ -922,4 +922,4 @@ public:
 SuiteInstance<All> myall;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

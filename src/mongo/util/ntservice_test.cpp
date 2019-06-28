@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstdarg>
 #include <cstdlib>
@@ -35,12 +35,12 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/client.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/ntservice.h"
-#include "mongo/util/text.h"
+#include "monger/db/client.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/ntservice.h"
+#include "monger/util/text.h"
 
-using namespace mongo;
+using namespace monger;
 
 static std::vector<std::string> svec(const char* first, ...) {
     std::vector<std::string> result;
@@ -95,13 +95,13 @@ TEST(NtService, RegressionSERVER_7252) {
     // in ticket SERVER-7252.
 
     const wchar_t inputCommandLine[] =
-        L"mongod --install --serviceName=\"My Service\" --serviceDescription \"My Service\" "
-        L"--serviceDisplayName \"My Service\" --dbpath C:\\mongo\\data\\config --port 20001 "
-        L"--logpath C:\\mongo\\logs\\mongo_config.log.txt --configsvr";
+        L"mongerd --install --serviceName=\"My Service\" --serviceDescription \"My Service\" "
+        L"--serviceDisplayName \"My Service\" --dbpath C:\\monger\\data\\config --port 20001 "
+        L"--logpath C:\\monger\\logs\\monger_config.log.txt --configsvr";
 
     const char expectedServiceCommandLine[] =
-        "mongod --dbpath C:\\mongo\\data\\config --port 20001 "
-        "--logpath C:\\mongo\\logs\\mongo_config.log.txt --configsvr --service";
+        "mongerd --dbpath C:\\monger\\data\\config --port 20001 "
+        "--logpath C:\\monger\\logs\\monger_config.log.txt --configsvr --service";
 
     // Convert the input wide-character command line into a UTF-8 vector of std::string.
     int inputArgc;

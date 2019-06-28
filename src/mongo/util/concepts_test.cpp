@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/concepts.h"
+#include "monger/util/concepts.h"
 
 #include <boost/preprocessor/cat.hpp>
 #include <cstdint>
 #include <string>
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // Everything this test tests is tests at compile time. If it compiles, it is a success.
@@ -167,4 +167,4 @@ static_assert(!isCallable<void(StringData), StringData, StringData>);
 TEST(Concepts, DummyTest) {}
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

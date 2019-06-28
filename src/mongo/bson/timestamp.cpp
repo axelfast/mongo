@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,8 +27,8 @@
  *    it in the license file.
  */
 
-#include "mongo/bson/timestamp.h"
-#include "mongo/bson/bsontypes.h"
+#include "monger/bson/timestamp.h"
+#include "monger/bson/bsontypes.h"
 
 #include <cstdint>
 #include <ctime>
@@ -36,10 +36,10 @@
 #include <limits>
 #include <sstream>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/time_support.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 const Timestamp Timestamp::kAllowUnstableCheckpointsSentinel = Timestamp(0, 1);
 

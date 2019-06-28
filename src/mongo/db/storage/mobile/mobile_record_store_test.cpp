@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/storage/mobile/mobile_options_gen.h"
-#include "mongo/db/storage/mobile/mobile_record_store.h"
-#include "mongo/db/storage/mobile/mobile_recovery_unit.h"
-#include "mongo/db/storage/mobile/mobile_session.h"
-#include "mongo/db/storage/mobile/mobile_session_pool.h"
-#include "mongo/db/storage/mobile/mobile_sqlite_statement.h"
-#include "mongo/db/storage/mobile/mobile_util.h"
-#include "mongo/db/storage/record_store_test_harness.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/options_parser/options_parser.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/base/init.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/storage/mobile/mobile_options_gen.h"
+#include "monger/db/storage/mobile/mobile_record_store.h"
+#include "monger/db/storage/mobile/mobile_recovery_unit.h"
+#include "monger/db/storage/mobile/mobile_session.h"
+#include "monger/db/storage/mobile/mobile_session_pool.h"
+#include "monger/db/storage/mobile/mobile_sqlite_statement.h"
+#include "monger/db/storage/mobile/mobile_util.h"
+#include "monger/db/storage/record_store_test_harness.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/options_parser/options_parser.h"
+#include "monger/util/options_parser/startup_options.h"
 
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -153,8 +153,8 @@ std::unique_ptr<HarnessHelper> makeHarnessHelper() {
 }
 
 MONGO_INITIALIZER(RegisterHarnessFactory)(InitializerContext* const) {
-    mongo::registerHarnessHelperFactory(makeHarnessHelper);
+    monger::registerHarnessHelperFactory(makeHarnessHelper);
     return Status::OK();
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

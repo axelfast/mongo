@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/query_planner_test_fixture.h"
+#include "monger/db/query/query_planner_test_fixture.h"
 
 #include <algorithm>
 
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_planner_test_lib.h"
-#include "mongo/util/log.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_planner_test_lib.h"
+#include "monger/util/log.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 
-namespace mongo {
+namespace monger {
 
 using unittest::assertGet;
 
@@ -554,4 +554,4 @@ std::unique_ptr<MatchExpression> QueryPlannerTest::parseMatchExpression(
     return std::move(status.getValue());
 }
 
-}  // namespace mongo
+}  // namespace monger

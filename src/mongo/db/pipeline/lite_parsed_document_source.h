@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,13 +34,13 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/stdx/unordered_set.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/stdx/unordered_set.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A lightly parsed version of a DocumentSource. It is not executable and not guaranteed to return a
@@ -114,7 +114,7 @@ public:
     }
 
     /**
-     * Returns true if this stage may be forwarded from mongos unmodified.
+     * Returns true if this stage may be forwarded from mongers unmodified.
      */
     virtual bool allowedToPassthroughFromMongos() const {
         return true;
@@ -186,4 +186,4 @@ protected:
 private:
     PrivilegeVector _requiredPrivileges;
 };
-}  // namespace mongo
+}  // namespace monger

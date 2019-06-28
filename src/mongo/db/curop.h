@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,16 +30,16 @@
 
 #pragma once
 
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/cursor_id.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/server_options.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/progress_meter.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/commands.h"
+#include "monger/db/cursor_id.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/server_options.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/progress_meter.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class Client;
 class CurOp;
@@ -191,7 +191,7 @@ public:
     bool exhaust{false};
 
     // For searchBeta.
-    boost::optional<long long> mongotCursorId{boost::none};
+    boost::optional<long long> mongertCursorId{boost::none};
     boost::optional<long long> msWaitingForMongot{boost::none};
 
     bool hasSortStage{false};  // true if the query plan involves an in-memory sort
@@ -269,7 +269,7 @@ public:
     /**
      * Writes a report of the operation being executed by the given client to the supplied
      * BSONObjBuilder, in a format suitable for display in currentOp. Does not include a lockInfo
-     * report, since this may be called in either a mongoD or mongoS context and the latter does not
+     * report, since this may be called in either a mongerD or mongerS context and the latter does not
      * supply lock stats. The client must be locked before calling this method.
      */
     static void reportCurrentOpForClient(OperationContext* opCtx,
@@ -679,4 +679,4 @@ BSONObj upconvertQueryEntry(const BSONObj& query,
  */
 BSONObj upconvertGetMoreEntry(const NamespaceString& nss, CursorId cursorId, int ntoreturn);
 
-}  // namespace mongo
+}  // namespace monger

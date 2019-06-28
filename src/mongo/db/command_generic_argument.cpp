@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/command_generic_argument.h"
+#include "monger/db/command_generic_argument.h"
 
 #include <algorithm>
 #include <array>
 #include <cstdlib>
 #include <iterator>
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -107,4 +107,4 @@ bool isReplyStripArgument(StringData arg) {
     return p && p->stripFromReply;
 }
 
-}  // namespace mongo
+}  // namespace monger

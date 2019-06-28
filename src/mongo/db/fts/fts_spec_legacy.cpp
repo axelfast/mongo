@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/db/fts/fts_spec.h"
+#include "monger/db/fts/fts_spec.h"
 
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/util/str.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
@@ -41,7 +41,7 @@ namespace fts {
 // text indexes.
 //
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 namespace {
 void _addFTSStuff(BSONObjBuilder* b) {

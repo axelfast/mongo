@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/biggie/biggie_kv_engine.h"
-#include "mongo/db/storage/biggie/biggie_recovery_unit.h"
-#include "mongo/db/storage/recovery_unit_test_harness.h"
+#include "monger/base/init.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/biggie/biggie_kv_engine.h"
+#include "monger/db/storage/biggie/biggie_recovery_unit.h"
+#include "monger/db/storage/recovery_unit_test_harness.h"
 
-namespace mongo {
+namespace monger {
 namespace biggie {
 namespace {
 
@@ -45,11 +45,11 @@ class BiggieRecoveryUnitHarnessHelper final : public RecoveryUnitHarnessHelper {
 public:
     BiggieRecoveryUnitHarnessHelper() = default;
 
-    virtual std::unique_ptr<mongo::RecoveryUnit> newRecoveryUnit() final {
+    virtual std::unique_ptr<monger::RecoveryUnit> newRecoveryUnit() final {
         return std::make_unique<RecoveryUnit>(&_kvEngine);
     }
 
-    virtual std::unique_ptr<mongo::RecordStore> createRecordStore(OperationContext* opCtx,
+    virtual std::unique_ptr<monger::RecordStore> createRecordStore(OperationContext* opCtx,
                                                                   const std::string& ns) {
         return std::make_unique<RecordStore>(ns,
                                              "ident"_sd /* ident */,
@@ -68,10 +68,10 @@ std::unique_ptr<HarnessHelper> makeHarnessHelper() {
 }
 
 MONGO_INITIALIZER(RegisterHarnessFactory)(InitializerContext* const) {
-    mongo::registerHarnessHelperFactory(makeHarnessHelper);
+    monger::registerHarnessHelperFactory(makeHarnessHelper);
     return Status::OK();
 }
 
 }  // namespace
 }  // namespace biggie
-}  // namespace mongo
+}  // namespace monger

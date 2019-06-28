@@ -23,9 +23,9 @@ const INTERNAL_USER = "C=US,ST=New York,L=New York City,O=MongoDB,OU=Kernel,CN=i
 const CLIENT_USER = "CN=client,OU=KernelUser,O=MongoDB,L=New York City,ST=New York,C=US";
 const INVALID_CLIENT_USER = "C=US,ST=New York,L=New York City,O=MongoDB,OU=KernelUser,CN=invalid";
 
-function authAndTest(mongo) {
-    external = mongo.getDB("$external");
-    test = mongo.getDB("test");
+function authAndTest(monger) {
+    external = monger.getDB("$external");
+    test = monger.getDB("test");
 
     // It should be impossible to create users with the same name as the server's subject
     assert.throws(function() {
@@ -90,24 +90,24 @@ function authAndTest(mongo) {
     }, [], "read after logout");
 }
 
-print("1. Testing x.509 auth to mongod");
+print("1. Testing x.509 auth to mongerd");
 var x509_options = {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT};
 
-var mongo = MongoRunner.runMongod(Object.merge(x509_options, {auth: ""}));
+var monger = MongoRunner.runMongod(Object.merge(x509_options, {auth: ""}));
 
-authAndTest(mongo);
-MongoRunner.stopMongod(mongo);
+authAndTest(monger);
+MongoRunner.stopMongod(monger);
 
-print("2. Testing x.509 auth to mongos");
+print("2. Testing x.509 auth to mongers");
 
 // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
 var st = new ShardingTest({
     shards: 1,
-    mongos: 1,
+    mongers: 1,
     other: {
         keyFile: 'jstests/libs/key1',
         configOptions: x509_options,
-        mongosOptions: x509_options,
+        mongersOptions: x509_options,
         shardOptions: x509_options,
         useHostname: false,
         shardAsReplicaSet: false

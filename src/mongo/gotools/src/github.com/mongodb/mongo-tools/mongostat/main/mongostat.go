@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Main package for the mongostat tool.
+// Main package for the mongerstat tool.
 package main
 
 import (
@@ -13,15 +13,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/password"
-	"github.com/mongodb/mongo-tools-common/signals"
-	"github.com/mongodb/mongo-tools-common/util"
-	"github.com/mongodb/mongo-tools/mongostat"
-	"github.com/mongodb/mongo-tools/mongostat/stat_consumer"
-	"github.com/mongodb/mongo-tools/mongostat/stat_consumer/line"
-	"github.com/mongodb/mongo-tools/mongostat/status"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/password"
+	"github.com/mongerdb/monger-tools-common/signals"
+	"github.com/mongerdb/monger-tools-common/util"
+	"github.com/mongerdb/monger-tools/mongerstat"
+	"github.com/mongerdb/monger-tools/mongerstat/stat_consumer"
+	"github.com/mongerdb/monger-tools/mongerstat/stat_consumer/line"
+	"github.com/mongerdb/monger-tools/mongerstat/status"
 )
 
 // optionKeyNames interprets the CLI options Columns and AppendColumns into
@@ -59,13 +59,13 @@ var (
 func main() {
 	// initialize command-line opts
 	opts := options.New(
-		"mongostat", VersionStr, GitCommit,
-		mongostat.Usage,
+		"mongerstat", VersionStr, GitCommit,
+		mongerstat.Usage,
 		options.EnabledOptions{Connection: true, Auth: true, Namespace: false, URI: true})
 	opts.UseReadOnlyHostDescription()
 
-	// add mongostat-specific options
-	statOpts := &mongostat.StatOptions{}
+	// add mongerstat-specific options
+	statOpts := &mongerstat.StatOptions{}
 	opts.AddOptions(statOpts)
 
 	interactiveOption := opts.FindOptionByLongName("interactive")
@@ -78,7 +78,7 @@ func main() {
 	args, err := opts.ParseArgs(os.Args[1:])
 	if err != nil {
 		log.Logvf(log.Always, "error parsing command line options: %v", err)
-		log.Logvf(log.Always, util.ShortUsage("mongostat"))
+		log.Logvf(log.Always, util.ShortUsage("mongerstat"))
 		os.Exit(util.ExitFailure)
 	}
 
@@ -89,7 +89,7 @@ func main() {
 	if len(args) > 0 {
 		if len(args) != 1 {
 			log.Logvf(log.Always, "too many positional arguments: %v", args)
-			log.Logvf(log.Always, util.ShortUsage("mongostat"))
+			log.Logvf(log.Always, util.ShortUsage("mongerstat"))
 			os.Exit(util.ExitFailure)
 		}
 		sleepInterval, err = strconv.Atoi(args[0])
@@ -210,16 +210,16 @@ func main() {
 	consumer := stat_consumer.NewStatConsumer(cliFlags, customHeaders,
 		keyNames, readerConfig, formatter, os.Stdout)
 	seedHosts := util.CreateConnectionAddrs(opts.Host, opts.Port)
-	var cluster mongostat.ClusterMonitor
+	var cluster mongerstat.ClusterMonitor
 	if statOpts.Discover || len(seedHosts) > 1 {
-		cluster = &mongostat.AsyncClusterMonitor{
+		cluster = &mongerstat.AsyncClusterMonitor{
 			ReportChan:    make(chan *status.ServerStatus),
 			ErrorChan:     make(chan *status.NodeError),
 			LastStatLines: map[string]*line.StatLine{},
 			Consumer:      consumer,
 		}
 	} else {
-		cluster = &mongostat.SyncClusterMonitor{
+		cluster = &mongerstat.SyncClusterMonitor{
 			ReportChan: make(chan *status.ServerStatus),
 			ErrorChan:  make(chan *status.NodeError),
 			Consumer:   consumer,
@@ -232,10 +232,10 @@ func main() {
 	}
 
 	opts.Direct = true
-	stat := &mongostat.MongoStat{
+	stat := &mongerstat.MongoStat{
 		Options:       opts,
 		StatOptions:   statOpts,
-		Nodes:         map[string]*mongostat.NodeMonitor{},
+		Nodes:         map[string]*mongerstat.NodeMonitor{},
 		Discovered:    discoverChan,
 		SleepInterval: time.Duration(sleepInterval) * time.Second,
 		Cluster:       cluster,

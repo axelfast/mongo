@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <string>
 
-#include "mongo/s/client/shard.h"
+#include "monger/s/client/shard.h"
 
-#include "mongo/executor/task_executor.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/executor/task_executor.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 /*
  * Maintains the targeting and command execution logic for a single shard. Performs polling of
@@ -153,4 +153,4 @@ private:
     const std::shared_ptr<RemoteCommandTargeter> _targeter;
 };
 
-}  // namespace mongo
+}  // namespace monger

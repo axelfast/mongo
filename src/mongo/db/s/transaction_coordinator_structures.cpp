@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kTransaction
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kTransaction
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/transaction_coordinator_structures.h"
+#include "monger/db/s/transaction_coordinator_structures.h"
 
-#include "mongo/util/assert_util.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace txn {
 namespace {
 
@@ -76,4 +76,4 @@ logger::LogstreamBuilder& operator<<(logger::LogstreamBuilder& stream,
 }
 
 }  // namespace txn
-}  // namespace mongo
+}  // namespace monger

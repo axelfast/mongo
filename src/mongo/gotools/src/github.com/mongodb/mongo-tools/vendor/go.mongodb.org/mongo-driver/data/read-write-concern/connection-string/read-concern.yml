@@ -1,37 +1,37 @@
 tests:
     -
         description: "Default"
-        uri: "mongodb://localhost/"
+        uri: "mongerdb://localhost/"
         valid: true
         warning: false
         readConcern: { }
     -
         description: "local specified"
-        uri: "mongodb://localhost/?readConcernLevel=local"
+        uri: "mongerdb://localhost/?readConcernLevel=local"
         valid: true
         warning: false
         readConcern: { level: "local" }
     -
         description: "majority specified"
-        uri: "mongodb://localhost/?readConcernLevel=majority"
+        uri: "mongerdb://localhost/?readConcernLevel=majority"
         valid: true
         warning: false
         readConcern: { level: "majority" }
     -
         description: "available specified"
-        uri: "mongodb://localhost?readConcernLevel=available"
+        uri: "mongerdb://localhost?readConcernLevel=available"
         valid: true
         warning: false
         readConcern: { level: "available" }
     -
         description: "snapshot specified"
-        uri: "mongodb://localhost?readConcernLevel=snapshot"
+        uri: "mongerdb://localhost?readConcernLevel=snapshot"
         valid: true
         warning: false
         readConcern: { level: "snapshot" }
     -
         description: "linearizable specified"
-        uri: "mongodb://localhost?readConcernLevel=linearizable"
+        uri: "mongerdb://localhost?readConcernLevel=linearizable"
         valid: true
         warning: false
         readConcern: { level: "linearizable" }

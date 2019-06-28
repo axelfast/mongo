@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/json.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/repl_set_heartbeat_args_v1.h"
-#include "mongo/db/repl/replication_coordinator_external_state_mock.h"
-#include "mongo/db/repl/replication_coordinator_impl.h"
-#include "mongo/db/repl/replication_coordinator_test_fixture.h"
-#include "mongo/db/repl/topology_coordinator.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
+#include "monger/bson/json.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/repl_set_heartbeat_args_v1.h"
+#include "monger/db/repl/replication_coordinator_external_state_mock.h"
+#include "monger/db/repl/replication_coordinator_impl.h"
+#include "monger/db/repl/replication_coordinator_test_fixture.h"
+#include "monger/db/repl/topology_coordinator.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -433,7 +433,7 @@ TEST_F(ReplCoordHBV1Test, IgnoreTheContentsOfMetadataWhenItsReplicaSetIdDoesNotM
     auto statusObj = statusBuilder.obj();
     unittest::log() << "replica set status = " << statusObj;
 
-    ASSERT_EQ(mongo::Array, statusObj["members"].type());
+    ASSERT_EQ(monger::Array, statusObj["members"].type());
     auto members = statusObj["members"].Array();
     ASSERT_EQ(2U, members.size());
     ASSERT_TRUE(members[1].isABSONObj());
@@ -450,4 +450,4 @@ TEST_F(ReplCoordHBV1Test, IgnoreTheContentsOfMetadataWhenItsReplicaSetIdDoesNotM
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

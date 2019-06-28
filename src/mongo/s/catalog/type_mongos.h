@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,28 +33,28 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This class represents the layout and contents of documents contained in the
- * config.mongos collection. All manipulation of documents coming from that
+ * config.mongers collection. All manipulation of documents coming from that
  * collection should be done with this class.
  */
 class MongosType {
 public:
-    // Name of the mongos collection in the config server.
+    // Name of the mongers collection in the config server.
     static const NamespaceString ConfigNS;
 
-    // Field names and types in the mongos collection type.
+    // Field names and types in the mongers collection type.
     static const BSONField<std::string> name;
     static const BSONField<Date_t> ping;
     static const BSONField<long long> uptime;
     static const BSONField<bool> waiting;
-    static const BSONField<std::string> mongoVersion;
+    static const BSONField<std::string> mongerVersion;
     static const BSONField<long long> configVersion;
     static const BSONField<BSONArray> advisoryHostFQDNs;
 
@@ -104,12 +104,12 @@ public:
     void setWaiting(const bool waiting);
 
     const std::string& getMongoVersion() const {
-        return _mongoVersion.get();
+        return _mongerVersion.get();
     }
     bool isMongoVersionSet() const {
-        return _mongoVersion.is_initialized();
+        return _mongerVersion.is_initialized();
     }
-    void setMongoVersion(const std::string& mongoVersion);
+    void setMongoVersion(const std::string& mongerVersion);
 
     long long getConfigVersion() const {
         return _configVersion.get();
@@ -124,7 +124,7 @@ public:
 private:
     // Convention: (M)andatory, (O)ptional, (S)pecial rule.
 
-    // (M) "host:port" for this mongos
+    // (M) "host:port" for this mongers
     boost::optional<std::string> _name;
     // (M) last time it was seen alive
     boost::optional<Date_t> _ping;
@@ -132,12 +132,12 @@ private:
     boost::optional<long long> _uptime;
     // (M) used to indicate if we are going to sleep after ping. For testing purposes
     boost::optional<bool> _waiting;
-    // (O) the mongodb version of the pinging mongos
-    boost::optional<std::string> _mongoVersion;
-    // (O) the config version of the pinging mongos
+    // (O) the mongerdb version of the pinging mongers
+    boost::optional<std::string> _mongerVersion;
+    // (O) the config version of the pinging mongers
     boost::optional<long long> _configVersion;
-    // (O) the results of hostname canonicalization on the pinging mongos
+    // (O) the results of hostname canonicalization on the pinging mongers
     boost::optional<std::vector<std::string>> _advisoryHostFQDNs;
 };
 
-}  // namespace mongo
+}  // namespace monger

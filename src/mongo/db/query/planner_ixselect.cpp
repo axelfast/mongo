@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/query/planner_ixselect.h"
+#include "monger/db/query/planner_ixselect.h"
 
 #include <vector>
 
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/db/geo/hash.h"
-#include "mongo/db/index/s2_common.h"
-#include "mongo/db/index/wildcard_key_generator.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/matcher/expression_algo.h"
-#include "mongo/db/matcher/expression_geo.h"
-#include "mongo/db/matcher/expression_internal_expr_eq.h"
-#include "mongo/db/matcher/expression_text.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/index_tag.h"
-#include "mongo/db/query/indexability.h"
-#include "mongo/db/query/planner_wildcard_helpers.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/util/log.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/db/geo/hash.h"
+#include "monger/db/index/s2_common.h"
+#include "monger/db/index/wildcard_key_generator.h"
+#include "monger/db/index_names.h"
+#include "monger/db/matcher/expression_algo.h"
+#include "monger/db/matcher/expression_geo.h"
+#include "monger/db/matcher/expression_internal_expr_eq.h"
+#include "monger/db/matcher/expression_text.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/index_tag.h"
+#include "monger/db/query/indexability.h"
+#include "monger/db/query/planner_wildcard_helpers.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
-namespace wcp = ::mongo::wildcard_planning;
+namespace wcp = ::monger::wildcard_planning;
 
 // Can't index negations of {$eq: <Array>} or {$in: [<Array>, ...]}. Note that we could
 // use the index in principle, though we would need to generate special bounds.
@@ -1184,4 +1184,4 @@ void QueryPlannerIXSelect::stripInvalidAssignmentsTo2dsphereIndices(
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/kv/kv_engine_test_harness.h"
+#include "monger/db/storage/kv/kv_engine_test_harness.h"
 
 #include <memory>
 
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/storage/durable_catalog_feature_tracker.h"
-#include "mongo/db/storage/kv/kv_engine.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/storage/durable_catalog_feature_tracker.h"
+#include "monger/db/storage/kv/kv_engine.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using NonRepairableFeature = DurableCatalogImpl::FeatureTracker::NonRepairableFeature;
@@ -371,8 +371,8 @@ TEST_F(DurableCatalogFeatureTrackerTest,
         auto status = getFeatureTracker()->isCompatibleWithCurrentCode(opCtx.get());
         ASSERT_EQ(ErrorCodes::MustUpgrade, status.code());
         ASSERT_EQ(
-            "The data files use features not recognized by this version of mongod; the NR feature"
-            " bits in positions [ 0 ] aren't recognized by this version of mongod",
+            "The data files use features not recognized by this version of mongerd; the NR feature"
+            " bits in positions [ 0 ] aren't recognized by this version of mongerd",
             status.reason());
     }
 }
@@ -407,8 +407,8 @@ TEST_F(DurableCatalogFeatureTrackerTest,
         auto status = getFeatureTracker()->isCompatibleWithCurrentCode(opCtx.get());
         ASSERT_EQ(ErrorCodes::MustUpgrade, status.code());
         ASSERT_EQ(
-            "The data files use features not recognized by this version of mongod; the NR feature"
-            " bits in positions [ 1, 2 ] aren't recognized by this version of mongod",
+            "The data files use features not recognized by this version of mongerd; the NR feature"
+            " bits in positions [ 1, 2 ] aren't recognized by this version of mongerd",
             status.reason());
     }
 }
@@ -458,8 +458,8 @@ TEST_F(DurableCatalogFeatureTrackerTest,
         auto status = getFeatureTracker()->isCompatibleWithCurrentCode(opCtx.get());
         ASSERT_EQ(ErrorCodes::CanRepairToDowngrade, status.code());
         ASSERT_EQ(
-            "The data files use features not recognized by this version of mongod; the R feature"
-            " bits in positions [ 0 ] aren't recognized by this version of mongod",
+            "The data files use features not recognized by this version of mongerd; the R feature"
+            " bits in positions [ 0 ] aren't recognized by this version of mongerd",
             status.reason());
     }
 }
@@ -492,11 +492,11 @@ TEST_F(DurableCatalogFeatureTrackerTest,
         auto status = getFeatureTracker()->isCompatibleWithCurrentCode(opCtx.get());
         ASSERT_EQ(ErrorCodes::CanRepairToDowngrade, status.code());
         ASSERT_EQ(
-            "The data files use features not recognized by this version of mongod; the R feature"
-            " bits in positions [ 1, 2 ] aren't recognized by this version of mongod",
+            "The data files use features not recognized by this version of mongerd; the R feature"
+            " bits in positions [ 1, 2 ] aren't recognized by this version of mongerd",
             status.reason());
     }
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,10 +33,10 @@
 #include <cstring>
 #include <type_traits>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/stdx/type_traits.h"
+#include "monger/base/static_assert.h"
+#include "monger/stdx/type_traits.h"
 
-namespace mongo {
+namespace monger {
 
 namespace atomic_word_detail {
 
@@ -235,4 +235,4 @@ public:
     using atomic_word_detail::Base<T>::Base;
 };
 
-}  // namespace mongo
+}  // namespace monger

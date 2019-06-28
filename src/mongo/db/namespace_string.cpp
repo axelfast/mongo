@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/namespace_string.h"
+#include "monger/db/namespace_string.h"
 
 #include <ostream>
 
-#include "mongo/base/parse_number.h"
-#include "mongo/util/str.h"
+#include "monger/base/parse_number.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 constexpr auto listCollectionsCursorCol = "$cmd.listCollections"_sd;
@@ -191,7 +191,7 @@ StatusWith<repl::OpTime> NamespaceString::getDropPendingNamespaceOpTime() const 
     }
 
     long long term;
-    status = mongo::NumberParser{}(opTimeStr.substr(termSeparatorIndex + 1), &term);
+    status = monger::NumberParser{}(opTimeStr.substr(termSeparatorIndex + 1), &term);
     if (!status.isOK()) {
         return status.withContext(str::stream() << "Invalid term in drop-pending namespace: "
                                                 << _ns);
@@ -242,4 +242,4 @@ StringBuilder& operator<<(StringBuilder& builder, const NamespaceStringOrUUID& n
     return builder << nsOrUUID.toString();
 }
 
-}  // namespace mongo
+}  // namespace monger

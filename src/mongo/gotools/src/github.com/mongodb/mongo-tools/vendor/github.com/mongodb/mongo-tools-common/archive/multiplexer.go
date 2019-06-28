@@ -13,10 +13,10 @@ import (
 	"io"
 	"reflect"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 // bufferSize enables or disables the MuxIn buffering

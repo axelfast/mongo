@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,39 +27,39 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/filesystem.hpp>
 
-#include "mongo/base/init.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/service_context.h"
-#include "mongo/embedded/embedded.h"
-#include "mongo/embedded/embedded_options.h"
-#include "mongo/embedded/embedded_options_helpers.h"
-#include "mongo/scripting/bson_template_evaluator.h"
-#include "mongo/shell/bench.h"
-#include "mongo/tools/mongoebench_options.h"
-#include "mongo/tools/mongoebench_options_gen.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/options_parser/option_section.h"
-#include "mongo/util/signal_handlers.h"
-#include "mongo/util/text.h"
+#include "monger/base/init.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/service_context.h"
+#include "monger/embedded/embedded.h"
+#include "monger/embedded/embedded_options.h"
+#include "monger/embedded/embedded_options_helpers.h"
+#include "monger/scripting/bson_template_evaluator.h"
+#include "monger/shell/bench.h"
+#include "monger/tools/mongerebench_options.h"
+#include "monger/tools/mongerebench_options_gen.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/options_parser/option_section.h"
+#include "monger/util/signal_handlers.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
  * DBDirectClientWithOwnOpCtx is a version of DBDirectClient that owns its own OperationContext.
  *
- * Since benchRun originally existed only in the mongo shell and was used with only
+ * Since benchRun originally existed only in the monger shell and was used with only
  * DBClientConnections, there isn't a part of the BenchRunConfig or BenchRunWorker interfaces that
- * is aware of having an OperationContext. In particular, the mongo shell lacks a ServiceContext and
+ * is aware of having an OperationContext. In particular, the monger shell lacks a ServiceContext and
  * therefore also lacks the rest of the Client and OperationContext hierarchy. We shove an
- * OperationContext onto the DBDirectClient to work around this limitation for mongoebench to work.
+ * OperationContext onto the DBDirectClient to work around this limitation for mongerebench to work.
  */
 class DBDirectClientWithOwnOpCtx : public DBDirectClient {
 public:
@@ -83,7 +83,7 @@ MONGO_INITIALIZER_WITH_PREREQUISITES(SignalProcessingStartup, ("ThreadNameInitia
     return Status::OK();
 }
 
-int mongoeBenchMain(int argc, char* argv[], char** envp) {
+int mongereBenchMain(int argc, char* argv[], char** envp) {
     ServiceContext* serviceContext = nullptr;
 
     registerShutdownTask([&]() {
@@ -110,34 +110,34 @@ int mongoeBenchMain(int argc, char* argv[], char** envp) {
 
     // If a "pre" section was present in the benchRun config file, then we run its operations once
     // before running the operations from the "ops" section.
-    if (mongoeBenchGlobalParams.preConfig) {
-        auto conn = mongoeBenchGlobalParams.preConfig->createConnection();
+    if (mongereBenchGlobalParams.preConfig) {
+        auto conn = mongereBenchGlobalParams.preConfig->createConnection();
         boost::optional<LogicalSessionIdToClient> lsid;
 
-        PseudoRandom rng(mongoeBenchGlobalParams.preConfig->randomSeed);
-        BsonTemplateEvaluator bsonTemplateEvaluator(mongoeBenchGlobalParams.preConfig->randomSeed);
+        PseudoRandom rng(mongereBenchGlobalParams.preConfig->randomSeed);
+        BsonTemplateEvaluator bsonTemplateEvaluator(mongereBenchGlobalParams.preConfig->randomSeed);
         BenchRunStats stats;
         BenchRunOp::State state(&rng, &bsonTemplateEvaluator, &stats);
 
-        for (auto&& op : mongoeBenchGlobalParams.preConfig->ops) {
-            op.executeOnce(conn.get(), lsid, *mongoeBenchGlobalParams.preConfig, &state);
+        for (auto&& op : mongereBenchGlobalParams.preConfig->ops) {
+            op.executeOnce(conn.get(), lsid, *mongereBenchGlobalParams.preConfig, &state);
         }
     }
 
     // If an "ops" section was present in the benchRun config file, then we repeatedly run its
     // operations across the configured number of threads for the configured number of seconds.
-    if (mongoeBenchGlobalParams.opsConfig) {
-        const double seconds = mongoeBenchGlobalParams.opsConfig->seconds;
-        auto runner = std::make_unique<BenchRunner>(mongoeBenchGlobalParams.opsConfig.release());
+    if (mongereBenchGlobalParams.opsConfig) {
+        const double seconds = mongereBenchGlobalParams.opsConfig->seconds;
+        auto runner = std::make_unique<BenchRunner>(mongereBenchGlobalParams.opsConfig.release());
         runner->start();
 
         sleepmillis(static_cast<long long>(seconds * 1000));
 
         BSONObj stats = BenchRunner::finish(runner.release());
-        log() << "writing stats to " << mongoeBenchGlobalParams.outputFile.string() << ": "
+        log() << "writing stats to " << mongereBenchGlobalParams.outputFile.string() << ": "
               << stats;
 
-        boost::filesystem::ofstream outfile(mongoeBenchGlobalParams.outputFile);
+        boost::filesystem::ofstream outfile(mongereBenchGlobalParams.outputFile);
         outfile << stats.jsonString() << '\n';
     }
 
@@ -151,20 +151,20 @@ MONGO_REGISTER_SHIM(BenchRunConfig::createConnectionImpl)
     return std::unique_ptr<DBClientBase>(new DBDirectClientWithOwnOpCtx());
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 #if defined(_WIN32)
 // In Windows, wmain() is an alternate entry point for main(), and receives the same parameters as
 // main() but encoded in Windows Unicode (UTF-16); "wide" 16-bit wchar_t characters. The
 // WindowsCommandLine object converts these wide character strings to a UTF-8 coded equivalent and
-// makes them available through the argv() and envp() members. This enables mongoeBenchMain() to
+// makes them available through the argv() and envp() members. This enables mongereBenchMain() to
 // process UTF-8 encoded arguments and environment variables without regard to platform.
 int wmain(int argc, wchar_t* argvW[], wchar_t* envpW[]) {
-    mongo::WindowsCommandLine wcl(argc, argvW, envpW);
-    return mongo::mongoeBenchMain(argc, wcl.argv(), wcl.envp());
+    monger::WindowsCommandLine wcl(argc, argvW, envpW);
+    return monger::mongereBenchMain(argc, wcl.argv(), wcl.envp());
 }
 #else
 int main(int argc, char* argv[], char** envp) {
-    return mongo::mongoeBenchMain(argc, argv, envp);
+    return monger::mongereBenchMain(argc, argv, envp);
 }
 #endif

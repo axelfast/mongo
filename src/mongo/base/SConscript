@@ -37,7 +37,7 @@ env.Library(
         'system_error.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -63,10 +63,10 @@ env.Library(
         'secure_allocator.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/server_options_core',
-        '$BUILD_DIR/mongo/util/processinfo',
-        '$BUILD_DIR/mongo/util/secure_zero_memory',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/server_options_core',
+        '$BUILD_DIR/monger/util/processinfo',
+        '$BUILD_DIR/monger/util/secure_zero_memory',
     ],
 )
 

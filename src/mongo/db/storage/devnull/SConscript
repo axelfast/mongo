@@ -10,11 +10,11 @@ env.Library(
         'devnull_kv_engine.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/storage/ephemeral_for_test/ephemeral_for_test_record_store',
-        '$BUILD_DIR/mongo/db/storage/kv/kv_prefix',
+        '$BUILD_DIR/monger/db/storage/ephemeral_for_test/ephemeral_for_test_record_store',
+        '$BUILD_DIR/monger/db/storage/kv/kv_prefix',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/snapshot_window_options',
+        '$BUILD_DIR/monger/db/snapshot_window_options',
     ],
 )
 
@@ -25,10 +25,10 @@ env.Library(
     ],
     LIBDEPS=[
         'storage_devnull_core',
-        '$BUILD_DIR/mongo/db/storage/durable_catalog_impl',
-        '$BUILD_DIR/mongo/db/storage/storage_engine_impl',
+        '$BUILD_DIR/monger/db/storage/durable_catalog_impl',
+        '$BUILD_DIR/monger/db/storage/storage_engine_impl',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/storage/storage_engine_common',
+        '$BUILD_DIR/monger/db/storage/storage_engine_common',
     ],
 )

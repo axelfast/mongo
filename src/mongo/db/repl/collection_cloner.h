@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,27 +34,27 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/client/fetcher.h"
-#include "mongo/client/remote_command_retry_scheduler.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/base_cloner.h"
-#include "mongo/db/repl/callback_completion_guard.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/task_runner.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/progress_meter.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/client/fetcher.h"
+#include "monger/client/remote_command_retry_scheduler.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/base_cloner.h"
+#include "monger/db/repl/callback_completion_guard.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/task_runner.h"
+#include "monger/executor/task_executor.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/progress_meter.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 class StorageInterface;
@@ -312,4 +312,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

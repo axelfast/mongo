@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,16 +33,16 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/fts/fts_language.h"
-#include "mongo/db/fts/fts_util.h"
-#include "mongo/db/fts/stemmer.h"
-#include "mongo/db/fts/stop_words.h"
-#include "mongo/db/fts/tokenizer.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/string_map.h"
+#include "monger/base/status_with.h"
+#include "monger/db/fts/fts_language.h"
+#include "monger/db/fts/fts_util.h"
+#include "monger/db/fts/stemmer.h"
+#include "monger/db/fts/stop_words.h"
+#include "monger/db/fts/tokenizer.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
@@ -186,4 +186,4 @@ private:
     std::vector<std::string> _extraAfter;
 };
 }  // namespace fts
-}  // namespace mongo
+}  // namespace monger

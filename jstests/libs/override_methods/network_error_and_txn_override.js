@@ -8,7 +8,7 @@
  * which are expected without failover in sharding, and automatically creates collections and
  * retries transactions that fail due to implicit collection creation.
  *
- * (2) When a network connection to the mongo shell is closed, attempting to call
+ * (2) When a network connection to the monger shell is closed, attempting to call
  * Mongo.prototype.runCommand() and Mongo.prototype.runCommandWithMetadata() throws a JavaScript
  * exception. This override catches these exceptions (i.e. ones where isNetworkError() returns true)
  * and automatically re-sends the command request to the server, or propagates the error if the
@@ -820,7 +820,7 @@
                 return kContinue;
             }
 
-            // listCollections and listIndexes called through mongos may return OperationFailed if
+            // listCollections and listIndexes called through mongers may return OperationFailed if
             // the request to establish a cursor on the targeted shard fails with a network error.
             //
             // TODO SERVER-30949: Remove this check once those two commands retry on retryable
@@ -828,7 +828,7 @@
             if ((cmdName === "listCollections" || cmdName === "listIndexes") &&
                 res.code === ErrorCodes.OperationFailed && res.hasOwnProperty("errmsg") &&
                 res.errmsg.indexOf("failed to read command response from shard") >= 0) {
-                logError("Retrying failed mongos cursor command");
+                logError("Retrying failed mongers cursor command");
                 return kContinue;
             }
 

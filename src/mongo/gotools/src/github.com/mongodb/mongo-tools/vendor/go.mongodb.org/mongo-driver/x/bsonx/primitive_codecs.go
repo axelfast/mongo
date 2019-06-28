@@ -11,9 +11,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/bson/bsonrw"
-	"go.mongodb.org/mongo-driver/bson/bsontype"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/bson/bsonrw"
+	"go.mongerdb.org/monger-driver/bson/bsontype"
 )
 
 var primitiveCodecs PrimitiveCodecs

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/aggregation_request.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/json.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const Document kDefaultCursorOptionDocument{
@@ -513,4 +513,4 @@ TEST(AggregationRequestTest, ShouldIgnoreQueryOptions) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

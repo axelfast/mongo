@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,9 +35,9 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/bson/util/builder.h"
+#include "monger/bson/util/builder.h"
 
-namespace mongo {
+namespace monger {
 
 class Status;
 template <typename T>
@@ -151,17 +151,17 @@ StringBuilder& operator<<(StringBuilder& os, const HostAndPort& hp);
 
 StackStringBuilder& operator<<(StackStringBuilder& os, const HostAndPort& hp);
 
-}  // namespace mongo
+}  // namespace monger
 
 template <>
-struct fmt::formatter<mongo::HostAndPort> {
+struct fmt::formatter<monger::HostAndPort> {
     template <typename ParseContext>
     auto parse(ParseContext& ctx) -> decltype(ctx.begin()) {
         return ctx.begin();
     }
 
     template <typename FormatContext>
-    auto format(const mongo::HostAndPort& hp, FormatContext& ctx) -> decltype(ctx.out()) {
+    auto format(const monger::HostAndPort& hp, FormatContext& ctx) -> decltype(ctx.out()) {
         fmt::writer w(ctx.out());
         hp.append(w);
         return ctx.out();

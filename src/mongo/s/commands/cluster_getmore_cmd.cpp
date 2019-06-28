@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/s/query/cluster_cursor_manager.h"
-#include "mongo/s/query/cluster_find.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/stats/counters.h"
+#include "monger/s/query/cluster_cursor_manager.h"
+#include "monger/s/query/cluster_find.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
- * Implements the getMore command on mongos. Retrieves more from an existing mongos cursor
+ * Implements the getMore command on mongers. Retrieves more from an existing mongers cursor
  * corresponding to the cursor id passed from the application. In order to generate these results,
  * may issue getMore commands to remote nodes in one or more shards.
  */
@@ -117,4 +117,4 @@ public:
 } cmdGetMoreCluster;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

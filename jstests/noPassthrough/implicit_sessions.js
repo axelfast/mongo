@@ -1,5 +1,5 @@
 /**
- * Verifies behavior around implicit sessions in the mongo shell.
+ * Verifies behavior around implicit sessions in the monger shell.
  */
 (function() {
     "use strict";
@@ -9,20 +9,20 @@
      * its logical session id.
      */
     function inspectCommandForSessionId(func, {shouldIncludeId, expectedId, differentFromId}) {
-        const mongoRunCommandOriginal = Mongo.prototype.runCommand;
+        const mongerRunCommandOriginal = Mongo.prototype.runCommand;
 
         const sentinel = {};
         let cmdObjSeen = sentinel;
 
         Mongo.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
             cmdObjSeen = cmdObj;
-            return mongoRunCommandOriginal.apply(this, arguments);
+            return mongerRunCommandOriginal.apply(this, arguments);
         };
 
         try {
             assert.doesNotThrow(func);
         } finally {
-            Mongo.prototype.runCommand = mongoRunCommandOriginal;
+            Mongo.prototype.runCommand = mongerRunCommandOriginal;
         }
 
         if (cmdObjSeen === sentinel) {

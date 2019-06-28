@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/split_chunk.h"
+#include "monger/db/s/split_chunk.h"
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/s/collection_metadata.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/shard_filtering_metadata_refresh.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/split_chunk_request_type.h"
-#include "mongo/util/log.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/commands.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/s/collection_metadata.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/shard_filtering_metadata_refresh.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/split_chunk_request_type.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const ReadPreferenceSetting kPrimaryOnlyReadPreference{ReadPreference::PrimaryOnly};
@@ -254,4 +254,4 @@ StatusWith<boost::optional<ChunkRange>> splitChunk(OperationContext* opCtx,
     return boost::optional<ChunkRange>(boost::none);
 }
 
-}  // namespace mongo
+}  // namespace monger

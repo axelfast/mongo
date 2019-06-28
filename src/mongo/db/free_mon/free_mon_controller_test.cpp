@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/filesystem.hpp>
 #include <future>
@@ -37,41 +37,41 @@
 #include <memory>
 #include <snappy.h>
 
-#include "mongo/db/free_mon/free_mon_controller.h"
-#include "mongo/db/free_mon/free_mon_storage.h"
+#include "monger/db/free_mon/free_mon_controller.h"
+#include "monger/db/free_mon/free_mon_storage.h"
 
-#include "mongo/base/data_type_validated.h"
-#include "mongo/base/deinitializer_context.h"
-#include "mongo/bson/bson_validate.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/free_mon/free_mon_op_observer.h"
-#include "mongo/db/ftdc/collector.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/constants.h"
-#include "mongo/db/ftdc/controller.h"
-#include "mongo/db/ftdc/ftdc_test.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/op_observer_noop.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/rpc/object_check.h"
-#include "mongo/unittest/barrier.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/log.h"
+#include "monger/base/data_type_validated.h"
+#include "monger/base/deinitializer_context.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/client.h"
+#include "monger/db/free_mon/free_mon_op_observer.h"
+#include "monger/db/ftdc/collector.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/constants.h"
+#include "monger/db/ftdc/controller.h"
+#include "monger/db/ftdc/ftdc_test.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/op_observer_noop.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/rpc/object_check.h"
+#include "monger/unittest/barrier.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/log.h"
 
 
-namespace mongo {
+namespace monger {
 namespace {
 
 
@@ -1615,4 +1615,4 @@ TEST_F(FreeMonControllerRSTest, SecondaryRollbackStopMetrics) {
 // TODO: Positive: ensure optional fields are rotated
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

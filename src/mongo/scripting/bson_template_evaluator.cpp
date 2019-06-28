@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/scripting/bson_template_evaluator.h"
+#include "monger/scripting/bson_template_evaluator.h"
 
 #include <cstddef>
 #include <cstdlib>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/util/map_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/static_assert.h"
+#include "monger/util/map_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -342,4 +342,4 @@ BsonTemplateEvaluator::Status BsonTemplateEvaluator::evalCurrentDate(BsonTemplat
     return StatusSuccess;
 }
 
-}  // end namespace mongo
+}  // end namespace monger

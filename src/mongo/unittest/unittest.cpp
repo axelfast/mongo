@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
 #include <functional>
 #include <iostream>
 #include <map>
 #include <memory>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/init.h"
-#include "mongo/db/server_options.h"
-#include "mongo/logger/console_appender.h"
-#include "mongo/logger/log_manager.h"
-#include "mongo/logger/logger.h"
-#include "mongo/logger/message_event_utf8_encoder.h"
-#include "mongo/logger/message_log_domain.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/timer.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/init.h"
+#include "monger/db/server_options.h"
+#include "monger/logger/console_appender.h"
+#include "monger/logger/log_manager.h"
+#include "monger/logger/logger.h"
+#include "monger/logger/message_event_utf8_encoder.h"
+#include "monger/logger/message_log_domain.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace unittest {
 namespace {
 
@@ -545,4 +545,4 @@ ComparisonAssertion<op> ComparisonAssertion<op>::make(const char* theFile,
 INSTANTIATE_COMPARISON_ASSERTION_CTORS();
 
 }  // namespace unittest
-}  // namespace mongo
+}  // namespace monger

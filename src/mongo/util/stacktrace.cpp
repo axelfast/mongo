@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 // stacktrace_${TARGET_OS_FAMILY}.cpp sets default log component to kControl.
 // Setting kDefault to preserve previous behavior in (defunct) getStacktraceLogger().
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/stacktrace.h"
+#include "monger/util/stacktrace.h"
 
-#include "mongo/util/log.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 void printStackTrace() {
     // NOTE: We disable long-line truncation for the stack trace, because the JSON representation of
@@ -53,4 +53,4 @@ void printWindowsStackTrace(CONTEXT& context) {
 
 #endif  // defined(_WIN32)
 
-}  // namespace mongo
+}  // namespace monger

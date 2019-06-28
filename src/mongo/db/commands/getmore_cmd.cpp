@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,43 +27,43 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <string>
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/client.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/find.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/read_concern.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/db/stats/top.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/client.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/commands.h"
+#include "monger/db/curop.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/find.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
+#include "monger/db/service_context.h"
+#include "monger/db/stats/counters.h"
+#include "monger/db/stats/top.h"
+#include "monger/s/chunk_version.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -643,7 +643,7 @@ public:
                 // getMores do not have support for a maxTimeout duration, we hardcode the timeout
                 // to avoid waiting indefinitely.
                 uassertStatusOK(
-                    mongo::waitForLinearizableReadConcern(opCtx, kLinearizableReadConcernTimeout));
+                    monger::waitForLinearizableReadConcern(opCtx, kLinearizableReadConcernTimeout));
             }
 
             // We're about to unpin or delete the cursor as the ClientCursorPin goes out of scope.
@@ -701,4 +701,4 @@ public:
 } getMoreCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

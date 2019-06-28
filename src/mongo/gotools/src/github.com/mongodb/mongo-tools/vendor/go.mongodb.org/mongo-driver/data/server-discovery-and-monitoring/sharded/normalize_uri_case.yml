@@ -1,6 +1,6 @@
 description: "Normalize URI case"
 
-uri: "mongodb://A,B"
+uri: "mongerdb://A,B"
 
 phases: [
 

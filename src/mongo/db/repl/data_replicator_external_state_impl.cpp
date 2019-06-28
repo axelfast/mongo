@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/data_replicator_external_state_impl.h"
+#include "monger/db/repl/data_replicator_external_state_impl.h"
 
-#include "mongo/base/init.h"
-#include "mongo/db/repl/oplog_applier_impl.h"
-#include "mongo/db/repl/oplog_buffer_blocking_queue.h"
-#include "mongo/db/repl/oplog_buffer_collection.h"
-#include "mongo/db/repl/oplog_buffer_proxy.h"
-#include "mongo/db/repl/repl_server_parameters_gen.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_external_state.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/db/repl/oplog_applier_impl.h"
+#include "monger/db/repl/oplog_buffer_blocking_queue.h"
+#include "monger/db/repl/oplog_buffer_collection.h"
+#include "monger/db/repl/oplog_buffer_proxy.h"
+#include "monger/db/repl/repl_server_parameters_gen.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_external_state.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -161,4 +161,4 @@ DataReplicatorExternalStateImpl::getReplicationCoordinatorExternalState() const 
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

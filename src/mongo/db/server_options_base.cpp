@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,21 +28,21 @@
  *    it in the license file.
  */
 
-#include "mongo/db/server_options_base.h"
+#include "monger/db/server_options_base.h"
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/server_options_base_gen.h"
-#include "mongo/db/server_options_general_gen.h"
-#include "mongo/logger/log_component.h"
-#include "mongo/util/options_parser/environment.h"
-#include "mongo/util/options_parser/option_description.h"
-#include "mongo/util/options_parser/option_section.h"
-#include "mongo/util/options_parser/startup_option_init.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/base/string_data.h"
+#include "monger/db/server_options_base_gen.h"
+#include "monger/db/server_options_general_gen.h"
+#include "monger/logger/log_component.h"
+#include "monger/util/options_parser/environment.h"
+#include "monger/util/options_parser/option_description.h"
+#include "monger/util/options_parser/option_section.h"
+#include "monger/util/options_parser/startup_option_init.h"
+#include "monger/util/options_parser/startup_options.h"
 
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 
-namespace mongo {
+namespace monger {
 
 // Primarily dispatches to IDL defined addBaseServerOptionDefinitions,
 // then adds some complex options inexpressible in IDL.
@@ -141,4 +141,4 @@ std::string getUnixDomainSocketFilePermissionsHelpText() {
     return ss.str();
 }
 
-}  // namespace mongo
+}  // namespace monger

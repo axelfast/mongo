@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,19 +28,19 @@
  */
 
 /**
- * This file contains tests for mongo/db/query/query_planner.cpp
+ * This file contains tests for monger/db/query/query_planner.cpp
  */
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 #include <ostream>
 
-namespace mongo {
+namespace monger {
 
 class QueryPlannerTestLib {
 public:
@@ -83,4 +83,4 @@ public:
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include "mongo/config.h"
+#include "monger/config.h"
 
 #include <cstddef>
 #include <limits>
@@ -38,12 +38,12 @@
 #include <type_traits>
 #include <vector>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/db/server_options.h"
-#include "mongo/stdx/type_traits.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/static_assert.h"
+#include "monger/db/server_options.h"
+#include "monger/stdx/type_traits.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 namespace secure_allocator_details {
 
@@ -54,7 +54,7 @@ inline void* allocateWrapper(std::size_t bytes, std::size_t alignOf, bool secure
     if (secure) {
         return allocate(bytes, alignOf);
     } else {
-        return mongoMalloc(bytes);
+        return mongerMalloc(bytes);
     }
 }
 inline void deallocateWrapper(void* ptr, std::size_t bytes, bool secure) {
@@ -332,4 +332,4 @@ template <typename T>
 using SecureVector = SecureAllocatorDefaultDomain::SecureVector<T>;
 using SecureString = SecureAllocatorDefaultDomain::SecureString;
 
-}  // namespace mongo
+}  // namespace monger

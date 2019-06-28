@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -84,7 +84,7 @@ def get_method_name_from_qualified_method_name(name):
     if name.startswith("::"):
         name = name[2:]
 
-    prefix = 'mongo::'
+    prefix = 'monger::'
     pos = name.find(prefix)
     if pos == -1:
         return name

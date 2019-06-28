@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/base/init.h"
+#include "monger/base/init.h"
 
 #include <memory>
 
-#include "mongo/db/storage/kv/kv_engine_test_harness.h"
-#include "mongo/db/storage/mobile/mobile_kv_engine.h"
-#include "mongo/db/storage/mobile/mobile_options_gen.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/util/options_parser/options_parser.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/db/storage/kv/kv_engine_test_harness.h"
+#include "monger/db/storage/mobile/mobile_kv_engine.h"
+#include "monger/db/storage/mobile/mobile_options_gen.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/util/options_parser/options_parser.h"
+#include "monger/util/options_parser/startup_options.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class MobileKVHarnessHelper : public KVHarnessHelper {
@@ -87,4 +87,4 @@ MONGO_INITIALIZER(RegisterKVHarnessFactory)(InitializerContext*) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

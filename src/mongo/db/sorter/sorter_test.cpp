@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/sorter/sorter.h"
+#include "monger/db/sorter/sorter.h"
 
 #include <boost/filesystem.hpp>
 
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/init.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/config.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/platform/random.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/init.h"
+#include "monger/base/static_assert.h"
+#include "monger/config.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/platform/random.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
 #include <memory>
 
-namespace mongo {
+namespace monger {
 
 /**
  * Generates a new file name on each call using a static, atomic and monotonically increasing
@@ -62,14 +62,14 @@ std::string nextFileName() {
     return "extsort-sorter-test." + std::to_string(sorterTestFileCounter.fetchAndAdd(1));
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 // Need access to internal classes
-#include "mongo/db/sorter/sorter.cpp"
+#include "monger/db/sorter/sorter.cpp"
 
-namespace mongo {
+namespace monger {
 
-using namespace mongo::sorter;
+using namespace monger::sorter;
 using std::make_shared;
 using std::pair;
 
@@ -204,7 +204,7 @@ void _assertIteratorsEquivalent(It1 it1, It2 it2, int line) {
         it1->closeSource();
         it2->closeSource();
     } catch (...) {
-        mongo::unittest::log() << "Failure from line " << line << " on iteration " << iteration
+        monger::unittest::log() << "Failure from line " << line << " on iteration " << iteration
                                << std::endl;
         it1->closeSource();
         it2->closeSource();
@@ -578,7 +578,7 @@ class LotsOfDataWithLimit : public LotsOfDataLittleMemory<Random> {
 };
 }  // namespace SorterTests
 
-class SorterSuite : public mongo::unittest::Suite {
+class SorterSuite : public monger::unittest::Suite {
 public:
     SorterSuite() : Suite("sorter") {}
 
@@ -619,5 +619,5 @@ public:
     }
 };
 
-mongo::unittest::SuiteInstance<SorterSuite> extSortTests;
-}  // namespace mongo
+monger::unittest::SuiteInstance<SorterSuite> extSortTests;
+}  // namespace monger

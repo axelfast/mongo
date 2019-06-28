@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,17 +29,17 @@
 
 #pragma once
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fmt/format.h>
 
-#include "mongo/db/db_raii.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/read_concern.h"
-#include "mongo/db/storage/recovery_unit.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/storage/recovery_unit.h"
 
-namespace mongo {
+namespace monger {
 using namespace fmt::literals;
 
 /**
@@ -225,4 +225,4 @@ DocumentSource::GetNextResult DocumentSourceWriter<B>::getNext() {
     MONGO_UNREACHABLE;
 }
 
-}  // namespace mongo
+}  // namespace monger

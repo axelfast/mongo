@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <map>
 #include <set>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/stdx/unordered_set.h"
+#include "monger/base/string_data.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/stdx/unordered_set.h"
 
-namespace mongo {
+namespace monger {
 
 class ValueComparator {
 public:
@@ -203,4 +203,4 @@ template <typename T>
 using ValueUnorderedMap =
     stdx::unordered_map<Value, T, ValueComparator::Hasher, ValueComparator::EqualTo>;
 
-}  // namespace mongo
+}  // namespace monger

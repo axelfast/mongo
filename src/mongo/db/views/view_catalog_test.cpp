@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,34 +27,34 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <functional>
 #include <memory>
 #include <set>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/views/durable_view_catalog.h"
-#include "mongo/db/views/view.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/db/views/view_graph.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/views/durable_view_catalog.h"
+#include "monger/db/views/view.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/db/views/view_graph.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 constexpr auto kLargeString =
@@ -597,4 +597,4 @@ TEST_F(ViewCatalogFixture, InvalidateThenReload) {
     ASSERT_EQ(2, durableViewCatalog->getIterateCount());
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

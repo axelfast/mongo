@@ -1,5 +1,5 @@
 description: "Standalone with default maxWireVersion of 0"
-uri: "mongodb://a"
+uri: "mongerdb://a"
 phases: [
     {
         responses: [

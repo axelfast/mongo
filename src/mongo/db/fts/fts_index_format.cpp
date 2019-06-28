@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <third_party/murmurhash3/MurmurHash3.h>
 
-#include "mongo/base/init.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/fts/fts_index_format.h"
-#include "mongo/db/fts/fts_spec.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/md5.hpp"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/fts/fts_index_format.h"
+#include "monger/db/fts/fts_spec.h"
+#include "monger/db/server_options.h"
+#include "monger/util/hex.h"
+#include "monger/util/md5.hpp"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
 using std::string;
 using std::vector;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 namespace {
 BSONObj nullObj;
@@ -224,7 +224,7 @@ void FTSIndexFormat::_appendIndexKey(BSONObjBuilder& b,
             } t;
             uint32_t seed = 0;
             MurmurHash3_x64_128(term.data(), term.size(), seed, t.hash);
-            string keySuffix = mongo::toHexLower(t.data, sizeof(t.data));
+            string keySuffix = monger::toHexLower(t.data, sizeof(t.data));
             invariant(termKeySuffixLengthV2 == keySuffix.size());
             b.append("", term.substr(0, termKeyPrefixLengthV2) + keySuffix);
         }

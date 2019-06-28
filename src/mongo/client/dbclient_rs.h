@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,11 +35,11 @@
 
 #include <utility>
 
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/client/monger_uri.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 class ReplicaSetMonitor;
 class TagSet;
@@ -82,7 +82,7 @@ public:
      *
      * @param dbname the database to logout from.
      * @param info the result object for the logout command (provided for backwards
-     *     compatibility with mongo shell)
+     *     compatibility with monger shell)
      */
     void logout(const std::string& dbname, BSONObj& info) override;
 
@@ -306,7 +306,7 @@ private:
      */
     void resetSlaveOkConn();
 
-    // TODO: remove this when processes other than mongos uses the driver version.
+    // TODO: remove this when processes other than mongers uses the driver version.
     static bool _authPooledSecondaryConn;
 
     // Throws a DBException if the monitor doesn't exist and there isn't a cached seed to use.

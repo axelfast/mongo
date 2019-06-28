@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/object_replace_executor.h"
+#include "monger/db/update/object_replace_executor.h"
 
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/mutable_bson_test_utils.h"
-#include "mongo/db/json.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/update/update_node_test_fixture.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/mutable_bson_test_utils.h"
+#include "monger/db/json.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/update/update_node_test_fixture.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using ObjectReplaceExecutorTest = UpdateNodeTest;
-using mongo::mutablebson::Element;
-using mongo::mutablebson::countChildren;
+using monger::mutablebson::Element;
+using monger::mutablebson::countChildren;
 
 TEST_F(ObjectReplaceExecutorTest, Noop) {
     auto obj = fromjson("{a: 1, b: 2}");
@@ -298,4 +298,4 @@ TEST_F(ObjectReplaceExecutorTest, NoLogBuilder) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

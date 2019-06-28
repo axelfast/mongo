@@ -26,8 +26,8 @@ server to return an error. Keep in mind that the fail point only triggers for
 commands listed in the "failCommands" field. See `SERVER-35004`_ and
 `SERVER-35083`_ for more information.
 
-.. _SERVER-35004: https://jira.mongodb.org/browse/SERVER-35004
-.. _SERVER-35083: https://jira.mongodb.org/browse/SERVER-35083
+.. _SERVER-35004: https://jira.mongerdb.org/browse/SERVER-35004
+.. _SERVER-35083: https://jira.mongerdb.org/browse/SERVER-35083
 
 The ``failCommand`` fail point may be configured like so::
 
@@ -92,7 +92,7 @@ Each YAML file has the following keys:
 
   - ``useMultipleMongoses``: Optional, boolean. If true and this test is
     running against a sharded cluster, intialize the MongoClient for this
-    test with multiple mongos seed addresses.
+    test with multiple mongers seed addresses.
 
   - ``clientOptions``: Optional, parameters to pass to MongoClient().
 
@@ -158,9 +158,9 @@ server selection in a transaction works properly. Including an arbiter helps
 ensure that no new bugs have been introduced related to arbiters.)
 
 A driver that implements support for sharded transactions MUST also run these
-tests against a MongoDB sharded cluster with multiple mongoses and
+tests against a MongoDB sharded cluster with multiple mongerses and
 **server version 4.2 or later**. Some tests require
-initializing the MongoClient with multiple mongos seeds to ensures that mongos
+initializing the MongoClient with multiple mongers seeds to ensures that mongers
 transaction pinning and the recoveryToken works properly.
 
 Load each YAML (or JSON) file using a Canonical Extended JSON parser.
@@ -176,7 +176,7 @@ Then for each element in ``tests``:
      a previously failed test to prevent the current test from blocking.
      It is sufficient to run this command once before starting the test suite
      and once after each failed test.
-   - When testing against a sharded cluster run this command on ALL mongoses.
+   - When testing against a sharded cluster run this command on ALL mongerses.
 
 #. Create a collection object from the MongoClient, using the ``database_name``
    and ``collection_name`` fields of the YAML file.
@@ -195,7 +195,7 @@ Then for each element in ``tests``:
    present.
 
    - When testing against a sharded cluster and ``useMultipleMongoses`` is
-     ``true`` the client MUST be created with multiple (valid) mongos seed
+     ``true`` the client MUST be created with multiple (valid) mongers seed
      addreses.
 
 #. Call ``client.startSession`` twice to create ClientSession objects
@@ -276,9 +276,9 @@ targetedFailPoint
 ~~~~~~~~~~~~~~~~~
 
 The "targetedFailPoint" operation instructs the test runner to configure a fail
-point on a specific mongos. The mongos to run the ``configureFailPoint`` is
+point on a specific mongers. The mongers to run the ``configureFailPoint`` is
 determined by the "session" argument (either "session0" or "session1").
-The session must already be pinned to a mongos server. The "failPoint" argument
+The session must already be pinned to a mongers server. The "failPoint" argument
 is the ``configureFailPoint`` command to run.
 
 If a test uses ``targetedFailPoint``, disable the fail point after running
@@ -291,7 +291,7 @@ point may be disabled like so::
     });
 
 Here is an example which instructs the test runner to enable the failCommand
-fail point on the mongos server which "session0" is pinned to::
+fail point on the mongers server which "session0" is pinned to::
 
       # Enable the fail point only on the Mongos that session0 is pinned to.
       - name: targetedFailPoint
@@ -309,7 +309,7 @@ assertSessionPinned
 ~~~~~~~~~~~~~~~~~~~
 
 The "assertSessionPinned" operation instructs the test runner to assert that
-the given session is pinned to a mongos::
+the given session is pinned to a mongers::
 
       - name: assertSessionPinned
         object: testRunner
@@ -320,7 +320,7 @@ assertSessionUnpinned
 ~~~~~~~~~~~~~~~~~~~~~
 
 The "assertSessionUnpinned" operation instructs the test runner to assert that
-the given session is not pinned to a mongos::
+the given session is not pinned to a mongers::
 
       - name: assertSessionPinned
         object: testRunner
@@ -377,7 +377,7 @@ Mongos Pinning Prose Tests
 
 The following tests ensure that a ClientSession is properly unpinned after
 a sharded transaction. Initialize these tests with a MongoClient connected
-to multiple mongoses.
+to multiple mongerses.
 
 These tests use a cursor's address field to track which server an operation
 was run on. If this is not possible in your driver, use command monitoring
@@ -389,11 +389,11 @@ instead.
    .. code:: python
 
       @require_server_version(4, 1, 6)
-      @require_mongos_count_at_least(2)
+      @require_mongers_count_at_least(2)
       def test_unpin_for_next_transaction(self):
         # Increase localThresholdMS and wait until both nodes are discovered
         # to avoid false positives.
-        client = MongoClient(mongos_hosts, localThresholdMS=1000)
+        client = MongoClient(mongers_hosts, localThresholdMS=1000)
         wait_until(lambda: len(client.nodes) > 1)
         # Create the collection.
         client.test.test.insert_one({})
@@ -417,11 +417,11 @@ instead.
    .. code:: python
 
       @require_server_version(4, 1, 6)
-      @require_mongos_count_at_least(2)
+      @require_mongers_count_at_least(2)
       def test_unpin_for_non_transaction_operation(self):
         # Increase localThresholdMS and wait until both nodes are discovered
         # to avoid false positives.
-        client = MongoClient(mongos_hosts, localThresholdMS=1000)
+        client = MongoClient(mongers_hosts, localThresholdMS=1000)
         wait_until(lambda: len(client.nodes) > 1)
         # Create the collection.
         client.test.test.insert_one({})
@@ -445,7 +445,7 @@ Why do some tests appear to hang for 60 seconds on a sharded cluster?
 `````````````````````````````````````````````````````````````````````
 
 There are two cases where this can happen. When the initial commitTransaction
-attempt fails on mongos A and is retried on mongos B, mongos B will block
+attempt fails on mongers A and is retried on mongers B, mongers B will block
 waiting for the transaction to complete. However because the initial commit
 attempt failed, the command will only complete after the transaction is
 automatically aborted for exceeding the shard's
@@ -454,7 +454,7 @@ recovering the outcome of an uncommitted transaction should immediately abort
 the transaction.
 
 The second case is when a *single-shard* transaction is committed successfully
-on mongos A and then explicitly committed again on mongos B. Mongos B will also
+on mongers A and then explicitly committed again on mongers B. Mongos B will also
 block until the transactionLifetimeLimitSeconds timeout is hit at which point
 ``{ok:1}`` will be returned. `SERVER-39349`_ requests that recovering the
 outcome of a completed single-shard transaction should not block.
@@ -467,13 +467,13 @@ prematurely timing out any tests' transactions. To decrease the timeout, run::
 
   db.adminCommand( { setParameter: 1, transactionLifetimeLimitSeconds: 3 } )
 
-Note that mongo-orchestration >=0.6.13 automatically sets this timeout to 3
-seconds so drivers using mongo-orchestration do not need to run these commands
+Note that monger-orchestration >=0.6.13 automatically sets this timeout to 3
+seconds so drivers using monger-orchestration do not need to run these commands
 manually.
 
-.. _SERVER-39726: https://jira.mongodb.org/browse/SERVER-39726
+.. _SERVER-39726: https://jira.mongerdb.org/browse/SERVER-39726
 
-.. _SERVER-39349: https://jira.mongodb.org/browse/SERVER-39349
+.. _SERVER-39349: https://jira.mongerdb.org/browse/SERVER-39349
 
 **Changelog**
 =============

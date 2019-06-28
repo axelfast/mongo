@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ func (o *VersionOptions) PrintVersion(versionStr, gitCommit string) bool {
 }
 
 func printVersionInfo(versionStr, gitCommit string) {
-	fmt.Printf("%v version: %v\n", "mongoreplay", versionStr)
+	fmt.Printf("%v version: %v\n", "mongerreplay", versionStr)
 	fmt.Printf("git version: %v\n", gitCommit)
 	fmt.Printf("Go version: %v\n", runtime.Version())
 	fmt.Printf("   os: %v\n", runtime.GOOS)

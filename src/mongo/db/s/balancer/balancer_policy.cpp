@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/balancer/balancer_policy.h"
+#include "monger/db/s/balancer/balancer_policy.h"
 
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog/type_tags.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog/type_tags.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::map;
 using std::numeric_limits;
@@ -546,4 +546,4 @@ string MigrateInfo::toString() const {
                          << ", to " << to;
 }
 
-}  // namespace mongo
+}  // namespace monger

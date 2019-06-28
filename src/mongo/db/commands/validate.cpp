@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 using std::string;
@@ -189,7 +189,7 @@ public:
         if (!results.valid) {
             result.append("advice",
                           "A corrupt namespace has been detected. See "
-                          "http://dochub.mongodb.org/core/data-recovery for recovery steps.");
+                          "http://dochub.mongerdb.org/core/data-recovery for recovery steps.");
         }
 
         return true;

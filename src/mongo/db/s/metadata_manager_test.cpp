@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/s/metadata_manager.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/shard_server_test_fixture.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/s/metadata_manager.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/shard_server_test_fixture.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using unittest::assertGet;
@@ -483,4 +483,4 @@ TEST_F(MetadataManagerTest, ClearUnneededChunkManagerObjectSnapshotInMiddleOfLis
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

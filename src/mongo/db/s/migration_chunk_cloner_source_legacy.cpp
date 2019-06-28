@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/migration_chunk_cloner_source_legacy.h"
+#include "monger/db/s/migration_chunk_cloner_source_legacy.h"
 
-#include "mongo/base/status.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/s/collection_sharding_runtime.h"
-#include "mongo/db/s/migration_source_manager.h"
-#include "mongo/db/s/sharding_statistics.h"
-#include "mongo/db/s/start_chunk_clone_request.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/elapsed_tracker.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/s/collection_sharding_runtime.h"
+#include "monger/db/s/migration_source_manager.h"
+#include "monger/db/s/sharding_statistics.h"
+#include "monger/db/s/start_chunk_clone_request.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/executor/task_executor.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/util/elapsed_tracker.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const char kRecvChunkStatus[] = "_recvChunkStatus";
@@ -948,4 +948,4 @@ MigrationChunkClonerSourceLegacy::getNotificationForNextSessionMigrationBatch() 
     return _sessionCatalogSource->getNotificationForNewOplog();
 }
 
-}  // namespace mongo
+}  // namespace monger

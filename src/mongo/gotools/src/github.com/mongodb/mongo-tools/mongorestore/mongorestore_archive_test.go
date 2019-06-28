@@ -4,14 +4,14 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongorestore
+package mongerrestore
 
 import (
-	"github.com/mongodb/mongo-tools-common/archive"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/testtype"
-	"github.com/mongodb/mongo-tools-common/testutil"
+	"github.com/mongerdb/monger-tools-common/archive"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/testutil"
 
 	. "github.com/smartystreets/goconvey/convey"
 

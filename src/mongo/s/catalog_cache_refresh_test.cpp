@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/concurrency/locker_noop.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/catalog_cache_test_fixture.h"
-#include "mongo/s/database_version_helpers.h"
-#include "mongo/unittest/death_test.h"
+#include "monger/db/concurrency/locker_noop.h"
+#include "monger/db/query/query_request.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/catalog_cache_test_fixture.h"
+#include "monger/s/database_version_helpers.h"
+#include "monger/unittest/death_test.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::RemoteCommandRequest;
@@ -629,4 +629,4 @@ TEST_F(CatalogCacheRefreshTest, IncrementalLoadAfterMoveLastChunk) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

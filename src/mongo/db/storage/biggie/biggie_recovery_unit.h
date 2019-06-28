@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <functional>
 #include <vector>
 
-#include "mongo/db/record_id.h"
-#include "mongo/db/storage/biggie/biggie_kv_engine.h"
-#include "mongo/db/storage/biggie/store.h"
-#include "mongo/db/storage/recovery_unit.h"
+#include "monger/db/record_id.h"
+#include "monger/db/storage/biggie/biggie_kv_engine.h"
+#include "monger/db/storage/biggie/store.h"
+#include "monger/db/storage/recovery_unit.h"
 
-namespace mongo {
+namespace monger {
 namespace biggie {
 
-class RecoveryUnit : public ::mongo::RecoveryUnit {
+class RecoveryUnit : public ::monger::RecoveryUnit {
 public:
     RecoveryUnit(KVEngine* parentKVEngine, std::function<void()> cb = nullptr);
     ~RecoveryUnit();
@@ -93,4 +93,4 @@ private:
 };
 
 }  // namespace biggie
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/write_ops/chunk_manager_targeter.h"
+#include "monger/s/write_ops/chunk_manager_targeter.h"
 
-#include "mongo/base/counter.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/collation/collation_index_key.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/counter.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/collation/collation_index_key.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 enum CompareResult { CompareResult_Unknown, CompareResult_GTE, CompareResult_LT };
@@ -107,7 +107,7 @@ StatusWith<UpdateType> getUpdateExprType(const write_ops::UpdateOpEntry& updateD
 /**
  * Obtain the update expression from the given update doc. If this is a replacement-style update,
  * and the shard key includes _id but the replacement document does not, we attempt to find an exact
- * _id match in the query component and add it to the doc. We do this because mongoD will propagate
+ * _id match in the query component and add it to the doc. We do this because mongerD will propagate
  * _id from the existing document if this is an update, and will extract _id from the query when
  * generating the new document in the case of an upsert. It is therefore always correct to target
  * the operation on the basis of the combined updateExpr and query.
@@ -424,7 +424,7 @@ StatusWith<std::vector<ShardEndpoint>> ChunkManagerTargeter::targetUpdate(
     // The rule is simple; we always attempt to target using the query first. If the update is
     // replacement-style and the query targets more than one shard, we fall back to targeting using
     // the replacement document, since it must always contain a full shard key. Upserts should have
-    // full shard key in the query and we always use query for targeting. Because mongoD will
+    // full shard key in the query and we always use query for targeting. Because mongerD will
     // automatically propagate '_id' from an existing document, and will extract it from an
     // exact-match in the query in the case of an upsert, we augment the replacement doc with the
     // query's '_id' for targeting purposes, if it exists.
@@ -805,4 +805,4 @@ Status ChunkManagerTargeter::_refreshNow(OperationContext* opCtx) {
     return init(opCtx);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <map>
@@ -35,28 +35,28 @@
 #include <string>
 #include <vector>
 
-#include "mongo/bson/json.h"
-#include "mongo/s/balancer_configuration.h"
-#include "mongo/s/catalog/dist_lock_catalog_mock.h"
-#include "mongo/s/catalog/replset_dist_lock_manager.h"
-#include "mongo/s/catalog/sharding_catalog_client_mock.h"
-#include "mongo/s/catalog/type_lockpings.h"
-#include "mongo/s/catalog/type_locks.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/shard_server_test_fixture.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/system_tick_source.h"
-#include "mongo/util/tick_source_mock.h"
-#include "mongo/util/time_support.h"
+#include "monger/bson/json.h"
+#include "monger/s/balancer_configuration.h"
+#include "monger/s/catalog/dist_lock_catalog_mock.h"
+#include "monger/s/catalog/replset_dist_lock_manager.h"
+#include "monger/s/catalog/sharding_catalog_client_mock.h"
+#include "monger/s/catalog/type_lockpings.h"
+#include "monger/s/catalog/type_locks.h"
+#include "monger/s/grid.h"
+#include "monger/s/shard_server_test_fixture.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/system_tick_source.h"
+#include "monger/util/tick_source_mock.h"
+#include "monger/util/time_support.h"
 
 /**
  * Tests for ReplSetDistLockManager. Note that unlock and ping operations are executed on a separate
  * thread. And since this thread cannot capture the assertion exceptions, all the assertion calls
  * should be performed on the main thread.
  */
-namespace mongo {
+namespace monger {
 namespace {
 
 // Max duration to wait to satisfy test invariant before joining with main test thread.
@@ -2071,4 +2071,4 @@ TEST_F(ReplSetDistLockManagerFixture, TryLockWithLocalWriteConcernBusy) {
 }
 
 }  // unnamed namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,22 +29,22 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/query/blocking_results_merger.h"
-#include "mongo/s/query/router_stage_merge.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/query/blocking_results_merger.h"
+#include "monger/s/query/router_stage_merge.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A stage used only internally to merge results that are being gathered from remote hosts, possibly
  * including this host.
  *
  * Does not assume ownership of cursors until the first call to getNext(). This is to allow this
- * stage to be used on mongos without actually iterating the cursors. For example, when this stage
- * is parsed on mongos it may later be decided that the merging should happen on one of the shards.
+ * stage to be used on mongers without actually iterating the cursors. For example, when this stage
+ * is parsed on mongers it may later be decided that the merging should happen on one of the shards.
  * Then this stage is forwarded to the merging shard, and it should not kill the cursors when it
- * goes out of scope on mongos.
+ * goes out of scope on mongers.
  */
 class DocumentSourceMergeCursors : public DocumentSource {
 public:
@@ -168,12 +168,12 @@ private:
 
     // '_blockingResultsMerger' is lazily populated. Until we need to use it, '_armParams' will be
     // populated with the parameters. Once we start using '_blockingResultsMerger', '_armParams'
-    // will become boost::none. We do this to prevent populating '_blockingResultsMerger' on mongos
+    // will become boost::none. We do this to prevent populating '_blockingResultsMerger' on mongers
     // before serializing this stage and sending it to a shard to perform the merge. If we always
     // populated '_blockingResultsMerger', then the destruction of this stage would cause the
     // cursors within '_blockingResultsMerger' to be killed prematurely. For example, if this stage
-    // is parsed on mongos then forwarded to the shards, it should not kill the cursors when it goes
-    // out of scope on mongos.
+    // is parsed on mongers then forwarded to the shards, it should not kill the cursors when it goes
+    // out of scope on mongers.
     boost::optional<AsyncResultsMergerParams> _armParams;
     boost::optional<BlockingResultsMerger> _blockingResultsMerger;
 
@@ -187,4 +187,4 @@ private:
     bool _ownCursors = true;
 };
 
-}  // namespace mongo
+}  // namespace monger

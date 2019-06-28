@@ -10,13 +10,13 @@ env.Library(
     target='connection_string',
     source=[
         'connection_string.cpp',
-        'mongo_uri.cpp',
+        'monger_uri.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/util/net/network',
+        '$BUILD_DIR/monger/util/net/network',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/util/dns_query',
+        '$BUILD_DIR/monger/util/dns_query',
     ],
 )
 
@@ -28,8 +28,8 @@ env.Library(
         'read_preference.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/db/service_context'
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/db/service_context'
     ],
 )
 
@@ -64,15 +64,15 @@ saslClientEnv.Library(
     target='sasl_client',
     source=saslClientSource,
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base/secure_allocator',
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/executor/remote_command',
-        '$BUILD_DIR/mongo/rpc/command_status',
-        '$BUILD_DIR/mongo/rpc/metadata',
-        '$BUILD_DIR/mongo/util/icu',
-        '$BUILD_DIR/mongo/util/md5',
-        '$BUILD_DIR/mongo/util/net/network',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/base/secure_allocator',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/executor/remote_command',
+        '$BUILD_DIR/monger/rpc/command_status',
+        '$BUILD_DIR/monger/rpc/metadata',
+        '$BUILD_DIR/monger/util/icu',
+        '$BUILD_DIR/monger/util/md5',
+        '$BUILD_DIR/monger/util/net/network',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ],
     SYSLIBDEPS=saslLibs,
 )
@@ -83,8 +83,8 @@ env.Library(
         'authenticate.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/bson/util/bson_extract',
-        '$BUILD_DIR/mongo/executor/remote_command',
+        '$BUILD_DIR/monger/bson/util/bson_extract',
+        '$BUILD_DIR/monger/executor/remote_command',
         'sasl_client'
     ],
 )
@@ -95,7 +95,7 @@ env.Library(
         'query.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         'read_preference',
     ],
 )
@@ -111,19 +111,19 @@ clientDriverEnv.Library(
         'index_spec.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/dbmessage',
-        '$BUILD_DIR/mongo/db/query/command_request_response',
-        '$BUILD_DIR/mongo/db/query/query_request',
-        '$BUILD_DIR/mongo/db/wire_version',
-        '$BUILD_DIR/mongo/rpc/command_status',
-        '$BUILD_DIR/mongo/rpc/rpc',
-        '$BUILD_DIR/mongo/s/common_s',
+        '$BUILD_DIR/monger/db/dbmessage',
+        '$BUILD_DIR/monger/db/query/command_request_response',
+        '$BUILD_DIR/monger/db/query/query_request',
+        '$BUILD_DIR/monger/db/wire_version',
+        '$BUILD_DIR/monger/rpc/command_status',
+        '$BUILD_DIR/monger/rpc/rpc',
+        '$BUILD_DIR/monger/s/common_s',
         'authentication',
         'client_query',
         'connection_string',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/util/net/ssl_manager',
+        '$BUILD_DIR/monger/util/net/ssl_manager',
     ],
 )
 
@@ -131,7 +131,7 @@ clientDriverEnv.Library(
     target='clientdriver_network',
     source=[
         'connection_string_connect.cpp',
-        'mongo_uri_connect.cpp',
+        'monger_uri_connect.cpp',
         'connpool.cpp',
         'dbclient_connection.cpp',
         'dbclient_rs.cpp',
@@ -142,21 +142,21 @@ clientDriverEnv.Library(
         'replica_set_monitor_manager.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/write_concern_options',
-        '$BUILD_DIR/mongo/executor/connection_pool_stats',
-        '$BUILD_DIR/mongo/executor/network_interface_factory',
-        '$BUILD_DIR/mongo/executor/network_interface_thread_pool',
-        '$BUILD_DIR/mongo/executor/thread_pool_task_executor',
-        '$BUILD_DIR/mongo/util/background_job',
-        '$BUILD_DIR/mongo/util/md5',
-        '$BUILD_DIR/mongo/util/net/network',
+        '$BUILD_DIR/monger/db/write_concern_options',
+        '$BUILD_DIR/monger/executor/connection_pool_stats',
+        '$BUILD_DIR/monger/executor/network_interface_factory',
+        '$BUILD_DIR/monger/executor/network_interface_thread_pool',
+        '$BUILD_DIR/monger/executor/thread_pool_task_executor',
+        '$BUILD_DIR/monger/util/background_job',
+        '$BUILD_DIR/monger/util/md5',
+        '$BUILD_DIR/monger/util/net/network',
         'clientdriver_minimal',
         'read_preference',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/commands/test_commands_enabled',
-        '$BUILD_DIR/mongo/transport/message_compressor',
-        '$BUILD_DIR/mongo/util/net/ssl_manager',
+        '$BUILD_DIR/monger/db/commands/test_commands_enabled',
+        '$BUILD_DIR/monger/transport/message_compressor',
+        '$BUILD_DIR/monger/util/net/ssl_manager',
     ]
 )
 
@@ -166,18 +166,18 @@ env.Library(
         'async_client.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/wire_version',
-        '$BUILD_DIR/mongo/rpc/command_status',
-        '$BUILD_DIR/mongo/rpc/rpc',
-        '$BUILD_DIR/mongo/transport/transport_layer_common',
-        '$BUILD_DIR/mongo/util/net/ssl_manager',
+        '$BUILD_DIR/monger/db/wire_version',
+        '$BUILD_DIR/monger/rpc/command_status',
+        '$BUILD_DIR/monger/rpc/rpc',
+        '$BUILD_DIR/monger/transport/transport_layer_common',
+        '$BUILD_DIR/monger/util/net/ssl_manager',
         'authentication',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/commands/test_commands_enabled',
-        '$BUILD_DIR/mongo/executor/egress_tag_closer_manager',
-        '$BUILD_DIR/mongo/transport/message_compressor',
-        '$BUILD_DIR/mongo/util/net/ssl_manager',
+        '$BUILD_DIR/monger/db/commands/test_commands_enabled',
+        '$BUILD_DIR/monger/executor/egress_tag_closer_manager',
+        '$BUILD_DIR/monger/transport/message_compressor',
+        '$BUILD_DIR/monger/util/net/ssl_manager',
     ],
 )
 
@@ -200,7 +200,7 @@ env.Library(
     ],
     LIBDEPS=[
         'clientdriver_network',
-        '$BUILD_DIR/mongo/db/service_context',
+        '$BUILD_DIR/monger/db/service_context',
     ],
 )
 
@@ -211,8 +211,8 @@ env.Library(
         'remote_command_targeter_factory_mock.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/util/net/network',
-        '$BUILD_DIR/mongo/s/coreshard',
+        '$BUILD_DIR/monger/util/net/network',
+        '$BUILD_DIR/monger/s/coreshard',
     ],
 )
 
@@ -223,10 +223,10 @@ env.Library(
     ],
     LIBDEPS=[
         'remote_command_retry_scheduler',
-        '$BUILD_DIR/mongo/executor/task_executor_interface',
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/namespace_string',
-        '$BUILD_DIR/mongo/rpc/command_status',
+        '$BUILD_DIR/monger/executor/task_executor_interface',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/namespace_string',
+        '$BUILD_DIR/monger/rpc/command_status',
     ],
 )
 
@@ -236,8 +236,8 @@ env.Library(
         'remote_command_retry_scheduler.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/executor/task_executor_interface',
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/executor/task_executor_interface',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -249,7 +249,7 @@ env.CppUnitTest(
         'dbclient_cursor_test.cpp',
         'fetcher_test.cpp',
         'index_spec_test.cpp',
-        'mongo_uri_test.cpp',
+        'monger_uri_test.cpp',
         'read_preference_test.cpp',
         'remote_command_retry_scheduler_test.cpp',
         'replica_set_monitor_internal_test.cpp',
@@ -259,19 +259,19 @@ env.CppUnitTest(
         'replica_set_monitor_test_fixture.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/client/clientdriver_network',
-        '$BUILD_DIR/mongo/db/auth/authmocks',
-        '$BUILD_DIR/mongo/db/service_context_test_fixture',
-        '$BUILD_DIR/mongo/db/write_concern_options',
-        '$BUILD_DIR/mongo/dbtests/mocklib',
-        '$BUILD_DIR/mongo/executor/network_interface_mock',
-        '$BUILD_DIR/mongo/executor/task_executor_test_fixture',
-        '$BUILD_DIR/mongo/executor/thread_pool_task_executor_test_fixture',
-        '$BUILD_DIR/mongo/rpc/command_status',
-        '$BUILD_DIR/mongo/transport/transport_layer_egress_init',
-        '$BUILD_DIR/mongo/unittest/task_executor_proxy',
-        '$BUILD_DIR/mongo/util/md5',
-        '$BUILD_DIR/mongo/util/net/network',
+        '$BUILD_DIR/monger/client/clientdriver_network',
+        '$BUILD_DIR/monger/db/auth/authmocks',
+        '$BUILD_DIR/monger/db/service_context_test_fixture',
+        '$BUILD_DIR/monger/db/write_concern_options',
+        '$BUILD_DIR/monger/dbtests/mocklib',
+        '$BUILD_DIR/monger/executor/network_interface_mock',
+        '$BUILD_DIR/monger/executor/task_executor_test_fixture',
+        '$BUILD_DIR/monger/executor/thread_pool_task_executor_test_fixture',
+        '$BUILD_DIR/monger/rpc/command_status',
+        '$BUILD_DIR/monger/transport/transport_layer_egress_init',
+        '$BUILD_DIR/monger/unittest/task_executor_proxy',
+        '$BUILD_DIR/monger/util/md5',
+        '$BUILD_DIR/monger/util/net/network',
         'authentication',
         'clientdriver_minimal',
         'clientdriver_network',
@@ -290,7 +290,7 @@ env.CppUnitTest(
         'dbclient_rs_test.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/dbtests/mocklib',
+        '$BUILD_DIR/monger/dbtests/mocklib',
         'clientdriver_network',
     ],
 )
@@ -303,7 +303,7 @@ env.CppIntegrationTest(
     ],
     LIBDEPS=[
         'clientdriver_network',
-        '$BUILD_DIR/mongo/transport/transport_layer_egress_init',
-        '$BUILD_DIR/mongo/util/version_impl',
+        '$BUILD_DIR/monger/transport/transport_layer_egress_init',
+        '$BUILD_DIR/monger/util/version_impl',
     ],
 )

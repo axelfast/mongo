@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/factory.h"
+#include "monger/rpc/factory.h"
 
 #include <memory>
 
-#include "mongo/rpc/legacy_reply.h"
-#include "mongo/rpc/legacy_reply_builder.h"
-#include "mongo/rpc/legacy_request.h"
-#include "mongo/rpc/legacy_request_builder.h"
-#include "mongo/rpc/message.h"
-#include "mongo/rpc/op_msg_rpc_impls.h"
-#include "mongo/rpc/protocol.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/rpc/legacy_reply.h"
+#include "monger/rpc/legacy_reply_builder.h"
+#include "monger/rpc/legacy_request.h"
+#include "monger/rpc/legacy_request_builder.h"
+#include "monger/rpc/message.h"
+#include "monger/rpc/op_msg_rpc_impls.h"
+#include "monger/rpc/protocol.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 Message messageFromOpMsgRequest(Protocol proto, const OpMsgRequest& request) {
@@ -58,9 +58,9 @@ Message messageFromOpMsgRequest(Protocol proto, const OpMsgRequest& request) {
 
 std::unique_ptr<ReplyInterface> makeReply(const Message* unownedMessage) {
     switch (unownedMessage->operation()) {
-        case mongo::dbMsg:
+        case monger::dbMsg:
             return std::make_unique<OpMsgReply>(OpMsg::parseOwned(*unownedMessage));
-        case mongo::opReply:
+        case monger::opReply:
             return std::make_unique<LegacyReply>(unownedMessage);
         default:
             uasserted(ErrorCodes::UnsupportedFormat,
@@ -71,9 +71,9 @@ std::unique_ptr<ReplyInterface> makeReply(const Message* unownedMessage) {
 
 OpMsgRequest opMsgRequestFromAnyProtocol(const Message& unownedMessage) {
     switch (unownedMessage.operation()) {
-        case mongo::dbMsg:
+        case monger::dbMsg:
             return OpMsgRequest::parseOwned(unownedMessage);
-        case mongo::dbQuery:
+        case monger::dbQuery:
             return opMsgRequestFromLegacyRequest(unownedMessage);
         default:
             uasserted(ErrorCodes::UnsupportedFormat,
@@ -93,4 +93,4 @@ std::unique_ptr<ReplyBuilderInterface> makeReplyBuilder(Protocol protocol) {
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

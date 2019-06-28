@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/s/write_ops/batched_upsert_detail.h"
+#include "monger/s/write_ops/batched_upsert_detail.h"
 
-#include "mongo/db/field_parser.h"
-#include "mongo/util/str.h"
+#include "monger/db/field_parser.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -132,4 +132,4 @@ const BSONObj& BatchedUpsertDetail::getUpsertedID() const {
     return _upsertedID;
 }
 
-}  // namespace mongo
+}  // namespace monger

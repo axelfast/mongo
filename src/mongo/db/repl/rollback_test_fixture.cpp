@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/rollback_test_fixture.h"
+#include "monger/db/repl/rollback_test_fixture.h"
 
 #include <memory>
 #include <string>
 
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/op_observer_noop.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/replication_consistency_markers_mock.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/replication_recovery.h"
-#include "mongo/db/repl/rs_rollback.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/logger/log_component.h"
-#include "mongo/logger/logger.h"
-#include "mongo/util/str.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/op_observer_noop.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/replication_consistency_markers_mock.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/replication_recovery.h"
+#include "monger/db/repl/rs_rollback.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/logger/log_component.h"
+#include "monger/logger/logger.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -110,7 +110,7 @@ void RollbackTest::setUp() {
     _replicationProcess->initializeRollbackID(_opCtx.get()).transitional_ignore();
 
     // Increase rollback log component verbosity for unit tests.
-    mongo::logger::globalLogDomain()->setMinimumLoggedSeverity(
+    monger::logger::globalLogDomain()->setMinimumLoggedSeverity(
         logger::LogComponent::kReplicationRollback, logger::LogSeverity::Debug(2));
 
     auto observerRegistry = checked_cast<OpObserverRegistry*>(serviceContext->getOpObserver());
@@ -192,7 +192,7 @@ Collection* RollbackTest::_createCollection(OperationContext* opCtx,
                                             const NamespaceString& nss,
                                             const CollectionOptions& options) {
     Lock::DBLock dbLock(opCtx, nss.db(), MODE_X);
-    mongo::WriteUnitOfWork wuow(opCtx);
+    monger::WriteUnitOfWork wuow(opCtx);
     auto databaseHolder = DatabaseHolder::get(opCtx);
     auto db = databaseHolder->openDb(opCtx, nss.db());
     ASSERT_TRUE(db);
@@ -333,4 +333,4 @@ void RollbackResyncsCollectionOptionsTest::resyncCollectionOptionsTest(
     ASSERT_BSONOBJ_EQ(expectedOptionsBob.obj(), collAfterRollbackOptions.toBSON());
 }
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

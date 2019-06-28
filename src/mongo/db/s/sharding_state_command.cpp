@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/commands.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ShardingStateCmd : public BasicCommand {
@@ -91,4 +91,4 @@ public:
 } shardingStateCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

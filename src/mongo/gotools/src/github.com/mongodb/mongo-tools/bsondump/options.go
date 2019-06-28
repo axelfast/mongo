@@ -9,15 +9,15 @@ package bsondump
 import (
 	"fmt"
 
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
 )
 
 var Usage = `<options> <file>
 
 View and debug .bson files.
 
-See http://docs.mongodb.org/manual/reference/program/bsondump/ for more information.`
+See http://docs.mongerdb.org/manual/reference/program/bsondump/ for more information.`
 
 // Options contains all the possible options used to configure bsondump.
 type Options struct {

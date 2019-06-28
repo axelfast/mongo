@@ -1,5 +1,5 @@
 /**
- * Tests that CRUD and aggregation commands through the mongos continue to work as expected on both
+ * Tests that CRUD and aggregation commands through the mongers continue to work as expected on both
  * sharded and unsharded collection at each step of cluster upgrade from last-stable to latest.
  *
  * TODO SERVER-36930 The tests about aggregation are specific to changes made in the 4.2 development
@@ -56,9 +56,9 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
         var st = new ShardingTest({
             shards: 2,
-            mongos: 1,
+            mongers: 1,
             other: {
-                mongosOptions: {binVersion: "last-stable"},
+                mongersOptions: {binVersion: "last-stable"},
                 configOptions: {binVersion: "last-stable"},
                 shardOptions: {binVersion: "last-stable"},
 
@@ -96,7 +96,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         testCRUDAndAgg(st.s.getDB('unsharded'));
         testCRUDAndAgg(st.s.getDB('sharded'));
 
-        // Restart mongos to clear all cache and force it to do remote calls.
+        // Restart mongers to clear all cache and force it to do remote calls.
         st.restartMongoses();
 
         testCRUDAndAgg(st.s.getDB('unsharded'));
@@ -109,20 +109,20 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         testCRUDAndAgg(st.s.getDB('unsharded'));
         testCRUDAndAgg(st.s.getDB('sharded'));
 
-        // Restart mongos to clear all cache and force it to do remote calls.
+        // Restart mongers to clear all cache and force it to do remote calls.
         st.restartMongoses();
 
         testCRUDAndAgg(st.s.getDB('unsharded'));
         testCRUDAndAgg(st.s.getDB('sharded'));
 
-        // Finally, upgrade mongos
-        jsTest.log('upgrading mongos servers');
+        // Finally, upgrade mongers
+        jsTest.log('upgrading mongers servers');
         st.upgradeCluster("latest", {upgradeConfigs: false, upgradeShards: false});
 
         testCRUDAndAgg(st.s.getDB('unsharded'));
         testCRUDAndAgg(st.s.getDB('sharded'));
 
-        // Restart mongos to clear all cache and force it to do remote calls.
+        // Restart mongers to clear all cache and force it to do remote calls.
         st.restartMongoses();
 
         testCRUDAndAgg(st.s.getDB('unsharded'));
@@ -138,13 +138,13 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Downgrade back
 
-        jsTest.log('downgrading mongos servers');
+        jsTest.log('downgrading mongers servers');
         st.upgradeCluster("last-stable", {upgradeConfigs: false, upgradeShards: false});
 
         testCRUDAndAgg(st.s.getDB('unsharded'));
         testCRUDAndAgg(st.s.getDB('sharded'));
 
-        // Restart mongos to clear all cache and force it to do remote calls.
+        // Restart mongers to clear all cache and force it to do remote calls.
         st.restartMongoses();
 
         testCRUDAndAgg(st.s.getDB('unsharded'));
@@ -156,7 +156,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         testCRUDAndAgg(st.s.getDB('unsharded'));
         testCRUDAndAgg(st.s.getDB('sharded'));
 
-        // Restart mongos to clear all cache and force it to do remote calls.
+        // Restart mongers to clear all cache and force it to do remote calls.
         st.restartMongoses();
 
         testCRUDAndAgg(st.s.getDB('unsharded'));
@@ -168,7 +168,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         testCRUDAndAgg(st.s.getDB('unsharded'));
         testCRUDAndAgg(st.s.getDB('sharded'));
 
-        // Restart mongos to clear all cache and force it to do remote calls.
+        // Restart mongers to clear all cache and force it to do remote calls.
         st.restartMongoses();
 
         testCRUDAndAgg(st.s.getDB('unsharded'));

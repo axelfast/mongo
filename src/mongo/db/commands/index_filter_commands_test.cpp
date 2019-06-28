@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,22 +28,22 @@
  */
 
 /**
- * This file contains tests for mongo/db/commands/index_filter_commands.h
+ * This file contains tests for monger/db/commands/index_filter_commands.h
  */
 
-#include "mongo/db/commands/index_filter_commands.h"
+#include "monger/db/commands/index_filter_commands.h"
 
 #include <memory>
 
-#include "mongo/db/json.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/db/query/plan_ranker.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/json.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/db/query/plan_ranker.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/unittest/unittest.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 
@@ -61,7 +61,7 @@ vector<BSONObj> getFilters(const QuerySettings& querySettings) {
     ASSERT_OK(ListFilters::list(querySettings, &bob));
     BSONObj resultObj = bob.obj();
     BSONElement filtersElt = resultObj.getField("filters");
-    ASSERT_EQUALS(filtersElt.type(), mongo::Array);
+    ASSERT_EQUALS(filtersElt.type(), monger::Array);
     vector<BSONElement> filtersEltArray = filtersElt.Array();
     vector<BSONObj> filters;
     for (vector<BSONElement>::const_iterator i = filtersEltArray.begin();
@@ -93,7 +93,7 @@ vector<BSONObj> getFilters(const QuerySettings& querySettings) {
 
         // indexes
         BSONElement indexesElt = obj.getField("indexes");
-        ASSERT_EQUALS(indexesElt.type(), mongo::Array);
+        ASSERT_EQUALS(indexesElt.type(), monger::Array);
 
         // All fields OK. Append to vector.
         filters.push_back(obj.getOwned());

@@ -9,8 +9,8 @@ package auth
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 func newDefaultAuthenticator(cred *Cred) (Authenticator, error) {

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/connection_pool.h"
+#include "monger/client/connection_pool.h"
 
-#include "mongo/client/authenticate.h"
-#include "mongo/client/connpool.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/executor/network_connection_hook.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/rpc/reply_interface.h"
-#include "mongo/rpc/unique_message.h"
+#include "monger/client/authenticate.h"
+#include "monger/client/connpool.h"
+#include "monger/client/monger_uri.h"
+#include "monger/executor/network_connection_hook.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/rpc/reply_interface.h"
+#include "monger/rpc/unique_message.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const Date_t kNeverTooStale = Date_t::max();
@@ -276,4 +276,4 @@ void ConnectionPool::ConnectionPtr::done(Date_t now) {
     _pool = nullptr;
 }
 
-}  // namespace mongo
+}  // namespace monger

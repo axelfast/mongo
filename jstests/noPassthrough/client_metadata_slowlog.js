@@ -5,7 +5,7 @@
     'use strict';
 
     let conn = MongoRunner.runMongod({useLogFiles: true});
-    assert.neq(null, conn, 'mongod was unable to start up');
+    assert.neq(null, conn, 'mongerd was unable to start up');
 
     let coll = conn.getCollection("test.foo");
     assert.writeOK(coll.insert({_id: 1}));
@@ -24,7 +24,7 @@
     assert(
         /COMMAND .* command test.foo appName: "MongoDB Shell" command: count { count: "foo", query: { \$where: function\(\)/
             .test(log),
-        "'slow query' log line missing in mongod log file!\n" + "Log file contents: " +
+        "'slow query' log line missing in mongerd log file!\n" + "Log file contents: " +
             conn.fullOptions.logFile +
             "\n************************************************************\n" + log +
             "\n************************************************************");

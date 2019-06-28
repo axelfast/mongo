@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/concurrency/lock_state.h"
+#include "monger/db/concurrency/lock_state.h"
 
 #include <vector>
 
-#include "mongo/db/concurrency/flow_control_ticketholder.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/flow_control.h"
-#include "mongo/platform/compiler.h"
-#include "mongo/stdx/new.h"
-#include "mongo/util/background.h"
-#include "mongo/util/concurrency/ticketholder.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/db/concurrency/flow_control_ticketholder.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/flow_control.h"
+#include "monger/platform/compiler.h"
+#include "monger/stdx/new.h"
+#include "monger/util/background.h"
+#include "monger/util/concurrency/ticketholder.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(failNonIntentLocksIfWaitNeeded);
 
@@ -1094,4 +1094,4 @@ const ResourceId resourceIdGlobal = ResourceId(RESOURCE_GLOBAL, 1ULL);
 const ResourceId resourceIdParallelBatchWriterMode = ResourceId(RESOURCE_PBWM, 1ULL);
 const ResourceId resourceIdReplicationStateTransitionLock = ResourceId(RESOURCE_RSTL, 1ULL);
 
-}  // namespace mongo
+}  // namespace monger

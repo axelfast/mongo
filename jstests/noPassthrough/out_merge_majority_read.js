@@ -1,7 +1,7 @@
 /**
  * Tests that $out and $merge with readConcern majority will only see committed data.
  *
- * Each operation is tested on a single node, and (if supported) through mongos on both sharded and
+ * Each operation is tested on a single node, and (if supported) through mongers on both sharded and
  * unsharded collections. Mongos doesn't directly handle readConcern majority, but these tests
  * should ensure that it correctly propagates the setting to the shards when running commands.
  * @tags: [requires_sharding, requires_majority_read_concern]
@@ -27,12 +27,12 @@
     }
     MongoRunner.stopMongod(testServer);
 
-    function runTests(sourceColl, mongodConnection) {
+    function runTests(sourceColl, mongerdConnection) {
         function makeSnapshot() {
-            return assert.commandWorked(mongodConnection.adminCommand("makeSnapshot")).name;
+            return assert.commandWorked(mongerdConnection.adminCommand("makeSnapshot")).name;
         }
         function setCommittedSnapshot(snapshot) {
-            assert.commandWorked(mongodConnection.adminCommand({"setCommittedSnapshot": snapshot}));
+            assert.commandWorked(mongerdConnection.adminCommand({"setCommittedSnapshot": snapshot}));
         }
         const db = sourceColl.getDB();
         const targetColl = db.targetColl;
@@ -178,36 +178,36 @@
     replTest.initiateWithAnyNodeAsPrimary(
         null, "replSetInitiate", {doNotWaitForStableRecoveryTimestamp: true});
 
-    const mongod = replTest.getPrimary();
+    const mongerd = replTest.getPrimary();
 
     (function testSingleNode() {
-        const db = mongod.getDB("singleNode");
-        runTests(db.collection, mongod);
+        const db = mongerd.getDB("singleNode");
+        runTests(db.collection, mongerd);
     })();
 
     const shardingTest = new ShardingTest({
         shards: 0,
-        mongos: 1,
+        mongers: 1,
     });
     assert(shardingTest.adminCommand({addShard: replTest.getURL()}));
 
     (function testUnshardedDBThroughMongos() {
         const db = shardingTest.getDB("throughMongos");
-        runTests(db.unshardedDB, mongod);
+        runTests(db.unshardedDB, mongerd);
     })();
 
     shardingTest.adminCommand({enableSharding: 'throughMongos'});
 
     (function testUnshardedCollectionThroughMongos() {
         const db = shardingTest.getDB("throughMongos");
-        runTests(db.unshardedCollection, mongod);
+        runTests(db.unshardedCollection, mongerd);
     })();
 
     (function testShardedCollectionThroughMongos() {
         const db = shardingTest.getDB("throughMongos");
         const collection = db.shardedCollection;
         shardingTest.adminCommand({shardCollection: collection.getFullName(), key: {_id: 1}});
-        runTests(collection, mongod);
+        runTests(collection, mongerd);
     })();
 
     shardingTest.stop();

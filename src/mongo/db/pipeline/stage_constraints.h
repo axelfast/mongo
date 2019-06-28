@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,10 +32,10 @@
 #include <boost/intrusive_ptr.hpp>
 #include <numeric>
 
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 /**
  * A struct describing various constraints about where this stage can run, where it must be in
  * the pipeline, what resources it may require, etc.
@@ -59,16 +59,16 @@ struct StageConstraints {
      * pipeline is run on a sharded cluster.
      */
     enum class HostTypeRequirement {
-        // Indicates that the stage can run either on mongoD or mongoS.
+        // Indicates that the stage can run either on mongerD or mongerS.
         kNone,
         // Indicates that the stage must run on the host to which it was originally sent and
-        // cannot be forwarded from mongoS to the shards.
+        // cannot be forwarded from mongerS to the shards.
         kLocalOnly,
         // Indicates that the stage must run on the primary shard.
         kPrimaryShard,
         // Indicates that the stage must run on any participating shard.
         kAnyShard,
-        // Indicates that the stage can only run on mongoS.
+        // Indicates that the stage can only run on mongerS.
         kMongoS,
     };
 
@@ -176,7 +176,7 @@ struct StageConstraints {
         invariant(!(isAllowedInChangeStream() && streamType == StreamType::kBlocking));
 
         // A stage which is whitelisted for $changeStream cannot have a requirement to run on a
-        // shard, since it needs to be able to run on mongoS in a cluster.
+        // shard, since it needs to be able to run on mongerS in a cluster.
         invariant(!(changeStreamRequirement == ChangeStreamRequirement::kWhitelist &&
                     (hostRequirement == HostTypeRequirement::kAnyShard ||
                      hostRequirement == HostTypeRequirement::kPrimaryShard)));
@@ -316,4 +316,4 @@ struct StageConstraints {
     // Indicates that a stage is allowed within a pipeline-stlye update.
     bool isAllowedWithinUpdatePipeline = false;
 };
-}  // namespace mongo
+}  // namespace monger

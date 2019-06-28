@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/unittest/task_executor_proxy.h"
+#include "monger/unittest/task_executor_proxy.h"
 
-namespace mongo {
+namespace monger {
 namespace unittest {
 
 TaskExecutorProxy::TaskExecutorProxy(executor::TaskExecutor* executor) : _executor(executor) {}
@@ -58,7 +58,7 @@ void TaskExecutorProxy::join() {
     _executor->join();
 }
 
-void TaskExecutorProxy::appendDiagnosticBSON(mongo::BSONObjBuilder* builder) const {
+void TaskExecutorProxy::appendDiagnosticBSON(monger::BSONObjBuilder* builder) const {
     _executor->appendDiagnosticBSON(builder);
 }
 
@@ -119,4 +119,4 @@ void TaskExecutorProxy::appendConnectionStats(executor::ConnectionPoolStats* sta
 }
 
 }  // namespace unittest
-}  // namespace mongo
+}  // namespace monger

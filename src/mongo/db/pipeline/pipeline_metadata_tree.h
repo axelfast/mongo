@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -38,10 +38,10 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_facet.h"
-#include "mongo/db/pipeline/document_source_lookup.h"
-#include "mongo/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_facet.h"
+#include "monger/db/pipeline/document_source_lookup.h"
+#include "monger/db/pipeline/pipeline.h"
 
 /**
  * A simple representation of an Aggregation Pipeline and functions for building it.
@@ -50,7 +50,7 @@
  * metadata. A PipelineMetadataTree is intended to be zipped along with another representation of a
  * pipeline in order to supplement the other representation's metadata.
  */
-namespace mongo::pipeline_metadata_tree {
+namespace monger::pipeline_metadata_tree {
 
 /**
  * An alternate representation of a stage in an Aggregation Pipeline which contains handles to all
@@ -296,4 +296,4 @@ inline void zip(Stage<T>* tree,
     detail::walk(tree, &iter, zipper);
 }
 
-}  // namespace mongo::pipeline_metadata_tree
+}  // namespace monger::pipeline_metadata_tree

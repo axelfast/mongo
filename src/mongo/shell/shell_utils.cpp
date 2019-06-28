@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/shell/shell_utils.h"
+#include "monger/shell/shell_utils.h"
 
 #include <algorithm>
 #include <boost/filesystem.hpp>
@@ -47,25 +47,25 @@
 #include <sys/types.h>
 #endif
 
-#include "mongo/base/shim.h"
-#include "mongo/client/dbclient_base.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/hasher.h"
-#include "mongo/platform/random.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/shell/bench.h"
-#include "mongo/shell/shell_options.h"
-#include "mongo/shell/shell_utils_extended.h"
-#include "mongo/shell/shell_utils_launcher.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/text.h"
-#include "mongo/util/version.h"
+#include "monger/base/shim.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/hasher.h"
+#include "monger/platform/random.h"
+#include "monger/scripting/engine.h"
+#include "monger/shell/bench.h"
+#include "monger/shell/shell_options.h"
+#include "monger/shell/shell_utils_extended.h"
+#include "monger/shell/shell_utils_launcher.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/text.h"
+#include "monger/util/version.h"
 
-namespace mongo::shell_utils {
+namespace monger::shell_utils {
 namespace {
 boost::filesystem::path getUserDir() {
 #ifdef _WIN32
@@ -97,7 +97,7 @@ boost::filesystem::path getUserDir() {
             break;
 
         if (errno != EINTR)
-            uasserted(mongo::ErrorCodes::InternalError,
+            uasserted(monger::ErrorCodes::InternalError,
                       "Unable to get home directory for the current user.");
     } while (errno == EINTR);
 
@@ -106,16 +106,16 @@ boost::filesystem::path getUserDir() {
 }
 
 }  // namespace
-}  // namespace mongo::shell_utils
+}  // namespace monger::shell_utils
 
-boost::filesystem::path mongo::shell_utils::getHistoryFilePath() {
+boost::filesystem::path monger::shell_utils::getHistoryFilePath() {
     static const auto& historyFile = *new boost::filesystem::path(getUserDir() / ".dbshell");
 
     return historyFile;
 }
 
 
-namespace mongo {
+namespace monger {
 namespace JSFiles {
 extern const JSFile servers;
 extern const JSFile shardingtest;
@@ -524,7 +524,7 @@ void initScope(Scope& scope) {
     scope.injectNative("_shouldRetryWrites", shouldRetryWrites);
     scope.injectNative("_shouldUseImplicitSessions", shouldUseImplicitSessions);
     scope.externalSetup();
-    mongo::shell_utils::installShellUtils(scope);
+    monger::shell_utils::installShellUtils(scope);
     scope.execSetup(JSFiles::servers);
     scope.execSetup(JSFiles::shardingtest);
     scope.execSetup(JSFiles::servers_misc);
@@ -602,7 +602,7 @@ void ConnectionRegistry::killOperationsOnAllConnections(bool withPrompt) const {
             // For sharded clusters, `client_s` is used instead and `client` is not present.
             std::string client;
             if (auto elem = op["client"]) {
-                // mongod currentOp client
+                // mongerd currentOp client
                 if (elem.type() != String) {
                     warning() << "Ignoring operation " << op["opid"].toString(false)
                               << "; expected 'client' field in currentOp response to have type "
@@ -612,7 +612,7 @@ void ConnectionRegistry::killOperationsOnAllConnections(bool withPrompt) const {
                 }
                 client = elem.str();
             } else if (auto elem = op["client_s"]) {
-                // mongos currentOp client
+                // mongers currentOp client
                 if (elem.type() != String) {
                     warning() << "Ignoring operation " << op["opid"].toString(false)
                               << "; expected 'client_s' field in currentOp response to have type "
@@ -669,6 +669,6 @@ bool fileExists(const std::string& file) {
 }
 
 
-stdx::mutex& mongoProgramOutputMutex(*(new stdx::mutex()));
+stdx::mutex& mongerProgramOutputMutex(*(new stdx::mutex()));
 }  // namespace shell_utils
-}  // namespace mongo
+}  // namespace monger

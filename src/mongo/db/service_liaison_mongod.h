@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,16 +29,16 @@
 
 #pragma once
 
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_liaison.h"
-#include "mongo/util/periodic_runner.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_liaison.h"
+#include "monger/util/periodic_runner.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * This is the service liaison to mongod for the logical session cache.
+ * This is the service liaison to mongerd for the logical session cache.
  *
  * This class will return active sessions for cursors stored in the
  * global cursor manager and cursors in per-collection managers. This
@@ -46,7 +46,7 @@ namespace mongo {
  * currently-running operations on this server.
  *
  * Job scheduling on this class will be handled behind the scenes by a
- * periodic runner for this mongod. The time will be returned from the
+ * periodic runner for this mongerd. The time will be returned from the
  * system clock.
  */
 class ServiceLiaisonMongod : public ServiceLiaison {
@@ -73,4 +73,4 @@ protected:
     std::vector<PeriodicJobAnchor> _jobs;
 };
 
-}  // namespace mongo
+}  // namespace monger

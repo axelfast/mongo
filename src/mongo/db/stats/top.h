@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,13 +35,13 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#include "mongo/db/commands.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/stats/operation_latency_histogram.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/commands.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/stats/operation_latency_histogram.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 class ServiceContext;
 
@@ -157,4 +157,4 @@ private:
     std::set<std::string> _collDropNs;
 };
 
-}  // namespace mongo
+}  // namespace monger

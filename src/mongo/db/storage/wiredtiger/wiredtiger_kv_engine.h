@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -37,17 +37,17 @@
 #include <boost/filesystem/path.hpp>
 #include <wiredtiger.h>
 
-#include "mongo/bson/ordering.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/storage/kv/kv_engine.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/elapsed_tracker.h"
+#include "monger/bson/ordering.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/storage/kv/kv_engine.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/elapsed_tracker.h"
 
-namespace mongo {
+namespace monger {
 
 class ClockSource;
 class JournalListener;
@@ -269,7 +269,7 @@ public:
      * An oplog manager is always accessible, but this method will start the background thread to
      * control oplog entry visibility for reads.
      *
-     * On mongod, the background thread will be started when the first oplog record store is
+     * On mongerd, the background thread will be started when the first oplog record store is
      * created, and stopped when the last oplog record store is destroyed, at shutdown time. For
      * unit tests, the background thread may be started and stopped multiple times as tests create
      * and destroy oplog record stores.

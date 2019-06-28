@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,60 +27,60 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/storage_interface_impl.h"
+#include "monger/db/repl/storage_interface_impl.h"
 
 #include <algorithm>
 #include <boost/optional.hpp>
 #include <utility>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/catalog/coll_mod.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/update_stage.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/delete_request.h"
-#include "mongo/db/ops/parsed_update.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/collection_bulk_loader_impl.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/rollback_gen.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/catalog/coll_mod.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/update_stage.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/delete_request.h"
+#include "monger/db/ops/parsed_update.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/collection_bulk_loader_impl.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/rollback_gen.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 const char StorageInterfaceImpl::kDefaultRollbackIdNamespace[] = "local.system.rollback.id";
@@ -413,7 +413,7 @@ Status StorageInterfaceImpl::dropReplicatedDatabases(OperationContext* opCtx) {
 }
 
 Status StorageInterfaceImpl::createOplog(OperationContext* opCtx, const NamespaceString& nss) {
-    mongo::repl::createOplog(opCtx, nss, true);
+    monger::repl::createOplog(opCtx, nss, true);
     return Status::OK();
 }
 
@@ -871,7 +871,7 @@ Status _updateWithQuery(OperationContext* opCtx,
         }
 
         auto planExecutorResult =
-            mongo::getExecutorUpdate(opCtx, nullptr, collection, &parsedUpdate);
+            monger::getExecutorUpdate(opCtx, nullptr, collection, &parsedUpdate);
         if (!planExecutorResult.isOK()) {
             return planExecutorResult.getStatus();
         }
@@ -1000,7 +1000,7 @@ Status StorageInterfaceImpl::deleteByFilter(OperationContext* opCtx,
         auto collection = collectionResult.getValue();
 
         auto planExecutorResult =
-            mongo::getExecutorDelete(opCtx, nullptr, collection, &parsedDelete);
+            monger::getExecutorDelete(opCtx, nullptr, collection, &parsedDelete);
         if (!planExecutorResult.isOK()) {
             return planExecutorResult.getStatus();
         }
@@ -1220,4 +1220,4 @@ Timestamp StorageInterfaceImpl::getPointInTimeReadTimestamp(OperationContext* op
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

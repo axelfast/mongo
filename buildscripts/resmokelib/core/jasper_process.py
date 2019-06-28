@@ -1,4 +1,4 @@
-"""A process management system using mongodb/jasper.
+"""A process management system using mongerdb/jasper.
 
 Serves as an alternative to process.py.
 """
@@ -14,7 +14,7 @@ from . import process as _process
 
 
 class Process(_process.Process):
-    """Class for spawning a process using mongodb/jasper."""
+    """Class for spawning a process using mongerdb/jasper."""
 
     jasper_pb2 = None
     jasper_pb2_grpc = None

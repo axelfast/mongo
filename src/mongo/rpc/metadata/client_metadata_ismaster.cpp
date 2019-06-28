@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
 
 #include <memory>
 #include <string>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/db/client.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/db/client.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -125,4 +125,4 @@ void ClientMetadataIsMasterState::writeToMetadata(OperationContext* opCtx,
     builder->append(ClientMetadata::fieldName(), clientMetadata.get().getDocument());
 }
 
-}  // namespace mongo
+}  // namespace monger

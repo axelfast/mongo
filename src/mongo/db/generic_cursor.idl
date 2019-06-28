@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -31,15 +31,15 @@
 # for that class.
 
 global:
-  cpp_namespace: "mongo"
+  cpp_namespace: "monger"
 
 imports:
-  - "mongo/db/logical_session_id.idl"
-  - "mongo/idl/basic_types.idl"
+  - "monger/db/logical_session_id.idl"
+  - "monger/idl/basic_types.idl"
 
 structs:
   GenericCursor:
-    description: "A struct representing a cursor in either mongod or mongos"
+    description: "A struct representing a cursor in either mongerd or mongers"
     fields:
       cursorId:
         description: The cursor id of the cursor.

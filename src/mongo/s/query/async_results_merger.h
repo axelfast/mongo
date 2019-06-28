@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,18 +33,18 @@
 #include <queue>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/cursor_id.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/query/async_results_merger_params_gen.h"
-#include "mongo/s/query/cluster_query_result.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/with_lock.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/cursor_id.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/query/async_results_merger_params_gen.h"
+#include "monger/s/query/cluster_query_result.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/with_lock.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class CursorResponse;
 
@@ -76,7 +76,7 @@ class AsyncResultsMerger {
     AsyncResultsMerger& operator=(const AsyncResultsMerger&) = delete;
 
 public:
-    // When mongos has to do a merge in order to return results to the client in the correct sort
+    // When mongers has to do a merge in order to return results to the client in the correct sort
     // order, it requests a sortKey meta-projection using this field name.
     static constexpr StringData kSortKeyField = "$sortKey"_sd;
 
@@ -300,7 +300,7 @@ private:
         Status status = Status::OK();
 
         // Count of fetched docs during ARM processing of the current batch. Used to reduce the
-        // batchSize in getMore when mongod returned less docs than the requested batchSize.
+        // batchSize in getMore when mongerd returned less docs than the requested batchSize.
         long long fetchedCount = 0;
     };
 
@@ -492,4 +492,4 @@ private:
     executor::TaskExecutor::EventHandle _killCompleteEvent;
 };
 
-}  // namespace mongo
+}  // namespace monger

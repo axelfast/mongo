@@ -10,7 +10,7 @@
 package json
 
 import (
-	"github.com/mongodb/mongo-tools/legacy/testtype"
+	"github.com/mongerdb/monger-tools/legacy/testtype"
 	"testing"
 )
 

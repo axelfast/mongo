@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/db/catalog/collection_compact.h"
+#include "monger/db/catalog/collection_compact.h"
 
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/catalog/index_key_validate.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/catalog/index_key_validate.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using logger::LogComponent;
 
@@ -151,7 +151,7 @@ StatusWith<CompactStats> compactCollection(OperationContext* opCtx,
                                   << ": "
                                   << keyStatus.reason()
                                   << " For more info see"
-                                  << " http://dochub.mongodb.org/core/index-validation");
+                                  << " http://dochub.mongerdb.org/core/index-validation");
             }
             indexSpecs.push_back(spec);
         }
@@ -207,4 +207,4 @@ StatusWith<CompactStats> compactCollection(OperationContext* opCtx,
     return StatusWith<CompactStats>(stats);
 }
 
-}  // namespace mongo
+}  // namespace monger

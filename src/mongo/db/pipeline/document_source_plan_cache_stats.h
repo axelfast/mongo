@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_match.h"
 
-namespace mongo {
+namespace monger {
 
 class DocumentSourcePlanCacheStats final : public DocumentSource {
 public:
@@ -61,7 +61,7 @@ public:
         }
 
         bool allowedToPassthroughFromMongos() const override {
-            // $planCacheStats must be run locally on a mongod.
+            // $planCacheStats must be run locally on a mongerd.
             return false;
         }
 
@@ -88,8 +88,8 @@ public:
         Pipeline::SplitState = Pipeline::SplitState::kUnsplit) const override {
         StageConstraints constraints{StreamType::kStreaming,
                                      PositionRequirement::kFirst,
-                                     // This stage must run on a mongod, and will fail at parse time
-                                     // if an attempt is made to run it on mongos.
+                                     // This stage must run on a mongerd, and will fail at parse time
+                                     // if an attempt is made to run it on mongers.
                                      HostTypeRequirement::kAnyShard,
                                      DiskUseRequirement::kNoDiskUse,
                                      FacetRequirement::kNotAllowed,
@@ -127,7 +127,7 @@ private:
         MONGO_UNREACHABLE;  // Should call serializeToArray instead.
     }
 
-    // The result set for this change is produced through the mongo process interface on the first
+    // The result set for this change is produced through the monger process interface on the first
     // call to getNext(), and then held by this data member.
     std::vector<BSONObj> _results;
 
@@ -142,4 +142,4 @@ private:
     boost::intrusive_ptr<DocumentSourceMatch> _absorbedMatch;
 };
 
-}  // namespace mongo
+}  // namespace monger

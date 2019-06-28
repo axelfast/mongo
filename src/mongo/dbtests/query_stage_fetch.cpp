@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,22 +31,22 @@
  * This file tests db/exec/fetch.cpp.  Fetch goes to disk so we cannot test outside of a dbtest.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/exec/fetch.h"
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/queued_data_stage.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/dbtests/dbtests.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/exec/fetch.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/queued_data_stage.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/dbtests/dbtests.h"
 
 namespace QueryStageFetch {
 

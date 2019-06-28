@@ -1,4 +1,4 @@
-// Tests that mongos and the shard discover changes to the shard's replica set membership.
+// Tests that mongers and the shard discover changes to the shard's replica set membership.
 load("jstests/replsets/rslib.js");
 
 (function() {
@@ -12,7 +12,7 @@ load("jstests/replsets/rslib.js");
     };
 
     var numMongosHosts = function() {
-        var commandResult = assert.commandWorked(mongos.adminCommand("connPoolStats"));
+        var commandResult = assert.commandWorked(mongers.adminCommand("connPoolStats"));
         var result = commandResult.replicaSets[rsObj.name];
         return result.hosts.length;
     };
@@ -40,7 +40,7 @@ load("jstests/replsets/rslib.js");
             },
             five_minutes);
 
-        jsTest.log("Waiting for the mongos to discover that the shard now has " + expectedNumHosts +
+        jsTest.log("Waiting for the mongers to discover that the shard now has " + expectedNumHosts +
                    " hosts.");
         var numHostsSeenByMongos;
 
@@ -52,16 +52,16 @@ load("jstests/replsets/rslib.js");
                 return numHostsSeenByMongos === expectedNumHosts;
             },
             function() {
-                return ("Expected mongos to see " + expectedNumHosts +
+                return ("Expected mongers to see " + expectedNumHosts +
                         " hosts on shard but found " + numHostsSeenByMongos);
             },
             five_minutes);
     };
 
     var st = new ShardingTest({
-        name: 'mongos_no_replica_set_refresh',
+        name: 'mongers_no_replica_set_refresh',
         shards: 1,
-        mongos: 1,
+        mongers: 1,
         other: {
             rs0: {
                 nodes: [
@@ -81,10 +81,10 @@ load("jstests/replsets/rslib.js");
     }),
                          'node 0 ' + rsObj.nodes[0].host + ' failed to become primary');
 
-    var mongos = st.s;
-    var config = mongos.getDB("config");
+    var mongers = st.s;
+    var config = mongers.getDB("config");
 
-    printjson(mongos.getCollection("foo.bar").findOne());
+    printjson(mongers.getCollection("foo.bar").findOne());
 
     jsTestLog("Removing a node from the shard's replica set.");
 

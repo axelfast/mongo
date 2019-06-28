@@ -2,12 +2,12 @@
 // Tests cleanup of sharded and unsharded cursors
 //
 
-var st = new ShardingTest({shards: 2, mongos: 1});
+var st = new ShardingTest({shards: 2, mongers: 1});
 
-var mongos = st.s0;
-var admin = mongos.getDB("admin");
-var coll = mongos.getCollection("foo.bar");
-var collUnsharded = mongos.getCollection("foo.baz");
+var mongers = st.s0;
+var admin = mongers.getDB("admin");
+var coll = mongers.getCollection("foo.bar");
+var collUnsharded = mongers.getCollection("foo.baz");
 
 // Shard collection
 printjson(admin.runCommand({enableSharding: coll.getDB() + ""}));

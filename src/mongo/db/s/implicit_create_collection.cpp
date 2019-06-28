@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/implicit_create_collection.h"
+#include "monger/db/s/implicit_create_collection.h"
 
 #include <map>
 #include <memory>
 #include <string>
 
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/create_collection_gen.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/commands.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/create_collection_gen.h"
 
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -180,4 +180,4 @@ Status onCannotImplicitlyCreateCollection(OperationContext* opCtx,
     return status;
 }
 
-}  // namespace mongo
+}  // namespace monger

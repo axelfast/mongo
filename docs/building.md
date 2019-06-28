@@ -15,7 +15,7 @@ To build MongoDB, you will need:
       * `libcurl4-gnutls-dev`
 * Python 3.7.x and Pip modules:
   * See the section "Python Prerequisites" below.
-* About 13 GB of free disk space for the core binaries (`mongod`, `mongos`, and `mongo`) and about 600 GB for the all target.
+* About 13 GB of free disk space for the core binaries (`mongerd`, `mongers`, and `monger`) and about 600 GB for the all target.
 
 MongoDB supports the following architectures: arm64, ppc64le, s390x, and x86-64.
 More detailed platform instructions can be found below.
@@ -24,10 +24,10 @@ More detailed platform instructions can be found below.
 MongoDB Tools
 --------------
 
-The MongoDB command line tools (mongodump, mongorestore, mongoimport, mongoexport, etc)
+The MongoDB command line tools (mongerdump, mongerrestore, mongerimport, mongerexport, etc)
 have been rewritten in [Go](http://golang.org/) and are no longer included in this repository.
 
-The source for the tools is now available at [mongodb/mongo-tools](https://github.com/mongodb/mongo-tools).
+The source for the tools is now available at [mongerdb/monger-tools](https://github.com/mongerdb/monger-tools).
 
 Python Prerequisites
 ---------------
@@ -48,47 +48,47 @@ Note: In order to compile C-based Python modules, you'll also need the Python an
 SCons
 ---------------
 
-For detail information about building, please see [the build manual](https://github.com/mongodb/mongo/wiki/Build-Mongodb-From-Source)
+For detail information about building, please see [the build manual](https://github.com/mongerdb/monger/wiki/Build-Mongodb-From-Source)
 
-If you want to build everything (mongod, mongo, tests, etc):
+If you want to build everything (mongerd, monger, tests, etc):
 
     $ python3 buildscripts/scons.py all
 
 If you only want to build the database:
 
-    $ python3 buildscripts/scons.py mongod
+    $ python3 buildscripts/scons.py mongerd
 
 ***Note***: For C++ compilers that are newer than the supported version, the compiler may issue new warnings that cause MongoDB to fail to build since the build system treats compiler warnings as errors. To ignore the warnings, pass the switch `--disable-warnings-as-errors` to scons.
 
-    $ python3 buildscripts/scons.py mongod --disable-warnings-as-errors
+    $ python3 buildscripts/scons.py mongerd --disable-warnings-as-errors
 
 To install
 
-    $ python3 buildscripts/scons.py --prefix=/opt/mongo install
+    $ python3 buildscripts/scons.py --prefix=/opt/monger install
 
-Please note that prebuilt binaries are available on [mongodb.org](http://www.mongodb.org/downloads) and may be the easiest way to get started.
+Please note that prebuilt binaries are available on [mongerdb.org](http://www.mongerdb.org/downloads) and may be the easiest way to get started.
 
 SCons Targets
 --------------
 
 The following targets can be named on the scons command line to build only certain components:
 
-* mongod
-* mongos
-* mongo
-* core (includes mongod, mongos, mongo)
+* mongerd
+* mongers
+* monger
+* core (includes mongerd, mongers, monger)
 * all
 
 Windows
 --------------
 
-See [the windows build manual](https://github.com/mongodb/mongo/wiki/Build-Mongodb-From-Source#windows-specific-instructions)
+See [the windows build manual](https://github.com/mongerdb/monger/wiki/Build-Mongodb-From-Source#windows-specific-instructions)
 
 Build requirements:
 * Visual Studio 2017 version 15.9 or newer
 * Python 3.7
 
-Or download a prebuilt binary for Windows at www.mongodb.org.
+Or download a prebuilt binary for Windows at www.mongerdb.org.
 
 Debian/Ubuntu
 --------------
@@ -100,18 +100,18 @@ To install dependencies on Debian or Ubuntu systems:
 
 To run tests as well, you will need PyMongo:
 
-    # apt-get install python3-pymongo
+    # apt-get install python3-pymonger
 
 OS X
 --------------
 
 Using [Homebrew](http://brew.sh):
 
-    $ brew install mongodb
+    $ brew install mongerdb
 
 Using [MacPorts](http://www.macports.org):
 
-    $ sudo port install mongodb
+    $ sudo port install mongerdb
 
 FreeBSD
 --------------

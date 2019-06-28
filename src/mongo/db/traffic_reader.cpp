@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fcntl.h>
 #include <iostream>
@@ -41,23 +41,23 @@
 #include <unistd.h>
 #endif
 
-#include "mongo/base/data_cursor.h"
-#include "mongo/base/data_range_cursor.h"
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/data_type_validated.h"
-#include "mongo/base/data_view.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/traffic_reader.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/message.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/errno_util.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/data_cursor.h"
+#include "monger/base/data_range_cursor.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/data_type_validated.h"
+#include "monger/base/data_view.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/traffic_reader.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/message.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/errno_util.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/time_support.h"
 
 namespace {
-// Taken from src/mongo/gotools/mongoreplay/util.go
+// Taken from src/monger/gotools/mongerreplay/util.go
 // Time.Unix() returns the number of seconds from the unix epoch but time's
 // underlying struct stores 'sec' as the number of seconds elapsed since
 // January 1, year 1 00:00:00 UTC (In the Proleptic Gregorian Calendar)
@@ -67,7 +67,7 @@ const long long unixToInternal =
     static_cast<long long>(1969 * 365 + 1969 / 4 - 1969 / 100 + 1969 / 400) * 86400;
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -157,7 +157,7 @@ void getBSONObjFromPacket(TrafficReaderPacket& packet, BSONObjBuilder* builder) 
     }
 
     // The seen field represents the time that the operation took place
-    // Trying to re-create the way mongoreplay does this
+    // Trying to re-create the way mongerreplay does this
     {
         BSONObjBuilder seen(builder->subobjStart("seen"));
         seen.append(
@@ -230,7 +230,7 @@ BSONArray trafficRecordingFileToBSONArr(const std::string& inputFile) {
 }
 
 void trafficRecordingFileToMongoReplayFile(int inputFd, std::ostream& outputStream) {
-    // Document expected by mongoreplay
+    // Document expected by mongerreplay
     BSONObjBuilder opts{};
     opts.append("playbackfileversion", 1);
     opts.append("driveropsfiltered", false);
@@ -250,4 +250,4 @@ void trafficRecordingFileToMongoReplayFile(int inputFd, std::ostream& outputStre
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/commands.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/commands.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ClusterSetFreeMonitoring : public BasicCommand {
@@ -48,7 +48,7 @@ public:
     }
 
     std::string help() const final {
-        return "setFreeMonitoring command must be run against mongod instances";
+        return "setFreeMonitoring command must be run against mongerd instances";
     }
 
     Status checkAuthForCommand(Client* client,
@@ -72,4 +72,4 @@ public:
 } clusterSetFreeMonitoring;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

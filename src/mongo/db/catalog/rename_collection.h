@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 class NamespaceString;
 class OperationContext;
@@ -80,4 +80,4 @@ Status renameCollectionForRollback(OperationContext* opCtx,
                                    const NamespaceString& target,
                                    const UUID& uuid);
 
-}  // namespace mongo
+}  // namespace monger

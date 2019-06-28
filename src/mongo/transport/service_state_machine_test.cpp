@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/service_context.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/transport/mock_session.h"
-#include "mongo/transport/service_entry_point.h"
-#include "mongo/transport/service_executor.h"
-#include "mongo/transport/service_executor_task_names.h"
-#include "mongo/transport/service_state_machine.h"
-#include "mongo/transport/transport_layer_mock.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/log.h"
-#include "mongo/util/tick_source_mock.h"
+#include "monger/base/checked_cast.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/client.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/service_context.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/transport/mock_session.h"
+#include "monger/transport/service_entry_point.h"
+#include "monger/transport/service_executor.h"
+#include "monger/transport/service_executor_task_names.h"
+#include "monger/transport/service_state_machine.h"
+#include "monger/transport/transport_layer_mock.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/log.h"
+#include "monger/util/tick_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 std::string stateToString(ServiceStateMachine::State state) {
@@ -847,4 +847,4 @@ TEST_F(ServiceStateMachineFixture, SSMRunsRecursively) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

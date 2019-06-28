@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/sync_source_feedback.h"
+#include "monger/db/repl/sync_source_feedback.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/repl/bgsync.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/reporter.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/client.h"
+#include "monger/db/repl/bgsync.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/reporter.h"
+#include "monger/executor/task_executor.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 namespace {
@@ -241,4 +241,4 @@ void SyncSourceFeedback::run(executor::TaskExecutor* executor,
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

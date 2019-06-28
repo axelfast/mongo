@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,15 +30,15 @@
 
 #if MONGO_CONFIG_SSL_PROVIDER == MONGO_CONFIG_SSL_PROVIDER_WINDOWS
 
-#include "mongo/util/net/ssl/context_schannel.hpp"
+#include "monger/util/net/ssl/context_schannel.hpp"
 
 #elif MONGO_CONFIG_SSL_PROVIDER == MONGO_CONFIG_SSL_PROVIDER_OPENSSL
 
-#include "mongo/util/net/ssl/context_openssl.hpp"
+#include "monger/util/net/ssl/context_openssl.hpp"
 
 #elif MONGO_CONFIG_SSL_PROVIDER == MONGO_CONFIG_SSL_PROVIDER_APPLE
 
-#include "mongo/util/net/ssl/context_apple.hpp"
+#include "monger/util/net/ssl/context_apple.hpp"
 
 #else
 #error "Unknown SSL Provider"

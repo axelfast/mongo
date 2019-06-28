@@ -10,9 +10,9 @@ import (
 	"context"
 	"fmt"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger"
+	"go.mongerdb.org/monger-driver/monger/options"
 )
 
 // BufferedBulkInserter implements a bufio.Writer-like design for queuing up
@@ -20,31 +20,31 @@ import (
 // message size) is reached. Must be flushed at the end to ensure that all
 // documents are written.
 type BufferedBulkInserter struct {
-	collection    *mongo.Collection
-	writeModels   []mongo.WriteModel
+	collection    *monger.Collection
+	writeModels   []monger.WriteModel
 	docLimit      int
 	docCount      int
 	bulkWriteOpts *options.BulkWriteOptions
 	upsert        bool
 }
 
-func newBufferedBulkInserter(collection *mongo.Collection, docLimit int, ordered bool) *BufferedBulkInserter {
+func newBufferedBulkInserter(collection *monger.Collection, docLimit int, ordered bool) *BufferedBulkInserter {
 	bb := &BufferedBulkInserter{
 		collection:    collection,
 		bulkWriteOpts: options.BulkWrite().SetOrdered(ordered),
 		docLimit:      docLimit,
-		writeModels:   make([]mongo.WriteModel, 0, docLimit),
+		writeModels:   make([]monger.WriteModel, 0, docLimit),
 	}
 	return bb
 }
 
 // NewOrderedBufferedBulkInserter returns an initialized BufferedBulkInserter for performing ordered bulk writes.
-func NewOrderedBufferedBulkInserter(collection *mongo.Collection, docLimit int) *BufferedBulkInserter {
+func NewOrderedBufferedBulkInserter(collection *monger.Collection, docLimit int) *BufferedBulkInserter {
 	return newBufferedBulkInserter(collection, docLimit, true)
 }
 
 // NewOrderedBufferedBulkInserter returns an initialized BufferedBulkInserter for performing unordered bulk writes.
-func NewUnorderedBufferedBulkInserter(collection *mongo.Collection, docLimit int) *BufferedBulkInserter {
+func NewUnorderedBufferedBulkInserter(collection *monger.Collection, docLimit int) *BufferedBulkInserter {
 	return newBufferedBulkInserter(collection, docLimit, false)
 }
 
@@ -71,7 +71,7 @@ func (bb *BufferedBulkInserter) resetBulk() {
 
 // Insert adds a document to the buffer for bulk insertion. If the buffer becomes full, the bulk write is performed, returning
 // any error that occurs.
-func (bb *BufferedBulkInserter) Insert(doc interface{}) (*mongo.BulkWriteResult, error) {
+func (bb *BufferedBulkInserter) Insert(doc interface{}) (*monger.BulkWriteResult, error) {
 	rawBytes, err := bson.Marshal(doc)
 	if err != nil {
 		return nil, fmt.Errorf("bson encoding error: %v", err)
@@ -82,25 +82,25 @@ func (bb *BufferedBulkInserter) Insert(doc interface{}) (*mongo.BulkWriteResult,
 
 // Update adds a document to the buffer for bulk update. If the buffer becomes full, the bulk write is performed, returning
 // any error that occurs.
-func (bb *BufferedBulkInserter) Update(selector, update bson.D) (*mongo.BulkWriteResult, error) {
-	return bb.addModel(mongo.NewUpdateOneModel().SetFilter(selector).SetUpdate(update).SetUpsert(bb.upsert))
+func (bb *BufferedBulkInserter) Update(selector, update bson.D) (*monger.BulkWriteResult, error) {
+	return bb.addModel(monger.NewUpdateOneModel().SetFilter(selector).SetUpdate(update).SetUpsert(bb.upsert))
 }
 
 // Replace adds a document to the buffer for bulk replacement. If the buffer becomes full, the bulk write is performed, returning
 // any error that occurs.
-func (bb *BufferedBulkInserter) Replace(selector, replacement bson.D) (*mongo.BulkWriteResult, error) {
-	return bb.addModel(mongo.NewReplaceOneModel().SetFilter(selector).SetReplacement(replacement).SetUpsert(bb.upsert))
+func (bb *BufferedBulkInserter) Replace(selector, replacement bson.D) (*monger.BulkWriteResult, error) {
+	return bb.addModel(monger.NewReplaceOneModel().SetFilter(selector).SetReplacement(replacement).SetUpsert(bb.upsert))
 }
 
 // InsertRaw adds a document, represented as raw bson bytes, to the buffer for bulk insertion. If the buffer becomes full,
 // the bulk write is performed, returning any error that occurs.
-func (bb *BufferedBulkInserter) InsertRaw(rawBytes []byte) (*mongo.BulkWriteResult, error) {
-	return bb.addModel(mongo.NewInsertOneModel().SetDocument(rawBytes))
+func (bb *BufferedBulkInserter) InsertRaw(rawBytes []byte) (*monger.BulkWriteResult, error) {
+	return bb.addModel(monger.NewInsertOneModel().SetDocument(rawBytes))
 }
 
 // addModel adds a WriteModel to the buffer. If the buffer becomes full, the bulk write is performed, returning any error
 // that occurs.
-func (bb *BufferedBulkInserter) addModel(model mongo.WriteModel) (*mongo.BulkWriteResult, error) {
+func (bb *BufferedBulkInserter) addModel(model monger.WriteModel) (*monger.BulkWriteResult, error) {
 	bb.docCount++
 	bb.writeModels = append(bb.writeModels, model)
 
@@ -112,7 +112,7 @@ func (bb *BufferedBulkInserter) addModel(model mongo.WriteModel) (*mongo.BulkWri
 }
 
 // Flush writes all buffered documents in one bulk write and then resets the buffer.
-func (bb *BufferedBulkInserter) Flush() (*mongo.BulkWriteResult, error) {
+func (bb *BufferedBulkInserter) Flush() (*monger.BulkWriteResult, error) {
 	if bb.docCount == 0 {
 		return nil, nil
 	}

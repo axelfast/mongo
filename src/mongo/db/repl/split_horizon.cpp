@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/split_horizon.h"
+#include "monger/db/repl/split_horizon.h"
 
 #include <utility>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/client.h"
-#include "mongo/util/log.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/client.h"
+#include "monger/util/log.h"
 
 using namespace std::literals::string_literals;
 
 using std::begin;
 using std::end;
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 const auto getSplitHorizonParameters = Client::declareDecoration<SplitHorizon::Parameters>();
@@ -126,7 +126,7 @@ SplitHorizon::ForwardMapping computeForwardMappings(
             } else if (horizonName == SplitHorizon::kDefaultHorizon) {
                 uasserted(ErrorCodes::BadValue,
                           "Horizon name \"" + SplitHorizon::kDefaultHorizon +
-                              "\" is reserved for internal mongodb usage");
+                              "\" is reserved for internal mongerdb usage");
             } else if (horizonName == "") {
                 uasserted(ErrorCodes::BadValue, "Horizons cannot have empty names");
             }
@@ -237,4 +237,4 @@ SplitHorizon::SplitHorizon(const HostAndPort& host,
     : SplitHorizon(computeForwardMappings(host, horizonsElement)) {}
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/repl/repl_set_command.h"
-#include "mongo/db/repl/replication_coordinator.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/repl/repl_set_command.h"
+#include "monger/db/repl/replication_coordinator.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 class CmdReplSetGetStatus : public ReplSetCommand {
@@ -40,7 +40,7 @@ public:
     std::string help() const override {
         return "Report status of a replica set from the POV of this server\n"
                "{ replSetGetStatus : 1 }\n"
-               "http://dochub.mongodb.org/core/replicasetcommands";
+               "http://dochub.mongerdb.org/core/replicasetcommands";
     }
 
     CmdReplSetGetStatus() : ReplSetCommand("replSetGetStatus") {}
@@ -77,4 +77,4 @@ private:
 } cmdReplSetGetStatus;
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

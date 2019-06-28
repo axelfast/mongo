@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,48 +27,48 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/free_mon/free_mon_mongod.h"
+#include "monger/db/free_mon/free_mon_mongerd.h"
 
 #include <mutex>
 #include <snappy.h>
 #include <string>
 
-#include "mongo/base/data_type_validated.h"
-#include "mongo/base/error_codes.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/free_mon/free_mon_controller.h"
-#include "mongo/db/free_mon/free_mon_message.h"
-#include "mongo/db/free_mon/free_mon_mongod_gen.h"
-#include "mongo/db/free_mon/free_mon_network.h"
-#include "mongo/db/free_mon/free_mon_op_observer.h"
-#include "mongo/db/free_mon/free_mon_options.h"
-#include "mongo/db/free_mon/free_mon_protocol_gen.h"
-#include "mongo/db/free_mon/free_mon_storage.h"
-#include "mongo/db/ftdc/ftdc_server.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/network_interface_factory.h"
-#include "mongo/executor/thread_pool_task_executor.h"
-#include "mongo/rpc/object_check.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/future.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/http_client.h"
+#include "monger/base/data_type_validated.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/free_mon/free_mon_controller.h"
+#include "monger/db/free_mon/free_mon_message.h"
+#include "monger/db/free_mon/free_mon_mongerd_gen.h"
+#include "monger/db/free_mon/free_mon_network.h"
+#include "monger/db/free_mon/free_mon_op_observer.h"
+#include "monger/db/free_mon/free_mon_options.h"
+#include "monger/db/free_mon/free_mon_protocol_gen.h"
+#include "monger/db/free_mon/free_mon_storage.h"
+#include "monger/db/ftdc/ftdc_server.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/network_interface_factory.h"
+#include "monger/executor/thread_pool_task_executor.h"
+#include "monger/rpc/object_check.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/future.h"
+#include "monger/util/log.h"
+#include "monger/util/net/http_client.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -392,4 +392,4 @@ void setupFreeMonitoringOpObserver(OpObserverRegistry* registry) {
     registry->addObserver(std::make_unique<FreeMonOpObserver>());
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,22 +34,22 @@
 #include <memory>
 #include <string>
 
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/durable_catalog_feature_tracker.h"
-#include "mongo/db/storage/journal_listener.h"
-#include "mongo/db/storage/kv/kv_drop_pending_ident_reaper.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/storage/storage_engine_interface.h"
-#include "mongo/db/storage/temporary_record_store.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/periodic_runner.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/durable_catalog_feature_tracker.h"
+#include "monger/db/storage/journal_listener.h"
+#include "monger/db/storage/kv/kv_drop_pending_ident_reaper.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/storage/storage_engine_interface.h"
+#include "monger/db/storage/temporary_record_store.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/periodic_runner.h"
 
-namespace mongo {
+namespace monger {
 
 class DurableCatalogImpl;
 class KVEngine;
@@ -402,4 +402,4 @@ private:
 
     std::unique_ptr<TimestampMonitor> _timestampMonitor;
 };
-}  // namespace mongo
+}  // namespace monger

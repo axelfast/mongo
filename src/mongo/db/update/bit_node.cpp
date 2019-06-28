@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/bit_node.h"
+#include "monger/db/update/bit_node.h"
 
-#include "mongo/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/algorithm.h"
 
-namespace mongo {
+namespace monger {
 
 Status BitNode::init(BSONElement modExpr, const boost::intrusive_ptr<ExpressionContext>& expCtx) {
     invariant(modExpr.ok());
 
-    if (modExpr.type() != mongo::Object) {
+    if (modExpr.type() != monger::Object) {
         return Status(ErrorCodes::BadValue,
                       str::stream() << "The $bit modifier is not compatible with a "
                                     << typeName(modExpr.type())
@@ -66,7 +66,7 @@ Status BitNode::init(BSONElement modExpr, const boost::intrusive_ptr<ExpressionC
                               << "}");
         }
 
-        if ((curOp.type() != mongo::NumberInt) && (curOp.type() != mongo::NumberLong)) {
+        if ((curOp.type() != monger::NumberInt) && (curOp.type() != monger::NumberLong)) {
             return Status(ErrorCodes::BadValue,
                           str::stream()
                               << "The $bit modifier field must be an Integer(32/64 bit); a '"
@@ -133,4 +133,4 @@ SafeNum BitNode::applyOpList(SafeNum value) const {
     return value;
 }
 
-}  // namespace mongo
+}  // namespace monger

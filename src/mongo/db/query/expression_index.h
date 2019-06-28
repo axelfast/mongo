@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,16 +31,16 @@
 
 #include <vector>
 
-#include "mongo/db/geo/hash.h"
-#include "mongo/db/geo/shapes.h"
-#include "mongo/db/index/s2_common.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/query/index_bounds_builder.h"  // For OrderedIntervalList
+#include "monger/db/geo/hash.h"
+#include "monger/db/geo/shapes.h"
+#include "monger/db/index/s2_common.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/query/index_bounds_builder.h"  // For OrderedIntervalList
 
 class S2CellId;
 class S2Region;
 
-namespace mongo {
+namespace monger {
 
 /**
  * Functions that compute expression index mappings.
@@ -80,4 +80,4 @@ public:
                               OrderedIntervalList* oilOut);
 };
 
-}  // namespace mongo
+}  // namespace monger

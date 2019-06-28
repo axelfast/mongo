@@ -1,7 +1,7 @@
 BSON_PKGS = $(shell etc/list_pkgs.sh ./bson)
 BSON_TEST_PKGS = $(shell etc/list_test_pkgs.sh ./bson)
-MONGO_PKGS = $(shell etc/list_pkgs.sh ./mongo)
-MONGO_TEST_PKGS = $(shell etc/list_test_pkgs.sh ./mongo)
+MONGO_PKGS = $(shell etc/list_pkgs.sh ./monger)
+MONGO_TEST_PKGS = $(shell etc/list_test_pkgs.sh ./monger)
 UNSTABLE_PKGS = $(shell etc/list_pkgs.sh ./x)
 UNSTABLE_TEST_PKGS = $(shell etc/list_test_pkgs.sh ./x)
 TAG_PKG = $(shell etc/list_pkgs.sh ./tag)
@@ -51,7 +51,7 @@ lint-add-whitelist:
 
 .PHONY: errcheck
 errcheck:
-	errcheck -exclude .errcheck-excludes ./bson/... ./mongo/... ./x/...
+	errcheck -exclude .errcheck-excludes ./bson/... ./monger/... ./x/...
 
 .PHONY: test
 test:

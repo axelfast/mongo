@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/matcher/extensions_callback.h"
+#include "monger/db/matcher/extensions_callback.h"
 
-#include "mongo/bson/util/bson_extract.h"
+#include "monger/bson/util/bson_extract.h"
 
-namespace mongo {
+namespace monger {
 
 StatusWith<TextMatchExpressionBase::TextParams>
 ExtensionsCallback::extractTextMatchExpressionParams(BSONElement text) {
@@ -102,12 +102,12 @@ ExtensionsCallback::extractWhereMatchExpressionParams(BSONElement where) {
     WhereMatchExpressionBase::WhereParams params;
 
     switch (where.type()) {
-        case mongo::String:
-        case mongo::Code:
+        case monger::String:
+        case monger::Code:
             params.code = where._asCode();
             params.scope = BSONObj();
             break;
-        case mongo::CodeWScope:
+        case monger::CodeWScope:
             params.code = where._asCode();
             params.scope = where.codeWScopeObject().getOwned();
             break;
@@ -122,4 +122,4 @@ ExtensionsCallback::extractWhereMatchExpressionParams(BSONElement where) {
     return params;
 }
 
-}  // namespace mongo
+}  // namespace monger

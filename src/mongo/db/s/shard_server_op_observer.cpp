@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/shard_server_op_observer.h"
+#include "monger/db/s/shard_server_op_observer.h"
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/op_observer_impl.h"
-#include "mongo/db/s/chunk_split_state_driver.h"
-#include "mongo/db/s/chunk_splitter.h"
-#include "mongo/db/s/database_sharding_state.h"
-#include "mongo/db/s/migration_source_manager.h"
-#include "mongo/db/s/shard_identity_rollback_notifier.h"
-#include "mongo/db/s/sharding_initialization_mongod.h"
-#include "mongo/db/s/type_shard_identity.h"
-#include "mongo/s/balancer_configuration.h"
-#include "mongo/s/catalog/type_shard_collection.h"
-#include "mongo/s/catalog/type_shard_database.h"
-#include "mongo/s/catalog_cache_loader.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/op_observer_impl.h"
+#include "monger/db/s/chunk_split_state_driver.h"
+#include "monger/db/s/chunk_splitter.h"
+#include "monger/db/s/database_sharding_state.h"
+#include "monger/db/s/migration_source_manager.h"
+#include "monger/db/s/shard_identity_rollback_notifier.h"
+#include "monger/db/s/sharding_initialization_mongerd.h"
+#include "monger/db/s/type_shard_identity.h"
+#include "monger/s/balancer_configuration.h"
+#include "monger/s/catalog/type_shard_collection.h"
+#include "monger/s/catalog/type_shard_database.h"
+#include "monger/s/catalog_cache_loader.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const auto getDocumentKey = OperationContext::declareDecoration<BSONObj>();
@@ -156,8 +156,8 @@ void incrementChunkOnInsertOrUpdate(OperationContext* opCtx,
     const auto& shardKeyPattern = chunkManager.getShardKeyPattern();
 
     // Each inserted/updated document should contain the shard key. The only instance in which a
-    // document could not contain a shard key is if the insert/update is performed through mongod
-    // explicitly, as opposed to first routed through mongos.
+    // document could not contain a shard key is if the insert/update is performed through mongerd
+    // explicitly, as opposed to first routed through mongers.
     BSONObj shardKey = shardKeyPattern.extractShardKeyFromDoc(document);
     if (shardKey.woCompare(BSONObj()) == 0) {
         warning() << "inserting document " << document.toString() << " without shard key pattern "
@@ -413,4 +413,4 @@ repl::OpTime ShardServerOpObserver::onDropCollection(OperationContext* opCtx,
     return {};
 }
 
-}  // namespace mongo
+}  // namespace monger

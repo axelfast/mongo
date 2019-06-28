@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <functional>
 #include <string>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/ftdc/collector.h"
-#include "mongo/db/ftdc/config.h"
-#include "mongo/db/ftdc/controller.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/operation_context.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/commands.h"
+#include "monger/db/ftdc/collector.h"
+#include "monger/db/ftdc/config.h"
+#include "monger/db/ftdc/controller.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/operation_context.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Function that allows FTDC server components to register their own collectors as needed.
@@ -139,4 +139,4 @@ Status onUpdateFTDCPerInterimUpdate(const std::int32_t value);
  */
 boost::filesystem::path getFTDCDirectoryPathParameter();
 
-}  // namespace mongo
+}  // namespace monger

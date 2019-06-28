@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/stacktrace.h"
+#include "monger/util/stacktrace.h"
 
 #pragma warning(push)
 // C4091: 'typedef ': ignored on left of '' when no variable is declared
@@ -49,13 +49,13 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/mutex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/text.h"
+#include "monger/base/init.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/mutex.h"
+#include "monger/util/log.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 const auto kPathBufferSize = 1024;
 
@@ -126,7 +126,7 @@ private:
     DWORD _origOptions;
 };
 
-MONGO_INITIALIZER(IntializeSymbolHandler)(::mongo::InitializerContext* ctx) {
+MONGO_INITIALIZER(IntializeSymbolHandler)(::monger::InitializerContext* ctx) {
     // We call this to ensure that the symbol handler is initialized in a single-threaded
     // context. The constructor of SymbolHandler does all the error handling, so we don't need to
     // do anything with the return value. Just make sure it gets called.
@@ -183,7 +183,7 @@ static void getSourceFileAndLineNumber(HANDLE process,
     }
 
     std::string filename(line64.FileName);
-    std::string::size_type start = filename.find("\\src\\mongo\\");
+    std::string::size_type start = filename.find("\\src\\monger\\");
     if (start == std::string::npos) {
         start = filename.find("\\src\\third_party\\");
     }

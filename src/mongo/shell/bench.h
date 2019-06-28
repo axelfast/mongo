@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,22 +32,22 @@
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/base/shim.h"
-#include "mongo/client/dbclient_base.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/ops/write_ops_parsers.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/timer.h"
+#include "monger/base/shim.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/ops/write_ops_parsers.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/timer.h"
 
 namespace pcrecpp {
 class RE;
 }  // namespace pcrecpp;
 
-namespace mongo {
+namespace monger {
 
 enum class OpType {
     NONE,
@@ -166,7 +166,7 @@ public:
 
     void initializeFromBson(const BSONObj& args);
 
-    // Create a new connection to the mongo instance specified by this configuration.
+    // Create a new connection to the monger instance specified by this configuration.
     std::unique_ptr<DBClientBase> createConnection() const;
 
     /**
@@ -438,13 +438,13 @@ public:
 
     /**
      * Called by each BenchRunWorker from within its thread context, immediately before it
-     * starts sending requests to the configured mongo instance.
+     * starts sending requests to the configured monger instance.
      */
     void onWorkerStarted();
 
     /**
      * Called by each BenchRunWorker from within its thread context, shortly after it finishes
-     * sending requests to the configured mongo instance.
+     * sending requests to the configured monger instance.
      */
     void onWorkerFinished();
 
@@ -612,4 +612,4 @@ private:
     std::vector<std::unique_ptr<BenchRunWorker>> _workers;
 };
 
-}  // namespace mongo
+}  // namespace monger

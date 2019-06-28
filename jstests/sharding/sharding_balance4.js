@@ -7,7 +7,7 @@
  */
 (function() {
 
-    var s = new ShardingTest({shards: 2, mongos: 1, other: {chunkSize: 1, enableAutoSplit: true}});
+    var s = new ShardingTest({shards: 2, mongers: 1, other: {chunkSize: 1, enableAutoSplit: true}});
 
     assert.commandWorked(s.s0.adminCommand({enablesharding: "test"}));
     s.ensurePrimaryShard('test', s.shard1.shardName);

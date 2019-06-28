@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <functional>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/auth/authz_manager_external_state.h"
-#include "mongo/db/auth/role_graph.h"
-#include "mongo/db/auth/role_name.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/authz_manager_external_state.h"
+#include "monger/db/auth/role_graph.h"
+#include "monger/db/auth/role_name.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 namespace mutablebson {
 class Document;
@@ -164,4 +164,4 @@ private:
     stdx::mutex _roleGraphMutex;
 };
 
-}  // namespace mongo
+}  // namespace monger

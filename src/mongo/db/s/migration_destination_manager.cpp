@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,49 +27,49 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/migration_destination_manager.h"
+#include "monger/db/s/migration_destination_manager.h"
 
 #include <list>
 #include <vector>
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/delete.h"
-#include "mongo/db/ops/write_ops_exec.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/migration_util.h"
-#include "mongo/db/s/move_timing_helper.h"
-#include "mongo/db/s/sharding_runtime_d_params_gen.h"
-#include "mongo/db/s/sharding_statistics.h"
-#include "mongo/db/s/start_chunk_clone_request.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/remove_saver.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/stdx/chrono.h"
-#include "mongo/util/concurrency/notification.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/producer_consumer_queue.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/delete.h"
+#include "monger/db/ops/write_ops_exec.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/migration_util.h"
+#include "monger/db/s/move_timing_helper.h"
+#include "monger/db/s/sharding_runtime_d_params_gen.h"
+#include "monger/db/s/sharding_statistics.h"
+#include "monger/db/s/start_chunk_clone_request.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/remove_saver.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/stdx/chrono.h"
+#include "monger/util/concurrency/notification.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/producer_consumer_queue.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const auto getMigrationDestinationManager =
@@ -78,7 +78,7 @@ const auto getMigrationDestinationManager =
 const WriteConcernOptions kMajorityWriteConcern(WriteConcernOptions::kMajority,
                                                 // Note: Even though we're setting UNSET here,
                                                 // kMajority implies JOURNAL if journaling is
-                                                // supported by mongod and
+                                                // supported by mongerd and
                                                 // writeConcernMajorityJournalDefault is set to true
                                                 // in the ReplSetConfig.
                                                 WriteConcernOptions::SyncMode::UNSET,
@@ -1192,4 +1192,4 @@ void MigrationDestinationManager::_forgetPending(OperationContext* opCtx, ChunkR
     css->forgetReceive(range);
 }
 
-}  // namespace mongo
+}  // namespace monger

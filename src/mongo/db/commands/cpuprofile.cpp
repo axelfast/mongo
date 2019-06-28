@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 /**
  * This module provides commands for starting and stopping the Google perftools
- * cpu profiler linked into mongod.
+ * cpu profiler linked into mongerd.
  *
  * The following command enables the not-currently-enabled profiler, and writes
  * the profile data to the specified "profileFilename."
- *     { _cpuProfilerStart: { profileFilename: '/path/on/mongod-host.prof' } }
+ *     { _cpuProfilerStart: { profileFilename: '/path/on/mongerd-host.prof' } }
  *
  * The following command disables the already-enabled profiler:
  *     { _cpuProfilerStop: 1}
@@ -46,22 +46,22 @@
  *     scons --release --use-cpu-profiler
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include "gperftools/profiler.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/jsobj.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -162,4 +162,4 @@ bool CpuProfilerStopCommand::errmsgRun(OperationContext* opCtx,
 
 }  // namespace
 
-}  // namespace mongo
+}  // namespace monger

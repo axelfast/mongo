@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,7 +31,7 @@
 
 #include <cstdint>
 
-namespace mongo {
+namespace monger {
 
 /**
  * Interface for objects generating ticks that roughly represents the passage of time.
@@ -65,4 +65,4 @@ public:
         return D(static_cast<int64_t>(ticks / ticksPerD));
     }
 };
-}  // namespace mongo
+}  // namespace monger

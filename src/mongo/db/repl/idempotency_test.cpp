@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/query/index_bounds.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/repl/idempotency_document_structure.h"
-#include "mongo/db/repl/idempotency_test_fixture.h"
-#include "mongo/db/repl/idempotency_update_sequence.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/query/index_bounds.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/repl/idempotency_document_structure.h"
+#include "monger/db/repl/idempotency_test_fixture.h"
+#include "monger/db/repl/idempotency_update_sequence.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/server_options.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -76,7 +76,7 @@ BSONObj RandomizedIdempotencyTest::canonicalizeDocumentForDataHash(const BSONObj
     while (iter.more()) {
         auto elem = iter.next();
         if (elem.isABSONObj()) {
-            if (elem.type() == mongo::Array) {
+            if (elem.type() == monger::Array) {
                 objBuilder.append(elem.fieldName(), obj);
             } else {
                 // If it is a sub object, we'll have to sort it as well before we append it.
@@ -199,4 +199,4 @@ TEST_F(RandomizedIdempotencyTest, CheckUpdateSequencesAreIdempotent) {
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

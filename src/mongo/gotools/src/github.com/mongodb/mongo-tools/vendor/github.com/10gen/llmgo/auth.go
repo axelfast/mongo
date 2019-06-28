@@ -94,9 +94,9 @@ func (socket *MongoSocket) getNonce() (nonce string, err error) {
 		debugf("Socket %p to %s: waiting for nonce", socket, socket.addr)
 		socket.gotNonce.Wait()
 	}
-	if socket.cachedNonce == "mongos" {
+	if socket.cachedNonce == "mongers" {
 		socket.Unlock()
-		return "", errors.New("Can't authenticate with mongos; see http://j.mp/mongos-auth")
+		return "", errors.New("Can't authenticate with mongers; see http://j.mp/mongers-auth")
 	}
 	debugf("Socket %p to %s: got nonce", socket, socket.addr)
 	nonce, err = socket.cachedNonce, socket.dead
@@ -127,8 +127,8 @@ func (socket *MongoSocket) resetNonce() {
 		}
 		debugf("Socket %p to %s: nonce unmarshalled: %#v", socket, socket.addr, result)
 		if result.Code == 13390 {
-			// mongos doesn't yet support auth (see http://j.mp/mongos-auth)
-			result.Nonce = "mongos"
+			// mongers doesn't yet support auth (see http://j.mp/mongers-auth)
+			result.Nonce = "mongers"
 		} else if result.Nonce == "" {
 			var msg string
 			if result.Err != "" {
@@ -249,7 +249,7 @@ func (socket *MongoSocket) loginClassic(cred Credential) error {
 	}
 
 	psum := md5.New()
-	psum.Write([]byte(cred.Username + ":mongo:" + cred.Password))
+	psum.Write([]byte(cred.Username + ":monger:" + cred.Password))
 
 	ksum := md5.New()
 	ksum.Write([]byte(nonce + cred.Username))
@@ -393,7 +393,7 @@ func (socket *MongoSocket) loginSASL(cred Credential) error {
 
 func saslNewScram1(cred Credential) *saslScram {
 	credsum := md5.New()
-	credsum.Write([]byte(cred.Username + ":mongo:" + cred.Password))
+	credsum.Write([]byte(cred.Username + ":monger:" + cred.Password))
 	client := scram.NewClient(sha1.New, cred.Username, hex.EncodeToString(credsum.Sum(nil)))
 	return &saslScram{cred: cred, client: client}
 }

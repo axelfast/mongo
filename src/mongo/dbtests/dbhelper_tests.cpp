@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/range_arithmetic.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/range_arithmetic.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -97,4 +97,4 @@ public:
 } myall;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -16,11 +16,11 @@ env.Library(
         env.Idlc('unittest.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/db/server_options_core',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/db/server_options_core',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ],
 )
 
@@ -34,7 +34,7 @@ env.Library(
         'unittest',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ],
 )
 
@@ -46,13 +46,13 @@ env.Library(
     ],
     LIBDEPS=[
         'unittest',
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/client/connection_string',
-        '$BUILD_DIR/mongo/db/service_context',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser_init',
+        '$BUILD_DIR/monger/client/connection_string',
+        '$BUILD_DIR/monger/db/service_context',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/util/options_parser/options_parser_init',
     ],
 )
 
@@ -64,8 +64,8 @@ bmEnv.Library(
         'benchmark_main.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/service_context',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/service_context',
         '$BUILD_DIR/third_party/shim_benchmark',
     ],
 )
@@ -76,7 +76,7 @@ env.Library(
         'task_executor_proxy.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/executor/task_executor_interface',
+        '$BUILD_DIR/monger/executor/task_executor_interface',
     ],
 )
 
@@ -95,6 +95,6 @@ env.Benchmark(
         'system_resource_canary_bm.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/util/processinfo',
+        '$BUILD_DIR/monger/util/processinfo',
     ],
 )

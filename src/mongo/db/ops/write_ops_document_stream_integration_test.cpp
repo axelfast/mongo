@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_base.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/unittest/integration_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/db/commands.h"
+#include "monger/db/namespace_string.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/unittest/integration_test.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 TEST(WriteOpsDocSeq, InsertDocStreamWorks) {
     std::string errMsg;
@@ -67,4 +67,4 @@ TEST(WriteOpsDocSeq, InsertDocStreamWorks) {
     ASSERT_EQ(conn->count(ns.ns()), 5u);
 }
 
-}  // namespace mongo
+}  // namespace monger

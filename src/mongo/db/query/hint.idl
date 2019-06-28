@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 # IDL type for index hints
 
 global:
-    cpp_namespace: "mongo"
+    cpp_namespace: "monger"
     cpp_includes:
-        - "mongo/db/query/hint_parser.h"
+        - "monger/db/query/hint_parser.h"
 types:
     indexHint:
         bson_serialization_type: any
         description: "Either a string index name or an object index specification."
-        cpp_type: mongo::BSONObj
-        serializer: "::mongo::serializeHintToBSON"
-        deserializer: "::mongo::parseHint"
+        cpp_type: monger::BSONObj
+        serializer: "::monger::serializeHintToBSON"
+        deserializer: "::monger::parseHint"

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,13 +34,13 @@
 #include <string>
 
 
-#include "mongo/base/clonable_ptr.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobjbuilder.h"
+#include "monger/base/clonable_ptr.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobjbuilder.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Representation of a name of a principal (authenticatable user) in a MongoDB system.
@@ -217,4 +217,4 @@ Container userNameIteratorToContainer(UserNameIterator it) {
     return container;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,10 +30,10 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/idl/unittest_import_gen.h"
+#include "monger/base/status.h"
+#include "monger/idl/unittest_import_gen.h"
 
-namespace mongo {
+namespace monger {
 namespace idl {
 namespace test {
 
@@ -84,11 +84,11 @@ Status validateStartsWith(const std::string& value) {
 /**
  * Validate a struct
  */
-inline Status validateOneInt(const mongo::idl::import::One_int& one) {
+inline Status validateOneInt(const monger::idl::import::One_int& one) {
     return validateEvenNumber(one.getValue());
 }
 
-inline Status validateOneInt(const std::vector<mongo::idl::import::One_int>& values) {
+inline Status validateOneInt(const std::vector<monger::idl::import::One_int>& values) {
     for (auto& value : values) {
         auto status = validateEvenNumber(value.getValue());
         if (!status.isOK()) {
@@ -100,4 +100,4 @@ inline Status validateOneInt(const std::vector<mongo::idl::import::One_int>& val
 
 }  // namespace test
 }  // namespace idl
-}  // namespace mongo
+}  // namespace monger

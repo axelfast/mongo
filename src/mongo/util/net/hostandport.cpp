@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/hostandport.h"
+#include "monger/util/net/hostandport.h"
 
 #include <boost/functional/hash.hpp>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/server_options.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 StatusWith<HostAndPort> HostAndPort::parse(StringData text) {
     HostAndPort result;
@@ -226,4 +226,4 @@ StackStringBuilder& operator<<(StackStringBuilder& os, const HostAndPort& hp) {
     return appendToStream(hp, os);
 }
 
-}  // namespace mongo
+}  // namespace monger

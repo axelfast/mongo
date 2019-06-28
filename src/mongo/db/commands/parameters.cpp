@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <set>
 
-#include "mongo/bson/json.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/config.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/parameters_gen.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/logger/logger.h"
-#include "mongo/logger/parse_log_component_settings.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/json.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/config.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/parameters_gen.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/logger/logger.h"
+#include "monger/logger/parse_log_component_settings.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
 using std::string;
 using std::stringstream;
 
-namespace mongo {
+namespace monger {
 
 namespace {
 using logger::globalLogDomain;
@@ -468,4 +468,4 @@ Status AutomationServiceDescriptorServerParameter::setFromString(const std::stri
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

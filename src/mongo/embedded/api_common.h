@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #include <string>
 
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A status object for use with C APIs that call into C++ code. When using StatusForAPI for error
@@ -198,10 +198,10 @@ public:
 
 template <typename Status, typename Callable>
 auto enterCXX(Status* const statusPtr, Callable&& c) noexcept
-    -> decltype(mongo::enterCXXImpl<Status, Callable>::call(std::forward<Callable>(c),
+    -> decltype(monger::enterCXXImpl<Status, Callable>::call(std::forward<Callable>(c),
                                                             *statusPtr)) {
-    return mongo::enterCXXImpl<Status, Callable>::call(std::forward<Callable>(c),
+    return monger::enterCXXImpl<Status, Callable>::call(std::forward<Callable>(c),
                                                        StatusGuard<Status>(statusPtr));
 }
 
-}  // namespace mongo
+}  // namespace monger

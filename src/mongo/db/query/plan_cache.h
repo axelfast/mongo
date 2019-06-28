@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,16 +32,16 @@
 #include <boost/optional/optional.hpp>
 #include <set>
 
-#include "mongo/db/exec/plan_stats.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/index_tag.h"
-#include "mongo/db/query/lru_key_value.h"
-#include "mongo/db/query/plan_cache_indexability.h"
-#include "mongo/db/query/query_planner_params.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/db/exec/plan_stats.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/index_tag.h"
+#include "monger/db/query/lru_key_value.h"
+#include "monger/db/query/plan_cache_indexability.h"
+#include "monger/db/query/query_planner_params.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Represents the "key" used in the PlanCache mapping from query shape -> query plan.
@@ -562,4 +562,4 @@ private:
     PlanCacheIndexabilityState _indexabilityState;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,45 +27,45 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include "repair_database_and_check_version.h"
 
 #include <functional>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/create_collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/commands/feature_compatibility_version.h"
-#include "mongo/db/commands/feature_compatibility_version_documentation.h"
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repair_database.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl_set_member_in_standalone_mode.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/storage_repair_observer.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/fail_point.h"
-#include "mongo/util/log.h"
-#include "mongo/util/quick_exit.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/create_collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/commands/feature_compatibility_version.h"
+#include "monger/db/commands/feature_compatibility_version_documentation.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repair_database.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl_set_member_in_standalone_mode.h"
+#include "monger/db/server_options.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/storage_repair_observer.h"
+#include "monger/util/exit.h"
+#include "monger/util/fail_point.h"
+#include "monger/util/log.h"
+#include "monger/util/quick_exit.h"
 
 #if !defined(_WIN32)
 #include <sys/file.h>
 #endif
 
-namespace mongo {
+namespace monger {
 
 // Exit after repair has started, but before data is repaired.
 MONGO_FAIL_POINT_DEFINE(exitBeforeDataRepair);
@@ -354,7 +354,7 @@ void setReplSetMemberInStandaloneMode(OperationContext* opCtx) {
 }  // namespace
 
 /**
- * Return whether there are non-local databases. If there was an error becauses the wrong mongod
+ * Return whether there are non-local databases. If there was an error becauses the wrong mongerd
  * version was used for these datafiles, a DBException with status ErrorCodes::MustDowngrade is
  * thrown.
  */
@@ -430,7 +430,7 @@ bool repairDatabasesAndCheckVersion(OperationContext* opCtx) {
         // We open the "local" database before calling hasReplSetConfigDoc() to ensure the in-memory
         // catalog entries for the 'kSystemReplSetNamespace' collection have been populated if the
         // collection exists. If the "local" database didn't exist at this point yet, then it will
-        // be created. If the mongod is running in a read-only mode, then it is fine to not open the
+        // be created. If the mongerd is running in a read-only mode, then it is fine to not open the
         // "local" database and populate the catalog entries because we won't attempt to drop the
         // temporary collections anyway.
         Lock::DBLock dbLock(opCtx, NamespaceString::kSystemReplSetNamespace.db(), MODE_X);
@@ -495,11 +495,11 @@ bool repairDatabasesAndCheckVersion(OperationContext* opCtx) {
                 // potentially confusing and inaccurate message.
                 //
                 // TODO SERVER-24097: Log a message informing the user that they can start the
-                // current version of mongod with --repair and then proceed with normal startup.
+                // current version of mongerd with --repair and then proceed with normal startup.
                 status = {ErrorCodes::MustUpgrade, status.reason()};
             }
-            severe() << "Unable to start mongod due to an incompatibility with the data files and"
-                        " this version of mongod: "
+            severe() << "Unable to start mongerd due to an incompatibility with the data files and"
+                        " this version of mongerd: "
                      << redact(status);
             severe() << "Please consult our documentation when trying to downgrade to a previous"
                         " major release";
@@ -568,7 +568,7 @@ bool repairDatabasesAndCheckVersion(OperationContext* opCtx) {
         if (replSettings.usingReplSets()) {
             // We only care about _id indexes and drop-pending collections if we are in a replset.
             db->checkForIdIndexesAndDropPendingCollections(opCtx);
-            // Ensure oplog is capped (mongodb does not guarantee order of inserts on noncapped
+            // Ensure oplog is capped (mongerdb does not guarantee order of inserts on noncapped
             // collections)
             if (db->name() == "local") {
                 checkForCappedOplog(opCtx, db);
@@ -592,7 +592,7 @@ bool repairDatabasesAndCheckVersion(OperationContext* opCtx) {
     // databases present and we do not need to start up via initial sync.
     if (!fcvDocumentExists && nonLocalDatabases && !needInitialSync) {
         severe()
-            << "Unable to start up mongod due to missing featureCompatibilityVersion document.";
+            << "Unable to start up mongerd due to missing featureCompatibilityVersion document.";
         severe() << "Please run with --repair to restore the document.";
         fassertFailedNoTrace(40652);
     }
@@ -601,4 +601,4 @@ bool repairDatabasesAndCheckVersion(OperationContext* opCtx) {
     return nonLocalDatabases;
 }
 
-}  // namespace mongo
+}  // namespace monger

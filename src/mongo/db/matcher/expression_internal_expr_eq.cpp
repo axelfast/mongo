@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/matcher/expression_internal_expr_eq.h"
+#include "monger/db/matcher/expression_internal_expr_eq.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr StringData InternalExprEqMatchExpression::kName;
 
@@ -66,4 +66,4 @@ std::unique_ptr<MatchExpression> InternalExprEqMatchExpression::shallowClone() c
     return std::move(clone);
 }
 
-}  //  namespace mongo
+}  //  namespace monger

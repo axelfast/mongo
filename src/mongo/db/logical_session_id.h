@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <string>
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/logical_session_id_gen.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/status_with.h"
+#include "monger/db/logical_session_id_gen.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 using TxnNumber = std::int64_t;
 using StmtId = std::int32_t;
@@ -123,4 +123,4 @@ using LogicalSessionRecordSet = stdx::unordered_set<LogicalSessionRecord, Logica
 template <typename T>
 using LogicalSessionIdMap = stdx::unordered_map<LogicalSessionId, T, LogicalSessionIdHash>;
 
-}  // namespace mongo
+}  // namespace monger

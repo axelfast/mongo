@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,40 +34,40 @@
  *
  * #include <normal/include/files.h>
  *
- * #include "mongo/db/sorter/sorter.h"
+ * #include "monger/db/sorter/sorter.h"
  *
- * namespace mongo {
+ * namespace monger {
  *     // Your code
  * }
  *
- * #include "mongo/db/sorter/sorter.cpp"
+ * #include "monger/db/sorter/sorter.cpp"
  * MONGO_CREATE_SORTER(MyKeyType, MyValueType, MyComparatorType);
  *
  * Do this once for each unique set of parameters to MONGO_CREATE_SORTER.
  */
 
-#include "mongo/db/sorter/sorter.h"
+#include "monger/db/sorter/sorter.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <snappy.h>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/config.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/encryption_hooks.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/overflow_arithmetic.h"
-#include "mongo/s/is_mongos.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/bufreader.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/unowned_ptr.h"
+#include "monger/base/string_data.h"
+#include "monger/config.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/encryption_hooks.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/overflow_arithmetic.h"
+#include "monger/s/is_mongers.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/bufreader.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/str.h"
+#include "monger/util/unowned_ptr.h"
 
-namespace mongo {
+namespace monger {
 
 namespace sorter {
 
@@ -906,7 +906,7 @@ SortedFileWriter<Key, Value>::SortedFileWriter(const SortOptions& opts,
 
     // This should be checked by consumers, but if we get here don't allow writes.
     uassert(
-        16946, "Attempting to use external sort from mongos. This is not allowed.", !isMongos());
+        16946, "Attempting to use external sort from mongers. This is not allowed.", !isMongos());
 
     uassert(17148,
             "Attempting to use external sort without setting SortOptions::tempDir",
@@ -1032,7 +1032,7 @@ Sorter<Key, Value>* Sorter<Key, Value>::make(const SortOptions& opts,
                                              const Settings& settings) {
     // This should be checked by consumers, but if it isn't try to fail early.
     uassert(16947,
-            "Attempting to use external sort from mongos. This is not allowed.",
+            "Attempting to use external sort from mongers. This is not allowed.",
             !(isMongos() && opts.extSortAllowed));
 
     uassert(17149,

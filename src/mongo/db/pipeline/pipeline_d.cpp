@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,68 +27,68 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/pipeline_d.h"
+#include "monger/db/pipeline/pipeline_d.h"
 
 #include <memory>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/fetch.h"
-#include "mongo/db/exec/multi_iterator.h"
-#include "mongo/db/exec/queued_data_stage.h"
-#include "mongo/db/exec/shard_filter.h"
-#include "mongo/db/exec/trial_stage.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/ops/write_ops_exec.h"
-#include "mongo/db/ops/write_ops_gen.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_change_stream.h"
-#include "mongo/db/pipeline/document_source_cursor.h"
-#include "mongo/db/pipeline/document_source_geo_near.h"
-#include "mongo/db/pipeline/document_source_geo_near_cursor.h"
-#include "mongo/db/pipeline/document_source_group.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/document_source_sample.h"
-#include "mongo/db/pipeline/document_source_sample_from_random_cursor.h"
-#include "mongo/db/pipeline/document_source_single_document_transformation.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/operation_sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/stats/top.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/chunk_manager.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/document_source_merge_cursors.h"
-#include "mongo/s/write_ops/cluster_write.h"
-#include "mongo/util/log.h"
-#include "mongo/util/time_support.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/fetch.h"
+#include "monger/db/exec/multi_iterator.h"
+#include "monger/db/exec/queued_data_stage.h"
+#include "monger/db/exec/shard_filter.h"
+#include "monger/db/exec/trial_stage.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/ops/write_ops_exec.h"
+#include "monger/db/ops/write_ops_gen.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_change_stream.h"
+#include "monger/db/pipeline/document_source_cursor.h"
+#include "monger/db/pipeline/document_source_geo_near.h"
+#include "monger/db/pipeline/document_source_geo_near_cursor.h"
+#include "monger/db/pipeline/document_source_group.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/document_source_sample.h"
+#include "monger/db/pipeline/document_source_sample_from_random_cursor.h"
+#include "monger/db/pipeline/document_source_single_document_transformation.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/operation_sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/db/stats/top.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/chunk_manager.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/document_source_merge_cursors.h"
+#include "monger/s/write_ops/cluster_write.h"
+#include "monger/util/log.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::shared_ptr;
@@ -891,4 +891,4 @@ void PipelineD::getPlanSummaryStats(const Pipeline* pipeline, PlanSummaryStats* 
     statsOut->usedDisk = usedDisk;
 }
 
-}  // namespace mongo
+}  // namespace monger

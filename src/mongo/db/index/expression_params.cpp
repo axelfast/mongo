@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/db/index/expression_params.h"
+#include "monger/db/index/expression_params.h"
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/geo/geoconstants.h"
-#include "mongo/db/hasher.h"
-#include "mongo/db/index/2d_common.h"
-#include "mongo/db/index/s2_common.h"
-#include "mongo/db/index_names.h"
-#include "mongo/util/str.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/geo/geoconstants.h"
+#include "monger/db/hasher.h"
+#include "monger/db/index/2d_common.h"
+#include "monger/db/index/s2_common.h"
+#include "monger/db/index_names.h"
+#include "monger/util/str.h"
 #include "third_party/s2/s2.h"
 
-namespace mongo {
+namespace monger {
 
 using str::stream;
 
@@ -204,4 +204,4 @@ void ExpressionParams::initialize2dsphereParams(const BSONObj& infoObj,
             out->indexVersion == S2_INDEX_VERSION_3 || out->indexVersion == S2_INDEX_VERSION_2 ||
                 out->indexVersion == S2_INDEX_VERSION_1);
 }
-}  // namespace mongo
+}  // namespace monger

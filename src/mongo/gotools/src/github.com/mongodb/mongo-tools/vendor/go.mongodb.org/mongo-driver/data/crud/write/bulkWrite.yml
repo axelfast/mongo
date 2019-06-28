@@ -119,7 +119,7 @@ tests:
                             filter: { _id: 1 }
                             # Repeat _id in replacement document so the server
                             # does not report a modification for this update.
-                            # See: https://jira.mongodb.org/browse/SERVER-36405
+                            # See: https://jira.mongerdb.org/browse/SERVER-36405
                             replacement: { _id: 1, x: 11 }
                     -
                         # modifies the matched document

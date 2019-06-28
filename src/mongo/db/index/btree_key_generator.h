@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <set>
 #include <vector>
 
-#include "mongo/bson/bsonobj_comparator_interface.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index/multikey_paths.h"
-#include "mongo/db/jsobj.h"
+#include "monger/bson/bsonobj_comparator_interface.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index/multikey_paths.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 
@@ -206,4 +206,4 @@ private:
     const CollatorInterface* _collator;
 };
 
-}  // namespace mongo
+}  // namespace monger

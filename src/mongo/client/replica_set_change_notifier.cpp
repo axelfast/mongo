@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/replica_set_change_notifier.h"
+#include "monger/client/replica_set_change_notifier.h"
 
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/stacktrace.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/stacktrace.h"
 
-namespace mongo {
+namespace monger {
 
 void ReplicaSetChangeNotifier::_addListener(Listener* listener) {
     stdx::lock_guard lk(_mutex);
@@ -147,4 +147,4 @@ auto ReplicaSetChangeNotifier::Listener::getCurrentState(const Key& key) -> Stat
     return _notifier->_replicaSetStates.at(key);
 }
 
-}  // namespace mongo
+}  // namespace monger

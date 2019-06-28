@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,10 +35,10 @@
 #include <limits>
 #include <memory>
 
-#include "mongo/base/data_range_cursor.h"
-#include "mongo/util/allocator.h"
+#include "monger/base/data_range_cursor.h"
+#include "monger/util/allocator.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * DataBuilder provides a reallocing buffer underneath the DataRangeCursor API.
@@ -178,7 +178,7 @@ public:
 
         auto ptr = _buf.release();
 
-        _buf.reset(static_cast<char*>(mongoRealloc(ptr, newSize)));
+        _buf.reset(static_cast<char*>(mongerRealloc(ptr, newSize)));
 
         _capacity = newSize;
 
@@ -257,4 +257,4 @@ private:
     DataRangeCursor _unwrittenSpaceCursor = {nullptr, nullptr};
 };
 
-}  // namespace mongo
+}  // namespace monger

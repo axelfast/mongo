@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <stack>
 
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/rpc/message.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/rpc/message.h"
 
-namespace mongo {
+namespace monger {
 
 class AScopedConnection;
 class DBClientBase;
@@ -320,4 +320,4 @@ private:
     int _n;
 };
 
-}  // namespace mongo
+}  // namespace monger

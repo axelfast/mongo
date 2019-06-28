@@ -9,7 +9,7 @@ package stat_consumer
 import (
 	"sync/atomic"
 
-	"github.com/mongodb/mongo-tools/mongostat/stat_consumer/line"
+	"github.com/mongerdb/monger-tools/mongerstat/stat_consumer/line"
 )
 
 // A LineFormatter formats StatLines for printing.
@@ -19,7 +19,7 @@ type LineFormatter interface {
 
 	// IsFinished returns true iff the formatter cannot print any more data
 	IsFinished() bool
-	// Finish() is called when mongostat is shutting down so that the formatter can clean up
+	// Finish() is called when mongerstat is shutting down so that the formatter can clean up
 	Finish()
 }
 

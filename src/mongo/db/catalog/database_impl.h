@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/db/catalog/database.h"
+#include "monger/db/catalog/database.h"
 
-#include "mongo/platform/random.h"
+#include "monger/platform/random.h"
 
-namespace mongo {
+namespace monger {
 
 class DatabaseImpl final : public Database {
 public:
@@ -181,4 +181,4 @@ private:
     std::unique_ptr<PseudoRandom> _uniqueCollectionNamespacePseudoRandom;
 };
 
-}  // namespace mongo
+}  // namespace monger

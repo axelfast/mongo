@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/index/expression_keys_private.h"
+#include "monger/db/index/expression_keys_private.h"
 
 #include <algorithm>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/index/expression_params.h"
-#include "mongo/db/index/s2_common.h"
-#include "mongo/db/json.h"
-#include "mongo/db/query/collation/collator_interface_mock.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/index/expression_params.h"
+#include "monger/db/index/s2_common.h"
+#include "monger/db/json.h"
+#include "monger/db/query/collation/collator_interface_mock.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 

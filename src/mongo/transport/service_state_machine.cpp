@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/transport/service_state_machine.h"
+#include "monger/transport/service_state_machine.h"
 
 #include <memory>
 
-#include "mongo/config.h"
-#include "mongo/db/client.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/db/traffic_recorder.h"
-#include "mongo/rpc/message.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/transport/message_compressor_manager.h"
-#include "mongo/transport/service_entry_point.h"
-#include "mongo/transport/service_executor_task_names.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_exception.h"
-#include "mongo/util/quick_exit.h"
+#include "monger/config.h"
+#include "monger/db/client.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/stats/counters.h"
+#include "monger/db/traffic_recorder.h"
+#include "monger/rpc/message.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/transport/message_compressor_manager.h"
+#include "monger/transport/service_entry_point.h"
+#include "monger/transport/service_executor_task_names.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_exception.h"
+#include "monger/util/quick_exit.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 /**
  * Creates and returns a legacy exhaust message, if exhaust is allowed. The returned message is to
@@ -437,7 +437,7 @@ void ServiceStateMachine::_processMessage(ThreadGuard guard) {
     // Pass sourced Message to handler to generate response.
     auto opCtx = Client::getCurrent()->makeOperationContext();
 
-    // The handleRequest is implemented in a subclass for mongod/mongos and actually all the
+    // The handleRequest is implemented in a subclass for mongerd/mongers and actually all the
     // database work for this request.
     DbResponse dbresponse = _sep->handleRequest(opCtx.get(), _inMessage);
 
@@ -625,4 +625,4 @@ void ServiceStateMachine::_cleanupSession(ThreadGuard guard) {
     Client::releaseCurrent();
 }
 
-}  // namespace mongo
+}  // namespace monger

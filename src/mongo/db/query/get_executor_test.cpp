@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,23 +28,23 @@
  */
 
 /**
- * This file contains tests for mongo/db/query/get_executor.h
+ * This file contains tests for monger/db/query/get_executor.h
  */
 
-#include "mongo/db/query/get_executor.h"
+#include "monger/db/query/get_executor.h"
 
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/json.h"
-#include "mongo/db/query/query_settings.h"
-#include "mongo/db/query/query_test_service_context.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/json.h"
+#include "monger/db/query/query_settings.h"
+#include "monger/db/query/query_test_service_context.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 

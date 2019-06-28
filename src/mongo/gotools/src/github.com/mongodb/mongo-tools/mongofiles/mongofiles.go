@@ -4,8 +4,8 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongofiles provides an interface to GridFS collections in a MongoDB instance.
-package mongofiles
+// Package mongerfiles provides an interface to GridFS collections in a MongoDB instance.
+package mongerfiles
 
 import (
 	"context"
@@ -14,19 +14,19 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/gridfs"
-	driverOptions "go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger/gridfs"
+	driverOptions "go.mongerdb.org/monger-driver/monger/options"
 )
 
-// List of possible commands for mongofiles.
+// List of possible commands for mongerfiles.
 const (
 	List     = "list"
 	Search   = "search"
@@ -39,15 +39,15 @@ const (
 )
 
 // MongoFiles is a container for the user-specified options and
-// internal state used for running mongofiles.
+// internal state used for running mongerfiles.
 type MongoFiles struct {
-	// generic mongo tool options
+	// generic monger tool options
 	ToolOptions *options.ToolOptions
 
-	// mongofiles-specific storage options
+	// mongerfiles-specific storage options
 	StorageOptions *StorageOptions
 
-	// mongofiles-specific input options
+	// mongerfiles-specific input options
 	InputOptions *InputOptions
 
 	// for connecting to the db
@@ -66,7 +66,7 @@ type MongoFiles struct {
 	bucket *gridfs.Bucket
 }
 
-// New constructs a new mongofiles instance from the provided options. Will fail if cannot connect to server or if the
+// New constructs a new mongerfiles instance from the provided options. Will fail if cannot connect to server or if the
 // provided options are invalid.
 func New(opts Options) (*MongoFiles, error) {
 	// create a session provider to connect to the db
@@ -83,13 +83,13 @@ func New(opts Options) (*MongoFiles, error) {
 	}
 
 	if err := mf.ValidateCommand(opts.ParsedArgs); err != nil {
-		return nil, util.SetupError{Err: err, Message: util.ShortUsage("mongofiles")}
+		return nil, util.SetupError{Err: err, Message: util.ShortUsage("mongerfiles")}
 	}
 
 	return mf, nil
 }
 
-// Close disconnects from the server and cleans up internal mongofiles state.
+// Close disconnects from the server and cleans up internal mongerfiles state.
 func (mf *MongoFiles) Close() {
 	mf.SessionProvider.Close()
 }
@@ -117,7 +117,7 @@ func (mf *MongoFiles) ValidateCommand(args []string) error {
 			return fmt.Errorf("too many positional arguments")
 		}
 		// also make sure the supporting argument isn't literally an
-		// empty string for example, mongofiles get ""
+		// empty string for example, mongerfiles get ""
 		if len(args) == 1 || args[1] == "" {
 			return fmt.Errorf("'%v' argument missing", args[0])
 		}
@@ -401,7 +401,7 @@ func (mf *MongoFiles) handlePut() error {
 	return nil
 }
 
-// Run the mongofiles utility. If displayHost is true, the connected host/port is
+// Run the mongerfiles utility. If displayHost is true, the connected host/port is
 // displayed.
 func (mf *MongoFiles) Run(displayHost bool) (output string, finalErr error) {
 	var err error
@@ -442,7 +442,7 @@ func (mf *MongoFiles) Run(displayHost bool) (output string, finalErr error) {
 		return "", err
 	}
 
-	log.Logvf(log.Info, "handling mongofiles '%v' command...", mf.Command)
+	log.Logvf(log.Info, "handling mongerfiles '%v' command...", mf.Command)
 
 	switch mf.Command {
 

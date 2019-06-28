@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/wiredtiger/wiredtiger_prepare_conflict.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_prepare_conflict.h"
 
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 // When set, simulates WT_PREPARE_CONFLICT returned from WiredTiger API calls.
 MONGO_FAIL_POINT_DEFINE(WTPrepareConflictForReads);
@@ -54,4 +54,4 @@ void wiredTigerPrepareConflictFailPointLog() {
     log() << "WTPrintPrepareConflictLog fail point enabled.";
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/matcher/schema/expression_internal_schema_num_properties.h"
+#include "monger/db/matcher/schema/expression_internal_schema_num_properties.h"
 
-namespace mongo {
+namespace monger {
 
 void InternalSchemaNumPropertiesMatchExpression::debugString(StringBuilder& debug,
                                                              int indentationLevel) const {
@@ -52,4 +52,4 @@ bool InternalSchemaNumPropertiesMatchExpression::equivalent(const MatchExpressio
         static_cast<const InternalSchemaNumPropertiesMatchExpression*>(other);
     return _numProperties == otherMaxProperties->_numProperties;
 }
-}  // namespace mongo
+}  // namespace monger

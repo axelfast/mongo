@@ -1,2 +1,2 @@
-src/mongo/gotools/*
+src/monger/gotools/*
 *.tpl.js

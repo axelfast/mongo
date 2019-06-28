@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cstring>
 
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 // This is the minimum valid timestamp; it can be used for reads that need to see all untimestamped
 // data but no timestamped data.  We cannot use 0 here because 0 means see all timestamped data.
@@ -267,4 +267,4 @@ uint64_t WiredTigerOplogManager::fetchAllCommittedValue(WT_CONNECTION* conn) {
     return tmp;
 }
 
-}  // namespace mongo
+}  // namespace monger

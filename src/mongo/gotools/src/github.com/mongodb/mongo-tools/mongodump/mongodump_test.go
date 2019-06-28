@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongodump
+package mongerdump
 
 import (
 	"bytes"
@@ -18,24 +18,24 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/testtype"
-	"github.com/mongodb/mongo-tools-common/testutil"
-	"github.com/mongodb/mongo-tools-common/util"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/testutil"
+	"github.com/mongerdb/monger-tools-common/util"
 	. "github.com/smartystreets/goconvey/convey"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 var (
 	// database with test data
-	testDB = "mongodump_test_db"
+	testDB = "mongerdump_test_db"
 	// temp database used for restoring a DB
-	testRestoreDB       = "temp_mongodump_restore_test_db"
+	testRestoreDB       = "temp_mongerdump_restore_test_db"
 	testCollectionNames = []string{"coll1", "coll2", "coll/three"}
 )
 
@@ -49,7 +49,7 @@ func simpleMongoDumpInstance() *MongoDump {
 	// get ToolOptions from URI or defaults
 	if uri := os.Getenv("MONGOD"); uri != "" {
 		fakeArgs := []string{"--uri=" + uri}
-		toolOptions = options.New("mongodump", "", "", "", options.EnabledOptions{URI: true})
+		toolOptions = options.New("mongerdump", "", "", "", options.EnabledOptions{URI: true})
 		toolOptions.URI.AddKnownURIParameters(options.KnownURIOptionsReadPreference)
 		_, err := toolOptions.ParseArgs(fakeArgs)
 		if err != nil {
@@ -262,7 +262,7 @@ func backgroundInsert(ready, done chan struct{}, errs chan error) {
 		return
 	}
 
-	colls := make([]*mongo.Collection, len(testCollectionNames))
+	colls := make([]*monger.Collection, len(testCollectionNames))
 	for i, v := range testCollectionNames {
 		colls[i] = session.Database(testDB).Collection(v)
 	}
@@ -318,7 +318,7 @@ func fileDirExists(name string) bool {
 	return true
 }
 
-func testQuery(md *MongoDump, session *mongo.Client) string {
+func testQuery(md *MongoDump, session *monger.Client) string {
 	origDB := session.Database(testDB)
 	restoredDB := session.Database(testRestoreDB)
 
@@ -450,12 +450,12 @@ func TestMongoDumpValidateOptions(t *testing.T) {
 func TestMongoDumpKerberos(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.KerberosTestType)
 
-	Convey("Should be able to run mongodump with Kerberos auth", t, func() {
+	Convey("Should be able to run mongerdump with Kerberos auth", t, func() {
 		opts, err := testutil.GetKerberosOptions()
 
 		So(err, ShouldBeNil)
 
-		mongoDump := MongoDump{
+		mongerDump := MongoDump{
 			ToolOptions:  opts,
 			InputOptions: &InputOptions{},
 			OutputOptions: &OutputOptions{
@@ -463,11 +463,11 @@ func TestMongoDumpKerberos(t *testing.T) {
 			},
 		}
 
-		mongoDump.OutputOptions.Out = KerberosDumpDirectory
+		mongerDump.OutputOptions.Out = KerberosDumpDirectory
 
-		err = mongoDump.Init()
+		err = mongerDump.Init()
 		So(err, ShouldBeNil)
-		err = mongoDump.Dump()
+		err = mongerDump.Dump()
 		So(err, ShouldBeNil)
 		path, err := os.Getwd()
 		So(err, ShouldBeNil)
@@ -776,7 +776,7 @@ func TestMongoDumpOplog(t *testing.T) {
 			// Start with clean database
 			So(tearDownMongoDumpTestData(), ShouldBeNil)
 
-			// Prepare mongodump with options
+			// Prepare mongerdump with options
 			md := simpleMongoDumpInstance()
 			md.OutputOptions.Oplog = true
 			md.ToolOptions.Namespace = &options.Namespace{}
@@ -790,7 +790,7 @@ func TestMongoDumpOplog(t *testing.T) {
 			go backgroundInsert(ready, done, errs)
 			<-ready
 
-			// Run mongodump
+			// Run mongerdump
 			err = md.Dump()
 			So(err, ShouldBeNil)
 

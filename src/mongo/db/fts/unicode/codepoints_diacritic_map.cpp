@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/db/fts/unicode/codepoints.h"
+#include "monger/db/fts/unicode/codepoints.h"
 
-namespace mongo {
+namespace monger {
 namespace unicode {
 
 char32_t codepointRemoveDiacritics(char32_t codepoint) {
@@ -5511,4 +5511,4 @@ char32_t codepointRemoveDiacritics(char32_t codepoint) {
     }
 }
 }  //  namespace unicode
-}  //  namespace mongo
+}  //  namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,12 +30,12 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/cmdline_utils/censor_cmdline.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/cmdline_utils/censor_cmdline.h"
 
-namespace mongo {
+namespace monger {
 namespace test {
 
 inline void censoringArgv(const std::vector<std::string>& expected,
@@ -72,4 +72,4 @@ inline void censoringVector(const std::vector<std::string>& expected,
 }
 
 }  // namespace test
-}  // namespace mongo
+}  // namespace monger

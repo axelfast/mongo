@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/process_interface_standalone.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/process_interface_standalone.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class MongoProcessInterfaceForTest : public MongoInterfaceStandalone {
@@ -84,14 +84,14 @@ TEST_F(ProcessInterfaceStandaloneTest,
     auto targetCollectionVersion = boost::make_optional(ChunkVersion(0, 0, OID::gen()));
     auto processInterface = makeProcessInterface();
 
-    // Test that 'targetCollectionVersion' is not accepted if not from mongos.
+    // Test that 'targetCollectionVersion' is not accepted if not from mongers.
     expCtx->fromMongos = false;
     ASSERT_THROWS_CODE(processInterface->ensureFieldsUniqueOrResolveDocumentKey(
                            expCtx, {{"_id"}}, targetCollectionVersion, expCtx->ns),
                        AssertionException,
                        51123);
 
-    // Test that 'targetCollectionVersion' is accepted if from mongos.
+    // Test that 'targetCollectionVersion' is accepted if from mongers.
     expCtx->fromMongos = true;
     auto[joinKey, chunkVersion] = processInterface->ensureFieldsUniqueOrResolveDocumentKey(
         expCtx, {{"_id"}}, targetCollectionVersion, expCtx->ns);
@@ -127,4 +127,4 @@ TEST_F(ProcessInterfaceStandaloneTest,
                        51183);
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

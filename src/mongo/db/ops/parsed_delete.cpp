@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kWrite
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kWrite
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ops/parsed_delete.h"
+#include "monger/db/ops/parsed_delete.h"
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/ops/delete_request.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/ops/delete_request.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 ParsedDelete::ParsedDelete(OperationContext* opCtx, const DeleteRequest* request)
     : _opCtx(opCtx), _request(request) {}
@@ -127,4 +127,4 @@ std::unique_ptr<CanonicalQuery> ParsedDelete::releaseParsedQuery() {
     return std::move(_canonicalQuery);
 }
 
-}  // namespace mongo
+}  // namespace monger

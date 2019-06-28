@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,34 +27,34 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/document_source_merge_cursors.h"
+#include "monger/s/query/document_source_merge_cursors.h"
 
 #include <memory>
 
-#include "mongo/client/remote_command_targeter_factory_mock.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/json.h"
-#include "mongo/db/pipeline/aggregation_context_fixture.h"
-#include "mongo/db/pipeline/document_source_limit.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/getmore_request.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/sharding_router_test_fixture.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/remote_command_targeter_factory_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/json.h"
+#include "monger/db/pipeline/aggregation_context_fixture.h"
+#include "monger/db/pipeline/document_source_limit.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/getmore_request.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_request.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/task_executor.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/sharding_router_test_fixture.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::NetworkInterfaceMock;
@@ -382,4 +382,4 @@ TEST_F(DocumentSourceMergeCursorsTest, ShouldEnforceSortSpecifiedViaARMParams) {
     future.default_timed_get();
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/db/curop.h"
-#include "mongo/db/prepare_conflict_tracker.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/util/fail_point_service.h"
+#include "monger/db/curop.h"
+#include "monger/db/prepare_conflict_tracker.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/util/fail_point_service.h"
 
-namespace mongo {
+namespace monger {
 
 // When set, simulates returning WT_PREPARE_CONFLICT on WT cursor read operations.
 MONGO_FAIL_POINT_DECLARE(WTPrepareConflictForReads);
@@ -138,4 +138,4 @@ int wiredTigerPrepareConflictRetry(OperationContext* opCtx, F&& f) {
                                                                                     lastCount);
     }
 }
-}  // namespace mongo
+}  // namespace monger

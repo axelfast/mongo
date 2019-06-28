@@ -12,7 +12,7 @@ if not env['MONGO_HAVE_LIBMONGOC']:
 
 if get_option('install-mode') == 'hygienic':
     env.AutoInstall(
-        'share/doc/mongoc_embedded',
+        'share/doc/mongerc_embedded',
         source=[
             '#/LICENSE-Community.txt',
             '../LICENSE-Embedded.txt',
@@ -22,55 +22,55 @@ if get_option('install-mode') == 'hygienic':
         ],
     )
 
-def create_mongoc_env(env):
-    mongocEnv = env.Clone()
-    if mongocEnv['MONGO_HAVE_LIBMONGOC'] == "framework":
-        mongocEnv.AppendUnique(FRAMEWORKS=['bson', 'mongoc'])
+def create_mongerc_env(env):
+    mongercEnv = env.Clone()
+    if mongercEnv['MONGO_HAVE_LIBMONGOC'] == "framework":
+        mongercEnv.AppendUnique(FRAMEWORKS=['bson', 'mongerc'])
     else:
-        mongocEnv.AppendUnique(LIBS=['bson-1.0', 'mongoc-1.0'])
-    return mongocEnv
+        mongercEnv.AppendUnique(LIBS=['bson-1.0', 'mongerc-1.0'])
+    return mongercEnv
 
-mongocEmbeddedEnv = create_mongoc_env(env)
+mongercEmbeddedEnv = create_mongerc_env(env)
 
-mongocEmbeddedEnv.AppendUnique(
+mongercEmbeddedEnv.AppendUnique(
     CPPDEFINES=[
         'MONGOC_EMBEDDED_COMPILING',
      ],
 )
 
 if get_option('link-model') == 'static':
-    mongocEmbeddedEnv.AppendUnique(
+    mongercEmbeddedEnv.AppendUnique(
         CPPDEFINES=[
             'MONGOC_EMBEDDED_STATIC',
         ],
     )
 
-# Please see the note in ../mongo_embedded/SConscript about how to
+# Please see the note in ../monger_embedded/SConscript about how to
 # interpret and adjust the current and compatibility versinos.
-mongocEmbeddedEnv.AppendUnique(
+mongercEmbeddedEnv.AppendUnique(
     SHLINKFLAGS=[
         '$MONGO_EXPORT_FILE_SHLINKFLAGS',
     ],
 )
 
-if mongocEmbeddedEnv.TargetOSIs('darwin'):
-    # Please see the note in ../mongo_embedded/SConscript about how to
+if mongercEmbeddedEnv.TargetOSIs('darwin'):
+    # Please see the note in ../monger_embedded/SConscript about how to
     # interpret and adjust the current and compatibility versinos.
-    mongocEmbeddedEnv.AppendUnique(
+    mongercEmbeddedEnv.AppendUnique(
         SHLINKFLAGS=[
             '-Wl,-current_version,1',
             '-Wl,-compatibility_version,1',
         ],
     )
 
-mongocEmbeddedTargets = mongocEmbeddedEnv.Library(
-    target='mongoc_embedded',
+mongercEmbeddedTargets = mongercEmbeddedEnv.Library(
+    target='mongerc_embedded',
     source=[
-        'mongoc_embedded.cpp',
+        'mongerc_embedded.cpp',
     ],
     LIBDEPS=[
-        # No LIBDEPS or LIBDEPS_PRIVATE to mongo libraries are allowed in this library. They would get duplicated in mongo_embedded_capi.
-        '$BUILD_DIR/mongo/embedded/mongo_embedded/mongo_embedded',
+        # No LIBDEPS or LIBDEPS_PRIVATE to monger libraries are allowed in this library. They would get duplicated in monger_embedded_capi.
+        '$BUILD_DIR/monger/embedded/monger_embedded/monger_embedded',
     ],
     INSTALL_ALIAS=[
         'embedded-dev',
@@ -79,8 +79,8 @@ mongocEmbeddedTargets = mongocEmbeddedEnv.Library(
 
 if get_option('install-mode') == 'hygienic':
     env.AutoInstall(
-        'include/mongoc_embedded/v1/mongoc_embedded',
-        source=['mongoc_embedded.h'],
+        'include/mongerc_embedded/v1/mongerc_embedded',
+        source=['mongerc_embedded.h'],
         INSTALL_ALIAS=[
             'embedded-dev',
         ],
@@ -90,19 +90,19 @@ yamlEnv = env.Clone()
 yamlEnv.InjectThirdParty(libraries=['yaml'])
 
 if get_option('link-model') != 'dynamic-sdk':
-    mongocEmbeddedTestEnv = create_mongoc_env(yamlEnv)
-    clientTest = mongocEmbeddedTestEnv.Program(
-        target='mongoc_embedded_test',
+    mongercEmbeddedTestEnv = create_mongerc_env(yamlEnv)
+    clientTest = mongercEmbeddedTestEnv.Program(
+        target='mongerc_embedded_test',
         source=[
-            'mongoc_embedded_test.cpp',
-            env.Idlc('mongoc_embedded_test.idl')[0],
+            'mongerc_embedded_test.cpp',
+            env.Idlc('mongerc_embedded_test.idl')[0],
         ],
         LIBDEPS_PRIVATE=[
-            '$BUILD_DIR/mongo/base',
-            '$BUILD_DIR/mongo/db/server_options_core',
-            '$BUILD_DIR/mongo/unittest/unittest',
-            '$BUILD_DIR/mongo/util/options_parser/options_parser',
-            'mongoc_embedded',
+            '$BUILD_DIR/monger/base',
+            '$BUILD_DIR/monger/db/server_options_core',
+            '$BUILD_DIR/monger/unittest/unittest',
+            '$BUILD_DIR/monger/util/options_parser/options_parser',
+            'mongerc_embedded',
         ],
         INSTALL_ALIAS=[
             'embedded-test',
@@ -122,7 +122,7 @@ if get_option('link-model') != 'dynamic-sdk':
 if get_option('link-model') != 'dynamic-sdk' or get_option('install-mode') != 'hygienic' or not env.TargetOSIs('darwin') or env.TargetOSIs('macOS'):
     Return()
 
-frameworkDir = env.Dir('$INSTALL_DIR/Frameworks/mongoc_embedded.framework')
+frameworkDir = env.Dir('$INSTALL_DIR/Frameworks/mongerc_embedded.framework')
 env.Alias('install-embedded-dev', frameworkDir)
 
 resourceDir = frameworkDir
@@ -136,26 +136,26 @@ env.Install(
             'LICENSE-Community.txt',
             'LICENSE-Embedded.txt',
         ],
-        directory=env.Dir('$INSTALL_DIR/share/doc/mongoc_embedded'),
+        directory=env.Dir('$INSTALL_DIR/share/doc/mongerc_embedded'),
     ),
 )
 
 env.Install(
     target=frameworkDir.Dir('Headers'),
-    source=env.File('mongoc_embedded.h'),
+    source=env.File('mongerc_embedded.h'),
 )
 
 env.InstallAs(
     target=frameworkDir.File('Modules/module.modulemap'),
-    source="mongoc_embedded.modulemap"
+    source="mongerc_embedded.modulemap"
 )
 
-mongocEmbeddedPlist = env.Substfile(
+mongercEmbeddedPlist = env.Substfile(
     target="Info.plist",
     source='../Info.plist.in',
     SUBST_DICT=[
-        ('@CFBundleExecutable@', 'mongoc_embedded'),
-        ('@CFBundleIdentifier@', 'org.mongodb.mongoc-embedded'),
+        ('@CFBundleExecutable@', 'mongerc_embedded'),
+        ('@CFBundleIdentifier@', 'org.mongerdb.mongerc-embedded'),
         ('@CFBundleVersion@', env['PLIST_MONGO_BUNDLE_VERSION']),
         ('@CFBundleShortVersionString@', env['PLIST_MONGO_BUNDLE_VERSION']),
         ('@MinimumOSVersion@', env['PLIST_MINIMUM_OS_VERSION'])
@@ -164,36 +164,36 @@ mongocEmbeddedPlist = env.Substfile(
 
 env.Install(
     target=resourceDir,
-    source=mongocEmbeddedPlist,
+    source=mongercEmbeddedPlist,
 )
 
-mongocEmbeddedFwLib = env.InstallAs(
-    target=frameworkDir.File('mongoc_embedded'),
-    source=mongocEmbeddedTargets[0],
+mongercEmbeddedFwLib = env.InstallAs(
+    target=frameworkDir.File('mongerc_embedded'),
+    source=mongercEmbeddedTargets[0],
 )
 
 env.AddPostAction(
-    files=mongocEmbeddedFwLib,
+    files=mongercEmbeddedFwLib,
     action=[
         "install_name_tool -delete_rpath @loader_path/../lib $TARGET",
-        "install_name_tool -id @rpath/mongoc_embedded.framework/mongoc_embedded $TARGET",
-        "install_name_tool -change @rpath/libmongo_embedded.dylib @rpath/mongo_embedded.framework/mongo_embedded $TARGET",
+        "install_name_tool -id @rpath/mongerc_embedded.framework/mongerc_embedded $TARGET",
+        "install_name_tool -change @rpath/libmonger_embedded.dylib @rpath/monger_embedded.framework/monger_embedded $TARGET",
     ],
 )
 
-mongocEmbeddedDSYM = getattr(mongocEmbeddedTargets[0].attributes, "separate_debug_file", None)
-if mongocEmbeddedDSYM:
-    frameworkDSYMDir = '$INSTALL_DIR/Frameworks/mongoc_embedded.framework.dSYM'
+mongercEmbeddedDSYM = getattr(mongercEmbeddedTargets[0].attributes, "separate_debug_file", None)
+if mongercEmbeddedDSYM:
+    frameworkDSYMDir = '$INSTALL_DIR/Frameworks/mongerc_embedded.framework.dSYM'
     env.Alias('install-embedded-dev', frameworkDSYMDir)
 
     env.InstallAs(
         target=frameworkDSYMDir,
-        source=mongocEmbeddedDSYM,
+        source=mongercEmbeddedDSYM,
     )
 
-mongocEmbeddedBCSymbolMap = getattr(mongocEmbeddedTargets[0].attributes, "bcsymbolmap_file", None)
-if mongocEmbeddedBCSymbolMap:
+mongercEmbeddedBCSymbolMap = getattr(mongercEmbeddedTargets[0].attributes, "bcsymbolmap_file", None)
+if mongercEmbeddedBCSymbolMap:
     env.Install(
         target=frameworkDir.Dir('BCSymbolMaps'),
-        source=mongocEmbeddedBCSymbolMap,
+        source=mongercEmbeddedBCSymbolMap,
     )

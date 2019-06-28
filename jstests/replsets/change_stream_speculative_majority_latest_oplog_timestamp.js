@@ -5,7 +5,7 @@
  * If a change stream query returns a batch containing oplog entries no newer than timestamp T, the
  * server may still report a high-water-mark postBatchResumeToken representing the latest majority
  * committed oplog timestamp that it observed while scanning the oplog, which may be greater than T.
- * A mongoS will use this PBRT as a guarantee that no new change events will occur at a lesser
+ * A mongerS will use this PBRT as a guarantee that no new change events will occur at a lesser
  * timestamp. This guarantee is only valid if the timestamp is actually majority committed, so we
  * need to make sure that guarantee holds, even when using speculative majority.
  *

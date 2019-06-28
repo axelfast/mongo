@@ -99,9 +99,9 @@ class TestGenerateEvgTasks(unittest.TestCase):
     def test_generate_evg_tasks_one_test_changed(self, create_tests_by_task_mock, evergreen_mock):
         evergreen_mock.parse_evergreen_file.return_value = get_evergreen_config()
         create_tests_by_task_mock.return_value = {
-            "aggregation_mongos_passthrough": {
+            "aggregation_mongers_passthrough": {
                 "resmoke_args":
-                    "--suites=aggregation_mongos_passthrough --storageEngine=wiredTiger",
+                    "--suites=aggregation_mongers_passthrough --storageEngine=wiredTiger",
                 "tests": ["jstests/aggregation/bugs/ifnull.js"],
                 "use_multiversion": None
             }
@@ -120,4 +120,4 @@ class TestGenerateEvgTasks(unittest.TestCase):
         self.assertEqual(first_generated_build_variant["display_tasks"][0]["name"], "burn_in_tests")
         self.assertEqual(
             first_generated_build_variant["display_tasks"][0]["execution_tasks"][0],
-            "burn_in:enterprise-rhel-62-64-bit-inmem-required_aggregation_mongos_passthrough_0")
+            "burn_in:enterprise-rhel-62-64-bit-inmem-required_aggregation_mongers_passthrough_0")

@@ -163,13 +163,13 @@ def generate_bypass_expansions(project, build_variant, revision, build_id):
     return {
         # With compile bypass we need to update the URL to point to the correct name of the base
         # commit binaries.
-        "mongo_binaries": _create_bypass_path(prefix, build_id, "binaries/mongo"),
+        "monger_binaries": _create_bypass_path(prefix, build_id, "binaries/monger"),
         # With compile bypass we need to update the URL to point to the correct name of the base
         # commit debug symbols.
-        "mongo_debugsymbols": _create_bypass_path(prefix, build_id, "debugsymbols/debugsymbols"),
+        "monger_debugsymbols": _create_bypass_path(prefix, build_id, "debugsymbols/debugsymbols"),
         # With compile bypass we need to update the URL to point to the correct name of the base
-        # commit mongo shell.
-        "mongo_shell": _create_bypass_path(prefix, build_id, "binaries/mongo-shell"),
+        # commit monger shell.
+        "monger_shell": _create_bypass_path(prefix, build_id, "binaries/monger-shell"),
         # Enable bypass compile
         "bypass_compile": True,
     }
@@ -283,7 +283,7 @@ def parse_args():
     """Parse the program arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", required=True,
-                        help="The Evergreen project. e.g mongodb-mongo-master")
+                        help="The Evergreen project. e.g mongerdb-monger-master")
 
     parser.add_argument("--buildVariant", required=True,
                         help="The build variant. e.g enterprise-rhel-62-64-bit")
@@ -374,9 +374,9 @@ def main():  # pylint: disable=too-many-locals,too-many-statements
 
                 # Need to extract certain files from the pre-existing artifacts.tgz.
                 extract_files = [
-                    executable_name("mongobridge"),
-                    executable_name("mongoebench"),
-                    executable_name("mongoed"),
+                    executable_name("mongerbridge"),
+                    executable_name("mongerebench"),
+                    executable_name("mongered"),
                     executable_name("wt"),
                 ]
                 with tarfile.open(filename, "r:gz") as tar:
@@ -390,8 +390,8 @@ def main():  # pylint: disable=too-many-locals,too-many-statements
                     print("Extracting the following files from {0}...\n{1}".format(
                         filename, "\n".join(tarinfo.name for tarinfo in subdir)))
                     tar.extractall(members=subdir)
-            elif filename.startswith("mongo-src"):
-                print("Retrieving mongo source {}".format(filename))
+            elif filename.startswith("monger-src"):
+                print("Retrieving monger source {}".format(filename))
                 # This is the distsrc.[tgz|zip] as referenced in evergreen.yml.
                 try:
                     urllib.request.urlretrieve(artifact["url"], filename)

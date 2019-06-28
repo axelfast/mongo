@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kGeo
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kGeo
 
-#include "mongo/db/geo/geoparser.h"
+#include "monger/db/geo/geoparser.h"
 
 #include <cmath>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/geo/shapes.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/geo/shapes.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 #include "third_party/s2/s2polygonbuilder.h"
 
 #define BAD_VALUE(error) Status(ErrorCodes::BadValue, str::stream() << error)
 
-namespace mongo {
+namespace monger {
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 // This field must be present, and...
 static const string GEOJSON_TYPE = "type";
@@ -70,7 +70,7 @@ static const string GEOJSON_GEOMETRIES = "geometries";
 // and http://www.geojson.org/geojson-spec.html#named-crs
 static const string CRS_CRS84 = "urn:ogc:def:crs:OGC:1.3:CRS84";
 static const string CRS_EPSG_4326 = "EPSG:4326";
-static const string CRS_STRICT_WINDING = "urn:x-mongodb:crs:strictwinding:EPSG:4326";
+static const string CRS_STRICT_WINDING = "urn:x-mongerdb:crs:strictwinding:EPSG:4326";
 
 static Status parseFlatPoint(const BSONElement& elem, Point* out, bool allowAddlFields = false) {
     if (!elem.isABSONObj())
@@ -811,4 +811,4 @@ GeoParser::GeoJSONType GeoParser::parseGeoJSONType(const BSONObj& obj) {
     return GeoParser::GEOJSON_UNKNOWN;
 }
 
-}  // namespace mongo
+}  // namespace monger

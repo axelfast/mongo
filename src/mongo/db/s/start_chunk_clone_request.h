@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <string>
 
-#include "mongo/client/connection_string.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/s/migration_session_id.h"
-#include "mongo/s/request_types/migration_secondary_throttle_options.h"
-#include "mongo/s/shard_id.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/s/migration_session_id.h"
+#include "monger/s/request_types/migration_secondary_throttle_options.h"
+#include "monger/s/shard_id.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 template <typename T>
@@ -135,4 +135,4 @@ private:
     MigrationSecondaryThrottleOptions _secondaryThrottle;
 };
 
-}  // namespace mongo
+}  // namespace monger

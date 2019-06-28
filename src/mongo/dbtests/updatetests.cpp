@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,19 +31,19 @@
  * unit tests relating to update requests
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 
-#include "mongo/bson/mutable/mutable_bson_test_utils.h"
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/client.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/json.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/ops/update.h"
-#include "mongo/dbtests/dbtests.h"
+#include "monger/bson/mutable/mutable_bson_test_utils.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/client.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/json.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/ops/update.h"
+#include "monger/dbtests/dbtests.h"
 
 namespace UpdateTests {
 
@@ -53,15 +53,15 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 class ClientBase {
 public:
     ClientBase() : _client(&_opCtx) {
-        mongo::LastError::get(_opCtx.getClient()).reset();
+        monger::LastError::get(_opCtx.getClient()).reset();
     }
     virtual ~ClientBase() {
-        mongo::LastError::get(_opCtx.getClient()).reset();
+        monger::LastError::get(_opCtx.getClient()).reset();
     }
 
 protected:

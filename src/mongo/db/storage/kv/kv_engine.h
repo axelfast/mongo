@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,16 +33,16 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/db/storage/storage_engine.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/db/storage/storage_engine.h"
 
-namespace mongo {
+namespace monger {
 
 class IndexDescriptor;
 class JournalListener;
@@ -264,7 +264,7 @@ public:
     /**
      * Returns true if storage engine supports --directoryperdb.
      * See:
-     *     http://docs.mongodb.org/manual/reference/program/mongod/#cmdoption--directoryperdb
+     *     http://docs.mongerdb.org/manual/reference/program/mongerd/#cmdoption--directoryperdb
      */
     virtual bool supportsDirectoryPerDB() const = 0;
 
@@ -424,7 +424,7 @@ public:
     }
 
     /**
-     * The destructor will never be called from mongod, but may be called from tests.
+     * The destructor will never be called from mongerd, but may be called from tests.
      * Engines may assume that this will only be called in the case of clean shutdown, even if
      * cleanShutdown() hasn't been called.
      */

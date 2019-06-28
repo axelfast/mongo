@@ -1,4 +1,4 @@
-// Test mongo shell connect strings.
+// Test monger shell connect strings.
 (function() {
     'use strict';
 
@@ -19,9 +19,9 @@
     rst.startSet();
     rst.initiate();
 
-    const mongod = rst.getPrimary();
-    const host = mongod.host;
-    const port = mongod.port;
+    const mongerd = rst.getPrimary();
+    const host = mongerd.host;
+    const port = mongerd.port;
 
     const username = "user";
     const usernameNotTest = "userNotTest";
@@ -30,14 +30,14 @@
     const password = username;
     const passwordNotTest = usernameNotTest;
 
-    mongod.getDB("test").createUser({user: username, pwd: username, roles: []});
-    mongod.getDB("notTest").createUser({user: usernameNotTest, pwd: usernameNotTest, roles: []});
-    mongod.getDB("$external").createUser({user: usernameX509, roles: []});
+    mongerd.getDB("test").createUser({user: username, pwd: username, roles: []});
+    mongerd.getDB("notTest").createUser({user: usernameNotTest, pwd: usernameNotTest, roles: []});
+    mongerd.getDB("$external").createUser({user: usernameX509, roles: []});
 
     var i = 0;
     function testConnect(expectPasswordPrompt, expectSuccess, ...args) {
         const command = [
-            'mongo',
+            'monger',
             '--setShellParameter',
             'newLineAfterPasswordPromptForTest=true',
             '--eval',
@@ -86,23 +86,23 @@
         testConnect(expectPasswordPrompt, false, ...args);
     };
 
-    testSuccessfulConnect(true, `mongodb://${username}@${host}/test`);
-    testSuccessfulConnect(true, `mongodb://${username}@${host}/test`, '--password');
+    testSuccessfulConnect(true, `mongerdb://${username}@${host}/test`);
+    testSuccessfulConnect(true, `mongerdb://${username}@${host}/test`, '--password');
 
-    testSuccessfulConnect(true, `mongodb://${username}@${host}/test`, '--username', username);
+    testSuccessfulConnect(true, `mongerdb://${username}@${host}/test`, '--username', username);
     testSuccessfulConnect(
-        true, `mongodb://${username}@${host}/test`, '--password', '--username', username);
+        true, `mongerdb://${username}@${host}/test`, '--password', '--username', username);
 
     testSuccessfulConnect(true,
-                          `mongodb://${usernameNotTest}@${host}/test?authSource=notTest`,
+                          `mongerdb://${usernameNotTest}@${host}/test?authSource=notTest`,
                           '--password',
                           '--username',
                           usernameNotTest);
 
-    testSuccessfulConnect(true, `mongodb://${usernameNotTest}@${host}/test?authSource=notTest`);
+    testSuccessfulConnect(true, `mongerdb://${usernameNotTest}@${host}/test?authSource=notTest`);
 
     testSuccessfulConnect(true,
-                          `mongodb://${usernameNotTest}@${host}/test?authSource=notTest`,
+                          `mongerdb://${usernameNotTest}@${host}/test?authSource=notTest`,
                           '--password',
                           '--username',
                           usernameNotTest,
@@ -110,7 +110,7 @@
                           'notTest');
 
     testSuccessfulConnect(true,
-                          `mongodb://${usernameNotTest}@${host}/test`,
+                          `mongerdb://${usernameNotTest}@${host}/test`,
                           '--password',
                           '--username',
                           usernameNotTest,
@@ -118,22 +118,22 @@
                           'notTest');
 
     testSuccessfulConnect(
-        true, `mongodb://${host}/test?authSource=notTest`, '--username', usernameNotTest);
+        true, `mongerdb://${host}/test?authSource=notTest`, '--username', usernameNotTest);
 
-    testSuccessfulConnect(true, `mongodb://${host}/test`, '--username', username);
-    testSuccessfulConnect(true, `mongodb://${host}/test`, '--password', '--username', username);
+    testSuccessfulConnect(true, `mongerdb://${host}/test`, '--username', username);
+    testSuccessfulConnect(true, `mongerdb://${host}/test`, '--password', '--username', username);
 
     testSuccessfulConnect(
-        false, `mongodb://${host}/test`, '--password', password, '--username', username);
+        false, `mongerdb://${host}/test`, '--password', password, '--username', username);
 
-    testSuccessfulConnect(false, `mongodb://${username}:${password}@${host}/test`);
-    testSuccessfulConnect(false, `mongodb://${username}:${password}@${host}/test`, '--password');
+    testSuccessfulConnect(false, `mongerdb://${username}:${password}@${host}/test`);
+    testSuccessfulConnect(false, `mongerdb://${username}:${password}@${host}/test`, '--password');
     testSuccessfulConnect(
-        false, `mongodb://${username}:${password}@${host}/test`, '--password', password);
-    testSuccessfulConnect(false, `mongodb://${username}@${host}/test`, '--password', password);
+        false, `mongerdb://${username}:${password}@${host}/test`, '--password', password);
+    testSuccessfulConnect(false, `mongerdb://${username}@${host}/test`, '--password', password);
 
     testSuccessfulConnect(false,
-                          `mongodb://${usernameNotTest}@${host}/test?authSource=notTest`,
+                          `mongerdb://${usernameNotTest}@${host}/test?authSource=notTest`,
                           '--username',
                           usernameNotTest,
                           '--password',
@@ -142,19 +142,19 @@
                           'notTest');
 
     testSuccessfulConnect(false,
-                          `mongodb://${usernameNotTest}@${host}/test?authSource=notTest`,
+                          `mongerdb://${usernameNotTest}@${host}/test?authSource=notTest`,
                           '--username',
                           usernameNotTest,
                           '--password',
                           passwordNotTest);
 
     testSuccessfulConnect(false,
-                          `mongodb://${usernameNotTest}@${host}/test?authSource=notTest`,
+                          `mongerdb://${usernameNotTest}@${host}/test?authSource=notTest`,
                           '--password',
                           passwordNotTest);
 
     testSuccessfulConnect(false,
-                          `mongodb://${host}/test?authSource=notTest`,
+                          `mongerdb://${host}/test?authSource=notTest`,
                           '--username',
                           usernameNotTest,
                           '--password',
@@ -165,49 +165,49 @@
     if (false) {
         testSuccessfulConnect(
             false,
-            `mongodb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`);
+            `mongerdb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`);
         testSuccessfulConnect(
             false,
-            `mongodb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
+            `mongerdb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
             '--username',
             usernameX509);
         testSuccessfulConnect(false,
-                              `mongodb://${usernameX509}@${host}/test?authSource=$external`,
+                              `mongerdb://${usernameX509}@${host}/test?authSource=$external`,
                               '--authenticationMechanism',
                               'MONGODB-X509');
 
         testSuccessfulConnect(
             false,
-            `mongodb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
+            `mongerdb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
             '--authenticationMechanism',
             'MONGODB-X509');
         testSuccessfulConnect(
             false,
-            `mongodb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
+            `mongerdb://${usernameX509}@${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
             '--authenticationMechanism',
             'MONGODB-X509',
             '--username',
             usernameX509);
         testSuccessfulConnect(false,
-                              `mongodb://${usernameX509}@${host}/test?authSource=$external`,
+                              `mongerdb://${usernameX509}@${host}/test?authSource=$external`,
                               '--authenticationMechanism',
                               'MONGODB-X509');
     }
     /* */
 
     testFailedConnect(false,
-                      `mongodb://${host}/test?authMechanism=MONGODB-X509&authSource=$external`);
+                      `mongerdb://${host}/test?authMechanism=MONGODB-X509&authSource=$external`);
     testFailedConnect(false,
-                      `mongodb://${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
+                      `mongerdb://${host}/test?authMechanism=MONGODB-X509&authSource=$external`,
                       '--username',
                       usernameX509);
 
     testFailedConnect(false,
-                      `mongodb://${host}/test?authSource=$external`,
+                      `mongerdb://${host}/test?authSource=$external`,
                       '--authenticationMechanism',
                       'MONGODB-X509');
     testFailedConnect(false,
-                      `mongodb://${host}/test?authSource=$external`,
+                      `mongerdb://${host}/test?authSource=$external`,
                       '--username',
                       usernameX509,
                       '--authenticationMechanism',

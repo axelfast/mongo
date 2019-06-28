@@ -41,7 +41,7 @@
 
     assert.commandWorked(session.abortTransaction_forTesting());
 
-    // merge on mongos
+    // merge on mongers
 
     session.startTransaction();
 

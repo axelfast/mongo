@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/expression_trigonometric.h"
+#include "monger/db/pipeline/expression_trigonometric.h"
 
-#include "mongo/db/pipeline/document_value_test_util.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/pipeline/document_value_test_util.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/unittest/unittest.h"
 
 namespace expression_tests {
 
 using boost::intrusive_ptr;
-using namespace mongo;
+using namespace monger;
 
 // assertApproxEq is a helper function for asserting approximate results.
 static void assertApproxEq(const Value& evaluated, const Value& expected) {

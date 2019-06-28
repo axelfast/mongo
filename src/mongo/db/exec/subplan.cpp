@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/subplan.h"
+#include "monger/db/exec/subplan.h"
 
 #include <memory>
 #include <vector>
 
-#include "mongo/db/exec/multi_plan.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/query/planner_access.h"
-#include "mongo/db/query/planner_analysis.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/db/query/stage_builder.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/db/exec/multi_plan.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/query/planner_access.h"
+#include "monger/db/query/planner_analysis.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/db/query/stage_builder.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 using std::unique_ptr;
@@ -494,4 +494,4 @@ const SpecificStats* SubplanStage::getSpecificStats() const {
     return nullptr;
 }
 
-}  // namespace mongo
+}  // namespace monger

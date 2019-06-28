@@ -3,7 +3,7 @@
     "use strict";
 
     const conn = MongoRunner.runMongod();
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
 
     const testDB = conn.getDB("test");
 

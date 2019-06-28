@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,14 +33,14 @@
  * Test suite generator headers.
  */
 
-#include "mongo/db/db_raii.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/db_raii.h"
+#include "monger/unittest/unittest.h"
 
-using namespace mongo;
-using namespace mongo::unittest;
+using namespace monger;
+using namespace monger::unittest;
 using std::shared_ptr;
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class OperationContext;
@@ -93,4 +93,4 @@ private:
 };
 
 }  // namespace dbtests
-}  // namespace mongo
+}  // namespace monger

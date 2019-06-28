@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/update_object_node.h"
+#include "monger/db/update/update_object_node.h"
 
 #include <memory>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/update/field_checker.h"
-#include "mongo/db/update/modifier_table.h"
-#include "mongo/db/update/update_array_node.h"
-#include "mongo/db/update/update_leaf_node.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/update/field_checker.h"
+#include "monger/db/update/modifier_table.h"
+#include "monger/db/update/update_array_node.h"
+#include "monger/db/update/update_leaf_node.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -475,4 +475,4 @@ UpdateExecutor::ApplyResult UpdateObjectNode::apply(
     return applyResult;
 }
 
-}  // namespace mongo
+}  // namespace monger

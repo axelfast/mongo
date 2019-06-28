@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/log_process_details.h"
+#include "monger/db/log_process_details.h"
 
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/server_options_server_helpers.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/version.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/server_options.h"
+#include "monger/db/server_options_server_helpers.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 
 bool is32bit() {
     return (sizeof(int*) == 4);
@@ -50,7 +50,7 @@ bool is32bit() {
 
 void logProcessDetails() {
     auto&& vii = VersionInfoInterface::instance();
-    log() << mongodVersion(vii);
+    log() << mongerdVersion(vii);
     vii.logBuildInfo();
 
     if (ProcessInfo::getMemSizeMB() < ProcessInfo::getSystemMemSizeMB()) {
@@ -82,4 +82,4 @@ void logProcessDetailsForLogRotate(ServiceContext* serviceContext) {
     logProcessDetails();
 }
 
-}  // mongo
+}  // monger

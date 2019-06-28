@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,15 +33,15 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/base/data_range.h"
-#include "mongo/base/secure_allocator.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/shell/kms_gen.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/base/data_range.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/shell/kms_gen.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * KMSService
@@ -116,7 +116,7 @@ public:
                                                         const BSONObj& config);
 
     /**
-     * Creates a KMS Service with the given mongo constructor options and key vault record.
+     * Creates a KMS Service with the given monger constructor options and key vault record.
      */
     static std::unique_ptr<KMSService> createFromDisk(const BSONObj& config,
                                                       const BSONObj& kmsProvider);
@@ -132,4 +132,4 @@ private:
  */
 HostAndPort parseUrl(StringData url);
 
-}  // namespace mongo
+}  // namespace monger

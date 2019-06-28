@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/json.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/matcher/schema/expression_internal_schema_allowed_properties.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/json.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/matcher/schema/expression_internal_schema_allowed_properties.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 TEST(InternalSchemaAllowedPropertiesMatchExpression, MatchesObjectsWithListedProperties) {
     auto filter = fromjson(
@@ -148,4 +148,4 @@ DEATH_TEST(InternalSchemaAllowedPropertiesMatchExpression,
     const size_t numChildren = 2;
     objMatch.getValue()->getChild(numChildren);
 }
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <cstdint>
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/safe_num.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/safe_num.h"
 
-namespace mongo {
+namespace monger {
 namespace mutablebson {
 
 /** For an overview of mutable BSON, please see the file document.h in this directory. */
@@ -388,7 +388,7 @@ public:
     void writeTo(BSONObjBuilder* builder) const;
 
     /** Write this Element to the provided array builder. This Element must be of type
-     *  mongo::Array.
+     *  monger::Array.
      */
     void writeArrayTo(BSONArrayBuilder* builder) const;
 
@@ -415,7 +415,7 @@ public:
     Status setValueArray(const BSONObj& value);
 
     /** Set the value of this Element to the given binary data. */
-    Status setValueBinary(uint32_t len, mongo::BinDataType binType, const void* data);
+    Status setValueBinary(uint32_t len, monger::BinDataType binType, const void* data);
 
     /** Set the value of this Element to Undefined. */
     Status setValueUndefined();
@@ -546,14 +546,14 @@ public:
     /** Append the provided binary data as a new field with the provided name. */
     Status appendBinary(StringData fieldName,
                         uint32_t len,
-                        mongo::BinDataType binType,
+                        monger::BinDataType binType,
                         const void* data);
 
     /** Append an undefined value as a new field with the provided name. */
     Status appendUndefined(StringData fieldName);
 
     /** Append the provided OID as a new field with the provided name. */
-    Status appendOID(StringData fieldName, mongo::OID value);
+    Status appendOID(StringData fieldName, monger::OID value);
 
     /** Append the provided bool as a new field with the provided name. */
     Status appendBool(StringData fieldName, bool value);
@@ -568,7 +568,7 @@ public:
     Status appendRegex(StringData fieldName, StringData re, StringData flags);
 
     /** Append the provided DBRef data as a new field with the provided name. */
-    Status appendDBRef(StringData fieldName, StringData ns, mongo::OID oid);
+    Status appendDBRef(StringData fieldName, StringData ns, monger::OID oid);
 
     /** Append the provided code data as a new field with the iven name. */
     Status appendCode(StringData fieldName, StringData value);
@@ -648,79 +648,79 @@ inline Element Element::operator[](StringData name) const {
 }
 
 inline double Element::getValueDouble() const {
-    dassert(hasValue() && isType(mongo::NumberDouble));
+    dassert(hasValue() && isType(monger::NumberDouble));
     return getValue()._numberDouble();
 }
 
 inline StringData Element::getValueString() const {
-    dassert(hasValue() && isType(mongo::String));
+    dassert(hasValue() && isType(monger::String));
     return getValueStringOrSymbol();
 }
 
 inline BSONObj Element::getValueObject() const {
-    dassert(hasValue() && isType(mongo::Object));
+    dassert(hasValue() && isType(monger::Object));
     return getValue().Obj();
 }
 
 inline BSONArray Element::getValueArray() const {
-    dassert(hasValue() && isType(mongo::Array));
+    dassert(hasValue() && isType(monger::Array));
     return BSONArray(getValue().Obj());
 }
 
 inline bool Element::isValueUndefined() const {
-    return isType(mongo::Undefined);
+    return isType(monger::Undefined);
 }
 
 inline OID Element::getValueOID() const {
-    dassert(hasValue() && isType(mongo::jstOID));
+    dassert(hasValue() && isType(monger::jstOID));
     return getValue().__oid();
 }
 
 inline bool Element::getValueBool() const {
-    dassert(hasValue() && isType(mongo::Bool));
+    dassert(hasValue() && isType(monger::Bool));
     return getValue().boolean();
 }
 
 inline Date_t Element::getValueDate() const {
-    dassert(hasValue() && isType(mongo::Date));
+    dassert(hasValue() && isType(monger::Date));
     return getValue().date();
 }
 
 inline bool Element::isValueNull() const {
-    return isType(mongo::jstNULL);
+    return isType(monger::jstNULL);
 }
 
 inline StringData Element::getValueSymbol() const {
-    dassert(hasValue() && isType(mongo::Symbol));
+    dassert(hasValue() && isType(monger::Symbol));
     return getValueStringOrSymbol();
 }
 
 inline int32_t Element::getValueInt() const {
-    dassert(hasValue() && isType(mongo::NumberInt));
+    dassert(hasValue() && isType(monger::NumberInt));
     return getValue()._numberInt();
 }
 
 inline Timestamp Element::getValueTimestamp() const {
-    dassert(hasValue() && isType(mongo::bsonTimestamp));
+    dassert(hasValue() && isType(monger::bsonTimestamp));
     return getValue().timestamp();
 }
 
 inline int64_t Element::getValueLong() const {
-    dassert(hasValue() && isType(mongo::NumberLong));
+    dassert(hasValue() && isType(monger::NumberLong));
     return getValue()._numberLong();
 }
 
 inline Decimal128 Element::getValueDecimal() const {
-    dassert(hasValue() && isType(mongo::NumberDecimal));
+    dassert(hasValue() && isType(monger::NumberDecimal));
     return getValue()._numberDecimal();
 }
 
 inline bool Element::isValueMinKey() const {
-    return isType(mongo::MinKey);
+    return isType(monger::MinKey);
 }
 
 inline bool Element::isValueMaxKey() const {
-    return isType(mongo::MaxKey);
+    return isType(monger::MaxKey);
 }
 
 inline bool Element::ok() const {
@@ -765,4 +765,4 @@ inline bool operator!=(const Element& l, const Element& r) {
 
 
 }  // namespace mutablebson
-}  // namespace mongo
+}  // namespace monger

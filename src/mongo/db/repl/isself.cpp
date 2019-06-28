@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/isself.h"
+#include "monger/db/repl/isself.h"
 
 #include <boost/algorithm/string.hpp>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/authenticate.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/init.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/authenticate.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/commands.h"
+#include "monger/db/service_context.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/scopeguard.h"
 
 #if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun) || \
     defined(__OpenBSD__)
@@ -74,7 +74,7 @@
 #include <winsock2.h>
 #endif  // defined(_WIN32)
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 OID instanceId;
@@ -343,4 +343,4 @@ std::vector<std::string> getBoundAddrs(const bool ipv6enabled) {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

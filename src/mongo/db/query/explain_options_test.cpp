@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/explain_options.h"
+#include "monger/db/query/explain_options.h"
 
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/json.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/json.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(ExplainOptionsTest, VerbosityEnumToStringReturnsCorrectValues) {
@@ -93,4 +93,4 @@ TEST(ExplainOptionsTest, ParsingFailsIfFirstElementIsNotAnObject) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

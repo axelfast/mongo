@@ -32,7 +32,7 @@ type Mode int
 const (
 	// Relevant documentation on read preference modes:
 	//
-	//     http://docs.mongodb.org/manual/reference/read-preference/
+	//     http://docs.mongerdb.org/manual/reference/read-preference/
 	//
 	Primary            Mode = 2 // Default mode. All operations read from the current replica set primary.
 	PrimaryPreferred   Mode = 3 // Read from the primary if available. Read from the secondary otherwise.
@@ -59,7 +59,7 @@ const (
 // See the documentation on Session.SetMode for more details.
 type Session struct {
 	m                sync.RWMutex
-	cluster_         *mongoCluster
+	cluster_         *mongerCluster
 	slaveSocket      *MongoSocket
 	masterSocket     *MongoSocket
 	slaveOk          bool
@@ -154,7 +154,7 @@ const defaultPrefetch = 0.25
 //
 // The seed servers must be provided in the following format:
 //
-//     [mongodb://][user:pass@]host1[:port1][,host2[:port2],...][/database][?options]
+//     [mongerdb://][user:pass@]host1[:port1][,host2[:port2],...][/database][?options]
 //
 // For example, it may be as simple as:
 //
@@ -162,7 +162,7 @@ const defaultPrefetch = 0.25
 //
 // Or more involved like:
 //
-//     mongodb://myuser:mypass@localhost:40001,otherhost:40001/mydb
+//     mongerdb://myuser:mypass@localhost:40001,otherhost:40001/mydb
 //
 // If the port number is not provided for a server, it defaults to 27017.
 //
@@ -197,7 +197,7 @@ const defaultPrefetch = 0.25
 //     gssapiServiceName=<name>
 //
 //        Defines the service name to use when authenticating with the GSSAPI
-//        mechanism. Defaults to "mongodb".
+//        mechanism. Defaults to "mongerdb".
 //
 //     maxPoolSize=<limit>
 //
@@ -207,7 +207,7 @@ const defaultPrefetch = 0.25
 //
 // Relevant documentation:
 //
-//     http://docs.mongodb.org/manual/reference/connection-string/
+//     http://docs.mongerdb.org/manual/reference/connection-string/
 //
 func Dial(url string) (*Session, error) {
 	session, err := DialWithTimeout(url, 10*time.Second)
@@ -332,7 +332,7 @@ type DialInfo struct {
 	Source string
 
 	// Service defines the service name to use when authenticating with the GSSAPI
-	// mechanism. Defaults to "mongodb".
+	// mechanism. Defaults to "mongerdb".
 	Service string
 
 	// ServiceHost defines which hostname to use when authenticating
@@ -450,7 +450,7 @@ type urlInfo struct {
 }
 
 func extractURL(s string) (*urlInfo, error) {
-	if strings.HasPrefix(s, "mongodb://") {
+	if strings.HasPrefix(s, "mongerdb://") {
 		s = s[10:]
 	}
 	info := &urlInfo{options: make(map[string]string)}
@@ -490,7 +490,7 @@ func extractURL(s string) (*urlInfo, error) {
 	return info, nil
 }
 
-func newSession(consistency Mode, cluster *mongoCluster, timeout time.Duration) (session *Session) {
+func newSession(consistency Mode, cluster *mongerCluster, timeout time.Duration) (session *Session) {
 	cluster.Acquire()
 	session = &Session{
 		cluster_:    cluster,
@@ -541,7 +541,7 @@ func (s *Session) LiveServers() (addrs []string) {
 // DB returns a value representing the named database. If name
 // is empty, the database name provided in the dialed URL is
 // used instead. If that is also empty, "test" is used as a
-// fallback in a way equivalent to the mongo shell.
+// fallback in a way equivalent to the monger shell.
 //
 // Creating this value is a very lightweight operation, and
 // involves no network communication.
@@ -586,9 +586,9 @@ func (c *Collection) With(s *Session) *Collection {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/GridFS
-//     http://www.mongodb.org/display/DOCS/GridFS+Tools
-//     http://www.mongodb.org/display/DOCS/GridFS+Specification
+//     http://www.mongerdb.org/display/DOCS/GridFS
+//     http://www.mongerdb.org/display/DOCS/GridFS+Tools
+//     http://www.mongerdb.org/display/DOCS/GridFS+Specification
 //
 func (db *Database) GridFS(prefix string) *GridFS {
 	return newGridFS(db, prefix)
@@ -611,8 +611,8 @@ func (db *Database) GridFS(prefix string) *GridFS {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Commands
-//     http://www.mongodb.org/display/DOCS/List+of+Database+CommandSkips
+//     http://www.mongerdb.org/display/DOCS/Commands
+//     http://www.mongerdb.org/display/DOCS/List+of+Database+CommandSkips
 //
 func (db *Database) Run(cmd interface{}, result interface{}) error {
 	socket, err := db.Session.AcquireSocketPrivate(true)
@@ -714,7 +714,7 @@ type Credential struct {
 	Source string
 
 	// Service defines the service name to use when authenticating with the GSSAPI
-	// mechanism. Defaults to "mongodb".
+	// mechanism. Defaults to "mongerdb".
 	Service string
 
 	// ServiceHost defines which hostname to use when authenticating
@@ -818,8 +818,8 @@ func (s *Session) LogoutAll() {
 //
 // Relevant documentation:
 //
-//     http://docs.mongodb.org/manual/reference/privilege-documents/
-//     http://docs.mongodb.org/manual/reference/user-privileges/
+//     http://docs.mongerdb.org/manual/reference/privilege-documents/
+//     http://docs.mongerdb.org/manual/reference/user-privileges/
 //
 type User struct {
 	// Username is how the user identifies itself to the system.
@@ -830,7 +830,7 @@ type User struct {
 	// unset it before the user is added to the database.
 	Password string `bson:",omitempty"`
 
-	// PasswordHash is the MD5 hash of Username+":mongo:"+Password.
+	// PasswordHash is the MD5 hash of Username+":monger:"+Password.
 	PasswordHash string `bson:"pwd,omitempty"`
 
 	// CustomData holds arbitrary data admins decide to associate
@@ -861,7 +861,7 @@ type Role string
 const (
 	// Relevant documentation:
 	//
-	//     http://docs.mongodb.org/manual/reference/user-privileges/
+	//     http://docs.mongerdb.org/manual/reference/user-privileges/
 	//
 	RoleRoot         Role = "root"
 	RoleRead         Role = "read"
@@ -884,8 +884,8 @@ const (
 //
 // Relevant documentation:
 //
-//     http://docs.mongodb.org/manual/reference/user-privileges/
-//     http://docs.mongodb.org/manual/reference/privilege-documents/
+//     http://docs.mongerdb.org/manual/reference/user-privileges/
+//     http://docs.mongerdb.org/manual/reference/privilege-documents/
 //
 func (db *Database) UpsertUser(user *User) error {
 	if user.Username == "" {
@@ -917,7 +917,7 @@ func (db *Database) UpsertUser(user *User) error {
 	var set, unset bson.D
 	if user.Password != "" {
 		psum := md5.New()
-		psum.Write([]byte(user.Username + ":mongo:" + user.Password))
+		psum.Write([]byte(user.Username + ":monger:" + user.Password))
 		set = append(set, bson.DocElem{"pwd", hex.EncodeToString(psum.Sum(nil))})
 		unset = append(unset, bson.DocElem{"userSource", 1})
 	} else if user.PasswordHash != "" {
@@ -1021,7 +1021,7 @@ func (db *Database) AddUser(username, password string, readOnly bool) error {
 
 	// Command doesn't exist. Fallback to pre-2.6 behavior.
 	psum := md5.New()
-	psum.Write([]byte(username + ":mongo:" + password))
+	psum.Write([]byte(username + ":monger:" + password))
 	digest := hex.EncodeToString(psum.Sum(nil))
 	c := db.C("system.users")
 	_, err = c.Upsert(bson.M{"user": username}, bson.M{"$set": bson.M{"user": username, "pwd": digest, "readOnly": readOnly}})
@@ -1231,7 +1231,7 @@ func (c *Collection) EnsureIndexKey(key ...string) error {
 // and remove documents containing an indexed time.Time field with a value
 // older than ExpireAfter. See the documentation for details:
 //
-//     http://docs.mongodb.org/manual/tutorial/expire-data
+//     http://docs.mongerdb.org/manual/tutorial/expire-data
 //
 // Other kinds of indexes are also supported through that API. Here is an example:
 //
@@ -1253,11 +1253,11 @@ func (c *Collection) EnsureIndexKey(key ...string) error {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Indexes
-//     http://www.mongodb.org/display/DOCS/Indexing+Advice+and+FAQ
-//     http://www.mongodb.org/display/DOCS/Indexing+as+a+Background+Operation
-//     http://www.mongodb.org/display/DOCS/Geospatial+Indexing
-//     http://www.mongodb.org/display/DOCS/Multikeys
+//     http://www.mongerdb.org/display/DOCS/Indexes
+//     http://www.mongerdb.org/display/DOCS/Indexing+Advice+and+FAQ
+//     http://www.mongerdb.org/display/DOCS/Indexing+as+a+Background+Operation
+//     http://www.mongerdb.org/display/DOCS/Geospatial+Indexing
+//     http://www.mongerdb.org/display/DOCS/Multikeys
 //
 func (c *Collection) EnsureIndex(index Index) error {
 	keyInfo, err := parseIndexKey(index.Key)
@@ -1611,7 +1611,7 @@ func (s *Session) Close() {
 	s.m.Unlock()
 }
 
-func (s *Session) cluster() *mongoCluster {
+func (s *Session) cluster() *mongerCluster {
 	if s.cluster_ == nil {
 		panic("Session already closed")
 	}
@@ -1752,7 +1752,7 @@ func (s *Session) SetPoolLimit(limit int) {
 //
 // Relevant documentation:
 //
-//   https://docs.mongodb.org/manual/release-notes/3.2/#bypass-validation
+//   https://docs.mongerdb.org/manual/release-notes/3.2/#bypass-validation
 //
 func (s *Session) SetBypassValidation(bypass bool) {
 	s.m.Lock()
@@ -1888,9 +1888,9 @@ func (s *Session) Safe() (safe *Safe) {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/getLastError+Command
-//     http://www.mongodb.org/display/DOCS/Verifying+Propagation+of+Writes+with+getLastError
-//     http://www.mongodb.org/display/DOCS/Data+Center+Awareness
+//     http://www.mongerdb.org/display/DOCS/getLastError+Command
+//     http://www.mongerdb.org/display/DOCS/Verifying+Propagation+of+Writes+with+getLastError
+//     http://www.mongerdb.org/display/DOCS/Data+Center+Awareness
 //
 func (s *Session) SetSafe(safe *Safe) {
 	s.m.Lock()
@@ -1922,9 +1922,9 @@ func (s *Session) SetSafe(safe *Safe) {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/getLastError+Command
-//     http://www.mongodb.org/display/DOCS/Verifying+Propagation+of+Writes+with+getLastError
-//     http://www.mongodb.org/display/DOCS/Data+Center+Awareness
+//     http://www.mongerdb.org/display/DOCS/getLastError+Command
+//     http://www.mongerdb.org/display/DOCS/Verifying+Propagation+of+Writes+with+getLastError
+//     http://www.mongerdb.org/display/DOCS/Data+Center+Awareness
 //
 func (s *Session) EnsureSafe(safe *Safe) {
 	s.m.Lock()
@@ -1992,8 +1992,8 @@ func (s *Session) ensureSafe(safe *Safe) {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Commands
-//     http://www.mongodb.org/display/DOCS/List+of+Database+CommandSkips
+//     http://www.mongerdb.org/display/DOCS/Commands
+//     http://www.mongerdb.org/display/DOCS/List+of+Database+CommandSkips
 //
 func (s *Session) Run(cmd interface{}, result interface{}) error {
 	return s.DB("admin").Run(cmd, result)
@@ -2015,7 +2015,7 @@ func (s *Session) Run(cmd interface{}, result interface{}) error {
 //
 // Relevant documentation:
 //
-//     http://docs.mongodb.org/manual/tutorial/configure-replica-set-tag-sets
+//     http://docs.mongerdb.org/manual/tutorial/configure-replica-set-tag-sets
 //
 func (s *Session) SelectServers(tags ...bson.D) {
 	s.m.Lock()
@@ -2050,15 +2050,15 @@ func (s *Session) Fsync(async bool) error {
 // blocks, follow up reads will block as well due to the way the
 // lock is internally implemented in the server. More details at:
 //
-//     https://jira.mongodb.org/browse/SERVER-4243
+//     https://jira.mongerdb.org/browse/SERVER-4243
 //
 // FsyncLock is often used for performing consistent backups of
 // the database files on disk.
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/fsync+Command
-//     http://www.mongodb.org/display/DOCS/Backups
+//     http://www.mongerdb.org/display/DOCS/fsync+Command
+//     http://www.mongerdb.org/display/DOCS/Backups
 //
 func (s *Session) FsyncLock() error {
 	return s.Run(bson.D{{"fsync", 1}, {"lock", true}}, nil)
@@ -2088,8 +2088,8 @@ func (s *Session) FsyncUnlock() error {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Querying
-//     http://www.mongodb.org/display/DOCS/Advanced+Queries
+//     http://www.mongerdb.org/display/DOCS/Querying
+//     http://www.mongerdb.org/display/DOCS/Advanced+Queries
 //
 func (c *Collection) Find(query interface{}) *Query {
 	session := c.Database.Session
@@ -2183,9 +2183,9 @@ type pipeCmdCursor struct {
 //
 // Relevant documentation:
 //
-//     http://docs.mongodb.org/manual/reference/aggregation
-//     http://docs.mongodb.org/manual/applications/aggregation
-//     http://docs.mongodb.org/manual/tutorial/aggregation-examples
+//     http://docs.mongerdb.org/manual/reference/aggregation
+//     http://docs.mongerdb.org/manual/applications/aggregation
+//     http://docs.mongerdb.org/manual/tutorial/aggregation-examples
 //
 func (c *Collection) Pipe(pipeline interface{}) *Pipe {
 	session := c.Database.Session
@@ -2441,8 +2441,8 @@ func (c *Collection) Insert(docs ...interface{}) error {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Updating
-//     http://www.mongodb.org/display/DOCS/Atomic+Operations
+//     http://www.mongerdb.org/display/DOCS/Updating
+//     http://www.mongerdb.org/display/DOCS/Atomic+Operations
 //
 func (c *Collection) Update(selector interface{}, update interface{}) error {
 	if selector == nil {
@@ -2485,8 +2485,8 @@ type ChangeInfo struct {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Updating
-//     http://www.mongodb.org/display/DOCS/Atomic+Operations
+//     http://www.mongerdb.org/display/DOCS/Updating
+//     http://www.mongerdb.org/display/DOCS/Atomic+Operations
 //
 func (c *Collection) UpdateAll(selector interface{}, update interface{}) (info *ChangeInfo, err error) {
 	if selector == nil {
@@ -2516,8 +2516,8 @@ func (c *Collection) UpdateAll(selector interface{}, update interface{}) (info *
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Updating
-//     http://www.mongodb.org/display/DOCS/Atomic+Operations
+//     http://www.mongerdb.org/display/DOCS/Updating
+//     http://www.mongerdb.org/display/DOCS/Atomic+Operations
 //
 func (c *Collection) Upsert(selector interface{}, update interface{}) (info *ChangeInfo, err error) {
 	if selector == nil {
@@ -2559,7 +2559,7 @@ func (c *Collection) UpsertId(id interface{}, update interface{}) (info *ChangeI
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Removing
+//     http://www.mongerdb.org/display/DOCS/Removing
 //
 func (c *Collection) Remove(selector interface{}) error {
 	if selector == nil {
@@ -2588,7 +2588,7 @@ func (c *Collection) RemoveId(id interface{}) error {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Removing
+//     http://www.mongerdb.org/display/DOCS/Removing
 //
 func (c *Collection) RemoveAll(selector interface{}) (info *ChangeInfo, err error) {
 	if selector == nil {
@@ -2615,8 +2615,8 @@ func (c *Collection) DropCollection() error {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/createCollection+Command
-//     http://www.mongodb.org/display/DOCS/Capped+Collections
+//     http://www.mongerdb.org/display/DOCS/createCollection+Command
+//     http://www.mongerdb.org/display/DOCS/Capped+Collections
 //
 type CollectionInfo struct {
 	// DisableIdIndex prevents the automatic creation of the index
@@ -2645,8 +2645,8 @@ type CollectionInfo struct {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/createCollection+Command
-//     http://www.mongodb.org/display/DOCS/Capped+Collections
+//     http://www.mongerdb.org/display/DOCS/createCollection+Command
+//     http://www.mongerdb.org/display/DOCS/Capped+Collections
 //
 func (c *Collection) Create(info *CollectionInfo) error {
 	cmd := make(bson.D, 0, 4)
@@ -2746,7 +2746,7 @@ func (q *Query) Limit(n int) *Query {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Retrieving+a+Subset+of+Fields
+//     http://www.mongerdb.org/display/DOCS/Retrieving+a+Subset+of+Fields
 //
 func (q *Query) Select(selector interface{}) *Query {
 	q.m.Lock()
@@ -2768,7 +2768,7 @@ func (q *Query) Select(selector interface{}) *Query {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Sorting+and+Natural+Order
+//     http://www.mongerdb.org/display/DOCS/Sorting+and+Natural+Order
 //
 func (q *Query) Sort(fields ...string) *Query {
 	q.m.Lock()
@@ -2821,8 +2821,8 @@ func (q *Query) Sort(fields ...string) *Query {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Optimization
-//     http://www.mongodb.org/display/DOCS/Query+Optimizer
+//     http://www.mongerdb.org/display/DOCS/Optimization
+//     http://www.mongerdb.org/display/DOCS/Query+Optimizer
 //
 func (q *Query) Explain(result interface{}) error {
 	q.m.Lock()
@@ -2853,8 +2853,8 @@ func (q *Query) Explain(result interface{}) error {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Optimization
-//     http://www.mongodb.org/display/DOCS/Query+Optimizer
+//     http://www.mongerdb.org/display/DOCS/Optimization
+//     http://www.mongerdb.org/display/DOCS/Query+Optimizer
 //
 func (q *Query) Hint(indexKey ...string) *Query {
 	q.m.Lock()
@@ -2909,7 +2909,7 @@ func (q *Query) SetMaxScan(n int) *Query {
 //
 // Relevant documentation:
 //
-//   http://blog.mongodb.org/post/83621787773/maxtimems-and-query-optimizer-introspection-in
+//   http://blog.mongerdb.org/post/83621787773/maxtimems-and-query-optimizer-introspection-in
 //
 func (q *Query) SetMaxTime(d time.Duration) *Query {
 	q.m.Lock()
@@ -2940,7 +2940,7 @@ func (q *Query) SetMaxTime(d time.Duration) *Query {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/How+to+do+Snapshotted+Queries+in+the+Mongo+Database
+//     http://www.mongerdb.org/display/DOCS/How+to+do+Snapshotted+Queries+in+the+Mongo+Database
 //
 func (q *Query) Snapshot() *Query {
 	q.m.Lock()
@@ -2954,9 +2954,9 @@ func (q *Query) Snapshot() *Query {
 //
 // Relevant documentation:
 //
-//     http://docs.mongodb.org/manual/reference/operator/meta/comment
-//     http://docs.mongodb.org/manual/reference/command/profile
-//     http://docs.mongodb.org/manual/administration/analyzing-mongodb-performance/#database-profiling
+//     http://docs.mongerdb.org/manual/reference/operator/meta/comment
+//     http://docs.mongerdb.org/manual/reference/command/profile
+//     http://docs.mongerdb.org/manual/administration/analyzing-mongerdb-performance/#database-profiling
 //
 func (q *Query) Comment(comment string) *Query {
 	q.m.Lock()
@@ -3113,7 +3113,7 @@ func (db *Database) run(socket *MongoSocket, cmd, result interface{}) (replyOp *
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Database+References
+//     http://www.mongerdb.org/display/DOCS/Database+References
 //
 type DBRef struct {
 	Collection string      `bson:"$ref"`
@@ -3131,7 +3131,7 @@ type DBRef struct {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Database+References
+//     http://www.mongerdb.org/display/DOCS/Database+References
 //
 func (db *Database) FindRef(ref *DBRef) *Query {
 	var c *Collection
@@ -3151,7 +3151,7 @@ func (db *Database) FindRef(ref *DBRef) *Query {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Database+References
+//     http://www.mongerdb.org/display/DOCS/Database+References
 //
 func (s *Session) FindRef(ref *DBRef) *Query {
 	if ref.Database == "" {
@@ -3336,9 +3336,9 @@ func (q *Query) Iter() *Iter {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Tailable+Cursors
-//     http://www.mongodb.org/display/DOCS/Capped+Collections
-//     http://www.mongodb.org/display/DOCS/Sorting+and+Natural+Order
+//     http://www.mongerdb.org/display/DOCS/Tailable+Cursors
+//     http://www.mongerdb.org/display/DOCS/Capped+Collections
+//     http://www.mongerdb.org/display/DOCS/Sorting+and+Natural+Order
 //
 func (q *Query) Tail(timeout time.Duration) *Iter {
 	q.m.Lock()
@@ -3760,7 +3760,7 @@ type distinctCmd struct {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/Aggregation
+//     http://www.mongerdb.org/display/DOCS/Aggregation
 //
 func (q *Query) Distinct(key string, result interface{}) error {
 	q.m.Lock()
@@ -3889,7 +3889,7 @@ type MapReduceTime struct {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/MapReduce
+//     http://www.mongerdb.org/display/DOCS/MapReduce
 //
 func (q *Query) MapReduce(job *MapReduce, result interface{}) (info *MapReduceInfo, err error) {
 	q.m.Lock()
@@ -4038,9 +4038,9 @@ type valueResult struct {
 //
 // Relevant documentation:
 //
-//     http://www.mongodb.org/display/DOCS/findAndModify+Command
-//     http://www.mongodb.org/display/DOCS/Updating
-//     http://www.mongodb.org/display/DOCS/Atomic+Operations
+//     http://www.mongerdb.org/display/DOCS/findAndModify+Command
+//     http://www.mongerdb.org/display/DOCS/Updating
+//     http://www.mongerdb.org/display/DOCS/Atomic+Operations
 //
 func (q *Query) Apply(change Change, result interface{}) (info *ChangeInfo, err error) {
 	q.m.Lock()
@@ -4473,7 +4473,7 @@ func (c *Collection) writeOpCommand(socket *MongoSocket, safeOp *QueryOp, op int
 	var cmd bson.D
 	switch op := op.(type) {
 	case *InsertOp:
-		// http://docs.mongodb.org/manual/reference/command/insert
+		// http://docs.mongerdb.org/manual/reference/command/insert
 		cmd = bson.D{
 			{"insert", c.Name},
 			{"documents", op.Documents},
@@ -4481,7 +4481,7 @@ func (c *Collection) writeOpCommand(socket *MongoSocket, safeOp *QueryOp, op int
 			{"ordered", op.Flags&1 == 0},
 		}
 	case *UpdateOp:
-		// http://docs.mongodb.org/manual/reference/command/update
+		// http://docs.mongerdb.org/manual/reference/command/update
 		cmd = bson.D{
 			{"update", c.Name},
 			{"updates", []interface{}{op}},
@@ -4489,7 +4489,7 @@ func (c *Collection) writeOpCommand(socket *MongoSocket, safeOp *QueryOp, op int
 			{"ordered", ordered},
 		}
 	case bulkUpdateOp:
-		// http://docs.mongodb.org/manual/reference/command/update
+		// http://docs.mongerdb.org/manual/reference/command/update
 		cmd = bson.D{
 			{"update", c.Name},
 			{"updates", op},
@@ -4497,7 +4497,7 @@ func (c *Collection) writeOpCommand(socket *MongoSocket, safeOp *QueryOp, op int
 			{"ordered", ordered},
 		}
 	case *DeleteOp:
-		// http://docs.mongodb.org/manual/reference/command/delete
+		// http://docs.mongerdb.org/manual/reference/command/delete
 		cmd = bson.D{
 			{"delete", c.Name},
 			{"deletes", []interface{}{op}},
@@ -4505,7 +4505,7 @@ func (c *Collection) writeOpCommand(socket *MongoSocket, safeOp *QueryOp, op int
 			{"ordered", ordered},
 		}
 	case bulkDeleteOp:
-		// http://docs.mongodb.org/manual/reference/command/delete
+		// http://docs.mongerdb.org/manual/reference/command/delete
 		cmd = bson.D{
 			{"delete", c.Name},
 			{"deletes", op},

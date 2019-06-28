@@ -42,13 +42,13 @@
             res.cursor.firstBatch.sort(nameSort));
     }
 
-    const mongod = MongoRunner.runMongod({auth: ''});
-    runTestOnConnection(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod({auth: ''});
+    runTestOnConnection(mongerd);
+    MongoRunner.stopMongod(mongerd);
 
     const st = new ShardingTest({
         shards: 1,
-        mongos: 1,
+        mongers: 1,
         config: 1,
         other: {keyFile: 'jstests/libs/key1', shardAsReplicaSet: false},
     });

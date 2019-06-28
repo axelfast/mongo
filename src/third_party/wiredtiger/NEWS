@@ -1,5 +1,5 @@
 Ticket reference tags refer to tickets in the MongoDB JIRA tracking system:
-https://jira.mongodb.org
+https://jira.mongerdb.org
 
 WiredTiger release 3.2.0, 2019-05-09
 ------------------------------------
@@ -16,7 +16,7 @@ Significant changes:
 * WT-4765	Remove support for Helium/Levyx data sources in WiredTiger
 
 See JIRA changelog for a full listing:
-https://jira.mongodb.org/projects/WT/versions/21117
+https://jira.mongerdb.org/projects/WT/versions/21117
 
 WiredTiger release 3.1.0, 2018-07-12
 ------------------------------------
@@ -24,7 +24,7 @@ WiredTiger release 3.1.0, 2018-07-12
 See the upgrading documentation for details of API and behavior changes.
 
 See JIRA changelog for a full listing:
-https://jira.mongodb.org/projects/WT/versions/19708
+https://jira.mongerdb.org/projects/WT/versions/19708
 
 WiredTiger release 3.0.0, 2018-01-08
 ------------------------------------
@@ -53,7 +53,7 @@ Significant changes:
 * WT-3752	Allow trimming of obsolete modify updates.
 
 See JIRA changelog for a full listing:
-https://jira.mongodb.org/projects/WT/versions/18401
+https://jira.mongerdb.org/projects/WT/versions/18401
 
 WiredTiger release 2.9.3, 2017-06-27
 ------------------------------------
@@ -77,7 +77,7 @@ Significant changes:
 * WT-3379       Change when pages can be split to avoid excessively slowing some operations
 
 See JIRA changelog for a full listing:
-https://jira.mongodb.org/browse/WT/fixforversion/18291
+https://jira.mongerdb.org/browse/WT/fixforversion/18291
 
 WiredTiger release 2.9.2, 2017-05-25
 ------------------------------------
@@ -113,7 +113,7 @@ Significant changes:
 * WT-3262       Stop making schema operations wait for cache
 
 See JIRA changelog for a full listing:
-https://jira.mongodb.org/browse/WT/fixforversion/17874
+https://jira.mongerdb.org/browse/WT/fixforversion/17874
 
 
 WiredTiger release 2.9.1, 2016-12-22
@@ -1490,7 +1490,7 @@ Now that WiredTiger is part of MongoDB, we are tracking issues related to
 MongoDB usage of WiredTiger in the MongoDB JIRA system.  Some entries in
 the changelog now reference JIRA tickets that can be found at:
 
-  http://jira.mongodb.org
+  http://jira.mongerdb.org
 
 New features and API changes:
 

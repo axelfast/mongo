@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/repl/mock_repl_coord_server_fixture.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/s/session_catalog_migration_source.h"
-#include "mongo/db/session.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/repl/mock_repl_coord_server_fixture.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/s/session_catalog_migration_source.h"
+#include "monger/db/session.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::RemoteCommandRequest;
@@ -1100,4 +1100,4 @@ TEST_F(SessionCatalogMigrationSourceTest, TwoSessionWithTwoWritesContainingWrite
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

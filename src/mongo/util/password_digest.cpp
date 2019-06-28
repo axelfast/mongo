@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/password_digest.h"
+#include "monger/util/password_digest.h"
 
-namespace mongo {
+namespace monger {
 
 std::string createPasswordDigest(StringData username, StringData clearTextPassword) {
     md5digest d;
@@ -39,11 +39,11 @@ std::string createPasswordDigest(StringData username, StringData clearTextPasswo
         md5_state_t st;
         md5_init(&st);
         md5_append(&st, (const md5_byte_t*)username.rawData(), username.size());
-        md5_append(&st, (const md5_byte_t*)":mongo:", 7);
+        md5_append(&st, (const md5_byte_t*)":monger:", 7);
         md5_append(&st, (const md5_byte_t*)clearTextPassword.rawData(), clearTextPassword.size());
         md5_finish(&st, d);
     }
     return digestToString(d);
 }
 
-}  // namespace mongo
+}  // namespace monger

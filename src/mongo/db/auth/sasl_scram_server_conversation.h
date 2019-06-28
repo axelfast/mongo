@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/crypto/mechanism_scram.h"
-#include "mongo/db/auth/sasl_mechanism_policies.h"
-#include "mongo/db/auth/sasl_mechanism_registry.h"
-#include "mongo/util/icu.h"
+#include "monger/crypto/mechanism_scram.h"
+#include "monger/db/auth/sasl_mechanism_policies.h"
+#include "monger/db/auth/sasl_mechanism_registry.h"
+#include "monger/util/icu.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  *  Server side authentication session for SASL SCRAM-SHA-1/256.
@@ -109,4 +109,4 @@ using SCRAMSHA1ServerFactory = SCRAMServerFactory<SaslSCRAMSHA1ServerMechanism>;
 using SaslSCRAMSHA256ServerMechanism = SaslSCRAMServerMechanism<SCRAMSHA256Policy>;
 using SCRAMSHA256ServerFactory = SCRAMServerFactory<SaslSCRAMSHA256ServerMechanism>;
 
-}  // namespace mongo
+}  // namespace monger

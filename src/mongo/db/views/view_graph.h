@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/string_map.h"
+#include "monger/base/status.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 class ViewDefinition;
 
 /**
@@ -183,4 +183,4 @@ private:
     stdx::unordered_map<uint64_t, Node> _graph;
     uint64_t _idCounter = 0;
 };
-}  // namespace mongo
+}  // namespace monger

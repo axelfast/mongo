@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -40,18 +40,18 @@
 #include <limits>
 #include <map>
 
-#include "mongo/base/data_view.h"
-#include "mongo/base/parse_number.h"
-#include "mongo/bson/bson_field.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/stdx/type_traits.h"
-#include "mongo/util/decimal_counter.h"
+#include "monger/base/data_view.h"
+#include "monger/base/parse_number.h"
+#include "monger/bson/bson_field.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/util/builder.h"
+#include "monger/platform/decimal128.h"
+#include "monger/stdx/type_traits.h"
+#include "monger/util/decimal_counter.h"
 
-namespace mongo {
+namespace monger {
 
 #if defined(_WIN32)
 // warning: 'this' : used in base member initializer list
@@ -1067,4 +1067,4 @@ inline BSONObjBuilder& BSONObjBuilder::appendTimestamp(StringData fieldName,
     return append(fieldName, Timestamp(val));
 }
 
-}  // namespace mongo
+}  // namespace monger

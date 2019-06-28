@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/collation/collation_index_key.h"
+#include "monger/db/query/collation/collation_index_key.h"
 
 #include <memory>
 #include <stack>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/util/assert_util.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/util/builder.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -164,4 +164,4 @@ void CollationIndexKey::collationAwareIndexKeyAppend(BSONElement elt,
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

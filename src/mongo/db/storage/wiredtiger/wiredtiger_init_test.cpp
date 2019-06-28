@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 
-#include "mongo/db/json.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/db/storage/storage_engine_init.h"
-#include "mongo/db/storage/storage_engine_metadata.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_global_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/db/json.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/db/storage/storage_engine_init.h"
+#include "monger/db/storage/storage_engine_metadata.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_global_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 class WiredTigerFactoryTest : public ServiceContextTest {
 private:

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/db/storage/sorted_data_interface_test_harness.h"
+#include "monger/db/storage/sorted_data_interface_test_harness.h"
 
 #include <algorithm>
 #include <memory>
 
-#include "mongo/db/storage/sorted_data_interface.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/storage/sorted_data_interface.h"
+#include "monger/unittest/unittest.h"
 
-auto mongo::SortedDataInterfaceHarnessHelper::newSortedDataInterface(
+auto monger::SortedDataInterfaceHarnessHelper::newSortedDataInterface(
     bool unique, bool partial, std::initializer_list<IndexKeyEntry> toInsert)
     -> std::unique_ptr<SortedDataInterface> {
     invariant(std::is_sorted(
@@ -46,7 +46,7 @@ auto mongo::SortedDataInterfaceHarnessHelper::newSortedDataInterface(
     return index;
 }
 
-void mongo::insertToIndex(unowned_ptr<OperationContext> opCtx,
+void monger::insertToIndex(unowned_ptr<OperationContext> opCtx,
                           unowned_ptr<SortedDataInterface> index,
                           std::initializer_list<IndexKeyEntry> toInsert) {
     WriteUnitOfWork wuow(opCtx);
@@ -56,7 +56,7 @@ void mongo::insertToIndex(unowned_ptr<OperationContext> opCtx,
     wuow.commit();
 }
 
-void mongo::removeFromIndex(unowned_ptr<OperationContext> opCtx,
+void monger::removeFromIndex(unowned_ptr<OperationContext> opCtx,
                             unowned_ptr<SortedDataInterface> index,
                             std::initializer_list<IndexKeyEntry> toRemove) {
     WriteUnitOfWork wuow(opCtx);
@@ -66,7 +66,7 @@ void mongo::removeFromIndex(unowned_ptr<OperationContext> opCtx,
     wuow.commit();
 }
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(SortedDataInterface, InsertWithDups1) {
@@ -574,4 +574,4 @@ TEST(SortedDataInterface, Locate4) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

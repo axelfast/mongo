@@ -1,6 +1,6 @@
 /**
  * If reIndex crashes after dropping indexes but before rebuilding them, a collection may exist
- * without an _id index. On startup, mongod should automatically build any missing _id indexes.
+ * without an _id index. On startup, mongerd should automatically build any missing _id indexes.
  *
  * @tags: [
  *   requires_journaling,
@@ -16,8 +16,8 @@
     const dbpath = MongoRunner.dataPath + baseName + '/';
     resetDbpath(dbpath);
 
-    const mongodOptions = {dbpath: dbpath, noCleanData: true};
-    let conn = MongoRunner.runMongod(mongodOptions);
+    const mongerdOptions = {dbpath: dbpath, noCleanData: true};
+    let conn = MongoRunner.runMongod(mongerdOptions);
 
     let testDB = conn.getDB('test');
     let testColl = testDB.getCollection(collName);
@@ -38,7 +38,7 @@
     MongoRunner.stopMongod(conn, null, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
 
     // The server should start up successfully after rebuilding the _id index.
-    conn = MongoRunner.runMongod(mongodOptions);
+    conn = MongoRunner.runMongod(mongerdOptions);
     testDB = conn.getDB('test');
     testColl = testDB.getCollection(collName);
     assert(testColl.exists());

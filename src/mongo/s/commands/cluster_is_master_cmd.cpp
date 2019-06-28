@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/sasl_mechanism_registry.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/rpc/metadata/client_metadata.h"
-#include "mongo/rpc/metadata/client_metadata_ismaster.h"
-#include "mongo/transport/message_compressor_manager.h"
-#include "mongo/util/map_util.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/version.h"
+#include "monger/db/auth/sasl_mechanism_registry.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/wire_version.h"
+#include "monger/rpc/metadata/client_metadata.h"
+#include "monger/rpc/metadata/client_metadata_ismaster.h"
+#include "monger/transport/message_compressor_manager.h"
+#include "monger/util/map_util.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CmdIsMaster : public BasicCommand {
@@ -138,4 +138,4 @@ public:
 } isMaster;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

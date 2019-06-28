@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,46 +27,46 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/sharding_initialization_mongod.h"
+#include "monger/db/s/sharding_initialization_mongerd.h"
 
-#include "mongo/client/connection_string.h"
-#include "mongo/client/global_conn_pool.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/client/remote_command_targeter_factory_impl.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/logical_time_metadata_hook.h"
-#include "mongo/db/logical_time_validator.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/ops/update.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/chunk_splitter.h"
-#include "mongo/db/s/periodic_balancer_config_refresher.h"
-#include "mongo/db/s/read_only_catalog_cache_loader.h"
-#include "mongo/db/s/shard_server_catalog_cache_loader.h"
-#include "mongo/db/s/sharding_config_optime_gossip.h"
-#include "mongo/db/s/transaction_coordinator_service.h"
-#include "mongo/db/server_options.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/rpc/metadata/egress_metadata_hook_list.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_connection.h"
-#include "mongo/s/client/shard_factory.h"
-#include "mongo/s/client/shard_local.h"
-#include "mongo/s/client/shard_remote.h"
-#include "mongo/s/client/sharding_connection_hook.h"
-#include "mongo/s/config_server_catalog_cache_loader.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/sharding_initialization.h"
-#include "mongo/util/log.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/global_conn_pool.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/client/remote_command_targeter_factory_impl.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/logical_time_metadata_hook.h"
+#include "monger/db/logical_time_validator.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/ops/update.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/chunk_splitter.h"
+#include "monger/db/s/periodic_balancer_config_refresher.h"
+#include "monger/db/s/read_only_catalog_cache_loader.h"
+#include "monger/db/s/shard_server_catalog_cache_loader.h"
+#include "monger/db/s/sharding_config_optime_gossip.h"
+#include "monger/db/s/transaction_coordinator_service.h"
+#include "monger/db/server_options.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/rpc/metadata/egress_metadata_hook_list.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_connection.h"
+#include "monger/s/client/shard_factory.h"
+#include "monger/s/client/shard_local.h"
+#include "monger/s/client/shard_remote.h"
+#include "monger/s/client/sharding_connection_hook.h"
+#include "monger/s/config_server_catalog_cache_loader.h"
+#include "monger/s/grid.h"
+#include "monger/s/sharding_initialization.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 // Failpoint for disabling updateShardIdentityConfigString calls on signaled RS nodes.
 MONGO_FAIL_POINT_DEFINE(failUpdateShardIdentityConfigString);
@@ -426,7 +426,7 @@ void initializeGlobalShardingStateForMongoD(OperationContext* opCtx,
         std::make_unique<CatalogCache>(CatalogCacheLoader::get(opCtx)),
         [service] { return makeEgressHooksList(service); },
         // We only need one task executor here because sharding task executors aren't used for user
-        // queries in mongod.
+        // queries in mongerd.
         1));
 
     auto const replCoord = repl::ReplicationCoordinator::get(service);
@@ -436,4 +436,4 @@ void initializeGlobalShardingStateForMongoD(OperationContext* opCtx,
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

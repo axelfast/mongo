@@ -13,14 +13,14 @@ env.Library(
         'write_error_detail.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/common',
-        '$BUILD_DIR/mongo/db/logical_clock',
-        '$BUILD_DIR/mongo/db/ops/write_ops_parsers',
-        '$BUILD_DIR/mongo/db/repl/optime',
-        '$BUILD_DIR/mongo/db/commands',
-        '$BUILD_DIR/mongo/rpc/command_status',
-        '$BUILD_DIR/mongo/s/common_s',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/common',
+        '$BUILD_DIR/monger/db/logical_clock',
+        '$BUILD_DIR/monger/db/ops/write_ops_parsers',
+        '$BUILD_DIR/monger/db/repl/optime',
+        '$BUILD_DIR/monger/db/commands',
+        '$BUILD_DIR/monger/rpc/command_status',
+        '$BUILD_DIR/monger/s/common_s',
     ],
 )
 
@@ -33,8 +33,8 @@ env.Library(
         'write_op.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/commands/server_status_core',
-        '$BUILD_DIR/mongo/s/sharding_router_api',
+        '$BUILD_DIR/monger/db/commands/server_status_core',
+        '$BUILD_DIR/monger/s/sharding_router_api',
         'batch_write_types',
     ],
 )
@@ -60,10 +60,10 @@ env.CppUnitTest(
         'write_op_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/db/auth/authmocks',
-        '$BUILD_DIR/mongo/db/logical_clock',
-        '$BUILD_DIR/mongo/db/ops/write_ops_parsers_test_helpers',
-        '$BUILD_DIR/mongo/s/sharding_router_test_fixture',
+        '$BUILD_DIR/monger/db/auth/authmocks',
+        '$BUILD_DIR/monger/db/logical_clock',
+        '$BUILD_DIR/monger/db/ops/write_ops_parsers_test_helpers',
+        '$BUILD_DIR/monger/s/sharding_router_test_fixture',
         'batch_write_types',
         'cluster_write_op',
         'cluster_write_op_conversion',

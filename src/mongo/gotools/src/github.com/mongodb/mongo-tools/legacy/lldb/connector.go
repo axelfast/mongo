@@ -11,9 +11,9 @@ import (
 	"time"
 
 	mgo "github.com/10gen/llmgo"
-	"github.com/mongodb/mongo-tools/legacy/lldb/kerberos"
-	"github.com/mongodb/mongo-tools/legacy/options"
-	"github.com/mongodb/mongo-tools/legacy/util"
+	"github.com/mongerdb/monger-tools/legacy/lldb/kerberos"
+	"github.com/mongerdb/monger-tools/legacy/options"
+	"github.com/mongerdb/monger-tools/legacy/util"
 )
 
 // Interface type for connecting to the database.

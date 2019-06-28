@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <boost/optional.hpp>
 #include <wiredtiger.h>
 
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/storage/snapshot_manager.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/storage/snapshot_manager.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 using RoundUpPreparedTimestamps = WiredTigerBeginTxnBlock::RoundUpPreparedTimestamps;
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/bson/unordered_fields_bsonelement_comparator.h"
-#include "mongo/db/matcher/expression_leaf.h"
+#include "monger/bson/unordered_fields_bsonelement_comparator.h"
+#include "monger/db/matcher/expression_leaf.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * MatchExpression for $_internalSchemaEq, which behaves similar to $eq except:
@@ -78,4 +78,4 @@ private:
     UnorderedFieldsBSONElementComparator _eltCmp;
     BSONElement _rhsElem;
 };
-}  // namespace mongo
+}  // namespace monger

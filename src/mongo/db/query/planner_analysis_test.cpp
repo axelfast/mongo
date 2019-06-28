@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/db/query/planner_analysis.h"
+#include "monger/db/query/planner_analysis.h"
 
 #include <set>
 
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression_geo.h"
-#include "mongo/db/query/index_entry.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression_geo.h"
+#include "monger/db/query/index_entry.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/unittest/unittest.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 

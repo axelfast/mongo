@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplication
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplication
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/oplogreader.h"
+#include "monger/db/repl/oplogreader.h"
 
 #include <string>
 
-#include "mongo/client/authenticate.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/util/log.h"
+#include "monger/client/authenticate.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/executor/network_interface.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -107,4 +107,4 @@ void OplogReader::tailingQuery(const char* ns, const BSONObj& query) {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

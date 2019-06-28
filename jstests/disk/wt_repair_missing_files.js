@@ -20,8 +20,8 @@
      * re-creating it. The collection should be visible on normal startup.
      */
 
-    let mongod = startMongodOnExistingPath(dbpath);
-    let testColl = mongod.getDB(baseName)[collName];
+    let mongerd = startMongodOnExistingPath(dbpath);
+    let testColl = mongerd.getDB(baseName)[collName];
 
     const doc = {a: 1};
     assert.commandWorked(testColl.insert(doc));
@@ -29,15 +29,15 @@
     let testCollUri = getUriForColl(testColl);
     let testCollFile = dbpath + testCollUri + ".wt";
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 
     jsTestLog("deleting collection file: " + testCollFile);
     removeFile(testCollFile);
 
-    assertRepairSucceeds(dbpath, mongod.port);
+    assertRepairSucceeds(dbpath, mongerd.port);
 
-    mongod = startMongodOnExistingPath(dbpath);
-    testColl = mongod.getDB(baseName)[collName];
+    mongerd = startMongodOnExistingPath(dbpath);
+    testColl = mongerd.getDB(baseName)[collName];
 
     assert.eq(testCollUri, getUriForColl(testColl));
     assert.eq(testColl.find({}).itcount(), 0);
@@ -56,15 +56,15 @@
 
     let indexUri = getUriForIndex(testColl, indexName);
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 
     let indexFile = dbpath + indexUri + ".wt";
     jsTestLog("deleting index file: " + indexFile);
     removeFile(indexFile);
 
-    assertRepairSucceeds(dbpath, mongod.port);
-    mongod = startMongodOnExistingPath(dbpath);
-    testColl = mongod.getDB(baseName)[collName];
+    assertRepairSucceeds(dbpath, mongerd.port);
+    mongerd = startMongodOnExistingPath(dbpath);
+    testColl = mongerd.getDB(baseName)[collName];
 
     // Repair creates new idents.
     assert.neq(indexUri, getUriForIndex(testColl, indexName));
@@ -73,7 +73,7 @@
     assert.eq(testColl.find(doc).itcount(), 1);
     assert.eq(testColl.count(), 1);
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 
     /**
      * Test 3. Delete the sizeStorer. Verify that repair suceeds in recreating it.
@@ -83,14 +83,14 @@
     jsTestLog("deleting size storer file: " + sizeStorerFile);
     removeFile(sizeStorerFile);
 
-    assertRepairSucceeds(dbpath, mongod.port);
+    assertRepairSucceeds(dbpath, mongerd.port);
 
-    mongod = startMongodOnExistingPath(dbpath);
-    testColl = mongod.getDB(baseName)[collName];
+    mongerd = startMongodOnExistingPath(dbpath);
+    testColl = mongerd.getDB(baseName)[collName];
 
     assert.eq(testColl.find(doc).itcount(), 1);
     assert.eq(testColl.count(), 1);
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 
     /**
      * Test 4. Delete the _mdb_catalog. Verify that repair suceeds in creating an empty catalog and
@@ -101,10 +101,10 @@
     jsTestLog("deleting catalog file: " + mdbCatalogFile);
     removeFile(mdbCatalogFile);
 
-    assertRepairSucceeds(dbpath, mongod.port);
+    assertRepairSucceeds(dbpath, mongerd.port);
 
-    mongod = startMongodOnExistingPath(dbpath);
-    testColl = mongod.getDB(baseName)[collName];
+    mongerd = startMongodOnExistingPath(dbpath);
+    testColl = mongerd.getDB(baseName)[collName];
     assert.isnull(testColl.exists());
 
     assert.eq(testColl.find(doc).itcount(), 0);
@@ -115,30 +115,30 @@
      * files, allowing MongoDB to start up normally.
      */
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
     resetDbpath(dbpath);
 
-    mongod = startMongodOnExistingPath(dbpath, {directoryperdb: ""});
-    testColl = mongod.getDB(baseName)[collName];
+    mongerd = startMongodOnExistingPath(dbpath, {directoryperdb: ""});
+    testColl = mongerd.getDB(baseName)[collName];
 
     assert.commandWorked(testColl.insert(doc));
 
     testCollUri = getUriForColl(testColl);
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 
     let dataDir = dbpath + baseName;
     jsTestLog("deleting data directory: " + dataDir);
     removeFile(dataDir);
 
-    assertRepairSucceeds(dbpath, mongod.port, {directoryperdb: ""});
+    assertRepairSucceeds(dbpath, mongerd.port, {directoryperdb: ""});
 
-    mongod = startMongodOnExistingPath(dbpath, {directoryperdb: ""});
-    testColl = mongod.getDB(baseName)[collName];
+    mongerd = startMongodOnExistingPath(dbpath, {directoryperdb: ""});
+    testColl = mongerd.getDB(baseName)[collName];
 
     assert.eq(testCollUri, getUriForColl(testColl));
     assert.eq(testColl.find({}).itcount(), 0);
     assert.eq(testColl.count(), 0);
 
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 })();

@@ -2,10 +2,10 @@
 
 var numPerTypeToCreate = 50;
 
-// We need to create a new mongod to ensure no one else is talking to us in the background, and
+// We need to create a new mongerd to ensure no one else is talking to us in the background, and
 // will screw up our stats.
-var mongo = MongoRunner.runMongod({});
-var db = mongo.getDB("test");
+var monger = MongoRunner.runMongod({});
+var db = monger.getDB("test");
 
 var availableConnections = db.serverStatus().connections.available;
 if (availableConnections < (numPerTypeToCreate * 10)) {
@@ -94,4 +94,4 @@ jsTestLog("Testing that current connections counter went down after temporary co
 waitForConnections(originalConnInfo.current + numPerTypeToCreate,
                    originalConnInfo.totalCreated + numPerTypeToCreate * 2);
 
-MongoRunner.stopMongod(mongo);
+MongoRunner.stopMongod(monger);

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/concurrency/thread_pool_test_common.h"
+#include "monger/util/concurrency/thread_pool_test_common.h"
 
 #include <memory>
 
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/thread_pool_interface.h"
-#include "mongo/util/concurrency/thread_pool_test_fixture.h"
-#include "mongo/util/log.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/unittest/death_test.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/thread_pool_interface.h"
+#include "monger/util/concurrency/thread_pool_test_fixture.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using ThreadPoolFactory = std::function<std::unique_ptr<ThreadPoolInterface>()>;
@@ -62,7 +62,7 @@ private:
 };
 
 using ThreadPoolTestCaseFactory =
-    std::function<std::unique_ptr<::mongo::unittest::Test>(ThreadPoolFactory)>;
+    std::function<std::unique_ptr<::monger::unittest::Test>(ThreadPoolFactory)>;
 using ThreadPoolTestCaseMap = stdx::unordered_map<std::string, ThreadPoolTestCaseFactory>;
 
 static ThreadPoolTestCaseMap& threadPoolTestCaseRegistry() {
@@ -98,7 +98,7 @@ public:
             fassertFailed(34356);
         }
         entry = [makeTest](ThreadPoolFactory makeThreadPool) {
-            return std::make_unique<::mongo::unittest::DeathTest<T>>(std::move(makeThreadPool));
+            return std::make_unique<::monger::unittest::DeathTest<T>>(std::move(makeThreadPool));
         };
     }
 };
@@ -237,4 +237,4 @@ void addTestsForThreadPool(const std::string& suiteName, ThreadPoolFactory makeT
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

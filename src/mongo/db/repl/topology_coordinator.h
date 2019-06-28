@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,16 +33,16 @@
 #include <iosfwd>
 #include <string>
 
-#include "mongo/db/repl/last_vote.h"
-#include "mongo/db/repl/repl_set_heartbeat_response.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/split_horizon.h"
-#include "mongo/db/repl/update_position_args.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/repl/last_vote.h"
+#include "monger/db/repl/repl_set_heartbeat_response.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/split_horizon.h"
+#include "monger/db/repl/update_position_args.h"
+#include "monger/db/server_options.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 class CommitQuorumOptions;
 class Timestamp;
 
@@ -213,7 +213,7 @@ public:
      *
      * "now" is used to skip over currently blacklisted sync sources.
      *
-     * TODO (SERVER-27668): Make OplogQueryMetadata non-optional in mongodb 3.8.
+     * TODO (SERVER-27668): Make OplogQueryMetadata non-optional in mongerdb 3.8.
      */
     bool shouldChangeSyncSource(const HostAndPort& currentSource,
                                 const rpc::ReplSetMetadata& replMetadata,
@@ -1135,4 +1135,4 @@ std::ostream& operator<<(std::ostream& os, TopologyCoordinator::Role role);
 std::ostream& operator<<(std::ostream& os, TopologyCoordinator::PrepareFreezeResponseResult result);
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,23 +28,23 @@
  */
 
 /**
- * This file contains tests for mongo/db/query/query_settings.h
+ * This file contains tests for monger/db/query/query_settings.h
  */
 
-#include "mongo/db/query/query_settings.h"
+#include "monger/db/query/query_settings.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/json.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/query/index_entry.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/json.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/index_names.h"
+#include "monger/db/query/index_entry.h"
+#include "monger/unittest/unittest.h"
 
-using mongo::AllowedIndicesFilter;
-using mongo::BSONObj;
-using mongo::IndexEntry;
-using mongo::SimpleBSONObjComparator;
-using mongo::fromjson;
+using monger::AllowedIndicesFilter;
+using monger::BSONObj;
+using monger::IndexEntry;
+using monger::SimpleBSONObjComparator;
+using monger::fromjson;
 
 namespace {
 TEST(QuerySettingsTest, AllowedIndicesFilterAllowsIndexesByName) {
@@ -52,7 +52,7 @@ TEST(QuerySettingsTest, AllowedIndicesFilterAllowsIndexesByName) {
     AllowedIndicesFilter filter(bsonCmp.makeBSONObjSet({fromjson("{a:1}")}), {"a_1"});
     auto keyPat = fromjson("{a:1, b:1}");
     IndexEntry a_idx(keyPat,
-                     mongo::IndexNames::nameToType(mongo::IndexNames::findPluginName(keyPat)),
+                     monger::IndexNames::nameToType(monger::IndexNames::findPluginName(keyPat)),
                      false,
                      {},
                      {},
@@ -64,7 +64,7 @@ TEST(QuerySettingsTest, AllowedIndicesFilterAllowsIndexesByName) {
                      nullptr,
                      nullptr);
     IndexEntry ab_idx(keyPat,
-                      mongo::IndexNames::nameToType(mongo::IndexNames::findPluginName(keyPat)),
+                      monger::IndexNames::nameToType(monger::IndexNames::findPluginName(keyPat)),
                       false,
                       {},
                       {},
@@ -85,7 +85,7 @@ TEST(QuerySettingsTest, AllowedIndicesFilterAllowsIndexesByKeyPattern) {
     AllowedIndicesFilter filter(bsonCmp.makeBSONObjSet({fromjson("{a:1}")}), {"a"});
     auto keyPat_a = fromjson("{a:1}");
     IndexEntry a_idx(keyPat_a,
-                     mongo::IndexNames::nameToType(mongo::IndexNames::findPluginName(keyPat_a)),
+                     monger::IndexNames::nameToType(monger::IndexNames::findPluginName(keyPat_a)),
                      false,
                      {},
                      {},
@@ -98,7 +98,7 @@ TEST(QuerySettingsTest, AllowedIndicesFilterAllowsIndexesByKeyPattern) {
                      nullptr);
     auto keyPat_ab = fromjson("{a:1, b:1}");
     IndexEntry ab_idx(keyPat_ab,
-                      mongo::IndexNames::nameToType(mongo::IndexNames::findPluginName(keyPat_ab)),
+                      monger::IndexNames::nameToType(monger::IndexNames::findPluginName(keyPat_ab)),
                       false,
                       {},
                       {},

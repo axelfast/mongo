@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/counter.h"
-#include "mongo/db/commands/server_status_metric.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/operation_context.h"
+#include "monger/base/counter.h"
+#include "monger/db/commands/server_status_metric.h"
+#include "monger/db/curop.h"
+#include "monger/db/operation_context.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 Counter64 returnedCounter;
 Counter64 insertedCounter;
@@ -82,4 +82,4 @@ void recordCurOpMetrics(OperationContext* opCtx) {
         writeConflictsCounter.increment(n);
 }
 
-}  // namespace mongo
+}  // namespace monger

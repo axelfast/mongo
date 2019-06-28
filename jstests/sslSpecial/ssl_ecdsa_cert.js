@@ -20,23 +20,23 @@ const test = () => {
         tlsAllowConnectionsWithoutCertificates: "",
     };
 
-    let mongod = MongoRunner.runMongod(tlsOptions);
+    let mongerd = MongoRunner.runMongod(tlsOptions);
 
     // Verify we can connect
     assert.eq(0,
-              runMongoProgram('mongo',
+              runMongoProgram('monger',
                               '--tls',
                               '--tlsCAFile',
                               ECDSA_CA_CERT,
                               '--port',
-                              mongod.port,
+                              mongerd.port,
                               '--eval',
                               'db.isMaster()'),
-              "mongo did not initialize properly");
+              "monger did not initialize properly");
 
     // Add an X509 user
     const addUserCmd = {createUser: CLIENT_USER, roles: [{role: 'root', db: 'admin'}]};
-    assert.commandWorked(mongod.getDB('$external').runCommand(addUserCmd),
+    assert.commandWorked(mongerd.getDB('$external').runCommand(addUserCmd),
                          'Failed to create X509 user using ECDSA certificates');
 
     const command = function() {
@@ -49,18 +49,18 @@ const test = () => {
     // Verify we can authenticate via X509
     assert.eq(
         0,
-        runMongoProgram('mongo',
+        runMongoProgram('monger',
                         '--tls',
                         '--tlsCertificateKeyFile',
                         ECDSA_CLIENT_CERT,
                         '--tlsCAFile',
                         ECDSA_CA_CERT,
                         '--port',
-                        mongod.port,
+                        mongerd.port,
                         '--eval',
                         '(' + command.toString().replace(/CLIENT_USER/g, CLIENT_USER) + ')();'),
         "ECDSA X509 authentication failed");
-    MongoRunner.stopMongod(mongod);
+    MongoRunner.stopMongod(mongerd);
 };
 
 const EXCLUDED_BUILDS = ['amazon', 'amzn64'];

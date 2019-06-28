@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,7 +32,7 @@
 #include <memory>
 #include <string>
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
 /**
  * Constructs a single death test named "TEST_NAME" within the test case "CASE_NAME".
@@ -45,16 +45,16 @@
  * in the setUp() method of the fixture.
  */
 #define DEATH_TEST(CASE_NAME, TEST_NAME, MATCH_EXPR)                                               \
-    class UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME) : public ::mongo::unittest::Test { \
+    class UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME) : public ::monger::unittest::Test { \
     private:                                                                                       \
         virtual void _doTest();                                                                    \
                                                                                                    \
         static const RegistrationAgent<                                                            \
-            ::mongo::unittest::DeathTest<UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)>>   \
+            ::monger::unittest::DeathTest<UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)>>   \
             _agent;                                                                                \
     };                                                                                             \
-    const ::mongo::unittest::Test::RegistrationAgent<                                              \
-        ::mongo::unittest::DeathTest<UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)>>       \
+    const ::monger::unittest::Test::RegistrationAgent<                                              \
+        ::monger::unittest::DeathTest<UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)>>       \
         UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)::_agent(#CASE_NAME, #TEST_NAME);     \
     std::string getDeathTestPattern(UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)*) {      \
         return MATCH_EXPR;                                                                         \
@@ -72,12 +72,12 @@
     private:                                                                                     \
         virtual void _doTest();                                                                  \
                                                                                                  \
-        static const RegistrationAgent<::mongo::unittest::DeathTest<                             \
+        static const RegistrationAgent<::monger::unittest::DeathTest<                             \
             UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)>>                           \
             _agent;                                                                              \
     };                                                                                           \
-    const ::mongo::unittest::Test::RegistrationAgent<                                            \
-        ::mongo::unittest::DeathTest<UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)>>  \
+    const ::monger::unittest::Test::RegistrationAgent<                                            \
+        ::monger::unittest::DeathTest<UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)>>  \
         UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)::_agent(#FIXTURE_NAME,          \
                                                                          #TEST_NAME);            \
     std::string getDeathTestPattern(UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)*) { \
@@ -85,7 +85,7 @@
     }                                                                                            \
     void UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)::_doTest()
 
-namespace mongo {
+namespace monger {
 namespace unittest {
 
 class DeathTestImpl : public Test {
@@ -117,4 +117,4 @@ private:
 };
 
 }  // namespace unittest
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-namespace mongo {
+namespace monger {
 class Initializer;
 
 /**
  * Get the process-global initializer object.
  *
- * See mongo/base/initializer.h and mongo/base/init.h for information about process
- * initialization in mongo applications.
+ * See monger/base/initializer.h and monger/base/init.h for information about process
+ * initialization in monger applications.
  */
 Initializer& getGlobalInitializer();
 
-}  // namespace mongo
+}  // namespace monger

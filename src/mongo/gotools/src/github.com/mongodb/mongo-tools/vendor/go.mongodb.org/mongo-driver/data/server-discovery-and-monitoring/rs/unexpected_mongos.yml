@@ -1,6 +1,6 @@
-description: "Unexpected mongos"
+description: "Unexpected mongers"
 
-uri: "mongodb://b/?replicaSet=rs"
+uri: "mongerdb://b/?replicaSet=rs"
 
 phases: [
 

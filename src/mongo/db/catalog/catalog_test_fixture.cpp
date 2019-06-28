@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/catalog_test_fixture.h"
+#include "monger/db/catalog/catalog_test_fixture.h"
 
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/service_context_d_test_fixture.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/service_context_d_test_fixture.h"
 
-namespace mongo {
+namespace monger {
 
 void CatalogTestFixture::setUp() {
-    // Set up mongod.
+    // Set up mongerd.
     ServiceContextMongoDTest::setUp();
 
     auto service = getServiceContext();
@@ -58,7 +58,7 @@ void CatalogTestFixture::tearDown() {
     _storage.reset();
     _opCtx.reset();
 
-    // Tear down mongod.
+    // Tear down mongerd.
     ServiceContextMongoDTest::tearDown();
 }
 
@@ -70,4 +70,4 @@ repl::StorageInterface* CatalogTestFixture::storageInterface() {
     return _storage.get();
 }
 
-}  // namespace mongo
+}  // namespace monger

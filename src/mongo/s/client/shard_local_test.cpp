@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/client/shard_local.h"
+#include "monger/s/client/shard_local.h"
 
 #include <memory>
 
-#include "mongo/client/read_preference.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/find_and_modify_request.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/s/client/shard_registry.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/find_and_modify_request.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/s/client/shard_registry.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class ShardLocalTest : public ServiceContextMongoDTest {
@@ -273,4 +273,4 @@ TEST_F(ShardLocalTest, CreateIndex) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

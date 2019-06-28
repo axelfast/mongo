@@ -9,7 +9,7 @@ tests:
         options: ~
     -
         description: "Invalid scheme"
-        uri: "mongo://localhost:27017"
+        uri: "monger://localhost:27017"
         valid: false
         warning: ~
         hosts: ~
@@ -17,7 +17,7 @@ tests:
         options: ~
     -
         description: "Missing host"
-        uri: "mongodb://"
+        uri: "mongerdb://"
         valid: false
         warning: ~
         hosts: ~
@@ -25,7 +25,7 @@ tests:
         options: ~
     -
         description: "Double colon in host identifier"
-        uri: "mongodb://localhost::27017"
+        uri: "mongerdb://localhost::27017"
         valid: false
         warning: ~
         hosts: ~
@@ -33,7 +33,7 @@ tests:
         options: ~
     -
         description: "Double colon in host identifier and trailing slash"
-        uri: "mongodb://localhost::27017/"
+        uri: "mongerdb://localhost::27017/"
         valid: false
         warning: ~
         hosts: ~
@@ -41,7 +41,7 @@ tests:
         options: ~
     -
         description: "Double colon in host identifier with missing host and port"
-        uri: "mongodb://::"
+        uri: "mongerdb://::"
         valid: false
         warning: ~
         hosts: ~
@@ -49,7 +49,7 @@ tests:
         options: ~
     -
         description: "Double colon in host identifier with missing port"
-        uri: "mongodb://localhost,localhost::"
+        uri: "mongerdb://localhost,localhost::"
         valid: false
         warning: ~
         hosts: ~
@@ -57,7 +57,7 @@ tests:
         options: ~
     -
         description: "Double colon in host identifier and second host"
-        uri: "mongodb://localhost::27017,abc"
+        uri: "mongerdb://localhost::27017,abc"
         valid: false
         warning: ~
         hosts: ~
@@ -65,7 +65,7 @@ tests:
         options: ~
     -
         description: "Invalid port (negative number) with hostname"
-        uri: "mongodb://localhost:-1"
+        uri: "mongerdb://localhost:-1"
         valid: false
         warning: ~
         hosts: ~
@@ -73,7 +73,7 @@ tests:
         options: ~
     -
         description: "Invalid port (zero) with hostname"
-        uri: "mongodb://localhost:0/"
+        uri: "mongerdb://localhost:0/"
         valid: false
         warning: ~
         hosts: ~
@@ -81,7 +81,7 @@ tests:
         options: ~
     -
         description: "Invalid port (positive number) with hostname"
-        uri: "mongodb://localhost:65536"
+        uri: "mongerdb://localhost:65536"
         valid: false
         warning: ~
         hosts: ~
@@ -89,7 +89,7 @@ tests:
         options: ~
     -
         description: "Invalid port (positive number) with hostname and trailing slash"
-        uri: "mongodb://localhost:65536/"
+        uri: "mongerdb://localhost:65536/"
         valid: false
         warning: ~
         hosts: ~
@@ -97,7 +97,7 @@ tests:
         options: ~
     -
         description: "Invalid port (non-numeric string) with hostname"
-        uri: "mongodb://localhost:foo"
+        uri: "mongerdb://localhost:foo"
         valid: false
         warning: ~
         hosts: ~
@@ -105,7 +105,7 @@ tests:
         options: ~
     -
         description: "Invalid port (negative number) with IP literal"
-        uri: "mongodb://[::1]:-1"
+        uri: "mongerdb://[::1]:-1"
         valid: false
         warning: ~
         hosts: ~
@@ -113,7 +113,7 @@ tests:
         options: ~
     -
         description: "Invalid port (zero) with IP literal"
-        uri: "mongodb://[::1]:0/"
+        uri: "mongerdb://[::1]:0/"
         valid: false
         warning: ~
         hosts: ~
@@ -121,7 +121,7 @@ tests:
         options: ~
     -
         description: "Invalid port (positive number) with IP literal"
-        uri: "mongodb://[::1]:65536"
+        uri: "mongerdb://[::1]:65536"
         valid: false
         warning: ~
         hosts: ~
@@ -129,7 +129,7 @@ tests:
         options: ~
     -
         description: "Invalid port (positive number) with IP literal and trailing slash"
-        uri: "mongodb://[::1]:65536/"
+        uri: "mongerdb://[::1]:65536/"
         valid: false
         warning: ~
         hosts: ~
@@ -137,7 +137,7 @@ tests:
         options: ~
     -
         description: "Invalid port (non-numeric string) with IP literal"
-        uri: "mongodb://[::1]:foo"
+        uri: "mongerdb://[::1]:foo"
         valid: false
         warning: ~
         hosts: ~
@@ -145,7 +145,7 @@ tests:
         options: ~
     -
         description: "Missing delimiting slash between hosts and options"
-        uri: "mongodb://example.com?w=1"
+        uri: "mongerdb://example.com?w=1"
         valid: false
         warning: ~
         hosts: ~
@@ -153,7 +153,7 @@ tests:
         options: ~
     -
         description: "Incomplete key value pair for option"
-        uri: "mongodb://example.com/?w"
+        uri: "mongerdb://example.com/?w"
         valid: false
         warning: ~
         hosts: ~
@@ -161,7 +161,7 @@ tests:
         options: ~
     -
         description: "Username with password containing an unescaped colon"
-        uri: "mongodb://alice:foo:bar@127.0.0.1"
+        uri: "mongerdb://alice:foo:bar@127.0.0.1"
         valid: false
         warning: ~
         hosts: ~
@@ -169,7 +169,7 @@ tests:
         options: ~
     -
         description: "Username containing an unescaped at-sign"
-        uri: "mongodb://alice@@127.0.0.1"
+        uri: "mongerdb://alice@@127.0.0.1"
         valid: false
         warning: ~
         hosts: ~
@@ -177,7 +177,7 @@ tests:
         options: ~
     -
         description: "Username with password containing an unescaped at-sign"
-        uri: "mongodb://alice@foo:bar@127.0.0.1"
+        uri: "mongerdb://alice@foo:bar@127.0.0.1"
         valid: false
         warning: ~
         hosts: ~
@@ -185,7 +185,7 @@ tests:
         options: ~
     -
         description: "Username containing an unescaped slash"
-        uri: "mongodb://alice/@localhost/db"
+        uri: "mongerdb://alice/@localhost/db"
         valid: false
         warning: ~
         hosts: ~
@@ -193,7 +193,7 @@ tests:
         options: ~
     -
         description: "Username containing unescaped slash with password"
-        uri: "mongodb://alice/bob:foo@localhost/db"
+        uri: "mongerdb://alice/bob:foo@localhost/db"
         valid: false
         warning: ~
         hosts: ~
@@ -201,7 +201,7 @@ tests:
         options: ~
     -
         description: "Username with password containing an unescaped slash"
-        uri: "mongodb://alice:foo/bar@localhost/db"
+        uri: "mongerdb://alice:foo/bar@localhost/db"
         valid: false
         warning: ~
         hosts: ~
@@ -209,23 +209,23 @@ tests:
         options: ~
     -
         description: "Host with unescaped slash"
-        uri: "mongodb:///tmp/mongodb-27017.sock/"
+        uri: "mongerdb:///tmp/mongerdb-27017.sock/"
         valid: false
         warning: ~
         hosts: ~
         auth: ~
         options: ~
     -
-        description: "mongodb+srv with multiple service names"
-        uri: "mongodb+srv://test5.test.mongodb.com,test6.test.mongodb.com"
+        description: "mongerdb+srv with multiple service names"
+        uri: "mongerdb+srv://test5.test.mongerdb.com,test6.test.mongerdb.com"
         valid: false
         warning: ~
         hosts: ~
         auth: ~
         options: ~
     -
-        description: "mongodb+srv with port number"
-        uri: "mongodb+srv://test7.test.mongodb.com:27018"
+        description: "mongerdb+srv with port number"
+        uri: "mongerdb+srv://test7.test.mongerdb.com:27018"
         valid: false
         warning: ~
         hosts: ~
@@ -233,7 +233,7 @@ tests:
         options: ~
     -
         description: "Username with password containing an unescaped percent sign"
-        uri: "mongodb://alice%foo:bar@127.0.0.1"
+        uri: "mongerdb://alice%foo:bar@127.0.0.1"
         valid: false
         warning: ~
         hosts: ~

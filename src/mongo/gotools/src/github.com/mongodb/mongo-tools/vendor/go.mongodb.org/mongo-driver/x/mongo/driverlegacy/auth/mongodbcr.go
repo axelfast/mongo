@@ -13,11 +13,11 @@ import (
 
 	"io"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/network/command"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/network/command"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 // MONGODBCR is the mechanism name for MONGODB-CR.
@@ -90,6 +90,6 @@ func (a *MongoDBCRAuthenticator) createKey(nonce string) string {
 
 	_, _ = io.WriteString(h, nonce)
 	_, _ = io.WriteString(h, a.Username)
-	_, _ = io.WriteString(h, mongoPasswordDigest(a.Username, a.Password))
+	_, _ = io.WriteString(h, mongerPasswordDigest(a.Username, a.Password))
 	return fmt.Sprintf("%x", h.Sum(nil))
 }

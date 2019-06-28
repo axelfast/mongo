@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kFTDC
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kFTDC
 
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/free_mon/free_mon_options.h"
+#include "monger/db/free_mon/free_mon_options.h"
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/initializer_context.h"
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/util/log.h"
-#include "mongo/util/options_parser/startup_option_init.h"
-#include "mongo/util/options_parser/startup_options.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/initializer_context.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/util/log.h"
+#include "monger/util/options_parser/startup_option_init.h"
+#include "monger/util/options_parser/startup_options.h"
 
-namespace mongo {
+namespace monger {
 
 FreeMonParams globalFreeMonParams;
 
@@ -52,7 +52,7 @@ class OptionSection;
 class Environment;
 }  // namespace optionenvironment
 
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 
 namespace {
 
@@ -98,4 +98,4 @@ MONGO_STARTUP_OPTIONS_STORE(FreeMonitoringOptions)(InitializerContext* /*unused*
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

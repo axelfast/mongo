@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,47 +27,47 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/cloner.h"
-#include "mongo/db/cloner_gen.h"
+#include "monger/db/cloner.h"
+#include "monger/db/cloner_gen.h"
 
-#include "mongo/base/status.h"
-#include "mongo/bson/unordered_fields_bsonobj_comparator.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/authenticate.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/list_collections_filter.h"
-#include "mongo/db/commands/rename_collection.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/ops/insert.h"
-#include "mongo/db/repl/isself.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/bson/unordered_fields_bsonobj_comparator.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/authenticate.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/list_collections_filter.h"
+#include "monger/db/commands/rename_collection.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/ops/insert.h"
+#include "monger/db/repl/isself.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::endl;
 using std::list;
@@ -845,4 +845,4 @@ Status Cloner::copyDb(OperationContext* opCtx,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

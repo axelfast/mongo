@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/valuewriter.h"
+#include "monger/scripting/mozjs/valuewriter.h"
 
 #include <js/Conversions.h>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/scripting/mozjs/exception.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/jsstringwrapper.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/represent_as.h"
+#include "monger/base/error_codes.h"
+#include "monger/platform/decimal128.h"
+#include "monger/scripting/mozjs/exception.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/jsstringwrapper.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/util/base64.h"
+#include "monger/util/represent_as.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 ValueWriter::ValueWriter(JSContext* cx, JS::HandleValue value)
@@ -257,7 +257,7 @@ void ValueWriter::writeThis(BSONObjBuilder* b,
         if (intval && _originalParent) {
             // This makes copying an object of numbers O(n**2) :(
             BSONElement elmt = _originalParent->getField(sd);
-            if (elmt.type() == mongo::NumberInt) {
+            if (elmt.type() == monger::NumberInt) {
                 b->append(sd, *intval);
                 return;
             }
@@ -274,7 +274,7 @@ void ValueWriter::writeThis(BSONObjBuilder* b,
         b->appendNull(sd);
     } else {
         uasserted(16662,
-                  str::stream() << "unable to convert JavaScript property to mongo element " << sd);
+                  str::stream() << "unable to convert JavaScript property to monger element " << sd);
     }
 }
 
@@ -317,15 +317,15 @@ void ValueWriter::_writeObject(BSONObjBuilder* b,
             if (scope->getProto<CodeInfo>().getJSClass() == jsclass) {
                 if (o.hasOwnField(InternedString::scope)  // CodeWScope
                     &&
-                    o.type(InternedString::scope) == mongo::Object) {
-                    if (o.type(InternedString::code) != mongo::String) {
+                    o.type(InternedString::scope) == monger::Object) {
+                    if (o.type(InternedString::code) != monger::String) {
                         uasserted(ErrorCodes::BadValue, "code must be a string");
                     }
 
                     b->appendCodeWScope(
                         sd, o.getString(InternedString::code), o.getObject(InternedString::scope));
                 } else {  // Code
-                    if (o.type(InternedString::code) != mongo::String) {
+                    if (o.type(InternedString::code) != monger::String) {
                         uasserted(ErrorCodes::BadValue, "code must be a string");
                     }
 
@@ -362,7 +362,7 @@ void ValueWriter::_writeObject(BSONObjBuilder* b,
 
                 b->appendBinData(sd,
                                  binData.size(),
-                                 static_cast<mongo::BinDataType>(
+                                 static_cast<monger::BinDataType>(
                                      static_cast<int>(o.getNumber(InternedString::type))),
                                  binData.c_str());
 
@@ -441,4 +441,4 @@ void ValueWriter::_writeObject(BSONObjBuilder* b,
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

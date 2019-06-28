@@ -7,10 +7,10 @@
 package line
 
 import (
-	"github.com/mongodb/mongo-tools/mongostat/status"
+	"github.com/mongerdb/monger-tools/mongerstat/status"
 )
 
-// StatLine is a wrapper for all metrics reported by mongostat for monitored hosts
+// StatLine is a wrapper for all metrics reported by mongerstat for monitored hosts
 type StatLine struct {
 	Fields  map[string]string
 	Error   error

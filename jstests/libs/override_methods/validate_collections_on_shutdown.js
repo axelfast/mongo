@@ -1,6 +1,6 @@
 /**
- * Load this file when starting a mongo shell program in order to provide a callback to validate
- * collections and indexes before shutting down a mongod while running JS tests.
+ * Load this file when starting a monger shell program in order to provide a callback to validate
+ * collections and indexes before shutting down a mongerd while running JS tests.
  */
 
 (function() {
@@ -10,7 +10,7 @@
 
     MongoRunner.validateCollectionsCallback = function(port) {
         if (jsTest.options().skipCollectionAndIndexValidation) {
-            print("Skipping collection validation during mongod shutdown");
+            print("Skipping collection validation during mongerd shutdown");
             return;
         }
 
@@ -36,12 +36,12 @@
                           if (res.msg === "isdbgrid") {
                               return {
                                   shouldStop: true,
-                                  reason: "not running validate against mongos"
+                                  reason: "not running validate against mongers"
                               };
                           } else if (!res.ismaster && !res.secondary) {
                               return {
                                   shouldStop: true,
-                                  reason: "not running validate since mongod isn't in the PRIMARY" +
+                                  reason: "not running validate since mongerd isn't in the PRIMARY" +
                                       " or SECONDARY states"
                               };
                           }

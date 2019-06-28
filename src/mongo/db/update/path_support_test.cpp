@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,42 +27,42 @@
  *    it in the license file.
  */
 
-#include "mongo/db/update/path_support.h"
+#include "monger/db/update/path_support.h"
 
 #include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement_comparator.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/mutable_bson_test_utils.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_leaf.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement_comparator.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/mutable_bson_test_utils.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_leaf.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 using namespace pathsupport;
 using str::stream;
 using mutablebson::Element;
 using std::unique_ptr;
 using std::string;
 
-class EmptyDoc : public mongo::unittest::Test {
+class EmptyDoc : public monger::unittest::Test {
 public:
     EmptyDoc() : _doc() {}
 
@@ -128,7 +128,7 @@ TEST_F(EmptyDoc, NewPath) {
     ASSERT_EQUALS(fromjson("{a: {b: {c: 1}}}"), doc());
 }
 
-class SimpleDoc : public mongo::unittest::Test {
+class SimpleDoc : public monger::unittest::Test {
 public:
     SimpleDoc() : _doc() {}
 
@@ -230,7 +230,7 @@ TEST_F(SimpleDoc, CreatePathAtFailsIfElemFoundIsNonObjectNonArray) {
     ASSERT_EQ(result.getStatus().reason(), "Cannot create field 'b' in element {a: 1}");
 }
 
-class NestedDoc : public mongo::unittest::Test {
+class NestedDoc : public monger::unittest::Test {
 public:
     NestedDoc() : _doc() {}
 
@@ -343,7 +343,7 @@ TEST_F(NestedDoc, NotStartingFromRoot) {
     ASSERT_EQUALS(elemFound.compareWithElement(root()["a"]["b"]["c"], nullptr), 0);
 }
 
-class ArrayDoc : public mongo::unittest::Test {
+class ArrayDoc : public monger::unittest::Test {
 public:
     ArrayDoc() : _doc() {}
 
@@ -508,7 +508,7 @@ TEST_F(ArrayDoc, ArrayPaddingNecessary) {
 TEST_F(ArrayDoc, ExcessivePaddingRequested) {
     // Try to create an array item beyond what we're allowed to pad. The index is two beyond the max
     // padding since the array already has one element.
-    string paddedField = stream() << "b." << mongo::pathsupport::kMaxPaddingAllowed + 2;
+    string paddedField = stream() << "b." << monger::pathsupport::kMaxPaddingAllowed + 2;
     setField(paddedField);
 
     size_t idxFound;
@@ -526,14 +526,14 @@ TEST_F(ArrayDoc, ExcessivePaddingRequested) {
 
 TEST_F(ArrayDoc, ExcessivePaddingNotRequestedIfArrayAlreadyPadded) {
     // We will try to set an array element whose index is 5 beyond the max padding.
-    string paddedField = stream() << "a." << mongo::pathsupport::kMaxPaddingAllowed + 5;
+    string paddedField = stream() << "a." << monger::pathsupport::kMaxPaddingAllowed + 5;
     setField(paddedField);
 
     // Add 5 elements to the array.
     for (size_t i = 0; i < 5; ++i) {
         Element arrayA = doc().root().leftChild();
         ASSERT_EQ(arrayA.getFieldName(), "a");
-        ASSERT_EQ(arrayA.getType(), mongo::Array);
+        ASSERT_EQ(arrayA.getType(), monger::Array);
         arrayA.appendInt("", 1).transitional_ignore();
     }
 
@@ -550,13 +550,13 @@ TEST_F(ArrayDoc, ExcessivePaddingNotRequestedIfArrayAlreadyPadded) {
     ASSERT_OK(firstNewElem);
     ASSERT_EQUALS(
         firstNewElem.getValue().compareWithElement(
-            root()["a"].findNthChild(mongo::pathsupport::kMaxPaddingAllowed + 5), nullptr),
+            root()["a"].findNthChild(monger::pathsupport::kMaxPaddingAllowed + 5), nullptr),
         0);
 
     // Array should now have maxPadding + 6 elements, since the highest array index is maxPadding +
     // 5. maxPadding of these elements are nulls adding as padding, 5 were appended at the
     // beginning, and 1 was added by createPathAt().
-    ASSERT_EQ(countChildren(doc().root().leftChild()), mongo::pathsupport::kMaxPaddingAllowed + 6);
+    ASSERT_EQ(countChildren(doc().root().leftChild()), monger::pathsupport::kMaxPaddingAllowed + 6);
 }
 
 TEST_F(ArrayDoc, NonNumericPathInArray) {

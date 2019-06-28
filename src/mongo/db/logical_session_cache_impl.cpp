@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/logical_session_cache_impl.h"
+#include "monger/db/logical_session_cache_impl.h"
 
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/logical_session_id_helpers.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/s/operation_sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/logical_session_id_helpers.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/s/operation_sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/duration.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -412,4 +412,4 @@ boost::optional<LogicalSessionRecord> LogicalSessionCacheImpl::peekCached(
     return it->second;
 }
 
-}  // namespace mongo
+}  // namespace monger

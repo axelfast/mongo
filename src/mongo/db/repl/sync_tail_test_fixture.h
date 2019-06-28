@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,17 +29,17 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/db/concurrency/lock_manager_defs.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/op_observer_noop.h"
-#include "mongo/db/repl/replication_consistency_markers.h"
-#include "mongo/db/repl/sync_tail.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/session_txn_record_gen.h"
+#include "monger/base/status.h"
+#include "monger/db/concurrency/lock_manager_defs.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/op_observer_noop.h"
+#include "monger/db/repl/replication_consistency_markers.h"
+#include "monger/db/repl/sync_tail.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/session_txn_record_gen.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class OperationContext;
@@ -179,4 +179,4 @@ void checkTxnTable(OperationContext* opCtx,
 bool docExists(OperationContext* opCtx, const NamespaceString& nss, const BSONObj& doc);
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

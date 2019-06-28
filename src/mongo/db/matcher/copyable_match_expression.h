@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #pragma once
 
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Classes that must be copyable but want to own a MatchExpression (which deletes its copy
@@ -97,4 +97,4 @@ private:
     std::shared_ptr<MatchExpression> _matchExpr;
 };
 
-}  // namespace mongo
+}  // namespace monger

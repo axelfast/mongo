@@ -182,7 +182,7 @@ class Graph(object):
                   ' MODE_IX')
         if message is not None:
             sb.append(message)
-        sb.append('digraph "mongod+lock-status" {')
+        sb.append('digraph "mongerd+lock-status" {')
         # Draw the graph from left to right. There can be hundreds of threads blocked by the same
         # resource, but only a few resources involved in a deadlock, so we prefer a long graph
         # than a super wide one. Long resource / thread names would make a wide graph even wider.
@@ -312,7 +312,7 @@ def find_lock_manager_holders(graph, thread_dict, show):  # pylint: disable=too-
     # In versions of MongoDB 4.0 and older, the LockerImpl class is templatized with a boolean
     # parameter. With the removal of the MMAPv1 storage engine in MongoDB 4.2, the LockerImpl class
     # is no longer templatized.
-    frame = find_frame(r'mongo::LockerImpl(?:\<.*\>)?::')
+    frame = find_frame(r'monger::LockerImpl(?:\<.*\>)?::')
     if not frame:
         return
 
@@ -322,17 +322,17 @@ def find_lock_manager_holders(graph, thread_dict, show):  # pylint: disable=too-
     lock_waiter = thread_dict[lock_waiter_lwpid]
 
     try:
-        locker_ptr_type = gdb.lookup_type("mongo::LockerImpl<false>").pointer()
+        locker_ptr_type = gdb.lookup_type("monger::LockerImpl<false>").pointer()
     except gdb.error as err:
         # If we don't find the templatized version of the LockerImpl class, then we try to find the
         # non-templatized version.
         if not err.args[0].startswith("No type named"):
             raise
 
-        locker_ptr_type = gdb.lookup_type("mongo::LockerImpl").pointer()
+        locker_ptr_type = gdb.lookup_type("monger::LockerImpl").pointer()
 
     lock_head = gdb.parse_and_eval(
-        "mongo::getGlobalLockManager()->_getBucket(resId)->findOrInsert(resId)")
+        "monger::getGlobalLockManager()->_getBucket(resId)->findOrInsert(resId)")
 
     granted_list = lock_head.dereference()["grantedList"]
     lock_request_ptr = granted_list["_front"]
@@ -398,20 +398,20 @@ class MongoDBShowLocks(gdb.Command):
     def __init__(self):
         """Initialize MongoDBShowLocks."""
         RegisterMongoCommand.register(  # pylint: disable=undefined-variable
-            self, "mongodb-show-locks", gdb.COMMAND_DATA)
+            self, "mongerdb-show-locks", gdb.COMMAND_DATA)
 
     def invoke(self, *_):
-        """Invoke mongodb_show_locks."""
-        self.mongodb_show_locks()
+        """Invoke mongerdb_show_locks."""
+        self.mongerdb_show_locks()
 
     @staticmethod
-    def mongodb_show_locks():
+    def mongerdb_show_locks():
         """GDB in-process python supplement."""
         try:
             thread_dict = get_threads_info()
             get_locks(graph=None, thread_dict=thread_dict, show=True)
         except gdb.error as err:
-            print("Ignoring GDB error '%s' in mongodb_show_locks" % str(err))
+            print("Ignoring GDB error '%s' in mongerdb_show_locks" % str(err))
 
 
 MongoDBShowLocks()
@@ -423,14 +423,14 @@ class MongoDBWaitsForGraph(gdb.Command):
     def __init__(self):
         """Initialize MongoDBWaitsForGraph."""
         RegisterMongoCommand.register(  # pylint: disable=undefined-variable
-            self, "mongodb-waitsfor-graph", gdb.COMMAND_DATA)
+            self, "mongerdb-waitsfor-graph", gdb.COMMAND_DATA)
 
     def invoke(self, arg, *_):
-        """Invoke mongodb_waitsfor_graph."""
-        self.mongodb_waitsfor_graph(arg)
+        """Invoke mongerdb_waitsfor_graph."""
+        self.mongerdb_waitsfor_graph(arg)
 
     @staticmethod
-    def mongodb_waitsfor_graph(graph_file=None):
+    def mongerdb_waitsfor_graph(graph_file=None):
         """GDB in-process python supplement."""
 
         graph = Graph()
@@ -454,7 +454,7 @@ class MongoDBWaitsForGraph(gdb.Command):
                 print(graph.to_graph(nodes=cycle_nodes, message=cycle_message))
 
         except gdb.error as err:
-            print("Ignoring GDB error '%s' in mongod_deadlock_graph" % str(err))
+            print("Ignoring GDB error '%s' in mongerd_deadlock_graph" % str(err))
 
 
 MongoDBWaitsForGraph()

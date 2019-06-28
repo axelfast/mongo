@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/executor/remote_command_request.h"
+#include "monger/executor/remote_command_request.h"
 
 #include <fmt/format.h>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/if_constexpr.h"
-#include "mongo/util/str.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/if_constexpr.h"
+#include "monger/util/str.h"
 
 using namespace fmt::literals;
 
-namespace mongo {
+namespace monger {
 namespace executor {
 namespace {
 
@@ -142,4 +142,4 @@ template struct RemoteCommandRequestImpl<HostAndPort>;
 template struct RemoteCommandRequestImpl<std::vector<HostAndPort>>;
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

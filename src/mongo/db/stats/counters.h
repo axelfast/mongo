@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,15 +29,15 @@
 
 #pragma once
 
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/platform/basic.h"
-#include "mongo/rpc/message.h"
-#include "mongo/util/concurrency/spin_lock.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/with_alignment.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/platform/basic.h"
+#include "monger/rpc/message.h"
+#include "monger/util/concurrency/spin_lock.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/with_alignment.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * for storing operation counters

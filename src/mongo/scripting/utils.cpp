@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/json.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/util/md5.hpp"
-#include "mongo/util/time_support.h"
+#include "monger/bson/json.h"
+#include "monger/scripting/engine.h"
+#include "monger/util/md5.hpp"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 static BSONObj native_hex_md5(const BSONObj& args, void* data) {
     uassert(10261,
@@ -51,7 +51,7 @@ static BSONObj native_hex_md5(const BSONObj& args, void* data) {
     return BSON("" << digestToString(d));
 }
 
-static BSONObj native_tostrictjson(const mongo::BSONObj& args, void* data) {
+static BSONObj native_tostrictjson(const monger::BSONObj& args, void* data) {
     uassert(40275,
             "tostrictjson takes a single BSON object argument, and on optional boolean argument "
             "for prettyPrint -- tostrictjson(obj, prettyPrint = false)",
@@ -74,4 +74,4 @@ void installGlobalUtils(Scope& scope) {
     scope.injectNative("tostrictjson", native_tostrictjson);
 }
 
-}  // namespace mongo
+}  // namespace monger

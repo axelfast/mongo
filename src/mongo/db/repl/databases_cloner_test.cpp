@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/client/fetcher.h"
-#include "mongo/db/client.h"
-#include "mongo/db/json.h"
-#include "mongo/db/repl/base_cloner_test_fixture.h"
-#include "mongo/db/repl/databases_cloner.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/dbtests/mock/mock_dbclient_connection.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/unittest/task_executor_proxy.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/concurrency/thread_pool.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/client/fetcher.h"
+#include "monger/db/client.h"
+#include "monger/db/json.h"
+#include "monger/db/repl/base_cloner_test_fixture.h"
+#include "monger/db/repl/databases_cloner.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/dbtests/mock/mock_dbclient_connection.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/stdx/mutex.h"
+#include "monger/unittest/task_executor_proxy.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/concurrency/thread_pool.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
 namespace {
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 using executor::NetworkInterfaceMock;
 using executor::RemoteCommandRequest;
 using executor::RemoteCommandResponse;

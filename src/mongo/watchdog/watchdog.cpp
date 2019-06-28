@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/watchdog/watchdog.h"
+#include "monger/watchdog/watchdog.h"
 
 #include <boost/filesystem.hpp>
 
@@ -42,17 +42,17 @@
 #include <unistd.h>
 #endif
 
-#include "mongo/base/static_assert.h"
-#include "mongo/db/client.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/platform/process_id.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/timer.h"
+#include "monger/base/static_assert.h"
+#include "monger/db/client.h"
+#include "monger/db/operation_context.h"
+#include "monger/platform/process_id.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/timer.h"
 
 
-namespace mongo {
+namespace monger {
 
 WatchdogPeriodicThread::WatchdogPeriodicThread(Milliseconds period, StringData threadName)
     : _period(period), _enabled(true), _threadName(threadName.toString()) {}
@@ -534,4 +534,4 @@ std::string DirectoryCheck::getDescriptionForLogging() {
     return str::stream() << "checked directory '" << _directory.generic_string() << "'";
 }
 
-}  // namespace mongo
+}  // namespace monger

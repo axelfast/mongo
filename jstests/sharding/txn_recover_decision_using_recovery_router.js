@@ -184,7 +184,7 @@
     };
 
     let st = new ShardingTest(
-        {shards: 2, rs: {nodes: 2}, mongos: 2, other: {mongosOptions: {verbose: 3}}});
+        {shards: 2, rs: {nodes: 2}, mongers: 2, other: {mongersOptions: {verbose: 3}}});
 
     assert.commandWorked(st.s0.adminCommand({enableSharding: 'test'}));
     st.ensurePrimaryShard('test', st.shard0.name);
@@ -193,7 +193,7 @@
     assert.commandWorked(
         st.s0.adminCommand({moveChunk: 'test.user', find: {x: 0}, to: st.shard1.name}));
 
-    // Insert documents to prime mongos and shards with the latest sharding metadata.
+    // Insert documents to prime mongers and shards with the latest sharding metadata.
     let testDB = st.s0.getDB('test');
     assert.commandWorked(testDB.runCommand({insert: 'user', documents: [{x: -10}, {x: 10}]}));
 

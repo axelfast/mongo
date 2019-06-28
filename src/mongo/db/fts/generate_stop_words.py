@@ -6,8 +6,8 @@ def generate( header, source, language_files ):
 #pragma once
 #include <set>
 #include <string>
-#include "mongo/util/string_map.h"
-namespace mongo {
+#include "monger/util/string_map.h"
+namespace monger {
 namespace fts {
 
   void loadStopWordMap( StringMap< std::set< std::string > >* m );
@@ -21,7 +21,7 @@ namespace fts {
     out = open( source, "w", encoding='utf-8')
     out.write( '#include "{}"'.format(header.rpartition( "/" )[2].rpartition( "\\" )[2]) )
     out.write( """
-namespace mongo {
+namespace monger {
 namespace fts {
 
   void loadStopWordMap( StringMap< std::set< std::string > >* m ) {
@@ -45,7 +45,7 @@ namespace fts {
     out.write( """
   }
 } // namespace fts
-} // namespace mongo
+} // namespace monger
 """ )
 
 

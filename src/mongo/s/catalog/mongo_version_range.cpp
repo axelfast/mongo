@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/catalog/mongo_version_range.h"
+#include "monger/s/catalog/monger_version_range.h"
 
-#include "mongo/util/str.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::vector;
@@ -57,7 +57,7 @@ bool MongoVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) 
     if (el.type() == String) {
         minVersion = el.String();
         if (minVersion == "") {
-            *errMsg = (string) "cannot parse single empty mongo version (" + el.toString() + ")";
+            *errMsg = (string) "cannot parse single empty monger version (" + el.toString() + ")";
             return false;
         }
         return true;
@@ -65,7 +65,7 @@ bool MongoVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) 
         BSONObj range = el.Obj();
 
         if (range.nFields() != 2) {
-            *errMsg = (string) "not enough fields in mongo version range (" + el.toString() + ")";
+            *errMsg = (string) "not enough fields in monger version range (" + el.toString() + ")";
             return false;
         }
 
@@ -75,7 +75,7 @@ bool MongoVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) 
         BSONElement subElB = it.next();
 
         if (subElA.type() != String || subElB.type() != String) {
-            *errMsg = (string) "wrong field type for mongo version range (" + el.toString() + ")";
+            *errMsg = (string) "wrong field type for monger version range (" + el.toString() + ")";
             return false;
         }
 
@@ -83,12 +83,12 @@ bool MongoVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) 
         maxVersion = subElB.String();
 
         if (minVersion == "") {
-            *errMsg = (string) "cannot parse first empty mongo version (" + el.toString() + ")";
+            *errMsg = (string) "cannot parse first empty monger version (" + el.toString() + ")";
             return false;
         }
 
         if (maxVersion == "") {
-            *errMsg = (string) "cannot parse second empty mongo version (" + el.toString() + ")";
+            *errMsg = (string) "cannot parse second empty monger version (" + el.toString() + ")";
             return false;
         }
 
@@ -100,7 +100,7 @@ bool MongoVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) 
 
         return true;
     } else {
-        *errMsg = (string) "wrong type for mongo version range " + el.toString();
+        *errMsg = (string) "wrong type for monger version range " + el.toString();
         return false;
     }
 }

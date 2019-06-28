@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"container/heap"
@@ -249,7 +249,7 @@ func (bidi *bidi) handleStreamStateBeforeMessage(stream *stream) {
 	stream.op.Header.FromWire(stream.reassembly.Bytes)
 	if !stream.op.Header.LooksReal() {
 		// When we're here and stream.reassembly.Start is true we may be able to
-		// know that we're actually not looking at mongodb traffic and that this
+		// know that we're actually not looking at mongerdb traffic and that this
 		// whole stream should be discarded.
 		bidi.logvf(DebugLow, "not a good header %#v", stream.op.Header)
 		bidi.logvf(Info, "Expected to, but didn't see a valid protocol message")

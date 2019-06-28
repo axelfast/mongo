@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_btree_impl.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_btree_impl.h"
 
 #include <memory>
 #include <set>
 
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_recovery_unit.h"
-#include "mongo/db/storage/index_entry_comparison.h"
-#include "mongo/util/str.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_recovery_unit.h"
+#include "monger/db/storage/index_entry_comparison.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 using std::string;
@@ -539,4 +539,4 @@ std::unique_ptr<SortedDataInterface> getEphemeralForTestBtreeImpl(
                                                        keyPattern);
 }
 
-}  // namespace mongo
+}  // namespace monger

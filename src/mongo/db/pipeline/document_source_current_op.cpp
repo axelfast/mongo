@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_current_op.h"
+#include "monger/db/pipeline/document_source_current_op.h"
 
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 const StringData kAllUsersFieldName = "allUsers"_sd;
@@ -72,7 +72,7 @@ std::unique_ptr<DocumentSourceCurrentOp::LiteParsed> DocumentSourceCurrentOp::Li
     // Check the spec for all fields named 'allUsers'. If any of them are 'true', we require
     // the 'inprog' privilege. This avoids the possibility that a spec with multiple
     // allUsers fields might allow an unauthorized user to view all operations. We also check for
-    // the presence of a 'localOps' field, which instructs this $currentOp to list local mongoS
+    // the presence of a 'localOps' field, which instructs this $currentOp to list local mongerS
     // operations rather than forwarding the request to the shards.
     for (auto&& elem : spec.embeddedObject()) {
         if (elem.fieldNameStringData() == "allUsers"_sd) {
@@ -111,7 +111,7 @@ DocumentSource::GetNextResult DocumentSourceCurrentOp::getNext() {
     pExpCtx->checkForInterrupt();
 
     if (_ops.empty()) {
-        _ops = pExpCtx->mongoProcessInterface->getCurrentOps(pExpCtx,
+        _ops = pExpCtx->mongerProcessInterface->getCurrentOps(pExpCtx,
                                                              _includeIdleConnections,
                                                              _includeIdleSessions,
                                                              _includeOpsFromAllUsers,
@@ -121,7 +121,7 @@ DocumentSource::GetNextResult DocumentSourceCurrentOp::getNext() {
         _opsIter = _ops.begin();
 
         if (pExpCtx->fromMongos) {
-            _shardName = pExpCtx->mongoProcessInterface->getShardName(pExpCtx->opCtx);
+            _shardName = pExpCtx->mongerProcessInterface->getShardName(pExpCtx->opCtx);
 
             uassert(40465,
                     "Aggregation request specified 'fromMongos' but unable to retrieve shard name "
@@ -146,7 +146,7 @@ DocumentSource::GetNextResult DocumentSourceCurrentOp::getNext() {
 
         // For operations on a shard, we change the opid from the raw numeric form to
         // 'shardname:opid'. We also change the fieldname 'client' to 'client_s' to indicate
-        // that the IP is that of the mongos which initiated this request.
+        // that the IP is that of the mongers which initiated this request.
         for (auto&& elt : op) {
             StringData fieldName = elt.fieldNameStringData();
 
@@ -294,4 +294,4 @@ Value DocumentSourceCurrentOp::serialize(boost::optional<ExplainOptions::Verbosi
                   {kIdleCursorsFieldName,
                    _idleCursors == CursorMode::kIncludeCursors ? Value(true) : Value()}}}});
 }
-}  // namespace mongo
+}  // namespace monger

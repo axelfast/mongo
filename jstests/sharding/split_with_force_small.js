@@ -4,13 +4,13 @@
 (function() {
     'use strict';
 
-    var st = new ShardingTest({shards: 1, mongos: 1, other: {chunkSize: 1}});
+    var st = new ShardingTest({shards: 1, mongers: 1, other: {chunkSize: 1}});
 
-    var mongos = st.s0;
-    var admin = mongos.getDB("admin");
-    var config = mongos.getDB("config");
+    var mongers = st.s0;
+    var admin = mongers.getDB("admin");
+    var config = mongers.getDB("config");
     var shardAdmin = st.shard0.getDB("admin");
-    var coll = mongos.getCollection("foo.bar");
+    var coll = mongers.getCollection("foo.bar");
 
     assert.commandWorked(admin.runCommand({enableSharding: coll.getDB() + ""}));
     assert.commandWorked(admin.runCommand({shardCollection: coll + "", key: {_id: 1}}));

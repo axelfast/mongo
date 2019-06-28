@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,10 +34,10 @@
 #include <queue>
 #include <vector>
 
-#include "mongo/db/geo/hash.h"
+#include "monger/db/geo/hash.h"
 
 
-namespace mongo {
+namespace monger {
 
 class R2Region;
 
@@ -155,4 +155,4 @@ private:
     std::vector<GeoHash> _cellIds;
 };
 
-} /* namespace mongo */
+} /* namespace monger */

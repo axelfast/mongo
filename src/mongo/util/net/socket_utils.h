@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,7 +32,7 @@
 #include <string>
 
 
-namespace mongo {
+namespace monger {
 
 void setSocketKeepAliveParams(int sock,
                               unsigned int maxKeepIdleSecs = 300,
@@ -60,4 +60,4 @@ std::string getHostNameCachedAndPort();
 /** Returns getHostNameCached(), or getHostNameCached():<port> if running on a non-default port. */
 std::string prettyHostName();
 
-}  // namespace mongo
+}  // namespace monger

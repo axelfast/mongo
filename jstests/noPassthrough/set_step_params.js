@@ -24,15 +24,15 @@ load("jstests/libs/parallelTester.js");
         config: {nodes: 1},
         shards: 1,
         rs0: {nodes: 1},
-        mongos: [{setParameter: stepParams}],
+        mongers: [{setParameter: stepParams}],
     });
-    const mongos = st.s0;
+    const mongers = st.s0;
     const rst = st.rs0;
     const primary = rst.getPrimary();
 
     const cfg = primary.getDB('local').system.replset.findOne();
     const allHosts = cfg.members.map(x => x.host);
-    const mongosDB = mongos.getDB(kDbName);
+    const mongersDB = mongers.getDB(kDbName);
     const primaryOnly = [primary.name];
 
     function configureReplSetFailpoint(name, modeValue) {
@@ -88,7 +88,7 @@ load("jstests/libs/parallelTester.js");
         }
 
         function checkAllStats() {
-            var res = mongos.adminCommand({connPoolStats: 1});
+            var res = mongers.adminCommand({connPoolStats: 1});
             return hosts.map(host => checkStats(res, host)).every(x => x);
         }
 
@@ -99,16 +99,16 @@ load("jstests/libs/parallelTester.js");
 
     function updateSetParameters(params) {
         var cmd = Object.assign({"setParameter": 1}, params);
-        assert.commandWorked(mongos.adminCommand(cmd));
+        assert.commandWorked(mongers.adminCommand(cmd));
     }
 
     function dropConnections() {
-        assert.commandWorked(mongos.adminCommand({dropConnections: 1, hostAndPort: allHosts}));
+        assert.commandWorked(mongers.adminCommand({dropConnections: 1, hostAndPort: allHosts}));
     }
 
     function resetPools() {
         dropConnections();
-        mongos.adminCommand({multicast: {ping: 0}});
+        mongers.adminCommand({multicast: {ping: 0}});
         hasConnPoolStats({ready: 4});
     }
 
@@ -122,9 +122,9 @@ load("jstests/libs/parallelTester.js");
         updateSetParameters(stepParams);
     }
 
-    assert.writeOK(mongosDB.test.insert({x: 1}));
-    assert.writeOK(mongosDB.test.insert({x: 2}));
-    assert.writeOK(mongosDB.test.insert({x: 3}));
+    assert.writeOK(mongersDB.test.insert({x: 1}));
+    assert.writeOK(mongersDB.test.insert({x: 2}));
+    assert.writeOK(mongersDB.test.insert({x: 3}));
     st.rs0.awaitReplication();
 
     runSubTest("MinSize", function() {

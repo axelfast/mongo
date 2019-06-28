@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,8 +31,8 @@
 
 #include <functional>
 
-#include "mongo/base/init.h"
-#include "mongo/config.h"
+#include "monger/base/init.h"
+#include "monger/config.h"
 
 /**
  * The `SHIM` mechanism allows for the creation of "weak-symbol-like" functions which can have their
@@ -67,7 +67,7 @@
  * factories, among other useful things
  */
 
-namespace mongo {
+namespace monger {
 template <typename T>
 struct PrivateCall;
 
@@ -100,7 +100,7 @@ public:
         return {};
     }
 };
-}  // namespace mongo
+}  // namespace monger
 
 namespace shim_detail {
 /**
@@ -118,7 +118,7 @@ T storage<T, tag>::data = {};
 
 #define MONGO_SHIM_DEPENDENTS ("ShimHooks")
 
-namespace mongo {
+namespace monger {
 #ifdef MONGO_CONFIG_CHECK_SHIM_DEPENDENCIES
 const bool checkShimsViaTUHook = true;
 #define MONGO_SHIM_TU_HOOK(name) \
@@ -127,7 +127,7 @@ const bool checkShimsViaTUHook = true;
 const bool checkShimsViaTUHook = false;
 #define MONGO_SHIM_TU_HOOK(name)
 #endif
-}  // namespace mongo
+}  // namespace monger
 
 /**
  * Declare a shimmable function with signature `SHIM_SIGNATURE`.  Declare such constructs in a C++
@@ -139,7 +139,7 @@ const bool checkShimsViaTUHook = false;
     const struct ShimBasis_##LN {                                                                 \
         ShimBasis_##LN() = default;                                                               \
         struct MongoShimImplGuts {                                                                \
-            template <bool required = mongo::checkShimsViaTUHook>                                 \
+            template <bool required = monger::checkShimsViaTUHook>                                 \
             struct AbiCheckType {                                                                 \
                 AbiCheckType() = default;                                                         \
             };                                                                                    \
@@ -153,7 +153,7 @@ const bool checkShimsViaTUHook = false;
             struct ImplTUHookTypeBase {                                                           \
                 ImplTUHookTypeBase();                                                             \
             };                                                                                    \
-            template <bool required = mongo::checkShimsViaTUHook>                                 \
+            template <bool required = monger::checkShimsViaTUHook>                                 \
             struct ImplTUHookType : ImplTUHookTypeBase {};                                        \
             using ImplTUHook = ImplTUHookType<>;                                                  \
                                                                                                   \
@@ -215,13 +215,13 @@ const bool checkShimsViaTUHook = false;
     namespace {                                                                               \
     namespace shim_namespace##LN {                                                            \
         using ShimType = decltype(__VA_ARGS__);                                               \
-        ::mongo::Status initializerGroupStartup(::mongo::InitializerContext*) {               \
+        ::monger::Status initializerGroupStartup(::monger::InitializerContext*) {               \
             return Status::OK();                                                              \
         }                                                                                     \
-        ::mongo::GlobalInitializerRegisterer _mongoInitializerRegisterer(                     \
+        ::monger::GlobalInitializerRegisterer _mongerInitializerRegisterer(                     \
             std::string(MONGO_SHIM_DEPENDENCY(__VA_ARGS__)),                                  \
-            mongo::InitializerFunction(initializerGroupStartup),                              \
-            mongo::DeinitializerFunction(nullptr),                                            \
+            monger::InitializerFunction(initializerGroupStartup),                              \
+            monger::DeinitializerFunction(nullptr),                                            \
             {},                                                                               \
             {MONGO_SHIM_DEPENDENTS});                                                         \
     } /*namespace shim_namespace*/                                                            \
@@ -249,16 +249,16 @@ const bool checkShimsViaTUHook = false;
             ShimType::MongoShimImplGuts::function_type implementation; /* override */           \
         };                                                                                      \
                                                                                                 \
-        ::mongo::Status createInitializerRegistration(::mongo::InitializerContext* const) {     \
+        ::monger::Status createInitializerRegistration(::monger::InitializerContext* const) {     \
             static Implementation impl;                                                         \
             ShimType::storage::data = &impl;                                                    \
             return Status::OK();                                                                \
         }                                                                                       \
                                                                                                 \
-        const ::mongo::GlobalInitializerRegisterer registrationHook{                            \
+        const ::monger::GlobalInitializerRegisterer registrationHook{                            \
             std::string(MONGO_SHIM_DEPENDENCY(__VA_ARGS__) "_registration"),                    \
-            mongo::InitializerFunction(createInitializerRegistration),                          \
-            mongo::DeinitializerFunction(nullptr),                                              \
+            monger::InitializerFunction(createInitializerRegistration),                          \
+            monger::DeinitializerFunction(nullptr),                                              \
             {},                                                                                 \
             {MONGO_SHIM_DEPENDENCY(__VA_ARGS__), MONGO_SHIM_DEPENDENTS}};                       \
     } /*namespace shim_namespace*/                                                              \
@@ -277,7 +277,7 @@ const bool checkShimsViaTUHook = false;
  * Define an overriding implementation of a shimmable function with `SHIM_NAME`.  The compiler will
  * check the supplied parameters for correctness.  This shim override macro should go in the
  * associated C++ implementation file to the header where a SHIM was defined.  Such a file
- * specifying an override would be a C++ implementation used by a mongodb extension module.
+ * specifying an override would be a C++ implementation used by a mongerdb extension module.
  * This creates a runtime dependency upon the original registration being linked in.
  */
 #define MONGO_OVERRIDE_SHIM(/*SHIM_NAME*/...) MONGO_OVERRIDE_SHIM_1(__LINE__, __VA_ARGS__)
@@ -293,16 +293,16 @@ const bool checkShimsViaTUHook = false;
             ShimType::MongoShimImplGuts::function_type implementation; /* override */            \
         };                                                                                       \
                                                                                                  \
-        ::mongo::Status createInitializerOverride(::mongo::InitializerContext* const) {          \
+        ::monger::Status createInitializerOverride(::monger::InitializerContext* const) {          \
             static OverrideImplementation overrideImpl;                                          \
             ShimType::storage::data = &overrideImpl;                                             \
             return Status::OK();                                                                 \
         }                                                                                        \
                                                                                                  \
-        const ::mongo::GlobalInitializerRegisterer overrideHook{                                 \
+        const ::monger::GlobalInitializerRegisterer overrideHook{                                 \
             std::string(MONGO_SHIM_DEPENDENCY(__VA_ARGS__) "_override"),                         \
-            mongo::InitializerFunction(createInitializerOverride),                               \
-            mongo::DeinitializerFunction(nullptr),                                               \
+            monger::InitializerFunction(createInitializerOverride),                               \
+            monger::DeinitializerFunction(nullptr),                                               \
             {MONGO_SHIM_DEPENDENCY(                                                              \
                 __VA_ARGS__) "_registration"},   /* Override happens after first registration */ \
             {MONGO_SHIM_DEPENDENCY(__VA_ARGS__), /* Provides impl for this shim */               \

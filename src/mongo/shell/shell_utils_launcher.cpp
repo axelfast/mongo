@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/shell/shell_utils_launcher.h"
+#include "monger/shell/shell_utils_launcher.h"
 
 #include <algorithm>
 #include <array>
@@ -60,23 +60,23 @@
 #include <unistd.h>
 #endif
 
-#include "mongo/base/environment_buffer.h"
-#include "mongo/client/dbclient_connection.h"
-#include "mongo/db/traffic_reader.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/shell/shell_options.h"
-#include "mongo/shell/shell_utils.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/signal_win32.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
+#include "monger/base/environment_buffer.h"
+#include "monger/client/dbclient_connection.h"
+#include "monger/db/traffic_reader.h"
+#include "monger/scripting/engine.h"
+#include "monger/shell/shell_options.h"
+#include "monger/shell/shell_utils.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/signal_win32.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 
 using std::cout;
 using std::endl;
@@ -239,7 +239,7 @@ void ProgramOutputMultiplexer::appendLine(int port,
                                           ProcessId pid,
                                           const std::string& name,
                                           const std::string& line) {
-    stdx::lock_guard<stdx::mutex> lk(mongoProgramOutputMutex);
+    stdx::lock_guard<stdx::mutex> lk(mongerProgramOutputMutex);
     boost::iostreams::tee_device<std::ostream, std::stringstream> teeDevice(cout, _buffer);
     boost::iostreams::stream<decltype(teeDevice)> teeStream(teeDevice);
     if (port > 0) {
@@ -250,12 +250,12 @@ void ProgramOutputMultiplexer::appendLine(int port,
 }
 
 string ProgramOutputMultiplexer::str() const {
-    stdx::lock_guard<stdx::mutex> lk(mongoProgramOutputMutex);
+    stdx::lock_guard<stdx::mutex> lk(mongerProgramOutputMutex);
     return _buffer.str();
 }
 
 void ProgramOutputMultiplexer::clear() {
-    stdx::lock_guard<stdx::mutex> lk(mongoProgramOutputMutex);
+    stdx::lock_guard<stdx::mutex> lk(mongerProgramOutputMutex);
     _buffer.str("");
 }
 
@@ -274,11 +274,11 @@ ProgramRunner::ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMon
     _pipe = -1;
     _port = -1;
 
-    string prefix("mongod-");
-    bool isMongodProgram = isMongo && (string("mongod") == programName ||
+    string prefix("mongerd-");
+    bool isMongodProgram = isMongo && (string("mongerd") == programName ||
                                        programName.string().compare(0, prefix.size(), prefix) == 0);
-    prefix = "mongos-";
-    bool isMongosProgram = isMongo && (string("mongos") == programName ||
+    prefix = "mongers-";
+    bool isMongosProgram = isMongo && (string("mongers") == programName ||
                                        programName.string().compare(0, prefix.size(), prefix) == 0);
 
     if (!isMongo) {
@@ -287,7 +287,7 @@ ProgramRunner::ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMon
         _name = "d";
     } else if (isMongosProgram) {
         _name = "s";
-    } else if (programName == "mongobridge") {
+    } else if (programName == "mongerbridge") {
         _name = "b";
     } else {
         _name = "sh";
@@ -307,7 +307,7 @@ ProgramRunner::ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMon
             ss << e.number();
             str = ss.str();
         } else {
-            verify(e.type() == mongo::String);
+            verify(e.type() == monger::String);
             str = e.valuestr();
         }
         if (isMongo) {
@@ -326,7 +326,7 @@ ProgramRunner::ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMon
     // Load explicitly set environment key value pairs into _envp.
     for (const BSONElement& e : env) {
         // Environment variable values must be strings
-        verify(e.type() == mongo::String);
+        verify(e.type() == monger::String);
 
         _envp.emplace(std::string(e.fieldName()), std::string(e.valuestr()));
     }
@@ -367,7 +367,7 @@ ProgramRunner::ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMon
     }
 #endif
     bool needsPort =
-        isMongo && (isMongodProgram || isMongosProgram || (programName == "mongobridge"));
+        isMongo && (isMongodProgram || isMongosProgram || (programName == "mongerbridge"));
     if (!needsPort) {
         _port = -1;
     }
@@ -466,7 +466,7 @@ void ProgramRunner::operator()() {
     while (std::getline(fdStream, line)) {
         if (line.find('\0') != std::string::npos) {
             programOutputLogger.appendLine(
-                _port, _pid, _name, "WARNING: mongod wrote null bytes to output");
+                _port, _pid, _name, "WARNING: mongerd wrote null bytes to output");
         }
         programOutputLogger.appendLine(_port, _pid, _name, line);
     }
@@ -480,7 +480,7 @@ boost::filesystem::path ProgramRunner::findProgram(const string& prog) {
 
 #ifdef _WIN32
     // The system programs either come versioned in the form of <utility>-<major.minor>
-    // (e.g., mongorestore-2.4) or just <utility>. For windows, the appropriate extension
+    // (e.g., mongerrestore-2.4) or just <utility>. For windows, the appropriate extension
     // needs to be appended.
     //
 
@@ -870,7 +870,7 @@ void copyDir(const boost::filesystem::path& from, const boost::filesystem::path&
                 log() << "Skipping copying of file from '" << p.generic_string() << "' to '"
                       << (to / p.leaf()).generic_string() << "' due to: " << ec.message();
             }
-        } else if (p.leaf() != "mongod.lock" && p.leaf() != "WiredTiger.lock") {
+        } else if (p.leaf() != "mongerd.lock" && p.leaf() != "WiredTiger.lock") {
             if (boost::filesystem::is_directory(p)) {
                 boost::filesystem::path newDir = to / p.leaf();
                 boost::filesystem::create_directory(newDir);
@@ -1045,7 +1045,7 @@ BSONObj StopMongoProgram(const BSONObj& a, void* data) {
     uassert(ErrorCodes::BadValue, "stopMongoProgram needs a number", a.firstElement().isNumber());
     int port = int(a.firstElement().number());
     int code = killDb(port, ProcessId::fromNative(0), getSignal(a), getStopMongodOpts(a));
-    log() << "shell: stopped mongo program on port " << port;
+    log() << "shell: stopped monger program on port " << port;
     return BSON("" << (double)code);
 }
 
@@ -1056,7 +1056,7 @@ BSONObj StopMongoProgramByPid(const BSONObj& a, void* data) {
         ErrorCodes::BadValue, "stopMongoProgramByPid needs a number", a.firstElement().isNumber());
     ProcessId pid = ProcessId::fromNative(int(a.firstElement().number()));
     int code = killDb(0, pid, getSignal(a), getStopMongodOpts(a));
-    log() << "shell: stopped mongo program with pid " << pid;
+    log() << "shell: stopped monger program with pid " << pid;
     return BSON("" << (double)code);
 }
 
@@ -1086,8 +1086,8 @@ int KillMongoProgramInstances() {
 std::vector<ProcessId> getRunningMongoChildProcessIds() {
     std::vector<ProcessId> registeredPids, outPids;
     registry.getRegisteredPids(registeredPids);
-    // Only return processes that are still alive. A client may have started a program using a mongo
-    // helper but terminated another way. E.g. if a mongod is started with MongoRunner.startMongod
+    // Only return processes that are still alive. A client may have started a program using a monger
+    // helper but terminated another way. E.g. if a mongerd is started with MongoRunner.startMongod
     // but exited with db.shutdownServer.
     std::copy_if(registeredPids.begin(),
                  registeredPids.end(),
@@ -1122,4 +1122,4 @@ void installShellUtilsLauncher(Scope& scope) {
     scope.injectNative("convertTrafficRecordingToBSON", ConvertTrafficRecordingToBSON);
 }
 }  // namespace shell_utils
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -36,25 +36,25 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/shim.h"
-#include "mongo/client/dbclient_base.h"
-#include "mongo/db/collection_index_usage_tracker.h"
-#include "mongo/db/generic_cursor.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/ops/write_ops_exec.h"
-#include "mongo/db/ops/write_ops_parsers.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/explain_options.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/resource_yielder.h"
-#include "mongo/db/storage/backup_cursor_state.h"
-#include "mongo/s/chunk_version.h"
+#include "monger/base/shim.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/db/collection_index_usage_tracker.h"
+#include "monger/db/generic_cursor.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/ops/write_ops_exec.h"
+#include "monger/db/ops/write_ops_parsers.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/explain_options.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/resource_yielder.h"
+#include "monger/db/storage/backup_cursor_state.h"
+#include "monger/s/chunk_version.h"
 
-namespace mongo {
+namespace monger {
 
 class ShardFilterer;
 class ExpressionContext;
@@ -63,9 +63,9 @@ class PipelineDeleter;
 class TransactionHistoryIteratorBase;
 
 /**
- * Any functionality needed by an aggregation stage that is either context specific to a mongod or
- * mongos process, or is only compiled in to one of those two binaries must be accessed via this
- * interface. This allows all DocumentSources to be parsed on either mongos or mongod, but only
+ * Any functionality needed by an aggregation stage that is either context specific to a mongerd or
+ * mongers process, or is only compiled in to one of those two binaries must be accessed via this
+ * interface. This allows all DocumentSources to be parsed on either mongers or mongerd, but only
  * executable where it makes sense.
  */
 class MongoProcessInterface {
@@ -127,7 +127,7 @@ public:
 
     /**
      * Always returns a DBDirectClient. The return type in the function signature is a DBClientBase*
-     * because DBDirectClient isn't linked into mongos.
+     * because DBDirectClient isn't linked into mongers.
      */
     virtual DBClientBase* directClient() = 0;
 
@@ -245,7 +245,7 @@ public:
 
     /**
      * Accepts a pipeline and returns a new one which will draw input from the underlying
-     * collection _locally_. Trying to run this method on mongos is a programming error. Running
+     * collection _locally_. Trying to run this method on mongers is a programming error. Running
      * this method on a shard server will only return results which match the pipeline on that
      * shard.
 
@@ -291,7 +291,7 @@ public:
      * indicates whether the returned fields of the document key are final and will never change for
      * the given collection, either because the collection was dropped or has become sharded.
      *
-     * This method is meant to be called from a mongod which owns at least one chunk for this
+     * This method is meant to be called from a mongerd which owns at least one chunk for this
      * collection. It will inspect the CollectionShardingState, not the CatalogCache. If asked about
      * a collection not hosted on this shard, the answer will be incorrect.
      */
@@ -386,11 +386,11 @@ public:
     /**
      * If the user supplied the 'fields' array, ensures that it can be used to uniquely identify a
      * document. Otherwise, picks a default unique key, which can be either the "_id" field, or
-     * or a shard key, depending on the 'outputNs' collection type and the server type (mongod or
-     * mongos). Also returns an optional ChunkVersion, populated with the version stored in the
-     * sharding catalog when we asked for the shard key (on mongos only). On mongod, this is the
+     * or a shard key, depending on the 'outputNs' collection type and the server type (mongerd or
+     * mongers). Also returns an optional ChunkVersion, populated with the version stored in the
+     * sharding catalog when we asked for the shard key (on mongers only). On mongerd, this is the
      * value of the 'targetCollectionVersion' parameter, which is the target shard version of the
-     * collection, as sent by mongos.
+     * collection, as sent by mongers.
      */
     virtual std::pair<std::set<FieldPath>, boost::optional<ChunkVersion>>
     ensureFieldsUniqueOrResolveDocumentKey(const boost::intrusive_ptr<ExpressionContext>& expCtx,
@@ -399,4 +399,4 @@ public:
                                            const NamespaceString& outputNs) const = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,12 +35,12 @@
 #include <vector>
 
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Representation of a name of a role in a MongoDB system.
@@ -176,9 +176,9 @@ private:
     std::unique_ptr<Impl> _impl;
 };
 
-}  // namespace mongo
+}  // namespace monger
 
-namespace mongo {
+namespace monger {
 
 template <typename ContainerIterator>
 class RoleNameContainerIteratorImpl : public RoleNameIterator::Impl {
@@ -227,4 +227,4 @@ Container roleNameIteratorToContainer(RoleNameIterator it) {
     return container;
 }
 
-}  // namespace mongo
+}  // namespace monger

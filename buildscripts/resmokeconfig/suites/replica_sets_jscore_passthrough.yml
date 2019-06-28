@@ -42,7 +42,7 @@ executor:
     n: 20
   fixture:
     class: ReplicaSetFixture
-    mongod_options:
+    mongerd_options:
       set_parameters:
         enableTestCommands: 1
     num_nodes: 2

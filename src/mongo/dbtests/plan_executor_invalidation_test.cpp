@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/service_context.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/service_context.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 
@@ -452,4 +452,4 @@ TEST_F(PlanExecutorInvalidationTest, CollScanExecutorSurvivesCollectionTruncate)
     ASSERT_EQUALS(PlanExecutor::IS_EOF, exec->getNext(&obj, nullptr));
 }
 
-}  // namespace mongo
+}  // namespace monger

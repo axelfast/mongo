@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/oid.h"
-#include "mongo/s/chunk_version.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/oid.h"
+#include "monger/s/chunk_version.h"
 
-namespace mongo {
+namespace monger {
 
 class ChunkType;
 class CollectionMetadata;
@@ -217,4 +217,4 @@ Status dropChunksAndDeleteCollectionsEntry(OperationContext* opCtx, const Namesp
 Status deleteDatabasesEntry(OperationContext* opCtx, StringData dbName);
 
 }  // namespace shardmetadatautil
-}  // namespace mongo
+}  // namespace monger

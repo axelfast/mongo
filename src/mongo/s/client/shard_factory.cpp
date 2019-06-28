@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/client/shard_factory.h"
+#include "monger/s/client/shard_factory.h"
 
 #include <memory>
 
-#include "mongo/base/status_with.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/base/status_with.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 ShardFactory::ShardFactory(BuildersMap&& builders,
                            std::unique_ptr<RemoteCommandTargeterFactory> targeterFactory)
@@ -61,4 +61,4 @@ std::shared_ptr<Shard> ShardFactory::createShard(const ShardId& shardId,
     invariant(builderIt != _builders.end());
     return std::shared_ptr<Shard>(builderIt->second(shardId, connStr));
 }
-}  // namespace mongo
+}  // namespace monger

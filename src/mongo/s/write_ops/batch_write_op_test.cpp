@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/owned_pointer_map.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/s/session_catalog_router.h"
-#include "mongo/s/sharding_router_test_fixture.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/s/write_ops/batch_write_op.h"
-#include "mongo/s/write_ops/batched_command_request.h"
-#include "mongo/s/write_ops/mock_ns_targeter.h"
-#include "mongo/s/write_ops/write_error_detail.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/owned_pointer_map.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/s/session_catalog_router.h"
+#include "monger/s/sharding_router_test_fixture.h"
+#include "monger/s/transaction_router.h"
+#include "monger/s/write_ops/batch_write_op.h"
+#include "monger/s/write_ops/batched_command_request.h"
+#include "monger/s/write_ops/mock_ns_targeter.h"
+#include "monger/s/write_ops/write_error_detail.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 void initTargeterFullRange(const NamespaceString& nss,
@@ -1638,4 +1638,4 @@ TEST_F(BatchWriteOpTransactionTest, ThrowTargetingErrorsInTransaction_Update) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

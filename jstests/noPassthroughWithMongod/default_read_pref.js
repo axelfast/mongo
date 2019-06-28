@@ -4,34 +4,34 @@
 
     "use strict";
 
-    var mongo = db.getMongo();
+    var monger = db.getMongo();
     try {
         var commandsRan = [];
-        db._mongo = {
+        db._monger = {
             getSlaveOk: function() {
                 return false;
             },
             getReadPrefMode: function() {
-                return mongo.getReadPrefMode();
+                return monger.getReadPrefMode();
             },
             getReadPref: function() {
-                return mongo.getReadPref();
+                return monger.getReadPref();
             },
             runCommand: function(db, cmd, opts) {
                 commandsRan.push({db: db, cmd: cmd, opts: opts});
                 return {ok: 1};
             },
             getMinWireVersion: function() {
-                return mongo.getMinWireVersion();
+                return monger.getMinWireVersion();
             },
             getMaxWireVersion: function() {
-                return mongo.getMaxWireVersion();
+                return monger.getMaxWireVersion();
             },
             isReplicaSetMember: function() {
-                return mongo.isReplicaSetMember();
+                return monger.isReplicaSetMember();
             },
             isMongos: function() {
-                return mongo.isMongos();
+                return monger.isMongos();
             },
             isCausalConsistency: function() {
                 return false;
@@ -40,7 +40,7 @@
                 return null;
             },
         };
-        db._session = new _DummyDriverSession(db._mongo);
+        db._session = new _DummyDriverSession(db._monger);
 
         db.runReadCommand({ping: 1});
         assert.eq(commandsRan.length, 1);
@@ -49,8 +49,8 @@
             commandsRan[0].opts & DBQuery.Option.slaveOk, 0, "The slaveOk bit should not be set.");
 
     } finally {
-        db._mongo = mongo;
-        db._session = new _DummyDriverSession(mongo);
+        db._monger = monger;
+        db._session = new _DummyDriverSession(monger);
     }
 
 })();

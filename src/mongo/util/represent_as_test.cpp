@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,7 +27,7 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <cmath>
 #include <fmt/format.h>
@@ -36,11 +36,11 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
-#include "mongo/util/represent_as.h"
+#include "monger/util/represent_as.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -483,4 +483,4 @@ TEST(RepresentAs, Identity) {
 #pragma warning(pop)
 #endif
 
-}  // namespace mongo
+}  // namespace monger

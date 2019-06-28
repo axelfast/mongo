@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/dbclient_rs.h"
+#include "monger/client/dbclient_rs.h"
 
 #include <memory>
 #include <utility>
 
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/connpool.h"
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/client/global_conn_pool.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/db/dbmessage.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/log.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/connpool.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/client/global_conn_pool.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/db/dbmessage.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 using std::unique_ptr;
@@ -94,7 +94,7 @@ const size_t MAX_RETRY = 3;
  * Format A (official format):
  * { query: <actual query>, $readPreference: <read pref obj> }
  *
- * Format B (unofficial internal format from mongos):
+ * Format B (unofficial internal format from mongers):
  * { <actual query>, $queryOptions: { $readPreference: <read pref obj> }}
  *
  * @param query the raw query document
@@ -706,7 +706,7 @@ DBClientConnection* DBClientReplicaSet::selectNodeUsingTags(
     _lastSlaveOkHost = selectedNode;
 
     // Primary connection is special because it is the only connection that is
-    // versioned in mongos. Therefore, we have to make sure that this object
+    // versioned in mongers. Therefore, we have to make sure that this object
     // maintains only one connection to the primary and use that connection
     // every time we need to talk to the primary.
     if (monitor->isPrimary(selectedNode)) {
@@ -1103,4 +1103,4 @@ void DBClientReplicaSet::resetSlaveOkConn() {
     _lastSlaveOkHost = HostAndPort();
 }
 
-}  // namespace mongo
+}  // namespace monger

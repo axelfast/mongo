@@ -29,11 +29,11 @@ functions:
     - command: git.get_project
       type: system
       params:
-        directory: src/go.mongodb.org/mongo-driver
+        directory: src/go.mongerdb.org/monger-driver
     # Make an evergreen expansion file with dynamic values
     - command: shell.exec
       params:
-        working_dir: src/go.mongodb.org/mongo-driver
+        working_dir: src/go.mongerdb.org/monger-driver
         script: |
            if [ "Windows_NT" = "$OS" ]; then
               export GOPATH=$(cygpath -w $(dirname $(dirname $(dirname `pwd`))))
@@ -51,14 +51,14 @@ functions:
            export DRIVERS_TOOLS="$(pwd)/../drivers-tools"
            export PROJECT_DIRECTORY="$(pwd)"
 
-           # Python has cygwin path problems on Windows. Detect prospective mongo-orchestration home directory
+           # Python has cygwin path problems on Windows. Detect prospective monger-orchestration home directory
            if [ "Windows_NT" = "$OS" ]; then # Magic variable in cygwin
               export DRIVERS_TOOLS=$(cygpath -m $DRIVERS_TOOLS)
               export PROJECT_DIRECTORY=$(cygpath -m $PROJECT_DIRECTORY)
            fi
 
            export MONGO_ORCHESTRATION_HOME="$DRIVERS_TOOLS/.evergreen/orchestration"
-           export MONGODB_BINARIES="$DRIVERS_TOOLS/mongodb/bin"
+           export MONGODB_BINARIES="$DRIVERS_TOOLS/mongerdb/bin"
            export UPLOAD_BUCKET="${project}"
            export PATH="${GO_DIST}/bin:${GCC_PATH}:$GOPATH/bin:$MONGODB_BINARIES:$PATH"
            export PROJECT="${project}"
@@ -97,7 +97,7 @@ functions:
     # Load the expansion file to make an evergreen variable with the current unique version
     - command: expansions.update
       params:
-        file: src/go.mongodb.org/mongo-driver/expansion.yml
+        file: src/go.mongerdb.org/monger-driver/expansion.yml
 
 
   prepare-resources:
@@ -110,12 +110,12 @@ functions:
             # If this was a patch build, doing a fresh clone would not actually test the patch
             cp -R ${PROJECT_DIRECTORY}/ $DRIVERS_TOOLS
           else
-            git clone git://github.com/mongodb-labs/drivers-evergreen-tools.git $DRIVERS_TOOLS
+            git clone git://github.com/mongerdb-labs/drivers-evergreen-tools.git $DRIVERS_TOOLS
           fi
           echo "{ \"releases\": { \"default\": \"$MONGODB_BINARIES\" }}" > $MONGO_ORCHESTRATION_HOME/orchestration.config
     - command: shell.exec
       params:
-        working_dir: src/go.mongodb.org/mongo-driver
+        working_dir: src/go.mongerdb.org/monger-driver
         script: |
            ${PREPARE_SHELL}
            # any go tools that we need
@@ -135,19 +135,19 @@ functions:
       params:
         script: |
           ${PREPARE_SHELL}
-          find $MONGO_ORCHESTRATION_HOME -name \*.log | xargs tar czf mongodb-logs.tar.gz
+          find $MONGO_ORCHESTRATION_HOME -name \*.log | xargs tar czf mongerdb-logs.tar.gz
     - command: s3.put
       params:
         aws_key: ${aws_key}
         aws_secret: ${aws_secret}
-        local_file: mongodb-logs.tar.gz
-        remote_file: ${UPLOAD_BUCKET}/${build_variant}/${revision}/${version_id}/${build_id}/logs/${task_id}-${execution}-mongodb-logs.tar.gz
+        local_file: mongerdb-logs.tar.gz
+        remote_file: ${UPLOAD_BUCKET}/${build_variant}/${revision}/${version_id}/${build_id}/logs/${task_id}-${execution}-mongerdb-logs.tar.gz
         bucket: mciuploads
         permissions: public-read
         content_type: ${content_type|application/x-gzip}
-        display_name: "mongodb-logs.tar.gz"
+        display_name: "mongerdb-logs.tar.gz"
 
-  bootstrap-mongo-orchestration:
+  bootstrap-monger-orchestration:
     - command: shell.exec
       params:
         script: |
@@ -170,13 +170,13 @@ functions:
         script: |
           ${PREPARE_SHELL}
           cd "$MONGO_ORCHESTRATION_HOME"
-          # source the mongo-orchestration virtualenv if it exists
+          # source the monger-orchestration virtualenv if it exists
           if [ -f venv/bin/activate ]; then
             . venv/bin/activate
           elif [ -f venv/Scripts/activate ]; then
             . venv/Scripts/activate
           fi
-          mongo-orchestration stop
+          monger-orchestration stop
           cd -
           rm -rf $DRIVERS_TOOLS || true
 
@@ -216,7 +216,7 @@ functions:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/go.mongodb.org/mongo-driver
+        working_dir: src/go.mongerdb.org/monger-driver
         script: |
           ${PREPARE_SHELL}
           ${BUILD_ENV|} make ${targets} BUILD_TAGS="-tags gssapi"
@@ -226,7 +226,7 @@ functions:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/go.mongodb.org/mongo-driver
+        working_dir: src/go.mongerdb.org/monger-driver
         script: |
           ${PREPARE_SHELL}
 
@@ -245,7 +245,7 @@ functions:
    - command: json.send
      params:
        name: perf
-       file: src/go.mongodb.org/mongo-driver/perf.json
+       file: src/go.mongerdb.org/monger-driver/perf.json
 
 
   run-enterprise-auth-tests:
@@ -253,7 +253,7 @@ functions:
       type: test
       params:
         silent: true
-        working_dir: src/go.mongodb.org/mongo-driver
+        working_dir: src/go.mongerdb.org/monger-driver
         script: |
           # DO NOT ECHO WITH XTRACE (which PREPARE_SHELL does)
           if [ "Windows_NT" = "$OS" ]; then
@@ -270,12 +270,12 @@ functions:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/go.mongodb.org/mongo-driver
+        working_dir: src/go.mongerdb.org/monger-driver
         script: |
           # DO NOT ECHO WITH XTRACE (which PREPARE_SHELL does)
           if [ "Windows_NT" = "$OS" ]; then
             export GOPATH=$(cygpath -w $(dirname $(dirname $(dirname `pwd`))))
-            export MONGODB_URI=${gssapi_auth_windows_mongodb_uri}
+            export MONGODB_URI=${gssapi_auth_windows_mongerdb_uri}
           else
             export GOPATH=$(dirname $(dirname $(dirname `pwd`)))
             echo "${gssapi_auth_linux_keytab_base64}" > /tmp/drivers.keytab.base64
@@ -283,7 +283,7 @@ functions:
             mkdir -p ~/.krb5
             cat .evergreen/krb5.config | tee -a ~/.krb5/config
             kinit -k -t ${PROJECT_DIRECTORY}/.evergreen/drivers.keytab -p "${gssapi_auth_username}"
-            export MONGODB_URI="${gssapi_auth_linux_mongodb_uri}"
+            export MONGODB_URI="${gssapi_auth_linux_mongerdb_uri}"
           fi;
           export GOPATH="$GOPATH"
           export GOROOT="${GO_DIST}"
@@ -294,12 +294,12 @@ functions:
     - command: shell.exec
       type: test
       params:
-        working_dir: src/go.mongodb.org/mongo-driver
+        working_dir: src/go.mongerdb.org/monger-driver
         script: |
           # DO NOT ECHO WITH XTRACE (which PREPARE_SHELL does)
           if [ "Windows_NT" = "$OS" ]; then
             export GOPATH=$(cygpath -w $(dirname $(dirname $(dirname `pwd`))))
-            export MONGODB_URI="${gssapi_service_host_auth_windows_mongodb_uri}"
+            export MONGODB_URI="${gssapi_service_host_auth_windows_mongerdb_uri}"
           else
             export GOPATH=$(dirname $(dirname $(dirname `pwd`)))
             echo "${gssapi_auth_linux_keytab_base64}" > /tmp/drivers.keytab.base64
@@ -307,7 +307,7 @@ functions:
             mkdir -p ~/.krb5
             cat .evergreen/krb5.config | tee -a ~/.krb5/config
             kinit -k -t ${PROJECT_DIRECTORY}/.evergreen/drivers.keytab -p "${gssapi_auth_username}"
-            export MONGODB_URI="${gssapi_service_host_auth_linux_mongodb_uri}"
+            export MONGODB_URI="${gssapi_service_host_auth_linux_mongerdb_uri}"
           fi;
           export GOPATH="$GOPATH"
           export GOROOT="${GO_DIST}"
@@ -325,7 +325,7 @@ post:
   - command: gotest.parse_files
     params:
       files:
-        - "src/go.mongodb.org/mongo-driver/*.suite"
+        - "src/go.mongerdb.org/monger-driver/*.suite"
   - func: upload-mo-artifacts
   - func: cleanup
 
@@ -363,7 +363,7 @@ tasks:
       tags: ["performance"]
       exec_timeout_secs: 7200
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "server"
             AUTH: "noauth"
@@ -383,7 +383,7 @@ tasks:
     - name: test-standalone-noauth-nossl
       tags: ["test", "standalone"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "server"
             AUTH: "noauth"
@@ -397,7 +397,7 @@ tasks:
     - name: test-standalone-noauth-nossl-snappy-compression
       tags: ["test", "standalone", "compression", "snappy"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "server"
             AUTH: "noauth"
@@ -412,7 +412,7 @@ tasks:
     - name: test-standalone-noauth-nossl-zlib-compression
       tags: ["test", "standalone", "compression", "zlib"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "server"
             AUTH: "noauth"
@@ -427,7 +427,7 @@ tasks:
     - name: test-standalone-auth-ssl
       tags: ["test", "standalone", "authssl"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "server"
             AUTH: "auth"
@@ -441,7 +441,7 @@ tasks:
     - name: test-standalone-auth-ssl-snappy-compression
       tags: ["test", "standalone", "authssl", "compression", "snappy"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "server"
             AUTH: "auth"
@@ -456,7 +456,7 @@ tasks:
     - name: test-standalone-auth-ssl-zlib-compression
       tags: ["test", "standalone", "authssl", "compression", "zlib"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "server"
             AUTH: "auth"
@@ -471,7 +471,7 @@ tasks:
     - name: test-replicaset-noauth-nossl
       tags: ["test", "replicaset"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "replica_set"
             AUTH: "noauth"
@@ -485,7 +485,7 @@ tasks:
     - name: test-replicaset-auth-ssl
       tags: ["test", "replicaset", "authssl"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "replica_set"
             AUTH: "auth"
@@ -499,7 +499,7 @@ tasks:
     - name: test-sharded-noauth-nossl
       tags: ["test", "sharded"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "sharded_cluster"
             AUTH: "noauth"
@@ -513,7 +513,7 @@ tasks:
     - name: test-sharded-noauth-nossl-snappy-compression
       tags: ["test", "sharded", "compression", "snappy"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "sharded_cluster"
             AUTH: "noauth"
@@ -528,7 +528,7 @@ tasks:
     - name: test-sharded-noauth-nossl-zlib-compression
       tags: ["test", "sharded", "compression", "zlib"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "sharded_cluster"
             AUTH: "noauth"
@@ -543,7 +543,7 @@ tasks:
     - name: test-sharded-auth-ssl
       tags: ["test", "sharded", "authssl"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "sharded_cluster"
             AUTH: "auth"
@@ -557,7 +557,7 @@ tasks:
     - name: test-sharded-auth-ssl-snappy-compression
       tags: ["test", "sharded", "authssl", "compression", "snappy"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "sharded_cluster"
             AUTH: "auth"
@@ -572,7 +572,7 @@ tasks:
     - name: test-sharded-auth-ssl-zlib-compression
       tags: ["test", "sharded", "authssl", "compression", "zlib"]
       commands:
-        - func: bootstrap-mongo-orchestration
+        - func: bootstrap-monger-orchestration
           vars:
             TOPOLOGY: "sharded_cluster"
             AUTH: "auth"
@@ -589,7 +589,7 @@ tasks:
       commands:
         - func: run-enterprise-auth-tests
           vars:
-            MONGODB_URI: "${plain_auth_mongodb_uri}"
+            MONGODB_URI: "${plain_auth_mongerdb_uri}"
 
     - name: test-enterprise-auth-gssapi
       tags: ["test", "enterprise-auth"]

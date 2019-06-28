@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/json.h"
-#include "mongo/db/s/sharding_initialization_mongod.h"
-#include "mongo/db/s/split_chunk.h"
-#include "mongo/db/server_options.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/catalog/dist_lock_manager_mock.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog_cache_loader.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/shard_server_test_fixture.h"
-#include "mongo/s/write_ops/batched_command_request.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/json.h"
+#include "monger/db/s/sharding_initialization_mongerd.h"
+#include "monger/db/s/split_chunk.h"
+#include "monger/db/server_options.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/catalog/dist_lock_manager_mock.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog_cache_loader.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/shard_server_test_fixture.h"
+#include "monger/s/write_ops/batched_command_request.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::RemoteCommandRequest;
@@ -739,4 +739,4 @@ TEST_F(SplitChunkTest, NoChunksAfterSplit) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

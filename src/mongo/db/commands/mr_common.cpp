@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/db/commands/mr.h"
+#include "monger/db/commands/mr.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/str.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/commands.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace mr {
 Config::OutputOptions Config::parseOutputOptions(const std::string& dbname, const BSONObj& cmdObj) {

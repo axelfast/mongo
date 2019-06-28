@@ -23,8 +23,8 @@
                'cluster id: ' + tojson(clusterId) + ' != ' + tojson(res.clusterId));
     };
 
-    var checkShardMarkedAsShardAware = function(mongosConn, shardName) {
-        var res = mongosConn.getDB('config').getCollection('shards').findOne({_id: shardName});
+    var checkShardMarkedAsShardAware = function(mongersConn, shardName) {
+        var res = mongersConn.getDB('config').getCollection('shards').findOne({_id: shardName});
         assert.neq(null, res, "Could not find new shard " + shardName + " in config.shards");
         assert.eq(1, res.state);
     };
@@ -33,7 +33,7 @@
     var st = new ShardingTest({shards: 1});
     var clusterId = st.s.getDB('config').getCollection('version').findOne().clusterId;
 
-    // Add a shard that is a standalone mongod.
+    // Add a shard that is a standalone mongerd.
 
     var standaloneConn = MongoRunner.runMongod({shardsvr: ''});
     waitForIsMaster(standaloneConn);

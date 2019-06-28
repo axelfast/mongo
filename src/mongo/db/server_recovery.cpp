@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/server_recovery.h"
+#include "monger/db/server_recovery.h"
 
-#include "mongo/db/namespace_string.h"
+#include "monger/db/namespace_string.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 const auto getInReplicationRecovery = ServiceContext::declareDecoration<bool>();
 const auto getSizeRecoveryState = ServiceContext::declareDecoration<SizeRecoveryState>();
@@ -61,12 +61,12 @@ void SizeRecoveryState::clearStateBeforeRecovery() {
     stdx::lock_guard<stdx::mutex> lock(_mutex);
     _collectionsAlwaysNeedingSizeAdjustment.clear();
 }
-}  // namespace mongo
+}  // namespace monger
 
-bool& mongo::inReplicationRecovery(ServiceContext* serviceCtx) {
+bool& monger::inReplicationRecovery(ServiceContext* serviceCtx) {
     return getInReplicationRecovery(serviceCtx);
 }
 
-mongo::SizeRecoveryState& mongo::sizeRecoveryState(ServiceContext* serviceCtx) {
+monger::SizeRecoveryState& monger::sizeRecoveryState(ServiceContext* serviceCtx) {
     return getSizeRecoveryState(serviceCtx);
 }

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,34 +28,34 @@
  */
 
 /**
- * This file contains tests for mongo/db/commands/mr.h
+ * This file contains tests for monger/db/commands/mr.h
  */
 
-#include "mongo/db/commands/mr.h"
+#include "monger/db/commands/mr.h"
 
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/json.h"
-#include "mongo/db/op_observer_noop.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/rpc/factory.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/scripting/dbdirectclient_factory.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/json.h"
+#include "monger/db/op_observer_noop.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/rpc/factory.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/scripting/dbdirectclient_factory.h"
+#include "monger/scripting/engine.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
@@ -522,4 +522,4 @@ TEST_F(MapReduceCommandTest, PrimaryStepDownPreventsTemporaryCollectionDrops) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

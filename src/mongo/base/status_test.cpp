@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,14 +33,14 @@
 
 #include <boost/exception/exception.hpp>
 
-#include "mongo/base/status.h"
-#include "mongo/config.h"
-#include "mongo/db/json.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/status.h"
+#include "monger/config.h"
+#include "monger/db/json.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(Basic, Accessors) {
@@ -233,8 +233,8 @@ TEST(Parsing, CodeToEnum) {
 }
 
 TEST(Transformers, ExceptionToStatus) {
-    using mongo::DBException;
-    using mongo::exceptionToStatus;
+    using monger::DBException;
+    using monger::exceptionToStatus;
 
     auto reason = "oh no";
 
@@ -338,4 +338,4 @@ TEST(ErrorExtraInfo, StatusWhenParserThrowsNested) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

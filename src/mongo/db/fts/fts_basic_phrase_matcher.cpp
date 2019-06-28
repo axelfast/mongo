@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/db/fts/fts_basic_phrase_matcher.h"
+#include "monger/db/fts/fts_basic_phrase_matcher.h"
 
-#include "mongo/platform/strcasestr.h"
+#include "monger/platform/strcasestr.h"
 
-namespace mongo {
+namespace monger {
 namespace fts {
 
 using std::string;
@@ -47,4 +47,4 @@ bool BasicFTSPhraseMatcher::phraseMatches(const string& phrase,
 }
 
 }  // namespace fts
-}  // namespace mongo
+}  // namespace monger

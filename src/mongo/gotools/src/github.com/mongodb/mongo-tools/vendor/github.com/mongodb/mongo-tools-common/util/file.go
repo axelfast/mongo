@@ -14,7 +14,7 @@ import (
 	"path/filepath"
 	"context"
 
-	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongerdb.org/monger-driver/monger"
 )
 
 // GetFieldsFromFile fetches the first line from the contents of the file
@@ -103,7 +103,7 @@ func (dc *DeferredCloser) CloseWithErrorCapture(deferredErr *error) {
 
 // Wrapper around Cursor to implement Closer
 type CloserCursor struct {
-	*mongo.Cursor
+	*monger.Cursor
 }
 
 func (cursor *CloserCursor) Close() error {

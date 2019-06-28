@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/assert_util.h"
-#include "mongo/util/itoa.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/itoa.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 const char kIndexTable[] =
     "0\0"
@@ -1066,4 +1066,4 @@ ItoA::ItoA(std::uint64_t val) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

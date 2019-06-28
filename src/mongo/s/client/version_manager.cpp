@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/client/version_manager.h"
+#include "monger/s/client/version_manager.h"
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/client/dbclient_rs.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard_connection.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/is_mongos.h"
-#include "mongo/s/request_types/set_shard_version_request.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/util/log.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/client/dbclient_rs.h"
+#include "monger/db/namespace_string.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard_connection.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/is_mongers.h"
+#include "monger/s/request_types/set_shard_version_request.h"
+#include "monger/s/stale_exception.h"
+#include "monger/s/transaction_router.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::shared_ptr;
 using std::map;
@@ -175,7 +175,7 @@ DBClientBase* getVersionable(DBClientBase* conn) {
  * shards.
  *
  * Eventually this should go completely away, but for now many commands rely on unversioned but
- * mongos-specific behavior on mongod (auditing and replication information in commands)
+ * mongers-specific behavior on mongerd (auditing and replication information in commands)
  */
 bool initShardVersionEmptyNS(OperationContext* opCtx, DBClientBase* conn_in) {
     try {
@@ -235,7 +235,7 @@ bool initShardVersionEmptyNS(OperationContext* opCtx, DBClientBase* conn_in) {
  * If no remote cached version has ever been set, an initial shard version is sent.
  *
  * If the namespace is empty and no version has ever been sent, the config server + shard name
- * is sent to the remote shard host to initialize the connection as coming from mongos.
+ * is sent to the remote shard host to initialize the connection as coming from mongers.
  * NOTE: This initialization is *best-effort only*.  Operations which wish to correctly version
  * must send the namespace.
  *
@@ -415,7 +415,7 @@ void VersionManager::resetShardVersionCB(DBClientBase* conn) {
 }
 
 bool VersionManager::isVersionableCB(DBClientBase* conn) {
-    // We do not version shard connections when issued from mongod
+    // We do not version shard connections when issued from mongerd
     if (!isMongos()) {
         return false;
     }
@@ -439,4 +439,4 @@ bool VersionManager::checkShardVersionCB(OperationContext* opCtx,
         opCtx, conn_in->get(), conn_in->getNS(), conn_in->getManager(), authoritative, tryNumber);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -1,5 +1,5 @@
 /**
- * Tests for the 'metrics.query' section of the mongoS serverStatus response dealing with CRUD
+ * Tests for the 'metrics.query' section of the mongerS serverStatus response dealing with CRUD
  * operations.
  */
 
@@ -37,10 +37,10 @@
         testDB.coll.update({_id: 1}, {$set: {x: 2, $invalidField: 4}}, {multi: false}),
         ErrorCodes.DollarPrefixedFieldName);
 
-    let mongosServerStatus = testDB.adminCommand({serverStatus: 1});
+    let mongersServerStatus = testDB.adminCommand({serverStatus: 1});
 
     // Verify that the above four updates incremented the metric counter.
-    assert.eq(4, mongosServerStatus.metrics.query.updateOneOpStyleBroadcastWithExactIDCount);
+    assert.eq(4, mongersServerStatus.metrics.query.updateOneOpStyleBroadcastWithExactIDCount);
 
     // Shouldn't increment the metric when {multi:true}.
     assert.commandWorked(testDB.coll.update({_id: 1}, {$set: {a: 3}}, {multi: true}));
@@ -69,10 +69,10 @@
         testDB.coll.update({_id: 1, $invalidOperator: 1}, {$set: {a: 2}}, {multi: false}),
         ErrorCodes.BadValue);
 
-    mongosServerStatus = testDB.adminCommand({serverStatus: 1});
+    mongersServerStatus = testDB.adminCommand({serverStatus: 1});
 
     // Verify that only the first four upserts incremented the metric counter.
-    assert.eq(4, mongosServerStatus.metrics.query.updateOneOpStyleBroadcastWithExactIDCount);
+    assert.eq(4, mongersServerStatus.metrics.query.updateOneOpStyleBroadcastWithExactIDCount);
 
     st.stop();
 })();

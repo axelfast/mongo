@@ -4,7 +4,7 @@
 
 (function() {
     var startTime = Date.now();
-    assert.neq(typeof db, 'undefined', 'No `db` object, is the shell connected to a mongod?');
+    assert.neq(typeof db, 'undefined', 'No `db` object, is the shell connected to a mongerd?');
 
     let runCheckOnReplSet = function(db) {
         let primaryInfo = db.isMaster();

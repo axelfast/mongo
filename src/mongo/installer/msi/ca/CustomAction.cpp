@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -47,7 +47,7 @@
 #include <string>
 #include <vector>
 
-#include "mongo/util/scopeguard.h"
+#include "monger/util/scopeguard.h"
 
 // UpdateMongoYAML CustomAction Constants
 constexpr wchar_t kBIN[] = L"BIN";
@@ -271,7 +271,7 @@ extern "C" UINT __stdcall UpdateMongoYAML(MSIHANDLE hInstall) {
         }
 
         std::wstring YamlFile(binPath);
-        YamlFile += L"\\mongod.cfg";
+        YamlFile += L"\\mongerd.cfg";
 
         LOG_INFO("CA - BIN = %ls", binPath.c_str());
         LOG_INFO("CA - MONGO_DATA_PATH = %ls", dataDir.c_str());
@@ -294,7 +294,7 @@ extern "C" UINT __stdcall UpdateMongoYAML(MSIHANDLE hInstall) {
             CHECKGLE_AND_LOG("Failed to open yaml file");
         }
 
-        const auto handleGuard = mongo::makeGuard([&] { CloseHandle(hFile); });
+        const auto handleGuard = monger::makeGuard([&] { CloseHandle(hFile); });
 
         LARGE_INTEGER fileSize;
         if (GetFileSizeEx(hFile, &fileSize) == 0) {

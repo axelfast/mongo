@@ -23,7 +23,7 @@ try:
     from bson.codec_options import CodecOptions
 except ImportError as err:
     print("Warning: Could not load bson library for Python {}.".format(sys.version))
-    print("Check with the pip command if pymongo 3.x is installed.")
+    print("Check with the pip command if pymonger 3.x is installed.")
     bson = None
 
 
@@ -32,11 +32,11 @@ def __lldb_init_module(debugger, dict):
     # register pretty printers #
     ############################
     debugger.HandleCommand("type summary add -s 'A${*var.__ptr_.__value_}' -x '^std::__1::unique_ptr<.+>$'")
-    debugger.HandleCommand("type summary add mongo::BSONObj -F lldb_printers.BSONObjPrinter")
-    debugger.HandleCommand("type summary add mongo::Status -F lldb_printers.StatusPrinter")
-    debugger.HandleCommand("type summary add mongo::StatusWith -F lldb_printers.StatusWithPrinter")
-    debugger.HandleCommand("type summary add mongo::StringData -F lldb_printers.StringDataPrinter")
-    debugger.HandleCommand("type summary add mongo::UUID -F lldb_printers.UUIDPrinter")
+    debugger.HandleCommand("type summary add monger::BSONObj -F lldb_printers.BSONObjPrinter")
+    debugger.HandleCommand("type summary add monger::Status -F lldb_printers.StatusPrinter")
+    debugger.HandleCommand("type summary add monger::StatusWith -F lldb_printers.StatusWithPrinter")
+    debugger.HandleCommand("type summary add monger::StringData -F lldb_printers.StringDataPrinter")
+    debugger.HandleCommand("type summary add monger::UUID -F lldb_printers.UUIDPrinter")
     debugger.HandleCommand("type summary add --summary-string '${var.m_pathname}' 'boost::filesystem::path'")
     debugger.HandleCommand("type synthetic add -x '^boost::optional<.+>$' --python-class lldb_printers.OptionalPrinter")
     debugger.HandleCommand("type synthetic add -x '^std::unique_ptr<.+>$' --python-class lldb_printers.UniquePtrPrinter")

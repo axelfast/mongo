@@ -27,22 +27,22 @@
     });
 
     // Create two databases. We will place one of these on each shard.
-    const mongosDB0 = st.s.getDB(`${jsTestName()}_0`);
-    const mongosDB1 = st.s.getDB(`${jsTestName()}_1`);
+    const mongersDB0 = st.s.getDB(`${jsTestName()}_0`);
+    const mongersDB1 = st.s.getDB(`${jsTestName()}_1`);
     const adminDB = st.s.getDB("admin");
 
-    // Enable sharding on mongosDB0 and ensure its primary is shard0.
-    assert.commandWorked(mongosDB0.adminCommand({enableSharding: mongosDB0.getName()}));
-    st.ensurePrimaryShard(mongosDB0.getName(), st.rs0.getURL());
+    // Enable sharding on mongersDB0 and ensure its primary is shard0.
+    assert.commandWorked(mongersDB0.adminCommand({enableSharding: mongersDB0.getName()}));
+    st.ensurePrimaryShard(mongersDB0.getName(), st.rs0.getURL());
 
-    // Enable sharding on mongosDB1 and ensure its primary is shard1.
-    assert.commandWorked(mongosDB1.adminCommand({enableSharding: mongosDB1.getName()}));
-    st.ensurePrimaryShard(mongosDB1.getName(), st.rs1.getURL());
+    // Enable sharding on mongersDB1 and ensure its primary is shard1.
+    assert.commandWorked(mongersDB1.adminCommand({enableSharding: mongersDB1.getName()}));
+    st.ensurePrimaryShard(mongersDB1.getName(), st.rs1.getURL());
 
     // Open a connection to a different collection on each shard. We use direct connections to
     // ensure that the oplog timestamps across the shards overlap.
-    const coll0 = st.rs0.getPrimary().getCollection(`${mongosDB0.getName()}.test`);
-    const coll1 = st.rs1.getPrimary().getCollection(`${mongosDB1.getName()}.test`);
+    const coll0 = st.rs0.getPrimary().getCollection(`${mongersDB0.getName()}.test`);
+    const coll1 = st.rs1.getPrimary().getCollection(`${mongersDB1.getName()}.test`);
 
     // Open a change stream on the test cluster. We will capture events in 'changeList'.
     const changeStreamCursor = adminDB.aggregate([{$changeStream: {allChangesForCluster: true}}]);

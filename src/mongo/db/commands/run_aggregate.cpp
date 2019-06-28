@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,56 +27,56 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/run_aggregate.h"
+#include "monger/db/commands/run_aggregate.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 #include <vector>
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/change_stream_proxy.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/accumulator.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/document_source_exchange.h"
-#include "mongo/db/pipeline/document_source_geo_near.h"
-#include "mongo/db/pipeline/expression.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/lite_parsed_pipeline.h"
-#include "mongo/db/pipeline/mongo_process_interface.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/pipeline_d.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/db/read_concern.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/db/views/view.h"
-#include "mongo/db/views/view_catalog.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/string_map.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/curop.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/change_stream_proxy.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/accumulator.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/document_source_exchange.h"
+#include "monger/db/pipeline/document_source_geo_near.h"
+#include "monger/db/pipeline/expression.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/lite_parsed_pipeline.h"
+#include "monger/db/pipeline/monger_process_interface.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/pipeline_d.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/db/views/view.h"
+#include "monger/db/views/view_catalog.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::endl;
@@ -450,7 +450,7 @@ std::vector<std::unique_ptr<Pipeline, PipelineDeleter>> createExchangePipelinesI
             // Create a new pipeline for the consumer consisting of a single
             // DocumentSourceExchange.
             boost::intrusive_ptr<DocumentSource> consumer = new DocumentSourceExchange(
-                expCtx, exchange, idx, expCtx->mongoProcessInterface->getResourceYielder());
+                expCtx, exchange, idx, expCtx->mongerProcessInterface->getResourceYielder());
             pipelines.emplace_back(uassertStatusOK(Pipeline::create({consumer}, expCtx)));
         }
     } else {
@@ -593,7 +593,7 @@ Status runAggregate(OperationContext* opCtx,
             auto resolvedView =
                 uassertStatusOK(ViewCatalog::get(ctx->getDb())->resolveView(opCtx, nss));
             uassert(std::move(resolvedView),
-                    "On sharded systems, resolved views must be executed by mongos",
+                    "On sharded systems, resolved views must be executed by mongers",
                     !ShardingState::get(opCtx)->enabled());
 
             // With the view & collation resolved, we can relinquish locks.
@@ -797,4 +797,4 @@ Status runAggregate(OperationContext* opCtx,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

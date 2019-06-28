@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/startup_warnings_mongod.h"
+#include "monger/db/startup_warnings_mongerd.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <fstream>
@@ -39,16 +39,16 @@
 #include <sys/resource.h>
 #endif
 
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/startup_warnings_common.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/str.h"
-#include "mongo/util/version.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/server_options.h"
+#include "monger/db/startup_warnings_common.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/str.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const std::string kTransparentHugePagesDirectory("/sys/kernel/mm/transparent_hugepage");
@@ -153,7 +153,7 @@ void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
             log() << "**       Note that journaling defaults to off for 32 bit "
                   << "and is currently off." << startupWarningsLog;
         }
-        log() << "**       See http://dochub.mongodb.org/core/32bit" << startupWarningsLog;
+        log() << "**       See http://dochub.mongerdb.org/core/32bit" << startupWarningsLog;
         warned = true;
     }
 
@@ -218,9 +218,9 @@ void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
                 else if (line.find("interleave", where) != where) {
                     log() << startupWarningsLog;
                     log() << "** WARNING: You are running on a NUMA machine." << startupWarningsLog;
-                    log() << "**          We suggest launching mongod like this to avoid "
+                    log() << "**          We suggest launching mongerd like this to avoid "
                           << "performance problems:" << startupWarningsLog;
-                    log() << "**              numactl --interleave=all mongod [other options]"
+                    log() << "**              numactl --interleave=all mongerd [other options]"
                           << startupWarningsLog;
                     warned = true;
                 }
@@ -383,4 +383,4 @@ void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
         log() << startupWarningsLog;
     }
 }
-}  // namespace mongo
+}  // namespace monger

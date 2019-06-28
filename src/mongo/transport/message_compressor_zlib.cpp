@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/transport/message_compressor_registry.h"
-#include "mongo/transport/message_compressor_zlib.h"
+#include "monger/base/init.h"
+#include "monger/transport/message_compressor_registry.h"
+#include "monger/transport/message_compressor_zlib.h"
 
 #include <zlib.h>
 
-namespace mongo {
+namespace monger {
 
 ZlibMessageCompressor::ZlibMessageCompressor() : MessageCompressorBase(MessageCompressor::kZlib) {}
 
@@ -88,4 +88,4 @@ MONGO_INITIALIZER_GENERAL(ZlibMessageCompressorInit,
     compressorRegistry.registerImplementation(std::make_unique<ZlibMessageCompressor>());
     return Status::OK();
 }
-}  // namespace mongo
+}  // namespace monger

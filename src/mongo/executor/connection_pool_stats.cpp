@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/executor/connection_pool_stats.h"
+#include "monger/executor/connection_pool_stats.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/map_util.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/map_util.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 ConnectionStatsPer::ConnectionStatsPer(size_t nInUse,
@@ -69,7 +69,7 @@ void ConnectionPoolStats::updateStatsForHost(std::string pool,
     totalRefreshing += newStats.refreshing;
 }
 
-void ConnectionPoolStats::appendToBSON(mongo::BSONObjBuilder& result, bool forFTDC) {
+void ConnectionPoolStats::appendToBSON(monger::BSONObjBuilder& result, bool forFTDC) {
     result.appendNumber("totalInUse", totalInUse);
     result.appendNumber("totalAvailable", totalAvailable);
     result.appendNumber("totalCreated", totalCreated);
@@ -123,4 +123,4 @@ void ConnectionPoolStats::appendToBSON(mongo::BSONObjBuilder& result, bool forFT
 }
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

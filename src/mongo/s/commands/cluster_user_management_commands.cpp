@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/config.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/user_management_commands_parser.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/user_management_commands.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/rpc/write_concern_error_detail.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/config.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/user_management_commands_parser.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/user_management_commands.h"
+#include "monger/db/jsobj.h"
+#include "monger/rpc/write_concern_error_detail.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::stringstream;
@@ -56,7 +56,7 @@ namespace {
 const WriteConcernOptions kMajorityWriteConcern(WriteConcernOptions::kMajority,
                                                 // Note: Even though we're setting UNSET here,
                                                 // kMajority implies JOURNAL if journaling is
-                                                // supported by this mongod.
+                                                // supported by this mongerd.
                                                 WriteConcernOptions::SyncMode::UNSET,
                                                 WriteConcernOptions::kWriteConcernTimeoutSharding);
 
@@ -755,10 +755,10 @@ public:
 } cmdInvalidateUserCache;
 
 /**
- * This command is used only by mongorestore to handle restoring users/roles.  We do this so
- * that mongorestore doesn't do direct inserts into the admin.system.users and
+ * This command is used only by mongerrestore to handle restoring users/roles.  We do this so
+ * that mongerrestore doesn't do direct inserts into the admin.system.users and
  * admin.system.roles, which would bypass the authzUpdateLock and allow multiple concurrent
- * modifications to users/roles.  What mongorestore now does instead is it inserts all user/role
+ * modifications to users/roles.  What mongerrestore now does instead is it inserts all user/role
  * definitions it wants to restore into temporary collections, then this command moves those
  * user/role definitions into their proper place in admin.system.users and admin.system.roles.
  * It either adds the users/roles to the existing ones or replaces the existing ones, depending
@@ -781,7 +781,7 @@ public:
     }
 
     std::string help() const override {
-        return "Internal command used by mongorestore for updating user/role data";
+        return "Internal command used by mongerrestore for updating user/role data";
     }
 
     virtual Status checkAuthForCommand(Client* client,
@@ -805,4 +805,4 @@ public:
 } cmdMergeAuthzCollections;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

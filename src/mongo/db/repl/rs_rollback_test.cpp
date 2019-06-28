@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,46 +27,46 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <initializer_list>
 #include <memory>
 #include <utility>
 
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/drop_indexes.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer_noop.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_interface.h"
-#include "mongo/db/repl/oplog_interface_mock.h"
-#include "mongo/db/repl/rollback_source.h"
-#include "mongo/db/repl/rollback_test_fixture.h"
-#include "mongo/db/repl/rs_rollback.h"
-#include "mongo/db/s/shard_identity_rollback_notifier.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/drop_indexes.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer_noop.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_interface.h"
+#include "monger/db/repl/oplog_interface_mock.h"
+#include "monger/db/repl/rollback_source.h"
+#include "monger/db/repl/rollback_test_fixture.h"
+#include "monger/db/repl/rs_rollback.h"
+#include "monger/db/s/shard_identity_rollback_notifier.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/net/hostandport.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::repl;
-using namespace mongo::repl::rollback_internal;
+using namespace monger;
+using namespace monger::repl;
+using namespace monger::repl::rollback_internal;
 
 const auto kIndexVersion = IndexDescriptor::IndexVersion::kV2;
 
@@ -1570,7 +1570,7 @@ TEST_F(RSRollbackTest, RollbackApplyOpsCommand) {
     options.uuid = UUID::gen();
     {
         AutoGetOrCreateDb autoDb(_opCtx.get(), "test", MODE_X);
-        mongo::WriteUnitOfWork wuow(_opCtx.get());
+        monger::WriteUnitOfWork wuow(_opCtx.get());
         coll = autoDb.getDb()->getCollection(_opCtx.get(), NamespaceString("test.t"));
         if (!coll) {
             coll =

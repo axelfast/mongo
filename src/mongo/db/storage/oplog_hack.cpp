@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/db/storage/oplog_hack.h"
+#include "monger/db/storage/oplog_hack.h"
 
 #include <limits>
 
-#include "mongo/bson/bson_validate.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/record_id.h"
-#include "mongo/util/debug_util.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/record_id.h"
+#include "monger/util/debug_util.h"
 
-namespace mongo {
+namespace monger {
 namespace oploghack {
 
 StatusWith<RecordId> keyForOptime(const Timestamp& opTime) {
@@ -80,4 +80,4 @@ StatusWith<RecordId> extractKey(const char* data, int len) {
 }
 
 }  // namespace oploghack
-}  // namespace mongo
+}  // namespace monger

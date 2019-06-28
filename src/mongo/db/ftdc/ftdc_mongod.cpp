@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ftdc/ftdc_mongod.h"
+#include "monger/db/ftdc/ftdc_mongerd.h"
 
 #include <boost/filesystem.hpp>
 
-#include "mongo/db/ftdc/constants.h"
-#include "mongo/db/ftdc/controller.h"
-#include "mongo/db/ftdc/ftdc_server.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/storage/storage_options.h"
+#include "monger/db/ftdc/constants.h"
+#include "monger/db/ftdc/controller.h"
+#include "monger/db/ftdc/ftdc_server.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/storage/storage_options.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 void registerMongoDCollectors(FTDCController* controller) {
@@ -77,4 +77,4 @@ void stopMongoDFTDC() {
     stopFTDC();
 }
 
-}  // namespace mongo
+}  // namespace monger

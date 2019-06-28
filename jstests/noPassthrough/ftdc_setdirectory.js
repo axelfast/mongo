@@ -1,5 +1,5 @@
 /**
- * Test that verifies FTDC works in mongos.
+ * Test that verifies FTDC works in mongers.
  * @tags: [requires_sharding]
  */
 load('jstests/libs/ftdc.js');
@@ -11,20 +11,20 @@ load('jstests/libs/ftdc.js');
     let testPath3 = MongoRunner.toRealPath('ftdc_setdir3');
     // SERVER-30394: Use a directory relative to the current working directory.
     let testPath4 = 'ftdc_setdir4/';
-    let testLog3 = testPath3 + "mongos_ftdc.log";
-    let testLog4 = testPath4 + "mongos_ftdc.log";
+    let testLog3 = testPath3 + "mongers_ftdc.log";
+    let testLog4 = testPath4 + "mongers_ftdc.log";
 
-    // Make the log file directory for mongos.
+    // Make the log file directory for mongers.
     mkdir(testPath3);
     mkdir(testPath4);
 
-    // Startup 3 mongos:
+    // Startup 3 mongers:
     // 1. Normal MongoS with no log file to verify FTDC can be startup at runtime with a path.
     // 2. MongoS with explict diagnosticDataCollectionDirectoryPath setParameter at startup.
     // 3. MongoS with log file to verify automatic FTDC path computation works.
     let st = new ShardingTest({
         shards: 1,
-        mongos: {
+        mongers: {
             s0: {verbose: 0},
             s1: {setParameter: {diagnosticDataCollectionDirectoryPath: testPath2}},
             s2: {logpath: testLog3},
@@ -105,7 +105,7 @@ load('jstests/libs/ftdc.js');
 
         // 1. Verify that path is computed correctly.
         let computedPath = getParam(admin3, "diagnosticDataCollectionDirectoryPath");
-        assert.eq(normpath(computedPath), normpath(testPath3 + "mongos_ftdc.diagnostic.data"));
+        assert.eq(normpath(computedPath), normpath(testPath3 + "mongers_ftdc.diagnostic.data"));
 
         // 2. Set path fail
         assert.commandFailed(

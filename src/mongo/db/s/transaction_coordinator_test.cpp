@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/commands/txn_two_phase_commit_cmds_gen.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/s/server_transaction_coordinators_metrics.h"
-#include "mongo/db/s/transaction_coordinator_document_gen.h"
-#include "mongo/db/s/transaction_coordinator_metrics_observer.h"
-#include "mongo/db/s/transaction_coordinator_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/log.h"
-#include "mongo/util/tick_source_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/commands/txn_two_phase_commit_cmds_gen.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/s/server_transaction_coordinators_metrics.h"
+#include "monger/db/s/transaction_coordinator_document_gen.h"
+#include "monger/db/s/transaction_coordinator_metrics_observer.h"
+#include "monger/db/s/transaction_coordinator_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/log.h"
+#include "monger/util/tick_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using CoordinatorCommitDecision = txn::CoordinatorCommitDecision;
@@ -2154,4 +2154,4 @@ TEST_F(TransactionCoordinatorMetricsTest,
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

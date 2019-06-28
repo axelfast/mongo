@@ -1,6 +1,6 @@
 #
 # This file defines the tasks and platforms for WiredTiger in the
-# MongoDB continuous integration system (see https://mci.mongodb.com).
+# MongoDB continuous integration system (see https://mci.mongerdb.com).
 #
 
 functions:
@@ -40,11 +40,11 @@ functions:
       params:
         path: "WT_TEST-big-endian.tgz"
         destination: "wiredtiger/build_posix/test/format"
-  "fetch mongo-tests repo" :
+  "fetch monger-tests repo" :
     command: shell.exec
     params:
       script: |
-        git clone https://github.com/wiredtiger/mongo-tests
+        git clone https://github.com/wiredtiger/monger-tests
   "compile wiredtiger":
     command: shell.exec
     params:
@@ -1022,10 +1022,10 @@ tasks:
       - rhel62-large
     commands:
       - func: "fetch source"
-      - func: "fetch mongo-tests repo"
+      - func: "fetch monger-tests repo"
       - command: shell.exec
         params:
-          working_dir: mongo-tests
+          working_dir: monger-tests
           script: |
             set -o errexit
             set -o verbose
@@ -1033,7 +1033,7 @@ tasks:
             ulimit -c unlimited
             largescale/run-million-collection-test.sh .
 
-  - name: compatibility-test-for-mongodb-releases
+  - name: compatibility-test-for-mongerdb-releases
     commands:
       - func: "fetch source"
       - command: shell.exec
@@ -1042,7 +1042,7 @@ tasks:
           script: |
             set -o errexit
             set -o verbose
-            test/evergreen/compatibility_test_for_mongodb_releases.sh
+            test/evergreen/compatibility_test_for_mongerdb_releases.sh
 
   - name: generate-datafile-little-endian
     depends_on:
@@ -1174,10 +1174,10 @@ buildvariants:
   - ubuntu1404-test
   expansions:
     # It's ugly, but we need the absolute path here, not the relative
-    test_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
+    test_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
     smp_command: -j $(grep -c ^processor /proc/cpuinfo)
-    configure_env_vars: CC=/opt/mongodbtoolchain/v3/bin/gcc CXX=/opt/mongodbtoolchain/v3/bin/g++ PATH=/opt/mongodbtoolchain/v3/bin:$PATH
-    make_command: PATH=/opt/mongodbtoolchain/v3/bin:$PATH make
+    configure_env_vars: CC=/opt/mongerdbtoolchain/v3/bin/gcc CXX=/opt/mongerdbtoolchain/v3/bin/g++ PATH=/opt/mongerdbtoolchain/v3/bin:$PATH
+    make_command: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH make
   tasks:
     - name: compile
     - name: lang-python-test
@@ -1241,11 +1241,11 @@ buildvariants:
   run_on:
   - ubuntu1404-test
   expansions:
-    test_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
+    test_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
     smp_command: -j $(grep -c ^processor /proc/cpuinfo)
-    configure_env_vars: CC=/opt/mongodbtoolchain/v3/bin/gcc CXX=/opt/mongodbtoolchain/v3/bin/g++ PATH=/opt/mongodbtoolchain/v3/bin:$PATH
+    configure_env_vars: CC=/opt/mongerdbtoolchain/v3/bin/gcc CXX=/opt/mongerdbtoolchain/v3/bin/g++ PATH=/opt/mongerdbtoolchain/v3/bin:$PATH
     configure_python_setting: PYTHON=python3
-    make_command: PATH=/opt/mongodbtoolchain/v3/bin:$PATH make
+    make_command: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH make
     python_binary: python3
   tasks:
     - name: compile
@@ -1264,7 +1264,7 @@ buildvariants:
   run_on:
   - rhel62-large
   expansions:
-    configure_env_vars: CC=/opt/mongodbtoolchain/v3/bin/gcc CXX=/opt/mongodbtoolchain/v3/bin/g++
+    configure_env_vars: CC=/opt/mongerdbtoolchain/v3/bin/gcc CXX=/opt/mongerdbtoolchain/v3/bin/g++
   tasks:
     - name: million-collection-test
 
@@ -1274,7 +1274,7 @@ buildvariants:
   run_on:
   - ubuntu1404-test
   tasks:
-    - name: compatibility-test-for-mongodb-releases
+    - name: compatibility-test-for-mongerdb-releases
 
 - name: windows-64
   display_name: Windows 64-bit
@@ -1300,9 +1300,9 @@ buildvariants:
   - macos-1012
   expansions:
     smp_command: -j $(sysctl -n hw.logicalcpu)
-    configure_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH
-    make_command: PATH=/opt/mongodbtoolchain/v3/bin:$PATH ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future make
-    test_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH DYLD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
+    configure_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH
+    make_command: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future make
+    test_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH DYLD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
   tasks:
     - name: compile
     - name: make-check-test
@@ -1316,8 +1316,8 @@ buildvariants:
   batchtime: 1440 # 1 day
   expansions:
     smp_command: -j $(grep -c ^processor /proc/cpuinfo)
-    configure_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH
-    test_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
+    configure_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH
+    test_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.libs top_srcdir=$(pwd)/.. top_builddir=$(pwd)
   tasks:
   - name: compile
   - name: generate-datafile-little-endian
@@ -1333,8 +1333,8 @@ buildvariants:
   batchtime: 1440 # 1 day
   expansions:
     smp_command: -j $(grep -c ^processor /proc/cpuinfo)
-    configure_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH
-    test_env_vars: PATH=/opt/mongodbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.lib top_srcdir=$(pwd)/.. top_builddir=$(pwd)
+    configure_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH
+    test_env_vars: PATH=/opt/mongerdbtoolchain/v3/bin:$PATH LD_LIBRARY_PATH=$(pwd)/.lib top_srcdir=$(pwd)/.. top_builddir=$(pwd)
   tasks:
   - name: compile
   - name: generate-datafile-big-endian

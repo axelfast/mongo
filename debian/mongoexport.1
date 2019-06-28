@@ -1,8 +1,8 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "MONGOEXPORT" "1" "Jun 21, 2018" "4.0" "mongodb-manual"
+.TH "MONGOEXPORT" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongoexport \- MongoDB Export Utility
+mongerexport \- MongoDB Export Utility
 .
 .nr rst2man-indent-level 0
 .
@@ -50,40 +50,40 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .IP "Mac OSX Sierra and Go 1.6 Incompatibility"
 .sp
 Users running on Mac OSX Sierra require the 3.2.10 or newer version
-of  mongoexport\&.
+of  mongerexport\&.
 .UNINDENT
 .UNINDENT
 .SH SYNOPSIS
 .sp
-\fI\%mongoexport\fP is a utility that produces a JSON or CSV export
+\fI\%mongerexport\fP is a utility that produces a JSON or CSV export
 of data stored in a MongoDB instance.
 .sp
-See the mongoimport document for more
-information regarding the \fBmongoimport\fP utility, which
+See the mongerimport document for more
+information regarding the \fBmongerimport\fP utility, which
 provides the inverse “importing” capability.
 .sp
-Run \fI\%mongoexport\fP from the system command line, not the \fBmongo\fP shell.
+Run \fI\%mongerexport\fP from the system command line, not the \fBmonger\fP shell.
 .SH CONSIDERATIONS
 .sp
 \fBWARNING:\fP
 .INDENT 0.0
 .INDENT 3.5
-Avoid using \fBmongoimport\fP and \fI\%mongoexport\fP for
+Avoid using \fBmongerimport\fP and \fI\%mongerexport\fP for
 full instance production backups. They do not reliably preserve all rich
 BSON data types, because JSON can only represent a subset
-of the types supported by BSON. Use \fBmongodump\fP
-and \fBmongorestore\fP as described in /core/backups for this
+of the types supported by BSON. Use \fBmongerdump\fP
+and \fBmongerrestore\fP as described in /core/backups for this
 kind of functionality.
 .UNINDENT
 .UNINDENT
 .sp
-\fI\%mongoexport\fP must be run directly from the system command line.
+\fI\%mongerexport\fP must be run directly from the system command line.
 .sp
-To preserve type information, \fI\%mongoexport\fP and \fBmongoimport\fP
+To preserve type information, \fI\%mongerexport\fP and \fBmongerimport\fP
 uses the strict mode representation
 for certain types.
 .sp
-For example, the following insert operation in the \fBmongo\fP
+For example, the following insert operation in the \fBmonger\fP
 shell uses the shell mode representation for the BSON types
 \fBdata_date\fP and \fBdata_numberlong\fP:
 .INDENT 0.0
@@ -101,13 +101,13 @@ db.traffic.insert( { _id: 1, volume: NumberLong(\(aq2980000\(aq), date: new Date
 The argument to \fBdata_numberlong\fP must be quoted to avoid potential
 loss of accuracy.
 .sp
-Use \fI\%mongoexport\fP to export the data:
+Use \fI\%mongerexport\fP to export the data:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-mongoexport \-\-db test \-\-collection traffic \-\-out traffic.json
+mongerexport \-\-db test \-\-collection traffic \-\-out traffic.json
 .ft P
 .fi
 .UNINDENT
@@ -125,23 +125,23 @@ The exported data is in strict mode representation to preserve type information:
 .UNINDENT
 .UNINDENT
 .sp
-See /reference/mongodb\-extended\-json for a complete list of
+See /reference/mongerdb\-extended\-json for a complete list of
 these types and the representations used.
 .SH REQUIRED ACCESS
 .sp
-\fI\%mongoexport\fP requires read access on the target database.
+\fI\%mongerexport\fP requires read access on the target database.
 .sp
 Ensure that the connecting user possesses, at a minimum, the \fBread\fP
 role on the target database.
 .sp
-When connecting to a \fBmongod\fP or \fBmongos\fP that enforces
+When connecting to a \fBmongerd\fP or \fBmongers\fP that enforces
 /core/authentication, ensure you use the required security
 parameters based on the configured
 authentication mechanism\&.
 .SH READ PREFERENCE
 .sp
-\fI\%mongoexport\fP defaults to \fBprimary\fP read
-preference when connected to a \fBmongos\fP
+\fI\%mongerexport\fP defaults to \fBprimary\fP read
+preference when connected to a \fBmongers\fP
 or a replica set\&.
 .sp
 You can override the default read preference using the
@@ -150,31 +150,31 @@ You can override the default read preference using the
 \fBIMPORTANT:\fP
 .INDENT 0.0
 .INDENT 3.5
-Using a non\-primary read preference on a \fBmongos\fP may
+Using a non\-primary read preference on a \fBmongers\fP may
 produce inconsistencies in data, including duplicates or missing
 documents.
 .UNINDENT
 .UNINDENT
 .SH OPTIONS
 .sp
-Changed in version 3.0.0: \fI\%mongoexport\fP removed the \fB\-\-dbpath\fP as well as related
+Changed in version 3.0.0: \fI\%mongerexport\fP removed the \fB\-\-dbpath\fP as well as related
 \fB\-\-directoryperdb\fP and \fB\-\-journal\fP options. To use
-\fI\%mongoexport\fP, you must run \fI\%mongoexport\fP against a running
-\fBmongod\fP or \fBmongos\fP instance as appropriate.
+\fI\%mongerexport\fP, you must run \fI\%mongerexport\fP against a running
+\fBmongerd\fP or \fBmongers\fP instance as appropriate.
 
 .sp
-Changed in version 3.0.0: \fI\%mongoexport\fP removed the \fB\-\-csv\fP option. Use the
+Changed in version 3.0.0: \fI\%mongerexport\fP removed the \fB\-\-csv\fP option. Use the
 \fI\%\-\-type=csv\fP option to specify CSV format
 for the output.
 
 .INDENT 0.0
 .TP
-.B mongoexport
+.B mongerexport
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help
-Returns information on the options and use of \fBmongoexport\fP\&.
+Returns information on the options and use of \fBmongerexport\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -186,7 +186,7 @@ including the option multiple times, (e.g. \fB\-vvvvv\fP\&.)
 .INDENT 0.0
 .TP
 .B \-\-quiet
-Runs \fBmongoexport\fP in a quiet mode that attempts to limit the amount
+Runs \fBmongerexport\fP in a quiet mode that attempts to limit the amount
 of output.
 .sp
 This option suppresses:
@@ -204,7 +204,7 @@ connection closed events
 .INDENT 0.0
 .TP
 .B \-\-version
-Returns the \fBmongoexport\fP release number.
+Returns the \fBmongerexport\fP release number.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,7 +213,7 @@ New in version 3.4.6.
 
 .sp
 Specify a resolvable URI
-connection string for the \fBmongod\fP to which to
+connection string for the \fBmongerd\fP to which to
 connect.
 .sp
 The following is the standard
@@ -223,7 +223,7 @@ URI connection scheme:
 .sp
 .nf
 .ft C
-mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+mongerdb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
 .ft P
 .fi
 .UNINDENT
@@ -237,7 +237,7 @@ documentation.
 \fBIMPORTANT:\fP
 .INDENT 7.0
 .INDENT 3.5
-The following \fI\%mongoexport\fP options are incompatible with the
+The following \fI\%mongerexport\fP options are incompatible with the
 \fB\-\-uri\fP option. Instead, specify these options as part of your
 \fB\-\-uri\fP connection string when applicable:
 .INDENT 0.0
@@ -265,8 +265,8 @@ URI connection string)
 .B \-\-host <hostname><:port>, \-h <hostname><:port>
 \fIDefault\fP: localhost:27017
 .sp
-Specifies a resolvable hostname for the \fBmongod\fP to which to
-connect. By default, the \fBmongoexport\fP attempts to connect to a MongoDB
+Specifies a resolvable hostname for the \fBmongerd\fP to which to
+connect. By default, the \fBmongerexport\fP attempts to connect to a MongoDB
 instance running on the localhost on port number \fB27017\fP\&.
 .sp
 To connect to a replica set, specify the
@@ -304,7 +304,7 @@ client connections.
 .B \-\-ipv6
 \fIRemoved in version 3.0.\fP
 .sp
-Enables IPv6 support and allows \fBmongoexport\fP to connect to the
+Enables IPv6 support and allows \fBmongerexport\fP to connect to the
 MongoDB instance using an IPv6 network. Prior to MongoDB 3.0, you
 had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongoDB 3.0 and later, IPv6
 is always enabled.
@@ -315,7 +315,7 @@ is always enabled.
 New in version 2.6.
 
 .sp
-Enables connection to a \fBmongod\fP or \fBmongos\fP that has
+Enables connection to a \fBmongerd\fP or \fBmongers\fP that has
 TLS/SSL support enabled.
 .sp
 For more information about TLS/SSL and MongoDB, see
@@ -344,12 +344,12 @@ must be specified.
 .INDENT 7.0
 .INDENT 3.5
 \fBVersion 3.2 and earlier:\fP For TLS/SSL connections (\fB\-\-ssl\fP) to
-\fBmongod\fP and \fBmongos\fP, if the \fBmongoexport\fP runs without the
-\fI\%\-\-sslCAFile\fP, \fBmongoexport\fP will not attempt
+\fBmongerd\fP and \fBmongers\fP, if the \fBmongerexport\fP runs without the
+\fI\%\-\-sslCAFile\fP, \fBmongerexport\fP will not attempt
 to validate the server certificates. This creates a vulnerability
-to expired \fBmongod\fP and \fBmongos\fP certificates as
-well as to foreign processes posing as valid \fBmongod\fP or
-\fBmongos\fP instances. Ensure that you \fIalways\fP specify the
+to expired \fBmongerd\fP and \fBmongers\fP certificates as
+well as to foreign processes posing as valid \fBmongerd\fP or
+\fBmongers\fP instances. Ensure that you \fIalways\fP specify the
 CA file to validate the server certificates in cases where
 intrusion is a possibility.
 .UNINDENT
@@ -370,7 +370,7 @@ and key. Specify the file name of the \fB\&.pem\fP file using relative
 or absolute paths.
 .sp
 This option is required when using the \fI\%\-\-ssl\fP option to connect
-to a \fBmongod\fP or \fBmongos\fP that has
+to a \fBmongerd\fP or \fBmongers\fP that has
 \fBCAFile\fP enabled \fIwithout\fP
 \fBallowConnectionsWithoutCertificates\fP\&.
 .sp
@@ -386,11 +386,11 @@ New in version 2.6.
 .sp
 Specifies the password to de\-crypt the certificate\-key file (i.e.
 \fI\%\-\-sslPEMKeyFile\fP). Use the \fI\%\-\-sslPEMKeyPassword\fP option only if the
-certificate\-key file is encrypted. In all cases, the \fBmongoexport\fP will
+certificate\-key file is encrypted. In all cases, the \fBmongerexport\fP will
 redact the password from all logging and reporting output.
 .sp
 If the private key in the PEM file is encrypted and you do not specify
-the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmongoexport\fP will prompt for a passphrase. See
+the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmongerexport\fP will prompt for a passphrase. See
 ssl\-certificate\-password\&.
 .sp
 For more information about TLS/SSL and MongoDB, see
@@ -431,21 +431,21 @@ only sufficient to establish a TLS/SSL connection but is
 \fBWARNING:\fP
 .INDENT 7.0
 .INDENT 3.5
-For TLS/SSL connections to \fBmongod\fP and
-\fBmongos\fP, avoid using
+For TLS/SSL connections to \fBmongerd\fP and
+\fBmongers\fP, avoid using
 \fB\-\-sslAllowInvalidCertificates\fP if possible and only use
 \fB\-\-sslAllowInvalidCertificates\fP on systems where intrusion is
 not possible.
 .sp
-If the \fBmongo\fP shell (and other
-mongodb\-tools\-support\-ssl) runs with the
+If the \fBmonger\fP shell (and other
+mongerdb\-tools\-support\-ssl) runs with the
 \fB\-\-sslAllowInvalidCertificates\fP option, the
-\fBmongo\fP shell (and other
-mongodb\-tools\-support\-ssl) will not attempt to validate
+\fBmonger\fP shell (and other
+mongerdb\-tools\-support\-ssl) will not attempt to validate
 the server certificates. This creates a vulnerability to expired
-\fBmongod\fP and \fBmongos\fP certificates as
+\fBmongerd\fP and \fBmongers\fP certificates as
 well as to foreign processes posing as valid
-\fBmongod\fP or \fBmongos\fP instances.
+\fBmongerd\fP or \fBmongers\fP instances.
 .UNINDENT
 .UNINDENT
 .sp
@@ -460,7 +460,7 @@ New in version 3.0.
 
 .sp
 Disables the validation of the hostnames in TLS/SSL certificates. Allows
-\fBmongoexport\fP to connect to MongoDB instances even if the hostname in their
+\fBmongerexport\fP to connect to MongoDB instances even if the hostname in their
 certificates do not match the specified hostname.
 .sp
 For more information about TLS/SSL and MongoDB, see
@@ -473,7 +473,7 @@ For more information about TLS/SSL and MongoDB, see
 New in version 2.6.
 
 .sp
-Directs the \fBmongoexport\fP to use the FIPS mode of the installed OpenSSL
+Directs the \fBmongerexport\fP to use the FIPS mode of the installed OpenSSL
 library. Your system must have a FIPS compliant OpenSSL library to use
 the \fI\%\-\-sslFIPSMode\fP option.
 .sp
@@ -500,11 +500,11 @@ Specifies a password with which to authenticate to a MongoDB database
 that uses authentication. Use in conjunction with the \fB\-\-username\fP and
 \fB\-\-authenticationDatabase\fP options.
 .sp
-Changed in version 3.0.0: If you do not specify an argument for \fI\%\-\-password\fP, \fBmongoexport\fP returns
+Changed in version 3.0.0: If you do not specify an argument for \fI\%\-\-password\fP, \fBmongerexport\fP returns
 an error.
 
 .sp
-Changed in version 3.0.2: If you wish \fBmongoexport\fP to prompt the user
+Changed in version 3.0.2: If you wish \fBmongerexport\fP to prompt the user
 for the password, pass the \fI\%\-\-username\fP option without
 \fI\%\-\-password\fP or specify an empty string as the \fI\%\-\-password\fP value,
 as in \fB\-\-password ""\fP .
@@ -516,7 +516,7 @@ as in \fB\-\-password ""\fP .
 Specifies the database in which the user is created.
 See user\-authentication\-database\&.
 .sp
-If you do not specify an authentication database, \fBmongoexport\fP
+If you do not specify an authentication database, \fBmongerexport\fP
 assumes that the database specified to export holds the user’s credentials.
 .UNINDENT
 .INDENT 0.0
@@ -524,8 +524,8 @@ assumes that the database specified to export holds the user’s credentials.
 .B \-\-authenticationMechanism <name>
 \fIDefault\fP: SCRAM\-SHA\-1
 .sp
-Specifies the authentication mechanism the \fBmongoexport\fP instance uses to
-authenticate to the \fBmongod\fP or \fBmongos\fP\&.
+Specifies the authentication mechanism the \fBmongerexport\fP instance uses to
+authenticate to the \fBmongerd\fP or \fBmongers\fP\&.
 .sp
 Changed in version 4.0: MongoDB removes support for the deprecated MongoDB
 Challenge\-Response (\fBMONGODB\-CR\fP) authentication mechanism.
@@ -594,7 +594,7 @@ New in version 2.6.
 
 .sp
 Specify the name of the service using GSSAPI/Kerberos\&. Only required if the service does not use the
-default name of \fBmongodb\fP\&.
+default name of \fBmongerdb\fP\&.
 .sp
 This option is available only in MongoDB Enterprise.
 .UNINDENT
@@ -612,7 +612,7 @@ This option is available only in MongoDB Enterprise.
 .INDENT 0.0
 .TP
 .B \-\-db <database>, \-d <database>
-Specifies the name of the database on which to run the \fBmongoexport\fP\&.
+Specifies the name of the database on which to run the \fBmongerexport\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -631,13 +631,13 @@ to export two fields, \fBphone\fP and \fBuser number\fP, you would
 specify \fB\-\-fields "phone,user number"\fP\&.
 .sp
 For \fI\%csv\fP output formats,
-\fI\%mongoexport\fP includes only the specified field(s), and the
+\fI\%mongerexport\fP includes only the specified field(s), and the
 specified field(s) can be a field within a sub\-document.
 .sp
-For JSON output formats, \fI\%mongoexport\fP includes
+For JSON output formats, \fI\%mongerexport\fP includes
 only the specified field(s) \fBand\fP the \fB_id\fP field, and if the
 specified field(s) is a field within a sub\-document, the
-\fI\%mongoexport\fP includes the sub\-document with all
+\fI\%mongerexport\fP includes the sub\-document with all
 its fields, not just the specified field within the document.
 .sp
 See: \fI\%Export Data in CSV Format using \-\-fields option\fP for sample usage.
@@ -653,7 +653,7 @@ with value \fBcsv\fP\&. The
 file must have only one field per line, and the line(s) must end with
 the LF character (\fB0x0A\fP).
 .sp
-\fI\%mongoexport\fP includes only the specified field(s). The
+\fI\%mongerexport\fP includes only the specified field(s). The
 specified field(s) can be a field within a sub\-document.
 .sp
 See \fI\%Use a File to Specify the Fields to Export in CSV Format\fP for sample usage.
@@ -685,7 +685,7 @@ For example, given a collection named \fBrecords\fP in the database
 .UNINDENT
 .UNINDENT
 .sp
-The following \fI\%mongoexport\fP uses the \fI\%\-q\fP option to
+The following \fI\%mongerexport\fP uses the \fI\%\-q\fP option to
 export only the documents with the field \fBa\fP greater than or equal to
 (\fB$gte\fP) to \fB3\fP:
 .INDENT 7.0
@@ -693,7 +693,7 @@ export only the documents with the field \fBa\fP greater than or equal to
 .sp
 .nf
 .ft C
-mongoexport \-d test \-c records \-q \(aq{ a: { $gte: 3 } }\(aq \-\-out exportdir/myRecords.json
+mongerexport \-d test \-c records \-q \(aq{ a: { $gte: 3 } }\(aq \-\-out exportdir/myRecords.json
 .ft P
 .fi
 .UNINDENT
@@ -713,7 +713,7 @@ The resulting file contains the following documents:
 .UNINDENT
 .sp
 You can sort the results with the \fI\%\-\-sort\fP option to
-\fI\%mongoexport\fP\&.
+\fI\%mongerexport\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -734,15 +734,15 @@ declare the fields to export from the collection.
 .TP
 .B \-\-out <file>, \-o <file>
 Specifies a file to write the export to. If you do not specify a file
-name, the \fI\%mongoexport\fP writes data to standard output
+name, the \fI\%mongerexport\fP writes data to standard output
 (e.g. \fBstdout\fP).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-jsonArray
-Modifies the output of \fI\%mongoexport\fP to write the
+Modifies the output of \fI\%mongerexport\fP to write the
 entire contents of the export as a single JSON array. By
-default \fI\%mongoexport\fP writes data using one JSON document
+default \fI\%mongerexport\fP writes data using one JSON document
 for every MongoDB document.
 .UNINDENT
 .INDENT 0.0
@@ -759,8 +759,8 @@ Outputs documents in a pretty\-printed format JSON.
 New in version 3.4.
 
 .sp
-By default, \fBmongoexport\fP includes the exported field names as the first
-line in a CSV output. \fI\%\-\-noHeaderLine\fP directs \fBmongoexport\fP to export the
+By default, \fBmongerexport\fP includes the exported field names as the first
+line in a CSV output. \fI\%\-\-noHeaderLine\fP directs \fBmongerexport\fP to export the
 data without the list of field names.
 \fI\%\-\-noHeaderLine\fP is \fBonly valid\fP with the
 \fI\%\-\-type\fP option with value \fBcsv\fP\&.
@@ -774,7 +774,7 @@ Deprecated since version 3.2.
 
 .sp
 Sets the replica\-set\-read\-preference to \fBnearest\fP,
-allowing \fI\%mongoexport\fP to read data from secondary
+allowing \fI\%mongerexport\fP to read data from secondary
 replica set members.
 .sp
 \fI\%\-\-readPreference\fP replaces \fB\-\-slaveOk\fP in MongoDB 3.2. You cannot
@@ -784,7 +784,7 @@ specify \fB\-\-slaveOk\fP when \fI\%\-\-readPreference\fP is specified.
 .INDENT 7.0
 .INDENT 3.5
 Using a read preference other than
-\fBprimary\fP with a connection to a \fBmongos\fP may produce
+\fBprimary\fP with a connection to a \fBmongers\fP may produce
 inconsistencies, duplicates, or result in missed documents.
 .UNINDENT
 .UNINDENT
@@ -793,21 +793,21 @@ inconsistencies, duplicates, or result in missed documents.
 .TP
 .B \-\-readPreference <string>
 Specify the read preference for
-\fBmongoexport\fP\&.
+\fBmongerexport\fP\&.
 .sp
 See replica\-set\-read\-preference\-modes\&.
 .sp
-\fBmongoexport\fP defaults to \fBprimary\fP
+\fBmongerexport\fP defaults to \fBprimary\fP
 read preference when connected to a
-\fBmongos\fP or a replica set\&.
+\fBmongers\fP or a replica set\&.
 .sp
-Otherwise, \fBmongoexport\fP defaults to \fBnearest\fP\&.
+Otherwise, \fBmongerexport\fP defaults to \fBnearest\fP\&.
 .sp
 \fBWARNING:\fP
 .INDENT 7.0
 .INDENT 3.5
 Using a read preference other than
-\fBprimary\fP with a connection to a \fBmongos\fP may produce
+\fBprimary\fP with a connection to a \fBmongers\fP may produce
 inconsistencies, duplicates, or result in missed documents.
 .UNINDENT
 .UNINDENT
@@ -815,7 +815,7 @@ inconsistencies, duplicates, or result in missed documents.
 .INDENT 0.0
 .TP
 .B \-\-forceTableScan
-Forces \fI\%mongoexport\fP to scan the data store directly instead
+Forces \fI\%mongerexport\fP to scan the data store directly instead
 of traversing the \fB_id\fP field index. Use \fI\%\-\-forceTableScan\fP to skip the
 index. Typically there are two cases where this behavior is
 preferable to the default:
@@ -827,7 +827,7 @@ in the \fB_id\fP index.
 Your database uses a custom \fB_id\fP field.
 .UNINDENT
 .sp
-When you run with \fI\%\-\-forceTableScan\fP, \fI\%mongoexport\fP may return a
+When you run with \fI\%\-\-forceTableScan\fP, \fI\%mongerexport\fP may return a
 document more than once if a write operation interleaves with the
 operation to cause the document to move.
 .sp
@@ -842,7 +842,7 @@ and consideration.
 .INDENT 0.0
 .TP
 .B \-\-skip <number>
-Use \fI\%\-\-skip\fP to control where \fI\%mongoexport\fP begins
+Use \fI\%\-\-skip\fP to control where \fI\%mongerexport\fP begins
 exporting documents. See \fBskip()\fP for information about
 the underlying operation.
 .UNINDENT
@@ -867,9 +867,9 @@ Use \fI\%\-\-sort\fP conjunction with \fI\%\-\-skip\fP and
 .sp
 .nf
 .ft C
-mongoexport \-d test \-c records \-\-sort \(aq{a: 1}\(aq \-\-limit 100 \-\-out export.0.json
-mongoexport \-d test \-c records \-\-sort \(aq{a: 1}\(aq \-\-limit 100 \-\-skip 100 \-\-out export.1.json
-mongoexport \-d test \-c records \-\-sort \(aq{a: 1}\(aq \-\-limit 100 \-\-skip 200 \-\-out export.2.json
+mongerexport \-d test \-c records \-\-sort \(aq{a: 1}\(aq \-\-limit 100 \-\-out export.0.json
+mongerexport \-d test \-c records \-\-sort \(aq{a: 1}\(aq \-\-limit 100 \-\-skip 100 \-\-out export.1.json
+mongerexport \-d test \-c records \-\-sort \(aq{a: 1}\(aq \-\-limit 100 \-\-skip 200 \-\-out export.2.json
 .ft P
 .fi
 .UNINDENT
@@ -881,17 +881,17 @@ operation.
 .SH USE
 .SS Export in CSV Format
 .sp
-Changed in version 3.0.0: \fI\%mongoexport\fP removed the \fB\-\-csv\fP option. Use the
+Changed in version 3.0.0: \fI\%mongerexport\fP removed the \fB\-\-csv\fP option. Use the
 \fI\%\-\-type=csv\fP option to specify CSV format
 for the output.
 
 .SS Export Data in CSV Format using \fB\-\-fields\fP option
 .sp
-In the following example, \fI\%mongoexport\fP exports data from the
+In the following example, \fI\%mongerexport\fP exports data from the
 collection \fBcontacts\fP collection in the \fBusers\fP database in CSV
 format to the file \fB/opt/backups/contacts.csv\fP\&.
 .sp
-The \fBmongod\fP instance that \fI\%mongoexport\fP connects to is
+The \fBmongerd\fP instance that \fI\%mongerexport\fP connects to is
 running on the localhost port number \fB27017\fP\&.
 .sp
 When you export in CSV format, you must specify the fields in the documents
@@ -902,7 +902,7 @@ to export.
 .sp
 .nf
 .ft C
-mongoexport \-\-db users \-\-collection contacts \-\-type=csv \-\-fields name,address \-\-out /opt/backups/contacts.csv
+mongerexport \-\-db users \-\-collection contacts \-\-type=csv \-\-fields name,address \-\-out /opt/backups/contacts.csv
 .ft P
 .fi
 .UNINDENT
@@ -948,7 +948,7 @@ the file:
 .sp
 .nf
 .ft C
-mongoexport \-\-db users \-\-collection contacts \-\-type=csv \-\-fieldFile fields.txt \-\-out /opt/backups/contacts.csv
+mongerexport \-\-db users \-\-collection contacts \-\-type=csv \-\-fieldFile fields.txt \-\-out /opt/backups/contacts.csv
 .ft P
 .fi
 .UNINDENT
@@ -968,7 +968,7 @@ of the field names as the first line:
 .sp
 .nf
 .ft C
-mongoexport \-\-db users \-\-collection contacts \-\-type csv \-\-fields name,address \-\-noHeaderLine \-\-out /opt/backups/contacts.csv
+mongerexport \-\-db users \-\-collection contacts \-\-type csv \-\-fields name,address \-\-noHeaderLine \-\-out /opt/backups/contacts.csv
 .ft P
 .fi
 .UNINDENT
@@ -996,7 +996,7 @@ writes the export to the \fBcontacts.json\fP file in JSON format.
 .sp
 .nf
 .ft C
-mongoexport \-\-db sales \-\-collection contacts \-\-out contacts.json
+mongerexport \-\-db sales \-\-collection contacts \-\-out contacts.json
 .ft P
 .fi
 .UNINDENT
@@ -1007,14 +1007,14 @@ The following example exports the \fBcontacts\fP collection from the
 \fBmarketing\fP database, which requires authentication.
 .sp
 This data resides on the MongoDB instance located on the host
-\fBmongodb1.example.net\fP running on port \fB37017\fP, which requires the username
+\fBmongerdb1.example.net\fP running on port \fB37017\fP, which requires the username
 \fBuser\fP and the password \fBpass\fP\&.
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-mongoexport \-\-host mongodb1.example.net \-\-port 37017 \-\-username user \-\-password "pass" \-\-collection contacts \-\-db marketing \-\-out mdb1\-examplenet.json
+mongerexport \-\-host mongerdb1.example.net \-\-port 37017 \-\-username user \-\-password "pass" \-\-collection contacts \-\-db marketing \-\-out mdb1\-examplenet.json
 .ft P
 .fi
 .UNINDENT
@@ -1033,7 +1033,7 @@ of \fB1\fP\&.
 .sp
 .nf
 .ft C
-mongoexport \-\-db sales \-\-collection contacts \-\-query \(aq{"field": 1}\(aq
+mongerexport \-\-db sales \-\-collection contacts \-\-query \(aq{"field": 1}\(aq
 .ft P
 .fi
 .UNINDENT

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT mongo::logger::LogComponent::kExecutor
+#define MONGO_LOG_DEFAULT_COMPONENT monger::logger::LogComponent::kExecutor
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/executor/thread_pool_task_executor.h"
+#include "monger/executor/thread_pool_task_executor.h"
 
 #include <boost/optional.hpp>
 #include <iterator>
 #include <utility>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/status_with.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/executor/connection_pool_stats.h"
-#include "mongo/executor/network_interface.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/transport/baton.h"
-#include "mongo/util/concurrency/thread_pool_interface.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/time_support.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/status_with.h"
+#include "monger/db/operation_context.h"
+#include "monger/executor/connection_pool_stats.h"
+#include "monger/executor/network_interface.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/transport/baton.h"
+#include "monger/util/concurrency/thread_pool_interface.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 MONGO_FAIL_POINT_DEFINE(initialSyncFuzzerSynchronizationPoint1);
@@ -686,4 +686,4 @@ void ThreadPoolTaskExecutor::dropConnections(const HostAndPort& hostAndPort) {
 }
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

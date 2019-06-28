@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/executor/async_timer_mock.h"
+#include "monger/executor/async_timer_mock.h"
 
 #include <memory>
 
-#include "mongo/base/system_error.h"
+#include "monger/base/system_error.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 namespace {
@@ -43,7 +43,7 @@ const Milliseconds kZeroMilliseconds = Milliseconds(0);
 AsyncTimerMockImpl::AsyncTimerMockImpl(Milliseconds expiration) : _timeLeft(expiration) {}
 
 void AsyncTimerMockImpl::cancel() {
-    _callAllHandlers(std::error_code(ErrorCodes::CallbackCanceled, mongoErrorCategory()));
+    _callAllHandlers(std::error_code(ErrorCodes::CallbackCanceled, mongerErrorCategory()));
 }
 
 void AsyncTimerMockImpl::asyncWait(AsyncTimerInterface::Handler handler) {
@@ -98,7 +98,7 @@ void AsyncTimerMockImpl::expireAfter(Milliseconds expiration) {
 
     // Call handlers with a "canceled" error code
     for (const auto& handler : tmp) {
-        handler(std::error_code(ErrorCodes::CallbackCanceled, mongoErrorCategory()));
+        handler(std::error_code(ErrorCodes::CallbackCanceled, mongerErrorCategory()));
     }
 }
 
@@ -168,4 +168,4 @@ int AsyncTimerFactoryMock::jobs() {
 }
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

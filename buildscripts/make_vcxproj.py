@@ -1,6 +1,6 @@
 """Generate vcxproj and vcxproj.filters files for browsing code in Visual Studio 2015.
 
-To build mongodb, you must use scons. You can use this project to navigate code during debugging.
+To build mongerdb, you must use scons. You can use this project to navigate code during debugging.
 
  HOW TO USE
 
@@ -10,7 +10,7 @@ To build mongodb, you must use scons. You can use this project to navigate code 
  Next, run the following command
    python buildscripts/make_vcxproj.py FILE_NAME
 
-  where FILE_NAME is the of the file to generate e.g., "mongod"
+  where FILE_NAME is the of the file to generate e.g., "mongerd"
 """
 
 import io
@@ -24,15 +24,15 @@ import xml.etree.ElementTree as ET
 VCXPROJ_FOOTER = r"""
 
   <ItemGroup>
-    <None Include="src\mongo\db\mongo.ico" />
+    <None Include="src\monger\db\monger.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <ResourceCompile Include="src\mongo\db\db.rc" />
+    <ResourceCompile Include="src\monger\db\db.rc" />
   </ItemGroup>
 
   <ItemGroup>
-    <Natvis Include="buildscripts\win\mongodb.natvis" />
+    <Natvis Include="buildscripts\win\mongerdb.natvis" />
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -270,7 +270,7 @@ class ProjFileGenerator(object):  # pylint: disable=too-many-instance-attributes
                     self.files.add(directory + "\\" + file_name)
 
             # Make sure the set also includes the base directories
-            # (i.e. src/mongo and src as examples)
+            # (i.e. src/monger and src as examples)
             base_name = os.path.dirname(directory)
             while base_name:
                 base_dirs.add(base_name)

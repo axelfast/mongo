@@ -191,7 +191,7 @@ _ERROR_CATEGORIES = [
   'build/storage_class',
   'legal/copyright',
   'legal/license',
-  'mongo/polyfill',
+  'monger/polyfill',
   'readability/alt_tokens',
   'readability/braces',
   'readability/casting',
@@ -1654,27 +1654,27 @@ _RE_PATTERN_MONGO_POLYFILL=make_polyfill_regex()
 def CheckForMongoPolyfill(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search(_RE_PATTERN_MONGO_POLYFILL, line):
-    error(filename, linenum, 'mongodb/polyfill', 5,
-          'Illegal use of banned name from std::/boost::, use mongo::stdx:: variant instead')
+    error(filename, linenum, 'mongerdb/polyfill', 5,
+          'Illegal use of banned name from std::/boost::, use monger::stdx:: variant instead')
 
 def CheckForMongoAtomic(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search('std::atomic', line):
-    error(filename, linenum, 'mongodb/stdatomic', 5,
+    error(filename, linenum, 'mongerdb/stdatomic', 5,
           'Illegal use of prohibited std::atomic<T>, use AtomicWord<T> or other types '
-          'from "mongo/platform/atomic_word.h"')
+          'from "monger/platform/atomic_word.h"')
 
 def CheckForMongoVolatile(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search('[^_]volatile', line) and not "__asm__" in line:
-    error(filename, linenum, 'mongodb/volatile', 5,
+    error(filename, linenum, 'mongerdb/volatile', 5,
           'Illegal use of the volatile storage keyword, use AtomicWord instead '
-          'from "mongo/platform/atomic_word.h"')
+          'from "monger/platform/atomic_word.h"')
 
 def CheckForNonMongoAssert(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search(r'\bassert\s*\(', line):
-    error(filename, linenum, 'mongodb/assert', 5,
+    error(filename, linenum, 'mongerdb/assert', 5,
           'Illegal use of the bare assert function, use a function from assert_utils.h instead.')
 
 def CheckForCopyright(filename, lines, error):
@@ -1704,7 +1704,7 @@ def CheckForServerSidePublicLicense(copyright_offset, filename, lines, error):
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -1719,21 +1719,21 @@ def CheckForServerSidePublicLicense(copyright_offset, filename, lines, error):
  *    it in the license file.
  */'''.splitlines()
 
-  # The following files are in the src/mongo/ directory but technically belong
+  # The following files are in the src/monger/ directory but technically belong
   # in src/third_party/ because their copyright does not belong to MongoDB. Note
   # that we do not need to use os.path.normpath() to match these pathnames on
   # Windows because FileInfo.RepositoryName() normalizes the path separator for
   # us already.
   files_to_ignore = set([
-    'src/mongo/shell/linenoise.cpp',
-    'src/mongo/shell/linenoise.h',
-    'src/mongo/shell/mk_wcwidth.cpp',
-    'src/mongo/shell/mk_wcwidth.h',
-    'src/mongo/util/md5.cpp',
-    'src/mongo/util/md5.h',
-    'src/mongo/util/md5main.cpp',
-    'src/mongo/util/net/ssl_stream.cpp',
-    'src/mongo/util/scopeguard.h',
+    'src/monger/shell/linenoise.cpp',
+    'src/monger/shell/linenoise.h',
+    'src/monger/shell/mk_wcwidth.cpp',
+    'src/monger/shell/mk_wcwidth.h',
+    'src/monger/util/md5.cpp',
+    'src/monger/util/md5.h',
+    'src/monger/util/md5main.cpp',
+    'src/monger/util/net/ssl_stream.cpp',
+    'src/monger/util/scopeguard.h',
   ])
 
   if FileInfo(filename).RepositoryName() in files_to_ignore:
@@ -1750,7 +1750,7 @@ def CheckForServerSidePublicLicense(copyright_offset, filename, lines, error):
           error(filename, 0, 'legal/license', 5,
                 'Incorrect license header found.  '
                 'Expected "' + license_header[i] + '".  '
-                'See https://github.com/mongodb/mongo/wiki/Server-Code-Style')
+                'See https://github.com/mongerdb/monger/wiki/Server-Code-Style')
           # We break here to stop reporting legal/license errors for this file.
           break
 
@@ -1759,7 +1759,7 @@ def CheckForServerSidePublicLicense(copyright_offset, filename, lines, error):
   else:
     error(filename, 0, 'legal/license', 5,
           'No license header found.  '
-          'See https://github.com/mongodb/mongo/wiki/Server-Code-Style')
+          'See https://github.com/mongerdb/monger/wiki/Server-Code-Style')
 
 def GetIndentLevel(line):
   """Return the number of leading spaces in line.

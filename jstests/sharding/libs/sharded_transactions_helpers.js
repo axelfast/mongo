@@ -45,7 +45,7 @@ function getCoordinatorFailpoints() {
 function setFailCommandOnShards(st, mode, commands, code, numShards) {
     for (let i = 0; i < numShards; i++) {
         const shardConn = st["rs" + i].getPrimary();
-        // Sharding tests require failInternalCommands: true, since the mongos appears to mongod to
+        // Sharding tests require failInternalCommands: true, since the mongers appears to mongerd to
         // be an internal client.
         assert.commandWorked(shardConn.adminCommand({
             configureFailPoint: "failCommand",
@@ -127,7 +127,7 @@ function disableStaleVersionAndSnapshotRetriesWithinTransactions(st) {
 //
 // TODO SERVER-39704: Remove this function.
 function flushRoutersAndRefreshShardMetadata(st, {ns, dbNames = []} = {}) {
-    st._mongos.forEach((s) => {
+    st._mongers.forEach((s) => {
         assert.commandWorked(s.adminCommand({flushRouterConfig: 1}));
     });
 

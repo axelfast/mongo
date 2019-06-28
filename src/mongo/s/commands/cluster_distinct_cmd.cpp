@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/bsonobj_comparator.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/parsed_distinct.h"
-#include "mongo/db/query/view_response_formatter.h"
-#include "mongo/db/views/resolved_view.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/commands/cluster_explain.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/cluster_aggregate.h"
-#include "mongo/s/transaction_router.h"
+#include "monger/bson/bsonobj_comparator.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/parsed_distinct.h"
+#include "monger/db/query/view_response_formatter.h"
+#include "monger/db/views/resolved_view.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/commands/cluster_explain.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/cluster_aggregate.h"
+#include "monger/s/transaction_router.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class DistinctCmd : public BasicCommand {
@@ -146,14 +146,14 @@ public:
 
         long long millisElapsed = timer.millis();
 
-        const char* mongosStageName =
+        const char* mongersStageName =
             ClusterExplain::getStageNameForReadOp(shardResponses.size(), cmdObj);
 
         auto bodyBuilder = result->getBodyBuilder();
         return ClusterExplain::buildExplainResult(
             opCtx,
             ClusterExplain::downconvert(opCtx, shardResponses),
-            mongosStageName,
+            mongersStageName,
             millisElapsed,
             &bodyBuilder);
     }
@@ -254,4 +254,4 @@ public:
 } disinctCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

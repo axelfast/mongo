@@ -10,12 +10,12 @@ import (
 	"context"
 	"runtime"
 
-	"go.mongodb.org/mongo-driver/version"
-	"go.mongodb.org/mongo-driver/x/bsonx"
-	"go.mongodb.org/mongo-driver/x/network/address"
-	"go.mongodb.org/mongo-driver/x/network/description"
-	"go.mongodb.org/mongo-driver/x/network/result"
-	"go.mongodb.org/mongo-driver/x/network/wiremessage"
+	"go.mongerdb.org/monger-driver/version"
+	"go.mongerdb.org/monger-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/x/network/address"
+	"go.mongerdb.org/monger-driver/x/network/description"
+	"go.mongerdb.org/monger-driver/x/network/result"
+	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
 // Handshake represents a generic MongoDB Handshake. It calls isMaster and
@@ -96,7 +96,7 @@ func ClientDoc(app string) bsonx.Doc {
 	doc := bsonx.Doc{
 		{"driver",
 			bsonx.Document(bsonx.Doc{
-				{"name", bsonx.String("mongo-go-driver")},
+				{"name", bsonx.String("monger-go-driver")},
 				{"version", bsonx.String(version.Driver)},
 			}),
 		},

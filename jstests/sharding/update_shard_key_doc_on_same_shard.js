@@ -9,14 +9,14 @@
 
     load("jstests/sharding/libs/update_shard_key_helpers.js");
 
-    const st = new ShardingTest({mongos: 1, shards: {rs0: {nodes: 3}, rs1: {nodes: 3}}});
+    const st = new ShardingTest({mongers: 1, shards: {rs0: {nodes: 3}, rs1: {nodes: 3}}});
     const kDbName = 'db';
     const ns = kDbName + '.foo';
-    const mongos = st.s0;
+    const mongers = st.s0;
     const shard0 = st.shard0.shardName;
     const shard1 = st.shard1.shardName;
 
-    assert.commandWorked(mongos.adminCommand({enableSharding: kDbName}));
+    assert.commandWorked(mongers.adminCommand({enableSharding: kDbName}));
     st.ensurePrimaryShard(kDbName, shard0);
 
     // -----------------------------------------
@@ -27,17 +27,17 @@
     let docsToInsert = [{"x": 4, "a": 3}, {"x": 100}, {"x": 300, "a": 3}, {"x": 500, "a": 6}];
     shardCollectionMoveChunks(st, kDbName, ns, {"x": 1}, docsToInsert, {"x": 100}, {"x": 300});
 
-    assert.writeError(mongos.getDB(kDbName).foo.update({"x": 300}, {"x": 600}));
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 300}).itcount());
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 600}).itcount());
+    assert.writeError(mongers.getDB(kDbName).foo.update({"x": 300}, {"x": 600}));
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 300}).itcount());
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 600}).itcount());
 
     assert.throws(function() {
-        mongos.getDB(kDbName).foo.findAndModify({query: {"x": 300}, update: {$set: {"x": 600}}});
+        mongers.getDB(kDbName).foo.findAndModify({query: {"x": 300}, update: {$set: {"x": 600}}});
     });
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 300}).itcount());
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 600}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 300}).itcount());
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 600}).itcount());
 
-    mongos.getDB(kDbName).foo.drop();
+    mongers.getDB(kDbName).foo.drop();
 
     // ---------------------------------
     // Update shard key retryable write
@@ -719,20 +719,20 @@
     shardCollectionMoveChunks(st, kDbName, ns, {"x": 1}, docsToInsert, {"x": 100}, {"x": 300});
 
     session.startTransaction();
-    let id = mongos.getDB(kDbName).foo.find({"x": 500}).toArray()[0]._id;
+    let id = mongers.getDB(kDbName).foo.find({"x": 500}).toArray()[0]._id;
     assert.commandWorked(sessionDB.foo.update({"x": 500}, {"$set": {"x": 400}}));
     assert.commandWorked(sessionDB.foo.update({"x": 400}, {"x": 600, "_id": id}));
     assert.commandWorked(sessionDB.foo.update({"x": 4}, {"$set": {"x": 30}}));
     assert.commandWorked(session.commitTransaction_forTesting());
 
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 500}).itcount());
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 400}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 600}).itcount());
-    assert.eq(id, mongos.getDB(kDbName).foo.find({"x": 600}).toArray()[0]._id);
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 4}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 30}).itcount());
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 500}).itcount());
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 400}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 600}).itcount());
+    assert.eq(id, mongers.getDB(kDbName).foo.find({"x": 600}).toArray()[0]._id);
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 4}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 30}).itcount());
 
-    mongos.getDB(kDbName).foo.drop();
+    mongers.getDB(kDbName).foo.drop();
 
     // Check that doing $inc on doc A, then updating shard key for doc A, then $inc again only incs
     // once
@@ -744,12 +744,12 @@
     assert.commandWorked(sessionDB.foo.update({"x": 500}, {"$inc": {"a": 1}}));
     assert.commandWorked(session.commitTransaction_forTesting());
 
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 500}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 400}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"a": 7}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 400, "a": 7}).itcount());
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 500}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 400}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"a": 7}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 400, "a": 7}).itcount());
 
-    mongos.getDB(kDbName).foo.drop();
+    mongers.getDB(kDbName).foo.drop();
 
     // Check that doing findAndModify to update shard key followed by $inc works correctly
     shardCollectionMoveChunks(st, kDbName, ns, {"x": 1}, docsToInsert, {"x": 100}, {"x": 300});
@@ -759,28 +759,28 @@
     assert.commandWorked(sessionDB.foo.update({"x": 600}, {"$inc": {"a": 1}}));
     assert.commandWorked(session.commitTransaction_forTesting());
 
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 500}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 600}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"a": 7}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 600, "a": 7}).itcount());
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 500}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 600}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"a": 7}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 600, "a": 7}).itcount());
 
-    mongos.getDB(kDbName).foo.drop();
+    mongers.getDB(kDbName).foo.drop();
 
     // Check that doing findAndModify followed by and update on a shard key works correctly
     shardCollectionMoveChunks(st, kDbName, ns, {"x": 1}, docsToInsert, {"x": 100}, {"x": 300});
 
-    id = mongos.getDB(kDbName).foo.find({"x": 4}).toArray()[0]._id;
+    id = mongers.getDB(kDbName).foo.find({"x": 4}).toArray()[0]._id;
     session.startTransaction();
     sessionDB.foo.findAndModify({query: {"x": 4}, update: {$set: {"x": 20}}});
     assert.commandWorked(sessionDB.foo.update({"x": 20}, {$set: {"x": 1}}));
     assert.commandWorked(session.commitTransaction_forTesting());
 
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 4}).itcount());
-    assert.eq(0, mongos.getDB(kDbName).foo.find({"x": 20}).itcount());
-    assert.eq(1, mongos.getDB(kDbName).foo.find({"x": 1}).itcount());
-    assert.eq(id, mongos.getDB(kDbName).foo.find({"x": 1}).toArray()[0]._id);
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 4}).itcount());
+    assert.eq(0, mongers.getDB(kDbName).foo.find({"x": 20}).itcount());
+    assert.eq(1, mongers.getDB(kDbName).foo.find({"x": 1}).itcount());
+    assert.eq(id, mongers.getDB(kDbName).foo.find({"x": 1}).toArray()[0]._id);
 
-    mongos.getDB(kDbName).foo.drop();
+    mongers.getDB(kDbName).foo.drop();
 
     st.stop();
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/s/config/sharding_catalog_manager.h"
-#include "mongo/rpc/metadata/tracking_metadata.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog/type_tags.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/config_server_test_fixture.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/s/config/sharding_catalog_manager.h"
+#include "monger/rpc/metadata/tracking_metadata.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog/type_tags.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/config_server_test_fixture.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using executor::RemoteCommandRequest;
@@ -568,4 +568,4 @@ TEST_F(DropColl2ShardTest, UnsetErrorOnShard2) {
 }
 
 }  // unnamed namespace
-}  // namespace mongo
+}  // namespace monger

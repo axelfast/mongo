@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/ssl_options.h"
+#include "monger/util/net/ssl_options.h"
 
 #include <boost/filesystem/operations.hpp>
 
-#include "mongo/base/status.h"
-#include "mongo/config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/text.h"
+#include "monger/base/status.h"
+#include "monger/config.h"
+#include "monger/db/server_options.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/text.h"
 
 #if MONGO_CONFIG_SSL_PROVIDER == MONGO_CONFIG_SSL_PROVIDER_OPENSSL
 #include <openssl/ssl.h>
 #endif  // #ifdef MONGO_CONFIG_SSL
 
-namespace mongo {
+namespace monger {
 
-namespace moe = mongo::optionenvironment;
+namespace moe = monger::optionenvironment;
 using std::string;
 
 SSLParams sslGlobalParams;
@@ -233,4 +233,4 @@ std::string SSLParams::tlsModeFormat(int mode) {
 }
 
 
-}  // namespace mongo
+}  // namespace monger

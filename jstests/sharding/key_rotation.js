@@ -64,7 +64,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         "data": {"overrideMS": 1000}
     });
 
-    // Kill and restart all shards and mongos processes so they have no keys in memory.
+    // Kill and restart all shards and mongers processes so they have no keys in memory.
     st.rs0.stopSet(null /* signal */, true /* forRestart */);
     st.rs0.startSet({restart: true});
 

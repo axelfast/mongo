@@ -10,16 +10,16 @@
         config: {nodes: 1},
         shards: 1,
         rs0: {nodes: 3},
-        mongos: 1,
+        mongers: 1,
     });
-    const mongos = st.s0;
+    const mongers = st.s0;
     const rst = st.rs0;
     const primary = rst.getPrimary();
 
-    mongos.adminCommand({multicast: {ping: 0}});
+    mongers.adminCommand({multicast: {ping: 0}});
 
     function getConnPoolHosts() {
-        const ret = mongos.adminCommand({connPoolStats: 1});
+        const ret = mongers.adminCommand({connPoolStats: 1});
         assert.commandWorked(ret);
         jsTestLog("Connection pool stats by host: " + tojson(ret.hosts));
         return ret.hosts;
@@ -38,7 +38,7 @@
     assert.eq(memberHost in getConnPoolHosts(), true);
 
     jsTestLog("Dropping connections to " + memberHost);
-    assert.commandWorked(mongos.adminCommand({dropConnections: 1, hostAndPort: [memberHost]}));
+    assert.commandWorked(mongers.adminCommand({dropConnections: 1, hostAndPort: [memberHost]}));
     assert.soon(() => {
         return !(memberHost in getConnPoolHosts());
     });

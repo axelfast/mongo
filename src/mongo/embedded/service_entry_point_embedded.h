@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/transport/service_entry_point.h"
+#include "monger/transport/service_entry_point.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * The entry point into mongod. Just a wrapper around assembleResponse.
+ * The entry point into mongerd. Just a wrapper around assembleResponse.
  */
 class ServiceEntryPointEmbedded final : public ServiceEntryPoint {
     ServiceEntryPointEmbedded(const ServiceEntryPointEmbedded&) = delete;
@@ -55,4 +55,4 @@ private:
     class Hooks;
 };
 
-}  // namespace mongo
+}  // namespace monger

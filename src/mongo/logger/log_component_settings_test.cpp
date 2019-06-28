@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/logger/log_component.h"
-#include "mongo/logger/log_component_settings.h"
-#include "mongo/logger/logger.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/barrier.h"
+#include "monger/logger/log_component.h"
+#include "monger/logger/log_component_settings.h"
+#include "monger/logger/logger.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/barrier.h"
 
-#include "mongo/unittest/unittest.h"
+#include "monger/unittest/unittest.h"
 
 namespace {
 
-using namespace mongo;
-using namespace mongo::logger;
+using namespace monger;
+using namespace monger::logger;
 
 // This test checks that calling "shouldLog" and "setMinimumLoggedSeverity" concurrently doesn't
 // cause an invariant failure, i.e. that these methods are thread-safe.
@@ -80,7 +80,7 @@ TEST(SERVER25981Test, SetSeverityShouldLogAndClear) {
         }
     });
 
-    mongo::sleepmillis(4000);
+    monger::sleepmillis(4000);
     running.store(false);
     shouldLogThread.join();
     setMinimumLoggedSeverityThreadA.join();

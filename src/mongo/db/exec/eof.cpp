@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/eof.h"
+#include "monger/db/exec/eof.h"
 
 #include <memory>
 
-#include "mongo/db/exec/scoped_timer.h"
+#include "monger/db/exec/scoped_timer.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::vector;
@@ -64,4 +64,4 @@ const SpecificStats* EOFStage::getSpecificStats() const {
     return nullptr;
 }
 
-}  // namespace mongo
+}  // namespace monger

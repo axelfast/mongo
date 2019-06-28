@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/update/push_node.h"
+#include "monger/db/update/push_node.h"
 
 #include <numeric>
 
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/update/update_internal_node.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/update/update_internal_node.h"
 
-namespace mongo {
+namespace monger {
 
 const StringData PushNode::kEachClauseName = "$each"_sd;
 const StringData PushNode::kSliceClauseName = "$slice";
@@ -363,4 +363,4 @@ void PushNode::setValueForNewElement(mutablebson::Element* element) const {
     (void)performPush(element, nullptr);
 }
 
-}  // namespace mongo
+}  // namespace monger

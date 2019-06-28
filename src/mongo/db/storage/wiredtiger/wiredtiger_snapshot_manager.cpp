@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/wiredtiger/wiredtiger_snapshot_manager.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_snapshot_manager.h"
 
-#include "mongo/db/server_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/util/log.h"
+#include "monger/db/server_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 void WiredTigerSnapshotManager::setCommittedSnapshot(const Timestamp& timestamp) {
     stdx::lock_guard<stdx::mutex> lock(_committedSnapshotMutex);
@@ -109,4 +109,4 @@ Timestamp WiredTigerSnapshotManager::beginTransactionOnLocalSnapshot(
     return *_localSnapshot;
 }
 
-}  // namespace mongo
+}  // namespace monger

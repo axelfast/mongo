@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/config_server_client.h"
+#include "monger/s/config_server_client.h"
 
-#include "mongo/client/read_preference.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/request_types/balance_chunk_request_type.h"
+#include "monger/client/read_preference.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/request_types/balance_chunk_request_type.h"
 
-namespace mongo {
+namespace monger {
 namespace configsvr_client {
 namespace {
 
@@ -83,4 +83,4 @@ Status rebalanceChunk(OperationContext* opCtx, const ChunkType& chunk) {
 }
 
 }  // namespace configsvr_client
-}  // namespace mongo
+}  // namespace monger

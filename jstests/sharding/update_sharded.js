@@ -1,8 +1,8 @@
-// Test simple updates issued through mongos. Updates have different constraints through mongos,
+// Test simple updates issued through mongers. Updates have different constraints through mongers,
 // since shard key is immutable.
 (function() {
 
-    const s = new ShardingTest({name: "auto1", shards: 2, mongos: 1});
+    const s = new ShardingTest({name: "auto1", shards: 2, mongers: 1});
 
     s.adminCommand({enablesharding: "test"});
     s.ensurePrimaryShard('test', s.shard1.shardName);

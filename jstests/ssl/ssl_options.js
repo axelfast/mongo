@@ -8,16 +8,16 @@ requireSSLProvider('openssl', function() {
 
     jsTest.log("Testing censorship of ssl options");
 
-    const mongodConfig = {
+    const mongerdConfig = {
         sslPEMKeyFile: "jstests/libs/password_protected.pem",
         sslMode: "requireSSL",
         sslPEMKeyPassword: "qwerty",
         sslClusterPassword: "qwerty",
         sslCAFile: "jstests/libs/ca.pem"
     };
-    const mongodSource = MongoRunner.runMongod(mongodConfig);
+    const mongerdSource = MongoRunner.runMongod(mongerdConfig);
 
-    const getCmdLineOptsResult = mongodSource.adminCommand("getCmdLineOpts");
+    const getCmdLineOptsResult = mongerdSource.adminCommand("getCmdLineOpts");
 
     let i;
     let isPassword = false;
@@ -43,7 +43,7 @@ requireSSLProvider('openssl', function() {
               "<password>",
               "Password not properly censored: " + tojson(getCmdLineOptsResult));
 
-    MongoRunner.stopMongod(mongodSource);
+    MongoRunner.stopMongod(mongerdSource);
 
     print(baseName + " succeeded.");
 });

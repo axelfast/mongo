@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include "mongo/rpc/op_msg.h"
-#include "mongo/rpc/protocol.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/rpc/protocol.h"
 
 #include <memory>
 
@@ -39,7 +39,7 @@
  * supports, and what the client has been configured to do.
  */
 
-namespace mongo {
+namespace monger {
 class Message;
 
 namespace rpc {
@@ -72,4 +72,4 @@ OpMsgRequest opMsgRequestFromAnyProtocol(const Message& unownedMessage);
 std::unique_ptr<ReplyBuilderInterface> makeReplyBuilder(Protocol protocol);
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

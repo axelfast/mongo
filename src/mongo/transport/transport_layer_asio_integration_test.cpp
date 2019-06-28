@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/async_client.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/db/client.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/transport/transport_layer_asio.h"
-#include "mongo/unittest/integration_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
+#include "monger/client/async_client.h"
+#include "monger/client/connection_string.h"
+#include "monger/db/client.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
+#include "monger/stdx/thread.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/transport/transport_layer_asio.h"
+#include "monger/unittest/integration_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
 
 #include "asio.hpp"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(TransportLayerASIO, HTTPRequestGetsHTTPError) {
@@ -151,4 +151,4 @@ TEST(TransportLayerASIO, asyncConnectTimeoutCleansUpSocket) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

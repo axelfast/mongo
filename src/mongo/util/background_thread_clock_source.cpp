@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/background_thread_clock_source.h"
+#include "monger/util/background_thread_clock_source.h"
 
 #include <chrono>
 #include <memory>
 #include <thread>
 
-#include "mongo/stdx/thread.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
-#include "mongo/util/log.h"
-#include "mongo/util/time_support.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/concurrency/idle_thread_block.h"
+#include "monger/util/log.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 BackgroundThreadClockSource::BackgroundThreadClockSource(std::unique_ptr<ClockSource> clockSource,
                                                          Milliseconds granularity)
@@ -202,4 +202,4 @@ void BackgroundThreadClockSource::_startTimerThread() {
     _condition.wait(lock, [this] { return _started; });
 }
 
-}  // namespace mongo
+}  // namespace monger

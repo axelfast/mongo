@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/sharding_task_executor.h"
+#include "monger/s/sharding_task_executor.h"
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/operation_time_tracker.h"
-#include "mongo/executor/thread_pool_task_executor.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/metadata/sharding_metadata.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_last_error_info.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/is_mongos.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/operation_time_tracker.h"
+#include "monger/executor/thread_pool_task_executor.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/metadata/sharding_metadata.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_last_error_info.h"
+#include "monger/s/grid.h"
+#include "monger/s/is_mongers.h"
+#include "monger/s/transaction_router.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 namespace {
@@ -70,7 +70,7 @@ void ShardingTaskExecutor::join() {
     _executor->join();
 }
 
-void ShardingTaskExecutor::appendDiagnosticBSON(mongo::BSONObjBuilder* builder) const {
+void ShardingTaskExecutor::appendDiagnosticBSON(monger::BSONObjBuilder* builder) const {
     _executor->appendDiagnosticBSON(builder);
 }
 
@@ -181,7 +181,7 @@ StatusWith<TaskExecutor::CallbackHandle> ShardingTaskExecutor::scheduleRemoteCom
             }
 
             if (isMongos() && args.response.status == ErrorCodes::IncompatibleWithUpgradedServer) {
-                severe() << "This mongos server must be upgraded. It is attempting to communicate "
+                severe() << "This mongers server must be upgraded. It is attempting to communicate "
                             "with "
                             "an upgraded cluster with which it is incompatible. Error: '"
                          << args.response.status.toString()
@@ -256,4 +256,4 @@ void ShardingTaskExecutor::appendConnectionStats(ConnectionPoolStats* stats) con
 }
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

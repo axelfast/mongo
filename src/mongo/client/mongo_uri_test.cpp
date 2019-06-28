@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <fstream>
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/json.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/json.h"
+#include "monger/client/monger_uri.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/unittest/unittest.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/optional.hpp>
 #include <boost/optional/optional_io.hpp>
 
-namespace mongo {
+namespace monger {
 namespace {
 using transport::ConnectSSLMode;
 constexpr auto kEnableSSL = ConnectSSLMode::kEnableSSL;
@@ -103,19 +103,19 @@ const ConnectionString::ConnectionType kSet = ConnectionString::SET;
 
 const URITestCase validCases[] = {
 
-    {"mongodb://user:pwd@127.0.0.1", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user:pwd@127.0.0.1", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://user@127.0.0.1", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user@127.0.0.1", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://localhost/?foo=bar", "", "", kMaster, "", 1, {{"foo", "bar"}}, "", kGlobalSSLMode},
+    {"mongerdb://localhost/?foo=bar", "", "", kMaster, "", 1, {{"foo", "bar"}}, "", kGlobalSSLMode},
 
-    {"mongodb://localhost,/?foo=bar", "", "", kMaster, "", 1, {{"foo", "bar"}}, "", kGlobalSSLMode},
+    {"mongerdb://localhost,/?foo=bar", "", "", kMaster, "", 1, {{"foo", "bar"}}, "", kGlobalSSLMode},
 
-    {"mongodb://user:pwd@127.0.0.1:1234", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user:pwd@127.0.0.1:1234", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://user@127.0.0.1:1234", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user@127.0.0.1:1234", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://127.0.0.1:1234/dbName?foo=a&c=b",
+    {"mongerdb://127.0.0.1:1234/dbName?foo=a&c=b",
      "",
      "",
      kMaster,
@@ -125,7 +125,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://127.0.0.1/dbName?foo=a&c=b",
+    {"mongerdb://127.0.0.1/dbName?foo=a&c=b",
      "",
      "",
      kMaster,
@@ -135,7 +135,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@127.0.0.1,/dbName?foo=a&c=b",
+    {"mongerdb://user:pwd@127.0.0.1,/dbName?foo=a&c=b",
      "user",
      "pwd",
      kMaster,
@@ -145,7 +145,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@127.0.0.1,127.0.0.2/dbname?a=b&replicaSet=replName",
+    {"mongerdb://user:pwd@127.0.0.1,127.0.0.2/dbname?a=b&replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -155,7 +155,7 @@ const URITestCase validCases[] = {
      "dbname",
      kGlobalSSLMode},
 
-    {"mongodb://needs%20encoding%25%23!%3C%3E:pwd@127.0.0.1,127.0.0.2/"
+    {"mongerdb://needs%20encoding%25%23!%3C%3E:pwd@127.0.0.1,127.0.0.2/"
      "dbname?a=b&replicaSet=replName",
      "needs encoding%#!<>",
      "pwd",
@@ -166,7 +166,7 @@ const URITestCase validCases[] = {
      "dbname",
      kGlobalSSLMode},
 
-    {"mongodb://needs%20encoding%25%23!%3C%3E:pwd@127.0.0.1,127.0.0.2/"
+    {"mongerdb://needs%20encoding%25%23!%3C%3E:pwd@127.0.0.1,127.0.0.2/"
      "db@name?a=b&replicaSet=replName",
      "needs encoding%#!<>",
      "pwd",
@@ -177,7 +177,7 @@ const URITestCase validCases[] = {
      "db@name",
      kGlobalSSLMode},
 
-    {"mongodb://user:needs%20encoding%25%23!%3C%3E@127.0.0.1,127.0.0.2/"
+    {"mongerdb://user:needs%20encoding%25%23!%3C%3E@127.0.0.1,127.0.0.2/"
      "dbname?a=b&replicaSet=replName",
      "user",
      "needs encoding%#!<>",
@@ -188,7 +188,7 @@ const URITestCase validCases[] = {
      "dbname",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@127.0.0.1,127.0.0.2/dbname?a=b&replicaSet=needs%20encoding%25%23!%3C%3E",
+    {"mongerdb://user:pwd@127.0.0.1,127.0.0.2/dbname?a=b&replicaSet=needs%20encoding%25%23!%3C%3E",
      "user",
      "pwd",
      kSet,
@@ -198,7 +198,7 @@ const URITestCase validCases[] = {
      "dbname",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@127.0.0.1,127.0.0.2/needsencoding%40hello?a=b&replicaSet=replName",
+    {"mongerdb://user:pwd@127.0.0.1,127.0.0.2/needsencoding%40hello?a=b&replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -208,7 +208,7 @@ const URITestCase validCases[] = {
      "needsencoding@hello",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@127.0.0.1,127.0.0.2/?replicaSet=replName",
+    {"mongerdb://user:pwd@127.0.0.1,127.0.0.2/?replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -218,7 +218,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user@127.0.0.1,127.0.0.2/?replicaSet=replName",
+    {"mongerdb://user@127.0.0.1,127.0.0.2/?replicaSet=replName",
      "user",
      "",
      kSet,
@@ -228,7 +228,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user@127.0.0.1,127.0.0.2/?replicaset=replName",
+    {"mongerdb://user@127.0.0.1,127.0.0.2/?replicaset=replName",
      "user",
      "",
      kSet,
@@ -238,7 +238,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://127.0.0.1,127.0.0.2/dbName?foo=a&c=b&replicaSet=replName",
+    {"mongerdb://127.0.0.1,127.0.0.2/dbName?foo=a&c=b&replicaSet=replName",
      "",
      "",
      kSet,
@@ -248,7 +248,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@127.0.0.1:1234,127.0.0.2:1234/?replicaSet=replName",
+    {"mongerdb://user:pwd@127.0.0.1:1234,127.0.0.2:1234/?replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -258,7 +258,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user@127.0.0.1:1234,127.0.0.2:1234/?replicaSet=replName",
+    {"mongerdb://user@127.0.0.1:1234,127.0.0.2:1234/?replicaSet=replName",
      "user",
      "",
      kSet,
@@ -268,7 +268,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://127.0.0.1:1234,127.0.0.1:1234/dbName?foo=a&c=b&replicaSet=replName",
+    {"mongerdb://127.0.0.1:1234,127.0.0.1:1234/dbName?foo=a&c=b&replicaSet=replName",
      "",
      "",
      kSet,
@@ -278,11 +278,11 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user:pwd@[::1]", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://user@[::1]", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user@[::1]", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://[::1]/dbName?foo=a&c=b",
+    {"mongerdb://[::1]/dbName?foo=a&c=b",
      "",
      "",
      kMaster,
@@ -292,11 +292,11 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]:1234", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user:pwd@[::1]:1234", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://user@[::1]:1234", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user@[::1]:1234", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://[::1]:1234/dbName?foo=a&c=b",
+    {"mongerdb://[::1]:1234/dbName?foo=a&c=b",
      "",
      "",
      kMaster,
@@ -306,7 +306,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1],127.0.0.2/?replicaSet=replName",
+    {"mongerdb://user:pwd@[::1],127.0.0.2/?replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -316,7 +316,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user@[::1],127.0.0.2/?replicaSet=replName",
+    {"mongerdb://user@[::1],127.0.0.2/?replicaSet=replName",
      "user",
      "",
      kSet,
@@ -326,7 +326,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://[::1],127.0.0.2/dbName?foo=a&c=b&replicaSet=replName",
+    {"mongerdb://[::1],127.0.0.2/dbName?foo=a&c=b&replicaSet=replName",
      "",
      "",
      kSet,
@@ -336,7 +336,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
+    {"mongerdb://user:pwd@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -346,7 +346,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
+    {"mongerdb://user@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
      "user",
      "",
      kSet,
@@ -356,7 +356,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://[::1]:1234,[::1]:1234/dbName?foo=a&c=b&replicaSet=replName",
+    {"mongerdb://[::1]:1234,[::1]:1234/dbName?foo=a&c=b&replicaSet=replName",
      "",
      "",
      kSet,
@@ -366,11 +366,11 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user:pwd@[::1]", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://user@[::1]", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user@[::1]", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://[::1]/dbName?foo=a&c=b",
+    {"mongerdb://[::1]/dbName?foo=a&c=b",
      "",
      "",
      kMaster,
@@ -380,11 +380,11 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]:1234", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user:pwd@[::1]:1234", "user", "pwd", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://user@[::1]:1234", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://user@[::1]:1234", "user", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://[::1]:1234/dbName?foo=a&c=b",
+    {"mongerdb://[::1]:1234/dbName?foo=a&c=b",
      "",
      "",
      kMaster,
@@ -394,7 +394,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1],127.0.0.2/?replicaSet=replName",
+    {"mongerdb://user:pwd@[::1],127.0.0.2/?replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -404,7 +404,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user@[::1],127.0.0.2/?replicaSet=replName",
+    {"mongerdb://user@[::1],127.0.0.2/?replicaSet=replName",
      "user",
      "",
      kSet,
@@ -414,7 +414,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://[::1],127.0.0.2/dbName?foo=a&c=b&replicaSet=replName",
+    {"mongerdb://[::1],127.0.0.2/dbName?foo=a&c=b&replicaSet=replName",
      "",
      "",
      kSet,
@@ -424,7 +424,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
+    {"mongerdb://user:pwd@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
      "user",
      "pwd",
      kSet,
@@ -434,7 +434,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
+    {"mongerdb://user@[::1]:1234,127.0.0.2:1234/?replicaSet=replName",
      "user",
      "",
      kSet,
@@ -444,7 +444,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://[::1]:1234,[::1]:1234/dbName?foo=a&c=b&replicaSet=replName",
+    {"mongerdb://[::1]:1234,[::1]:1234/dbName?foo=a&c=b&replicaSet=replName",
      "",
      "",
      kSet,
@@ -454,7 +454,7 @@ const URITestCase validCases[] = {
      "dbName",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]/?authMechanism=GSSAPI&authMechanismProperties=SERVICE_NAME:foobar",
+    {"mongerdb://user:pwd@[::1]/?authMechanism=GSSAPI&authMechanismProperties=SERVICE_NAME:foobar",
      "user",
      "pwd",
      kMaster,
@@ -464,7 +464,7 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://user:pwd@[::1]/?authMechanism=GSSAPI&gssapiServiceName=foobar",
+    {"mongerdb://user:pwd@[::1]/?authMechanism=GSSAPI&gssapiServiceName=foobar",
      "user",
      "pwd",
      kMaster,
@@ -474,9 +474,9 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://%2Ftmp%2Fmongodb-27017.sock", "", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
+    {"mongerdb://%2Ftmp%2Fmongerdb-27017.sock", "", "", kMaster, "", 1, {}, "", kGlobalSSLMode},
 
-    {"mongodb://%2Ftmp%2Fmongodb-27017.sock,%2Ftmp%2Fmongodb-27018.sock/?replicaSet=replName",
+    {"mongerdb://%2Ftmp%2Fmongerdb-27017.sock,%2Ftmp%2Fmongerdb-27018.sock/?replicaSet=replName",
      "",
      "",
      kSet,
@@ -486,91 +486,91 @@ const URITestCase validCases[] = {
      "",
      kGlobalSSLMode},
 
-    {"mongodb://localhost/?ssl=true", "", "", kMaster, "", 1, {{"ssl", "true"}}, "", kEnableSSL},
-    {"mongodb://localhost/?ssl=false", "", "", kMaster, "", 1, {{"ssl", "false"}}, "", kDisableSSL},
-    {"mongodb://localhost/?tls=true", "", "", kMaster, "", 1, {{"tls", "true"}}, "", kEnableSSL},
-    {"mongodb://localhost/?tls=false", "", "", kMaster, "", 1, {{"tls", "false"}}, "", kDisableSSL},
+    {"mongerdb://localhost/?ssl=true", "", "", kMaster, "", 1, {{"ssl", "true"}}, "", kEnableSSL},
+    {"mongerdb://localhost/?ssl=false", "", "", kMaster, "", 1, {{"ssl", "false"}}, "", kDisableSSL},
+    {"mongerdb://localhost/?tls=true", "", "", kMaster, "", 1, {{"tls", "true"}}, "", kEnableSSL},
+    {"mongerdb://localhost/?tls=false", "", "", kMaster, "", 1, {{"tls", "false"}}, "", kDisableSSL},
 };
 
 const InvalidURITestCase invalidCases[] = {
 
     // No host.
-    {"mongodb://"},
-    {"mongodb://usr:pwd@/dbname?a=b"},
+    {"mongerdb://"},
+    {"mongerdb://usr:pwd@/dbname?a=b"},
 
     // Username and password must be encoded (cannot have ':' or '@')
-    {"mongodb://usr:pwd:@127.0.0.1/dbName?foo=a&c=b"},
+    {"mongerdb://usr:pwd:@127.0.0.1/dbName?foo=a&c=b"},
 
     // Needs a "/" after the hosts and before the options.
-    {"mongodb://localhost:27017,localhost:27018?replicaSet=missingSlash"},
+    {"mongerdb://localhost:27017,localhost:27018?replicaSet=missingSlash"},
 
     // Host list must actually be comma separated.
-    {"mongodb://localhost:27017localhost:27018"},
+    {"mongerdb://localhost:27017localhost:27018"},
 
     // % symbol in password must be escaped.
-    {"mongodb://localhost:pass%word@127.0.0.1:27017", ErrorCodes::duplicateCodeForTest(51040)},
+    {"mongerdb://localhost:pass%word@127.0.0.1:27017", ErrorCodes::duplicateCodeForTest(51040)},
 
     // Domain sockets have to end in ".sock".
-    {"mongodb://%2Fnotareal%2Fdomainsock"},
+    {"mongerdb://%2Fnotareal%2Fdomainsock"},
 
     // Database name cannot contain slash ("/"), backslash ("\"), space (" "), double-quote ("""),
     // or dollar sign ("$")
-    {"mongodb://usr:pwd@localhost:27017/db$name?a=b"},
-    {"mongodb://usr:pwd@localhost:27017/db/name?a=b"},
-    {"mongodb://usr:pwd@localhost:27017/db\\name?a=b"},
-    {"mongodb://usr:pwd@localhost:27017/db name?a=b"},
-    {"mongodb://usr:pwd@localhost:27017/db\"name?a=b"},
+    {"mongerdb://usr:pwd@localhost:27017/db$name?a=b"},
+    {"mongerdb://usr:pwd@localhost:27017/db/name?a=b"},
+    {"mongerdb://usr:pwd@localhost:27017/db\\name?a=b"},
+    {"mongerdb://usr:pwd@localhost:27017/db name?a=b"},
+    {"mongerdb://usr:pwd@localhost:27017/db\"name?a=b"},
 
     // Options must have a key
-    {"mongodb://usr:pwd@localhost:27017/dbname?=b"},
+    {"mongerdb://usr:pwd@localhost:27017/dbname?=b"},
 
     // Cannot skip a key value pair
-    {"mongodb://usr:pwd@localhost:27017/dbname?a=b&&b=c"},
+    {"mongerdb://usr:pwd@localhost:27017/dbname?a=b&&b=c"},
 
     // Multiple Unix domain sockets and auth DB resembling a socket (relative path)
-    {"mongodb://rel%2Fmongodb-27017.sock,rel%2Fmongodb-27018.sock/admin.sock?replicaSet=replName"},
+    {"mongerdb://rel%2Fmongerdb-27017.sock,rel%2Fmongerdb-27018.sock/admin.sock?replicaSet=replName"},
 
     // Multiple Unix domain sockets with auth DB resembling a path (relative path)
-    {"mongodb://rel%2Fmongodb-27017.sock,rel%2Fmongodb-27018.sock/admin.shoe?replicaSet=replName"},
+    {"mongerdb://rel%2Fmongerdb-27017.sock,rel%2Fmongerdb-27018.sock/admin.shoe?replicaSet=replName"},
 
     // Multiple Unix domain sockets and auth DB resembling a socket (absolute path)
-    {"mongodb://%2Ftmp%2Fmongodb-27017.sock,%2Ftmp%2Fmongodb-27018.sock/"
+    {"mongerdb://%2Ftmp%2Fmongerdb-27017.sock,%2Ftmp%2Fmongerdb-27018.sock/"
      "admin.sock?replicaSet=replName"},
 
     // Multiple Unix domain sockets with auth DB resembling a path (absolute path)
-    {"mongodb://%2Ftmp%2Fmongodb-27017.sock,%2Ftmp%2Fmongodb-27018.sock/"
+    {"mongerdb://%2Ftmp%2Fmongerdb-27017.sock,%2Ftmp%2Fmongerdb-27018.sock/"
      "admin.shoe?replicaSet=replName"},
 
     // Missing value in key value pair for options
-    {"mongodb://127.0.0.1:1234/dbName?foo=a&c=b&d"},
-    {"mongodb://127.0.0.1:1234/dbName?foo=a&c=b&d="},
-    {"mongodb://127.0.0.1:1234/dbName?foo=a&h=&c=b&d=6"},
-    {"mongodb://127.0.0.1:1234/dbName?foo=a&h&c=b&d=6"},
+    {"mongerdb://127.0.0.1:1234/dbName?foo=a&c=b&d"},
+    {"mongerdb://127.0.0.1:1234/dbName?foo=a&c=b&d="},
+    {"mongerdb://127.0.0.1:1234/dbName?foo=a&h=&c=b&d=6"},
+    {"mongerdb://127.0.0.1:1234/dbName?foo=a&h&c=b&d=6"},
 
     // Missing a hostname, or unparsable hostname(s)
-    {"mongodb://,/dbName"},
-    {"mongodb://user:pwd@,/dbName"},
-    {"mongodb://localhost:1234:5678/dbName"},
+    {"mongerdb://,/dbName"},
+    {"mongerdb://user:pwd@,/dbName"},
+    {"mongerdb://localhost:1234:5678/dbName"},
 
     // Options can't have multiple question marks. Only one.
-    {"mongodb://localhost:27017/?foo=a?c=b&d=e?asdf=foo"},
+    {"mongerdb://localhost:27017/?foo=a?c=b&d=e?asdf=foo"},
 
     // Missing a key in key value pair for options
-    {"mongodb://127.0.0.1:1234/dbName?foo=a&=d&c=b"},
+    {"mongerdb://127.0.0.1:1234/dbName?foo=a&=d&c=b"},
 
     // Missing an entire key-value pair
-    {"mongodb://127.0.0.1:1234/dbName?foo=a&&c=b"},
+    {"mongerdb://127.0.0.1:1234/dbName?foo=a&&c=b"},
 
     // Illegal value for ssl/tls.
-    {"mongodb://127.0.0.1:1234/dbName?ssl=blah", ErrorCodes::duplicateCodeForTest(51041)},
-    {"mongodb://127.0.0.1:1234/dbName?tls=blah", ErrorCodes::duplicateCodeForTest(51041)},
+    {"mongerdb://127.0.0.1:1234/dbName?ssl=blah", ErrorCodes::duplicateCodeForTest(51041)},
+    {"mongerdb://127.0.0.1:1234/dbName?tls=blah", ErrorCodes::duplicateCodeForTest(51041)},
 };
 
 // Helper Method to take a filename for a json file and return the array of tests inside of it
 BSONObj getBsonFromJsonFile(std::string fileName) {
     boost::filesystem::path directoryPath = boost::filesystem::current_path();
-    boost::filesystem::path filePath(directoryPath / "src" / "mongo" / "client" /
-                                     "mongo_uri_tests" / fileName);
+    boost::filesystem::path filePath(directoryPath / "src" / "monger" / "client" /
+                                     "monger_uri_tests" / fileName);
     std::string filename(filePath.string());
     std::ifstream infile(filename.c_str());
     std::string data((std::istreambuf_iterator<char>(infile)), std::istreambuf_iterator<char>());
@@ -634,7 +634,7 @@ TEST(MongoURI, InvalidURIs) {
 TEST_F(ServiceContextTest, ValidButBadURIsFailToConnect) {
     // "invalid" is a TLD that cannot exit on the public internet (see rfc2606). It should always
     // parse as a valid URI, but connecting should always fail.
-    auto sw_uri = MongoURI::parse("mongodb://user:pass@hostname.invalid:12345");
+    auto sw_uri = MongoURI::parse("mongerdb://user:pass@hostname.invalid:12345");
     ASSERT_OK(sw_uri.getStatus());
     auto uri = sw_uri.getValue();
     ASSERT_TRUE(uri.isValid());
@@ -646,7 +646,7 @@ TEST_F(ServiceContextTest, ValidButBadURIsFailToConnect) {
 
 TEST(MongoURI, CloneURIForServer) {
     auto sw_uri = MongoURI::parse(
-        "mongodb://localhost:27017,localhost:27018,localhost:27019/admin?replicaSet=rs1&ssl=true");
+        "mongerdb://localhost:27017,localhost:27018,localhost:27019/admin?replicaSet=rs1&ssl=true");
     ASSERT_OK(sw_uri.getStatus());
 
     auto uri = sw_uri.getValue();
@@ -668,19 +668,19 @@ TEST(MongoURI, CloneURIForServer) {
 
 /**
  * These tests come from the Mongo Uri Specifications for the drivers found at:
- * https://github.com/mongodb/specifications/tree/master/source/connection-string/tests
+ * https://github.com/mongerdb/specifications/tree/master/source/connection-string/tests
  * They have been altered as the Drivers specification is somewhat different from the shell
  * implementation.
  */
 TEST(MongoURI, specTests) {
     const std::string files[] = {
-        "mongo-uri-valid-auth.json",
-        "mongo-uri-options.json",
-        "mongo-uri-unix-sockets-absolute.json",
-        "mongo-uri-unix-sockets-relative.json",
-        "mongo-uri-warnings.json",
-        "mongo-uri-host-identifiers.json",
-        "mongo-uri-invalid.json",
+        "monger-uri-valid-auth.json",
+        "monger-uri-options.json",
+        "monger-uri-unix-sockets-absolute.json",
+        "monger-uri-unix-sockets-relative.json",
+        "monger-uri-warnings.json",
+        "monger-uri-host-identifiers.json",
+        "monger-uri-invalid.json",
     };
 
     for (const auto& file : files) {
@@ -781,7 +781,7 @@ TEST(MongoURI, srvRecordTest) {
     } tests[] = {
         // Test some non-SRV URIs to make sure that they do not perform expansions
         {__LINE__,
-         "mongodb://test1.test.build.10gen.cc:12345/",
+         "mongerdb://test1.test.build.10gen.cc:12345/",
          "",
          "",
          "",
@@ -790,7 +790,7 @@ TEST(MongoURI, srvRecordTest) {
          success},
 
         {__LINE__,
-         "mongodb://test6.test.build.10gen.cc:12345/",
+         "mongerdb://test6.test.build.10gen.cc:12345/",
          "",
          "",
          "",
@@ -800,7 +800,7 @@ TEST(MongoURI, srvRecordTest) {
 
         // Test a sample URI against each provided testing DNS entry
         {__LINE__,
-         "mongodb+srv://test1.test.build.10gen.cc/",
+         "mongerdb+srv://test1.test.build.10gen.cc/",
          "",
          "",
          "",
@@ -810,7 +810,7 @@ TEST(MongoURI, srvRecordTest) {
 
         // Test a sample URI against each provided testing DNS entry
         {__LINE__,
-         "mongodb+srv://test1.test.build.10gen.cc/?ssl=false",
+         "mongerdb+srv://test1.test.build.10gen.cc/?ssl=false",
          "",
          "",
          "",
@@ -820,7 +820,7 @@ TEST(MongoURI, srvRecordTest) {
 
         // Test a sample URI against the need for deep DNS relation
         {__LINE__,
-         "mongodb+srv://test18.test.build.10gen.cc/?replicaSet=repl0",
+         "mongerdb+srv://test18.test.build.10gen.cc/?replicaSet=repl0",
          "",
          "",
          "",
@@ -834,7 +834,7 @@ TEST(MongoURI, srvRecordTest) {
 
         // Test a sample URI with FQDN against the need for deep DNS relation
         {__LINE__,
-         "mongodb+srv://test18.test.build.10gen.cc./?replicaSet=repl0",
+         "mongerdb+srv://test18.test.build.10gen.cc./?replicaSet=repl0",
          "",
          "",
          "",
@@ -847,7 +847,7 @@ TEST(MongoURI, srvRecordTest) {
          success},
 
         {__LINE__,
-         "mongodb+srv://user:password@test2.test.build.10gen.cc/"
+         "mongerdb+srv://user:password@test2.test.build.10gen.cc/"
          "database?someOption=someValue&someOtherOption=someOtherValue",
          "user",
          "password",
@@ -858,7 +858,7 @@ TEST(MongoURI, srvRecordTest) {
 
 
         {__LINE__,
-         "mongodb+srv://user:password@test3.test.build.10gen.cc/"
+         "mongerdb+srv://user:password@test3.test.build.10gen.cc/"
          "database?someOption=someValue&someOtherOption=someOtherValue",
          "user",
          "password",
@@ -869,7 +869,7 @@ TEST(MongoURI, srvRecordTest) {
 
 
         {__LINE__,
-         "mongodb+srv://user:password@test5.test.build.10gen.cc/"
+         "mongerdb+srv://user:password@test5.test.build.10gen.cc/"
          "database?someOption=someValue&someOtherOption=someOtherValue",
          "user",
          "password",
@@ -883,7 +883,7 @@ TEST(MongoURI, srvRecordTest) {
          success},
 
         {__LINE__,
-         "mongodb+srv://user:password@test5.test.build.10gen.cc/"
+         "mongerdb+srv://user:password@test5.test.build.10gen.cc/"
          "database?someOption=someValue&authSource=anotherDB&someOtherOption=someOtherValue",
          "user",
          "password",
@@ -897,10 +897,10 @@ TEST(MongoURI, srvRecordTest) {
           {"ssl", "true"}},
          success},
 
-        {__LINE__, "mongodb+srv://test6.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test6.test.build.10gen.cc/", "", "", "", {}, {}, failure},
 
         {__LINE__,
-         "mongodb+srv://test6.test.build.10gen.cc/database",
+         "mongerdb+srv://test6.test.build.10gen.cc/database",
          "",
          "",
          "database",
@@ -909,7 +909,7 @@ TEST(MongoURI, srvRecordTest) {
          failure},
 
         {__LINE__,
-         "mongodb+srv://test6.test.build.10gen.cc/?authSource=anotherDB",
+         "mongerdb+srv://test6.test.build.10gen.cc/?authSource=anotherDB",
          "",
          "",
          "",
@@ -918,7 +918,7 @@ TEST(MongoURI, srvRecordTest) {
          failure},
 
         {__LINE__,
-         "mongodb+srv://test6.test.build.10gen.cc/?irrelevantOption=irrelevantValue",
+         "mongerdb+srv://test6.test.build.10gen.cc/?irrelevantOption=irrelevantValue",
          "",
          "",
          "",
@@ -928,7 +928,7 @@ TEST(MongoURI, srvRecordTest) {
 
 
         {__LINE__,
-         "mongodb+srv://test6.test.build.10gen.cc/"
+         "mongerdb+srv://test6.test.build.10gen.cc/"
          "?irrelevantOption=irrelevantValue&authSource=anotherDB",
          "",
          "",
@@ -938,7 +938,7 @@ TEST(MongoURI, srvRecordTest) {
          failure},
 
         {__LINE__,
-         "mongodb+srv://test7.test.build.10gen.cc./?irrelevantOption=irrelevantValue",
+         "mongerdb+srv://test7.test.build.10gen.cc./?irrelevantOption=irrelevantValue",
          "",
          "",
          "",
@@ -946,12 +946,12 @@ TEST(MongoURI, srvRecordTest) {
          {},
          failure},
 
-        {__LINE__, "mongodb+srv://test7.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test7.test.build.10gen.cc./", "", "", "", {}, {}, failure},
 
-        {__LINE__, "mongodb+srv://test8.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test8.test.build.10gen.cc./", "", "", "", {}, {}, failure},
 
         {__LINE__,
-         "mongodb+srv://test10.test.build.10gen.cc./?irrelevantOption=irrelevantValue",
+         "mongerdb+srv://test10.test.build.10gen.cc./?irrelevantOption=irrelevantValue",
          "",
          "",
          "",
@@ -960,7 +960,7 @@ TEST(MongoURI, srvRecordTest) {
          failure},
 
         {__LINE__,
-         "mongodb+srv://test11.test.build.10gen.cc./?irrelevantOption=irrelevantValue",
+         "mongerdb+srv://test11.test.build.10gen.cc./?irrelevantOption=irrelevantValue",
          "",
          "",
          "",
@@ -968,21 +968,21 @@ TEST(MongoURI, srvRecordTest) {
          {},
          failure},
 
-        {__LINE__, "mongodb+srv://test12.test.build.10gen.cc./", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test13.test.build.10gen.cc./", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test14.test.build.10gen.cc./", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test15.test.build.10gen.cc./", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test16.test.build.10gen.cc./", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test17.test.build.10gen.cc./", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test19.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test12.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test13.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test14.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test15.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test16.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test17.test.build.10gen.cc./", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test19.test.build.10gen.cc./", "", "", "", {}, {}, failure},
 
-        {__LINE__, "mongodb+srv://test12.test.build.10gen.cc/", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test13.test.build.10gen.cc/", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test14.test.build.10gen.cc/", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test15.test.build.10gen.cc/", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test16.test.build.10gen.cc/", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test17.test.build.10gen.cc/", "", "", "", {}, {}, failure},
-        {__LINE__, "mongodb+srv://test19.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test12.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test13.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test14.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test15.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test16.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test17.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+        {__LINE__, "mongerdb+srv://test19.test.build.10gen.cc/", "", "", "", {}, {}, failure},
     };
 
     for (const auto& test : tests) {
@@ -1024,19 +1024,19 @@ TEST(MongoURI, srvRecordTest) {
  * Also checks that SRV URI's don't turn into non-SRV URIs after redaction.
  */
 TEST(MongoURI, Redact) {
-    constexpr auto goodWithDBName = "mongodb://admin@localhost/admin"_sd;
-    constexpr auto goodWithoutDBName = "mongodb://admin@localhost"_sd;
-    constexpr auto goodWithOnlyDBAndHost = "mongodb://localhost/admin"_sd;
+    constexpr auto goodWithDBName = "mongerdb://admin@localhost/admin"_sd;
+    constexpr auto goodWithoutDBName = "mongerdb://admin@localhost"_sd;
+    constexpr auto goodWithOnlyDBAndHost = "mongerdb://localhost/admin"_sd;
     const std::initializer_list<std::pair<StringData, StringData>> testCases = {
-        {"mongodb://admin:password@localhost/admin"_sd, goodWithDBName},
-        {"mongodb://admin@localhost/admin?secretConnectionOption=foo"_sd, goodWithDBName},
-        {"mongodb://admin:password@localhost/admin?secretConnectionOptions"_sd, goodWithDBName},
-        {"mongodb://admin@localhost/admin"_sd, goodWithDBName},
-        {"mongodb://admin@localhost/admin?secretConnectionOptions", goodWithDBName},
-        {"mongodb://admin:password@localhost"_sd, goodWithoutDBName},
-        {"mongodb://admin@localhost", goodWithoutDBName},
-        {"mongodb://localhost/admin?socketTimeoutMS=5", goodWithOnlyDBAndHost},
-        {"mongodb://localhost/admin", goodWithOnlyDBAndHost},
+        {"mongerdb://admin:password@localhost/admin"_sd, goodWithDBName},
+        {"mongerdb://admin@localhost/admin?secretConnectionOption=foo"_sd, goodWithDBName},
+        {"mongerdb://admin:password@localhost/admin?secretConnectionOptions"_sd, goodWithDBName},
+        {"mongerdb://admin@localhost/admin"_sd, goodWithDBName},
+        {"mongerdb://admin@localhost/admin?secretConnectionOptions", goodWithDBName},
+        {"mongerdb://admin:password@localhost"_sd, goodWithoutDBName},
+        {"mongerdb://admin@localhost", goodWithoutDBName},
+        {"mongerdb://localhost/admin?socketTimeoutMS=5", goodWithOnlyDBAndHost},
+        {"mongerdb://localhost/admin", goodWithOnlyDBAndHost},
     };
 
     for (const auto& testCase : testCases) {
@@ -1044,10 +1044,10 @@ TEST(MongoURI, Redact) {
         ASSERT_EQ(MongoURI::redact(testCase.first), testCase.second);
     }
 
-    const auto toRedactSRV = "mongodb+srv://admin:password@localhost/admin?secret=foo"_sd;
-    const auto redactedSRV = "mongodb+srv://admin@localhost/admin"_sd;
+    const auto toRedactSRV = "mongerdb+srv://admin:password@localhost/admin?secret=foo"_sd;
+    const auto redactedSRV = "mongerdb+srv://admin@localhost/admin"_sd;
     ASSERT_EQ(MongoURI::redact(toRedactSRV), redactedSRV);
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

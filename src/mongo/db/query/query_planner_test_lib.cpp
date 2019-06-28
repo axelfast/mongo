@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,30 +28,30 @@
  */
 
 /**
- * This file contains tests for mongo/db/query/query_planner.cpp
+ * This file contains tests for monger/db/query/query_planner.cpp
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/query/query_planner_test_lib.h"
+#include "monger/db/query/query_planner_test_lib.h"
 
 #include <ostream>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/json.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/query/collation/collator_factory_mock.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_solution.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/json.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/query/collation/collator_factory_mock.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_solution.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 using std::string;
 
@@ -145,7 +145,7 @@ bool bsonObjFieldsAreInSet(BSONObj obj, const std::set<std::string>& allowedFiel
 
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 /**
  * Looks in the children stored in the 'nodes' field of 'testSoln'
@@ -751,4 +751,4 @@ bool QueryPlannerTestLib::solutionMatches(const BSONObj& testSoln,
     return false;
 }
 
-}  // namespace mongo
+}  // namespace monger

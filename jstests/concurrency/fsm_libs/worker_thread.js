@@ -3,7 +3,7 @@
 load('jstests/concurrency/fsm_libs/assert.js');
 load('jstests/concurrency/fsm_libs/cluster.js');       // for Cluster.isStandalone
 load('jstests/concurrency/fsm_libs/parse_config.js');  // for parseConfig
-load('jstests/libs/specific_secondary_reader_mongo.js');
+load('jstests/libs/specific_secondary_reader_monger.js');
 
 var workerThread = (function() {
 
@@ -24,7 +24,7 @@ var workerThread = (function() {
     function main(workloads, args, run) {
         var myDB;
         var configs = {};
-        var connectionString = 'mongodb://' + args.host + '/?appName=tid:' + args.tid;
+        var connectionString = 'mongerdb://' + args.host + '/?appName=tid:' + args.tid;
         if (typeof args.replSetName !== 'undefined') {
             connectionString += '&replicaSet=' + args.replSetName;
         }
@@ -44,11 +44,11 @@ var workerThread = (function() {
                 gc();
             }
 
-            let mongo;
+            let monger;
             if (TestData.pinningSecondary) {
-                mongo = new SpecificSecondaryReaderMongo(connectionString, args.secondaryHost);
+                monger = new SpecificSecondaryReaderMongo(connectionString, args.secondaryHost);
             } else {
-                mongo = new Mongo(connectionString);
+                monger = new Mongo(connectionString);
             }
 
             // Retry operations that fail due to in-progress background operations. Load this early
@@ -83,7 +83,7 @@ var workerThread = (function() {
                     delete args.sessionOptions.initialOperationTime;
                 }
 
-                const session = mongo.startSession(args.sessionOptions);
+                const session = monger.startSession(args.sessionOptions);
                 const readPreference = session.getOptions().getReadPreference();
                 if (readPreference && readPreference.mode === 'secondary') {
                     // Unset the explicit read preference so set_read_preference_secondary.js can do
@@ -91,7 +91,7 @@ var workerThread = (function() {
                     session.getOptions().setReadPreference(undefined);
 
                     // We load() set_read_preference_secondary.js in order to avoid running
-                    // commands against the "admin" and "config" databases via mongos with
+                    // commands against the "admin" and "config" databases via mongers with
                     // readPreference={mode: "secondary"} when there's only a single node in
                     // the CSRS.
                     load('jstests/libs/override_methods/set_read_preference_secondary.js');
@@ -113,12 +113,12 @@ var workerThread = (function() {
 
                 myDB = session.getDatabase(args.dbName);
             } else {
-                myDB = mongo.getDB(args.dbName);
+                myDB = monger.getDB(args.dbName);
             }
 
             {
                 let connectionDesc = '';
-                // In sharded environments, mongos is acting as a proxy for the mongo shell and
+                // In sharded environments, mongers is acting as a proxy for the monger shell and
                 // therefore has a different outbound port than the 'whatsmyuri' command returns.
                 if (!Cluster.isSharded(args.clusterOptions)) {
                     let res = assert.commandWorked(myDB.runCommand({whatsmyuri: 1}));

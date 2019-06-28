@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/dbtests/mock/mock_dbclient_connection.h"
-#include "mongo/dbtests/mock/mock_remote_db_server.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/concurrency/mutex.h"
+#include "monger/base/status.h"
+#include "monger/dbtests/mock/mock_dbclient_connection.h"
+#include "monger/dbtests/mock/mock_remote_db_server.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/concurrency/mutex.h"
 
-namespace mongo {
+namespace monger {
 /**
  * Registry for storing mock servers and can create mock connections to these
  * servers.
@@ -99,7 +99,7 @@ private:
         MockConnHook(MockConnRegistry* registry);
         ~MockConnHook();
 
-        std::unique_ptr<mongo::DBClientBase> connect(const mongo::ConnectionString& connString,
+        std::unique_ptr<monger::DBClientBase> connect(const monger::ConnectionString& connString,
                                                      std::string& errmsg,
                                                      double socketTimeout);
 
@@ -117,4 +117,4 @@ private:
     stdx::mutex _registryMutex;
     stdx::unordered_map<std::string, MockRemoteDBServer*> _registry;
 };
-}  // namespace mongo
+}  // namespace monger

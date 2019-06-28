@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/mongos_options.h"
+#include "monger/s/mongers_options.h"
 
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/config.h"
-#include "mongo/db/server_options_base.h"
-#include "mongo/db/server_options_server_helpers.h"
-#include "mongo/s/version_mongos.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/builder.h"
+#include "monger/config.h"
+#include "monger/db/server_options_base.h"
+#include "monger/db/server_options_server_helpers.h"
+#include "monger/s/version_mongers.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
-MongosGlobalParams mongosGlobalParams;
+MongosGlobalParams mongersGlobalParams;
 
 void printMongosHelp(const moe::OptionSection& options) {
     std::cout << options.helpString() << std::endl;
@@ -68,8 +68,8 @@ bool handlePreValidationMongosOptions(const moe::Environment& params,
         return false;
     }
     if (params.count("test") && params["test"].as<bool>() == true) {
-        ::mongo::logger::globalLogDomain()->setMinimumLoggedSeverity(
-            ::mongo::logger::LogSeverity::Debug(5));
+        ::monger::logger::globalLogDomain()->setMinimumLoggedSeverity(
+            ::monger::logger::LogSeverity::Debug(5));
         return false;
     }
 
@@ -108,7 +108,7 @@ Status storeMongosOptions(const moe::Environment& params) {
     }
 
     if (params.count("noscripting") || params.count("security.javascriptEnabled")) {
-        warning() << "The Javascript enabled/disabled options are not supported for mongos. "
+        warning() << "The Javascript enabled/disabled options are not supported for mongers. "
                      "(\"noscripting\" and/or \"security.javascriptEnabled\" are set.)";
     }
 
@@ -149,12 +149,12 @@ Status storeMongosOptions(const moe::Environment& params) {
         }
     }
 
-    mongosGlobalParams.configdbs =
+    mongersGlobalParams.configdbs =
         ConnectionString{configdbConnectionString.getValue().type(),
                          seedServers,
                          configdbConnectionString.getValue().getSetName()};
 
-    if (mongosGlobalParams.configdbs.getServers().size() < 3) {
+    if (mongersGlobalParams.configdbs.getServers().size() < 3) {
         warning() << "Running a sharded cluster with fewer than 3 config servers should only be "
                      "done for testing purposes and is not recommended for production.";
     }
@@ -162,4 +162,4 @@ Status storeMongosOptions(const moe::Environment& params) {
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

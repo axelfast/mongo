@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,34 +27,34 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
 #if defined(__linux__)
 #include <sys/vfs.h>
 #endif
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/init.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/storage_engine_impl.h"
-#include "mongo/db/storage/storage_engine_init.h"
-#include "mongo/db/storage/storage_engine_lock_file.h"
-#include "mongo/db/storage/storage_engine_metadata.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_global_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_index.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_parameters_gen.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_server_status.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/processinfo.h"
+#include "monger/base/init.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/storage_engine_impl.h"
+#include "monger/db/storage/storage_engine_init.h"
+#include "monger/db/storage/storage_engine_lock_file.h"
+#include "monger/db/storage/storage_engine_metadata.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_global_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_index.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_parameters_gen.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_server_status.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/util/log.h"
+#include "monger/util/processinfo.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 class WiredTigerFactory : public StorageEngine::Factory {
@@ -80,7 +80,7 @@ public:
                          "WiredTiger storage engine"
                       << startupWarningsLog;
                 log() << "**          See "
-                         "http://dochub.mongodb.org/core/prodnotes-filesystem"
+                         "http://dochub.mongerdb.org/core/prodnotes-filesystem"
                       << startupWarningsLog;
             }
         }
@@ -96,7 +96,7 @@ public:
                       << memoryThresholdPercentage * 100 << "% of available RAM."
                       << startupWarningsLog;
                 log() << "**          See "
-                         "http://dochub.mongodb.org/core/faq-memory-diagnostics-wt"
+                         "http://dochub.mongerdb.org/core/faq-memory-diagnostics-wt"
                       << startupWarningsLog;
             }
         }
@@ -162,7 +162,7 @@ public:
         // If the 'groupCollections' field does not exist in the 'storage.bson' file, the
         // data-format of existing tables is as if 'groupCollections' is false. Passing this in
         // prevents validation from accepting 'params.groupCollections' being true when a "group
-        // collections" aware mongod is launched on an 3.4- dbpath.
+        // collections" aware mongerd is launched on an 3.4- dbpath.
         const bool kDefaultGroupCollections = false;
         status =
             metadata.validateStorageEngineOption("groupCollections",
@@ -193,4 +193,4 @@ ServiceContext::ConstructorActionRegisterer registerWiredTiger(
         registerStorageEngine(service, std::make_unique<WiredTigerFactory>());
     });
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

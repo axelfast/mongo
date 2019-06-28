@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,26 +27,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 
-#include "mongo/client/remote_command_targeter_factory_mock.h"
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/pipeline/document_source_group.h"
-#include "mongo/db/pipeline/document_source_match.h"
-#include "mongo/db/pipeline/document_source_merge.h"
-#include "mongo/db/pipeline/document_source_out.h"
-#include "mongo/db/pipeline/document_source_project.h"
-#include "mongo/db/pipeline/document_source_sort.h"
-#include "mongo/db/pipeline/expression_context_for_test.h"
-#include "mongo/db/pipeline/stub_mongo_process_interface.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/catalog_cache_test_fixture.h"
-#include "mongo/s/query/cluster_aggregation_planner.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/remote_command_targeter_factory_mock.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/pipeline/document_source_group.h"
+#include "monger/db/pipeline/document_source_match.h"
+#include "monger/db/pipeline/document_source_merge.h"
+#include "monger/db/pipeline/document_source_out.h"
+#include "monger/db/pipeline/document_source_project.h"
+#include "monger/db/pipeline/document_source_sort.h"
+#include "monger/db/pipeline/expression_context_for_test.h"
+#include "monger/db/pipeline/stub_monger_process_interface.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/catalog_cache_test_fixture.h"
+#include "monger/s/query/cluster_aggregation_planner.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 using MergeStrategyDescriptor = DocumentSourceMerge::MergeStrategyDescriptor;
@@ -74,7 +74,7 @@ public:
         CatalogCacheTestFixture::setUp();
         _expCtx = new ExpressionContextForTest(operationContext(),
                                                AggregationRequest{kTestAggregateNss, {}});
-        _expCtx->mongoProcessInterface = std::make_shared<FakeMongoProcessInterface>();
+        _expCtx->mongerProcessInterface = std::make_shared<FakeMongoProcessInterface>();
         _expCtx->inMongos = true;
     }
 
@@ -145,9 +145,9 @@ TEST_F(ClusterExchangeTest, ShouldNotExchangeIfPipelineEndsWithOut) {
     setupNShards(2);
 
     // For this test pretend 'kTestOutNss' is not sharded so that we can use $out.
-    const auto originalMongoProcessInterface = expCtx()->mongoProcessInterface;
-    expCtx()->mongoProcessInterface = std::make_shared<StubMongoProcessInterface>();
-    ON_BLOCK_EXIT([&]() { expCtx()->mongoProcessInterface = originalMongoProcessInterface; });
+    const auto originalMongoProcessInterface = expCtx()->mongerProcessInterface;
+    expCtx()->mongerProcessInterface = std::make_shared<StubMongoProcessInterface>();
+    ON_BLOCK_EXIT([&]() { expCtx()->mongerProcessInterface = originalMongoProcessInterface; });
 
     auto mergePipe = unittest::assertGet(
         Pipeline::create({DocumentSourceOut::create(kTestOutNss, expCtx())}, expCtx()));
@@ -688,4 +688,4 @@ TEST_F(ClusterExchangeTest, CompoundShardKeyThreeShards) {
     future.default_timed_get();
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

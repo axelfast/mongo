@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/db/read_concern.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_REGISTER_SHIM(waitForReadConcern)
 (OperationContext* opCtx,
@@ -63,4 +63,4 @@ MONGO_REGISTER_SHIM(waitForLinearizableReadConcern)
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,17 +31,17 @@
 
 #include <string>
 
-#include "mongo/bson/oid.h"
-#include "mongo/s/shard_id.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/bson/oid.h"
+#include "monger/s/shard_id.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class ServiceContext;
 
 /**
- * Contains information about the shardingness of a running mongod. This is a passive class and its
+ * Contains information about the shardingness of a running mongerd. This is a passive class and its
  * state and concurrency control is driven from outside (specifically ShardingInitializationMongoD,
  * which should be its only caller).
  *
@@ -151,4 +151,4 @@ private:
     Status _initializationStatus{ErrorCodes::InternalError, "Uninitialized value"};
 };
 
-}  // namespace mongo
+}  // namespace monger

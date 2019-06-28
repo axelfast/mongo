@@ -25,7 +25,7 @@ executor:
           forceValidationWithFeatureCompatibilityVersion: "4.2"
   fixture:
     class: MongoDFixture
-    mongod_options:
+    mongerd_options:
       set_parameters:
         disableLogicalSessionCacheRefresh: false
         enableTestCommands: 1

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/fts/fts_spec.h"
+#include "monger/db/fts/fts_spec.h"
 
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/fts/fts_element_iterator.h"
-#include "mongo/db/fts/fts_tokenizer.h"
-#include "mongo/db/fts/fts_util.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/util/str.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/fts/fts_element_iterator.h"
+#include "monger/db/fts/fts_tokenizer.h"
+#include "monger/db/fts/fts_util.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
 using std::map;
 using std::string;
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 const double DEFAULT_WEIGHT = 1;
 const double MAX_WEIGHT = 1000000000;
@@ -108,7 +108,7 @@ FTSSpec::FTSSpec(const BSONObj& indexInfo) {
     // TODO: consder propagating the index ns to here to improve the error message
     uassert(28682,
             str::stream() << "Unrecognized language " << indexLanguage
-                          << " found for text index. Verify mongod was started with the"
+                          << " found for text index. Verify mongerd was started with the"
                              " correct options.",
             swl.getStatus().isOK());
     _defaultLanguage = swl.getValue();
@@ -166,7 +166,7 @@ const FTSLanguage* FTSSpec::_getLanguageToUseV2(const BSONObj& userDoc,
     }
     uassert(17261,
             "found language override field in document with non-string type",
-            e.type() == mongo::String);
+            e.type() == monger::String);
     StatusWithFTSLanguage swl = FTSLanguage::make(e.String(), getTextIndexVersion());
     uassert(17262, "language override unsupported: " + e.String(), swl.getStatus().isOK());
     return swl.getValue();

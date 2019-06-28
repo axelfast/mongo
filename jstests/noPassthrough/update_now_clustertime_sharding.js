@@ -10,7 +10,7 @@
 (function() {
     "use strict";
 
-    const st = new ShardingTest({name: jsTestName(), mongos: 1, shards: 2, rs: {nodes: 1}});
+    const st = new ShardingTest({name: jsTestName(), mongers: 1, shards: 2, rs: {nodes: 1}});
 
     const db = st.s.getDB(jsTestName());
     const otherColl = db.other;
@@ -45,7 +45,7 @@
 
     assert.commandWorked(bulk.execute());
 
-    // Test that we cannot issue an update to mongoS with runtime constants already present.
+    // Test that we cannot issue an update to mongerS with runtime constants already present.
     assert.commandFailedWithCode(db.runCommand({
         update: coll.getName(),
         updates: [{q: {}, u: {$set: {operationFailsBeforeApplyingUpdates: true}}}],
@@ -186,7 +186,7 @@
         assert.eq(result.ctime5, result.ctime6);
     }
 
-    // Test that we cannot issue a findAndModify to mongoS with runtime constants already present.
+    // Test that we cannot issue a findAndModify to mongerS with runtime constants already present.
     assert.commandFailedWithCode(db.runCommand({
         findAndModify: coll.getName(),
         query: {},

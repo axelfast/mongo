@@ -4,27 +4,27 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongodump creates BSON data from the contents of a MongoDB instance.
-package mongodump
+// Package mongerdump creates BSON data from the contents of a MongoDB instance.
+package mongerdump
 
 import (
 	"context"
 
-	"github.com/mongodb/mongo-tools-common/archive"
-	"github.com/mongodb/mongo-tools-common/auth"
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/failpoint"
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/progress"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"github.com/mongerdb/monger-tools-common/archive"
+	"github.com/mongerdb/monger-tools-common/auth"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/failpoint"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/progress"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
+	"go.mongerdb.org/monger-driver/monger/readpref"
 
 	"bufio"
 	"compress/gzip"
@@ -39,9 +39,9 @@ import (
 const defaultPermissions = 0755
 
 // MongoDump is a container for the user-specified options and
-// internal state used for running mongodump.
+// internal state used for running mongerdump.
 type MongoDump struct {
-	// basic mongo tool options
+	// basic monger tool options
 	ToolOptions   *options.ToolOptions
 	InputOptions  *InputOptions
 	OutputOptions *OutputOptions
@@ -124,7 +124,7 @@ func (dump *MongoDump) ValidateOptions() error {
 
 // Init performs preliminary setup operations for MongoDump.
 func (dump *MongoDump) Init() error {
-	log.Logvf(log.DebugHigh, "initializing mongodump object")
+	log.Logvf(log.DebugHigh, "initializing mongerdump object")
 	err := dump.ValidateOptions()
 	if err != nil {
 		return fmt.Errorf("bad option: %v", err)
@@ -150,7 +150,7 @@ func (dump *MongoDump) Init() error {
 	}
 
 	if dump.isMongos && dump.OutputOptions.Oplog {
-		return fmt.Errorf("can't use --oplog option when dumping from a mongos")
+		return fmt.Errorf("can't use --oplog option when dumping from a mongers")
 	}
 
 	// warn if we are trying to dump from a secondary in a sharded cluster
@@ -408,7 +408,7 @@ func (dump *MongoDump) Dump() (err error) {
 		exists, err := dump.checkOplogTimestampExists(dump.oplogStart)
 		if !exists {
 			return fmt.Errorf(
-				"oplog overflow: mongodump was unable to capture all new oplog entries during execution")
+				"oplog overflow: mongerdump was unable to capture all new oplog entries during execution")
 		}
 		if err != nil {
 			return fmt.Errorf("unable to check oplog for overflow: %v", err)
@@ -429,7 +429,7 @@ func (dump *MongoDump) Dump() (err error) {
 		exists, err = dump.checkOplogTimestampExists(dump.oplogStart)
 		if !exists {
 			return fmt.Errorf(
-				"oplog overflow: mongodump was unable to capture all new oplog entries during execution")
+				"oplog overflow: mongerdump was unable to capture all new oplog entries during execution")
 		}
 		if err != nil {
 			return fmt.Errorf("unable to check oplog for overflow: %v", err)
@@ -658,14 +658,14 @@ func (dump *MongoDump) dumpValidatedQueryToIntent(
 // dumpIterToWriter takes an mgo iterator, a writer, and a pointer to
 // a counter, and dumps the iterator's contents to the writer.
 func (dump *MongoDump) dumpIterToWriter(
-	iter *mongo.Cursor, writer io.Writer, progressCount progress.Updateable) error {
+	iter *monger.Cursor, writer io.Writer, progressCount progress.Updateable) error {
 	return dump.dumpValidatedIterToWriter(iter, writer, progressCount, nil)
 }
 
 // dumpValidatedIterToWriter takes a cursor, a writer, an Updateable object, and a documentValidator and validates and
 // dumps the iterator's contents to the writer.
 func (dump *MongoDump) dumpValidatedIterToWriter(
-	iter *mongo.Cursor, writer io.Writer, progressCount progress.Updateable, validator documentValidator) error {
+	iter *monger.Cursor, writer io.Writer, progressCount progress.Updateable, validator documentValidator) error {
 	defer iter.Close(context.Background())
 	var termErr error
 

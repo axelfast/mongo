@@ -3,11 +3,11 @@
 (function() {
     'use strict';
 
-    const mongod = MongoRunner.runMongod({
+    const mongerd = MongoRunner.runMongod({
         tlsOnNormalPorts: '',
         tlsCertificateKeyFile: 'jstests/libs/server.pem',
     });
-    assert(mongod);
-    assert.commandWorked(mongod.getDB('admin').runCommand({isMaster: 1}));
-    MongoRunner.stopMongod(mongod);
+    assert(mongerd);
+    assert.commandWorked(mongerd.getDB('admin').runCommand({isMaster: 1}));
+    MongoRunner.stopMongod(mongerd);
 })();

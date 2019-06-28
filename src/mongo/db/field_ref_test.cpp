@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 
 #include <string>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/db/field_ref.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 TEST(Empty, NoFields) {
@@ -906,4 +906,4 @@ TEST(RemoveFirstPart, RemovingFirstPartFromLongPathMultipleTimes) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

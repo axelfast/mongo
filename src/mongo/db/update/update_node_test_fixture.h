@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/db/update/update_node.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/db/update/update_node.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 class UpdateNodeTest : public ServiceContextTest {
 public:
@@ -46,9 +46,9 @@ protected:
         resetApplyParams();
 
         // Set up the logical clock needed by CurrentDateNode and ObjectReplaceExecutor.
-        auto service = mongo::getGlobalServiceContext();
-        auto logicalClock = std::make_unique<mongo::LogicalClock>(service);
-        mongo::LogicalClock::set(service, std::move(logicalClock));
+        auto service = monger::getGlobalServiceContext();
+        auto logicalClock = std::make_unique<monger::LogicalClock>(service);
+        monger::LogicalClock::set(service, std::move(logicalClock));
     }
 
     void resetApplyParams() {
@@ -151,4 +151,4 @@ private:
     FieldRefSetWithStorage _modifiedPaths;
 };
 
-}  // namespace mongo
+}  // namespace monger

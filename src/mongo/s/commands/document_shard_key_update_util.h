@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/s/transaction_router.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/s/transaction_router.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class BSONObjBuilder;
@@ -109,4 +109,4 @@ BSONObj constructShardKeyInsertCmdObj(const NamespaceString& nss,
                                       const BSONObj& updatePostImage,
                                       int stmtId);
 }  // namespace documentShardKeyUpdateUtil
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,16 +28,16 @@
  */
 
 #ifndef MONGO_UTIL_DNS_QUERY_PLATFORM_INCLUDE_WHITELIST
-#error Do not include the DNS Query platform implementation headers.  Please use "mongo/util/dns_query.h" instead.
+#error Do not include the DNS Query platform implementation headers.  Please use "monger/util/dns_query.h" instead.
 #endif
 
 #include <stdexcept>
 #include <string>
 #include <vector>
 
-#include "mongo/util/assert_util.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 namespace dns {
 namespace {
 
@@ -80,4 +80,4 @@ public:
 };
 }  // namespace
 }  // namespace dns
-}  // namespace mongo
+}  // namespace monger

@@ -1,11 +1,11 @@
 /**
  * Tests the logicalTime API for the following topologies:
- *   - mongos talking to a sharded replica set (sharded and unsharded collections)
- *   - mongod from a sharded replica set
- *   - mongod from a non-sharded replica set
- *   - standalone mongod
+ *   - mongers talking to a sharded replica set (sharded and unsharded collections)
+ *   - mongerd from a sharded replica set
+ *   - mongerd from a non-sharded replica set
+ *   - standalone mongerd
  *
- * Expects logicalTime to come in the command body from both a mongos and a mongod.
+ * Expects logicalTime to come in the command body from both a mongers and a mongerd.
  */
 (function() {
     "use strict";
@@ -37,7 +37,7 @@
         return true;
     }
 
-    // A mongos that talks to a non-sharded collection on a sharded replica set returns a
+    // A mongers that talks to a non-sharded collection on a sharded replica set returns a
     // logicalTime BSON object that matches the expected format.
     var st = new ShardingTest({name: "logical_time_api", shards: {rs0: {nodes: 1}}});
 
@@ -45,36 +45,36 @@
     var res =
         assert.commandWorked(testDB.runCommand("insert", {insert: "foo", documents: [{x: 1}]}));
     assert(containsValidLogicalTimeBson(res),
-           "Expected command body from a mongos talking to a non-sharded collection on a sharded " +
+           "Expected command body from a mongers talking to a non-sharded collection on a sharded " +
                "replica set to contain logicalTime, received: " + tojson(res));
 
-    // A mongos that talks to a sharded collection on a sharded replica set returns a
+    // A mongers that talks to a sharded collection on a sharded replica set returns a
     // logicalTime BSON object that matches the expected format.
     assert.commandWorked(st.s.adminCommand({enableSharding: "test"}));
     assert.commandWorked(st.s.adminCommand({shardCollection: "test.bar", key: {x: 1}}));
 
     res = assert.commandWorked(testDB.runCommand("insert", {insert: "bar", documents: [{x: 2}]}));
     assert(containsValidLogicalTimeBson(res),
-           "Expected command body from a mongos talking to a sharded collection on a sharded " +
+           "Expected command body from a mongers talking to a sharded collection on a sharded " +
                "replica set to contain logicalTime, received: " + tojson(res));
 
-    // Verify mongos can accept requests with $clusterTime in the command body.
+    // Verify mongers can accept requests with $clusterTime in the command body.
     assert.commandWorked(testDB.runCommand({isMaster: 1, $clusterTime: res.$clusterTime}));
 
-    // A mongod in a sharded replica set returns a logicalTime bson that matches the expected
+    // A mongerd in a sharded replica set returns a logicalTime bson that matches the expected
     // format.
     testDB = st.rs0.getPrimary().getDB("test");
     res = assert.commandWorked(testDB.runCommand("insert", {insert: "foo", documents: [{x: 3}]}));
     assert(containsValidLogicalTimeBson(res),
-           "Expected command body from a mongod in a sharded replica set to contain " +
+           "Expected command body from a mongerd in a sharded replica set to contain " +
                "logicalTime, received: " + tojson(res));
 
-    // Verify mongod can accept requests with $clusterTime in the command body.
+    // Verify mongerd can accept requests with $clusterTime in the command body.
     res = assert.commandWorked(testDB.runCommand({isMaster: 1, $clusterTime: res.$clusterTime}));
 
     st.stop();
 
-    // A mongod from a non-sharded replica set does not return logicalTime.
+    // A mongerd from a non-sharded replica set does not return logicalTime.
     var replTest = new ReplSetTest({name: "logical_time_api_non_sharded_replset", nodes: 1});
     replTest.startSet();
     replTest.initiate();
@@ -82,18 +82,18 @@
     testDB = replTest.getPrimary().getDB("test");
     res = assert.commandWorked(testDB.runCommand("insert", {insert: "foo", documents: [{x: 4}]}));
     assert(containsValidLogicalTimeBson(res),
-           "Expected command body from a mongod in a non-sharded replica set to " +
+           "Expected command body from a mongerd in a non-sharded replica set to " +
                "contain logicalTime, received: " + tojson(res));
 
     replTest.stopSet();
 
-    // A standalone mongod does not return logicalTime.
+    // A standalone mongerd does not return logicalTime.
     var standalone = MongoRunner.runMongod();
 
     testDB = standalone.getDB("test");
     res = assert.commandWorked(testDB.runCommand("insert", {insert: "foo", documents: [{x: 5}]}));
     assert(!containsValidLogicalTimeBson(res),
-           "Expected command body from a standalone mongod to not contain logicalTime, " +
+           "Expected command body from a standalone mongerd to not contain logicalTime, " +
                "received: " + tojson(res));
 
     MongoRunner.stopMongod(standalone);

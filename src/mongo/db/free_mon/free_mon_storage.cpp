@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/db/free_mon/free_mon_storage.h"
+#include "monger/db/free_mon/free_mon_storage.h"
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/util/assert_util.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -135,4 +135,4 @@ boost::optional<BSONObj> FreeMonStorage::readClusterManagerState(OperationContex
     return swObj.getValue();
 }
 
-}  // namespace mongo
+}  // namespace monger

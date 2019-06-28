@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/bson/bsonobj.h"
+#include "monger/bson/bsonobj.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * Holds a single result from a mongos find command shard request. The result can either contain
+ * Holds a single result from a mongers find command shard request. The result can either contain
  * collection data, stored in '_resultObj'; or be EOF, and isEOF() returns true.
  */
 class ClusterQueryResult {
@@ -57,4 +57,4 @@ private:
     boost::optional<BSONObj> _resultObj;
 };
 
-}  // namespace mongo
+}  // namespace monger

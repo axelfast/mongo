@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,24 +31,24 @@
  *  compaction of deleted space in pdfiles (datafiles)
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/util/timer.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/jsobj.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class TouchCmd : public ErrmsgCommandDeprecated {
@@ -110,4 +110,4 @@ public:
 } touchCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/bson/timestamp.h"
-#include "mongo/db/keys_collection_client_sharded.h"
-#include "mongo/db/keys_collection_manager.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/logical_time_validator.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/signed_logical_time.h"
-#include "mongo/db/time_proof_service.h"
-#include "mongo/s/catalog/dist_lock_manager_mock.h"
-#include "mongo/s/config_server_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/bson/timestamp.h"
+#include "monger/db/keys_collection_client_sharded.h"
+#include "monger/db/keys_collection_manager.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/logical_time_validator.h"
+#include "monger/db/server_options.h"
+#include "monger/db/signed_logical_time.h"
+#include "monger/db/time_proof_service.h"
+#include "monger/s/catalog/dist_lock_manager_mock.h"
+#include "monger/s/config_server_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class LogicalTimeValidatorTest : public ConfigServerTestFixture {
@@ -201,4 +201,4 @@ TEST_F(LogicalTimeValidatorTest, CanSignTimesAfterReset) {
 }
 
 }  // unnamed namespace
-}  // namespace mongo
+}  // namespace monger

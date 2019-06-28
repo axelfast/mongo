@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,16 +29,16 @@
 
 #pragma once
 
-#include "mongo/db/service_context_d_test_fixture.h"
+#include "monger/db/service_context_d_test_fixture.h"
 
-namespace mongo {
+namespace monger {
 
 /**
- * Test fixture class for mongod tests that use the "devnull" storage engine.
+ * Test fixture class for mongerd tests that use the "devnull" storage engine.
  */
 class ServiceContextDevnullTestFixture : public ServiceContextMongoDTest {
 protected:
     ServiceContextDevnullTestFixture();
 };
 
-}  // namespace mongo
+}  // namespace monger

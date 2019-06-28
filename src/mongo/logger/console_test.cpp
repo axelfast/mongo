@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,8 +31,8 @@
  * Unit tests of the unittest framework itself.
  */
 
-#include "mongo/logger/console.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/logger/console.h"
+#include "monger/unittest/unittest.h"
 #include <iostream>
 #include <ostream>
 #include <sstream>
@@ -50,7 +50,7 @@ TEST(ConsoleTest, testUtf8) {
     // this constant should match ConsoleStreamBuffer::bufferSize in console.cpp
     const size_t bufferSize = 1024U;
 
-    mongo::Console console;
+    monger::Console console;
     ostream& out = console.out();
 
     // example unicode code points are from:

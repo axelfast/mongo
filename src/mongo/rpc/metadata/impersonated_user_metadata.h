@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include "boost/optional.hpp"
 
-#include "mongo/db/operation_context.h"
-#include "mongo/rpc/metadata/impersonated_user_metadata_gen.h"
+#include "monger/db/operation_context.h"
+#include "monger/rpc/metadata/impersonated_user_metadata_gen.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 /*
@@ -45,7 +45,7 @@ namespace rpc {
  * into the community edition and appears in network messages as "$audit" for backwards
  * compatibility.
  *
- * This metadata should only appear in requests from mongos to mongod.
+ * This metadata should only appear in requests from mongers to mongerd.
  */
 static constexpr auto kImpersonationMetadataSectionName = "$audit"_sd;
 
@@ -71,4 +71,4 @@ void readImpersonatedUserMetadata(const BSONElement& elem, OperationContext* opC
 void writeAuthDataToImpersonatedUserMetadata(OperationContext* opCtx, BSONObjBuilder* out);
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

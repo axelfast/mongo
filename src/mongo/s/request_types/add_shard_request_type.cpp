@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/request_types/add_shard_request_type.h"
+#include "monger/s/request_types/add_shard_request_type.h"
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/str.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/server_options.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using str::stream;
@@ -44,8 +44,8 @@ class BSONObj;
 template <typename T>
 class StatusWith;
 
-const BSONField<std::string> AddShardRequest::mongosAddShard("addShard");
-const BSONField<std::string> AddShardRequest::mongosAddShardDeprecated("addshard");
+const BSONField<std::string> AddShardRequest::mongersAddShard("addShard");
+const BSONField<std::string> AddShardRequest::mongersAddShardDeprecated("addshard");
 const BSONField<std::string> AddShardRequest::configsvrAddShard("_configsvrAddShard");
 const BSONField<std::string> AddShardRequest::shardName("name");
 const BSONField<long long> AddShardRequest::maxSizeMB("maxSize");
@@ -61,8 +61,8 @@ AddShardRequest::AddShardRequest(ConnectionString connString)
 
 StatusWith<AddShardRequest> AddShardRequest::parseFromMongosCommand(const BSONObj& obj) {
     invariant(obj.nFields() >= 1);
-    invariant(mongosAddShard.name() == obj.firstElement().fieldNameStringData() ||
-              mongosAddShardDeprecated.name() == obj.firstElement().fieldNameStringData());
+    invariant(mongersAddShard.name() == obj.firstElement().fieldNameStringData() ||
+              mongersAddShardDeprecated.name() == obj.firstElement().fieldNameStringData());
     return parseInternalFields(obj);
 }
 
@@ -166,4 +166,4 @@ string AddShardRequest::toString() const {
     return ss;
 }
 
-}  // namespace mongo
+}  // namespace monger

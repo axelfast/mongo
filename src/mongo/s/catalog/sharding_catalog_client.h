@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,13 +34,13 @@
 #include <string>
 #include <vector>
 
-#include "mongo/db/keys_collection_document.h"
-#include "mongo/db/repl/optime_with.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/s/catalog/dist_lock_manager.h"
-#include "mongo/s/client/shard.h"
+#include "monger/db/keys_collection_document.h"
+#include "monger/db/repl/optime_with.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/s/catalog/dist_lock_manager.h"
+#include "monger/s/client/shard.h"
 
-namespace mongo {
+namespace monger {
 
 class BatchedCommandRequest;
 class BatchedCommandResponse;
@@ -389,4 +389,4 @@ private:
         boost::optional<long long> limit) = 0;
 };
 
-}  // namespace mongo
+}  // namespace monger

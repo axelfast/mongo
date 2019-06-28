@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/s/query/router_exec_stage.h"
+#include "monger/s/query/router_exec_stage.h"
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/s/query/document_source_merge_cursors.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/s/query/document_source_merge_cursors.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Inserts a pipeline into the router execution tree, drawing results from the input stage, feeding
@@ -67,7 +67,7 @@ private:
 
     std::unique_ptr<Pipeline, PipelineDeleter> _mergePipeline;
 
-    // May be null if this pipeline runs exclusively on mongos without contacting the shards at all.
+    // May be null if this pipeline runs exclusively on mongers without contacting the shards at all.
     boost::intrusive_ptr<DocumentSourceMergeCursors> _mergeCursorsStage;
 };
-}  // namespace mongo
+}  // namespace monger

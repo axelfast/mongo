@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/parsed_aggregation_projection.h"
+#include "monger/db/pipeline/parsed_aggregation_projection.h"
 
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/matcher/expression_algo.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/parsed_exclusion_projection.h"
-#include "mongo/db/pipeline/parsed_inclusion_projection.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/matcher/expression_algo.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/parsed_exclusion_projection.h"
+#include "monger/db/pipeline/parsed_inclusion_projection.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace parsed_aggregation_projection {
 
 using TransformerType = TransformerInterface::TransformerType;
@@ -338,4 +338,4 @@ std::unique_ptr<ParsedAggregationProjection> ParsedAggregationProjection::create
     return parsedProject;
 }
 }  // namespace parsed_aggregation_projection
-}  // namespace mongo
+}  // namespace monger

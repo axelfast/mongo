@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/mongo_process_interface.h"
-#include "mongo/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/monger_process_interface.h"
+#include "monger/db/pipeline/pipeline.h"
 
-#include "mongo/util/assert_util.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A stub MongoProcessInterface that provides default implementations of all methods, which can then
@@ -235,4 +235,4 @@ public:
         return {fieldPaths, targetCollectionVersion};
     }
 };
-}  // namespace mongo
+}  // namespace monger

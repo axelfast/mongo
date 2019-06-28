@@ -14,7 +14,7 @@ try:
     from bson.codec_options import CodecOptions
 except ImportError as err:
     print("Warning: Could not load bson library for Python '" + str(sys.version) + "'.")
-    print("Check with the pip command if pymongo 3.x is installed.")
+    print("Check with the pip command if pymonger 3.x is installed.")
     bson = None
 
 if sys.version_info[0] < 3:
@@ -35,7 +35,7 @@ def get_unique_ptr(obj):
 
 
 class StatusPrinter(object):
-    """Pretty-printer for mongo::Status."""
+    """Pretty-printer for monger::Status."""
 
     def __init__(self, val):
         """Initialize StatusPrinter."""
@@ -47,7 +47,7 @@ class StatusPrinter(object):
             return 'Status::OK()'
 
         code = self.val['_error']['code']
-        # Remove the mongo::ErrorCodes:: prefix. Does nothing if not a real ErrorCode.
+        # Remove the monger::ErrorCodes:: prefix. Does nothing if not a real ErrorCode.
         code = str(code).split('::')[-1]
 
         info = self.val['_error'].dereference()
@@ -56,7 +56,7 @@ class StatusPrinter(object):
 
 
 class StatusWithPrinter(object):
-    """Pretty-printer for mongo::StatusWith<>."""
+    """Pretty-printer for monger::StatusWith<>."""
 
     def __init__(self, val):
         """Initialize StatusWithPrinter."""
@@ -69,7 +69,7 @@ class StatusWithPrinter(object):
 
         code = self.val['_status']['_error']['code']
 
-        # Remove the mongo::ErrorCodes:: prefix. Does nothing if not a real ErrorCode.
+        # Remove the monger::ErrorCodes:: prefix. Does nothing if not a real ErrorCode.
         code = str(code).split('::')[-1]
 
         info = self.val['_status']['_error'].dereference()
@@ -78,7 +78,7 @@ class StatusWithPrinter(object):
 
 
 class StringDataPrinter(object):
-    """Pretty-printer for mongo::StringData."""
+    """Pretty-printer for monger::StringData."""
 
     def __init__(self, val):
         """Initialize StringDataPrinter."""
@@ -98,7 +98,7 @@ class StringDataPrinter(object):
 
 
 class BSONObjPrinter(object):
-    """Pretty-printer for mongo::BSONObj."""
+    """Pretty-printer for monger::BSONObj."""
 
     def __init__(self, val):
         """Initialize BSONObjPrinter."""
@@ -152,7 +152,7 @@ class BSONObjPrinter(object):
 
 
 class UUIDPrinter(object):
-    """Pretty-printer for mongo::UUID."""
+    """Pretty-printer for monger::UUID."""
 
     def __init__(self, val):
         """Initialize UUIDPrinter."""
@@ -171,7 +171,7 @@ class UUIDPrinter(object):
 
 
 class DecorablePrinter(object):
-    """Pretty-printer for mongo::Decorable<>."""
+    """Pretty-printer for monger::Decorable<>."""
 
     def __init__(self, val):
         """Initialize DecorablePrinter."""
@@ -182,7 +182,7 @@ class DecorablePrinter(object):
         self.start = decl_vector["_M_impl"]["_M_start"]
         finish = decl_vector["_M_impl"]["_M_finish"]
         decorable_t = val.type.template_argument(0)
-        decinfo_t = gdb.lookup_type('mongo::DecorationRegistry<{}>::DecorationInfo'.format(
+        decinfo_t = gdb.lookup_type('monger::DecorationRegistry<{}>::DecorationInfo'.format(
             str(decorable_t).replace("class", "").strip()))
         self.count = int((int(finish) - int(self.start)) / decinfo_t.sizeof)
 
@@ -516,7 +516,7 @@ class MongoPrettyPrinterCollection(gdb.printing.PrettyPrinter):
 
     def __init__(self):
         """Initialize MongoPrettyPrinterCollection."""
-        super(MongoPrettyPrinterCollection, self).__init__("mongo", [])
+        super(MongoPrettyPrinterCollection, self).__init__("monger", [])
 
     def add(self, name, prefix, is_template, printer):
         """Add a subprinter."""
@@ -551,16 +551,16 @@ class MongoPrettyPrinterCollection(gdb.printing.PrettyPrinter):
 def build_pretty_printer():
     """Build a pretty printer."""
     pp = MongoPrettyPrinterCollection()
-    pp.add('BSONObj', 'mongo::BSONObj', False, BSONObjPrinter)
-    pp.add('Decorable', 'mongo::Decorable', True, DecorablePrinter)
-    pp.add('Status', 'mongo::Status', False, StatusPrinter)
-    pp.add('StatusWith', 'mongo::StatusWith', True, StatusWithPrinter)
-    pp.add('StringData', 'mongo::StringData', False, StringDataPrinter)
+    pp.add('BSONObj', 'monger::BSONObj', False, BSONObjPrinter)
+    pp.add('Decorable', 'monger::Decorable', True, DecorablePrinter)
+    pp.add('Status', 'monger::Status', False, StatusPrinter)
+    pp.add('StatusWith', 'monger::StatusWith', True, StatusWithPrinter)
+    pp.add('StringData', 'monger::StringData', False, StringDataPrinter)
     pp.add('node_hash_map', 'absl::node_hash_map', True, AbslNodeHashMapPrinter)
     pp.add('node_hash_set', 'absl::node_hash_set', True, AbslNodeHashSetPrinter)
     pp.add('flat_hash_map', 'absl::flat_hash_map', True, AbslFlatHashMapPrinter)
     pp.add('flat_hash_set', 'absl::flat_hash_set', True, AbslFlatHashSetPrinter)
-    pp.add('UUID', 'mongo::UUID', False, UUIDPrinter)
+    pp.add('UUID', 'monger::UUID', False, UUIDPrinter)
     pp.add('__wt_cursor', '__wt_cursor', False, WtCursorPrinter)
     pp.add('__wt_session_impl', '__wt_session_impl', False, WtSessionImplPrinter)
     pp.add('__wt_txn', '__wt_txn', False, WtTxnPrinter)
@@ -573,7 +573,7 @@ def build_pretty_printer():
 #
 ###################################################################################################
 
-# Register pretty-printers, replace existing mongo printers
+# Register pretty-printers, replace existing monger printers
 gdb.printing.register_pretty_printer(gdb.current_objfile(), build_pretty_printer(), True)
 
 print("MongoDB GDB pretty-printers loaded")

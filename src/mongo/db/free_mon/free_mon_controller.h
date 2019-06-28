@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,16 +35,16 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/db/client.h"
-#include "mongo/db/free_mon/free_mon_message.h"
-#include "mongo/db/free_mon/free_mon_network.h"
-#include "mongo/db/free_mon/free_mon_processor.h"
-#include "mongo/db/service_context.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/duration.h"
+#include "monger/base/status.h"
+#include "monger/db/client.h"
+#include "monger/db/free_mon/free_mon_message.h"
+#include "monger/db/free_mon/free_mon_network.h"
+#include "monger/db/free_mon/free_mon_processor.h"
+#include "monger/db/service_context.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/duration.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Manages and control Free Monitoring. This is the entry point for non-free monitoring components
@@ -95,7 +95,7 @@ public:
     static void set(ServiceContext* serviceContext, std::unique_ptr<FreeMonController> controller);
 
     /**
-     * Start registration of mongod with remote service.
+     * Start registration of mongerd with remote service.
      *
      * Only sends one remote registration at a time.
      * Returns after timeout if registrations is not complete. Registration continues though.
@@ -103,7 +103,7 @@ public:
     void registerServerStartup(RegistrationType registrationType, std::vector<std::string>& tags);
 
     /**
-     * Start registration of mongod with remote service.
+     * Start registration of mongerd with remote service.
      *
      * Only sends one remote registration at a time.
      * Returns after timeout if registrations is not complete. Registration continues though.
@@ -113,7 +113,7 @@ public:
     boost::optional<Status> registerServerCommand(Milliseconds timeout);
 
     /**
-     * Stop registration of mongod with remote service.
+     * Stop registration of mongerd with remote service.
      *
      * As with registerServerCommand() above, but undoes registration.
      * On complettion of this command, no further metrics will be transmitted.
@@ -212,4 +212,4 @@ private:
     std::shared_ptr<FreeMonProcessor> _processor;
 };
 
-}  // namespace mongo
+}  // namespace monger

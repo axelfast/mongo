@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,9 +31,9 @@
 
 #include <algorithm>
 
-#include "mongo/stdx/new.h"
+#include "monger/stdx/new.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Creates a new type with the same interface as T, but having the
@@ -63,4 +63,4 @@ using WithAlignmentAtLeast = WithAlignment<T, std::max(alignof(T), alignment)>;
 template <typename T>
 using CacheAligned = WithAlignmentAtLeast<T, stdx::hardware_destructive_interference_size>;
 
-}  // namespace mongo
+}  // namespace monger

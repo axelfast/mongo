@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,24 +32,24 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/db/field_ref_set.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/ops/write_ops_parsers.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/update/modifier_table.h"
-#include "mongo/db/update/object_replace_executor.h"
-#include "mongo/db/update/pipeline_executor.h"
-#include "mongo/db/update/update_node_visitor.h"
-#include "mongo/db/update/update_object_node.h"
-#include "mongo/db/update/update_tree_executor.h"
-#include "mongo/db/update_index_data.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/db/field_ref_set.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/ops/write_ops_parsers.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/update/modifier_table.h"
+#include "monger/db/update/object_replace_executor.h"
+#include "monger/db/update/pipeline_executor.h"
+#include "monger/db/update/update_node_visitor.h"
+#include "monger/db/update/update_object_node.h"
+#include "monger/db/update/update_tree_executor.h"
+#include "monger/db/update_index_data.h"
 
-namespace mongo {
+namespace monger {
 
 class CollatorInterface;
 class OperationContext;
@@ -244,4 +244,4 @@ private:
     mutablebson::Document _logDoc;
 };
 
-}  // namespace mongo
+}  // namespace monger

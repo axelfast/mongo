@@ -21,7 +21,7 @@ function CollectionValidator() {
             }
         }
 
-        assert.eq(typeof db, 'object', 'Invalid `db` object, is the shell connected to a mongod?');
+        assert.eq(typeof db, 'object', 'Invalid `db` object, is the shell connected to a mongerd?');
         assert.eq(typeof obj, 'object', 'The `obj` argument must be an object');
         assert(obj.hasOwnProperty('full'), 'Please specify whether to use full validation');
 

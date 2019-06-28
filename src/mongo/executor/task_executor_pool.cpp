@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/executor/task_executor_pool.h"
+#include "monger/executor/task_executor_pool.h"
 
 #include <algorithm>
 
-#include "mongo/executor/connection_pool_stats.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/executor/task_executor_pool_parameters_gen.h"
-#include "mongo/util/processinfo.h"
+#include "monger/executor/connection_pool_stats.h"
+#include "monger/executor/task_executor.h"
+#include "monger/executor/task_executor_pool_parameters_gen.h"
+#include "monger/util/processinfo.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 
 size_t TaskExecutorPool::getSuggestedPoolSize() {
@@ -104,4 +104,4 @@ void TaskExecutorPool::appendConnectionStats(ConnectionPoolStats* stats) const {
 }
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

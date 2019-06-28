@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,18 +32,18 @@
 #include <string>
 #include <vector>
 
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/auth/resource_pattern.h"
-#include "mongo/db/auth/restriction_set.h"
-#include "mongo/db/auth/role_name.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/stdx/unordered_set.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/auth/resource_pattern.h"
+#include "monger/db/auth/restriction_set.h"
+#include "monger/db/auth/role_name.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/stdx/unordered_set.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Represents a MongoDB user.  Stores information about the user necessary for access control
@@ -269,4 +269,4 @@ private:
 
 using UserHandle = std::shared_ptr<User>;
 
-}  // namespace mongo
+}  // namespace monger

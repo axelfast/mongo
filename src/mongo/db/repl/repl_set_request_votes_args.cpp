@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
 
-#include "mongo/bson/util/bson_check.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/bson_extract_optime.h"
+#include "monger/bson/util/bson_check.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/bson_extract_optime.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -198,4 +198,4 @@ std::string ReplSetRequestVotesResponse::toString() const {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

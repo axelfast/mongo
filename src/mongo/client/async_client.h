@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,19 +31,19 @@
 
 #include <memory>
 
-#include "mongo/client/authenticate.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/network_connection_hook.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/rpc/protocol.h"
-#include "mongo/rpc/unique_message.h"
-#include "mongo/transport/baton.h"
-#include "mongo/transport/message_compressor_manager.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/future.h"
+#include "monger/client/authenticate.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/network_connection_hook.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/rpc/protocol.h"
+#include "monger/rpc/unique_message.h"
+#include "monger/transport/baton.h"
+#include "monger/transport/message_compressor_manager.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/future.h"
 
-namespace mongo {
+namespace monger {
 
 class AsyncDBClient : public std::enable_shared_from_this<AsyncDBClient> {
 public:
@@ -95,4 +95,4 @@ private:
     boost::optional<rpc::Protocol> _negotiatedProtocol;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -11,7 +11,7 @@ is experimental.
 
 Sample usage:
 
-mongosymb.py --symbolizer-path=/path/to/llvm-symbolizer /path/to/executable </file/with/stacktrace
+mongersymb.py --symbolizer-path=/path/to/llvm-symbolizer /path/to/executable </file/with/stacktrace
 
 You can also pass --output-format=json, to get rich json output. It shows some extra information,
 but emits json instead of plain text.

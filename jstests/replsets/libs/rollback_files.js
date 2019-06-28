@@ -16,7 +16,7 @@ function checkRollbackFiles(dbPath, nss, expectedDocs) {
     // 'rollback/<db>.<collection>' directory with a file naming scheme of
     // 'removed.<timestamp>.bson'. The data formats of the files themselves should be the same in
     // both cases, though. These file layouts are documented here:
-    // https://docs.mongodb.com/manual/core/replica-set-rollbacks/#collect-rollback-data.
+    // https://docs.mongerdb.com/manual/core/replica-set-rollbacks/#collect-rollback-data.
 
     function getRollbackViaRefetchRollbackFile() {
         let files = listFiles(rollbackDir);

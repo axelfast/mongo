@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/parsed_distinct.h"
+#include "monger/db/query/parsed_distinct.h"
 
 #include <memory>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/distinct_command_gen.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/idl/idl_parser.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/distinct_command_gen.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/idl/idl_parser.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 const char ParsedDistinct::kKeyField[] = "key";
 const char ParsedDistinct::kQueryField[] = "query";
@@ -119,7 +119,7 @@ std::string getProjectedDottedField(const std::string& field, bool* isIDOut) {
     // with a number, the number cannot be an array index.
     int arrayIndex = 0;
     for (size_t i = 1; i < res.size(); ++i) {
-        if (mongo::NumberParser().base(10)(res[i], &arrayIndex).isOK()) {
+        if (monger::NumberParser().base(10)(res[i], &arrayIndex).isOK()) {
             // Array indices cannot be negative numbers (this is not $slice).
             // Negative numbers are allowed as field names.
             if (arrayIndex >= 0) {
@@ -341,4 +341,4 @@ StatusWith<ParsedDistinct> ParsedDistinct::parse(OperationContext* opCtx,
     return ParsedDistinct(std::move(cq.getValue()), parsedDistinct.getKey().toString());
 }
 
-}  // namespace mongo
+}  // namespace monger

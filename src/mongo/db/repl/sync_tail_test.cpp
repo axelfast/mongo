@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,55 +27,55 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/logical_session_id_helpers.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/bgsync.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/idempotency_test_fixture.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_buffer_blocking_queue.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/sync_tail.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/db/transaction_participant_gen.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/md5.hpp"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/string_map.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/logical_session_id_helpers.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/bgsync.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/idempotency_test_fixture.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_buffer_blocking_queue.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/sync_tail.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/stats/counters.h"
+#include "monger/db/transaction_participant_gen.h"
+#include "monger/stdx/mutex.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/md5.hpp"
+#include "monger/util/scopeguard.h"
+#include "monger/util/string_map.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -185,7 +185,7 @@ void createCollection(OperationContext* opCtx,
         OldClientContext ctx(opCtx, nss.ns());
         auto db = ctx.db();
         ASSERT_TRUE(db);
-        mongo::WriteUnitOfWork wuow(opCtx);
+        monger::WriteUnitOfWork wuow(opCtx);
         auto coll = db->createCollection(opCtx, nss, options);
         ASSERT_TRUE(coll);
         wuow.commit();
@@ -2331,7 +2331,7 @@ TEST_F(SyncTailTest, FailOnDropFCVCollection) {
 
 TEST_F(SyncTailTest, FailOnInsertFCVDocument) {
     auto fcvNS(NamespaceString::kServerConfigurationNamespace);
-    ::mongo::repl::createCollection(_opCtx.get(), fcvNS, CollectionOptions());
+    ::monger::repl::createCollection(_opCtx.get(), fcvNS, CollectionOptions());
     ASSERT_OK(
         ReplicationCoordinator::get(_opCtx.get())->setFollowerMode(MemberState::RS_RECOVERING));
 
@@ -2342,7 +2342,7 @@ TEST_F(SyncTailTest, FailOnInsertFCVDocument) {
 
 TEST_F(IdempotencyTest, InsertToFCVCollectionBesidesFCVDocumentSucceeds) {
     auto fcvNS(NamespaceString::kServerConfigurationNamespace);
-    ::mongo::repl::createCollection(_opCtx.get(), fcvNS, CollectionOptions());
+    ::monger::repl::createCollection(_opCtx.get(), fcvNS, CollectionOptions());
     ASSERT_OK(
         ReplicationCoordinator::get(_opCtx.get())->setFollowerMode(MemberState::RS_RECOVERING));
 
@@ -2356,7 +2356,7 @@ TEST_F(IdempotencyTest, InsertToFCVCollectionBesidesFCVDocumentSucceeds) {
 TEST_F(IdempotencyTest, DropDatabaseSucceeds) {
     // Choose `system.profile` so the storage engine doesn't expect the drop to be timestamped.
     auto ns = NamespaceString("foo.system.profile");
-    ::mongo::repl::createCollection(_opCtx.get(), ns, CollectionOptions());
+    ::monger::repl::createCollection(_opCtx.get(), ns, CollectionOptions());
     ASSERT_OK(
         ReplicationCoordinator::get(_opCtx.get())->setFollowerMode(MemberState::RS_RECOVERING));
 
@@ -2367,7 +2367,7 @@ TEST_F(IdempotencyTest, DropDatabaseSucceeds) {
 TEST_F(SyncTailTest, DropDatabaseSucceedsInRecovering) {
     // Choose `system.profile` so the storage engine doesn't expect the drop to be timestamped.
     auto ns = NamespaceString("foo.system.profile");
-    ::mongo::repl::createCollection(_opCtx.get(), ns, CollectionOptions());
+    ::monger::repl::createCollection(_opCtx.get(), ns, CollectionOptions());
     ASSERT_OK(
         ReplicationCoordinator::get(_opCtx.get())->setFollowerMode(MemberState::RS_RECOVERING));
 
@@ -3537,4 +3537,4 @@ TEST_F(IdempotencyTestTxns, CommitPreparedTransactionIgnoresNamespaceNotFoundErr
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

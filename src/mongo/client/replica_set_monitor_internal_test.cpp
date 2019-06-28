@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/replica_set_monitor_test_fixture.h"
+#include "monger/client/replica_set_monitor_test_fixture.h"
 
-#include "mongo/client/mongo_uri.h"
+#include "monger/client/monger_uri.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 // -- SetState Construction --
 using InitialStateTest = ReplicaSetMonitorTest;
 
 TEST_F(InitialStateTest, InitialStateMongoURI) {
-    auto uri = MongoURI::parse("mongodb://a,b,c/?replicaSet=name");
+    auto uri = MongoURI::parse("mongerdb://a,b,c/?replicaSet=name");
     ASSERT_OK(uri.getStatus());
     auto state = makeState(uri.getValue());
     ASSERT_EQUALS(state->name, "name");
@@ -192,11 +192,11 @@ TEST_F(NodeTest, PriNodeCompatibleTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 TEST_F(NodeTest, SecNodeCompatibleTag) {
@@ -212,11 +212,11 @@ TEST_F(NodeTest, SecNodeCompatibleTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(!isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 TEST_F(NodeTest, PriNodeNotCompatibleTag) {
@@ -232,11 +232,11 @@ TEST_F(NodeTest, PriNodeNotCompatibleTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 TEST_F(NodeTest, SecNodeNotCompatibleTag) {
@@ -252,11 +252,11 @@ TEST_F(NodeTest, SecNodeNotCompatibleTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(!isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 TEST_F(NodeTest, PriNodeCompatiblMultiTag) {
@@ -276,11 +276,11 @@ TEST_F(NodeTest, PriNodeCompatiblMultiTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 TEST_F(NodeTest, SecNodeCompatibleMultiTag) {
@@ -300,11 +300,11 @@ TEST_F(NodeTest, SecNodeCompatibleMultiTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(!isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 TEST_F(NodeTest, PriNodeNotCompatibleMultiTag) {
@@ -324,11 +324,11 @@ TEST_F(NodeTest, PriNodeNotCompatibleMultiTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 TEST_F(NodeTest, SecNodeNotCompatibleMultiTag) {
@@ -348,18 +348,18 @@ TEST_F(NodeTest, SecNodeNotCompatibleMultiTag) {
 
     TagSet tags(BSONArray(builder.done()));
 
-    ASSERT(!isCompatible(node, mongo::ReadPreference::PrimaryOnly, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::PrimaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryPreferred, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::SecondaryOnly, tags));
-    ASSERT(!isCompatible(node, mongo::ReadPreference::Nearest, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::PrimaryOnly, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::PrimaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryPreferred, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::SecondaryOnly, tags));
+    ASSERT(!isCompatible(node, monger::ReadPreference::Nearest, tags));
 }
 
 // -- IsMasterReply operations --
 using IsMasterReplyTest = ReplicaSetMonitorTest;
 TEST_F(IsMasterReplyTest, IsMasterBadParse) {
-    BSONObj ismaster = BSON("hosts" << BSON_ARRAY("mongo.example:badport"));
-    IsMasterReply imr(HostAndPort("mongo.example:27017"), -1, ismaster);
+    BSONObj ismaster = BSON("hosts" << BSON_ARRAY("monger.example:badport"));
+    IsMasterReply imr(HostAndPort("monger.example:27017"), -1, ismaster);
     ASSERT_EQUALS(imr.ok, false);
 }
 
@@ -376,7 +376,7 @@ TEST_F(IsMasterReplyTest, IsMasterReplyRSNotInitiated) {
                    << "maxWriteBatchSize"
                    << 1000
                    << "localTime"
-                   << mongo::jsTime()
+                   << monger::jsTime()
                    << "maxWireVersion"
                    << 2
                    << "minWireVersion"
@@ -410,11 +410,11 @@ TEST_F(IsMasterReplyTest, IsMasterReplyRSPrimary) {
                             << "secondary"
                             << false
                             << "hosts"
-                            << BSON_ARRAY("mongo.example:3000")
+                            << BSON_ARRAY("monger.example:3000")
                             << "primary"
-                            << "mongo.example:3000"
+                            << "monger.example:3000"
                             << "me"
-                            << "mongo.example:3000"
+                            << "monger.example:3000"
                             << "maxBsonObjectSize"
                             << 16777216
                             << "maxMessageSizeBytes"
@@ -422,7 +422,7 @@ TEST_F(IsMasterReplyTest, IsMasterReplyRSPrimary) {
                             << "maxWriteBatchSize"
                             << 1000
                             << "localTime"
-                            << mongo::jsTime()
+                            << monger::jsTime()
                             << "maxWireVersion"
                             << 2
                             << "minWireVersion"
@@ -430,18 +430,18 @@ TEST_F(IsMasterReplyTest, IsMasterReplyRSPrimary) {
                             << "ok"
                             << 1);
 
-    IsMasterReply imr(HostAndPort("mongo.example:3000"), -1, ismaster);
+    IsMasterReply imr(HostAndPort("monger.example:3000"), -1, ismaster);
 
     ASSERT_EQUALS(imr.ok, true);
-    ASSERT_EQUALS(imr.host.toString(), HostAndPort("mongo.example:3000").toString());
+    ASSERT_EQUALS(imr.host.toString(), HostAndPort("monger.example:3000").toString());
     ASSERT_EQUALS(imr.setName, "test");
     ASSERT_EQUALS(imr.configVersion, 1);
     ASSERT_EQUALS(imr.electionId, OID("7fffffff0000000000000001"));
     ASSERT_EQUALS(imr.hidden, false);
     ASSERT_EQUALS(imr.secondary, false);
     ASSERT_EQUALS(imr.isMaster, true);
-    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("mongo.example:3000").toString());
-    ASSERT(imr.normalHosts.count(HostAndPort("mongo.example:3000")));
+    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("monger.example:3000").toString());
+    ASSERT(imr.normalHosts.count(HostAndPort("monger.example:3000")));
     ASSERT(imr.tags.isEmpty());
 }
 
@@ -457,15 +457,15 @@ TEST_F(IsMasterReplyTest, IsMasterReplyPassiveSecondary) {
                             << "secondary"
                             << true
                             << "hosts"
-                            << BSON_ARRAY("mongo.example:3000")
+                            << BSON_ARRAY("monger.example:3000")
                             << "passives"
-                            << BSON_ARRAY("mongo.example:3001")
+                            << BSON_ARRAY("monger.example:3001")
                             << "primary"
-                            << "mongo.example:3000"
+                            << "monger.example:3000"
                             << "passive"
                             << true
                             << "me"
-                            << "mongo.example:3001"
+                            << "monger.example:3001"
                             << "maxBsonObjectSize"
                             << 16777216
                             << "maxMessageSizeBytes"
@@ -473,7 +473,7 @@ TEST_F(IsMasterReplyTest, IsMasterReplyPassiveSecondary) {
                             << "maxWriteBatchSize"
                             << 1000
                             << "localTime"
-                            << mongo::jsTime()
+                            << monger::jsTime()
                             << "maxWireVersion"
                             << 2
                             << "minWireVersion"
@@ -481,18 +481,18 @@ TEST_F(IsMasterReplyTest, IsMasterReplyPassiveSecondary) {
                             << "ok"
                             << 1);
 
-    IsMasterReply imr(HostAndPort("mongo.example:3001"), -1, ismaster);
+    IsMasterReply imr(HostAndPort("monger.example:3001"), -1, ismaster);
 
     ASSERT_EQUALS(imr.ok, true);
-    ASSERT_EQUALS(imr.host.toString(), HostAndPort("mongo.example:3001").toString());
+    ASSERT_EQUALS(imr.host.toString(), HostAndPort("monger.example:3001").toString());
     ASSERT_EQUALS(imr.setName, "test");
     ASSERT_EQUALS(imr.configVersion, 2);
     ASSERT_EQUALS(imr.hidden, false);
     ASSERT_EQUALS(imr.secondary, true);
     ASSERT_EQUALS(imr.isMaster, false);
-    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("mongo.example:3000").toString());
-    ASSERT(imr.normalHosts.count(HostAndPort("mongo.example:3000")));
-    ASSERT(imr.normalHosts.count(HostAndPort("mongo.example:3001")));
+    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("monger.example:3000").toString());
+    ASSERT(imr.normalHosts.count(HostAndPort("monger.example:3000")));
+    ASSERT(imr.normalHosts.count(HostAndPort("monger.example:3001")));
     ASSERT(imr.tags.isEmpty());
     ASSERT(!imr.electionId.isSet());
 }
@@ -509,15 +509,15 @@ TEST_F(IsMasterReplyTest, IsMasterReplyHiddenSecondary) {
                             << "secondary"
                             << true
                             << "hosts"
-                            << BSON_ARRAY("mongo.example:3000")
+                            << BSON_ARRAY("monger.example:3000")
                             << "primary"
-                            << "mongo.example:3000"
+                            << "monger.example:3000"
                             << "passive"
                             << true
                             << "hidden"
                             << true
                             << "me"
-                            << "mongo.example:3001"
+                            << "monger.example:3001"
                             << "maxBsonObjectSize"
                             << 16777216
                             << "maxMessageSizeBytes"
@@ -525,7 +525,7 @@ TEST_F(IsMasterReplyTest, IsMasterReplyHiddenSecondary) {
                             << "maxWriteBatchSize"
                             << 1000
                             << "localTime"
-                            << mongo::jsTime()
+                            << monger::jsTime()
                             << "maxWireVersion"
                             << 2
                             << "minWireVersion"
@@ -533,17 +533,17 @@ TEST_F(IsMasterReplyTest, IsMasterReplyHiddenSecondary) {
                             << "ok"
                             << 1);
 
-    IsMasterReply imr(HostAndPort("mongo.example:3001"), -1, ismaster);
+    IsMasterReply imr(HostAndPort("monger.example:3001"), -1, ismaster);
 
     ASSERT_EQUALS(imr.ok, true);
-    ASSERT_EQUALS(imr.host.toString(), HostAndPort("mongo.example:3001").toString());
+    ASSERT_EQUALS(imr.host.toString(), HostAndPort("monger.example:3001").toString());
     ASSERT_EQUALS(imr.setName, "test");
     ASSERT_EQUALS(imr.configVersion, 2);
     ASSERT_EQUALS(imr.hidden, true);
     ASSERT_EQUALS(imr.secondary, true);
     ASSERT_EQUALS(imr.isMaster, false);
-    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("mongo.example:3000").toString());
-    ASSERT(imr.normalHosts.count(HostAndPort("mongo.example:3000")));
+    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("monger.example:3000").toString());
+    ASSERT(imr.normalHosts.count(HostAndPort("monger.example:3000")));
     ASSERT(imr.tags.isEmpty());
     ASSERT(!imr.electionId.isSet());
 }
@@ -560,12 +560,12 @@ TEST_F(IsMasterReplyTest, IsMasterSecondaryWithTags) {
                             << "secondary"
                             << true
                             << "hosts"
-                            << BSON_ARRAY("mongo.example:3000"
-                                          << "mongo.example:3001")
+                            << BSON_ARRAY("monger.example:3000"
+                                          << "monger.example:3001")
                             << "primary"
-                            << "mongo.example:3000"
+                            << "monger.example:3000"
                             << "me"
-                            << "mongo.example:3001"
+                            << "monger.example:3001"
                             << "maxBsonObjectSize"
                             << 16777216
                             << "maxMessageSizeBytes"
@@ -573,7 +573,7 @@ TEST_F(IsMasterReplyTest, IsMasterSecondaryWithTags) {
                             << "maxWriteBatchSize"
                             << 1000
                             << "localTime"
-                            << mongo::jsTime()
+                            << monger::jsTime()
                             << "maxWireVersion"
                             << 2
                             << "minWireVersion"
@@ -586,18 +586,18 @@ TEST_F(IsMasterReplyTest, IsMasterSecondaryWithTags) {
                             << "ok"
                             << 1);
 
-    IsMasterReply imr(HostAndPort("mongo.example:3001"), -1, ismaster);
+    IsMasterReply imr(HostAndPort("monger.example:3001"), -1, ismaster);
 
     ASSERT_EQUALS(imr.ok, true);
-    ASSERT_EQUALS(imr.host.toString(), HostAndPort("mongo.example:3001").toString());
+    ASSERT_EQUALS(imr.host.toString(), HostAndPort("monger.example:3001").toString());
     ASSERT_EQUALS(imr.setName, "test");
     ASSERT_EQUALS(imr.configVersion, 2);
     ASSERT_EQUALS(imr.hidden, false);
     ASSERT_EQUALS(imr.secondary, true);
     ASSERT_EQUALS(imr.isMaster, false);
-    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("mongo.example:3000").toString());
-    ASSERT(imr.normalHosts.count(HostAndPort("mongo.example:3000")));
-    ASSERT(imr.normalHosts.count(HostAndPort("mongo.example:3001")));
+    ASSERT_EQUALS(imr.primary.toString(), HostAndPort("monger.example:3000").toString());
+    ASSERT(imr.normalHosts.count(HostAndPort("monger.example:3000")));
+    ASSERT(imr.normalHosts.count(HostAndPort("monger.example:3001")));
     ASSERT(imr.tags.hasElement("dc"));
     ASSERT(imr.tags.hasElement("use"));
     ASSERT(!imr.electionId.isSet());
@@ -606,4 +606,4 @@ TEST_F(IsMasterReplyTest, IsMasterSecondaryWithTags) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

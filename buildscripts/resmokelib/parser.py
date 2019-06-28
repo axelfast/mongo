@@ -7,7 +7,7 @@ import sys
 
 import datetime
 import optparse
-import pymongo.uri_parser
+import pymonger.uri_parser
 
 from . import config as _config
 from . import utils
@@ -60,7 +60,7 @@ def _make_parser():  # pylint: disable=too-many-statements
 
     parser.add_option(
         "--basePort", dest="base_port", metavar="PORT",
-        help=("The starting port number to use for mongod and mongos processes"
+        help=("The starting port number to use for mongerd and mongers processes"
               " spawned by resmoke.py or the tests themselves. Each fixture and Job"
               " allocates a contiguous range of ports."))
 
@@ -72,7 +72,7 @@ def _make_parser():  # pylint: disable=too-many-statements
 
     parser.add_option(
         "--dbpathPrefix", dest="dbpath_prefix", metavar="PATH",
-        help=("The directory which will contain the dbpaths of any mongod's started"
+        help=("The directory which will contain the dbpaths of any mongerd's started"
               " by resmoke.py or the tests themselves."))
 
     parser.add_option("--dbtest", dest="dbtest_executable", metavar="PATH",
@@ -118,36 +118,36 @@ def _make_parser():  # pylint: disable=too-many-statements
     parser.add_option("-l", "--listSuites", action="store_true", dest="list_suites",
                       help="Lists the names of the suites available to execute.")
 
-    parser.add_option("--mongo", dest="mongo_executable", metavar="PATH",
-                      help="The path to the mongo shell executable for resmoke.py to use.")
+    parser.add_option("--monger", dest="monger_executable", metavar="PATH",
+                      help="The path to the monger shell executable for resmoke.py to use.")
 
-    parser.add_option("--mongod", dest="mongod_executable", metavar="PATH",
-                      help="The path to the mongod executable for resmoke.py to use.")
+    parser.add_option("--mongerd", dest="mongerd_executable", metavar="PATH",
+                      help="The path to the mongerd executable for resmoke.py to use.")
 
     parser.add_option(
-        "--mongodSetParameters", dest="mongod_set_parameters",
+        "--mongerdSetParameters", dest="mongerd_set_parameters",
         metavar="{key1: value1, key2: value2, ..., keyN: valueN}",
-        help=("Passes one or more --setParameter options to all mongod processes"
+        help=("Passes one or more --setParameter options to all mongerd processes"
               " started by resmoke.py. The argument is specified as bracketed YAML -"
               " i.e. JSON with support for single quoted and unquoted keys."))
 
     parser.add_option(
-        "--mongoebench", dest="mongoebench_executable", metavar="PATH",
-        help=("The path to the mongoebench (benchrun embedded) executable for"
+        "--mongerebench", dest="mongerebench_executable", metavar="PATH",
+        help=("The path to the mongerebench (benchrun embedded) executable for"
               " resmoke.py to use."))
 
-    parser.add_option("--mongos", dest="mongos_executable", metavar="PATH",
-                      help="The path to the mongos executable for resmoke.py to use.")
+    parser.add_option("--mongers", dest="mongers_executable", metavar="PATH",
+                      help="The path to the mongers executable for resmoke.py to use.")
 
     parser.add_option(
-        "--mongosSetParameters", dest="mongos_set_parameters",
+        "--mongersSetParameters", dest="mongers_set_parameters",
         metavar="{key1: value1, key2: value2, ..., keyN: valueN}",
-        help=("Passes one or more --setParameter options to all mongos processes"
+        help=("Passes one or more --setParameter options to all mongers processes"
               " started by resmoke.py. The argument is specified as bracketed YAML -"
               " i.e. JSON with support for single quoted and unquoted keys."))
 
     parser.add_option("--nojournal", action="store_true", dest="no_journal",
-                      help="Disables journaling for all mongod's.")
+                      help="Disables journaling for all mongerd's.")
 
     parser.add_option("--numClientsPerFixture", type="int", dest="num_clients_per_fixture",
                       help="Number of clients running tests per fixture.")
@@ -157,7 +157,7 @@ def _make_parser():  # pylint: disable=too-many-statements
 
     parser.add_option(
         "--shellConnString", dest="shell_conn_string", metavar="CONN_STRING",
-        help="Overrides the default fixture and connects with a mongodb:// connection"
+        help="Overrides the default fixture and connects with a mongerdb:// connection"
         " string to an existing MongoDB cluster instead. This is useful for"
         " connecting to a MongoDB deployment started outside of resmoke.py including"
         " one running in a debugger.")
@@ -165,7 +165,7 @@ def _make_parser():  # pylint: disable=too-many-statements
     parser.add_option(
         "--shellPort", dest="shell_port", metavar="PORT",
         help="Convenience form of --shellConnString for connecting to an"
-        " existing MongoDB cluster with the URL mongodb://localhost:[PORT]."
+        " existing MongoDB cluster with the URL mongerdb://localhost:[PORT]."
         " This is useful for connecting to a server running in a debugger.")
 
     parser.add_option("--repeat", "--repeatSuites", type="int", dest="repeat_suites", metavar="N",
@@ -219,11 +219,11 @@ def _make_parser():  # pylint: disable=too-many-statements
 
     parser.add_option("--shellReadMode", type="choice", action="store", dest="shell_read_mode",
                       choices=("commands", "compatibility", "legacy"), metavar="READ_MODE",
-                      help="The read mode used by the mongo shell.")
+                      help="The read mode used by the monger shell.")
 
     parser.add_option("--shellWriteMode", type="choice", action="store", dest="shell_write_mode",
                       choices=("commands", "compatibility", "legacy"), metavar="WRITE_MODE",
-                      help="The write mode used by the mongo shell.")
+                      help="The write mode used by the monger shell.")
 
     parser.add_option(
         "--shuffle", action="store_const", const="on", dest="shuffle",
@@ -262,19 +262,19 @@ def _make_parser():  # pylint: disable=too-many-statements
     parser.add_option(
         "--storageEngineCacheSizeGB", dest="storage_engine_cache_size_gb", metavar="CONFIG",
         help="Sets the storage engine cache size configuration"
-        " setting for all mongod's.")
+        " setting for all mongerd's.")
 
     parser.add_option("--tagFile", dest="tag_file", metavar="OPTIONS",
                       help="A YAML file that associates tests and tags.")
 
     parser.add_option("--wiredTigerCollectionConfigString", dest="wt_coll_config", metavar="CONFIG",
-                      help="Sets the WiredTiger collection configuration setting for all mongod's.")
+                      help="Sets the WiredTiger collection configuration setting for all mongerd's.")
 
     parser.add_option("--wiredTigerEngineConfigString", dest="wt_engine_config", metavar="CONFIG",
-                      help="Sets the WiredTiger engine configuration setting for all mongod's.")
+                      help="Sets the WiredTiger engine configuration setting for all mongerd's.")
 
     parser.add_option("--wiredTigerIndexConfigString", dest="wt_index_config", metavar="CONFIG",
-                      help="Sets the WiredTiger index configuration setting for all mongod's.")
+                      help="Sets the WiredTiger index configuration setting for all mongerd's.")
 
     parser.add_option(
         "--executor", dest="executor_file",
@@ -579,12 +579,12 @@ def _update_config_vars(values):  # pylint: disable=too-many-statements
     _config.GENNY_EXECUTABLE = _expand_user(config.pop("genny_executable"))
     _config.JOBS = config.pop("jobs")
     _config.MAJORITY_READ_CONCERN = config.pop("majority_read_concern") == "on"
-    _config.MONGO_EXECUTABLE = _expand_user(config.pop("mongo_executable"))
-    _config.MONGOD_EXECUTABLE = _expand_user(config.pop("mongod_executable"))
-    _config.MONGOD_SET_PARAMETERS = config.pop("mongod_set_parameters")
-    _config.MONGOEBENCH_EXECUTABLE = _expand_user(config.pop("mongoebench_executable"))
-    _config.MONGOS_EXECUTABLE = _expand_user(config.pop("mongos_executable"))
-    _config.MONGOS_SET_PARAMETERS = config.pop("mongos_set_parameters")
+    _config.MONGO_EXECUTABLE = _expand_user(config.pop("monger_executable"))
+    _config.MONGOD_EXECUTABLE = _expand_user(config.pop("mongerd_executable"))
+    _config.MONGOD_SET_PARAMETERS = config.pop("mongerd_set_parameters")
+    _config.MONGOEBENCH_EXECUTABLE = _expand_user(config.pop("mongerebench_executable"))
+    _config.MONGOS_EXECUTABLE = _expand_user(config.pop("mongers_executable"))
+    _config.MONGOS_SET_PARAMETERS = config.pop("mongers_set_parameters")
     _config.NO_JOURNAL = config.pop("no_journal")
     _config.NUM_CLIENTS_PER_FIXTURE = config.pop("num_clients_per_fixture")
     _config.PERF_REPORT_FILE = config.pop("perf_report_file")
@@ -646,14 +646,14 @@ def _update_config_vars(values):  # pylint: disable=too-many-statements
     port = config.pop("shell_port")
 
     if port is not None:
-        conn_string = "mongodb://localhost:" + port
+        conn_string = "mongerdb://localhost:" + port
 
     if conn_string is not None:
         # The --shellConnString command line option must be a MongoDB connection URI, which means it
-        # must specify the mongodb:// or mongodb+srv:// URI scheme. pymongo.uri_parser.parse_uri()
+        # must specify the mongerdb:// or mongerdb+srv:// URI scheme. pymonger.uri_parser.parse_uri()
         # raises an exception if the connection string specified isn't considered a valid MongoDB
         # connection URI.
-        pymongo.uri_parser.parse_uri(conn_string)
+        pymonger.uri_parser.parse_uri(conn_string)
         _config.SHELL_CONN_STRING = conn_string
 
     if config:

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/base/encoded_value_storage.h"
+#include "monger/base/encoded_value_storage.h"
 
 #include <cstring>
 
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/static_assert.h"
-#include "mongo/platform/endian.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/static_assert.h"
+#include "monger/platform/endian.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 // Simplistic encoded value view and value classes to test EncodedValueStorage
 namespace EncodedValueStorageTest {
@@ -144,4 +144,4 @@ TEST(EncodedValueStorage, EncodedValueStorage) {
     ASSERT_EQUALS(static_cast<uint32_t>(3), raw.constView().getBE());
 }
 
-}  // namespace mongo
+}  // namespace monger

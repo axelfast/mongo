@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/exec/cached_plan.h"
+#include "monger/db/exec/cached_plan.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/exec/multi_plan.h"
-#include "mongo/db/exec/scoped_timer.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/plan_cache.h"
-#include "mongo/db/query/plan_ranker.h"
-#include "mongo/db/query/plan_yield_policy.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/stage_builder.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/transitional_tools_do_not_use/vector_spooling.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/exec/multi_plan.h"
+#include "monger/db/exec/scoped_timer.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/plan_cache.h"
+#include "monger/db/query/plan_ranker.h"
+#include "monger/db/query/plan_yield_policy.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/stage_builder.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/transitional_tools_do_not_use/vector_spooling.h"
 
-namespace mongo {
+namespace monger {
 
 // static
 const char* CachedPlanStage::kStageType = "CACHED_PLAN";
@@ -314,4 +314,4 @@ void CachedPlanStage::updatePlanCache() {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

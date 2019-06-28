@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/rpc/metadata/config_server_metadata.h"
+#include "monger/rpc/metadata/config_server_metadata.h"
 
-#include "mongo/bson/util/bson_check.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/bson_extract_optime.h"
-#include "mongo/rpc/metadata.h"
+#include "monger/bson/util/bson_check.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/bson_extract_optime.h"
+#include "monger/rpc/metadata.h"
 
-namespace mongo {
+namespace monger {
 namespace rpc {
 
 using repl::OpTime;
@@ -61,10 +61,10 @@ StatusWith<ConfigServerMetadata> ConfigServerMetadata::readFromMetadata(
     const BSONElement& metadataElem) {
     if (metadataElem.eoo()) {
         return ConfigServerMetadata{};
-    } else if (metadataElem.type() != mongo::Object) {
+    } else if (metadataElem.type() != monger::Object) {
         return {ErrorCodes::TypeMismatch,
                 str::stream() << "ConfigServerMetadata element has incorrect type: expected"
-                              << mongo::Object
+                              << monger::Object
                               << " but got "
                               << metadataElem.type()};
     }
@@ -87,4 +87,4 @@ void ConfigServerMetadata::writeToMetadata(BSONObjBuilder* builder) const {
 }
 
 }  // namespace rpc
-}  // namespace mongo
+}  // namespace monger

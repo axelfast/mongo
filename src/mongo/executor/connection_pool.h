@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,19 +33,19 @@
 #include <memory>
 #include <queue>
 
-#include "mongo/executor/egress_tag_closer.h"
-#include "mongo/executor/egress_tag_closer_manager.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/future.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/out_of_line_executor.h"
-#include "mongo/util/time_support.h"
+#include "monger/executor/egress_tag_closer.h"
+#include "monger/executor/egress_tag_closer_manager.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer.h"
+#include "monger/util/duration.h"
+#include "monger/util/future.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/out_of_line_executor.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 
@@ -512,4 +512,4 @@ public:
 };
 
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

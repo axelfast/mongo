@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <functional>
 
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/sessions_collection.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/sessions_collection.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * To allow us to move a MockSessionCollection into the session cache while
@@ -132,4 +132,4 @@ private:
     std::shared_ptr<MockSessionsCollectionImpl> _impl;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package version // import "go.mongodb.org/mongo-driver/version"
+package version // import "go.mongerdb.org/monger-driver/version"
 
 // Driver is the current version of the driver.
 var Driver = "v1.1.0+prerelease"

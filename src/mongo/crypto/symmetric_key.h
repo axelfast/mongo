@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,10 +32,10 @@
 #include <cstdint>
 #include <memory>
 
-#include "mongo/base/secure_allocator.h"
-#include "mongo/platform/atomic_word.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/platform/atomic_word.h"
 
-namespace mongo {
+namespace monger {
 class Status;
 
 class SymmetricKeyId {
@@ -143,4 +143,4 @@ private:
 };
 
 using UniqueSymmetricKey = std::unique_ptr<SymmetricKey>;
-}  // namespace mongo
+}  // namespace monger

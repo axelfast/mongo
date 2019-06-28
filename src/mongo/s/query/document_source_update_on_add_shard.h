@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,12 +29,12 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/query/document_source_merge_cursors.h"
-#include "mongo/s/shard_id.h"
+#include "monger/db/pipeline/document_source.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/query/document_source_merge_cursors.h"
+#include "monger/s/shard_id.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * An internal stage used as part of the change streams infrastructure to listen for an event
@@ -58,7 +58,7 @@ public:
 
     Value serialize(boost::optional<ExplainOptions::Verbosity> explain) const final {
         // We only ever expect to add this stage if the pipeline is being executed locally on a
-        // mongos. In this case, it should never be serialized.
+        // mongers. In this case, it should never be serialized.
         MONGO_UNREACHABLE;
     }
 
@@ -101,4 +101,4 @@ private:
     std::vector<ShardId> _shardsWithCursors;
     BSONObj _cmdToRunOnNewShards;
 };
-}  // namespace mongo
+}  // namespace monger

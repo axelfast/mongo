@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,11 +32,11 @@
 #include <string>
 #include <vector>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/field_ref.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/field_ref.h"
 
-namespace mongo {
+namespace monger {
 /**
  * A JSONPointer (RFC 6901) is a string representation for referring to an element within a JSON
  * instance. In the MongoDB context, it specifically is used to point to a particular BSON element
@@ -92,4 +92,4 @@ private:
     std::string _original;
 };
 
-}  // namespace mongo
+}  // namespace monger

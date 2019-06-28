@@ -26,18 +26,18 @@
         networkMessageCompressors: 'disabled',
     };
 
-    const mongod = MongoRunner.runMongod(options);
-    runTest(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod(options);
+    runTest(mongerd);
+    MongoRunner.stopMongod(mongerd);
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     const st = new ShardingTest({
         shards: 3,
-        mongos: 1,
+        mongers: 1,
         config: 1,
         other: {
             configOptions: options,
-            mongosOptions: options,
+            mongersOptions: options,
             shardOptions: options,
             shardAsReplicaSet: false,
         }

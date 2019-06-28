@@ -1,6 +1,6 @@
 description: "Parse logicalSessionTimeoutMinutes from replica set"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
     # An RSPrimary responds with a non-null logicalSessionTimeoutMinutes

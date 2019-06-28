@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,10 +27,10 @@
  *    it in the license file.
  */
 
-#include "mongo/util/net/cidr.h"
+#include "monger/util/net/cidr.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/platform/basic.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/platform/basic.h"
 
 #ifdef _WIN32
 #include <Ws2tcpip.h>
@@ -43,7 +43,7 @@ using std::begin;
 using std::find;
 using std::end;
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -141,10 +141,10 @@ BSONObjBuilder& BSONObjBuilderValueStream::operator<<<CIDR>(CIDR value) {
 
 }  // namespace
 
-std::ostream& mongo::operator<<(std::ostream& s, const CIDR& cidr) {
+std::ostream& monger::operator<<(std::ostream& s, const CIDR& cidr) {
     return append(s, cidr._family, cidr._ip, cidr._len);
 }
 
-mongo::StringBuilder& mongo::operator<<(StringBuilder& s, const CIDR& cidr) {
+monger::StringBuilder& monger::operator<<(StringBuilder& s, const CIDR& cidr) {
     return append(s, cidr._family, cidr._ip, cidr._len);
 }

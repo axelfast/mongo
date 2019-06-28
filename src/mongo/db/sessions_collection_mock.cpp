@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,10 +29,10 @@
 
 #include <functional>
 
-#include "mongo/db/sessions_collection_mock.h"
-#include "mongo/platform/basic.h"
+#include "monger/db/sessions_collection_mock.h"
+#include "monger/platform/basic.h"
 
-namespace mongo {
+namespace monger {
 
 MockSessionsCollectionImpl::MockSessionsCollectionImpl()
     : _refresh([=](const LogicalSessionRecordSet& sessions) { return _refreshSessions(sessions); }),
@@ -113,4 +113,4 @@ StatusWith<LogicalSessionIdSet> MockSessionsCollectionImpl::findRemovedSessions(
     return lsids;
 }
 
-}  // namespace mongo
+}  // namespace monger

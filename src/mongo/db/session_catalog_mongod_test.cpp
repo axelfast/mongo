@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/sessions_collection_mock.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/sessions_collection_mock.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class MongoDSessionCatalogTest : public ServiceContextMongoDTest {
@@ -87,4 +87,4 @@ TEST_F(MongoDSessionCatalogTest, ReapSomeExpiredSomeNot) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

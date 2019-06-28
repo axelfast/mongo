@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/periodic_runner_impl.h"
+#include "monger/util/periodic_runner_impl.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/service_context.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/client.h"
+#include "monger/db/service_context.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 PeriodicRunnerImpl::PeriodicRunnerImpl(ServiceContext* svc, ClockSource* clockSource)
     : _svc(svc), _clockSource(clockSource) {}
@@ -171,4 +171,4 @@ void PeriodicRunnerImpl::PeriodicJobImpl::setPeriod(Milliseconds ms) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

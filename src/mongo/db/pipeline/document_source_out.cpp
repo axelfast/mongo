@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_out.h"
+#include "monger/db/pipeline/document_source_out.h"
 
 #include <fmt/format.h>
 
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/pipeline/document_path_support.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/util/destructor_guard.h"
-#include "mongo/util/log.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/pipeline/document_path_support.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/util/destructor_guard.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 using namespace fmt::literals;
 
 static AtomicWord<unsigned> aggOutCounter;
@@ -69,10 +69,10 @@ DocumentSourceOut::~DocumentSourceOut() {
 
             // Reset the operation context back to original once dropCollection is done.
             ON_BLOCK_EXIT(
-                [this] { pExpCtx->mongoProcessInterface->setOperationContext(pExpCtx->opCtx); });
+                [this] { pExpCtx->mongerProcessInterface->setOperationContext(pExpCtx->opCtx); });
 
-            pExpCtx->mongoProcessInterface->setOperationContext(cleanupOpCtx.get());
-            pExpCtx->mongoProcessInterface->directClient()->dropCollection(_tempNs.ns());
+            pExpCtx->mongerProcessInterface->setOperationContext(cleanupOpCtx.get());
+            pExpCtx->mongerProcessInterface->directClient()->dropCollection(_tempNs.ns());
         });
 }
 
@@ -103,7 +103,7 @@ std::unique_ptr<DocumentSourceOut::LiteParsed> DocumentSourceOut::LiteParsed::pa
 void DocumentSourceOut::initialize() {
     DocumentSourceWriteBlock writeBlock(pExpCtx->opCtx);
 
-    DBClientBase* conn = pExpCtx->mongoProcessInterface->directClient();
+    DBClientBase* conn = pExpCtx->mongerProcessInterface->directClient();
 
     const auto& outputNs = getOutputNs();
     _tempNs = NamespaceString(str::stream() << outputNs.db() << ".tmp.agg_out."
@@ -111,7 +111,7 @@ void DocumentSourceOut::initialize() {
 
     // Save the original collection options and index specs so we can check they didn't change
     // during computation.
-    _originalOutOptions = pExpCtx->mongoProcessInterface->getCollectionOptions(outputNs);
+    _originalOutOptions = pExpCtx->mongerProcessInterface->getCollectionOptions(outputNs);
     _originalIndexes = conn->getIndexSpecs(outputNs.ns());
 
     // Check if it's capped to make sure we have a chance of succeeding before we do all the work.
@@ -166,7 +166,7 @@ void DocumentSourceOut::finalize() {
     auto renameCommandObj =
         BSON("renameCollection" << _tempNs.ns() << "to" << outputNs.ns() << "dropTarget" << true);
 
-    pExpCtx->mongoProcessInterface->renameIfOptionsAndIndexesHaveNotChanged(
+    pExpCtx->mongerProcessInterface->renameIfOptionsAndIndexesHaveNotChanged(
         pExpCtx->opCtx, renameCommandObj, outputNs, _originalOutOptions, _originalIndexes);
 
     // The rename succeeded, so the temp collection no longer exists.
@@ -193,7 +193,7 @@ boost::intrusive_ptr<DocumentSource> DocumentSourceOut::create(
 
     uassert(17017,
             "{} is not supported to an existing *sharded* output collection"_format(kStageName),
-            !expCtx->mongoProcessInterface->isSharded(expCtx->opCtx, outputNs));
+            !expCtx->mongerProcessInterface->isSharded(expCtx->opCtx, outputNs));
 
     uassert(17385,
             "Can't {} to special collection: {}"_format(kStageName, outputNs.coll()),
@@ -231,4 +231,4 @@ void DocumentSourceOut::waitWhileFailPointEnabled() {
         });
 }
 
-}  // namespace mongo
+}  // namespace monger

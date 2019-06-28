@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/user_name.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/user_name.h"
 
-namespace mongo {
+namespace monger {
 
 class Principal;
 class OperationContext;
@@ -43,7 +43,7 @@ class OperationContext;
 /**
  * Public interface for a class that encapsulates all the session information related to system
  * state not stored in AuthorizationSession.  This is primarily to make AuthorizationSession
- * easier to test as well as to allow different implementations in mongos and mongod.
+ * easier to test as well as to allow different implementations in mongers and mongerd.
  */
 class AuthzSessionExternalState {
     AuthzSessionExternalState(const AuthzSessionExternalState&) = delete;
@@ -89,4 +89,4 @@ protected:
     AuthorizationManager* _authzManager;
 };
 
-}  // namespace mongo
+}  // namespace monger

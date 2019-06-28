@@ -12,22 +12,22 @@
     load('jstests/libs/parallelTester.js');  // for ScopedThread.
     load('jstests/sharding/libs/sharded_transactions_helpers.js');
 
-    let st = new ShardingTest({mongos: 1, shards: 2});
+    let st = new ShardingTest({mongers: 1, shards: 2});
     let kDbName = 'db';
-    let mongos = st.s0;
+    let mongers = st.s0;
     let ns = kDbName + '.foo';
-    let db = mongos.getDB(kDbName);
+    let db = mongers.getDB(kDbName);
 
-    assert.commandWorked(mongos.adminCommand({enableSharding: kDbName}));
+    assert.commandWorked(mongers.adminCommand({enableSharding: kDbName}));
     st.ensurePrimaryShard(kDbName, st.shard0.shardName);
 
     // Shards the collection "db.foo" on shard key {"x" : 1} such that negative "x" values are on
     // shard0 and positive on shard1
     assert.commandWorked(db.foo.createIndex({"x": 1}));
-    assert.commandWorked(mongos.adminCommand({shardCollection: ns, key: {"x": 1}}));
-    assert.commandWorked(mongos.adminCommand({split: ns, middle: {"x": 0}}));
+    assert.commandWorked(mongers.adminCommand({shardCollection: ns, key: {"x": 1}}));
+    assert.commandWorked(mongers.adminCommand({split: ns, middle: {"x": 0}}));
     assert.commandWorked(
-        mongos.adminCommand({moveChunk: ns, find: {"x": 0}, to: st.shard1.shardName}));
+        mongers.adminCommand({moveChunk: ns, find: {"x": 0}, to: st.shard1.shardName}));
 
     assert.commandWorked(db.foo.insert({"x": -50, "a": 10}));
     assert.commandWorked(db.foo.insert({"x": -100, "a": 4}));
@@ -41,15 +41,15 @@
     assert.commandWorked(st.shard1.adminCommand({_flushDatabaseCacheUpdates: kDbName}));
     assert.commandWorked(st.shard1.adminCommand({_flushRoutingTableCacheUpdates: ns}));
 
-    let session = mongos.startSession({retryWrites: false});
+    let session = mongers.startSession({retryWrites: false});
     let sessionDB = session.getDatabase(kDbName);
 
-    let session2 = mongos.startSession({retryWrites: true});
+    let session2 = mongers.startSession({retryWrites: true});
     let sessionDB2 = session2.getDatabase(kDbName);
 
     // Returns true if the command "cmdName" has started running on the server.
     function opStarted(cmdName) {
-        return mongos.getDB(kDbName).currentOp().inprog.some(op => {
+        return mongers.getDB(kDbName).currentOp().inprog.some(op => {
             return op.active && (op.ns === "db.foo") && (op.op === cmdName);
         });
     }
@@ -89,8 +89,8 @@
                                      ErrorCodes.MaxTimeMSExpired);
         // Run the non-transactional update again in a separate thread and wait for it to start.
         function conflictingUpdate(host, kDbName, query, update) {
-            const mongosConn = new Mongo(host);
-            return mongosConn.getDB(kDbName).foo.update(query, update);
+            const mongersConn = new Mongo(host);
+            return mongersConn.getDB(kDbName).foo.update(query, update);
         }
         let thread = new ScopedThread(
             conflictingUpdate, st.s.host, kDbName, {"x": originalShardKeyValue}, {$inc: {"a": 1}});
@@ -322,7 +322,7 @@
      * fail with WriteConflict.
      */
     (() => {
-        session2 = mongos.startSession();
+        session2 = mongers.startSession();
         sessionDB2 = session2.getDatabase(kDbName);
         // Start transactions on both sessions and then run the two change shard key updates for the
         // same document
@@ -344,7 +344,7 @@
     /**
      * Test scenarios where a user sends an update as a retryable write that changes the shard key
      * and there is a concurrent update/delete that mutates the same document which completes after
-     * the change to the shard key throws WouldChangeOwningShard the first time, but before mongos
+     * the change to the shard key throws WouldChangeOwningShard the first time, but before mongers
      * starts a transaction to change the shard key.
      *
      * The scenario looks like:
@@ -352,8 +352,8 @@
      * 2. shard throws WCOS for this update
      * 3. user sends db.foo.update({shardKey: x}, {otherFieldInDoc: y}) on a different thread, this
      * write completes successfully
-     * 4. mongos starts a transaction and resends the update on line 1
-     * 5. mongos deletes the old doc, inserts a doc with the updated shard key, and commits the txn
+     * 4. mongers starts a transaction and resends the update on line 1
+     * 5. mongers deletes the old doc, inserts a doc with the updated shard key, and commits the txn
      */
 
     // Assert that if the concurrent update modifies the document so that the update which changes

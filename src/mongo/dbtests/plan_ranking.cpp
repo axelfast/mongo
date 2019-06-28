@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,36 +31,36 @@
  * This file tests db/query/plan_ranker.cpp and db/query/multi_plan_runner.cpp.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 #include <memory>
 
-#include "mongo/client/dbclient_cursor.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/exec/multi_plan.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_planner_test_lib.h"
-#include "mongo/db/query/stage_builder.h"
-#include "mongo/dbtests/dbtests.h"
+#include "monger/client/dbclient_cursor.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/exec/multi_plan.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_planner_test_lib.h"
+#include "monger/db/query/stage_builder.h"
+#include "monger/dbtests/dbtests.h"
 
-namespace mongo {
+namespace monger {
 
 // How we access the external setParameter testing bool.
 extern AtomicWord<bool> internalQueryForceIntersectionPlans;
 
 extern AtomicWord<bool> internalQueryPlannerEnableHashIntersection;
 
-}  // namespace mongo
+}  // namespace monger
 
 namespace PlanRankingTests {
 

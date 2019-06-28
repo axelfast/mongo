@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/db/auth/user_document_parser.h"
+#include "monger/db/auth/user_document_parser.h"
 
 #include <string>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/db/auth/address_restriction.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/privilege_parser.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/address_restriction.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/privilege_parser.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 constexpr StringData ADMIN_DBNAME = "admin"_sd;
@@ -487,4 +487,4 @@ Status V2UserDocumentParser::initializeUserPrivilegesFromUserDocument(const BSON
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

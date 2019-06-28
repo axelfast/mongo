@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/index_catalog_entry_impl.h"
+#include "monger/db/catalog/index_catalog_entry_impl.h"
 
 #include <algorithm>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/collection_info_cache_impl.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/multi_key_path_tracker.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/storage/durable_catalog.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/init.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/collection_info_cache_impl.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/multi_key_path_tracker.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/storage/durable_catalog.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 
@@ -364,4 +364,4 @@ KVPrefix IndexCatalogEntryImpl::_catalogGetPrefix(OperationContext* opCtx) const
         opCtx, _collection->ns(), _descriptor->indexName());
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/db/concurrency/lock_manager_defs.h"
-#include "mongo/db/stats/fill_locker_info.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/db/concurrency/lock_manager_defs.h"
+#include "monger/db/stats/fill_locker_info.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 using LockerInfo = Locker::LockerInfo;
 using OneLock = Locker::OneLock;
@@ -135,4 +135,4 @@ TEST(FillLockerInfo, ShouldReportMaxTypeHeldForResourceType) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

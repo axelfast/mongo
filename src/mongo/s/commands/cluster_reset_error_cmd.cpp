@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <set>
 #include <string>
 
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/s/client/shard_connection.h"
-#include "mongo/s/cluster_last_error_info.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/lasterror.h"
+#include "monger/s/client/shard_connection.h"
+#include "monger/s/cluster_last_error_info.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CmdShardingResetError : public BasicCommand {
@@ -87,4 +87,4 @@ public:
 } cmdShardingResetError;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

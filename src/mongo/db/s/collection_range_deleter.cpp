@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,43 +27,43 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/collection_range_deleter.h"
+#include "monger/db/s/collection_range_deleter.h"
 
 #include <algorithm>
 #include <utility>
 
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/plan_yield_policy.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/s/collection_sharding_runtime.h"
-#include "mongo/db/s/sharding_runtime_d_params_gen.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/s/sharding_statistics.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/remove_saver.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/plan_yield_policy.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/s/collection_sharding_runtime.h"
+#include "monger/db/s/sharding_runtime_d_params_gen.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/s/sharding_statistics.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/remove_saver.h"
+#include "monger/db/write_concern.h"
+#include "monger/executor/task_executor.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -529,4 +529,4 @@ Status CollectionRangeDeleter::DeleteNotification::waitStatus(OperationContext* 
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

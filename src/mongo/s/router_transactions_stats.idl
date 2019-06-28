@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 # for that class.
 
 global:
-  cpp_namespace: "mongo"
+  cpp_namespace: "monger"
 
 imports:
-  - "mongo/idl/basic_types.idl"
+  - "monger/idl/basic_types.idl"
 
 structs:
 
@@ -69,7 +69,7 @@ structs:
 
   RouterTransactionsStats:
     description: "A struct representing the section of the server status
-                  command on mongos with information about sharded transactions"
+                  command on mongers with information about sharded transactions"
     strict: true
     fields:
       totalStarted:

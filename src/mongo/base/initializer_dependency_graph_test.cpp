@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,9 +35,9 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/base/initializer_dependency_graph.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/init.h"
+#include "monger/base/initializer_dependency_graph.h"
+#include "monger/unittest/unittest.h"
 
 #define STRIP_PARENS_(...) __VA_ARGS__
 
@@ -60,7 +60,7 @@
 #define ASSERT_EXACTLY_ONE_IN_CONTAINER(CONTAINER, THING) \
     ASSERT_EXACTLY_N_IN_CONTAINER(1, CONTAINER, THING)
 
-namespace mongo {
+namespace monger {
 namespace {
 
 Status doNothing(InitializerContext*) {
@@ -364,4 +364,4 @@ TEST(InitializerDependencyGraphTest, TopSortShufflesChildren) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

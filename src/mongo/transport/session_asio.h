@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,25 +31,25 @@
 
 #include <utility>
 
-#include "mongo/base/system_error.h"
-#include "mongo/config.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/transport/asio_utils.h"
-#include "mongo/transport/baton.h"
-#include "mongo/transport/transport_layer_asio.h"
-#include "mongo/util/fail_point.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/base/system_error.h"
+#include "monger/config.h"
+#include "monger/db/stats/counters.h"
+#include "monger/transport/asio_utils.h"
+#include "monger/transport/baton.h"
+#include "monger/transport/transport_layer_asio.h"
+#include "monger/util/fail_point.h"
+#include "monger/util/net/socket_utils.h"
 #ifdef MONGO_CONFIG_SSL
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/net/ssl_types.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/net/ssl_types.h"
 #endif
 
 #include "asio.hpp"
 #ifdef MONGO_CONFIG_SSL
-#include "mongo/util/net/ssl.hpp"
+#include "monger/util/net/ssl.hpp"
 #endif
 
-namespace mongo {
+namespace monger {
 namespace transport {
 
 MONGO_FAIL_POINT_DEFINE(transportLayerASIOshortOpportunisticReadWrite);
@@ -79,7 +79,7 @@ class TransportLayerASIO::ASIOSession final : public Session {
 
 public:
     // If the socket is disconnected while any of these options are being set, this constructor
-    // may throw, but it is guaranteed to throw a mongo DBException.
+    // may throw, but it is guaranteed to throw a monger DBException.
     ASIOSession(TransportLayerASIO* tl, GenericSocket socket, bool isIngressSession) try
         : _socket(std::move(socket)),
           _tl(tl),
@@ -586,9 +586,9 @@ private:
         if (checkForHTTPRequest(buffer)) {
             return Future<bool>::makeReady(false);
         }
-        // This logic was taken from the old mongo/util/net/sock.cpp.
+        // This logic was taken from the old monger/util/net/sock.cpp.
         //
-        // It lets us run both TLS and unencrypted mongo over the same port.
+        // It lets us run both TLS and unencrypted monger over the same port.
         //
         // The first message received from the client should have the responseTo field of the wire
         // protocol message needs to be 0 or -1. Otherwise the connection is either sending
@@ -712,4 +712,4 @@ private:
 };
 
 }  // namespace transport
-}  // namespace mongo
+}  // namespace monger

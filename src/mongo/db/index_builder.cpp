@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kIndex
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kIndex
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/index_builder.h"
+#include "monger/db/index_builder.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_timestamp_helper.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/repl/timestamp_block.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_timestamp_helper.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/repl/timestamp_block.h"
+#include "monger/db/server_options.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 AtomicWord<unsigned> IndexBuilder::_indexBuildCount;
 
@@ -202,4 +202,4 @@ Status IndexBuilder::_build(OperationContext* opCtx,
     return e.toStatus();
 }
 
-}  // namespace mongo
+}  // namespace monger

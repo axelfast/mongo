@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -40,7 +40,7 @@
 #define MONGO_CONSTEXPR constexpr
 #endif
 
-namespace mongo {
+namespace monger {
 
 /**
  * A synthetic std::array alike builder for making array's with unique types.
@@ -217,7 +217,7 @@ struct MakeArrayType {
     Array _data;
 };
 
-}  // namespace mongo
+}  // namespace monger
 
 #undef MONGO_CONSTEXPR
 #pragma pop_macro("MONGO_CONSTEXPR")

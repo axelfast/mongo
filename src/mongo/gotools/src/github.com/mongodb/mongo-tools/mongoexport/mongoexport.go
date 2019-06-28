@@ -4,8 +4,8 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongoexport produces a JSON or CSV export of data stored in a MongoDB instance.
-package mongoexport
+// Package mongerexport produces a JSON or CSV export of data stored in a MongoDB instance.
+package mongerexport
 
 import (
 	"fmt"
@@ -15,20 +15,20 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/bsonutil"
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/json"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/progress"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	driverOpts "go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"github.com/mongerdb/monger-tools-common/bsonutil"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/json"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/progress"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/monger"
+	driverOpts "go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readpref"
 )
 
-// Output types supported by mongoexport.
+// Output types supported by mongerexport.
 const (
 	CSV                            = "csv"
 	JSON                           = "json"
@@ -49,9 +49,9 @@ const (
 )
 
 // MongoExport is a container for the user-specified options and
-// internal state used for running mongoexport.
+// internal state used for running mongerexport.
 type MongoExport struct {
-	// generic mongo tool options
+	// generic monger tool options
 	ToolOptions *options.ToolOptions
 
 	// OutputOpts controls options for how the exported data should be formatted
@@ -100,7 +100,7 @@ func New(opts Options) (*MongoExport, error) {
 	if err != nil {
 		return nil, util.SetupError{
 			Err:     err,
-			Message: util.ShortUsage("mongoexport"),
+			Message: util.ShortUsage("mongerexport"),
 		}
 	}
 
@@ -239,9 +239,9 @@ func makeFieldSelector(fields string) bson.M {
 
 	for _, field := range strings.Split(fields, ",") {
 		// Projections like "a.0" work fine for nested documents not for arrays
-		// - if passed directly to mongod. To handle this, we have to retrieve
+		// - if passed directly to mongerd. To handle this, we have to retrieve
 		// the entire top-level document and then filter afterwards. An exception
-		// is made for '$' projections - which are passed directly to mongod.
+		// is made for '$' projections - which are passed directly to mongerd.
 		if i := strings.LastIndex(field, "."); i != -1 && field[i+1:] != "$" {
 			field = field[:strings.Index(field, ".")]
 		}
@@ -291,9 +291,9 @@ func (exp *MongoExport) getCount() (int64, error) {
 }
 
 // getCursor returns a cursor that can be iterated over to get all the documents
-// to export, based on the options given to mongoexport. Also returns the
+// to export, based on the options given to mongerexport. Also returns the
 // associated session, so that it can be closed once the cursor is used up.
-func (exp *MongoExport) getCursor() (*mongo.Cursor, error) {
+func (exp *MongoExport) getCursor() (*monger.Cursor, error) {
 	findOpts := driverOpts.Find()
 
 	if exp.InputOpts != nil && exp.InputOpts.Sort != "" {

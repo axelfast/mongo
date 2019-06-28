@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/bson/unordered_fields_bsonobj_comparator.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/auth/address_restriction.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/restriction_set.h"
-#include "mongo/db/auth/role_graph.h"
-#include "mongo/db/auth/user_management_commands_parser.h"
-#include "mongo/db/update/update_driver.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/bson/unordered_fields_bsonobj_comparator.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/auth/address_restriction.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/restriction_set.h"
+#include "monger/db/auth/role_graph.h"
+#include "monger/db/auth/user_management_commands_parser.h"
+#include "monger/db/update/update_driver.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -393,4 +393,4 @@ Status RoleGraph::handleLogOp(OperationContext* opCtx,
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/db/ops/single_write_result_gen.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/repl/oplog_entry.h"
+#include "monger/db/ops/single_write_result_gen.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/repl/oplog_entry.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObjBuilder;
 class FindAndModifyRequest;
@@ -56,4 +56,4 @@ void parseOplogEntryForFindAndModify(OperationContext* opCtx,
                                      const repl::OplogEntry& oplogEntry,
                                      BSONObjBuilder* builder);
 
-}  // namespace mongo
+}  // namespace monger

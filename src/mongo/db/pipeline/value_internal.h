@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,17 +32,17 @@
 #include <algorithm>
 #include <boost/intrusive_ptr.hpp>
 
-#include "mongo/base/static_assert.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/bson/oid.h"
-#include "mongo/bson/timestamp.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/intrusive_counter.h"
+#include "monger/base/static_assert.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/bson/oid.h"
+#include "monger/bson/timestamp.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/intrusive_counter.h"
 
 
-namespace mongo {
+namespace monger {
 class Document;
 class DocumentStorage;
 class Value;
@@ -362,4 +362,4 @@ public:
 };
 MONGO_STATIC_ASSERT(sizeof(ValueStorage) == 16);
 MONGO_STATIC_ASSERT(alignof(ValueStorage) >= alignof(void*));
-}  // namespace mongo
+}  // namespace monger

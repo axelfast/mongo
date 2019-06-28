@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
 #ifdef _WIN32
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #pragma warning(push)
 // C4091: 'typedef ': ignored on left of '' when no variable is declared
@@ -41,15 +41,15 @@
 
 #include <ostream>
 
-#include "mongo/config.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/exit_code.h"
-#include "mongo/util/log.h"
-#include "mongo/util/quick_exit.h"
-#include "mongo/util/stacktrace.h"
-#include "mongo/util/text.h"
+#include "monger/config.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/exit_code.h"
+#include "monger/util/log.h"
+#include "monger/util/quick_exit.h"
+#include "monger/util/stacktrace.h"
+#include "monger/util/text.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 /* create a process dump.
@@ -66,7 +66,7 @@ void doMinidumpWithException(struct _EXCEPTION_POINTERS* exceptionInfo) {
         log() << "GetModuleFileName failed " << errnoWithDescription(gle);
 
         // Fallback name
-        wcscpy_s(moduleFileName, L"mongo");
+        wcscpy_s(moduleFileName, L"monger");
     } else {
         WCHAR* dotStr = wcschr(&moduleFileName[0], L'.');
         if (dotStr != nullptr) {
@@ -186,11 +186,11 @@ void setWindowsUnhandledExceptionFilter() {
     filtLast = SetUnhandledExceptionFilter(exceptionFilter);
 }
 
-}  // namespace mongo
+}  // namespace monger
 
 #else
 
-namespace mongo {
+namespace monger {
 void setWindowsUnhandledExceptionFilter() {}
 }
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/db/matcher/expression_leaf.h"
+#include "monger/db/matcher/expression_leaf.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * MatchExpression for $_internalSchemaFmod keyword. Same as ModMatchExpression but works on
@@ -73,4 +73,4 @@ private:
     Decimal128 _divisor;
     Decimal128 _remainder;
 };
-}  // namespace mongo
+}  // namespace monger

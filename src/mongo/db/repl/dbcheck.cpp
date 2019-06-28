@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/health_log.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/dbcheck.h"
-#include "mongo/db/repl/dbcheck.h"
-#include "mongo/db/repl/dbcheck_gen.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/storage/durable_catalog.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/health_log.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/dbcheck.h"
+#include "monger/db/repl/dbcheck.h"
+#include "monger/db/repl/dbcheck_gen.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/storage/durable_catalog.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -554,4 +554,4 @@ Status dbCheckOplogCommand(OperationContext* opCtx,
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

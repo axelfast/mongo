@@ -5,7 +5,7 @@
 
     load("jstests/aggregation/extras/merge_helpers.js");  // For withEachMergeMode,
 
-    const st = new ShardingTest({shards: 2, mongos: 2});
+    const st = new ShardingTest({shards: 2, mongers: 2});
 
     const dbName = "merge_stale_unique_key";
     assert.commandWorked(st.s.adminCommand({enableSharding: dbName}));
@@ -13,7 +13,7 @@
     const source = st.s0.getDB(dbName).source;
     const target = st.s0.getDB(dbName).target;
 
-    // Test that an $merge through a stale mongos can still use the correct "on" fields and succeed.
+    // Test that an $merge through a stale mongers can still use the correct "on" fields and succeed.
     (function testDefaultOnFieldsIsRecent() {
         const freshMongos = st.s0;
         const staleMongos = st.s1;
@@ -28,17 +28,17 @@
             // collection is sharded by {sk: 1, _id: 1}.
             assert.commandWorked(staleMongosDB.adminCommand(
                 {shardCollection: target.getFullName(), key: {sk: 1, _id: 1}}));
-            // Perform a query through that mongos to ensure the cache is populated.
+            // Perform a query through that mongers to ensure the cache is populated.
             assert.eq(0, staleMongosDB[target.getName()].find().itcount());
 
-            // Drop the collection from the other mongos - it is no longer sharded but the stale
-            // mongos doesn't know that yet.
+            // Drop the collection from the other mongers - it is no longer sharded but the stale
+            // mongers doesn't know that yet.
             target.drop();
         }());
 
         // At this point 'staleMongos' will believe that the target collection is sharded. This
         // should not prevent it from running an $merge without "on" fields specified.
-        // Specifically, the mongos should force a refresh of its cache before defaulting the "on"
+        // Specifically, the mongers should force a refresh of its cache before defaulting the "on"
         // fields.
         assert.commandWorked(source.insert({_id: 'seed'}));
 
@@ -81,8 +81,8 @@
 
         // Use a failpoint to make the query feeding into the aggregate hang while we drop the
         // collection.
-        [st.rs0.getPrimary(), st.rs1.getPrimary()].forEach((mongod) => {
-            assert.commandWorked(mongod.adminCommand(
+        [st.rs0.getPrimary(), st.rs1.getPrimary()].forEach((mongerd) => {
+            assert.commandWorked(mongerd.adminCommand(
                 {configureFailPoint: failpoint, mode: "alwaysOn", data: failpointData || {}}));
         });
         let parallelShellJoiner;
@@ -100,8 +100,8 @@
                 // If a user specifies their own "on" fields, we don't need to fail an aggregation
                 // if the collection is dropped and recreated or the epoch otherwise changes. We are
                 // allowed to fail such an operation should we choose to in the future, but for now
-                // we don't expect to because we do not do anything special on mongos to ensure the
-                // catalog cache is up to date, so do not want to attach mongos's believed epoch to
+                // we don't expect to because we do not do anything special on mongers to ensure the
+                // catalog cache is up to date, so do not want to attach mongers's believed epoch to
                 // the command for the shards.
                 parallelCode = `
                     const source = db.getSiblingDB("${dbName}").${source.getName()};
@@ -115,7 +115,7 @@
             parallelShellJoiner = startParallelShell(parallelCode, st.s.port);
 
             // Wait for the merging $merge to appear in the currentOp output from the shards. We
-            // should see that the $merge stage has an 'epoch' field serialized from the mongos.
+            // should see that the $merge stage has an 'epoch' field serialized from the mongers.
             const getAggOps = function() {
                 return st.s.getDB("admin")
                     .aggregate([
@@ -138,9 +138,9 @@
             // Drop the collection so that the epoch changes.
             target.drop();
         } finally {
-            [st.rs0.getPrimary(), st.rs1.getPrimary()].forEach((mongod) => {
+            [st.rs0.getPrimary(), st.rs1.getPrimary()].forEach((mongerd) => {
                 assert.commandWorked(
-                    mongod.adminCommand({configureFailPoint: failpoint, mode: "off"}));
+                    mongerd.adminCommand({configureFailPoint: failpoint, mode: "off"}));
             });
         }
         parallelShellJoiner();

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_coll_stats.h"
+#include "monger/db/pipeline/document_source_coll_stats.h"
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
-#include "mongo/db/stats/top.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/time_support.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/stats/top.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/time_support.h"
 
 using boost::intrusive_ptr;
 
-namespace mongo {
+namespace monger {
 
 REGISTER_DOCUMENT_SOURCE(collStats,
                          DocumentSourceCollStats::LiteParsed::parse,
@@ -107,7 +107,7 @@ DocumentSource::GetNextResult DocumentSourceCollStats::getNext() {
 
     builder.append("ns", pExpCtx->ns.ns());
 
-    auto shardName = pExpCtx->mongoProcessInterface->getShardName(pExpCtx->opCtx);
+    auto shardName = pExpCtx->mongerProcessInterface->getShardName(pExpCtx->opCtx);
 
     if (!shardName.empty()) {
         builder.append("shard", shardName);
@@ -122,14 +122,14 @@ DocumentSource::GetNextResult DocumentSourceCollStats::getNext() {
         if (_collStatsSpec["latencyStats"].type() == BSONType::Object) {
             includeHistograms = _collStatsSpec["latencyStats"]["histograms"].boolean();
         }
-        pExpCtx->mongoProcessInterface->appendLatencyStats(
+        pExpCtx->mongerProcessInterface->appendLatencyStats(
             pExpCtx->opCtx, pExpCtx->ns, includeHistograms, &builder);
     }
 
     if (_collStatsSpec.hasField("storageStats")) {
         // If the storageStats field exists, it must have been validated as an object when parsing.
         BSONObjBuilder storageBuilder(builder.subobjStart("storageStats"));
-        Status status = pExpCtx->mongoProcessInterface->appendStorageStats(
+        Status status = pExpCtx->mongerProcessInterface->appendStorageStats(
             pExpCtx->opCtx, pExpCtx->ns, _collStatsSpec["storageStats"].Obj(), &storageBuilder);
         storageBuilder.doneFast();
         if (!status.isOK()) {
@@ -140,7 +140,7 @@ DocumentSource::GetNextResult DocumentSourceCollStats::getNext() {
     }
 
     if (_collStatsSpec.hasField("count")) {
-        Status status = pExpCtx->mongoProcessInterface->appendRecordCount(
+        Status status = pExpCtx->mongerProcessInterface->appendRecordCount(
             pExpCtx->opCtx, pExpCtx->ns, &builder);
         if (!status.isOK()) {
             uasserted(40481,
@@ -156,4 +156,4 @@ Value DocumentSourceCollStats::serialize(boost::optional<ExplainOptions::Verbosi
     return Value(Document{{getSourceName(), _collStatsSpec}});
 }
 
-}  // namespace mongo
+}  // namespace monger

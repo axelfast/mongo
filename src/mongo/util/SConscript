@@ -28,7 +28,7 @@ env.Library(
         'version_impl.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ]
 )
 
@@ -38,7 +38,7 @@ env.Library(
         'intrusive_counter.cpp',
         ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         ]
     )
 
@@ -48,7 +48,7 @@ env.Library(
         'log_and_backoff.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -58,7 +58,7 @@ env.Library(
         'regex_util.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -85,7 +85,7 @@ env.Library(
         'summation.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -96,7 +96,7 @@ env.Library(
         'thread_safe_string.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -114,7 +114,7 @@ env.Library(
         'clock_source_mock.cpp'
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -126,7 +126,7 @@ env.Library(
     ],
     LIBDEPS=[
         'clock_sources',
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -137,7 +137,7 @@ env.Library(
         "processinfo_${TARGET_OS}.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
+        "$BUILD_DIR/monger/base",
     ],
 )
 
@@ -150,9 +150,9 @@ env.Library(
         env.Idlc('fail_point_server_parameter.idl')[0],
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
-        "$BUILD_DIR/mongo/bson/util/bson_extract",
-        "$BUILD_DIR/mongo/idl/server_parameter",
+        "$BUILD_DIR/monger/base",
+        "$BUILD_DIR/monger/bson/util/bson_extract",
+        "$BUILD_DIR/monger/idl/server_parameter",
     ],
 )
 
@@ -162,7 +162,7 @@ env.Library(
         "periodic_runner.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
+        "$BUILD_DIR/monger/base",
     ],
 )
 
@@ -172,8 +172,8 @@ env.Library(
         "periodic_runner_impl.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
-        "$BUILD_DIR/mongo/db/service_context",
+        "$BUILD_DIR/monger/base",
+        "$BUILD_DIR/monger/db/service_context",
         "periodic_runner",
     ],
 )
@@ -184,7 +184,7 @@ env.Library(
         'periodic_runner_factory.cpp',
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/db/service_context",
+        "$BUILD_DIR/monger/db/service_context",
         'periodic_runner',
         'periodic_runner_impl',
     ],
@@ -196,7 +196,7 @@ env.Library(
         "background.cpp",
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         'concurrency/spin_lock',
     ],
 )
@@ -231,16 +231,16 @@ if env['MONGO_ALLOCATOR'] in ['tcmalloc', 'tcmalloc-experimental']:
             'heap_profiler.cpp',
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/transport/service_executor',
+            '$BUILD_DIR/monger/transport/service_executor',
         ],
         LIBDEPS_PRIVATE=[
-            '$BUILD_DIR/mongo/db/commands/server_status',
-            '$BUILD_DIR/mongo/idl/server_parameter',
+            '$BUILD_DIR/monger/db/commands/server_status',
+            '$BUILD_DIR/monger/idl/server_parameter',
             'processinfo',
         ],
         PROGDEPS_DEPENDENTS=[
-            '$BUILD_DIR/mongo/mongod',
-            '$BUILD_DIR/mongo/mongos',
+            '$BUILD_DIR/monger/mongerd',
+            '$BUILD_DIR/monger/mongers',
         ],
     )
 
@@ -258,7 +258,7 @@ env.Library(
     ],
     LIBDEPS=[
         'signal_handlers',
-        '$BUILD_DIR/mongo/util/options_parser/options_parser',
+        '$BUILD_DIR/monger/util/options_parser/options_parser',
     ],
 )
 
@@ -270,7 +270,7 @@ env.Library(
         'fast_clock_source_factory.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -280,8 +280,8 @@ env.Library(
         'diagnostic_info.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        "$BUILD_DIR/mongo/db/service_context",
+        '$BUILD_DIR/monger/base',
+        "$BUILD_DIR/monger/db/service_context",
     ],
 )
 
@@ -302,7 +302,7 @@ env.Library(
         'elapsed_tracker.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         'net/network', # this is for using listener to check elapsed time
     ],
 )
@@ -344,7 +344,7 @@ env.Library(
         'secure_compare_memory.cpp',
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
+        "$BUILD_DIR/monger/base",
     ],
 )
 
@@ -354,7 +354,7 @@ env.Library(
         'dns_query.cpp',
     ],
     LIBDEPS_PRIVATE=[
-        "$BUILD_DIR/mongo/base",
+        "$BUILD_DIR/monger/base",
     ],
 )
 
@@ -364,7 +364,7 @@ env.Library(
         'secure_zero_memory.cpp',
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
+        "$BUILD_DIR/monger/base",
     ],
 )
 
@@ -375,10 +375,10 @@ env.Library(
         "signal_win32.cpp",
     ],
     LIBDEPS=[
-        "$BUILD_DIR/mongo/base",
-        "$BUILD_DIR/mongo/db/log_process_details",
-        "$BUILD_DIR/mongo/db/service_context",
-        "$BUILD_DIR/mongo/db/server_options_core",
+        "$BUILD_DIR/monger/base",
+        "$BUILD_DIR/monger/db/log_process_details",
+        "$BUILD_DIR/monger/db/service_context",
+        "$BUILD_DIR/monger/db/server_options_core",
     ],
 )
 
@@ -388,7 +388,7 @@ env.Library(
         'safe_num.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
 )
 
@@ -399,10 +399,10 @@ env.Library(
         env.Idlc('password_params.idl')[0],
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/idl/server_parameter',
+        '$BUILD_DIR/monger/idl/server_parameter',
     ]
 )
 
@@ -439,7 +439,7 @@ if env.TargetOSIs('linux'):
             "procparser.cpp",
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
+            '$BUILD_DIR/monger/base',
         ],
     )
 
@@ -450,7 +450,7 @@ if env.TargetOSIs('windows'):
             "perfctr_collect.cpp",
         ],
         LIBDEPS=[
-            '$BUILD_DIR/mongo/base',
+            '$BUILD_DIR/monger/base',
         ],
     )
 
@@ -461,9 +461,9 @@ if not use_system_version_of_library("icu"):
         target="icu_init.cpp",
         source=[
             "generate_icu_init_cpp.py",
-            ("$BUILD_DIR/third_party/icu4c-57.1/source/mongo_sources/icudt57l.dat"
+            ("$BUILD_DIR/third_party/icu4c-57.1/source/monger_sources/icudt57l.dat"
                 if endian == "little"
-                else "$BUILD_DIR/third_party/icu4c-57.1/source/mongo_sources/icudt57b.dat"),
+                else "$BUILD_DIR/third_party/icu4c-57.1/source/monger_sources/icudt57b.dat"),
         ],
         action="$PYTHON ${SOURCES[0]} -o $TARGET -i ${SOURCES[1]}",
     )
@@ -495,7 +495,7 @@ icuEnv.Library(
         'icu_init.cpp' if not use_system_version_of_library('icu') else 'icu_init_stub.cpp',
     ],
     LIBDEPS_PRIVATE=[
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         '$BUILD_DIR/third_party/shim_icu',
     ],
 )
@@ -507,7 +507,7 @@ icuEnv.Library(
     ],
     LIBDEPS_PRIVATE=[
         'icu_init',
-        '$BUILD_DIR/mongo/base',
+        '$BUILD_DIR/monger/base',
         '$BUILD_DIR/third_party/shim_icu',
     ],
 )
@@ -564,9 +564,9 @@ icuEnv.CppUnitTest(
         'unowned_ptr_test.cpp',
     ],
     LIBDEPS=[
-        '$BUILD_DIR/mongo/base',
-        '$BUILD_DIR/mongo/db/service_context',
-        '$BUILD_DIR/mongo/db/service_context_test_fixture',
+        '$BUILD_DIR/monger/base',
+        '$BUILD_DIR/monger/db/service_context',
+        '$BUILD_DIR/monger/db/service_context_test_fixture',
         'alarm',
         'background_job',
         'clock_source_mock',

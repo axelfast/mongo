@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/logger/rotatable_file_writer.h"
+#include "monger/logger/rotatable_file_writer.h"
 
 #include <boost/filesystem/operations.hpp>
 #include <cstdio>
 #include <fstream>
 
-#include "mongo/base/string_data.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace logger {
 
 namespace {
@@ -277,4 +277,4 @@ Status RotatableFileWriter::Use::_openFileStream(bool append) {
 }
 
 }  // namespace logger
-}  // namespace mongo
+}  // namespace monger

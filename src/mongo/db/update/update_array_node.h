@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -35,11 +35,11 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/base/clonable_ptr.h"
-#include "mongo/db/matcher/expression_with_placeholder.h"
-#include "mongo/db/update/update_internal_node.h"
+#include "monger/base/clonable_ptr.h"
+#include "monger/db/matcher/expression_with_placeholder.h"
+#include "monger/db/update/update_internal_node.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * An internal node in the prefix tree of update modifier expressions, representing updates to an
@@ -108,4 +108,4 @@ private:
         _mergedChildrenCache;
 };
 
-}  // namespace mongo
+}  // namespace monger

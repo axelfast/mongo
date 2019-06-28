@@ -68,7 +68,7 @@
                     " command because a background operation is in progress (attempt " + attempt +
                     "): " + tojson(res);
 
-                // This handles the retry case when run against a standalone, replica set, or mongos
+                // This handles the retry case when run against a standalone, replica set, or mongers
                 // where both shards returned the same response.
                 if (hasBackgroundOpInProgress(res)) {
                     print(message);
@@ -77,7 +77,7 @@
 
                 // The following logic only applies to sharded clusters.
                 if (!conn.isMongos() || !res.raw) {
-                    // We don't attempt to retry commands for which mongos doesn't expose the raw
+                    // We don't attempt to retry commands for which mongers doesn't expose the raw
                     // responses from the shards.
                     return kNoRetry;
                 }

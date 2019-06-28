@@ -6,9 +6,9 @@
 
 var st = new ShardingTest({shards: 2, verbose: 4});
 
-var mongos = st.s0;
-var coll = mongos.getCollection("foo.bar");
-var admin = mongos.getDB("admin");
+var mongers = st.s0;
+var coll = mongers.getCollection("foo.bar");
+var admin = mongers.getDB("admin");
 
 assert.commandWorked(admin.runCommand({enableSharding: coll.getDB().getName()}));
 printjson(admin.runCommand({movePrimary: coll.getDB().getName(), to: st.shard0.shardName}));

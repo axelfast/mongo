@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoreplay
+package mongerreplay
 
 import (
 	"fmt"
@@ -72,7 +72,7 @@ type cursorsRewriteable interface {
 }
 
 // Replyable is an interface representing any operation that has the
-// functionality of a reply from a mongodb server. This includes both
+// functionality of a reply from a mongerdb server. This includes both
 // ReplyOps and CommandOpReplies.
 type Replyable interface {
 	getCursorID() (int64, error)

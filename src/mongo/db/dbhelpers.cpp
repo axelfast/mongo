@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/dbhelpers.h"
+#include "monger/db/dbhelpers.h"
 
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/index/btree_access_method.h"
-#include "mongo/db/json.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/ops/delete.h"
-#include "mongo/db/ops/update.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/ops/update_result.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/index/btree_access_method.h"
+#include "monger/db/json.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/ops/delete.h"
+#include "monger/db/ops/update.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/ops/update_result.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/db/write_concern.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::set;
@@ -266,4 +266,4 @@ void Helpers::emptyCollection(OperationContext* opCtx, const NamespaceString& ns
     deleteObjects(opCtx, collection, nss, BSONObj(), false);
 }
 
-}  // namespace mongo
+}  // namespace monger

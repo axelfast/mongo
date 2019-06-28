@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/s/query/cluster_find.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/query/explain.h"
+#include "monger/s/query/cluster_find.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 /**
- * Implements the explain command on mongos.
+ * Implements the explain command on mongers.
  *
  * "Old-style" explains (i.e. queries which have the $explain flag set), do not run
  * through this path. Such explains will be supported for backwards compatibility,
  * and must succeed in multiversion clusters.
  *
  * "New-style" explains use the explain command. When the explain command is routed
- * through mongos, it is forwarded to all relevant shards. If *any* shard does not
+ * through mongers, it is forwarded to all relevant shards. If *any* shard does not
  * support a new-style explain, then the entire explain will fail (i.e. new-style
  * explains cannot be used in multiversion clusters).
  */
@@ -191,4 +191,4 @@ std::unique_ptr<CommandInvocation> ClusterExplainCmd::parse(OperationContext* op
 ClusterExplainCmd cmdExplainCluster;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

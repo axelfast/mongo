@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -29,40 +29,40 @@
 # Document source merge stage IDL file
 
 global:
-    cpp_namespace: "mongo"
+    cpp_namespace: "monger"
     cpp_includes:
-        - "mongo/db/namespace_string.h"
-        - "mongo/db/pipeline/document_source_merge_spec.h"
+        - "monger/db/namespace_string.h"
+        - "monger/db/pipeline/document_source_merge_spec.h"
 
 imports:
-    - "mongo/db/pipeline/document_source_merge_modes.idl"
-    - "mongo/idl/basic_types.idl"
-    - "mongo/s/chunk_version.idl"
+    - "monger/db/pipeline/document_source_merge_modes.idl"
+    - "monger/idl/basic_types.idl"
+    - "monger/s/chunk_version.idl"
 
 types:
     MergeTargetNss:
         bson_serialization_type: any
         description: Names of the target database and collection. The database name defaults
                      to the database of the aggregation.
-        cpp_type: mongo::NamespaceString
-        serializer: "::mongo::mergeTargetNssSerializeToBSON"
-        deserializer: "::mongo::mergeTargetNssParseFromBSON"
+        cpp_type: monger::NamespaceString
+        serializer: "::monger::mergeTargetNssSerializeToBSON"
+        deserializer: "::monger::mergeTargetNssParseFromBSON"
 
     MergeOnFields:
         bson_serialization_type: any
         description: A single field or array of fields that identify a document for merge.
         cpp_type: std::vector<std::string>
-        serializer: "::mongo::mergeOnFieldsSerializeToBSON"
-        deserializer: "::mongo::mergeOnFieldsParseFromBSON"
+        serializer: "::monger::mergeOnFieldsSerializeToBSON"
+        deserializer: "::monger::mergeOnFieldsParseFromBSON"
 
     MergeWhenMatchedPolicy:
         bson_serialization_type: any
         description: Defines a policy strategy describing what to do when there is a matching
                      document in the target collection. Can hold a value from the
                      MergeWhenMatchedMode enum, or a custom pipeline definition.
-        cpp_type: "::mongo::MergeWhenMatchedPolicy"
-        serializer: "::mongo::mergeWhenMatchedSerializeToBSON"
-        deserializer: "::mongo::mergeWhenMatchedParseFromBSON"
+        cpp_type: "::monger::MergeWhenMatchedPolicy"
+        serializer: "::monger::mergeWhenMatchedSerializeToBSON"
+        deserializer: "::monger::mergeWhenMatchedParseFromBSON"
 
 structs:
     NamespaceSpec:
@@ -114,7 +114,7 @@ structs:
             targetCollectionVersion:
                 type: ChunkVersion
                 optional: true
-                description: If set, the collection's ChunkVersion found when parsed on mongos. Can
+                description: If set, the collection's ChunkVersion found when parsed on mongers. Can
                              be used to check if a collection has since been dropped and re-created,
                              in which case the shard key may have changed. This also can be used to
                              detect if the collection has gone from unsharded to sharded, and thus

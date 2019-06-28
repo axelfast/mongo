@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,18 +31,18 @@
 
 #if defined(_WIN32) || defined(__sun)
 
-namespace mongo {
+namespace monger {
 namespace pal {
 const char* strcasestr(const char* haystack, const char* needle);
 }
-using mongo::pal::strcasestr;
+using monger::pal::strcasestr;
 }
 
 #else
 
 #include <cstring>
 
-namespace mongo {
+namespace monger {
 using ::strcasestr;
 }
 

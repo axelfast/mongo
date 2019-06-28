@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/optional.hpp>
 #include <map>
 #include <set>
 #include <string>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/collection_catalog_helper.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/md5.hpp"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/timer.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/collection_catalog_helper.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/log.h"
+#include "monger/util/md5.hpp"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -395,4 +395,4 @@ private:
 } dbhashCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/devnull/devnull_kv_engine.h"
+#include "monger/db/storage/devnull/devnull_kv_engine.h"
 
 #include <memory>
 
-#include "mongo/db/snapshot_window_options.h"
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_record_store.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/sorted_data_interface.h"
+#include "monger/db/snapshot_window_options.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_record_store.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/sorted_data_interface.h"
 
-namespace mongo {
+namespace monger {
 
 class EmptyRecordCursor final : public SeekableRecordCursor {
 public:
@@ -281,4 +281,4 @@ StatusWith<std::vector<std::string>> DevNullKVEngine::extendBackupCursor(Operati
     return filesToCopy;
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
 #
 
 global:
-    cpp_namespace: "mongo::write_ops"
+    cpp_namespace: "monger::write_ops"
     cpp_includes:
-        - "mongo/db/ops/write_ops_parsers.h"
+        - "monger/db/ops/write_ops_parsers.h"
 
 imports:
-    - "mongo/db/logical_session_id.idl"
-    - "mongo/db/pipeline/runtime_constants.idl"
-    - "mongo/idl/basic_types.idl"
-    - "mongo/db/query/hint.idl"
+    - "monger/db/logical_session_id.idl"
+    - "monger/db/pipeline/runtime_constants.idl"
+    - "monger/idl/basic_types.idl"
+    - "monger/db/query/hint.idl"
 
 types:
     multi_delete_bool:
@@ -44,16 +44,16 @@ types:
                       command, which has a mandatory value of either 0 or 1, where 0 means multi
                       delete and 1 means delete just one."
         cpp_type: "bool"
-        serializer: "::mongo::write_ops::writeMultiDeleteProperty"
-        deserializer: "::mongo::write_ops::readMultiDeleteProperty"
+        serializer: "::monger::write_ops::writeMultiDeleteProperty"
+        deserializer: "::monger::write_ops::readMultiDeleteProperty"
 
     update_modification:
         bson_serialization_type: any
         description: "Holds the contents of the update command 'u' field, describing the
                       modifications to apply on update."
-        cpp_type: "mongo::write_ops::UpdateModification"
-        serializer: "mongo::write_ops::UpdateModification::serializeToBSON"
-        deserializer: "mongo::write_ops::UpdateModification::parseFromBSON"
+        cpp_type: "monger::write_ops::UpdateModification"
+        serializer: "monger::write_ops::UpdateModification::serializeToBSON"
+        deserializer: "monger::write_ops::UpdateModification::parseFromBSON"
 
 structs:
 
@@ -115,7 +115,7 @@ structs:
             hint:
                 description: "Specifies the hint to use for the operation."
                 type: indexHint 
-                default: mongo::BSONObj()
+                default: monger::BSONObj()
             multi:
                 description: "If true, updates all documents that meet the query criteria. If false,
                               limits the update to one document which meets the query criteria."

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <set>
 
-#include "mongo/bson/json.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/fts/fts_index_format.h"
-#include "mongo/db/fts/fts_spec.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/json.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/fts/fts_index_format.h"
+#include "monger/db/fts/fts_spec.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace fts {
 
@@ -196,8 +196,8 @@ TEST(FTSIndexFormat, LongWordTextIndexVersion2) {
     string longWordCat = longPrefix + "cat";
     // "aaa...aaasat"
     string longWordSat = longPrefix + "sat";
-    // "aaa...aaamongodbfts"
-    string longWordMongoDBFts = longPrefix + "mongodbfts";
+    // "aaa...aaamongerdbfts"
+    string longWordMongoDBFts = longPrefix + "mongerdbfts";
     string text = str::stream() << longWordCat << " " << longWordSat << " " << longWordMongoDBFts;
     FTSIndexFormat::getKeys(spec, BSON("data" << text), &keys);
 
@@ -207,7 +207,7 @@ TEST(FTSIndexFormat, LongWordTextIndexVersion2) {
     expectedKeys.insert("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab8e78455d827ebb87cbe87f392bf45f6");
     // sat
     expectedKeys.insert("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf2d6f58bb3b81b97e611ae7ccac6dea7");
-    // mongodbfts
+    // mongerdbfts
     expectedKeys.insert("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae1d6b34f5d9c92acecd8cce32f747b27");
 
     assertEqualsIndexKeys(expectedKeys, keys);
@@ -324,4 +324,4 @@ TEST(FTSIndexFormat, GetKeysWithPositionalPathAllowed) {
     }
 }
 }  // namespace fts
-}  // namespace mongo
+}  // namespace monger

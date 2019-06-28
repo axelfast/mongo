@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,35 +27,35 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/db/commands/fsync.h"
+#include "monger/db/commands/fsync.h"
 
 #include <string>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/privilege.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/fsync_locked.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/backup_cursor_hooks.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/background.h"
-#include "mongo/util/exit.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/privilege.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/fsync_locked.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/backup_cursor_hooks.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/background.h"
+#include "monger/util/exit.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::stringstream;
@@ -67,7 +67,7 @@ Lock::ResourceMutex commandMutex("fsyncCommandMutex");
 }
 
 /**
- * Maintains a global read lock while mongod is fsyncLocked.
+ * Maintains a global read lock while mongerd is fsyncLocked.
  */
 class FSyncLockThread : public BackgroundJob {
 public:
@@ -87,7 +87,7 @@ private:
 class FSyncCommand : public ErrmsgCommandDeprecated {
 public:
     static const char* url() {
-        return "http://dochub.mongodb.org/core/fsynccommand";
+        return "http://dochub.mongerdb.org/core/fsynccommand";
     }
 
     FSyncCommand() : ErrmsgCommandDeprecated("fsync") {}
@@ -187,7 +187,7 @@ public:
             }
         }
 
-        log() << "mongod is locked and no writes are allowed. db.fsyncUnlock() to unlock";
+        log() << "mongerd is locked and no writes are allowed. db.fsyncUnlock() to unlock";
         log() << "Lock count is " << getLockCount();
         log() << "    For more info see " << FSyncCommand::url();
         result.append("info", "now locked against writes, use db.fsyncUnlock() to unlock");
@@ -322,7 +322,7 @@ public:
         } else {
             invariant(fsyncCmd.getLockCount() == 0);
             lockCount = 0;
-            log() << "fsyncUnlock completed. mongod is now unlocked and free to accept writes";
+            log() << "fsyncUnlock completed. mongerd is now unlocked and free to accept writes";
         }
 
         result.append("info", str::stream() << "fsyncUnlock completed");

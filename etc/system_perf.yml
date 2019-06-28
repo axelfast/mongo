@@ -55,7 +55,7 @@ post:
           # these default values in the distro config in evergreen.
 
           if [ -d "${scons_cache_path}" ]; then
-              /opt/mongodbtoolchain/v3/bin/python3 buildscripts/scons_cache_prune.py --cache-dir ${scons_cache_path} --cache-size ${scons_cache_size|200} --prune-ratio ${scons_prune_ratio|0.8}
+              /opt/mongerdbtoolchain/v3/bin/python3 buildscripts/scons_cache_prune.py --cache-dir ${scons_cache_path} --cache-size ${scons_cache_size|200} --prune-ratio ${scons_prune_ratio|0.8}
           fi
 
 functions:
@@ -71,7 +71,7 @@ functions:
         workloads: ${workloads_rev}
         wtdevelop: ${wtdevelop_rev}
 
-  "compile mongodb":
+  "compile mongerdb":
     # We create a virtual environment with the Python dependencies for compiling the server
     # installed.
     - command: shell.exec
@@ -81,8 +81,8 @@ functions:
           set -o errexit
           set -o verbose
 
-          /opt/mongodbtoolchain/v3/bin/virtualenv --python /opt/mongodbtoolchain/v3/bin/python3 "${workdir}/compile_venv"
-          /opt/mongodbtoolchain/v3/bin/virtualenv --python /opt/mongodbtoolchain/v3/bin/python2 "${workdir}/venv"
+          /opt/mongerdbtoolchain/v3/bin/virtualenv --python /opt/mongerdbtoolchain/v3/bin/python3 "${workdir}/compile_venv"
+          /opt/mongerdbtoolchain/v3/bin/virtualenv --python /opt/mongerdbtoolchain/v3/bin/python2 "${workdir}/venv"
           source "${workdir}/compile_venv/bin/activate"
 
           python -m pip install -r etc/pip/compile-requirements.txt
@@ -119,7 +119,7 @@ functions:
         file: src/compile_expansions.yml
     - command: shell.exec
       params:
-        working_dir: src/src/mongo/gotools/src/github.com/mongodb/mongo-tools
+        working_dir: src/src/monger/gotools/src/github.com/mongerdb/monger-tools
         script: |
           set -o verbose
           set -o errexit
@@ -131,13 +131,13 @@ functions:
           . ./set_goenv.sh
           GOROOT="" set_goenv || exit
           go version
-          build_tools="bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop"
-          if [ "${build_mongoreplay}" = "true" ]; then
-              build_tools="$build_tools mongoreplay"
+          build_tools="bsondump mongerstat mongerfiles mongerexport mongerimport mongerrestore mongerdump mongertop"
+          if [ "${build_mongerreplay}" = "true" ]; then
+              build_tools="$build_tools mongerreplay"
           fi
           for i in $build_tools; do
-              go build -ldflags "$(print_ldflags)" ${args} -tags "$(print_tags ${tooltags})" -o "../../../../../../mongo-tools/$i${exe|}" $i/main/$i.go
-              "../../../../../../mongo-tools/$i${exe|}" --version
+              go build -ldflags "$(print_ldflags)" ${args} -tags "$(print_tags ${tooltags})" -o "../../../../../../monger-tools/$i${exe|}" $i/main/$i.go
+              "../../../../../../monger-tools/$i${exe|}" --version
           done
     - command: shell.exec
       params:
@@ -146,38 +146,38 @@ functions:
           set -o errexit
           set -o verbose
           source "${workdir}/compile_venv/bin/activate"
-          python ./buildscripts/scons.py ${compile_flags|} ${scons_cache_args|} mongo${extension} --use-new-tools mongod${extension} mongos${extension} MONGO_VERSION=${version}
-          mkdir -p mongodb/bin
-          mkdir -p mongodb/jstests/hooks
-          mv mongo${extension|} mongodb/bin
-          mv mongod${extension|} mongodb/bin
-          mv mongos${extension|} mongodb/bin
-          mv src/mongo-tools/* mongodb/bin
+          python ./buildscripts/scons.py ${compile_flags|} ${scons_cache_args|} monger${extension} --use-new-tools mongerd${extension} mongers${extension} MONGO_VERSION=${version}
+          mkdir -p mongerdb/bin
+          mkdir -p mongerdb/jstests/hooks
+          mv monger${extension|} mongerdb/bin
+          mv mongerd${extension|} mongerdb/bin
+          mv mongers${extension|} mongerdb/bin
+          mv src/monger-tools/* mongerdb/bin
           if [ -d jstests/hooks ]
           then
             echo "Fetching JS test DB correctness checks from directory jstests"
-            cp -a jstests/* mongodb/jstests
+            cp -a jstests/* mongerdb/jstests
 
             echo "Now adding our own special run_validate_collections.js wrapper"
-            mv mongodb/jstests/hooks/run_validate_collections.js mongodb/jstests/hooks/run_validate_collections.actual.js
+            mv mongerdb/jstests/hooks/run_validate_collections.js mongerdb/jstests/hooks/run_validate_collections.actual.js
 
-            cat << EOF > mongodb/jstests/hooks/run_validate_collections.js
+            cat << EOF > mongerdb/jstests/hooks/run_validate_collections.js
             print("NOTE: run_validate_collections.js will skip the oplog!");
             TestData = { skipValidationNamespaces: ['local.oplog.rs'] };
             load('jstests/hooks/run_validate_collections.actual.js');
           EOF
           fi
-          tar czf mongodb${compile-variant|}.tar.gz mongodb
+          tar czf mongerdb${compile-variant|}.tar.gz mongerdb
     - command: s3.put
       params:
         aws_key: ${aws_key}
         aws_secret: ${aws_secret}
-        local_file: src/mongodb${compile-variant|}.tar.gz
-        remote_file: ${project_dir}/${version_id}/${revision}/${platform}/mongodb${compile-variant|}-${version_id}.tar.gz
+        local_file: src/mongerdb${compile-variant|}.tar.gz
+        remote_file: ${project_dir}/${version_id}/${revision}/${platform}/mongerdb${compile-variant|}-${version_id}.tar.gz
         bucket: mciuploads
         permissions: public-read
         content_type: ${content_type|application/x-gzip}
-        display_name: mongodb${compile-variant|}.tar.gz
+        display_name: mongerdb${compile-variant|}.tar.gz
 
   "use WiredTiger develop":
     command: shell.exec
@@ -202,7 +202,7 @@ functions:
           mkdir src
           mkdir work
     - command: manifest.load
-    # Calling the git.get_project command here will clone the mongodb/mongo repository, as well as
+    # Calling the git.get_project command here will clone the mongerdb/monger repository, as well as
     # the repositories defined in the build variant's "modules" section.
     - *git_get_project
     - command: shell.exec
@@ -212,7 +212,7 @@ functions:
           cat > bootstrap.yml <<EOF
           infrastructure_provisioning: ${cluster}
           platform: ${platform}
-          mongodb_setup: ${setup}
+          mongerdb_setup: ${setup}
           storageEngine: ${storageEngine}
           test_control: ${test}
           production: true
@@ -225,8 +225,8 @@ functions:
                 linkbench: ../src/linkbench/linkbench
                 tpcc: ../src/tpcc/tpcc
                 genny: ../src/genny/genny
-            mongodb_setup:
-              mongodb_binary_archive: "https://s3.amazonaws.com/mciuploads/${project_dir}/${version_id}/${revision}/${platform}/mongodb${compile-variant|}-${version_id}.tar.gz"
+            mongerdb_setup:
+              mongerdb_binary_archive: "https://s3.amazonaws.com/mciuploads/${project_dir}/${version_id}/${revision}/${platform}/mongerdb${compile-variant|}-${version_id}.tar.gz"
           EOF
 
           cat > runtime.yml <<EOF
@@ -303,7 +303,7 @@ functions:
           source ./dsienv.sh
           ../src/dsi/dsi/run-dsi infrastructure_provisioning.py
           ../src/dsi/dsi/run-dsi workload_setup.py
-          ../src/dsi/dsi/run-dsi mongodb_setup.py
+          ../src/dsi/dsi/run-dsi mongerdb_setup.py
 
   "run test":
     - command: shell.exec
@@ -372,7 +372,7 @@ tasks:
     - command: manifest.load
     - func: "git get project"
     - func: "use WiredTiger develop" # noop if ${compile-variant|} is not "-wtdevelop"
-    - func: "compile mongodb"
+    - func: "compile mongerdb"
 
 - name: linkbench
   priority: 5
@@ -671,22 +671,22 @@ tasks:
     - func: "run test"
     - func: "analyze"
 
-- name: mongos_workloads
+- name: mongers_workloads
   priority: 5
   commands:
     - func: "prepare environment"
       vars:
-        test: "mongos"
+        test: "mongers"
     - func: "deploy cluster"
     - func: "run test"
     - func: "analyze"
 
-- name: mongos_large_catalog_workloads
+- name: mongers_large_catalog_workloads
   priority: 5
   commands:
     - func: "prepare environment"
       vars:
-        test: "mongos_large_catalog"
+        test: "mongers_large_catalog"
     - func: "deploy cluster"
     - func: "run test"
     - func: "analyze"
@@ -716,7 +716,7 @@ tasks:
   commands:
     - func: "prepare environment"
       vars:
-        # Unfortunately the dash/underscore style is different for mongodb_setup and test_control
+        # Unfortunately the dash/underscore style is different for mongerdb_setup and test_control
         test: "secondary_performance"
         setup: "secondary-performance"
     - func: "deploy cluster"
@@ -775,12 +775,12 @@ tasks:
     - func: "run test"
     - func: "analyze"
 
-- name: change_streams_multi_mongos
+- name: change_streams_multi_mongers
   priority: 5
   commands:
     - func: "prepare environment"
       vars:
-        test: "change_streams_multi_mongos"
+        test: "change_streams_multi_mongers"
     - func: "deploy cluster"
     - func: "run test"
     - func: "analyze"
@@ -817,8 +817,8 @@ modules:
   branch: master
 
 - name: enterprise
-  repo: git@github.com:10gen/mongo-enterprise-modules.git
-  prefix: src/mongo/db/modules
+  repo: git@github.com:10gen/monger-enterprise-modules.git
+  prefix: src/monger/db/modules
   branch: master
 
 #######################################
@@ -838,7 +838,7 @@ buildvariants:
       MONGO_DISTMOD=linux-64-amzn-build
       -j$(grep -c ^processor /proc/cpuinfo)
       --release
-      --variables-files=etc/scons/mongodbtoolchain_v3_gcc.vars
+      --variables-files=etc/scons/mongerdbtoolchain_v3_gcc.vars
     platform: linux
     project_dir: &project_dir dsi
     tooltags: ""
@@ -869,7 +869,7 @@ buildvariants:
       MONGO_DISTMOD=amazon2
       -j$(grep -c ^processor /proc/cpuinfo)
       --release
-      --variables-files=etc/scons/mongodbtoolchain_v3_gcc.vars
+      --variables-files=etc/scons/mongerdbtoolchain_v3_gcc.vars
     compile-variant: -enterprise
   run_on:
       - "amazon2-build"
@@ -888,7 +888,7 @@ buildvariants:
       MONGO_DISTMOD=rhel70
       -j$(grep -c ^processor /proc/cpuinfo)
       --release
-      --variables-files=etc/scons/mongodbtoolchain_v3_gcc.vars
+      --variables-files=etc/scons/mongerdbtoolchain_v3_gcc.vars
     compile-variant: -rhel70
   run_on:
       - rhel70-small
@@ -1071,11 +1071,11 @@ buildvariants:
     - name: map_reduce_workloads
     - name: smoke_test
     - name: industry_benchmarks_wmajority
-    - name: mongos_workloads
-    - name: mongos_large_catalog_workloads
+    - name: mongers_workloads
+    - name: mongers_large_catalog_workloads
     - name: change_streams_throughput
     - name: change_streams_latency
-    - name: change_streams_multi_mongos
+    - name: change_streams_multi_mongers
 
 - name: linux-shard-lite
   display_name: Linux Shard Lite Cluster
@@ -1106,8 +1106,8 @@ buildvariants:
     - name: industry_benchmarks_wmajority
     - name: linkbench
     - name: mixed_workloads
-    - name: mongos_workloads
-    - name: mongos_large_catalog_workloads
+    - name: mongers_workloads
+    - name: mongers_large_catalog_workloads
     - name: move_chunk_workloads
     - name: move_chunk_waiting_workloads
     - name: retryable_writes_workloads
@@ -1144,7 +1144,7 @@ buildvariants:
     - name: smoke_test
     - name: retryable_writes_workloads
     - name: industry_benchmarks_wmajority
-    - name: secondary_performance # Uses a special 2 node mongodb setup
+    - name: secondary_performance # Uses a special 2 node mongerdb setup
     - name: non_sharded_workloads
     - name: bestbuy_agg
     - name: bestbuy_agg_merge_different_db
@@ -1270,7 +1270,7 @@ buildvariants:
   depends_on:
       - name: compile
         variant: compile-rhel70
-  tasks:  # Cannot use *3nodetasks because secondary_performance uses a special mongodb setup.
+  tasks:  # Cannot use *3nodetasks because secondary_performance uses a special mongerdb setup.
     - name: industry_benchmarks
     - name: ycsb_60GB
     - name: industry_benchmarks_secondary_reads
@@ -1294,7 +1294,7 @@ buildvariants:
     - name: change_streams_latency
     - name: snapshot_reads
     - name: secondary_reads
-    # - name: tpcc # TPCC with SSL currently broken https://jira.mongodb.org/browse/TIG-1681
+    # - name: tpcc # TPCC with SSL currently broken https://jira.mongerdb.org/browse/TIG-1681
     - name: linkbench
     # - name: big_update
 

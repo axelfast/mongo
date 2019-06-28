@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_cursor.h"
+#include "monger/db/pipeline/document_source_cursor.h"
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 
 MONGO_FAIL_POINT_DEFINE(hangBeforeDocumentSourceCursorLoadBatch);
 

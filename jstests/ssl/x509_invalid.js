@@ -16,7 +16,7 @@
         }
         const script = 'assert(db.getSiblingDB(\'$external\').auth(' + tojson(auth) + '));';
         clearRawMongoProgramOutput();
-        const exitCode = runMongoProgram('mongo',
+        const exitCode = runMongoProgram('monger',
                                          '--ssl',
                                          '--sslAllowInvalidHostnames',
                                          '--sslPEMKeyFile',
@@ -49,13 +49,13 @@
     }
 
     // Standalone.
-    const mongod = MongoRunner.runMongod({
+    const mongerd = MongoRunner.runMongod({
         auth: '',
         sslMode: 'requireSSL',
         sslPEMKeyFile: SERVER_CERT,
         sslCAFile: CA_CERT,
         sslAllowInvalidCertificates: '',
     });
-    runTest(mongod);
-    MongoRunner.stopMongod(mongod);
+    runTest(mongerd);
+    MongoRunner.stopMongod(mongerd);
 })();

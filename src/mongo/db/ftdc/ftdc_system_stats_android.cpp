@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ftdc/ftdc_system_stats.h"
+#include "monger/db/ftdc/ftdc_system_stats.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/ftdc/collector.h"
-#include "mongo/db/ftdc/controller.h"
-#include "mongo/util/processinfo.h"
-#include "mongo/util/procparser.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/ftdc/collector.h"
+#include "monger/db/ftdc/controller.h"
+#include "monger/util/processinfo.h"
+#include "monger/util/procparser.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -125,4 +125,4 @@ void installSystemMetricsCollector(FTDCController* controller) {
     controller->addPeriodicCollector(std::make_unique<LinuxSystemMetricsCollector>());
 }
 
-}  // namespace mongo
+}  // namespace monger

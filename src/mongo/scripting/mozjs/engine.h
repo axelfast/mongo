@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,13 +31,13 @@
 
 #include <jsapi.h>
 
-#include "mongo/scripting/deadline_monitor.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/concurrency/mutex.h"
+#include "monger/scripting/deadline_monitor.h"
+#include "monger/scripting/engine.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/concurrency/mutex.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 class MozJSImplScope;
@@ -46,13 +46,13 @@ class MozJSImplScope;
  * Implements the global ScriptEngine interface for MozJS.  The associated TU
  * pulls this in for the polymorphic globalScriptEngine.
  */
-class MozJSScriptEngine final : public mongo::ScriptEngine {
+class MozJSScriptEngine final : public monger::ScriptEngine {
 public:
     MozJSScriptEngine();
     ~MozJSScriptEngine() override;
 
-    mongo::Scope* createScope() override;
-    mongo::Scope* createScopeForCurrentThread() override;
+    monger::Scope* createScope() override;
+    monger::Scope* createScopeForCurrentThread() override;
 
     void runTest() override {}
 
@@ -94,11 +94,11 @@ private:
     stdx::mutex _globalInterruptLock;
 
     using OpIdToScopeMap = stdx::unordered_map<unsigned, MozJSImplScope*>;
-    OpIdToScopeMap _opToScopeMap;  // map of mongo op ids to scopes (protected by
+    OpIdToScopeMap _opToScopeMap;  // map of monger op ids to scopes (protected by
                                    // _globalInterruptLock).
 
     DeadlineMonitor<MozJSImplScope> _deadlineMonitor;
 };
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

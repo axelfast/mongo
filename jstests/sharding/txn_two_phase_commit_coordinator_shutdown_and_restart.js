@@ -25,7 +25,7 @@ TestData.skipCheckDBHashes = true;
     // Start the participant replSet with one node as a priority 0 node to avoid flip flopping.
     const rs1_opts = {nodes: [{}, {rsConfig: {priority: 0}}]};
     const st = new ShardingTest(
-        {shards: {rs0: rs0_opts, rs1: rs1_opts}, mongos: 1, causallyConsistent: true});
+        {shards: {rs0: rs0_opts, rs1: rs1_opts}, mongers: 1, causallyConsistent: true});
 
     // Create a sharded collection:
     // shard0: [-inf, 0)
@@ -69,7 +69,7 @@ TestData.skipCheckDBHashes = true;
     };
 
     jsTest.log("Starting a cross-shard transaction");
-    // Start a cross shard transaction through mongos.
+    // Start a cross shard transaction through mongers.
     const updateDocumentOnShard0 = {q: {x: -1}, u: {"$set": {a: 1}}, upsert: true};
 
     const updateDocumentOnShard1 = {q: {x: 1}, u: {"$set": {a: 1}}, upsert: true};
@@ -91,13 +91,13 @@ TestData.skipCheckDBHashes = true;
         mode: "alwaysOn",
     }));
 
-    // Run commit through mongos in a parallel shell. This should timeout since we have set the
+    // Run commit through mongers in a parallel shell. This should timeout since we have set the
     // failpoint.
     runCommitThroughMongosInParallelShellExpectTimeOut();
     waitForFailpoint("Hit hangBeforeWritingDecision failpoint", 1 /* numTimes */);
 
     jsTest.log("Stopping coordinator shard");
-    // Stop the mongods on the coordinator shard using the SIGTERM signal. We must skip validation
+    // Stop the mongerds on the coordinator shard using the SIGTERM signal. We must skip validation
     // checks since we'll be shutting down a node with a prepared transaction.
     coordinatorReplSetTest.stopSet(15, true /* forRestart */, {skipValidation: true} /* opts */);
 

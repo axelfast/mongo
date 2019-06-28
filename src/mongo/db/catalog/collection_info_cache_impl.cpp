@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,30 +27,30 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/collection_info_cache_impl.h"
+#include "monger/db/catalog/collection_info_cache_impl.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/fts/fts_spec.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index/wildcard_access_method.h"
-#include "mongo/db/index_legacy.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_cache.h"
-#include "mongo/db/query/planner_ixselect.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/ttl_collection_cache.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/log.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/fts/fts_spec.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index/wildcard_access_method.h"
+#include "monger/db/index_legacy.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_cache.h"
+#include "monger/db/query/planner_ixselect.h"
+#include "monger/db/service_context.h"
+#include "monger/db/ttl_collection_cache.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 CollectionInfoCacheImpl::CollectionInfoCacheImpl(Collection* collection, const NamespaceString& ns)
     : _collection(collection),
@@ -263,4 +263,4 @@ void CollectionInfoCacheImpl::setNs(NamespaceString ns) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

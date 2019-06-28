@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/util/log.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 /* for diagnostic / testing purposes. Enabled via command line. */
 class CmdSleep : public BasicCommand {
@@ -70,7 +70,7 @@ public:
                                        const BSONObj& cmdObj,
                                        std::vector<Privilege>* out) const {}
 
-    void _sleepInLock(mongo::OperationContext* opCtx,
+    void _sleepInLock(monger::OperationContext* opCtx,
                       long long millis,
                       LockMode mode,
                       const StringData& ns) {

@@ -10,9 +10,9 @@ var Mongo, assert;
         return result.version;
     };
 
-    // Checks that our mongodb process is of a certain version
-    assert.binVersion = function(mongo, version) {
-        var currVersion = mongo.getBinVersion();
+    // Checks that our mongerdb process is of a certain version
+    assert.binVersion = function(monger, version) {
+        var currVersion = monger.getBinVersion();
         assert(MongoRunner.areBinVersionsTheSame(MongoRunner.getBinVersionFor(currVersion),
                                                  MongoRunner.getBinVersionFor(version)),
                "version " + version + " (" + MongoRunner.getBinVersionFor(version) + ")" +

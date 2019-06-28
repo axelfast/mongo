@@ -22,17 +22,17 @@
         }
     });
 
-    const mongos = shardingTest.s;
-    const mongosDB = mongos.getDB(dbName);
-    const mongosColl = mongosDB[collName];
+    const mongers = shardingTest.s;
+    const mongersDB = mongers.getDB(dbName);
+    const mongersColl = mongersDB[collName];
 
     // Create and shard collection beforehand.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
     assert.commandWorked(
-        mongosDB.adminCommand({shardCollection: mongosColl.getFullName(), key: {_id: 1}}));
-    assert.commandWorked(mongosColl.insert({_id: 1}, {writeConcern: {w: "majority"}}));
+        mongersDB.adminCommand({shardCollection: mongersColl.getFullName(), key: {_id: 1}}));
+    assert.commandWorked(mongersColl.insert({_id: 1}, {writeConcern: {w: "majority"}}));
 
-    const session = mongos.startSession();
+    const session = mongers.startSession();
     const sessionDB = session.getDatabase(dbName);
     const sessionColl = sessionDB.getCollection(collName);
 

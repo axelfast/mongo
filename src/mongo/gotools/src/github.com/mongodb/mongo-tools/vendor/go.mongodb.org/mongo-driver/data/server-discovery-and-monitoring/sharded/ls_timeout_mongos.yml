@@ -1,6 +1,6 @@
-description: "Parse logicalSessionTimeoutMinutes from mongoses"
+description: "Parse logicalSessionTimeoutMinutes from mongerses"
 
-uri: "mongodb://a,b"
+uri: "mongerdb://a,b"
 
 phases: [
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,7 +32,7 @@
 #include <array>
 #include <jsapi.h>
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 /**
@@ -42,7 +42,7 @@ namespace mozjs {
  */
 enum class InternedString {
 #define MONGO_MOZJS_INTERNED_STRING(name, str) name,
-#include "mongo/scripting/mozjs/internedstring.defs"
+#include "monger/scripting/mozjs/internedstring.defs"
 #undef MONGO_MOZJS_INTERNED_STRING
     NUM_IDS,
 };
@@ -85,4 +85,4 @@ private:
 };
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

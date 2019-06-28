@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,19 +32,19 @@
 #include <list>
 #include <memory>
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/range_arithmetic.h"
-#include "mongo/db/s/collection_range_deleter.h"
-#include "mongo/db/s/scoped_collection_metadata.h"
-#include "mongo/db/service_context.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/util/concurrency/notification.h"
-#include "mongo/util/concurrency/with_lock.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/range_arithmetic.h"
+#include "monger/db/s/collection_range_deleter.h"
+#include "monger/db/s/scoped_collection_metadata.h"
+#include "monger/db/service_context.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/util/concurrency/notification.h"
+#include "monger/util/concurrency/with_lock.h"
 
-namespace mongo {
+namespace monger {
 
 class RangePreserver;
 
@@ -255,4 +255,4 @@ private:
     CollectionRangeDeleter _rangesToClean;
 };
 
-}  // namespace mongo
+}  // namespace monger

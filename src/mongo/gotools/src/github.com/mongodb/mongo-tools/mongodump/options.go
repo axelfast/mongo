@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongodump
+package mongerdump
 
 import (
 	"fmt"
@@ -17,7 +17,7 @@ Export the content of a running server into .bson files.
 
 Specify a database with -d and a collection with -c to only dump that database or collection.
 
-See http://docs.mongodb.org/manual/reference/program/mongodump/ for more information.`
+See http://docs.mongerdb.org/manual/reference/program/mongerdump/ for more information.`
 
 // InputOptions defines the set of options to use in retrieving data from the server.
 type InputOptions struct {

@@ -14,9 +14,9 @@ import (
 
 	"math"
 
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/x/bsonx"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
+	"go.mongerdb.org/monger-driver/x/bsonx"
 )
 
 // UploadBufferSize is the size in bytes of one stream batch. Chunks will be written to the db after the sum of chunk
@@ -32,9 +32,9 @@ type UploadStream struct {
 	FileID  interface{}
 
 	chunkIndex    int
-	chunksColl    *mongo.Collection // collection to store file chunks
+	chunksColl    *monger.Collection // collection to store file chunks
 	filename      string
-	filesColl     *mongo.Collection // collection to store file metadata
+	filesColl     *monger.Collection // collection to store file metadata
 	closed        bool
 	buffer        []byte
 	bufferIndex   int
@@ -43,7 +43,7 @@ type UploadStream struct {
 }
 
 // NewUploadStream creates a new upload stream.
-func newUploadStream(upload *Upload, fileID interface{}, filename string, chunks, files *mongo.Collection) *UploadStream {
+func newUploadStream(upload *Upload, fileID interface{}, filename string, chunks, files *monger.Collection) *UploadStream {
 	return &UploadStream{
 		Upload: upload,
 		FileID: fileID,

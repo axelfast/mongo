@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/commands/feature_compatibility_version_documentation.h"
-#include "mongo/db/namespace_string.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/commands/feature_compatibility_version_documentation.h"
+#include "monger/db/namespace_string.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr StringData FeatureCompatibilityVersionParser::kVersion40;
 constexpr StringData FeatureCompatibilityVersionParser::kVersion42;
@@ -155,4 +155,4 @@ FeatureCompatibilityVersionParser::parse(const BSONObj& featureCompatibilityVers
     return version;
 }
 
-}  // namespace mongo
+}  // namespace monger

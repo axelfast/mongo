@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/lock_manager_defs.h"
-#include "mongo/db/free_mon/free_mon_storage.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/thread_pool_task_executor.h"
-#include "mongo/executor/thread_pool_task_executor_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/lock_manager_defs.h"
+#include "monger/db/free_mon/free_mon_storage.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/thread_pool_task_executor.h"
+#include "monger/executor/thread_pool_task_executor_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class FreeMonStorageTest : public ServiceContextMongoDTest {
@@ -267,4 +267,4 @@ TEST_F(FreeMonStorageTest, TestClusterManagerStorage) {
     ASSERT_FALSE(FreeMonStorage::readClusterManagerState(_opCtx.get()).is_initialized());
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

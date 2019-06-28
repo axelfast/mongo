@@ -1,6 +1,6 @@
 description: "Secondary with mismatched 'me' tells us who the primary is"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/query/cluster_cursor_manager.h"
+#include "monger/s/query/cluster_cursor_manager.h"
 
 #include <set>
 
-#include "mongo/db/kill_sessions_common.h"
-#include "mongo/db/logical_session_cache.h"
-#include "mongo/util/clock_source.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/db/kill_sessions_common.h"
+#include "monger/db/logical_session_cache.h"
+#include "monger/util/clock_source.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -784,4 +784,4 @@ StatusWith<std::unique_ptr<ClusterClientCursor>> ClusterCursorManager::_detachCu
     return std::move(cursor);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include "boost/filesystem.hpp"
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/security_file.h"
-#include "mongo/db/auth/security_key.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/string_data.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/security_file.h"
+#include "monger/db/auth/security_key.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 class TestFile {
     TestFile(TestFile&) = delete;
@@ -170,4 +170,4 @@ TEST(SecurityKey, Test) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

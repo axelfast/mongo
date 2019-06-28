@@ -1,6 +1,6 @@
 /**
  * Define overrides to prevent any test from spawning its own test fixture since certain passthrough
- * suites should not contain JS tests that start their own mongod/s.
+ * suites should not contain JS tests that start their own mongerd/s.
  */
 (function() {
     'use strict';

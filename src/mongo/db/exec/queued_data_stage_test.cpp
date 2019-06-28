@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,21 +28,21 @@
  */
 
 //
-// This file contains tests for mongo/db/exec/queued_data_stage.cpp
+// This file contains tests for monger/db/exec/queued_data_stage.cpp
 //
 
-#include "mongo/db/exec/queued_data_stage.h"
+#include "monger/db/exec/queued_data_stage.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
 
-using namespace mongo;
+using namespace monger;
 
 namespace {
 

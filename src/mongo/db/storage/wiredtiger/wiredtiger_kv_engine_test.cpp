@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/storage/kv/kv_engine_test_harness.h"
+#include "monger/db/storage/kv/kv_engine_test_harness.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/path.hpp>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_global_options.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/logger/logger.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/base/init.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_global_options.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/logger/logger.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class WiredTigerKVHarnessHelper : public KVHarnessHelper, public ScopedGlobalServiceContextForTest {
@@ -328,4 +328,4 @@ MONGO_INITIALIZER(RegisterKVHarnessFactory)(InitializerContext*) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

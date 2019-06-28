@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,33 +29,33 @@
 
 #pragma once
 
-#include "mongo/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_manager.h"
 
 #include <functional>
 #include <memory>
 #include <mutex>
 #include <string>
 
-#include "mongo/base/secure_allocator.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/bson/oid.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/privilege_format.h"
-#include "mongo/db/auth/resource_pattern.h"
-#include "mongo/db/auth/role_graph.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_name.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/server_options.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/invalidating_lru_cache.h"
+#include "monger/base/secure_allocator.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/bson/oid.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/privilege_format.h"
+#include "monger/db/auth/resource_pattern.h"
+#include "monger/db/auth/role_graph.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_name.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/server_options.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/invalidating_lru_cache.h"
 
-namespace mongo {
+namespace monger {
 class AuthorizationSession;
 class AuthzManagerExternalState;
 class OperationContext;
@@ -266,4 +266,4 @@ private:
 
 extern int authorizationManagerCacheSize;
 
-}  // namespace mongo
+}  // namespace monger

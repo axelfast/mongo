@@ -1,11 +1,11 @@
 (function() {
     "use strict";
 
-    const st = new ShardingTest({shards: 3, mongos: 1});
+    const st = new ShardingTest({shards: 3, mongers: 1});
     const db = st.s.getDB("test_failcommand_noparallel");
 
     // Test times when closing connection.
-    // Sharding tests require failInternalCommands: true, since the mongos appears to mongod to be
+    // Sharding tests require failInternalCommands: true, since the mongers appears to mongerd to be
     // an internal client.
     assert.commandWorked(st.s.adminCommand({
         configureFailPoint: "failCommand",

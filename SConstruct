@@ -20,12 +20,12 @@ import SCons
 # we are to avoid bulk loading all tools in the DefaultEnvironment.
 DefaultEnvironment(tools=[])
 
-# These come from site_scons/mongo. Import these things
+# These come from site_scons/monger. Import these things
 # after calling DefaultEnvironment, for the sake of paranoia.
-import mongo
-import mongo.platform as mongo_platform
-import mongo.toolchain as mongo_toolchain
-import mongo.generators as mongo_generators
+import monger
+import monger.platform as monger_platform
+import monger.toolchain as monger_toolchain
+import monger.generators as monger_generators
 
 EnsurePythonVersion(3, 5)
 EnsureSConsVersion(3, 0, 4)
@@ -39,7 +39,7 @@ import psutil
 scons_invocation = '{} {}'.format(sys.executable, ' '.join(sys.argv))
 print('scons: running with args {}'.format(scons_invocation))
 
-atexit.register(mongo.print_build_failures)
+atexit.register(monger.print_build_failures)
 
 def add_option(name, **kwargs):
 
@@ -196,7 +196,7 @@ add_option('js-engine',
 add_option('server-js',
     choices=['on', 'off'],
     default='on',
-    help='Build mongod without JavaScript support',
+    help='Build mongerd without JavaScript support',
     type='choice',
 )
 
@@ -399,11 +399,11 @@ add_option('use-system-intel_decimal128',
     nargs=0,
 )
 
-add_option('use-system-mongo-c',
+add_option('use-system-monger-c',
     choices=['on', 'off', 'auto'],
     const='on',
     default="auto",
-    help="use system version of the mongo-c-driver (auto will use it if it's found)",
+    help="use system version of the monger-c-driver (auto will use it if it's found)",
     nargs='?',
     type='choice',
 )
@@ -423,8 +423,8 @@ add_option('use-new-tools',
     nargs=0,
 )
 
-add_option('build-mongoreplay',
-    help='when building with --use-new-tools, build mongoreplay ( requires pcap dev )',
+add_option('build-mongerreplay',
+    help='when building with --use-new-tools, build mongerreplay ( requires pcap dev )',
     nargs=1,
 )
 
@@ -493,16 +493,16 @@ add_option("cxx-std",
     help="Select the C++ langauge standard to build with",
 )
 
-def find_mongo_custom_variables():
+def find_monger_custom_variables():
     files = []
     for path in sys.path:
-        probe = os.path.join(path, 'mongo_custom_variables.py')
+        probe = os.path.join(path, 'monger_custom_variables.py')
         if os.path.isfile(probe):
             files.append(probe)
     return files
 
 add_option('variables-files',
-    default=find_mongo_custom_variables(),
+    default=find_monger_custom_variables(),
     help="Specify variables files to load",
 )
 
@@ -613,7 +613,7 @@ def variable_shlex_converter(val):
         return val
     parse_mode = get_option('variable-parse-mode')
     if parse_mode == 'auto':
-        parse_mode = 'other' if mongo_platform.is_running_os('windows') else 'posix'
+        parse_mode = 'other' if monger_platform.is_running_os('windows') else 'posix'
     return shlex.split(val, posix=(parse_mode == 'posix'))
 
 def variable_arch_converter(val):
@@ -643,12 +643,12 @@ def variable_arch_converter(val):
 # If we aren't on a platform where we know the minimal set of tools, we fall back to loading
 # the 'default' tool.
 def decide_platform_tools():
-    if mongo_platform.is_running_os('windows'):
+    if monger_platform.is_running_os('windows'):
         # we only support MS toolchain on windows
         return ['msvc', 'mslink', 'mslib', 'masm']
-    elif mongo_platform.is_running_os('linux', 'solaris'):
+    elif monger_platform.is_running_os('linux', 'solaris'):
         return ['gcc', 'g++', 'gnulink', 'ar', 'gas']
-    elif mongo_platform.is_running_os('darwin'):
+    elif monger_platform.is_running_os('darwin'):
         return ['gcc', 'g++', 'applelink', 'ar', 'libtool', 'as', 'xcode']
     else:
         return ["default"]
@@ -660,10 +660,10 @@ def variable_tools_converter(val):
         "gziptool",
         'idl_tool',
         "jsheader",
-        "mongo_benchmark",
-        "mongo_integrationtest",
-        "mongo_unittest",
-        "mongo_libfuzzer",
+        "monger_benchmark",
+        "monger_integrationtest",
+        "monger_unittest",
+        "monger_libfuzzer",
         "textfile",
     ]
 
@@ -797,12 +797,12 @@ env_vars.Add('MAXLINELENGTH',
 # default_buildinfo_environment_data() function for examples of how to use this.
 env_vars.Add('MONGO_BUILDINFO_ENVIRONMENT_DATA',
     help='Sets the info returned from the buildInfo command and --version command-line flag',
-    default=mongo_generators.default_buildinfo_environment_data())
+    default=monger_generators.default_buildinfo_environment_data())
 
 env_vars.Add('MONGO_DIST_SRC_PREFIX',
     help='Sets the prefix for files in the source distribution archive',
     converter=variable_distsrc_converter,
-    default="mongodb-src-r${MONGO_VERSION}")
+    default="mongerdb-src-r${MONGO_VERSION}")
 
 env_vars.Add('MONGO_DISTARCH',
     help='Adds a string representing the target processor architecture to the dist archive',
@@ -816,7 +816,7 @@ env_vars.Add('MONGO_DISTNAME',
     help='Sets the version string to be used in dist archive naming',
     default='$MONGO_VERSION')
 
-def validate_mongo_version(key, val, env):
+def validate_monger_version(key, val, env):
     regex = r'^(\d+)\.(\d+)\.(\d+)-?((?:(rc)(\d+))?.*)?'
     if not re.match(regex, val):
         print(("Invalid MONGO_VERSION '{}', or could not derive from version.json or git metadata. Please add a conforming MONGO_VERSION=x.y.z[-extra] as an argument to SCons".format(val)))
@@ -825,7 +825,7 @@ def validate_mongo_version(key, val, env):
 env_vars.Add('MONGO_VERSION',
     help='Sets the version string for MongoDB',
     default=version_data['version'],
-    validator=validate_mongo_version)
+    validator=validate_monger_version)
 
 env_vars.Add('MONGO_GIT_HASH',
     help='Sets the githash to store in the MongoDB version information',
@@ -875,7 +875,7 @@ env_vars.Add('TARGET_ARCH',
 
 env_vars.Add('TARGET_OS',
     help='Sets the target OS to build for',
-    default=mongo_platform.get_running_os_name())
+    default=monger_platform.get_running_os_name())
 
 env_vars.Add('TOOLS',
     help='Sets the list of SCons tools to add to the environment',
@@ -884,7 +884,7 @@ env_vars.Add('TOOLS',
 
 env_vars.Add('VARIANT_DIR',
     help='Sets the name (or generator function) for the variant directory',
-    default=mongo_generators.default_variant_dir_generator,
+    default=monger_generators.default_variant_dir_generator,
 )
 
 env_vars.Add('VERBOSE',
@@ -965,7 +965,7 @@ printLocalInfo()
 
 boostLibs = [ "filesystem", "program_options", "system", "iostreams", "thread", "log" ]
 
-onlyServer = len( COMMAND_LINE_TARGETS ) == 0 or ( len( COMMAND_LINE_TARGETS ) == 1 and str( COMMAND_LINE_TARGETS[0] ) in [ "mongod" , "mongos" , "test" ] )
+onlyServer = len( COMMAND_LINE_TARGETS ) == 0 or ( len( COMMAND_LINE_TARGETS ) == 1 and str( COMMAND_LINE_TARGETS[0] ) in [ "mongerd" , "mongers" , "test" ] )
 
 releaseBuild = has_option("release")
 
@@ -1054,8 +1054,8 @@ for var in ['CC', 'CXX']:
     if realpath != path:
         print('{} resolves to {}'.format(path, realpath))
 
-env.AddMethod(mongo_platform.env_os_is_wrapper, 'TargetOSIs')
-env.AddMethod(mongo_platform.env_get_os_name_wrapper, 'GetTargetOSName')
+env.AddMethod(monger_platform.env_os_is_wrapper, 'TargetOSIs')
+env.AddMethod(monger_platform.env_get_os_name_wrapper, 'GetTargetOSName')
 
 def fatal_error(env, msg, *args):
     print((msg.format(*args)))
@@ -1258,7 +1258,7 @@ if not detectConf.CheckForCXXLink():
         detectEnv['CXX'])
 
 toolchain_search_sequence = [ "GCC", "clang" ]
-if mongo_platform.is_running_os('windows'):
+if monger_platform.is_running_os('windows'):
     toolchain_search_sequence = [ 'MSVC', 'clang', 'GCC' ]
 for candidate_toolchain in toolchain_search_sequence:
     if detectConf.CheckForToolchain(candidate_toolchain, "C++", "CXX", ".cpp"):
@@ -1302,8 +1302,8 @@ elif not detectConf.CheckForOS(env['TARGET_OS']):
 
 detectConf.Finish()
 
-env['CC_VERSION'] = mongo_toolchain.get_toolchain_ver(env, 'CC')
-env['CXX_VERSION'] = mongo_toolchain.get_toolchain_ver(env, 'CXX')
+env['CC_VERSION'] = monger_toolchain.get_toolchain_ver(env, 'CC')
+env['CXX_VERSION'] = monger_toolchain.get_toolchain_ver(env, 'CXX')
 
 if not env['HOST_ARCH']:
     env['HOST_ARCH'] = env['TARGET_ARCH']
@@ -1412,7 +1412,7 @@ if link_model.startswith("dynamic"):
     #   links all of them.
     #
     # - The symbol is provided by an executable into which the library
-    #   will be linked. The mongo::inShutdown symbol is a good
+    #   will be linked. The monger::inShutdown symbol is a good
     #   example.
     #
     # - The symbol is provided by a third-party library, outside of our
@@ -1993,7 +1993,7 @@ if get_option("system-boost-lib-search-suffixes") is not None:
         boostSuffixList = boostSuffixList.split(',')
 
 # discover modules, and load the (python) module for each module's build.py
-mongo_modules = moduleconfig.discover_modules('src/mongo/db/modules', get_option('modules'))
+monger_modules = moduleconfig.discover_modules('src/monger/db/modules', get_option('modules'))
 
 # --- check system ---
 ssl_provider = None
@@ -2255,7 +2255,7 @@ def doConfigure(myenv):
         AddToCCFLAGSIfSupported(myenv, "-Wno-tautological-unsigned-enum-zero-compare")
 
         # New in clang-3.4, trips up things mostly in third_party, but in a few places in the
-        # primary mongo sources as well.
+        # primary monger sources as well.
         AddToCCFLAGSIfSupported(myenv, "-Wno-unused-const-variable")
 
         # Prevents warning about unused but set variables found in boost version 1.49
@@ -3467,14 +3467,14 @@ def doConfigure(myenv):
 
     def CheckMongoCMinVersion(context):
         compile_test_body = textwrap.dedent("""
-        #include <mongoc/mongoc.h>
+        #include <mongerc/mongerc.h>
 
         #if !MONGOC_CHECK_VERSION(1,13,0)
         #error
         #endif
         """)
 
-        context.Message("Checking if mongoc version is 1.13.0 or newer...")
+        context.Message("Checking if mongerc version is 1.13.0 or newer...")
         result = context.TryCompile(compile_test_body, ".cpp")
         context.Result(result)
         return result
@@ -3483,19 +3483,19 @@ def doConfigure(myenv):
 
     if env.TargetOSIs('darwin'):
         def CheckMongoCFramework(context):
-            context.Message("Checking for mongoc_get_major_version() in darwin framework mongoc...")
+            context.Message("Checking for mongerc_get_major_version() in darwin framework mongerc...")
             test_body = """
-            #include <mongoc/mongoc.h>
+            #include <mongerc/mongerc.h>
 
             int main() {
-                mongoc_get_major_version();
+                mongerc_get_major_version();
 
                 return EXIT_SUCCESS;
             }
             """
 
             lastFRAMEWORKS = context.env['FRAMEWORKS']
-            context.env.Append(FRAMEWORKS=['mongoc'])
+            context.env.Append(FRAMEWORKS=['mongerc'])
             result = context.TryLink(textwrap.dedent(test_body), ".c")
             context.Result(result)
             context.env['FRAMEWORKS'] = lastFRAMEWORKS
@@ -3503,25 +3503,25 @@ def doConfigure(myenv):
 
         conf.AddTest('CheckMongoCFramework', CheckMongoCFramework)
 
-    mongoc_mode = get_option('use-system-mongo-c')
+    mongerc_mode = get_option('use-system-monger-c')
     conf.env['MONGO_HAVE_LIBMONGOC'] = False
-    if mongoc_mode != 'off':
+    if mongerc_mode != 'off':
         if conf.CheckLibWithHeader(
-                ["mongoc-1.0"],
-                ["mongoc/mongoc.h"],
+                ["mongerc-1.0"],
+                ["mongerc/mongerc.h"],
                 "C",
-                "mongoc_get_major_version();",
+                "mongerc_get_major_version();",
                 autoadd=False ):
             conf.env['MONGO_HAVE_LIBMONGOC'] = "library"
         if not conf.env['MONGO_HAVE_LIBMONGOC'] and env.TargetOSIs('darwin') and conf.CheckMongoCFramework():
             conf.env['MONGO_HAVE_LIBMONGOC'] = "framework"
-        if not conf.env['MONGO_HAVE_LIBMONGOC'] and mongoc_mode == 'on':
+        if not conf.env['MONGO_HAVE_LIBMONGOC'] and mongerc_mode == 'on':
             myenv.ConfError("Failed to find the required C driver headers")
         if conf.env['MONGO_HAVE_LIBMONGOC'] and not conf.CheckMongoCMinVersion():
-            myenv.ConfError("Version of mongoc is too old. Version 1.13+ required")
+            myenv.ConfError("Version of mongerc is too old. Version 1.13+ required")
 
     # ask each module to configure itself and the build environment.
-    moduleconfig.configure_modules(mongo_modules, conf)
+    moduleconfig.configure_modules(monger_modules, conf)
 
     # Resolve --enable-free-mon
     if free_monitoring == "auto":
@@ -3679,7 +3679,7 @@ env.Tool("compilation_db")
 
 # If we can, load the dagger tool for build dependency graph introspection.
 # Dagger is only supported on Linux and OSX (not Windows or Solaris).
-should_dagger = ( mongo_platform.is_running_os('osx') or mongo_platform.is_running_os('linux')  ) and "dagger" in COMMAND_LINE_TARGETS
+should_dagger = ( monger_platform.is_running_os('osx') or monger_platform.is_running_os('linux')  ) and "dagger" in COMMAND_LINE_TARGETS
 
 if should_dagger:
     env.Tool("dagger")
@@ -3708,7 +3708,7 @@ env.AddMethod(env_windows_resource_file, 'WindowsResourceFile')
 
 def doLint( env , target , source ):
     import buildscripts.eslint
-    if not buildscripts.eslint.lint(None, dirmode=True, glob=["jstests/", "src/mongo/"]):
+    if not buildscripts.eslint.lint(None, dirmode=True, glob=["jstests/", "src/monger/"]):
         raise Exception("ESLint errors")
 
     import buildscripts.clang_format
@@ -3720,7 +3720,7 @@ def doLint( env , target , source ):
 
 run_lint = env.Command(
     target="#run_lint",
-    source=["buildscripts/lint.py", "src/mongo"],
+    source=["buildscripts/lint.py", "src/monger"],
     action="$PYTHON ${SOURCES[0]} ${SOURCES[1]}",
 )
 
@@ -3745,8 +3745,8 @@ def getSystemInstallName():
     os_name = os_name_translations.get(os_name, os_name)
     n = os_name + "-" + arch_name
 
-    if len(mongo_modules):
-            n += "-" + "-".join(m.name for m in mongo_modules)
+    if len(monger_modules):
+            n += "-" + "-".join(m.name for m in monger_modules)
 
     dn = env.subst('$MONGO_DISTMOD')
     if len(dn) > 0:
@@ -3775,9 +3775,9 @@ def add_version_to_distsrc(env, archive):
 
 env.AddDistSrcCallback(add_version_to_distsrc)
 
-env['SERVER_DIST_BASENAME'] = env.subst('mongodb-%s-$MONGO_DISTNAME' % (getSystemInstallName()))
+env['SERVER_DIST_BASENAME'] = env.subst('mongerdb-%s-$MONGO_DISTNAME' % (getSystemInstallName()))
 
-module_sconscripts = moduleconfig.get_module_sconscripts(mongo_modules)
+module_sconscripts = moduleconfig.get_module_sconscripts(monger_modules)
 
 # The following symbols are exported for use in subordinate SConscript files.
 # Ideally, the SConscript files would be purely declarative.  They would only
@@ -3818,22 +3818,22 @@ compileDb = env.Alias("compiledb", compileCommands)
 
 # Microsoft Visual Studio Project generation for code browsing
 vcxprojFile = env.Command(
-    "mongodb.vcxproj",
+    "mongerdb.vcxproj",
     compileCommands,
-    r"$PYTHON buildscripts\make_vcxproj.py mongodb")
+    r"$PYTHON buildscripts\make_vcxproj.py mongerdb")
 vcxproj = env.Alias("vcxproj", vcxprojFile)
 
-distSrc = env.DistSrc("mongodb-src-${MONGO_VERSION}.tar")
+distSrc = env.DistSrc("mongerdb-src-${MONGO_VERSION}.tar")
 env.NoCache(distSrc)
 env.Alias("distsrc-tar", distSrc)
 
 distSrcGzip = env.GZip(
-    target="mongodb-src-${MONGO_VERSION}.tgz",
+    target="mongerdb-src-${MONGO_VERSION}.tgz",
     source=[distSrc])
 env.NoCache(distSrcGzip)
 env.Alias("distsrc-tgz", distSrcGzip)
 
-distSrcZip = env.DistSrc("mongodb-src-${MONGO_VERSION}.zip")
+distSrcZip = env.DistSrc("mongerdb-src-${MONGO_VERSION}.zip")
 env.NoCache(distSrcZip)
 env.Alias("distsrc-zip", distSrcZip)
 
@@ -3979,7 +3979,7 @@ env.Alias('cache-prune', cachePrune)
 #
 # > scons --prefix=/foo/bar '$INSTALL_DIR'
 # or
-# > scons \$BUILD_DIR/mongo/base
+# > scons \$BUILD_DIR/monger/base
 #
 # That way, you can reference targets under the variant dir or install
 # path via an invariant name.

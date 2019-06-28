@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <boost/intrusive_ptr.hpp>
@@ -40,20 +40,20 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/db/pipeline/dependencies.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/expression_visitor.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/db/pipeline/variables.h"
-#include "mongo/db/query/datetime/date_time_support.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/intrusive_counter.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/db/pipeline/dependencies.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/expression_visitor.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/db/pipeline/variables.h"
+#include "monger/db/query/datetime/date_time_support.h"
+#include "monger/db/server_options.h"
+#include "monger/util/intrusive_counter.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONArrayBuilder;
 class BSONElement;

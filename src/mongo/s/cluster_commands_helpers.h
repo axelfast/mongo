@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,16 +33,16 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/rpc/write_concern_error_detail.h"
-#include "mongo/s/async_requests_sender.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/commands/strategy.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/jsobj.h"
+#include "monger/rpc/write_concern_error_detail.h"
+#include "monger/s/async_requests_sender.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/commands/strategy.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This function appends the provided writeConcernError BSONElement to the sharded response.
@@ -87,10 +87,10 @@ BSONObj appendAllowImplicitCreate(BSONObj cmdObj, bool allow);
  * success and a list of responses from shards (including errors from the shards or errors reaching
  * the shards).
  *
- * Note, if this mongos has not refreshed its shard list since
- * 1) a shard has been *added* through a different mongos, a request will not be sent to the added
+ * Note, if this mongers has not refreshed its shard list since
+ * 1) a shard has been *added* through a different mongers, a request will not be sent to the added
  *    shard
- * 2) a shard has been *removed* through a different mongos, this function will return a
+ * 2) a shard has been *removed* through a different mongers, this function will return a
  *    ShardNotFound error status.
  */
 std::vector<AsyncRequestsSender::Response> scatterGatherUnversionedTargetAllShards(
@@ -223,4 +223,4 @@ std::set<ShardId> getTargetedShardsForQuery(OperationContext* opCtx,
 StatusWith<CachedCollectionRoutingInfo> getCollectionRoutingInfoForTxnCmd(
     OperationContext* opCtx, const NamespaceString& nss);
 
-}  // namespace mongo
+}  // namespace monger

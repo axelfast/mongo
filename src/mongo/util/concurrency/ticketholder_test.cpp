@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,15 +28,15 @@
  */
 
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/concurrency/ticketholder.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/concurrency/ticketholder.h"
 
 namespace {
-using namespace mongo;
+using namespace monger;
 
 TEST(TicketholderTest, BasicTimeout) {
     TicketHolder holder(1);

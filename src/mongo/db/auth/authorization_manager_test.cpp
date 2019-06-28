@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,47 +27,47 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
 /**
  * Unit tests of the AuthorizationManager type.
  */
-#include "mongo/base/status.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/config.h"
-#include "mongo/crypto/mechanism_scram.h"
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/db/auth/action_set.h"
-#include "mongo/db/auth/action_type.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/authorization_manager_impl.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/auth/authz_manager_external_state_mock.h"
-#include "mongo/db/auth/authz_session_external_state_mock.h"
-#include "mongo/db/auth/sasl_options.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/db/storage/recovery_unit_noop.h"
-#include "mongo/transport/session.h"
-#include "mongo/transport/transport_layer_mock.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/map_util.h"
+#include "monger/base/status.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/config.h"
+#include "monger/crypto/mechanism_scram.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/db/auth/action_set.h"
+#include "monger/db/auth/action_type.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/authorization_manager_impl.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/auth/authz_manager_external_state_mock.h"
+#include "monger/db/auth/authz_session_external_state_mock.h"
+#include "monger/db/auth/sasl_options.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/db/storage/recovery_unit_noop.h"
+#include "monger/transport/session.h"
+#include "monger/transport/transport_layer_mock.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/map_util.h"
 
 #define ASSERT_NULL(EXPR) ASSERT_FALSE(EXPR)
 #define ASSERT_NON_NULL(EXPR) ASSERT_TRUE(EXPR)
 
-namespace mongo {
+namespace monger {
 namespace {
 
-// Construct a simple, structured X509 name equivalent to "CN=mongodb.com"
+// Construct a simple, structured X509 name equivalent to "CN=mongerdb.com"
 SSLX509Name buildX509Name() {
     return SSLX509Name(std::vector<std::vector<SSLX509Name::Entry>>(
-        {{{kOID_CommonName.toString(), 19 /* Printable String */, "mongodb.com"}}}));
+        {{{kOID_CommonName.toString(), 19 /* Printable String */, "mongerdb.com"}}}));
 }
 
 void setX509PeerInfo(const transport::SessionHandle& session, SSLPeerInfo info) {
@@ -185,7 +185,7 @@ TEST_F(AuthorizationManagerTest, testLocalX509Authorization) {
                                 boost::none,
                                 {RoleName("read", "test"), RoleName("readWrite", "test")}));
 
-    auto swu = authzManager->acquireUser(opCtx.get(), UserName("CN=mongodb.com", "$external"));
+    auto swu = authzManager->acquireUser(opCtx.get(), UserName("CN=mongerdb.com", "$external"));
     ASSERT_OK(swu.getStatus());
     auto x509User = std::move(swu.getValue());
     ASSERT(x509User->isValid());
@@ -220,7 +220,7 @@ TEST_F(AuthorizationManagerTest, testLocalX509AuthorizationInvalidUser) {
 TEST_F(AuthorizationManagerTest, testLocalX509AuthenticationNoAuthorization) {
     setX509PeerInfo(session, {});
 
-    ASSERT_NOT_OK(authzManager->acquireUser(opCtx.get(), UserName("CN=mongodb.com", "$external"))
+    ASSERT_NOT_OK(authzManager->acquireUser(opCtx.get(), UserName("CN=mongerdb.com", "$external"))
                       .getStatus());
 }
 
@@ -267,7 +267,7 @@ private:
     }
 };
 
-class AuthorizationManagerWithExplicitUserPrivilegesTest : public ::mongo::unittest::Test {
+class AuthorizationManagerWithExplicitUserPrivilegesTest : public ::monger::unittest::Test {
 public:
     virtual void setUp() {
         auto localExternalState =
@@ -459,4 +459,4 @@ TEST_F(AuthorizationManagerLogOpTest, testRawInsertAddsRecoveryUnits) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/dbdirectclient_factory.h"
+#include "monger/scripting/dbdirectclient_factory.h"
 
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/service_context.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/service_context.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -63,4 +63,4 @@ auto DBDirectClientFactory::create(OperationContext* opCtx) -> Result {
     return _implementation(opCtx);
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Main package for the mongotop tool.
+// Main package for the mongertop tool.
 package main
 
 import (
@@ -12,13 +12,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mongodb/mongo-tools-common/db"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/options"
-	"github.com/mongodb/mongo-tools-common/signals"
-	"github.com/mongodb/mongo-tools-common/util"
-	"github.com/mongodb/mongo-tools/mongotop"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"github.com/mongerdb/monger-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/options"
+	"github.com/mongerdb/monger-tools-common/signals"
+	"github.com/mongerdb/monger-tools-common/util"
+	"github.com/mongerdb/monger-tools/mongertop"
+	"go.mongerdb.org/monger-driver/monger/readpref"
 )
 
 var (
@@ -28,18 +28,18 @@ var (
 
 func main() {
 	// initialize command-line opts
-	opts := options.New("mongotop", VersionStr, GitCommit, mongotop.Usage,
+	opts := options.New("mongertop", VersionStr, GitCommit, mongertop.Usage,
 		options.EnabledOptions{Auth: true, Connection: true, Namespace: false, URI: true})
 	opts.UseReadOnlyHostDescription()
 
-	// add mongotop-specific options
-	outputOpts := &mongotop.Output{}
+	// add mongertop-specific options
+	outputOpts := &mongertop.Output{}
 	opts.AddOptions(outputOpts)
 
 	args, err := opts.ParseArgs(os.Args[1:])
 	if err != nil {
 		log.Logvf(log.Always, "error parsing command line options: %v", err)
-		log.Logvf(log.Always, util.ShortUsage("mongotop"))
+		log.Logvf(log.Always, util.ShortUsage("mongertop"))
 		os.Exit(util.ExitFailure)
 	}
 
@@ -61,7 +61,7 @@ func main() {
 
 	if len(args) > 1 {
 		log.Logvf(log.Always, "too many positional arguments")
-		log.Logvf(log.Always, util.ShortUsage("mongotop"))
+		log.Logvf(log.Always, util.ShortUsage("mongertop"))
 		os.Exit(util.ExitFailure)
 	}
 
@@ -98,19 +98,19 @@ func main() {
 		os.Exit(util.ExitFailure)
 	}
 
-	// fail fast if connecting to a mongos
+	// fail fast if connecting to a mongers
 	isMongos, err := sessionProvider.IsMongos()
 	if err != nil {
 		log.Logvf(log.Always, "Failed: %v", err)
 		os.Exit(util.ExitFailure)
 	}
 	if isMongos {
-		log.Logvf(log.Always, "cannot run mongotop against a mongos")
+		log.Logvf(log.Always, "cannot run mongertop against a mongers")
 		os.Exit(util.ExitFailure)
 	}
 
-	// instantiate a mongotop instance
-	top := &mongotop.MongoTop{
+	// instantiate a mongertop instance
+	top := &mongertop.MongoTop{
 		Options:         opts,
 		OutputOptions:   outputOpts,
 		SessionProvider: sessionProvider,

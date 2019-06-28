@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,24 +29,24 @@
 
 #pragma once
 
-#include "mongo/logger/log_severity.h"
-#include "mongo/logger/logger.h"
-#include "mongo/logger/logstream_builder.h"
-#include "mongo/util/assert_util.h"
+#include "monger/logger/log_severity.h"
+#include "monger/logger/logger.h"
+#include "monger/logger/logstream_builder.h"
+#include "monger/util/assert_util.h"
 
 #define DESTRUCTOR_GUARD MONGO_DESTRUCTOR_GUARD
 #define MONGO_DESTRUCTOR_GUARD(expression)                                                     \
     try {                                                                                      \
         expression;                                                                            \
     } catch (const std::exception& e) {                                                        \
-        ::mongo::logger::LogstreamBuilder(::mongo::logger::globalLogDomain(),                  \
-                                          ::mongo::getThreadName(),                            \
-                                          ::mongo::logger::LogSeverity::Log())                 \
+        ::monger::logger::LogstreamBuilder(::monger::logger::globalLogDomain(),                  \
+                                          ::monger::getThreadName(),                            \
+                                          ::monger::logger::LogSeverity::Log())                 \
             << "caught exception (" << e.what() << ") in destructor (" << __FUNCTION__ << ")"  \
             << std::endl;                                                                      \
     } catch (...) {                                                                            \
-        ::mongo::logger::LogstreamBuilder(::mongo::logger::globalLogDomain(),                  \
-                                          ::mongo::getThreadName(),                            \
-                                          ::mongo::logger::LogSeverity::Log())                 \
+        ::monger::logger::LogstreamBuilder(::monger::logger::globalLogDomain(),                  \
+                                          ::monger::getThreadName(),                            \
+                                          ::monger::logger::LogSeverity::Log())                 \
             << "caught unknown exception in destructor (" << __FUNCTION__ << ")" << std::endl; \
     }

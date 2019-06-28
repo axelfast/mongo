@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,36 +27,36 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/s/client/shard_remote.h"
+#include "monger/s/client/shard_remote.h"
 
 #include <algorithm>
 #include <string>
 
-#include "mongo/client/fetcher.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/remote_command_retry_scheduler.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/metadata/repl_set_metadata.h"
-#include "mongo/rpc/metadata/tracking_metadata.h"
-#include "mongo/s/client/shard_remote_gen.h"
-#include "mongo/s/grid.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/time_support.h"
+#include "monger/client/fetcher.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/remote_command_retry_scheduler.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/metadata/repl_set_metadata.h"
+#include "monger/rpc/metadata/tracking_metadata.h"
+#include "monger/s/client/shard_remote_gen.h"
+#include "monger/s/grid.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 
 using executor::RemoteCommandRequest;
 using executor::RemoteCommandResponse;
@@ -441,4 +441,4 @@ StatusWith<ShardRemote::AsyncCmdHandle> ShardRemote::_scheduleCommand(
     return asyncHandle;
 }
 
-}  // namespace mongo
+}  // namespace monger

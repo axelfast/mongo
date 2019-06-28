@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_source_writer.h"
+#include "monger/db/pipeline/document_source_writer.h"
 
-namespace mongo {
+namespace monger {
 /**
  * Implementation for the $out aggregation stage.
  */
@@ -105,7 +105,7 @@ private:
         DocumentSourceWriteBlock writeBlock(pExpCtx->opCtx);
 
         auto targetEpoch = boost::none;
-        uassertStatusOK(pExpCtx->mongoProcessInterface->insert(
+        uassertStatusOK(pExpCtx->mongerProcessInterface->insert(
             pExpCtx, _tempNs, std::move(batch), _writeConcern, targetEpoch));
     }
 
@@ -125,4 +125,4 @@ private:
     NamespaceString _tempNs;
 };
 
-}  // namespace mongo
+}  // namespace monger

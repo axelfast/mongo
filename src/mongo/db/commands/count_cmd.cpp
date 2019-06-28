@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/run_aggregate.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/count.h"
-#include "mongo/db/query/count_command_as_aggregation_command.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/query/view_response_formatter.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/views/resolved_view.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/run_aggregate.h"
+#include "monger/db/curop.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/count.h"
+#include "monger/db/query/count_command_as_aggregation_command.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/query/view_response_formatter.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/views/resolved_view.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::unique_ptr;
@@ -265,4 +265,4 @@ public:
 } cmdCount;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

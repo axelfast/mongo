@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/db/exec/write_stage_common.h"
+#include "monger/db/exec/write_stage_common.h"
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/exec/working_set.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/canonical_query.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/exec/working_set.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/canonical_query.h"
 
-namespace mongo {
+namespace monger {
 namespace write_stage_common {
 
 bool ensureStillMatches(const Collection* collection,
@@ -74,4 +74,4 @@ bool ensureStillMatches(const Collection* collection,
 }
 
 }  // namespace write_stage_common
-}  // namespace mongo
+}  // namespace monger

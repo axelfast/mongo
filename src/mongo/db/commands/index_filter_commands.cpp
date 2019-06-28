@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/index_filter_commands.h"
-#include "mongo/db/commands/plan_cache_commands.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/stdx/unordered_set.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/index_filter_commands.h"
+#include "monger/db/commands/plan_cache_commands.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/namespace_string.h"
+#include "monger/stdx/unordered_set.h"
+#include "monger/util/log.h"
 
 
 namespace {
 
 using std::string;
 using std::vector;
-using namespace mongo;
+using namespace monger;
 
 /**
  * Retrieves a collection's query settings and plan cache from the database.
@@ -106,7 +106,7 @@ MONGO_INITIALIZER_WITH_PREREQUISITES(SetupIndexFilterCommands, MONGO_NO_PREREQUI
 
 }  // namespace
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::stringstream;
@@ -360,7 +360,7 @@ Status SetFilter::set(OperationContext* opCtx,
     if (indexesElt.eoo()) {
         return Status(ErrorCodes::BadValue, "required field indexes missing");
     }
-    if (indexesElt.type() != mongo::Array) {
+    if (indexesElt.type() != monger::Array) {
         return Status(ErrorCodes::BadValue, "required field indexes must be an array");
     }
     vector<BSONElement> indexesEltArray = indexesElt.Array();
@@ -405,4 +405,4 @@ Status SetFilter::set(OperationContext* opCtx,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

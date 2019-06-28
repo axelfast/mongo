@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,17 +29,17 @@
 
 #pragma once
 
-#include "mongo/util/future.h"
+#include "monger/util/future.h"
 
-#include "mongo/stdx/thread.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/stdx/thread.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
 
 #if !defined(__has_feature)
 #define __has_feature(x) 0
 #endif
 
-namespace mongo {
+namespace monger {
 
 enum DoExecutorFuture : bool {
     // Force exemptions to say *why* they shouldn't test ExecutorFuture to ensure that if the
@@ -234,4 +234,4 @@ void FUTURE_FAIL_TEST(const TestFunc& test) {
         test(Future<CompletionType>::makeReady(failStatus()).thenRunOn(exec));
     }
 }
-}  // namespace mongo
+}  // namespace monger

@@ -27,7 +27,7 @@ func New(target, username, password string, passwordSet bool, props map[string]s
 	}
 
 	var err error
-	serviceName := "mongodb"
+	serviceName := "mongerdb"
 	serviceRealm := ""
 	canonicalizeHostName := false
 	var serviceHostSet bool

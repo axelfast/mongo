@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <cctype>
 #include <memory>
 
-#include "mongo/db/field_ref.h"
-#include "mongo/db/field_ref_set.h"
-#include "mongo/db/repl/idempotency_document_structure.h"
-#include "mongo/db/repl/idempotency_update_sequence.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/field_ref_set.h"
+#include "monger/db/repl/idempotency_document_structure.h"
+#include "monger/db/repl/idempotency_update_sequence.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 std::vector<std::string> eliminatePrefixPaths_forTest(const std::string& path,
                                                       const std::vector<std::string>& paths) {
@@ -322,4 +322,4 @@ TEST(UpdateGenTest, OnlySetUpdatesWithScalarsAtMaxDepth) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

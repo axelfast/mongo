@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,9 +32,9 @@
 #include <string>
 #include <vector>
 
-#include "mongo/bson/oid.h"
+#include "monger/bson/oid.h"
 
-namespace mongo {
+namespace monger {
 struct HostAndPort;
 class ServiceContext;
 
@@ -62,4 +62,4 @@ bool isSelf(const HostAndPort& hostAndPort, ServiceContext* ctx);
 std::vector<std::string> getBoundAddrs(const bool ipv6enabled);
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

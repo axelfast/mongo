@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/repl/local_oplog_info.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/logger/redaction.h"
-#include "mongo/util/str.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/repl/local_oplog_info.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/logger/redaction.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -154,4 +154,4 @@ repl::OpTime TransactionHistoryIterator::nextOpTime(OperationContext* opCtx) {
     return returnOpTime;
 }
 
-}  // namespace mongo
+}  // namespace monger

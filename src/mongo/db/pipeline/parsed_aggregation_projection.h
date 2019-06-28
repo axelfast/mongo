@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,17 +29,17 @@
 
 #pragma once
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <boost/intrusive_ptr.hpp>
 #include <memory>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/db/pipeline/transformer_interface.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/db/pipeline/transformer_interface.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class Document;
@@ -229,4 +229,4 @@ protected:
     ProjectionPolicies _policies;
 };
 }  // namespace parsed_aggregation_projection
-}  // namespace mongo
+}  // namespace monger

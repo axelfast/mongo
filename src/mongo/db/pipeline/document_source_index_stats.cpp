@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,15 +27,15 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document_source_index_stats.h"
+#include "monger/db/pipeline/document_source_index_stats.h"
 
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
+#include "monger/db/server_options.h"
+#include "monger/util/net/socket_utils.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 
@@ -51,7 +51,7 @@ DocumentSource::GetNextResult DocumentSourceIndexStats::getNext() {
     pExpCtx->checkForInterrupt();
 
     if (_indexStatsMap.empty()) {
-        _indexStatsMap = pExpCtx->mongoProcessInterface->getIndexStats(pExpCtx->opCtx, pExpCtx->ns);
+        _indexStatsMap = pExpCtx->mongerProcessInterface->getIndexStats(pExpCtx->opCtx, pExpCtx->ns);
         _indexStatsIter = _indexStatsMap.begin();
     }
 

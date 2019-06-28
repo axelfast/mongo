@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,11 +28,11 @@
  */
 
 
-#include "mongo/client/sasl_client_session.h"
+#include "monger/client/sasl_client_session.h"
 
 #include <sasl/sasl.h>
 
-namespace mongo {
+namespace monger {
 
 /**
  * Implementation of the client side of a SASL authentication conversation.
@@ -88,4 +88,4 @@ private:
     sasl_callback_t _callbacks[maxCallbacks];
 };
 
-}  // namespace mongo
+}  // namespace monger

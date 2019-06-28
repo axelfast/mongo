@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/db/index/hash_access_method.h"
+#include "monger/db/index/hash_access_method.h"
 
-#include "mongo/db/catalog/index_catalog_entry.h"
-#include "mongo/db/hasher.h"
-#include "mongo/db/index/expression_keys_private.h"
-#include "mongo/db/index/expression_params.h"
+#include "monger/db/catalog/index_catalog_entry.h"
+#include "monger/db/hasher.h"
+#include "monger/db/index/expression_keys_private.h"
+#include "monger/db/index/expression_params.h"
 
-namespace mongo {
+namespace monger {
 
 HashAccessMethod::HashAccessMethod(IndexCatalogEntry* btreeState,
                                    std::unique_ptr<SortedDataInterface> btree)
@@ -63,4 +63,4 @@ void HashAccessMethod::doGetKeys(const BSONObj& obj,
         obj, _hashedField, _seed, _hashVersion, _descriptor->isSparse(), _collator, keys);
 }
 
-}  // namespace mongo
+}  // namespace monger

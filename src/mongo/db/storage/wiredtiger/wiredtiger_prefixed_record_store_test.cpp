@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 #include <sstream>
 #include <string>
 #include <time.h>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/base/init.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/json.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/kv/kv_engine_test_harness.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/db/storage/record_store_test_harness.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store_oplog_stones.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_size_storer.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
-#include "mongo/util/fail_point.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/base/checked_cast.h"
+#include "monger/base/init.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/json.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/kv/kv_engine_test_harness.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/db/storage/record_store_test_harness.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_oplog_manager.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store_oplog_stones.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_size_storer.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
+#include "monger/util/fail_point.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::unique_ptr;
@@ -203,7 +203,7 @@ std::unique_ptr<HarnessHelper> makeHarnessHelper() {
 }
 
 MONGO_INITIALIZER(RegisterHarnessFactory)(InitializerContext* const) {
-    mongo::registerHarnessHelperFactory(makeHarnessHelper);
+    monger::registerHarnessHelperFactory(makeHarnessHelper);
     return Status::OK();
 }
 
@@ -262,4 +262,4 @@ TEST(WiredTigerRecordStoreTest, PrefixedSeekingCursor) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

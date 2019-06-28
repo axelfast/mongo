@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/util/options_parser/value.h"
+#include "monger/util/options_parser/value.h"
 
-#include "mongo/bson/util/builder.h"
+#include "monger/bson/util/builder.h"
 
-namespace mongo {
+namespace monger {
 namespace optionenvironment {
 
 // Value implementation
@@ -281,4 +281,4 @@ const std::type_info& Value::type() const {
 }
 
 }  // namespace optionenvironment
-}  // namespace mongo
+}  // namespace monger

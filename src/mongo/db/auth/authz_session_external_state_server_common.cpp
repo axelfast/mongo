@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kAccessControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kAccessControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authz_session_external_state_server_common.h"
+#include "monger/db/auth/authz_session_external_state_server_common.h"
 
 #include <mutex>
 
-#include "mongo/base/status.h"
-#include "mongo/db/auth/enable_localhost_auth_bypass_parameter_gen.h"
-#include "mongo/db/client.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/log.h"
+#include "monger/base/status.h"
+#include "monger/db/auth/enable_localhost_auth_bypass_parameter_gen.h"
+#include "monger/db/client.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 std::once_flag checkShouldAllowLocalhostOnceFlag;
@@ -90,4 +90,4 @@ bool AuthzSessionExternalStateServerCommon::shouldIgnoreAuthChecks() const {
     return !_authzManager->isAuthEnabled();
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/db/catalog/document_validation.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/write_commands/write_commands_common.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/db/storage/duplicate_key_error_info.h"
-#include "mongo/executor/task_executor_pool.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/cluster_last_error_info.h"
-#include "mongo/s/commands/cluster_explain.h"
-#include "mongo/s/commands/document_shard_key_update_util.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/multi_statement_transaction_requests_sender.h"
-#include "mongo/s/session_catalog_router.h"
-#include "mongo/s/transaction_router.h"
-#include "mongo/s/would_change_owning_shard_exception.h"
-#include "mongo/s/write_ops/batched_command_request.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/s/write_ops/chunk_manager_targeter.h"
-#include "mongo/s/write_ops/cluster_write.h"
-#include "mongo/util/log.h"
-#include "mongo/util/timer.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/db/catalog/document_validation.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/write_commands/write_commands_common.h"
+#include "monger/db/curop.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/stats/counters.h"
+#include "monger/db/storage/duplicate_key_error_info.h"
+#include "monger/executor/task_executor_pool.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/cluster_last_error_info.h"
+#include "monger/s/commands/cluster_explain.h"
+#include "monger/s/commands/document_shard_key_update_util.h"
+#include "monger/s/grid.h"
+#include "monger/s/multi_statement_transaction_requests_sender.h"
+#include "monger/s/session_catalog_router.h"
+#include "monger/s/transaction_router.h"
+#include "monger/s/would_change_owning_shard_exception.h"
+#include "monger/s/write_ops/batched_command_request.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/s/write_ops/chunk_manager_targeter.h"
+#include "monger/s/write_ops/cluster_write.h"
+#include "monger/util/log.h"
+#include "monger/util/timer.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 MONGO_FAIL_POINT_DEFINE(hangAfterThrowWouldChangeOwningShardRetryableWrite);
@@ -312,7 +312,7 @@ bool handleWouldChangeOwningShardError(OperationContext* opCtx,
 }
 
 /**
- * Base class for mongos write commands.
+ * Base class for mongers write commands.
  */
 class ClusterWriteCmd : public Command {
 public:
@@ -623,7 +623,7 @@ private:
                                              const OpMsgRequest& request) final {
         auto parsedRequest = BatchedCommandRequest::parseUpdate(request);
         uassert(51195,
-                "Cannot specify runtime constants option to a mongos",
+                "Cannot specify runtime constants option to a mongers",
                 !parsedRequest.hasRuntimeConstants());
         parsedRequest.setRuntimeConstants(Variables::generateRuntimeConstants(opCtx));
         return std::make_unique<Invocation>(this, request, std::move(parsedRequest));
@@ -670,4 +670,4 @@ private:
 } clusterDeleteCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/shard_metadata_util.h"
+#include "monger/db/s/shard_metadata_util.h"
 
 #include <memory>
 
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/ops/write_ops.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/unique_message.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_shard_collection.h"
-#include "mongo/s/catalog/type_shard_database.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/util/log.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/ops/write_ops.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/unique_message.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_shard_collection.h"
+#include "monger/s/catalog/type_shard_database.h"
+#include "monger/s/chunk_version.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace shardmetadatautil {
 
 namespace {
@@ -462,4 +462,4 @@ Status deleteDatabasesEntry(OperationContext* opCtx, StringData dbName) {
 }
 
 }  // namespace shardmetadatautil
-}  // namespace mongo
+}  // namespace monger

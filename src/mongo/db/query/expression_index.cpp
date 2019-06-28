@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#include "mongo/db/query/expression_index.h"
+#include "monger/db/query/expression_index.h"
 
 #include <iostream>
 #include <unordered_set>
 
-#include "mongo/db/geo/geoconstants.h"
-#include "mongo/db/geo/r2_region_coverer.h"
-#include "mongo/db/hasher.h"
-#include "mongo/db/index/expression_params.h"
-#include "mongo/db/query/expression_index_knobs_gen.h"
+#include "monger/db/geo/geoconstants.h"
+#include "monger/db/geo/r2_region_coverer.h"
+#include "monger/db/hasher.h"
+#include "monger/db/index/expression_params.h"
+#include "monger/db/query/expression_index_knobs_gen.h"
 #include "third_party/s2/s2cellid.h"
 #include "third_party/s2/s2region.h"
 #include "third_party/s2/s2regioncoverer.h"
 
-namespace mongo {
+namespace monger {
 
 using std::set;
 
@@ -228,4 +228,4 @@ void ExpressionMapping::S2CellIdsToIntervalsWithParents(const std::vector<S2Cell
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

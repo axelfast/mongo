@@ -1,6 +1,6 @@
-description: "Connect to mongos"
+description: "Connect to mongers"
 
-uri: "mongodb://a"
+uri: "mongerdb://a"
 
 phases: [
 

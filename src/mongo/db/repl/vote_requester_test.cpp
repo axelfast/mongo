@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <functional>
 #include <memory>
 
-#include "mongo/base/status.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/repl_set_request_votes_args.h"
-#include "mongo/db/repl/vote_requester.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/str.h"
+#include "monger/base/status.h"
+#include "monger/db/commands.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/repl_set_request_votes_args.h"
+#include "monger/db/repl/vote_requester.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -55,7 +55,7 @@ bool stringContains(const std::string& haystack, const std::string& needle) {
 }
 
 
-class VoteRequesterTest : public mongo::unittest::Test {
+class VoteRequesterTest : public monger::unittest::Test {
 public:
     virtual void setUp() {
         ReplSetConfig config;
@@ -561,4 +561,4 @@ TEST_F(VoteRequesterCatchupTakeoverDryRunTest, CatchupTakeoverPrimarySaysNoLoseE
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

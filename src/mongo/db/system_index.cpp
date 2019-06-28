@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,38 +27,38 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/system_index.h"
+#include "monger/db/system_index.h"
 
-#include "mongo/base/init.h"
-#include "mongo/base/status.h"
-#include "mongo/client/index_spec.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog/index_key_validate.h"
-#include "mongo/db/catalog/multi_index_block.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/repl_index_build_state.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/future.h"
-#include "mongo/util/log.h"
+#include "monger/base/init.h"
+#include "monger/base/status.h"
+#include "monger/client/index_spec.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog/index_key_validate.h"
+#include "monger/db/catalog/multi_index_block.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/repl_index_build_state.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/future.h"
+#include "monger/util/log.h"
 
 using namespace std::chrono_literals;
 
-namespace mongo {
+namespace monger {
 
 namespace {
 BSONObj v1SystemUsersKeyPattern;
@@ -260,4 +260,4 @@ void createSystemIndexes(OperationContext* opCtx, Collection* collection) {
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

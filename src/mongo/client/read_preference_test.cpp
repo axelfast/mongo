@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -26,16 +26,16 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/read_preference.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/duration.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/jsobj.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/duration.h"
 
 namespace {
 
-using namespace mongo;
+using namespace monger;
 
 static const Seconds kMinMaxStaleness = ReadPreferenceSetting::kMinimalMaxStalenessValue;
 

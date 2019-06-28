@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/auth/authorization_session.h"
-#include "mongo/db/client.h"
-#include "mongo/db/clientcursor.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/commands/run_aggregate.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/cursor_manager.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/exec/working_set_common.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/pipeline/variables.h"
-#include "mongo/db/query/cursor_response.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/find.h"
-#include "mongo/db/query/find_common.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/stats/counters.h"
-#include "mongo/db/stats/server_read_concern_metrics.h"
-#include "mongo/db/storage/storage_engine.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/util/log.h"
+#include "monger/db/auth/authorization_session.h"
+#include "monger/db/client.h"
+#include "monger/db/clientcursor.h"
+#include "monger/db/commands.h"
+#include "monger/db/commands/run_aggregate.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/cursor_manager.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/exec/working_set_common.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/pipeline/variables.h"
+#include "monger/db/query/cursor_response.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/find.h"
+#include "monger/db/query/find_common.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/service_context.h"
+#include "monger/db/stats/counters.h"
+#include "monger/db/stats/server_read_concern_metrics.h"
+#include "monger/db/storage/storage_engine.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const auto kTermField = "term"_sd;
@@ -538,4 +538,4 @@ public:
 } findCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

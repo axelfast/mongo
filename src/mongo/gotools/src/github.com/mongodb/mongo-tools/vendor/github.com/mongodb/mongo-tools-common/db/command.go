@@ -9,9 +9,9 @@ package db
 import (
 	"context"
 
-	"go.mongodb.org/mongo-driver/bson"
-	mopt "go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"go.mongerdb.org/monger-driver/bson"
+	mopt "go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readpref"
 )
 
 // Query flags
@@ -24,7 +24,7 @@ const (
 type NodeType string
 
 const (
-	Mongos     NodeType = "mongos"
+	Mongos     NodeType = "mongers"
 	Standalone          = "standalone"
 	ReplSet             = "replset"
 	Unknown             = "unknown"
@@ -107,7 +107,7 @@ func (sp *SessionProvider) DatabaseNames() ([]string, error) {
 // 	return session.DB(dbName).CollectionNames()
 // }
 
-// GetNodeType checks if the connected SessionProvider is a mongos, standalone, or replset,
+// GetNodeType checks if the connected SessionProvider is a mongers, standalone, or replset,
 // by looking at the result of calling isMaster.
 func (sp *SessionProvider) GetNodeType() (NodeType, error) {
 	session, err := sp.GetSession()
@@ -134,8 +134,8 @@ func (sp *SessionProvider) GetNodeType() (NodeType, error) {
 	if masterDoc.SetName != nil || masterDoc.Hosts != nil {
 		return ReplSet, nil
 	} else if masterDoc.Msg == "isdbgrid" {
-		// isdbgrid is always the msg value when calling isMaster on a mongos
-		// see http://docs.mongodb.org/manual/core/sharded-cluster-query-router/
+		// isdbgrid is always the msg value when calling isMaster on a mongers
+		// see http://docs.mongerdb.org/manual/core/sharded-cluster-query-router/
 		return Mongos, nil
 	}
 	return Standalone, nil
@@ -151,7 +151,7 @@ func (sp *SessionProvider) IsReplicaSet() (bool, error) {
 	return nodeType == ReplSet, nil
 }
 
-// IsMongos returns true if the connected server is a mongos.
+// IsMongos returns true if the connected server is a mongers.
 func (sp *SessionProvider) IsMongos() (bool, error) {
 	nodeType, err := sp.GetNodeType()
 	if err != nil {

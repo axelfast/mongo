@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 
 #include "boost/optional/optional_io.hpp"
-#include "mongo/db/catalog/database_holder_mock.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/lock_state.h"
-#include "mongo/db/service_context_test_fixture.h"
-#include "mongo/db/storage/recovery_unit_noop.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/log.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/catalog/database_holder_mock.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/lock_state.h"
+#include "monger/db/service_context_test_fixture.h"
+#include "monger/db/storage/recovery_unit_noop.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/log.h"
+#include "monger/util/time_support.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class CatalogRAIITestFixture : public ServiceContextTest {
@@ -272,4 +272,4 @@ TEST_F(ReadSourceScopeTest, RestoreReadSource) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

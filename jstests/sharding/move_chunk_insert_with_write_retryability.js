@@ -13,7 +13,7 @@ load("jstests/sharding/move_chunk_with_session_helper.js");
     // Prevent unnecessary elections in the first shard replica set. Shard 'rs1' shard will need its
     // secondary to get elected, so we don't give it a zero priority.
     var st = new ShardingTest({
-        mongos: 2,
+        mongers: 2,
         shards: {
             rs0: {nodes: [{rsConfig: {}}, {rsConfig: {priority: 0}}]},
             rs1: {nodes: [{rsConfig: {}}, {rsConfig: {}}]}

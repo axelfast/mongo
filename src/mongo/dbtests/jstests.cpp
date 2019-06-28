@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <iostream>
 #include <limits>
 
-#include "mongo/base/parse_number.h"
-#include "mongo/db/client.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/hasher.h"
-#include "mongo/db/json.h"
-#include "mongo/dbtests/dbtests.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/shell/shell_utils.h"
-#include "mongo/util/concurrency/thread_name.h"
-#include "mongo/util/future.h"
-#include "mongo/util/log.h"
-#include "mongo/util/time_support.h"
-#include "mongo/util/timer.h"
+#include "monger/base/parse_number.h"
+#include "monger/db/client.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/hasher.h"
+#include "monger/db/json.h"
+#include "monger/dbtests/dbtests.h"
+#include "monger/platform/decimal128.h"
+#include "monger/scripting/engine.h"
+#include "monger/shell/shell_utils.h"
+#include "monger/util/concurrency/thread_name.h"
+#include "monger/util/future.h"
+#include "monger/util/log.h"
+#include "monger/util/time_support.h"
+#include "monger/util/timer.h"
 
 using std::cout;
 using std::endl;
@@ -169,10 +169,10 @@ class LogRecordingScope {
 public:
     LogRecordingScope()
         : _logged(false),
-          _threadName(mongo::getThreadName().toString()),
-          _handle(mongo::logger::globalLogDomain()->attachAppender(std::make_unique<Tee>(this))) {}
+          _threadName(monger::getThreadName().toString()),
+          _handle(monger::logger::globalLogDomain()->attachAppender(std::make_unique<Tee>(this))) {}
     ~LogRecordingScope() {
-        mongo::logger::globalLogDomain()->detachAppender(_handle);
+        monger::logger::globalLogDomain()->detachAppender(_handle);
     }
     /** @return most recent log entry. */
     bool logged() const {
@@ -180,13 +180,13 @@ public:
     }
 
 private:
-    class Tee : public mongo::logger::MessageLogDomain::EventAppender {
+    class Tee : public monger::logger::MessageLogDomain::EventAppender {
     public:
         Tee(LogRecordingScope* scope) : _scope(scope) {}
         virtual ~Tee() {}
         virtual Status append(const logger::MessageEventEphemeral& event) {
             // Don't want to consider logging by background threads.
-            if (mongo::getThreadName() == _scope->_threadName) {
+            if (monger::getThreadName() == _scope->_threadName) {
                 _scope->_logged = true;
             }
             return Status::OK();
@@ -197,7 +197,7 @@ private:
     };
     bool _logged;
     const string _threadName;
-    mongo::logger::MessageLogDomain::AppenderHandle _handle;
+    monger::logger::MessageLogDomain::AppenderHandle _handle;
 };
 
 /** Error logging in Scope::exec(). */
@@ -417,12 +417,12 @@ public:
 
         BSONObj out;
 
-        ASSERT_THROWS(s->invoke("blah.y = 'e'", nullptr, nullptr), mongo::AssertionException);
-        ASSERT_THROWS(s->invoke("blah.a = 19;", nullptr, nullptr), mongo::AssertionException);
-        ASSERT_THROWS(s->invoke("blah.zz.a = 19;", nullptr, nullptr), mongo::AssertionException);
+        ASSERT_THROWS(s->invoke("blah.y = 'e'", nullptr, nullptr), monger::AssertionException);
+        ASSERT_THROWS(s->invoke("blah.a = 19;", nullptr, nullptr), monger::AssertionException);
+        ASSERT_THROWS(s->invoke("blah.zz.a = 19;", nullptr, nullptr), monger::AssertionException);
         ASSERT_THROWS(s->invoke("blah.zz = { a : 19 };", nullptr, nullptr),
-                      mongo::AssertionException);
-        ASSERT_THROWS(s->invoke("delete blah['x']", nullptr, nullptr), mongo::AssertionException);
+                      monger::AssertionException);
+        ASSERT_THROWS(s->invoke("delete blah['x']", nullptr, nullptr), monger::AssertionException);
 
         // read-only object itself can be overwritten
         s->invoke("blah = {}", nullptr, nullptr);
@@ -684,11 +684,11 @@ public:
         BSONObj in = b.obj();
         s->setObject("a", in);
         BSONObj out = s->getObject("a");
-        ASSERT_EQUALS(mongo::NumberLong, out.firstElement().type());
+        ASSERT_EQUALS(monger::NumberLong, out.firstElement().type());
 
         ASSERT(s->exec("b = {b:a.a}", "foo", false, true, false));
         out = s->getObject("b");
-        ASSERT_EQUALS(mongo::NumberLong, out.firstElement().type());
+        ASSERT_EQUALS(monger::NumberLong, out.firstElement().type());
         if (val != out.firstElement().numberLong()) {
             cout << val << endl;
             cout << out.firstElement().numberLong() << endl;
@@ -728,7 +728,7 @@ public:
 
         ASSERT(s->exec("w = {w:z.z}", "foo", false, true, false));
         out = s->getObject("w");
-        ASSERT_EQUALS(mongo::NumberLong, out.firstElement().type());
+        ASSERT_EQUALS(monger::NumberLong, out.firstElement().type());
         ASSERT_EQUALS(4, out.firstElement().numberLong());
     }
 };
@@ -774,11 +774,11 @@ public:
         BSONObj in = b.obj();
         s->setObject("a", in);
         BSONObj out = s->getObject("a");
-        ASSERT_EQUALS(mongo::NumberLong, out.firstElement().type());
+        ASSERT_EQUALS(monger::NumberLong, out.firstElement().type());
 
         ASSERT(s->exec("b = {b:a.a}", "foo", false, true, false));
         out = s->getObject("b");
-        ASSERT_EQUALS(mongo::NumberLong, out.firstElement().type());
+        ASSERT_EQUALS(monger::NumberLong, out.firstElement().type());
         if (val != out.firstElement().numberLong()) {
             cout << val << endl;
             cout << out.firstElement().numberLong() << endl;
@@ -821,12 +821,12 @@ public:
 
         // Test the scope object
         BSONObj out = s->getObject("a");
-        ASSERT_EQUALS(mongo::NumberDecimal, out.firstElement().type());
+        ASSERT_EQUALS(monger::NumberDecimal, out.firstElement().type());
         ASSERT_TRUE(val.isEqual(out.firstElement().numberDecimal()));
 
         ASSERT(s->exec("b = {b:a.a}", "foo", false, true, false));
         out = s->getObject("b");
-        ASSERT_EQUALS(mongo::NumberDecimal, out.firstElement().type());
+        ASSERT_EQUALS(monger::NumberDecimal, out.firstElement().type());
         ASSERT_TRUE(val.isEqual(out.firstElement().numberDecimal()));
 
         // Test that the appropriate string output is generated
@@ -1424,7 +1424,7 @@ public:
 template <ScopeFactory scopeFactory>
 class ConvertShardKeyToHashed {
 public:
-    void check(shared_ptr<Scope> s, const mongo::BSONObj& o) {
+    void check(shared_ptr<Scope> s, const monger::BSONObj& o) {
         s->setObject("o", o, true);
         s->invoke("return convertShardKeyToHashed(o);", nullptr, nullptr);
         const auto scopeShardKey = s->getNumber("__returnValue");
@@ -1433,12 +1433,12 @@ public:
         const auto wrapO = BSON("" << o);
         const auto e = wrapO[""];
         const auto trueShardKey =
-            mongo::BSONElementHasher::hash64(e, mongo::BSONElementHasher::DEFAULT_HASH_SEED);
+            monger::BSONElementHasher::hash64(e, monger::BSONElementHasher::DEFAULT_HASH_SEED);
 
         ASSERT_EQUALS(scopeShardKey, trueShardKey);
     }
 
-    void checkWithSeed(shared_ptr<Scope> s, const mongo::BSONObj& o, int seed) {
+    void checkWithSeed(shared_ptr<Scope> s, const monger::BSONObj& o, int seed) {
         s->setObject("o", o, true);
         s->setNumber("seed", seed);
         s->invoke("return convertShardKeyToHashed(o, seed);", nullptr, nullptr);
@@ -1447,7 +1447,7 @@ public:
         // Wrapping to form a proper element
         const auto wrapO = BSON("" << o);
         const auto e = wrapO[""];
-        const auto trueShardKey = mongo::BSONElementHasher::hash64(e, seed);
+        const auto trueShardKey = monger::BSONElementHasher::hash64(e, seed);
 
         ASSERT_EQUALS(scopeShardKey, trueShardKey);
     }
@@ -1456,13 +1456,13 @@ public:
         s->invoke("return convertShardKeyToHashed();", nullptr, nullptr);
     }
 
-    void checkWithExtraArg(shared_ptr<Scope> s, const mongo::BSONObj& o, int seed) {
+    void checkWithExtraArg(shared_ptr<Scope> s, const monger::BSONObj& o, int seed) {
         s->setObject("o", o, true);
         s->setNumber("seed", seed);
         s->invoke("return convertShardKeyToHashed(o, seed, 1);", nullptr, nullptr);
     }
 
-    void checkWithBadSeed(shared_ptr<Scope> s, const mongo::BSONObj& o) {
+    void checkWithBadSeed(shared_ptr<Scope> s, const monger::BSONObj& o) {
         s->setObject("o", o, true);
         s->setString("seed", "sunflower");
         s->invoke("return convertShardKeyToHashed(o, seed);", nullptr, nullptr);
@@ -1479,8 +1479,8 @@ public:
               BSON(""
                    << "Shardy"));
         check(s, BSON("" << BSON_ARRAY(1 << 2 << 3)));
-        check(s, BSON("" << mongo::jstNULL));
-        check(s, BSON("" << mongo::BSONObj()));
+        check(s, BSON("" << monger::jstNULL));
+        check(s, BSON("" << monger::BSONObj()));
         check(s,
               BSON("A" << 1 << "B"
                        << "Shardy"));
@@ -1489,7 +1489,7 @@ public:
         checkWithSeed(s,
                       BSON(""
                            << "Shardy"),
-                      mongo::BSONElementHasher::DEFAULT_HASH_SEED);
+                      monger::BSONElementHasher::DEFAULT_HASH_SEED);
         checkWithSeed(s,
                       BSON(""
                            << "Shardy"),
@@ -1499,9 +1499,9 @@ public:
                            << "Shardy"),
                       -1);
 
-        ASSERT_THROWS(checkNoArgs(s), mongo::DBException);
-        ASSERT_THROWS(checkWithExtraArg(s, BSON("" << 10.0), 0), mongo::DBException);
-        ASSERT_THROWS(checkWithBadSeed(s, BSON("" << 1)), mongo::DBException);
+        ASSERT_THROWS(checkNoArgs(s), monger::DBException);
+        ASSERT_THROWS(checkWithExtraArg(s, BSON("" << 10.0), 0), monger::DBException);
+        ASSERT_THROWS(checkWithBadSeed(s, BSON("" << 1)), monger::DBException);
     }
 };
 

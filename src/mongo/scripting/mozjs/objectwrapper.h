@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <jsapi.h>
 #include <string>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/scripting/mozjs/exception.h"
-#include "mongo/scripting/mozjs/internedstring.h"
-#include "mongo/scripting/mozjs/jsstringwrapper.h"
-#include "mongo/scripting/mozjs/lifetimestack.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/platform/decimal128.h"
+#include "monger/scripting/mozjs/exception.h"
+#include "monger/scripting/mozjs/internedstring.h"
+#include "monger/scripting/mozjs/jsstringwrapper.h"
+#include "monger/scripting/mozjs/lifetimestack.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class BSONObjBuilder;
@@ -245,4 +245,4 @@ private:
 };
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

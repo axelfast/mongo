@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,13 +32,13 @@
 #include <functional>
 #include <vector>
 
-#include "mongo/base/init.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/pipeline/expression_context.h"
-#include "mongo/db/pipeline/value.h"
-#include "mongo/util/intrusive_counter.h"
+#include "monger/base/init.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/pipeline/expression_context.h"
+#include "monger/db/pipeline/value.h"
+#include "monger/util/intrusive_counter.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Registers a GranularityRounder with the name 'name' and initializer key 'key'. When a
@@ -183,4 +183,4 @@ private:
 
     std::string _name = "POWERSOF2";
 };
-}  //  namespace mongo
+}  //  namespace monger

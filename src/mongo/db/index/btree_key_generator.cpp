@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,24 +27,24 @@
  *    it in the license file.
  */
 
-#include "mongo/db/index/btree_key_generator.h"
+#include "monger/db/index/btree_key_generator.h"
 
 #include <boost/optional.hpp>
 #include <memory>
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/field_ref.h"
-#include "mongo/db/query/collation/collation_index_key.h"
-#include "mongo/db/query/collation/collator_interface.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/field_ref.h"
+#include "monger/db/query/collation/collation_index_key.h"
+#include "monger/db/query/collation/collator_interface.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using IndexVersion = IndexDescriptor::IndexVersion;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 namespace {
 
@@ -387,4 +387,4 @@ void BtreeKeyGenerator::_getKeysWithArray(std::vector<const char*> fieldNames,
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

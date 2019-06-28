@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -39,17 +39,17 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/service_context.h"
-#include "mongo/platform/random.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/transport/session.h"
-#include "mongo/util/concurrency/spin_lock.h"
-#include "mongo/util/decorable.h"
-#include "mongo/util/invariant.h"
-#include "mongo/util/net/hostandport.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/service_context.h"
+#include "monger/platform/random.h"
+#include "monger/stdx/thread.h"
+#include "monger/transport/session.h"
+#include "monger/util/concurrency/spin_lock.h"
+#include "monger/util/decorable.h"
+#include "monger/util/invariant.h"
+#include "monger/util/net/hostandport.h"
 
-namespace mongo {
+namespace monger {
 
 class Collection;
 class OperationContext;
@@ -321,4 +321,4 @@ private:
 Client& cc();
 
 bool haveClient();
-}  // namespace mongo
+}  // namespace monger

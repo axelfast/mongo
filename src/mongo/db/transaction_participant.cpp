@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,47 +27,47 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
 #define LOG_FOR_TRANSACTION(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kTransaction)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kTransaction)
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/transaction_participant.h"
+#include "monger/db/transaction_participant.h"
 
 #include <fmt/format.h>
 
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/commands/test_commands_enabled.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/lock_state.h"
-#include "mongo/db/concurrency/locker.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/curop_failpoint_helpers.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/index/index_access_method.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/ops/update.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/repl/local_oplog_info.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/retryable_writes_stats.h"
-#include "mongo/db/server_recovery.h"
-#include "mongo/db/server_transactions_metrics.h"
-#include "mongo/db/stats/fill_locker_info.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/db/transaction_participant_gen.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/commands/test_commands_enabled.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/lock_state.h"
+#include "monger/db/concurrency/locker.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/curop_failpoint_helpers.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/index/index_access_method.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/ops/update.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/repl/local_oplog_info.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/retryable_writes_stats.h"
+#include "monger/db/server_recovery.h"
+#include "monger/db/server_transactions_metrics.h"
+#include "monger/db/stats/fill_locker_info.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/db/transaction_participant_gen.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
 
-namespace mongo {
+namespace monger {
 using namespace fmt::literals;
 namespace {
 
@@ -2184,4 +2184,4 @@ void TransactionParticipant::Participant::_registerUpdateCacheOnCommit(
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

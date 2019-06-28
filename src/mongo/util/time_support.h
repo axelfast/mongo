@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,13 +34,13 @@
 #include <limits>
 #include <string>
 
-#include "mongo/base/status_with.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/chrono.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/util/duration.h"
+#include "monger/base/status_with.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/chrono.h"
+#include "monger/stdx/mutex.h"
+#include "monger/util/duration.h"
 
-namespace mongo {
+namespace monger {
 
 class BackgroundThreadClockSource;
 
@@ -377,4 +377,4 @@ struct tm* localtime(const time_t* timep);
 // Find minimum system timer resolution of OS
 Nanoseconds getMinimumTimerResolution();
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <string>
 #include <vector>
 
-#include "mongo/base/string_data.h"
-#include "mongo/db/auth/authorization_manager.h"
-#include "mongo/db/auth/user.h"
-#include "mongo/db/auth/user_name.h"
+#include "monger/base/string_data.h"
+#include "monger/db/auth/authorization_manager.h"
+#include "monger/db/auth/user.h"
+#include "monger/db/auth/user_name.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A collection of authenticated users.
@@ -115,4 +115,4 @@ private:
     std::list<UserHandle> _users;
 };
 
-}  // namespace mongo
+}  // namespace monger

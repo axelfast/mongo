@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,22 +27,22 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/bson/json.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/views/resolved_view.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/bson/json.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/views/resolved_view.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const NamespaceString viewNss("testdb.testview");
@@ -273,7 +273,7 @@ TEST(ResolvedViewTest, FromBSONSuccessfullyParsesPopulatedBSONArrayIntoVector) {
 TEST(ResolvedViewTest, IsResolvedViewErrorResponseDetectsKickbackErrorCodeSuccessfully) {
     BSONObj errorResponse =
         BSON("ok" << 0 << "code" << ErrorCodes::CommandOnShardedViewNotSupportedOnMongod << "errmsg"
-                  << "This view is sharded and cannot be run on mongod"
+                  << "This view is sharded and cannot be run on mongerd"
                   << "resolvedView"
                   << BSON("ns" << backingNss.ns() << "pipeline" << BSONArray()));
     auto status = getStatusFromCommandResult(errorResponse);
@@ -324,4 +324,4 @@ TEST(ResolvedViewTest, SerializeOutputCanBeReparsed) {
                            << "fr_CA"));
 }
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

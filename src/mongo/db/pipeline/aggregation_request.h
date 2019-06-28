@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,15 +32,15 @@
 #include <boost/optional.hpp>
 #include <vector>
 
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/exchange_spec_gen.h"
-#include "mongo/db/pipeline/runtime_constants_gen.h"
-#include "mongo/db/query/explain_options.h"
-#include "mongo/db/write_concern_options.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/exchange_spec_gen.h"
+#include "monger/db/pipeline/runtime_constants_gen.h"
+#include "monger/db/query/explain_options.h"
+#include "monger/db/write_concern_options.h"
 
-namespace mongo {
+namespace monger {
 
 template <typename T>
 class StatusWith;
@@ -156,7 +156,7 @@ public:
     }
 
     /**
-     * Returns true if this request originated from a mongoS.
+     * Returns true if this request originated from a mongerS.
      */
     bool isFromMongos() const {
         return _fromMongos;
@@ -314,9 +314,9 @@ private:
 
     BSONObj _readConcern;
 
-    // The unwrapped readPreference object, if one was given to us by the mongos command processor.
+    // The unwrapped readPreference object, if one was given to us by the mongers command processor.
     // This object will be empty when no readPreference is specified or if the request does not
-    // originate from mongos.
+    // originate from mongers.
     BSONObj _unwrappedReadPref;
 
     // The explain mode to use, or boost::none if this is not a request for an aggregation explain.
@@ -342,4 +342,4 @@ private:
     // $$NOW).
     boost::optional<RuntimeConstants> _runtimeConstants;
 };
-}  // namespace mongo
+}  // namespace monger

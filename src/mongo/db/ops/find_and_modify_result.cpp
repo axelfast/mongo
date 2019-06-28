@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kWrite
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kWrite
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/ops/find_and_modify_result.h"
+#include "monger/db/ops/find_and_modify_result.h"
 
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/db/lasterror.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/db/lasterror.h"
 
-namespace mongo {
+namespace monger {
 namespace find_and_modify {
 namespace {
 
@@ -75,4 +75,4 @@ void serializeUpsert(size_t n,
 }
 
 }  // namespace find_and_modify
-}  // namespace mongo
+}  // namespace monger

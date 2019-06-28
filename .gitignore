@@ -1,5 +1,5 @@
 /build
-/src/mongo/db/modules
+/src/monger/db/modules
 /.jsdbshell
 /.dbshell
 /*.ninja
@@ -42,16 +42,16 @@
 *#
 .#*
 
-/src/mongo/*/*Debug*/
-/src/mongo/*/*/*Debug*/
-/src/mongo/*/*Release*/
-/src/mongo/*/*/*Release*/
+/src/monger/*/*Debug*/
+/src/monger/*/*/*Debug*/
+/src/monger/*/*Release*/
+/src/monger/*/*/*Release*/
 /src/ipch
-/src/mongo/*/ipch
-/src/mongo/*/*/ipch
-/src/mongo/db/.gdb*
-/src/mongo/db/makefile.local
-/src/mongo/db/_ReSharper.db
+/src/monger/*/ipch
+/src/monger/*/*/ipch
+/src/monger/db/.gdb*
+/src/monger/db/makefile.local
+/src/monger/db/_ReSharper.db
 /src/third_party/*/*.cache
 /src/third_party/*/*.tlog
 /src/third_party/*/*.lastbuildstate
@@ -74,18 +74,18 @@ scratch
 # binaries
 /docgen
 /loadgen
-/mongo
-/mongobridge
-/mongocryptd
-/mongod
-/mongoed
-/mongogrid
-/mongoperf
-/mongos
-/mongoshim
-/mongosniff
-/mongotmock
-/mongotrafficreader
+/monger
+/mongerbridge
+/mongercryptd
+/mongerd
+/mongered
+/mongergrid
+/mongerperf
+/mongers
+/mongershim
+/mongersniff
+/mongertmock
+/mongertrafficreader
 /wt
 
 *.tgz
@@ -93,9 +93,9 @@ scratch
 *.tar.gz
 
 #libs
-/libmongoclient.*
-/libmongotestfiles.*
-/libmongoshellfiles.*
+/libmongerclient.*
+/libmongertestfiles.*
+/libmongershellfiles.*
 /sharedclient
 /genny
 
@@ -127,7 +127,7 @@ scratch
 #debian
 build-stamp
 configure-stamp
-debian/mongodb
+debian/mongerdb
 
 # OSX files
 .DS_Store
@@ -169,9 +169,9 @@ DriverInclude.wxs
 
 # Gradle
 .gradle
-src/mongo/embedded/java/build/
-src/mongo/embedded/java/aar/build/
-src/mongo/embedded/java/jar/build/
+src/monger/embedded/java/build/
+src/monger/embedded/java/aar/build/
+src/monger/embedded/java/jar/build/
 local.properties
 
 compile_commands.json

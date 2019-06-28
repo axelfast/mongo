@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/db/matcher/expression_geo.h"
+#include "monger/db/matcher/expression_geo.h"
 
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/geo/geoparser.h"
-#include "mongo/db/matcher/expression_parser.h"
-#include "mongo/platform/basic.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/geo/geoparser.h"
+#include "monger/db/matcher/expression_parser.h"
+#include "monger/platform/basic.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 //
 // GeoExpression

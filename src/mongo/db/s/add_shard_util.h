@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,9 +31,9 @@
 
 #include <string>
 
-#include "mongo/base/string_data.h"
+#include "monger/base/string_data.h"
 
-namespace mongo {
+namespace monger {
 class AddShard;
 class BSONObj;
 class OperationContext;
@@ -49,7 +49,7 @@ constexpr StringData kShardIdentityDocumentId = "shardIdentity"_sd;
 
 /**
  * Creates an AddShard command object that's sent from the config server to
- * a mongod to instruct it to initialize itself as a shard in the cluster.
+ * a mongerd to instruct it to initialize itself as a shard in the cluster.
  */
 AddShard createAddShardCmd(OperationContext* opCtx, const ShardId& shardName);
 
@@ -60,5 +60,5 @@ AddShard createAddShardCmd(OperationContext* opCtx, const ShardId& shardName);
  */
 BSONObj createShardIdentityUpsertForAddShard(const AddShard& addShardCmd);
 
-}  // namespace mongo
+}  // namespace monger
 }  // namespace add_shard_util

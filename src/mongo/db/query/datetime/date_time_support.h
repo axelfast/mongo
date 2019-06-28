@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,16 +32,16 @@
 #include <memory>
 #include <string>
 
-#include "mongo/db/service_context.h"
-#include "mongo/util/string_map.h"
-#include "mongo/util/time_support.h"
+#include "monger/db/service_context.h"
+#include "monger/util/string_map.h"
+#include "monger/util/time_support.h"
 
 struct _timelib_error_container;
 struct _timelib_time;
 struct _timelib_tzdb;
 struct _timelib_tzinfo;
 
-namespace mongo {
+namespace monger {
 
 /**
  * A TimeZone object represents one way of formatting/reading dates to compute things like the day
@@ -431,4 +431,4 @@ private:
     std::unique_ptr<_timelib_tzdb, TimeZoneDBDeleter> _timeZoneDatabase;
 };
 
-}  // namespace mongo
+}  // namespace monger

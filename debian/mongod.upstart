@@ -1,7 +1,7 @@
-# Ubuntu upstart file at /etc/init/mongod.conf
+# Ubuntu upstart file at /etc/init/mongerd.conf
 
-# Recommended ulimit values for mongod or mongos
-# See http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
+# Recommended ulimit values for mongerd or mongers
+# See http://docs.mongerdb.org/manual/reference/ulimit/#recommended-settings
 #
 limit fsize unlimited unlimited
 limit cpu unlimited unlimited
@@ -14,15 +14,15 @@ limit memlock unlimited unlimited
 kill timeout 300 # wait 300s between SIGTERM and SIGKILL.
 
 pre-start script
-  DAEMONUSER=${DAEMONUSER:-mongodb}
-  if [ ! -d /var/lib/mongodb ]; then
-    mkdir -p /var/lib/mongodb && chown mongodb:mongodb /var/lib/mongodb
+  DAEMONUSER=${DAEMONUSER:-mongerdb}
+  if [ ! -d /var/lib/mongerdb ]; then
+    mkdir -p /var/lib/mongerdb && chown mongerdb:mongerdb /var/lib/mongerdb
   fi
-  if [ ! -d /var/log/mongodb ]; then
-    mkdir -p /var/log/mongodb && chown mongodb:mongodb /var/log/mongodb
+  if [ ! -d /var/log/mongerdb ]; then
+    mkdir -p /var/log/mongerdb && chown mongerdb:mongerdb /var/log/mongerdb
   fi
-  touch /var/run/mongodb.pid
-  chown $DAEMONUSER /var/run/mongodb.pid
+  touch /var/run/mongerdb.pid
+  chown $DAEMONUSER /var/run/mongerdb.pid
 end script
 
 start on runlevel [2345]
@@ -30,12 +30,12 @@ stop on runlevel [06]
 
 script
   ENABLE_MONGOD="yes"
-  CONF=/etc/mongod.conf
-  DAEMON=/usr/bin/mongod
-  DAEMONUSER=${DAEMONUSER:-mongodb}
-  DAEMONGROUP=${DAEMONGROUP:-mongodb}
+  CONF=/etc/mongerd.conf
+  DAEMON=/usr/bin/mongerd
+  DAEMONUSER=${DAEMONUSER:-mongerdb}
+  DAEMONGROUP=${DAEMONGROUP:-mongerdb}
 
-  if [ -f /etc/default/mongod ]; then . /etc/default/mongod; fi
+  if [ -f /etc/default/mongerd ]; then . /etc/default/mongerd; fi
 
   # Handle NUMA access to CPUs (SERVER-3574)
   # This verifies the existence of numactl as well as testing that the command works
@@ -53,7 +53,7 @@ script
   then
     exec start-stop-daemon --start \
         --chuid $DAEMONUSER:$DAEMONGROUP \
-        --pidfile /var/run/mongodb.pid \
+        --pidfile /var/run/mongerdb.pid \
         --make-pidfile \
         --exec $NUMACTL $DAEMON $DAEMON_OPTS
   fi

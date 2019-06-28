@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,11 +29,11 @@
 
 #pragma once
 
-#include "mongo/db/client.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/service_context.h"
+#include "monger/db/client.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/service_context.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * QueryTestServiceContext is a helper class for tests that require only a single Client under a
@@ -57,4 +57,4 @@ private:
     ServiceContext::UniqueClient _client;
 };
 
-}  // namespace mongo
+}  // namespace monger

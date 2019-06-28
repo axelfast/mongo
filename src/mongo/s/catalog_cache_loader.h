@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,19 +32,19 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/base/string_data.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_collection.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/chunk_version.h"
-#include "mongo/util/concurrency/notification.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/status_with.h"
+#include "monger/base/string_data.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_collection.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/chunk_version.h"
+#include "monger/util/concurrency/notification.h"
+#include "monger/util/uuid.h"
 
 #define LOG_CATALOG_REFRESH(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kShardingCatalogRefresh)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kShardingCatalogRefresh)
 
-namespace mongo {
+namespace monger {
 
 class NamespaceString;
 class OperationContext;
@@ -168,4 +168,4 @@ protected:
     CatalogCacheLoader() = default;
 };
 
-}  // namespace mongo
+}  // namespace monger

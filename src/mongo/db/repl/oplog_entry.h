@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 
 #pragma once
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/logical_session_id.h"
-#include "mongo/db/repl/apply_ops_gen.h"
-#include "mongo/db/repl/oplog_entry_gen.h"
-#include "mongo/db/repl/optime.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/logical_session_id.h"
+#include "monger/db/repl/apply_ops_gen.h"
+#include "monger/db/repl/oplog_entry_gen.h"
+#include "monger/db/repl/optime.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 /**
@@ -169,7 +169,7 @@ public:
                const boost::optional<BSONObj>& o2Field,
                const OperationSessionInfo& sessionInfo,
                const boost::optional<bool>& isUpsert,
-               const boost::optional<mongo::Date_t>& wallClockTime,
+               const boost::optional<monger::Date_t>& wallClockTime,
                const boost::optional<StmtId>& statementId,
                const boost::optional<OpTime>& prevWriteOpTimeInTransaction,
                const boost::optional<OpTime>& preImageOpTime,
@@ -274,4 +274,4 @@ inline bool operator==(const OplogEntry& lhs, const OplogEntry& rhs) {
 std::ostream& operator<<(std::ostream& s, const ReplOperation& o);
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

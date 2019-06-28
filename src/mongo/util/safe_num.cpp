@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #include <sstream>
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 #undef MONGO_PCH_WHITELISTED  // for malloc/realloc/INFINITY pulled from bson
 
-#include "mongo/bson/bsontypes.h"
-#include "mongo/util/safe_num.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/util/safe_num.h"
 
-namespace mongo {
+namespace monger {
 
 using std::ostringstream;
 
@@ -464,4 +464,4 @@ SafeNum SafeNum::xorInternal(const SafeNum& lhs, const SafeNum& rhs) {
     return SafeNum();
 }
 
-}  // namespace mongo
+}  // namespace monger

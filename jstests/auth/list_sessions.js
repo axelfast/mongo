@@ -11,10 +11,10 @@
     // implicit sessions.
     TestData.disableImplicitSessions = true;
 
-    function runListSessionsTest(mongod) {
-        assert(mongod);
-        const admin = mongod.getDB('admin');
-        const config = mongod.getDB('config');
+    function runListSessionsTest(mongerd) {
+        assert(mongerd);
+        const admin = mongerd.getDB('admin');
+        const config = mongerd.getDB('config');
 
         const pipeline = [{'$listSessions': {}}];
         function listSessions() {
@@ -63,7 +63,7 @@
         assertErrorCode(config.system.sessions, user1Pipeline, ErrorCodes.Unauthorized);
 
         if (true) {
-            // TODO SERVER-29141: Support forcing pipelines to run on mongos
+            // TODO SERVER-29141: Support forcing pipelines to run on mongers
             return;
         }
         function listLocalSessions() {
@@ -72,14 +72,14 @@
         assert.eq(listLocalSessions().toArray().length, 0);
     }
 
-    const mongod = MongoRunner.runMongod({auth: ""});
-    runListSessionsTest(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod({auth: ""});
+    runListSessionsTest(mongerd);
+    MongoRunner.stopMongod(mongerd);
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     const st = new ShardingTest({
         shards: 1,
-        mongos: 1,
+        mongers: 1,
         config: 1,
         other: {keyFile: 'jstests/libs/key1', shardAsReplicaSet: false}
     });

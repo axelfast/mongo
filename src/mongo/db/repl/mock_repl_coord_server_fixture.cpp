@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/client.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/mock_repl_coord_server_fixture.h"
-#include "mongo/db/repl/oplog.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/replication_consistency_markers_mock.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/replication_recovery_mock.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/service_context_d_test_fixture.h"
+#include "monger/db/client.h"
+#include "monger/db/curop.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/mock_repl_coord_server_fixture.h"
+#include "monger/db/repl/oplog.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/replication_consistency_markers_mock.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/replication_recovery_mock.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/service_context.h"
+#include "monger/db/service_context_d_test_fixture.h"
 
-namespace mongo {
+namespace monger {
 
 void MockReplCoordServerFixture::setUp() {
     ServiceContextMongoDTest::setUp();
@@ -109,4 +109,4 @@ OperationContext* MockReplCoordServerFixture::opCtx() {
     return _opCtx.get();
 }
 
-}  // namespace mongo
+}  // namespace monger

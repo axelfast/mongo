@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/repl_set_command.h"
+#include "monger/db/repl/repl_set_command.h"
 
-#include "mongo/db/auth/authorization_session.h"
+#include "monger/db/auth/authorization_session.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 Status ReplSetCommand::checkAuthForCommand(Client* client,
@@ -47,4 +47,4 @@ Status ReplSetCommand::checkAuthForCommand(Client* client,
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

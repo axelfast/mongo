@@ -1,6 +1,6 @@
-// mongo.js
+// monger.js
 
-// Defined in mongo.cpp
+// Defined in monger.cpp
 
 if (!Mongo.prototype) {
     throw Error("Mongo.prototype not defined");
@@ -23,8 +23,8 @@ if (!Mongo.prototype.update)
         throw Error("update not implemented");
     };
 
-if (typeof mongoInject == "function") {
-    mongoInject(Mongo.prototype);
+if (typeof mongerInject == "function") {
+    mongerInject(Mongo.prototype);
 }
 
 Mongo.prototype.setSlaveOk = function(value) {
@@ -113,7 +113,7 @@ Mongo.prototype.getDBs = function(driverSession = this._getDefaultSession(),
             //   * nameOnly must not be false as we can't infer size information.
             //   * authorizedDatabases must not be false as those are the only DBs we can infer.
             // Note that if the above are valid and we get Unauthorized, that also means
-            // that we MUST be talking to a pre-4.0 mongod.
+            // that we MUST be talking to a pre-4.0 mongerd.
             //
             // Like the server response mode, this path will return a simple list of
             // names if nameOnly is specified as true.
@@ -249,7 +249,7 @@ Mongo.prototype.getReadPrefTagSet = function() {
     return this._readPrefTagSet;
 };
 
-// Returns a readPreference object of the type expected by mongos.
+// Returns a readPreference object of the type expected by mongers.
 Mongo.prototype.getReadPref = function() {
     var obj = {}, mode, tagSet;
     if (typeof(mode = this.getReadPrefMode()) === "string") {
@@ -301,7 +301,7 @@ connect = function(url, user, pass) {
     // Validate connection string "url" as "hostName:portNumber/databaseName"
     //                                  or "hostName/databaseName"
     //                                  or "databaseName"
-    //                                  or full mongo uri.
+    //                                  or full monger uri.
     var urlType = typeof url;
     if (urlType == "undefined") {
         throw Error("Missing connection string");
@@ -315,19 +315,19 @@ connect = function(url, user, pass) {
         throw Error("Empty connection string");
     }
 
-    if (!url.startsWith("mongodb://") && !url.startsWith("mongodb+srv://")) {
+    if (!url.startsWith("mongerdb://") && !url.startsWith("mongerdb+srv://")) {
         const colon = url.lastIndexOf(":");
         const slash = url.lastIndexOf("/");
         if (url.split("/").length > 1) {
             url = url.substring(0, slash).replace(/\//g, "%2F") + url.substring(slash);
         }
         if (slash == 0) {
-            throw Error("Failed to parse mongodb:// URL: " + url);
+            throw Error("Failed to parse mongerdb:// URL: " + url);
         }
         if (slash == -1 && colon == -1) {
-            url = "mongodb://127.0.0.1:27017/" + url;
+            url = "mongerdb://127.0.0.1:27017/" + url;
         } else if (slash != -1) {
-            url = "mongodb://" + url;
+            url = "mongerdb://" + url;
         }
     }
 
@@ -341,7 +341,7 @@ connect = function(url, user, pass) {
     try {
         var m = new Mongo(url);
     } catch (e) {
-        if (url.indexOf(".mongodb.net") != -1) {
+        if (url.indexOf(".mongerdb.net") != -1) {
             print("\n\n*** It looks like this is a MongoDB Atlas cluster. Please ensure that your" +
                   " IP whitelist allows connections from your network.\n\n");
         }

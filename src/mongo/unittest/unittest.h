@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,7 +30,7 @@
 /*
  * A C++ unit testing framework.
  *
- * For examples of basic usage, see mongo/unittest/unittest_test.cpp.
+ * For examples of basic usage, see monger/unittest/unittest_test.cpp.
  */
 
 #pragma once
@@ -44,18 +44,18 @@
 #include <utility>
 #include <vector>
 
-#include "mongo/base/status_with.h"
-#include "mongo/logger/logstream_builder.h"
-#include "mongo/logger/message_log_domain.h"
-#include "mongo/unittest/bson_test_util.h"
-#include "mongo/unittest/unittest_helpers.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/status_with.h"
+#include "monger/logger/logstream_builder.h"
+#include "monger/logger/message_log_domain.h"
+#include "monger/unittest/bson_test_util.h"
+#include "monger/unittest/unittest_helpers.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
 /**
  * Fail unconditionally, reporting the given message.
  */
-#define FAIL(MESSAGE) ::mongo::unittest::TestAssertionFailure(__FILE__, __LINE__, MESSAGE).stream()
+#define FAIL(MESSAGE) ::monger::unittest::TestAssertionFailure(__FILE__, __LINE__, MESSAGE).stream()
 
 /**
  * Fails unless "EXPRESSION" is true.
@@ -73,12 +73,12 @@
 /**
  * Asserts that a Status code is OK.
  */
-#define ASSERT_OK(EXPRESSION) ASSERT_EQUALS(::mongo::Status::OK(), (EXPRESSION))
+#define ASSERT_OK(EXPRESSION) ASSERT_EQUALS(::monger::Status::OK(), (EXPRESSION))
 
 /**
  * Asserts that a status code is anything but OK.
  */
-#define ASSERT_NOT_OK(EXPRESSION) ASSERT_NOT_EQUALS(::mongo::Status::OK(), (EXPRESSION))
+#define ASSERT_NOT_OK(EXPRESSION) ASSERT_NOT_EQUALS(::monger::Status::OK(), (EXPRESSION))
 
 /*
  * Binary comparison assertions.
@@ -104,7 +104,7 @@
  */
 #define ASSERT_COMPARISON_(OP, a, b)                                                           \
     if (auto ca =                                                                              \
-            ::mongo::unittest::ComparisonAssertion<::mongo::unittest::ComparisonOp::OP>::make( \
+            ::monger::unittest::ComparisonAssertion<::monger::unittest::ComparisonOp::OP>::make( \
                 __FILE__, __LINE__, #a, #b, a, b))                                             \
     ca.failure().stream()
 
@@ -119,8 +119,8 @@
  */
 #define ASSERT_IDENTITY(INPUT, FUNCTION)                                                        \
     [&](auto&& v) {                                                                             \
-        if (auto ca = ::mongo::unittest::ComparisonAssertion<                                   \
-                ::mongo::unittest::ComparisonOp::kEq>::make(__FILE__,                           \
+        if (auto ca = ::monger::unittest::ComparisonAssertion<                                   \
+                ::monger::unittest::ComparisonOp::kEq>::make(__FILE__,                           \
                                                             __LINE__,                           \
                                                             #INPUT,                             \
                                                             #FUNCTION "(" #INPUT ")",           \
@@ -146,8 +146,8 @@
  */
 #define ASSERT_THROWS_WHAT(STATEMENT, EXCEPTION_TYPE, EXPECTED_WHAT)                     \
     ASSERT_THROWS_WITH_CHECK(STATEMENT, EXCEPTION_TYPE, ([&](const EXCEPTION_TYPE& ex) { \
-                                 ASSERT_EQ(::mongo::StringData(ex.what()),               \
-                                           ::mongo::StringData(EXPECTED_WHAT));          \
+                                 ASSERT_EQ(::monger::StringData(ex.what()),               \
+                                           ::monger::StringData(EXPECTED_WHAT));          \
                              }))
 
 /**
@@ -167,8 +167,8 @@
 #define ASSERT_THROWS_CODE_AND_WHAT(STATEMENT, EXCEPTION_TYPE, EXPECTED_CODE, EXPECTED_WHAT) \
     ASSERT_THROWS_WITH_CHECK(STATEMENT, EXCEPTION_TYPE, ([&](const EXCEPTION_TYPE& ex) {     \
                                  ASSERT_EQ(ex.toStatus().code(), EXPECTED_CODE);             \
-                                 ASSERT_EQ(::mongo::StringData(ex.what()),                   \
-                                           ::mongo::StringData(EXPECTED_WHAT));              \
+                                 ASSERT_EQ(::monger::StringData(ex.what()),                   \
+                                           ::monger::StringData(EXPECTED_WHAT));              \
                              }))
 
 
@@ -236,10 +236,10 @@
         std::string myString(BIG_STRING);                                                       \
         std::string myContains(CONTAINS);                                                       \
         if (myString.find(myContains) == std::string::npos) {                                   \
-            ::mongo::str::stream err;                                                           \
+            ::monger::str::stream err;                                                           \
             err << "Expected to find " #CONTAINS " (" << myContains << ") in " #BIG_STRING " (" \
                 << myString << ")";                                                             \
-            ::mongo::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream();          \
+            ::monger::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream();          \
         }                                                                                       \
     } while (false)
 
@@ -248,10 +248,10 @@
         std::string myString(BIG_STRING);                                                       \
         std::string myOmits(OMITS);                                                             \
         if (myString.find(myOmits) != std::string::npos) {                                      \
-            ::mongo::str::stream err;                                                           \
+            ::monger::str::stream err;                                                           \
             err << "Did not expect to find " #OMITS " (" << myOmits << ") in " #BIG_STRING " (" \
                 << myString << ")";                                                             \
-            ::mongo::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream();          \
+            ::monger::unittest::TestAssertionFailure(__FILE__, __LINE__, err).stream();          \
         }                                                                                       \
     } while (false)
 
@@ -265,14 +265,14 @@
  * }
  */
 #define TEST(CASE_NAME, TEST_NAME)                                                                 \
-    class UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME) : public ::mongo::unittest::Test { \
+    class UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME) : public ::monger::unittest::Test { \
     private:                                                                                       \
         virtual void _doTest();                                                                    \
                                                                                                    \
         static const RegistrationAgent<UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)>      \
             _agent;                                                                                \
     };                                                                                             \
-    const ::mongo::unittest::Test::RegistrationAgent<UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME,    \
+    const ::monger::unittest::Test::RegistrationAgent<UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME,    \
                                                                                      TEST_NAME)>   \
         UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)::_agent(#CASE_NAME, #TEST_NAME);     \
     void UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME)::_doTest()
@@ -283,7 +283,7 @@
  *
  * Usage:
  *
- * class FixtureClass : public mongo::unittest::Test {
+ * class FixtureClass : public monger::unittest::Test {
  * protected:
  *   int myVar;
  *   void setUp() { myVar = 10; }
@@ -301,7 +301,7 @@
         static const RegistrationAgent<UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)>   \
             _agent;                                                                                \
     };                                                                                             \
-    const ::mongo::unittest::Test::RegistrationAgent<UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, \
+    const ::monger::unittest::Test::RegistrationAgent<UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, \
                                                                                      TEST_NAME)>   \
         UNIT_TEST_DETAIL_TEST_TYPE_NAME(FIXTURE_NAME, TEST_NAME)::_agent(#FIXTURE_NAME,            \
                                                                          #TEST_NAME);              \
@@ -314,7 +314,7 @@
 #define UNIT_TEST_DETAIL_TEST_TYPE_NAME(CASE_NAME, TEST_NAME) \
     UnitTest_CaseName##CASE_NAME##TestName##TEST_NAME
 
-namespace mongo {
+namespace monger {
 namespace unittest {
 
 class Result;
@@ -325,8 +325,8 @@ void setupTestLogger();
  * Gets a LogstreamBuilder for logging to the unittest log domain, which may have
  * different target from the global log domain.
  */
-mongo::logger::LogstreamBuilder log();
-mongo::logger::LogstreamBuilder warning();
+monger::logger::LogstreamBuilder log();
+monger::logger::LogstreamBuilder warning();
 
 /**
  * Type representing the function composing a test.
@@ -797,4 +797,4 @@ T assertGet(StatusWith<T>&& swt) {
 std::vector<std::string> getAllSuiteNames();
 
 }  // namespace unittest
-}  // namespace mongo
+}  // namespace monger

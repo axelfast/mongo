@@ -29,45 +29,45 @@
         }
     });
 
-    const mongosDB = st.s0.getDB(jsTestName());
-    const mongosColl = mongosDB[jsTestName()];
+    const mongersDB = st.s0.getDB(jsTestName());
+    const mongersColl = mongersDB[jsTestName()];
 
-    let cst = new ChangeStreamTest(mongosDB);
+    let cst = new ChangeStreamTest(mongersDB);
 
-    function testResume(mongosColl, collToWatch) {
-        mongosColl.drop();
+    function testResume(mongersColl, collToWatch) {
+        mongersColl.drop();
 
         // Enable sharding on the test DB and ensure its primary is st.shard0.shardName.
-        assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
-        st.ensurePrimaryShard(mongosDB.getName(), st.rs0.getURL());
+        assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
+        st.ensurePrimaryShard(mongersDB.getName(), st.rs0.getURL());
 
         // Shard the test collection on _id.
         assert.commandWorked(
-            mongosDB.adminCommand({shardCollection: mongosColl.getFullName(), key: {_id: 1}}));
+            mongersDB.adminCommand({shardCollection: mongersColl.getFullName(), key: {_id: 1}}));
 
         // Split the collection into 2 chunks: [MinKey, 0), [0, MaxKey].
         assert.commandWorked(
-            mongosDB.adminCommand({split: mongosColl.getFullName(), middle: {_id: 0}}));
+            mongersDB.adminCommand({split: mongersColl.getFullName(), middle: {_id: 0}}));
 
         // Move the [0, MaxKey] chunk to st.shard1.shardName.
-        assert.commandWorked(mongosDB.adminCommand(
-            {moveChunk: mongosColl.getFullName(), find: {_id: 1}, to: st.rs1.getURL()}));
+        assert.commandWorked(mongersDB.adminCommand(
+            {moveChunk: mongersColl.getFullName(), find: {_id: 1}, to: st.rs1.getURL()}));
 
         // Write a document to each chunk.
-        assert.writeOK(mongosColl.insert({_id: -1}, {writeConcern: {w: "majority"}}));
-        assert.writeOK(mongosColl.insert({_id: 1}, {writeConcern: {w: "majority"}}));
+        assert.writeOK(mongersColl.insert({_id: -1}, {writeConcern: {w: "majority"}}));
+        assert.writeOK(mongersColl.insert({_id: 1}, {writeConcern: {w: "majority"}}));
 
         let changeStream = cst.startWatchingChanges(
             {pipeline: [{$changeStream: {}}], collection: collToWatch, includeToken: true});
 
         // We awaited the replication of the first writes, so the change stream shouldn't return
         // them.
-        assert.writeOK(mongosColl.update({_id: -1}, {$set: {updated: true}}));
+        assert.writeOK(mongersColl.update({_id: -1}, {$set: {updated: true}}));
 
         // Record current time to resume a change stream later in the test.
-        const resumeTimeFirstUpdate = mongosDB.runCommand({isMaster: 1}).$clusterTime.clusterTime;
+        const resumeTimeFirstUpdate = mongersDB.runCommand({isMaster: 1}).$clusterTime.clusterTime;
 
-        assert.writeOK(mongosColl.update({_id: 1}, {$set: {updated: true}}));
+        assert.writeOK(mongersColl.update({_id: 1}, {$set: {updated: true}}));
 
         // Test that we see the two writes, and remember their resume tokens.
         let next = cst.getOneChange(changeStream);
@@ -82,8 +82,8 @@
 
         // Write some additional documents, then test that it's possible to resume after the first
         // update.
-        assert.writeOK(mongosColl.insert({_id: -2}, {writeConcern: {w: "majority"}}));
-        assert.writeOK(mongosColl.insert({_id: 2}, {writeConcern: {w: "majority"}}));
+        assert.writeOK(mongersColl.insert({_id: -2}, {writeConcern: {w: "majority"}}));
+        assert.writeOK(mongersColl.insert({_id: 2}, {writeConcern: {w: "majority"}}));
 
         changeStream = cst.startWatchingChanges({
             pipeline: [{$changeStream: {resumeAfter: resumeTokenFromFirstUpdateOnShard0}}],
@@ -115,20 +115,20 @@
 
         while (!oplogIsRolledOver()) {
             let idVal = 100 + (i++);
-            assert.writeOK(mongosColl.insert({_id: idVal, long_str: largeStr},
+            assert.writeOK(mongersColl.insert({_id: idVal, long_str: largeStr},
                                              {writeConcern: {w: "majority"}}));
             sleep(100);
         }
 
         ChangeStreamTest.assertChangeStreamThrowsCode({
-            db: mongosDB,
+            db: mongersDB,
             collName: collToWatch,
             pipeline: [{$changeStream: {resumeAfter: resumeTokenFromFirstUpdateOnShard1}}],
             expectedCode: 40576
         });
 
         ChangeStreamTest.assertChangeStreamThrowsCode({
-            db: mongosDB,
+            db: mongersDB,
             collName: collToWatch,
             pipeline: [{$changeStream: {startAtOperationTime: resumeTimeFirstUpdate}}],
             expectedCode: 40576
@@ -140,40 +140,40 @@
         // 'resumeTokenFromFirstUpdateOnShard0' is still present on shard 0, but shard 1 doesn't
         // have any changes earlier than that, so won't be able to resume.
         ChangeStreamTest.assertChangeStreamThrowsCode({
-            db: mongosDB,
+            db: mongersDB,
             collName: collToWatch,
             pipeline: [{$changeStream: {resumeAfter: resumeTokenFromFirstUpdateOnShard0}}],
             expectedCode: 40576
         });
 
         // Drop the collection.
-        assert(mongosColl.drop());
+        assert(mongersColl.drop());
 
         // Shard the test collection on shardKey.
         assert.commandWorked(
-            mongosDB.adminCommand({shardCollection: mongosColl.getFullName(), key: {shardKey: 1}}));
+            mongersDB.adminCommand({shardCollection: mongersColl.getFullName(), key: {shardKey: 1}}));
 
         // Split the collection into 2 chunks: [MinKey, 50), [50, MaxKey].
         assert.commandWorked(
-            mongosDB.adminCommand({split: mongosColl.getFullName(), middle: {shardKey: 50}}));
+            mongersDB.adminCommand({split: mongersColl.getFullName(), middle: {shardKey: 50}}));
 
         // Move the [50, MaxKey] chunk to st.shard1.shardName.
-        assert.commandWorked(mongosDB.adminCommand(
-            {moveChunk: mongosColl.getFullName(), find: {shardKey: 51}, to: st.rs1.getURL()}));
+        assert.commandWorked(mongersDB.adminCommand(
+            {moveChunk: mongersColl.getFullName(), find: {shardKey: 51}, to: st.rs1.getURL()}));
 
         const numberOfDocs = 100;
 
         // Insert test documents.
         for (let counter = 0; counter < numberOfDocs / 5; ++counter) {
-            assert.writeOK(mongosColl.insert({_id: "abcd" + counter, shardKey: counter * 5 + 0},
+            assert.writeOK(mongersColl.insert({_id: "abcd" + counter, shardKey: counter * 5 + 0},
                                              {writeConcern: {w: "majority"}}));
-            assert.writeOK(mongosColl.insert({_id: "Abcd" + counter, shardKey: counter * 5 + 1},
+            assert.writeOK(mongersColl.insert({_id: "Abcd" + counter, shardKey: counter * 5 + 1},
                                              {writeConcern: {w: "majority"}}));
-            assert.writeOK(mongosColl.insert({_id: "aBcd" + counter, shardKey: counter * 5 + 2},
+            assert.writeOK(mongersColl.insert({_id: "aBcd" + counter, shardKey: counter * 5 + 2},
                                              {writeConcern: {w: "majority"}}));
-            assert.writeOK(mongosColl.insert({_id: "abCd" + counter, shardKey: counter * 5 + 3},
+            assert.writeOK(mongersColl.insert({_id: "abCd" + counter, shardKey: counter * 5 + 3},
                                              {writeConcern: {w: "majority"}}));
-            assert.writeOK(mongosColl.insert({_id: "abcD" + counter, shardKey: counter * 5 + 4},
+            assert.writeOK(mongersColl.insert({_id: "abcD" + counter, shardKey: counter * 5 + 4},
                                              {writeConcern: {w: "majority"}}));
         }
 
@@ -181,7 +181,7 @@
             {pipeline: [{$changeStream: {}}], collection: collToWatch, includeToken: true});
 
         // Perform the multi-update that will induce timestamp collisions
-        assert.writeOK(mongosColl.update({}, {$set: {updated: true}}, {multi: true}));
+        assert.writeOK(mongersColl.update({}, {$set: {updated: true}}, {multi: true}));
 
         // Loop over documents and open inner change streams resuming from a specified position.
         // Note we skip the last document as it does not have the next document so we would
@@ -201,10 +201,10 @@
     }
 
     // Test change stream on a single collection.
-    testResume(mongosColl, mongosColl.getName());
+    testResume(mongersColl, mongersColl.getName());
 
     // Test change stream on all collections.
-    testResume(mongosColl, 1);
+    testResume(mongersColl, 1);
 
     cst.cleanUp();
 

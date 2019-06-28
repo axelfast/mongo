@@ -13,10 +13,10 @@ import (
 	"path/filepath"
 	"sync/atomic"
 
-	"github.com/mongodb/mongo-tools-common/intents"
-	"github.com/mongodb/mongo-tools-common/log"
-	"github.com/mongodb/mongo-tools-common/util"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/mongerdb/monger-tools-common/intents"
+	"github.com/mongerdb/monger-tools-common/log"
+	"github.com/mongerdb/monger-tools-common/util"
+	"go.mongerdb.org/monger-driver/bson"
 )
 
 //MetadataFile implements intents.file
@@ -44,7 +44,7 @@ func (md *MetadataFile) Pos() int64 {
 }
 
 // DirLike represents the group of methods done on directories and files in dump directories,
-// or in archives, when mongorestore is figuring out what intents to create.
+// or in archives, when mongerrestore is figuring out what intents to create.
 type DirLike interface {
 	Name() string
 	Path() string
@@ -79,7 +79,7 @@ func (prelude *Prelude) Read(in io.Reader) error {
 	)
 
 	if readMagicNumber != MagicNumber {
-		return fmt.Errorf("stream or file does not appear to be a mongodump archive")
+		return fmt.Errorf("stream or file does not appear to be a mongerdump archive")
 	}
 
 	if prelude.NamespaceMetadatasByDB != nil {

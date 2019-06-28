@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/db/update/path_support.h"
+#include "monger/db/update/path_support.h"
 
-#include "mongo/base/string_data.h"
-#include "mongo/bson/mutable/algorithm.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/str.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/mutable/algorithm.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace pathsupport {
 
 using std::string;
@@ -170,7 +170,7 @@ StatusWith<mutablebson::Element> createPathAt(const FieldRef& prefix,
     // we need padding.
     size_t i = idxFound;
     bool inArray = false;
-    if (elemFound.getType() == mongo::Array) {
+    if (elemFound.getType() == monger::Array) {
         boost::optional<size_t> newIdx = str::parseUnsignedBase10Integer(prefix.getPart(idxFound));
         if (!newIdx) {
             return Status(ErrorCodes::PathNotViable,
@@ -437,4 +437,4 @@ Status addEqualitiesToDoc(const EqualityMatches& equalities, mutablebson::Docume
 }
 
 }  // namespace pathsupport
-}  // namespace mongo
+}  // namespace monger

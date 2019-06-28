@@ -18,16 +18,16 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
+	"go.mongerdb.org/monger-driver/bson"
+	"go.mongerdb.org/monger-driver/bson/primitive"
+	"go.mongerdb.org/monger-driver/monger"
+	"go.mongerdb.org/monger-driver/monger/options"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
 )
 
-func requireCursorLength(t *testing.T, cursor *mongo.Cursor, length int) {
+func requireCursorLength(t *testing.T, cursor *monger.Cursor, length int) {
 	i := 0
 	for cursor.Next(context.Background()) {
 		i++
@@ -46,7 +46,7 @@ func containsKey(doc bson.Raw, key ...string) bool {
 }
 
 // InsertExamples contains examples for insert operations.
-func InsertExamples(t *testing.T, db *mongo.Database) {
+func InsertExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_insert")
 
 	err := coll.Drop(context.Background())
@@ -135,7 +135,7 @@ func InsertExamples(t *testing.T, db *mongo.Database) {
 }
 
 // QueryToplevelFieldsExamples contains examples for querying top-level fields.
-func QueryToplevelFieldsExamples(t *testing.T, db *mongo.Database) {
+func QueryToplevelFieldsExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_query_top")
 
 	err := coll.Drop(context.Background())
@@ -303,7 +303,7 @@ func QueryToplevelFieldsExamples(t *testing.T, db *mongo.Database) {
 }
 
 // QueryEmbeddedDocumentsExamples contains examples for querying embedded document fields.
-func QueryEmbeddedDocumentsExamples(t *testing.T, db *mongo.Database) {
+func QueryEmbeddedDocumentsExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_query_embedded")
 
 	err := coll.Drop(context.Background())
@@ -464,7 +464,7 @@ func QueryEmbeddedDocumentsExamples(t *testing.T, db *mongo.Database) {
 }
 
 // QueryArraysExamples contains examples for querying array fields.
-func QueryArraysExamples(t *testing.T, db *mongo.Database) {
+func QueryArraysExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_query_array")
 
 	err := coll.Drop(context.Background())
@@ -650,7 +650,7 @@ func QueryArraysExamples(t *testing.T, db *mongo.Database) {
 }
 
 // QueryArrayEmbeddedDocumentsExamples contains examples for querying fields with arrays and embedded documents.
-func QueryArrayEmbeddedDocumentsExamples(t *testing.T, db *mongo.Database) {
+func QueryArrayEmbeddedDocumentsExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_query_array_embedded")
 
 	err := coll.Drop(context.Background())
@@ -879,7 +879,7 @@ func QueryArrayEmbeddedDocumentsExamples(t *testing.T, db *mongo.Database) {
 }
 
 // QueryNullMissingFieldsExamples contains examples for querying fields that are null or missing.
-func QueryNullMissingFieldsExamples(t *testing.T, db *mongo.Database) {
+func QueryNullMissingFieldsExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_query_null_missing")
 
 	err := coll.Drop(context.Background())
@@ -957,7 +957,7 @@ func QueryNullMissingFieldsExamples(t *testing.T, db *mongo.Database) {
 }
 
 // ProjectionExamples contains examples for specifying projections in find operations.
-func ProjectionExamples(t *testing.T, db *mongo.Database) {
+func ProjectionExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_project")
 
 	err := coll.Drop(context.Background())
@@ -1341,7 +1341,7 @@ func ProjectionExamples(t *testing.T, db *mongo.Database) {
 }
 
 // UpdateExamples contains examples of update operations.
-func UpdateExamples(t *testing.T, db *mongo.Database) {
+func UpdateExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_update")
 
 	err := coll.Drop(context.Background())
@@ -1621,7 +1621,7 @@ func UpdateExamples(t *testing.T, db *mongo.Database) {
 }
 
 // DeleteExamples contains examples of delete operations.
-func DeleteExamples(t *testing.T, db *mongo.Database) {
+func DeleteExamples(t *testing.T, db *monger.Database) {
 	coll := db.Collection("inventory_delete")
 
 	err := coll.Drop(context.Background())
@@ -1740,11 +1740,11 @@ var log = logger.New(ioutil.Discard, "", logger.LstdFlags)
 // Start Transactions Intro Example 1
 
 // UpdateEmployeeInfo is an example function demonstrating transactions.
-func UpdateEmployeeInfo(ctx context.Context, client *mongo.Client) error {
+func UpdateEmployeeInfo(ctx context.Context, client *monger.Client) error {
 	employees := client.Database("hr").Collection("employees")
 	events := client.Database("reporting").Collection("events")
 
-	return client.UseSession(ctx, func(sctx mongo.SessionContext) error {
+	return client.UseSession(ctx, func(sctx monger.SessionContext) error {
 		err := sctx.StartTransaction(options.Transaction().
 			SetReadConcern(readconcern.Snapshot()).
 			SetWriteConcern(writeconcern.New(writeconcern.WMajority())),
@@ -1771,7 +1771,7 @@ func UpdateEmployeeInfo(ctx context.Context, client *mongo.Client) error {
 			switch e := err.(type) {
 			case nil:
 				return nil
-			case mongo.CommandError:
+			case monger.CommandError:
 				if e.HasErrorLabel("UnknownTransactionCommitResult") {
 					log.Println("UnknownTransactionCommitResult, retrying commit operation...")
 					continue
@@ -1791,7 +1791,7 @@ func UpdateEmployeeInfo(ctx context.Context, client *mongo.Client) error {
 // Start Transactions Retry Example 1
 
 // RunTransactionWithRetry is an example function demonstrating transaction retry logic.
-func RunTransactionWithRetry(sctx mongo.SessionContext, txnFn func(mongo.SessionContext) error) error {
+func RunTransactionWithRetry(sctx monger.SessionContext, txnFn func(monger.SessionContext) error) error {
 	for {
 		err := txnFn(sctx) // Performs transaction.
 		if err == nil {
@@ -1801,7 +1801,7 @@ func RunTransactionWithRetry(sctx mongo.SessionContext, txnFn func(mongo.Session
 		log.Println("Transaction aborted. Caught exception during transaction.")
 
 		// If transient error, retry the whole transaction
-		if cmdErr, ok := err.(mongo.CommandError); ok && cmdErr.HasErrorLabel("TransientTransactionError") {
+		if cmdErr, ok := err.(monger.CommandError); ok && cmdErr.HasErrorLabel("TransientTransactionError") {
 			log.Println("TransientTransactionError, retrying transaction...")
 			continue
 		}
@@ -1814,14 +1814,14 @@ func RunTransactionWithRetry(sctx mongo.SessionContext, txnFn func(mongo.Session
 // Start Transactions Retry Example 2
 
 // CommitWithRetry is an example function demonstrating transaction commit with retry logic.
-func CommitWithRetry(sctx mongo.SessionContext) error {
+func CommitWithRetry(sctx monger.SessionContext) error {
 	for {
 		err := sctx.CommitTransaction(sctx)
 		switch e := err.(type) {
 		case nil:
 			log.Println("Transaction committed.")
 			return nil
-		case mongo.CommandError:
+		case monger.CommandError:
 			// Can retry commit
 			if e.HasErrorLabel("UnknownTransactionCommitResult") {
 				log.Println("UnknownTransactionCommitResult, retrying commit operation...")
@@ -1839,7 +1839,7 @@ func CommitWithRetry(sctx mongo.SessionContext) error {
 // End Transactions Retry Example 2
 
 // TransactionsExamples contains examples for transaction operations.
-func TransactionsExamples(ctx context.Context, client *mongo.Client) error {
+func TransactionsExamples(ctx context.Context, client *monger.Client) error {
 	_, err := client.Database("hr").Collection("employees").InsertOne(ctx, bson.D{{"pi", 3.14159}})
 	if err != nil {
 		return err
@@ -1858,7 +1858,7 @@ func TransactionsExamples(ctx context.Context, client *mongo.Client) error {
 	}
 	// Start Transactions Retry Example 3
 
-	runTransactionWithRetry := func(sctx mongo.SessionContext, txnFn func(mongo.SessionContext) error) error {
+	runTransactionWithRetry := func(sctx monger.SessionContext, txnFn func(monger.SessionContext) error) error {
 		for {
 			err := txnFn(sctx) // Performs transaction.
 			if err == nil {
@@ -1868,7 +1868,7 @@ func TransactionsExamples(ctx context.Context, client *mongo.Client) error {
 			log.Println("Transaction aborted. Caught exception during transaction.")
 
 			// If transient error, retry the whole transaction
-			if cmdErr, ok := err.(mongo.CommandError); ok && cmdErr.HasErrorLabel("TransientTransactionError") {
+			if cmdErr, ok := err.(monger.CommandError); ok && cmdErr.HasErrorLabel("TransientTransactionError") {
 				log.Println("TransientTransactionError, retrying transaction...")
 				continue
 			}
@@ -1876,14 +1876,14 @@ func TransactionsExamples(ctx context.Context, client *mongo.Client) error {
 		}
 	}
 
-	commitWithRetry := func(sctx mongo.SessionContext) error {
+	commitWithRetry := func(sctx monger.SessionContext) error {
 		for {
 			err := sctx.CommitTransaction(sctx)
 			switch e := err.(type) {
 			case nil:
 				log.Println("Transaction committed.")
 				return nil
-			case mongo.CommandError:
+			case monger.CommandError:
 				// Can retry commit
 				if e.HasErrorLabel("UnknownTransactionCommitResult") {
 					log.Println("UnknownTransactionCommitResult, retrying commit operation...")
@@ -1899,7 +1899,7 @@ func TransactionsExamples(ctx context.Context, client *mongo.Client) error {
 	}
 
 	// Updates two collections in a transaction.
-	updateEmployeeInfo := func(sctx mongo.SessionContext) error {
+	updateEmployeeInfo := func(sctx monger.SessionContext) error {
 		employees := client.Database("hr").Collection("employees")
 		events := client.Database("reporting").Collection("events")
 
@@ -1929,7 +1929,7 @@ func TransactionsExamples(ctx context.Context, client *mongo.Client) error {
 
 	return client.UseSessionWithOptions(
 		ctx, options.Session().SetDefaultReadPreference(readpref.Primary()),
-		func(sctx mongo.SessionContext) error {
+		func(sctx monger.SessionContext) error {
 			return runTransactionWithRetry(sctx, updateEmployeeInfo)
 		},
 	)
@@ -1938,7 +1938,7 @@ func TransactionsExamples(ctx context.Context, client *mongo.Client) error {
 // End Transactions Retry Example 3
 
 // ChangeStreamExamples contains examples of changestream operations.
-func ChangeStreamExamples(t *testing.T, db *mongo.Database) {
+func ChangeStreamExamples(t *testing.T, db *monger.Database) {
 	ctx := context.Background()
 
 	coll := db.Collection("inventory_changestream")
@@ -1951,7 +1951,7 @@ func ChangeStreamExamples(t *testing.T, db *mongo.Database) {
 
 	var stop int32
 
-	doInserts := func(coll *mongo.Collection) {
+	doInserts := func(coll *monger.Collection) {
 		for atomic.LoadInt32(&stop) == 0 {
 			_, err = coll.InsertOne(ctx, bson.D{{"x", 1}})
 			time.Sleep(10 * time.Millisecond)
@@ -1964,7 +1964,7 @@ func ChangeStreamExamples(t *testing.T, db *mongo.Database) {
 	{
 		// Start Changestream Example 1
 
-		cs, err := coll.Watch(ctx, mongo.Pipeline{})
+		cs, err := coll.Watch(ctx, monger.Pipeline{})
 		require.NoError(t, err)
 		defer cs.Close(ctx)
 
@@ -1980,7 +1980,7 @@ func ChangeStreamExamples(t *testing.T, db *mongo.Database) {
 	{
 		// Start Changestream Example 2
 
-		cs, err := coll.Watch(ctx, mongo.Pipeline{}, options.ChangeStream().SetFullDocument(options.UpdateLookup))
+		cs, err := coll.Watch(ctx, monger.Pipeline{}, options.ChangeStream().SetFullDocument(options.UpdateLookup))
 		require.NoError(t, err)
 		defer cs.Close(ctx)
 
@@ -1995,7 +1995,7 @@ func ChangeStreamExamples(t *testing.T, db *mongo.Database) {
 	}
 
 	{
-		original, err := coll.Watch(ctx, mongo.Pipeline{})
+		original, err := coll.Watch(ctx, monger.Pipeline{})
 		require.NoError(t, err)
 		defer original.Close(ctx)
 
@@ -2006,7 +2006,7 @@ func ChangeStreamExamples(t *testing.T, db *mongo.Database) {
 		// Start Changestream Example 3
 		resumeToken := next.Lookup("_id").Document()
 
-		cs, err := coll.Watch(ctx, mongo.Pipeline{}, options.ChangeStream().SetResumeAfter(resumeToken))
+		cs, err := coll.Watch(ctx, monger.Pipeline{}, options.ChangeStream().SetResumeAfter(resumeToken))
 		require.NoError(t, err)
 		defer cs.Close(ctx)
 
@@ -2022,7 +2022,7 @@ func ChangeStreamExamples(t *testing.T, db *mongo.Database) {
 
 	{
 		// Start Changestream Example 4
-		pipeline := mongo.Pipeline{bson.D{{"$match", bson.D{{"$or",
+		pipeline := monger.Pipeline{bson.D{{"$match", bson.D{{"$or",
 			bson.A{
 				bson.D{{"fullDocument.username", "alice"}},
 				bson.D{{"operationType", "delete"}}}}},

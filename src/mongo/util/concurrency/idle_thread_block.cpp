@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,12 +27,12 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/assert_util.h"
-#include "mongo/util/concurrency/idle_thread_block.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/concurrency/idle_thread_block.h"
 
-namespace mongo {
+namespace monger {
 namespace for_debuggers {
 // This needs external linkage to ensure that debuggers can use it.
 thread_local const char* idleThreadLocation = nullptr;

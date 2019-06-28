@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,17 +34,17 @@
 #include <string>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/catalog/collection_catalog_entry.h"
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/util/future.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/uuid.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/catalog/collection_catalog_entry.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/namespace_string.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/util/future.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Tracks the cross replica set progress of a particular index build identified by a build UUID.
@@ -140,4 +140,4 @@ private:
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

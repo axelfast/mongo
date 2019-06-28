@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <string>
 #include <vector>
 
-#include "mongo/client/connection_string.h"
-#include "mongo/client/query.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/rpc/unique_message.h"
-#include "mongo/stdx/unordered_map.h"
-#include "mongo/util/concurrency/spin_lock.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/query.h"
+#include "monger/db/jsobj.h"
+#include "monger/rpc/unique_message.h"
+#include "monger/stdx/unordered_map.h"
+#include "monger/util/concurrency/spin_lock.h"
 
-namespace mongo {
+namespace monger {
 
 const std::string IdentityNS("local.me");
 const BSONField<std::string> HostField("host");
@@ -58,7 +58,7 @@ public:
 
     /**
      * Creates a new mock server. This can also be setup to work with the
-     * ConnectionString class by using mongo::MockConnRegistry as follows:
+     * ConnectionString class by using monger::MockConnRegistry as follows:
      *
      * ConnectionString::setConnectionHook(MockConnRegistry::get()->getConnStrHook());
      * MockRemoteDBServer server("$a:27017");
@@ -91,7 +91,7 @@ public:
 
     /**
      * Shuts down this server. Any operations on this server with an InstanceID
-     * less than or equal to the current one will throw a mongo::SocketException.
+     * less than or equal to the current one will throw a monger::SocketException.
      * To bring the server up again, use the reboot method.
      */
     void shutdown();
@@ -116,7 +116,7 @@ public:
      * @param cmdName the name of the command
      * @param replyObj the exact reply for the command
      */
-    void setCommandReply(const std::string& cmdName, const mongo::BSONObj& replyObj);
+    void setCommandReply(const std::string& cmdName, const monger::BSONObj& replyObj);
 
     /**
      * Sets the reply for a command.
@@ -128,7 +128,7 @@ public:
      *     that requires different results when calling a method.
      */
     void setCommandReply(const std::string& cmdName,
-                         const std::vector<mongo::BSONObj>& replySequence);
+                         const std::vector<monger::BSONObj>& replySequence);
 
     /**
      * Inserts a single document to this server.
@@ -154,19 +154,19 @@ public:
      * @param ns the namespace to be associated with the uuid.
      * @param uuid the uuid to associate with the namespace.
      */
-    void assignCollectionUuid(const std::string& ns, const mongo::UUID& uuid);
+    void assignCollectionUuid(const std::string& ns, const monger::UUID& uuid);
 
     //
     // DBClientBase methods
     //
     rpc::UniqueReply runCommand(InstanceID id, const OpMsgRequest& request);
 
-    mongo::BSONArray query(InstanceID id,
+    monger::BSONArray query(InstanceID id,
                            const NamespaceStringOrUUID& nsOrUuid,
-                           mongo::Query query = mongo::Query(),
+                           monger::Query query = monger::Query(),
                            int nToReturn = 0,
                            int nToSkip = 0,
-                           const mongo::BSONObj* fieldsToReturn = nullptr,
+                           const monger::BSONObj* fieldsToReturn = nullptr,
                            int queryOptions = 0,
                            int batchSize = 0);
 
@@ -175,7 +175,7 @@ public:
     //
 
     InstanceID getInstanceID() const;
-    mongo::ConnectionString::ConnectionType type() const;
+    monger::ConnectionString::ConnectionType type() const;
     double getSoTimeout() const;
 
     /**
@@ -203,24 +203,24 @@ private:
         /**
          * Creates a new iterator with a deep copy of the vector.
          */
-        CircularBSONIterator(const std::vector<mongo::BSONObj>& replyVector);
-        mongo::BSONObj next();
+        CircularBSONIterator(const std::vector<monger::BSONObj>& replyVector);
+        monger::BSONObj next();
 
     private:
-        std::vector<mongo::BSONObj>::iterator _iter;
-        std::vector<mongo::BSONObj> _replyObjs;
+        std::vector<monger::BSONObj>::iterator _iter;
+        std::vector<monger::BSONObj> _replyObjs;
     };
 
     /**
      * Checks whether the instance of the server is still up.
      *
-     * @throws mongo::SocketException if this server is down
+     * @throws monger::SocketException if this server is down
      */
     void checkIfUp(InstanceID id) const;
 
     typedef stdx::unordered_map<std::string, std::shared_ptr<CircularBSONIterator>> CmdToReplyObj;
     typedef stdx::unordered_map<std::string, std::vector<BSONObj>> MockDataMgr;
-    typedef stdx::unordered_map<mongo::UUID, std::string, UUID::Hash> UUIDMap;
+    typedef stdx::unordered_map<monger::UUID, std::string, UUID::Hash> UUIDMap;
 
     bool _isRunning;
 
@@ -245,6 +245,6 @@ private:
     InstanceID _instanceID;
 
     // protects this entire instance
-    mutable mongo::SpinLock _lock;
+    mutable monger::SpinLock _lock;
 };
-}  // namespace mongo
+}  // namespace monger

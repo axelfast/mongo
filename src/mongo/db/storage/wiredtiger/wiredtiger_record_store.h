@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,19 +34,19 @@
 #include <string>
 #include <wiredtiger.h>
 
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/storage/capped_callback.h"
-#include "mongo/db/storage/kv/kv_prefix.h"
-#include "mongo/db/storage/record_store.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_cursor.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_size_storer.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/fail_point_service.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/storage/capped_callback.h"
+#include "monger/db/storage/kv/kv_prefix.h"
+#include "monger/db/storage/record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_cursor.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_size_storer.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/fail_point_service.h"
 
 /**
  * Either executes the specified operation and returns it's value or randomly throws a write
@@ -61,7 +61,7 @@
 #define WT_READ_CHECK(x) \
     (((MONGO_FAIL_POINT(WTWriteConflictExceptionForReads))) ? (WT_ROLLBACK) : (x))
 
-namespace mongo {
+namespace monger {
 
 class RecoveryUnit;
 class WiredTigerSessionCache;

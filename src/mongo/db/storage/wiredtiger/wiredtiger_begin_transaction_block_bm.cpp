@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,26 +28,26 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <benchmark/benchmark.h>
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/recovery_unit_test_harness.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_kv_engine.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_record_store.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_session_cache.h"
-#include "mongo/db/storage/wiredtiger/wiredtiger_util.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/clock_source_mock.h"
+#include "monger/base/checked_cast.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/recovery_unit_test_harness.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_begin_transaction_block.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_kv_engine.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_record_store.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_recovery_unit.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_session_cache.h"
+#include "monger/db/storage/wiredtiger/wiredtiger_util.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/clock_source_mock.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class WiredTigerConnection {
@@ -122,7 +122,7 @@ void BM_WiredTigerBeginTxnBlock(benchmark::State& state) {
     }
 }
 
-using mongo::WiredTigerBeginTxnBlock;
+using monger::WiredTigerBeginTxnBlock;
 
 template <PrepareConflictBehavior behavior, RoundUpPreparedTimestamps round>
 void BM_WiredTigerBeginTxnBlockWithArgs(benchmark::State& state) {
@@ -164,4 +164,4 @@ BENCHMARK_TEMPLATE(BM_WiredTigerBeginTxnBlockWithArgs,
 BENCHMARK(BM_setTimestamp);
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

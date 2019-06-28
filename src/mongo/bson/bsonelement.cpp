@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault
 
-#include "mongo/bson/bsonelement.h"
+#include "monger/bson/bsonelement.h"
 
 #include <boost/functional/hash.hpp>
 #include <cmath>
 
-#include "mongo/base/compare_numbers.h"
-#include "mongo/base/data_cursor.h"
-#include "mongo/base/parse_number.h"
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/platform/strnlen.h"
-#include "mongo/util/base64.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/string_map.h"
-#include "mongo/util/uuid.h"
+#include "monger/base/compare_numbers.h"
+#include "monger/base/data_cursor.h"
+#include "monger/base/parse_number.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/db/jsobj.h"
+#include "monger/platform/strnlen.h"
+#include "monger/util/base64.h"
+#include "monger/util/duration.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/string_map.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 using std::dec;
 using std::hex;
@@ -71,7 +71,7 @@ void BSONElement::jsonStringStream(JsonStringFormat format,
     if (includeFieldNames)
         s << '"' << str::escape(fieldName()) << "\" : ";
     switch (type()) {
-        case mongo::String:
+        case monger::String:
         case Symbol:
             s << '"' << str::escape(string(valuestr(), valuestrsize() - 1)) << '"';
             break;
@@ -128,7 +128,7 @@ void BSONElement::jsonStringStream(JsonStringFormat format,
             else
                 s << "\" }";
             break;
-        case mongo::Bool:
+        case monger::Bool:
             s << (boolean() ? "true" : "false");
             break;
         case jstNULL:
@@ -144,7 +144,7 @@ void BSONElement::jsonStringStream(JsonStringFormat format,
         case Object:
             embeddedObject().jsonStringStream(format, pretty, false, s);
             break;
-        case mongo::Array: {
+        case monger::Array: {
             if (embeddedObject().isEmpty()) {
                 s << "[]";
                 break;
@@ -187,7 +187,7 @@ void BSONElement::jsonStringStream(JsonStringFormat format,
             s << '"' << valuestr() << "\", ";
             if (format != TenGen)
                 s << "\"$id\" : ";
-            s << '"' << mongo::OID::from(valuestr() + valuestrsize()) << "\" ";
+            s << '"' << monger::OID::from(valuestr() + valuestrsize()) << "\" ";
             if (format == TenGen)
                 s << ')';
             else
@@ -233,7 +233,7 @@ void BSONElement::jsonStringStream(JsonStringFormat format,
             s << "\" }";
             break;
         }
-        case mongo::Date:
+        case monger::Date:
             if (format == Strict) {
                 Date_t d = date();
                 s << "{ \"$date\" : ";
@@ -510,7 +510,7 @@ int BSONElement::compareElements(const BSONElement& l,
     any fields with non-numeric field names.
     */
 std::vector<BSONElement> BSONElement::Array() const {
-    chk(mongo::Array);
+    chk(monger::Array);
     std::vector<BSONElement> v;
     BSONObjIterator i(Obj());
     while (i.more()) {
@@ -796,7 +796,7 @@ void BSONElement::toString(
     switch (type()) {
         case Object:
             return embeddedObject().toString(s, false, full, redactValues, depth + 1);
-        case mongo::Array:
+        case monger::Array:
             return embeddedObject().toString(s, true, full, redactValues, depth + 1);
         default:
             break;
@@ -811,7 +811,7 @@ void BSONElement::toString(
         case EOO:
             s << "EOO";
             break;
-        case mongo::Date:
+        case monger::Date:
             s << "new Date(" << date().toMillisSinceEpoch() << ')';
             break;
         case RegEx: {
@@ -832,7 +832,7 @@ void BSONElement::toString(
         case NumberDecimal:
             s << _numberDecimal().toString();
             break;
-        case mongo::Bool:
+        case monger::Bool:
             s << (boolean() ? "true" : "false");
             break;
         case Undefined:
@@ -859,7 +859,7 @@ void BSONElement::toString(
             }
             break;
         case Symbol:
-        case mongo::String:
+        case monger::String:
             s << '"';
             if (!full && valuestrsize() > 160) {
                 s.write(valuestr(), 150);
@@ -871,7 +871,7 @@ void BSONElement::toString(
             break;
         case DBRef:
             s << "DBRef('" << valuestr() << "',";
-            s << mongo::OID::from(valuestr() + valuestrsize()) << ')';
+            s << monger::OID::from(valuestr() + valuestrsize()) << ')';
             break;
         case jstOID:
             s << "ObjectId('";
@@ -917,7 +917,7 @@ void BSONElement::toString(
 
 std::string BSONElement::_asCode() const {
     switch (type()) {
-        case mongo::String:
+        case monger::String:
         case Code:
             return std::string(valuestr(), valuestrsize() - 1);
         case CodeWScope:
@@ -940,7 +940,7 @@ StringBuilder& operator<<(StringBuilder& s, const BSONElement& e) {
 }
 
 bool BSONElement::coerce(std::string* out) const {
-    if (type() != mongo::String)
+    if (type() != monger::String)
         return false;
     *out = String();
     return true;
@@ -980,7 +980,7 @@ bool BSONElement::coerce(bool* out) const {
 }
 
 bool BSONElement::coerce(std::vector<std::string>* out) const {
-    if (type() != mongo::Array)
+    if (type() != monger::Array)
         return false;
     return Obj().coerceVector<std::string>(out);
 }
@@ -998,4 +998,4 @@ bool BSONObj::coerceVector(std::vector<T>* out) const {
     return true;
 }
 
-}  // namespace mongo
+}  // namespace monger

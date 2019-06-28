@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Powercycle test.
 
-Tests robustness of mongod to survive multiple powercycle events.
+Tests robustness of mongerd to survive multiple powercycle events.
 
 Client & server side powercycle test script.
 
@@ -46,7 +46,7 @@ import zipfile
 import subprocess
 
 import psutil
-import pymongo
+import pymonger
 import requests
 import yaml
 
@@ -560,7 +560,7 @@ def set_windows_bootstatuspolicy():
     return ret, output
 
 
-def install_mongod(bin_dir=None, tarball_url="latest", root_dir=None):
+def install_mongerd(bin_dir=None, tarball_url="latest", root_dir=None):
     """Set up 'root_dir'/bin to contain MongoDB binaries.
 
     If 'bin_dir' is specified, then symlink it to 'root_dir'/bin.
@@ -570,11 +570,11 @@ def install_mongod(bin_dir=None, tarball_url="latest", root_dir=None):
     from 'bin_dir' to 'root_dir'/bin.
     """
 
-    LOGGER.debug("install_mongod: %s %s %s", bin_dir, tarball_url, root_dir)
+    LOGGER.debug("install_mongerd: %s %s %s", bin_dir, tarball_url, root_dir)
     # Create 'root_dir', if it does not exist.
     root_bin_dir = os.path.join(root_dir, "bin")
     if not os.path.isdir(root_dir):
-        LOGGER.info("install_mongod: creating %s", root_dir)
+        LOGGER.info("install_mongerd: creating %s", root_dir)
         os.makedirs(root_dir)
 
     # Symlink the 'bin_dir', if it's specified, to 'root_bin_dir'
@@ -586,11 +586,11 @@ def install_mongod(bin_dir=None, tarball_url="latest", root_dir=None):
         # TODO SERVER-31021: Support all platforms.
         if _IS_WINDOWS:
             # MSI default:
-            # https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-latest-signed.msi
+            # https://fastdl.mongerdb.org/win32/mongerdb-win32-x86_64-2008plus-ssl-latest-signed.msi
             tarball_url = (
-                "https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-latest.zip")
+                "https://fastdl.mongerdb.org/win32/mongerdb-win32-x86_64-2008plus-ssl-latest.zip")
         elif _IS_LINUX:
-            tarball_url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-latest.tgz"
+            tarball_url = "https://fastdl.mongerdb.org/linux/mongerdb-linux-x86_64-latest.tgz"
 
     tarball = os.path.split(urllib.parse.urlsplit(tarball_url).path)[-1]
     download_file(tarball_url, tarball)
@@ -909,8 +909,8 @@ class WindowsService(object):
 
             if ret == winerror.ERROR_BROKEN_PIPE:
                 # win32serviceutil.StopService() returns a "The pipe has been ended" error message
-                # (winerror=109) when stopping the "mongod-powertest" service on
-                # Windows Server 2016 and the underlying mongod process has already exited.
+                # (winerror=109) when stopping the "mongerd-powertest" service on
+                # Windows Server 2016 and the underlying mongerd process has already exited.
                 ret = 0
                 output = f"Assuming service '{self.name}' stopped despite error: {output}"
 
@@ -942,7 +942,7 @@ class PosixService(object):
     """Service control on POSIX systems.
 
     Simulates service control for background processes which fork themselves,
-    i.e., mongod with '--fork'.
+    i.e., mongerd with '--fork'.
     """
 
     def __init__(self, name, bin_path, bin_options):
@@ -993,12 +993,12 @@ class PosixService(object):
 
 
 class MongodControl(object):  # pylint: disable=too-many-instance-attributes
-    """Control mongod process."""
+    """Control mongerd process."""
 
     def __init__(  # pylint: disable=too-many-arguments
             self, bin_dir, db_path, log_path, port, options=None):
         """Initialize MongodControl."""
-        self.process_name = "mongod{}".format(executable_extension())
+        self.process_name = "mongerd{}".format(executable_extension())
 
         self.bin_dir = bin_dir
         if self.bin_dir:
@@ -1010,37 +1010,37 @@ class MongodControl(object):  # pylint: disable=too-many-instance-attributes
 
         self.options_map = parse_options(options)
         self.db_path = db_path
-        self.set_mongod_option("dbpath", db_path)
+        self.set_mongerd_option("dbpath", db_path)
         self.log_path = log_path
-        self.set_mongod_option("logpath", log_path)
-        self.set_mongod_option("logappend")
+        self.set_mongerd_option("logpath", log_path)
+        self.set_mongerd_option("logappend")
         self.port = port
-        self.set_mongod_option("port", port)
-        self.set_mongod_option("bind_ip", "0.0.0.0")
+        self.set_mongerd_option("port", port)
+        self.set_mongerd_option("bind_ip", "0.0.0.0")
         if _IS_WINDOWS:
-            self.set_mongod_option("service")
+            self.set_mongerd_option("service")
             self._service = WindowsService
         else:
-            self.set_mongod_option("fork")
+            self.set_mongerd_option("fork")
             self._service = PosixService
-        # After mongod has been installed, self.bin_path is defined.
+        # After mongerd has been installed, self.bin_path is defined.
         if self.bin_path:
-            self.service = self._service("mongod-powertest", self.bin_path, self.mongod_options())
+            self.service = self._service("mongerd-powertest", self.bin_path, self.mongerd_options())
 
-    def set_mongod_option(self, option, option_value=None, option_form="--"):
-        """Set mongod command line option."""
+    def set_mongerd_option(self, option, option_value=None, option_form="--"):
+        """Set mongerd command line option."""
         self.options_map[option] = (option_value, option_form)
 
-    def get_mongod_option(self, option):
+    def get_mongerd_option(self, option):
         """Return tuple of (value, form)."""
         return self.options_map[option]
 
-    def get_mongod_service(self):
-        """Return the service object used to control mongod."""
+    def get_mongerd_service(self):
+        """Return the service object used to control mongerd."""
         return self.service
 
-    def mongod_options(self):
-        """Return string of mongod options, which can be used when invoking mongod."""
+    def mongerd_options(self):
+        """Return string of mongerd options, which can be used when invoking mongerd."""
         opt_string = ""
         for opt_name in self.options_map:
             opt_val, opt_form = self.options_map[opt_name]
@@ -1051,11 +1051,11 @@ class MongodControl(object):  # pylint: disable=too-many-instance-attributes
 
     def install(self, root_dir, tarball_url):
         """Return tuple (ret, ouput)."""
-        # Install mongod, if 'root_dir' does not exist.
+        # Install mongerd, if 'root_dir' does not exist.
         if os.path.isdir(root_dir):
             LOGGER.warning("Root dir %s already exists", root_dir)
         else:
-            install_mongod(bin_dir=self.bin_dir, tarball_url=tarball_url, root_dir=root_dir)
+            install_mongerd(bin_dir=self.bin_dir, tarball_url=tarball_url, root_dir=root_dir)
         self.bin_dir = get_bin_dir(root_dir)
         if not self.bin_dir:
             ret, output = execute_cmd("ls -lR '{}'".format(root_dir), use_file=True)
@@ -1063,8 +1063,8 @@ class MongodControl(object):  # pylint: disable=too-many-instance-attributes
             return 1, "No bin dir can be found under {}".format(root_dir)
         self.bin_path = os.path.join(self.bin_dir, self.process_name)
         # We need to instantiate the Service when installing, since the bin_path
-        # is only known after install_mongod runs.
-        self.service = self._service("mongod-powertest", self.bin_path, self.mongod_options())
+        # is only known after install_mongerd runs.
+        self.service = self._service("mongerd-powertest", self.bin_path, self.mongerd_options())
         ret, output = self.service.create()
         return ret, output
 
@@ -1172,20 +1172,20 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
     host_port = "{}:{}".format(host, options.port)
 
     if options.repl_set:
-        options.mongod_options = "{} --replSet {}".format(options.mongod_options, options.repl_set)
+        options.mongerd_options = "{} --replSet {}".format(options.mongerd_options, options.repl_set)
 
     # For MongodControl, the file references should be fully specified.
-    if options.mongodb_bin_dir:
-        bin_dir = abs_path(options.mongodb_bin_dir)
+    if options.mongerdb_bin_dir:
+        bin_dir = abs_path(options.mongerdb_bin_dir)
     else:
         bin_dir = get_bin_dir(root_dir)
     db_path = abs_path(options.db_path)
     log_path = abs_path(options.log_path)
 
-    mongod = MongodControl(bin_dir=bin_dir, db_path=db_path, log_path=log_path, port=options.port,
-                           options=options.mongod_options)
+    mongerd = MongodControl(bin_dir=bin_dir, db_path=db_path, log_path=log_path, port=options.port,
+                           options=options.mongerd_options)
 
-    mongo_client_opts = get_mongo_client_args(host=host, port=options.port, options=options)
+    monger_client_opts = get_monger_client_args(host=host, port=options.port, options=options)
 
     # Perform the sequence of operations specified. If any operation fails then return immediately.
     for operation in operations:
@@ -1203,28 +1203,28 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
             except IOError:
                 pass
 
-        elif operation == "kill_mongod":
-            # Unconditional kill of mongod.
-            ret, output = kill_mongod()
+        elif operation == "kill_mongerd":
+            # Unconditional kill of mongerd.
+            ret, output = kill_mongerd()
             if ret:
-                LOGGER.error("kill_mongod failed %s", output)
+                LOGGER.error("kill_mongerd failed %s", output)
                 return ret
-            # Ensure the mongod service is not in a running state.
-            mongod.stop(timeout=30)
-            status = mongod.status()
+            # Ensure the mongerd service is not in a running state.
+            mongerd.stop(timeout=30)
+            status = mongerd.status()
             if status != "stopped":
-                LOGGER.error("Unable to stop the mongod service, in state '%s'", status)
+                LOGGER.error("Unable to stop the mongerd service, in state '%s'", status)
                 ret = 1
 
-        elif operation == "install_mongod":
-            ret, output = mongod.install(root_dir, options.tarball_url)
+        elif operation == "install_mongerd":
+            ret, output = mongerd.install(root_dir, options.tarball_url)
             LOGGER.info(output)
 
-            # Create mongod's dbpath, if it does not exist.
+            # Create mongerd's dbpath, if it does not exist.
             if not os.path.isdir(db_path):
                 os.makedirs(db_path)
 
-            # Create mongod's logpath directory, if it does not exist.
+            # Create mongerd's logpath directory, if it does not exist.
             log_dir = os.path.dirname(log_path)
             if not os.path.isdir(log_dir):
                 os.makedirs(log_dir)
@@ -1239,34 +1239,34 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
                 ret, output = set_windows_bootstatuspolicy()
                 LOGGER.info(output)
 
-        elif operation == "start_mongod":
+        elif operation == "start_mongerd":
             # Always update the service before starting, as options might have changed.
-            ret, output = mongod.update()
+            ret, output = mongerd.update()
             LOGGER.info(output)
-            ret, output = mongod.start()
+            ret, output = mongerd.start()
             LOGGER.info(output)
             if ret:
-                LOGGER.error("Failed to start mongod on port %d: %s", options.port, output)
+                LOGGER.error("Failed to start mongerd on port %d: %s", options.port, output)
                 return ret
-            LOGGER.info("Started mongod running on port %d pid %s", options.port, mongod.get_pids())
-            mongo = pymongo.MongoClient(**mongo_client_opts)
-            LOGGER.info("Server buildinfo: %s", mongo.admin.command("buildinfo"))
-            LOGGER.info("Server serverStatus: %s", mongo.admin.command("serverStatus"))
+            LOGGER.info("Started mongerd running on port %d pid %s", options.port, mongerd.get_pids())
+            monger = pymonger.MongoClient(**monger_client_opts)
+            LOGGER.info("Server buildinfo: %s", monger.admin.command("buildinfo"))
+            LOGGER.info("Server serverStatus: %s", monger.admin.command("serverStatus"))
             if options.repl_set:
-                ret = mongo_reconfig_replication(mongo, host_port, options.repl_set)
+                ret = monger_reconfig_replication(monger, host_port, options.repl_set)
 
-        elif operation == "stop_mongod":
-            ret, output = mongod.stop()
+        elif operation == "stop_mongerd":
+            ret, output = mongerd.stop()
             LOGGER.info(output)
-            ret = wait_for_mongod_shutdown(mongod)
+            ret = wait_for_mongerd_shutdown(mongerd)
 
-        elif operation == "shutdown_mongod":
-            mongo = pymongo.MongoClient(**mongo_client_opts)
+        elif operation == "shutdown_mongerd":
+            monger = pymonger.MongoClient(**monger_client_opts)
             try:
-                mongo.admin.command("shutdown", force=True)
-            except pymongo.errors.AutoReconnect:
+                monger.admin.command("shutdown", force=True)
+            except pymonger.errors.AutoReconnect:
                 pass
-            ret = wait_for_mongod_shutdown(mongod)
+            ret = wait_for_mongerd_shutdown(mongerd)
 
         elif operation == "rsync_data":
             rsync_dir, new_rsync_dir = options.rsync_dest
@@ -1279,41 +1279,41 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
                 os.rename(rsync_dir, new_rsync_dir)
 
         elif operation == "seed_docs":
-            mongo = pymongo.MongoClient(**mongo_client_opts)
-            ret = mongo_seed_docs(mongo, options.db_name, options.collection_name,
+            monger = pymonger.MongoClient(**monger_client_opts)
+            ret = monger_seed_docs(monger, options.db_name, options.collection_name,
                                   options.seed_doc_num)
 
         elif operation == "validate_collections":
-            mongo = pymongo.MongoClient(**mongo_client_opts)
-            ret = mongo_validate_collections(mongo)
+            monger = pymonger.MongoClient(**monger_client_opts)
+            ret = monger_validate_collections(monger)
 
         elif operation == "insert_canary":
-            mongo = pymongo.MongoClient(**mongo_client_opts)
-            ret = mongo_insert_canary(mongo, options.db_name, options.collection_name,
+            monger = pymonger.MongoClient(**monger_client_opts)
+            ret = monger_insert_canary(monger, options.db_name, options.collection_name,
                                       options.canary_doc)
 
         elif operation == "validate_canary":
-            mongo = pymongo.MongoClient(**mongo_client_opts)
-            ret = mongo_validate_canary(mongo, options.db_name, options.collection_name,
+            monger = pymonger.MongoClient(**monger_client_opts)
+            ret = monger_validate_canary(monger, options.db_name, options.collection_name,
                                         options.canary_doc)
 
         elif operation == "set_fcv":
-            mongo = pymongo.MongoClient(**mongo_client_opts)
+            monger = pymonger.MongoClient(**monger_client_opts)
             try:
-                ret = mongo.admin.command("setFeatureCompatibilityVersion", options.fcv_version)
+                ret = monger.admin.command("setFeatureCompatibilityVersion", options.fcv_version)
                 ret = 0 if ret["ok"] == 1 else 1
-            except pymongo.errors.OperationFailure as err:
+            except pymonger.errors.OperationFailure as err:
                 LOGGER.error("%s", err)
                 ret = err.code
 
         elif operation == "remove_lock_file":
-            lock_file = os.path.join(options.db_path, "mongod.lock")
+            lock_file = os.path.join(options.db_path, "mongerd.lock")
             if os.path.exists(lock_file):
-                LOGGER.debug("Deleting mongod lockfile %s", lock_file)
+                LOGGER.debug("Deleting mongerd lockfile %s", lock_file)
                 try:
                     os.remove(lock_file)
                 except (IOError, OSError) as err:
-                    LOGGER.warning("Unable to delete mongod lockfile %s with error %s", lock_file,
+                    LOGGER.warning("Unable to delete mongerd lockfile %s with error %s", lock_file,
                                    err)
                     ret = err.code
 
@@ -1370,12 +1370,12 @@ def rsync(src_dir, dest_dir, exclude_files=None):
     return ret, rsync_output
 
 
-def kill_mongod():
-    """Kill all mongod processes uncondtionally."""
+def kill_mongerd():
+    """Kill all mongerd processes uncondtionally."""
     if _IS_WINDOWS:
-        cmds = "taskkill /f /im mongod.exe"
+        cmds = "taskkill /f /im mongerd.exe"
     else:
-        cmds = "pkill -9 mongod"
+        cmds = "pkill -9 mongerd"
     ret, output = execute_cmd(cmds, use_file=True)
     return ret, output
 
@@ -1413,12 +1413,12 @@ def internal_crash(use_sudo=False, crash_option=None):
     return 1, "Crash did not occur"
 
 
-def crash_server_or_kill_mongod(  # pylint: disable=too-many-arguments,,too-many-locals
+def crash_server_or_kill_mongerd(  # pylint: disable=too-many-arguments,,too-many-locals
         options, crash_canary, canary_port, local_ops, script_name, client_args):
-    """Crash server or kill mongod and optionally write canary doc. Return tuple (ret, output)."""
+    """Crash server or kill mongerd and optionally write canary doc. Return tuple (ret, output)."""
 
     crash_wait_time = options.crash_wait_time + random.randint(0, options.crash_wait_time_jitter)
-    message_prefix = "Killing mongod" if options.crash_method == "kill" else "Crashing server"
+    message_prefix = "Killing mongerd" if options.crash_method == "kill" else "Crashing server"
     LOGGER.info("%s in %d seconds", message_prefix, crash_wait_time)
     time.sleep(crash_wait_time)
 
@@ -1437,11 +1437,11 @@ def crash_server_or_kill_mongod(  # pylint: disable=too-many-arguments,,too-many
         verify_remote_access(local_ops)
 
     elif options.crash_method == "internal" or options.crash_method == "kill":
-        crash_cmd = "crash_server" if options.crash_method == "internal" else "kill_mongod"
+        crash_cmd = "crash_server" if options.crash_method == "internal" else "kill_mongerd"
         if options.canary == "remote":
             # The crash canary function executes remotely, only if the
             # crash_method is 'internal'.
-            canary = "--mongodPort {} --docForCanary \"{}\"".format(canary_port,
+            canary = "--mongerdPort {} --docForCanary \"{}\"".format(canary_port,
                                                                     crash_canary["args"][3])
             canary_cmd = "insert_canary"
         else:
@@ -1471,18 +1471,18 @@ def crash_server_or_kill_mongod(  # pylint: disable=too-many-arguments,,too-many
     return ret, output
 
 
-def wait_for_mongod_shutdown(mongod_control, timeout=120):
-    """Wait for for mongod to shutdown; return 0 if shutdown occurs within 'timeout', else 1."""
+def wait_for_mongerd_shutdown(mongerd_control, timeout=120):
+    """Wait for for mongerd to shutdown; return 0 if shutdown occurs within 'timeout', else 1."""
     start = time.time()
-    status = mongod_control.status()
+    status = mongerd_control.status()
     while status != "stopped":
         if time.time() - start >= timeout:
-            LOGGER.error("The mongod process has not stopped, current status is %s", status)
+            LOGGER.error("The mongerd process has not stopped, current status is %s", status)
             return 1
-        LOGGER.info("Waiting for mongod process to stop, current status is %s ", status)
+        LOGGER.info("Waiting for mongerd process to stop, current status is %s ", status)
         time.sleep(3)
-        status = mongod_control.status()
-    LOGGER.info("The mongod process has stopped")
+        status = mongerd_control.status()
+    LOGGER.info("The mongerd process has stopped")
 
     # We wait a bit, since files could still be flushed to disk, which was causing
     # rsync "file has vanished" errors.
@@ -1491,32 +1491,32 @@ def wait_for_mongod_shutdown(mongod_control, timeout=120):
     return 0
 
 
-def get_mongo_client_args(host=None, port=None, options=None, server_selection_timeout_ms=600000,
+def get_monger_client_args(host=None, port=None, options=None, server_selection_timeout_ms=600000,
                           socket_timeout_ms=600000):
     """Return keyword arg dict used in PyMongo client."""
     # Set the default serverSelectionTimeoutMS & socketTimeoutMS to 10 minutes.
-    mongo_args = {
+    monger_args = {
         "serverSelectionTimeoutMS": server_selection_timeout_ms,
         "socketTimeoutMS": socket_timeout_ms
     }
     if host:
-        mongo_args["host"] = host
+        monger_args["host"] = host
     if port:
-        mongo_args["port"] = port
+        monger_args["port"] = port
     # Set the writeConcern
     if hasattr(options, "write_concern"):
-        mongo_args.update(yaml.safe_load(options.write_concern))
+        monger_args.update(yaml.safe_load(options.write_concern))
     # Set the readConcernLevel
     if hasattr(options, "read_concern_level") and options.read_concern_level:
-        mongo_args["readConcernLevel"] = options.read_concern_level
-    return mongo_args
+        monger_args["readConcernLevel"] = options.read_concern_level
+    return monger_args
 
 
-def mongo_shell(  # pylint: disable=too-many-arguments
-        mongo_path, work_dir, host_port, mongo_cmds, retries=5, retry_sleep=5):
-    """Start mongo_path from work_dir, connecting to host_port and executes mongo_cmds."""
+def monger_shell(  # pylint: disable=too-many-arguments
+        monger_path, work_dir, host_port, monger_cmds, retries=5, retry_sleep=5):
+    """Start monger_path from work_dir, connecting to host_port and executes monger_cmds."""
     cmds = "cd {}; echo {} | {} {}".format(
-        pipes.quote(work_dir), pipes.quote(mongo_cmds), pipes.quote(mongo_path), host_port)
+        pipes.quote(work_dir), pipes.quote(monger_cmds), pipes.quote(monger_path), host_port)
     attempt_num = 0
     while True:
         ret, output = execute_cmd(cmds, use_file=True)
@@ -1529,43 +1529,43 @@ def mongo_shell(  # pylint: disable=too-many-arguments
     return ret, output
 
 
-def mongod_wait_for_primary(mongo, timeout=60, sleep_interval=3):
-    """Return True if mongod primary is available in replica set, within the specified timeout."""
+def mongerd_wait_for_primary(monger, timeout=60, sleep_interval=3):
+    """Return True if mongerd primary is available in replica set, within the specified timeout."""
 
     start = time.time()
-    while not mongo.admin.command("isMaster")["ismaster"]:
+    while not monger.admin.command("isMaster")["ismaster"]:
         time.sleep(sleep_interval)
         if time.time() - start >= timeout:
             return False
     return True
 
 
-def mongo_reconfig_replication(mongo, host_port, repl_set):
-    """Reconfigure the mongod replica set. Return 0 if successful."""
+def monger_reconfig_replication(monger, host_port, repl_set):
+    """Reconfigure the mongerd replica set. Return 0 if successful."""
 
     # TODO: Rework reconfig logic as follows:
-    # 1. Start up mongod in standalone
+    # 1. Start up mongerd in standalone
     # 2. Delete the config doc
-    # 3. Stop mongod
-    # 4. Start mongod
+    # 3. Stop mongerd
+    # 4. Start mongerd
     # When reconfiguring the replica set, due to a switch in ports
     # it can only be done using force=True, as the node will not come up as Primary.
     # The side affect of using force=True are large jumps in the config
     # version, which after many reconfigs may exceed the 'int' value.
 
     LOGGER.info("Reconfiguring replication %s %s", host_port, repl_set)
-    database = pymongo.database.Database(mongo, "local")
+    database = pymonger.database.Database(monger, "local")
     system_replset = database.get_collection("system.replset")
     # Check if replica set has already been initialized
     if not system_replset or not system_replset.find_one():
         rs_config = {"_id": repl_set, "members": [{"_id": 0, "host": host_port}]}
-        ret = mongo.admin.command("replSetInitiate", rs_config)
+        ret = monger.admin.command("replSetInitiate", rs_config)
         LOGGER.info("Replication initialized: %s %s", ret, rs_config)
     else:
         # Wait until replication is initialized.
         while True:
             try:
-                ret = mongo.admin.command("replSetGetConfig")
+                ret = monger.admin.command("replSetGetConfig")
                 if ret["ok"] != 1:
                     LOGGER.error("Failed replSetGetConfig: %s", ret)
                     return 1
@@ -1576,28 +1576,28 @@ def mongo_reconfig_replication(mongo, host_port, repl_set):
                     # With force=True, version is ignored.
                     # rs_config["version"] = rs_config["version"] + 1
                     rs_config["members"][0]["host"] = host_port
-                    ret = mongo.admin.command("replSetReconfig", rs_config, force=True)
+                    ret = monger.admin.command("replSetReconfig", rs_config, force=True)
                     if ret["ok"] != 1:
                         LOGGER.error("Failed replSetReconfig: %s", ret)
                         return 1
                     LOGGER.info("Replication reconfigured: %s", ret)
                 break
 
-            except pymongo.errors.AutoReconnect:
+            except pymonger.errors.AutoReconnect:
                 pass
-            except pymongo.errors.OperationFailure as err:
-                # src/mongo/base/error_codes.err: error_code("NotYetInitialized", 94)
+            except pymonger.errors.OperationFailure as err:
+                # src/monger/base/error_codes.err: error_code("NotYetInitialized", 94)
                 if err.code != 94:
                     LOGGER.error("Replication failed to initialize: %s", ret)
                     return 1
 
-    primary_available = mongod_wait_for_primary(mongo)
-    LOGGER.debug("isMaster: %s", mongo.admin.command("isMaster"))
-    LOGGER.debug("replSetGetStatus: %s", mongo.admin.command("replSetGetStatus"))
+    primary_available = mongerd_wait_for_primary(monger)
+    LOGGER.debug("isMaster: %s", monger.admin.command("isMaster"))
+    LOGGER.debug("replSetGetStatus: %s", monger.admin.command("replSetGetStatus"))
     return 0 if ret["ok"] == 1 and primary_available else 1
 
 
-def mongo_seed_docs(mongo, db_name, coll_name, num_docs):
+def monger_seed_docs(monger, db_name, coll_name, num_docs):
     """Seed a collection with random document values."""
 
     def rand_string(max_length=1024):
@@ -1606,32 +1606,32 @@ def mongo_seed_docs(mongo, db_name, coll_name, num_docs):
             random.choice(string.ascii_letters) for _ in range(random.randint(1, max_length)))
 
     LOGGER.info("Seeding DB '%s' collection '%s' with %d documents, %d already exist", db_name,
-                coll_name, num_docs, mongo[db_name][coll_name].count())
+                coll_name, num_docs, monger[db_name][coll_name].count())
     random.seed()
     base_num = 100000
     bulk_num = min(num_docs, 10000)
     bulk_loops = num_docs // bulk_num
     for _ in range(bulk_loops):
-        num_coll_docs = mongo[db_name][coll_name].count()
+        num_coll_docs = monger[db_name][coll_name].count()
         if num_coll_docs >= num_docs:
             break
-        mongo[db_name][coll_name].insert_many(
+        monger[db_name][coll_name].insert_many(
             [{"x": random.randint(0, base_num), "doc": rand_string(1024)} for _ in range(bulk_num)])
     LOGGER.info("After seeding there are %d documents in the collection",
-                mongo[db_name][coll_name].count())
+                monger[db_name][coll_name].count())
     return 0
 
 
-def mongo_validate_collections(mongo):
-    """Validate the mongo collections, return 0 if all are valid."""
+def monger_validate_collections(monger):
+    """Validate the monger collections, return 0 if all are valid."""
 
     LOGGER.info("Validating all collections")
     invalid_colls = []
     ebusy_colls = []
-    for db_name in mongo.database_names():
-        for coll in mongo[db_name].list_collections(filter={"type": "collection"}):
+    for db_name in monger.database_names():
+        for coll in monger[db_name].list_collections(filter={"type": "collection"}):
             coll_name = coll["name"]
-            res = mongo[db_name].command({"validate": coll_name, "full": True})
+            res = monger[db_name].command({"validate": coll_name, "full": True})
             LOGGER.info("Validating %s %s: %s", db_name, coll_name, res)
             ebusy = "EBUSY" in res["errors"] or "EBUSY" in res["warnings"]
             if not res["valid"]:
@@ -1646,19 +1646,19 @@ def mongo_validate_collections(mongo):
     return 0 if not invalid_colls else 1
 
 
-def mongo_validate_canary(mongo, db_name, coll_name, doc):
+def monger_validate_canary(monger, db_name, coll_name, doc):
     """Validate a canary document, return 0 if the document exists."""
     if not doc:
         return 0
     LOGGER.info("Validating canary document using %s.%s.find_one(%s)", db_name, coll_name, doc)
-    return 0 if mongo[db_name][coll_name].find_one(doc) else 1
+    return 0 if monger[db_name][coll_name].find_one(doc) else 1
 
 
-def mongo_insert_canary(mongo, db_name, coll_name, doc):
+def monger_insert_canary(monger, db_name, coll_name, doc):
     """Insert a canary document with 'j' True, return 0 if successful."""
     LOGGER.info("Inserting canary document using %s.%s.insert_one(%s)", db_name, coll_name, doc)
-    coll = mongo[db_name][coll_name].with_options(
-        write_concern=pymongo.write_concern.WriteConcern(j=True))
+    coll = monger[db_name][coll_name].with_options(
+        write_concern=pymonger.write_concern.WriteConcern(j=True))
     res = coll.insert_one(doc)
     return 0 if res.inserted_id else 1
 
@@ -1678,20 +1678,20 @@ def new_resmoke_config(config_file, new_config_file, test_data, eval_str=""):
 
 
 def resmoke_client(  # pylint: disable=too-many-arguments
-        work_dir, mongo_path, host_port, js_test, resmoke_suite, repeat_num=1, no_wait=False,
+        work_dir, monger_path, host_port, js_test, resmoke_suite, repeat_num=1, no_wait=False,
         log_file=None):
     """Start resmoke client from work_dir, connecting to host_port and executes js_test."""
     log_output = ">> {} 2>&1".format(log_file) if log_file else ""
     cmds = ("cd {}; "
             "python buildscripts/resmoke.py"
-            " --mongo {}"
+            " --monger {}"
             " --suites {}"
-            " --shellConnString mongodb://{}"
+            " --shellConnString mongerdb://{}"
             " --continueOnFailure"
             " --repeat {}"
             " {}"
             " {}".format(
-                pipes.quote(work_dir), pipes.quote(mongo_path), pipes.quote(resmoke_suite),
+                pipes.quote(work_dir), pipes.quote(monger_path), pipes.quote(resmoke_suite),
                 host_port, repeat_num, pipes.quote(js_test), log_output))
     ret, output = None, None
     if no_wait:
@@ -1731,20 +1731,20 @@ Examples:
             --crashOption output1
             --sshCrashUserHost admin@10.4.100.2
             --sshCrashOption "-oKexAlgorithms=+diffie-hellman-group1-sha1 -i /Users/jonathan/.ssh/mFi.pem"
-            --mongodOptions "--storageEngine mmapv1"
+            --mongerdOptions "--storageEngine mmapv1"
 
     Linux server running in AWS, testing nojournal:
       python powertest.py
             --sshUserHost ec2-user@52.4.173.196
             --sshConnection "-i $HOME/.ssh/JAkey.pem"
             --rootDir pt-nojournal
-            --mongodOptions "--nojournal"
+            --mongerdOptions "--nojournal"
 """)
 
     test_options = optparse.OptionGroup(parser, "Test Options")
     crash_options = optparse.OptionGroup(parser, "Crash Options")
-    mongodb_options = optparse.OptionGroup(parser, "MongoDB Options")
-    mongod_options = optparse.OptionGroup(parser, "mongod Options")
+    mongerdb_options = optparse.OptionGroup(parser, "MongoDB Options")
+    mongerd_options = optparse.OptionGroup(parser, "mongerd Options")
     client_options = optparse.OptionGroup(parser, "Client Options")
     program_options = optparse.OptionGroup(parser, "Program Options")
 
@@ -1771,7 +1771,7 @@ Examples:
                             default=0)
 
     test_options.add_option("--rsync", dest="rsync_data",
-                            help="Rsync data directory between mongod stop and start",
+                            help="Rsync data directory between mongerd stop and start",
                             action="store_true", default=False)
 
     test_options.add_option("--rsyncExcludeFiles", dest="rsync_exclude_files",
@@ -1791,7 +1791,7 @@ Examples:
     validate_locations = ["local", "remote"]
     test_options.add_option(
         "--validate", dest="validate_collections",
-        help="Run validate on all collections after mongod restart after"
+        help="Run validate on all collections after mongerd restart after"
         " a powercycle. Choose from {} to specify where the"
         " validate runs.".format(validate_locations), choices=validate_locations, default=None)
 
@@ -1818,11 +1818,11 @@ Examples:
                             default="cycle")
 
     test_options.add_option(
-        "--writeConcern", dest="write_concern", help="mongo (shell) CRUD client writeConcern, i.e.,"
+        "--writeConcern", dest="write_concern", help="monger (shell) CRUD client writeConcern, i.e.,"
         " '{\"w\": \"majority\"}' [default: '%default']", default="{}")
 
     test_options.add_option("--readConcernLevel", dest="read_concern_level",
-                            help="mongo (shell) CRUD client readConcernLevel, i.e.,"
+                            help="monger (shell) CRUD client readConcernLevel, i.e.,"
                             "'majority'", default=None)
 
     # Crash options
@@ -1833,7 +1833,7 @@ Examples:
         " Select 'aws_ec2' to force-stop/start an AWS instance."
         " Select 'internal' to crash the remote server through an"
         " internal command, i.e., sys boot (Linux) or notmyfault (Windows)."
-        " Select 'kill' to perform an unconditional kill of mongod,"
+        " Select 'kill' to perform an unconditional kill of mongerd,"
         " which will keep the remote server running."
         " Select 'mpower' to use the mFi mPower to cutoff power to"
         " the remote server.".format(crash_methods), default="internal")
@@ -1877,75 +1877,75 @@ Examples:
                              default=None)
 
     # MongoDB options
-    mongodb_options.add_option(
+    mongerdb_options.add_option(
         "--downloadUrl", dest="tarball_url",
         help="URL of tarball to test, if unspecifed latest tarball will be"
         " used", default="latest")
 
-    mongodb_options.add_option(
+    mongerdb_options.add_option(
         "--rootDir", dest="root_dir",
         help="Root directory, on remote host, to install tarball and data"
-        " directory [default: 'mongodb-powertest-<epochSecs>']", default=None)
+        " directory [default: 'mongerdb-powertest-<epochSecs>']", default=None)
 
-    mongodb_options.add_option(
-        "--mongodbBinDir", dest="mongodb_bin_dir",
-        help="Directory, on remote host, containing mongoDB binaries,"
+    mongerdb_options.add_option(
+        "--mongerdbBinDir", dest="mongerdb_bin_dir",
+        help="Directory, on remote host, containing mongerDB binaries,"
         " overrides bin from tarball in --downloadUrl", default=None)
 
-    mongodb_options.add_option(
+    mongerdb_options.add_option(
         "--dbPath", dest="db_path", help="Data directory to use, on remote host, if unspecified"
         " it will be '<rootDir>/data/db'", default=None)
 
-    mongodb_options.add_option(
+    mongerdb_options.add_option(
         "--logPath", dest="log_path", help="Log path, on remote host, if unspecified"
-        " it will be '<rootDir>/log/mongod.log'", default=None)
+        " it will be '<rootDir>/log/mongerd.log'", default=None)
 
-    # mongod options
-    mongod_options.add_option(
+    # mongerd options
+    mongerd_options.add_option(
         "--replSet", dest="repl_set",
-        help="Name of mongod single node replica set, if unpsecified mongod"
+        help="Name of mongerd single node replica set, if unpsecified mongerd"
         " defaults to standalone node", default=None)
 
-    # The current host used to start and connect to mongod. Not meant to be specified
+    # The current host used to start and connect to mongerd. Not meant to be specified
     # by the user.
-    mongod_options.add_option("--mongodHost", dest="host", help=optparse.SUPPRESS_HELP,
+    mongerd_options.add_option("--mongerdHost", dest="host", help=optparse.SUPPRESS_HELP,
                               default=None)
 
-    # The current port used to start and connect to mongod. Not meant to be specified
+    # The current port used to start and connect to mongerd. Not meant to be specified
     # by the user.
-    mongod_options.add_option("--mongodPort", dest="port", help=optparse.SUPPRESS_HELP, type="int",
+    mongerd_options.add_option("--mongerdPort", dest="port", help=optparse.SUPPRESS_HELP, type="int",
                               default=None)
 
     # The ports used on the 'server' side when in standard or secret mode.
-    mongod_options.add_option(
-        "--mongodUsablePorts", dest="usable_ports", nargs=2,
-        help="List of usable ports to be used by mongod for"
+    mongerd_options.add_option(
+        "--mongerdUsablePorts", dest="usable_ports", nargs=2,
+        help="List of usable ports to be used by mongerd for"
         " standard and secret modes, [default: %default]", type="int", default=[27017, 37017])
 
-    mongod_options.add_option("--mongodOptions", dest="mongod_options",
-                              help="Additional mongod options", default="")
+    mongerd_options.add_option("--mongerdOptions", dest="mongerd_options",
+                              help="Additional mongerd options", default="")
 
-    mongod_options.add_option("--fcv", dest="fcv_version",
-                              help="Set the FeatureCompatibilityVersion of mongod.", default=None)
+    mongerd_options.add_option("--fcv", dest="fcv_version",
+                              help="Set the FeatureCompatibilityVersion of mongerd.", default=None)
 
-    mongod_options.add_option(
+    mongerd_options.add_option(
         "--removeLockFile", dest="remove_lock_file",
-        help="If specified, the mongod.lock file will be deleted after a"
-        " powercycle event, before mongod is started. This is a"
-        " workaround for mongod failing start with MMAPV1 (See"
+        help="If specified, the mongerd.lock file will be deleted after a"
+        " powercycle event, before mongerd is started. This is a"
+        " workaround for mongerd failing start with MMAPV1 (See"
         " SERVER-15109).", action="store_true", default=False)
 
     # Client options
-    mongo_path = distutils.spawn.find_executable("mongo",
+    monger_path = distutils.spawn.find_executable("monger",
                                                  os.getcwd() + os.pathsep + os.environ["PATH"])
     client_options.add_option(
-        "--mongoPath", dest="mongo_path",
-        help="Path to mongo (shell) executable, if unspecifed, mongo client"
-        " is launched from the current directory.", default=mongo_path)
+        "--mongerPath", dest="monger_path",
+        help="Path to monger (shell) executable, if unspecifed, monger client"
+        " is launched from the current directory.", default=monger_path)
 
     client_options.add_option(
-        "--mongoRepoRootDir", dest="mongo_repo_root_dir",
-        help="Root directory of mongoDB repository, defaults to current"
+        "--mongerRepoRootDir", dest="monger_repo_root_dir",
+        help="Root directory of mongerDB repository, defaults to current"
         " directory.", default=None)
 
     client_options.add_option(
@@ -1959,7 +1959,7 @@ Examples:
         help="The path to the CRUD client configuration YML file on the"
         " local host. This is the resmoke.py suite file. If unspecified,"
         " a default configuration YML file (%default) will be used that"
-        " provides a mongo (shell) DB connection to a running mongod.",
+        " provides a monger (shell) DB connection to a running mongerd.",
         default=with_external_server)
 
     client_options.add_option(
@@ -2051,8 +2051,8 @@ Examples:
     parser.add_option_group(test_options)
     parser.add_option_group(crash_options)
     parser.add_option_group(client_options)
-    parser.add_option_group(mongodb_options)
-    parser.add_option_group(mongod_options)
+    parser.add_option_group(mongerdb_options)
+    parser.add_option_group(mongerd_options)
     parser.add_option_group(program_options)
 
     options, args = parser.parse_args()
@@ -2135,15 +2135,15 @@ Examples:
             parser.error("Invalid crashOption address_type '{}' specified for crashMethod"
                          " 'aws_ec2', specify one of {}".format(address_type, aws_address_types))
 
-    # Initialize the mongod options
+    # Initialize the mongerd options
     # Note - We use posixpath for Windows client to Linux server scenarios.
     if not options.root_dir:
-        options.root_dir = "mongodb-powertest-{}".format(int(time.time()))
+        options.root_dir = "mongerdb-powertest-{}".format(int(time.time()))
     if not options.db_path:
         options.db_path = posixpath.join(options.root_dir, "data", "db")
     if not options.log_path:
-        options.log_path = posixpath.join(options.root_dir, "log", "mongod.log")
-    mongod_options_map = parse_options(options.mongod_options)
+        options.log_path = posixpath.join(options.root_dir, "log", "mongerd.log")
+    mongerd_options_map = parse_options(options.mongerd_options)
     set_fcv_cmd = "set_fcv" if options.fcv_version is not None else ""
     remove_lock_file_cmd = "remove_lock_file" if options.remove_lock_file else ""
 
@@ -2182,16 +2182,16 @@ Examples:
         rsync_cmd = ""
         rsync_opt = ""
 
-    # Setup the mongo client, mongo_path is required if there are local clients.
+    # Setup the monger client, monger_path is required if there are local clients.
     if (options.num_crud_clients > 0 or options.num_fsm_clients > 0
             or options.validate_collections == "local"):
-        if not options.mongo_path:
-            LOGGER.error("mongoPath must be specified")
+        if not options.monger_path:
+            LOGGER.error("mongerPath must be specified")
             local_exit(1)
-        if not os.path.isfile(options.mongo_path):
-            LOGGER.error("mongoPath %s does not exist", options.mongo_path)
+        if not os.path.isfile(options.monger_path):
+            LOGGER.error("mongerPath %s does not exist", options.monger_path)
             local_exit(1)
-        mongo_path = os.path.abspath(os.path.normpath(options.mongo_path))
+        monger_path = os.path.abspath(os.path.normpath(options.monger_path))
 
     # Setup the CRUD & FSM clients.
     if not os.path.isfile(options.config_crud_client):
@@ -2225,13 +2225,13 @@ Examples:
         fsm_test_data["workloadBlacklistFiles"] = fsm_workload_blacklist_files
     crud_test_data["dbName"] = options.db_name
 
-    # Setup the mongo_repo_root.
-    if options.mongo_repo_root_dir:
-        mongo_repo_root_dir = options.mongo_repo_root_dir
+    # Setup the monger_repo_root.
+    if options.monger_repo_root_dir:
+        monger_repo_root_dir = options.monger_repo_root_dir
     else:
-        mongo_repo_root_dir = os.getcwd()
-    if not os.path.isdir(mongo_repo_root_dir):
-        LOGGER.error("mongoRepoRoot %s does not exist", mongo_repo_root_dir)
+        monger_repo_root_dir = os.getcwd()
+    if not os.path.isdir(monger_repo_root_dir):
+        LOGGER.error("mongerRepoRoot %s does not exist", monger_repo_root_dir)
         local_exit(1)
 
     # Setup the validate_collections option.
@@ -2241,8 +2241,8 @@ Examples:
         validate_collections_cmd = ""
 
     # Setup the validate_canary option.
-    if options.canary and "nojournal" in mongod_options_map:
-        LOGGER.error("Cannot create and validate canary documents if the mongod option"
+    if options.canary and "nojournal" in mongerd_options_map:
+        LOGGER.error("Cannot create and validate canary documents if the mongerd option"
                      " '--nojournal' is used.")
         local_exit(1)
 
@@ -2253,14 +2253,14 @@ Examples:
     orig_canary_doc = canary_doc = ""
     validate_canary_cmd = ""
 
-    # Set the Pymongo connection timeout to 1 hour for canary insert & validation.
+    # Set the Pymonger connection timeout to 1 hour for canary insert & validation.
     one_hour_ms = 60 * 60 * 1000
 
-    # The remote mongod host comes from the ssh_user_host,
+    # The remote mongerd host comes from the ssh_user_host,
     # which may be specified as user@host.
     ssh_user_host = options.ssh_user_host
     ssh_user, ssh_host = get_user_host(ssh_user_host)
-    mongod_host = ssh_host
+    mongerd_host = ssh_host
 
     # As described in http://man7.org/linux/man-pages/man5/ssh_config.5.html, ssh uses the value of
     # the first occurrence for each parameter, so we have the default connection options follow the
@@ -2321,8 +2321,8 @@ Examples:
 
     # Remote install of MongoDB.
     ret, output = call_remote_operation(local_ops, options.remote_python, script_name, client_args,
-                                        "--remoteOperation install_mongod")
-    LOGGER.info("****install_mongod: %d %s****", ret, output)
+                                        "--remoteOperation install_mongerd")
+    LOGGER.info("****install_mongerd: %d %s****", ret, output)
     if ret:
         local_exit(ret)
 
@@ -2337,13 +2337,13 @@ Examples:
 
     # ======== Main loop for running the powercycle test========:
     #   1. Rsync the database (optional, post-crash, pre-recovery)
-    #   2. Start mongod on the secret port and wait for it to recover
+    #   2. Start mongerd on the secret port and wait for it to recover
     #   3  Validate collections (optional)
     #   4. Validate canary (optional)
-    #   5. Stop mongod
+    #   5. Stop mongerd
     #   6. Rsync the database (optional, post-recovery)
-    #   7. Start mongod on the standard port
-    #   8. Start mongo (shell) & FSM clients
+    #   7. Start mongerd on the standard port
+    #   8. Start monger (shell) & FSM clients
     #   9. Generate canary document (optional)
     #  10. Crash the server
     #  11. Exit loop if one of these occurs:
@@ -2379,16 +2379,16 @@ Examples:
         remote_operation = ("--remoteOperation"
                             " {rsync_opt}"
                             " {canary_opt}"
-                            " --mongodHost {host}"
-                            " --mongodPort {port}"
+                            " --mongerdHost {host}"
+                            " --mongerdPort {port}"
                             " {rsync_cmd}"
                             " {remove_lock_file_cmd}"
-                            " start_mongod"
+                            " start_mongerd"
                             " {set_fcv_cmd}"
                             " {validate_collections_cmd}"
                             " {validate_canary_cmd}"
                             " {seed_docs}").format(
-                                rsync_opt=rsync_opt, canary_opt=canary_opt, host=mongod_host,
+                                rsync_opt=rsync_opt, canary_opt=canary_opt, host=mongerd_host,
                                 port=secret_port, rsync_cmd=rsync_cmd,
                                 remove_lock_file_cmd=remove_lock_file_cmd,
                                 set_fcv_cmd=set_fcv_cmd if loop_num == 1 else "",
@@ -2398,39 +2398,39 @@ Examples:
         ret, output = call_remote_operation(local_ops, options.remote_python, script_name,
                                             client_args, remote_operation)
         rsync_text = "rsync_data beforerecovery & " if options.rsync_data else ""
-        LOGGER.info("****%sstart mongod: %d %s****", rsync_text, ret, output)
+        LOGGER.info("****%sstart mongerd: %d %s****", rsync_text, ret, output)
         if ret:
             local_exit(ret)
 
         # Optionally validate canary document locally.
         if validate_canary_local:
-            mongo = pymongo.MongoClient(**get_mongo_client_args(
-                host=mongod_host, port=secret_port, server_selection_timeout_ms=one_hour_ms,
+            monger = pymonger.MongoClient(**get_monger_client_args(
+                host=mongerd_host, port=secret_port, server_selection_timeout_ms=one_hour_ms,
                 socket_timeout_ms=one_hour_ms))
-            ret = mongo_validate_canary(mongo, options.db_name, options.collection_name, canary_doc)
+            ret = monger_validate_canary(monger, options.db_name, options.collection_name, canary_doc)
             LOGGER.info("Local canary validation: %d", ret)
             if ret:
                 local_exit(ret)
 
         # Optionally, run local validation of collections.
         if options.validate_collections == "local":
-            host_port = "{}:{}".format(mongod_host, secret_port)
+            host_port = "{}:{}".format(mongerd_host, secret_port)
             new_config_file = NamedTempFile.create(suffix=".yml", directory="tmp")
             temp_client_files.append(new_config_file)
             validation_test_data = {"skipValidationOnNamespaceNotFound": True}
             new_resmoke_config(with_external_server, new_config_file, validation_test_data)
-            ret, output = resmoke_client(mongo_repo_root_dir, mongo_path, host_port,
+            ret, output = resmoke_client(monger_repo_root_dir, monger_path, host_port,
                                          "jstests/hooks/run_validate_collections.js",
                                          new_config_file)
             LOGGER.info("Local collection validation: %d %s", ret, output)
             if ret:
                 local_exit(ret)
 
-        # Shutdown mongod on secret port.
-        remote_op = ("--remoteOperation" " --mongodPort {}" " shutdown_mongod").format(secret_port)
+        # Shutdown mongerd on secret port.
+        remote_op = ("--remoteOperation" " --mongerdPort {}" " shutdown_mongerd").format(secret_port)
         ret, output = call_remote_operation(local_ops, options.remote_python, script_name,
                                             client_args, remote_op)
-        LOGGER.info("****shutdown_mongod: %d %s****", ret, output)
+        LOGGER.info("****shutdown_mongerd: %d %s****", ret, output)
         if ret:
             local_exit(ret)
 
@@ -2445,21 +2445,21 @@ Examples:
         # Start monogd on the standard port.
         remote_op = ("--remoteOperation"
                      " {}"
-                     " --mongodHost {}"
-                     " --mongodPort {}"
+                     " --mongerdHost {}"
+                     " --mongerdPort {}"
                      " {}"
-                     " start_mongod").format(rsync_opt, mongod_host, standard_port, rsync_cmd)
+                     " start_mongerd").format(rsync_opt, mongerd_host, standard_port, rsync_cmd)
         ret, output = call_remote_operation(local_ops, options.remote_python, script_name,
                                             client_args, remote_op)
         rsync_text = "rsync_data afterrecovery & " if options.rsync_data else ""
-        LOGGER.info("****%s start mongod: %d %s****", rsync_text, ret, output)
+        LOGGER.info("****%s start mongerd: %d %s****", rsync_text, ret, output)
         if ret:
             local_exit(ret)
 
         boot_time_after_recovery = get_boot_datetime(output)
 
         # Start CRUD clients
-        host_port = "{}:{}".format(mongod_host, standard_port)
+        host_port = "{}:{}".format(mongerd_host, standard_port)
         for i in range(options.num_crud_clients):
             if options.config_crud_client == with_external_server:
                 crud_config_file = NamedTempFile.create(suffix=".yml", directory="tmp")
@@ -2467,7 +2467,7 @@ Examples:
                 new_resmoke_config(with_external_server, crud_config_file, crud_test_data, eval_str)
             else:
                 crud_config_file = options.config_crud_client
-            _, _ = resmoke_client(work_dir=mongo_repo_root_dir, mongo_path=mongo_path,
+            _, _ = resmoke_client(work_dir=monger_repo_root_dir, monger_path=monger_path,
                                   host_port=host_port, js_test=options.crud_client,
                                   resmoke_suite=crud_config_file, repeat_num=100, no_wait=True,
                                   log_file="crud_{}.log".format(i))
@@ -2482,7 +2482,7 @@ Examples:
             # Do collection validation only for the first FSM client.
             fsm_test_data["validateCollections"] = bool(i == 0)
             new_resmoke_config(with_external_server, fsm_config_file, fsm_test_data, eval_str)
-            _, _ = resmoke_client(work_dir=mongo_repo_root_dir, mongo_path=mongo_path,
+            _, _ = resmoke_client(work_dir=monger_repo_root_dir, monger_path=monger_path,
                                   host_port=host_port, js_test=fsm_client,
                                   resmoke_suite=fsm_config_file, repeat_num=100, no_wait=True,
                                   log_file="fsm_{}.log".format(i))
@@ -2495,15 +2495,15 @@ Examples:
         if options.canary:
             canary_doc = {"x": time.time()}
             orig_canary_doc = copy.deepcopy(canary_doc)
-            mongo = pymongo.MongoClient(**get_mongo_client_args(
-                host=mongod_host, port=standard_port, server_selection_timeout_ms=one_hour_ms,
+            monger = pymonger.MongoClient(**get_monger_client_args(
+                host=mongerd_host, port=standard_port, server_selection_timeout_ms=one_hour_ms,
                 socket_timeout_ms=one_hour_ms))
-            crash_canary["function"] = mongo_insert_canary
-            crash_canary["args"] = [mongo, options.db_name, options.collection_name, canary_doc]
-        ret, output = crash_server_or_kill_mongod(options, crash_canary, standard_port, local_ops,
+            crash_canary["function"] = monger_insert_canary
+            crash_canary["args"] = [monger, options.db_name, options.collection_name, canary_doc]
+        ret, output = crash_server_or_kill_mongerd(options, crash_canary, standard_port, local_ops,
                                                   script_name, client_args)
 
-        LOGGER.info("Crash server or Kill mongod: %d %s****", ret, output)
+        LOGGER.info("Crash server or Kill mongerd: %d %s****", ret, output)
 
         # For internal crashes 'ret' is non-zero, because the ssh session unexpectedly terminates.
         if options.crash_method != "internal" and ret:
@@ -2543,7 +2543,7 @@ Examples:
                 ssh_user_host = ssh_host
             else:
                 ssh_user_host = "{}@{}".format(ssh_user, ssh_host)
-            mongod_host = ssh_host
+            mongerd_host = ssh_host
 
         # Reestablish remote access after crash.
         local_ops = LocalToRemoteOperations(user_host=ssh_user_host,

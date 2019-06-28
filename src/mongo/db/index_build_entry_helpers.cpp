@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,37 +27,37 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/index_build_entry_helpers.h"
+#include "monger/db/index_build_entry_helpers.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "mongo/db/catalog/commit_quorum_options.h"
-#include "mongo/db/catalog/create_collection.h"
-#include "mongo/db/catalog/database_impl.h"
-#include "mongo/db/catalog/index_build_entry_gen.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbhelpers.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/get_executor.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/record_id.h"
-#include "mongo/db/storage/write_unit_of_work.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
-#include "mongo/util/uuid.h"
+#include "monger/db/catalog/commit_quorum_options.h"
+#include "monger/db/catalog/create_collection.h"
+#include "monger/db/catalog/database_impl.h"
+#include "monger/db/catalog/index_build_entry_gen.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbhelpers.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/get_executor.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/record_id.h"
+#include "monger/db/storage/write_unit_of_work.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -373,4 +373,4 @@ Status clearAllIndexBuildEntries(OperationContext* opCtx) {
 }
 
 }  // namespace indexbuildentryhelpers
-}  // namespace mongo
+}  // namespace monger

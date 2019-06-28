@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/net/sock.h"
+#include "monger/util/net/sock.h"
 
 #include <algorithm>
 
@@ -55,22 +55,22 @@
 #include <ws2tcpip.h>
 #endif
 
-#include "mongo/config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/util/background.h"
-#include "mongo/util/concurrency/value.h"
-#include "mongo/util/debug_util.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/private/socket_poll.h"
-#include "mongo/util/net/socket_exception.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/net/ssl_manager.h"
-#include "mongo/util/str.h"
-#include "mongo/util/winutil.h"
+#include "monger/config.h"
+#include "monger/db/server_options.h"
+#include "monger/util/background.h"
+#include "monger/util/concurrency/value.h"
+#include "monger/util/debug_util.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/net/private/socket_poll.h"
+#include "monger/util/net/socket_exception.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/net/ssl_manager.h"
+#include "monger/util/str.h"
+#include "monger/util/winutil.h"
 
-namespace mongo {
+namespace monger {
 
 using std::pair;
 using std::string;
@@ -534,16 +534,16 @@ int Socket::_recv(char* buf, int max) {
 
 void Socket::handleSendError(int ret, const char* context) {
 #if defined(_WIN32)
-    const int mongo_errno = WSAGetLastError();
-    if (mongo_errno == WSAETIMEDOUT && _timeout != 0) {
+    const int monger_errno = WSAGetLastError();
+    if (monger_errno == WSAETIMEDOUT && _timeout != 0) {
 #else
-    const int mongo_errno = errno;
-    if ((mongo_errno == EAGAIN || mongo_errno == EWOULDBLOCK) && _timeout != 0) {
+    const int monger_errno = errno;
+    if ((monger_errno == EAGAIN || monger_errno == EWOULDBLOCK) && _timeout != 0) {
 #endif
         LOG(_logLevel) << "Socket " << context << " send() timed out " << remoteString();
         throwSocketError(SocketErrorKind::SEND_TIMEOUT, remoteString());
-    } else if (mongo_errno != EINTR) {
-        LOG(_logLevel) << "Socket " << context << " send() " << errnoWithDescription(mongo_errno)
+    } else if (monger_errno != EINTR) {
+        LOG(_logLevel) << "Socket " << context << " send() " << errnoWithDescription(monger_errno)
                        << ' ' << remoteString();
         throwSocketError(SocketErrorKind::SEND_ERROR, remoteString());
     }
@@ -716,4 +716,4 @@ bool Socket::isStillConnected() {
     return false;
 }
 
-}  // namespace mongo
+}  // namespace monger

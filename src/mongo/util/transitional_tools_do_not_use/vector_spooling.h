@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,7 +34,7 @@
 #include <memory>
 #include <vector>
 
-namespace mongo {
+namespace monger {
 namespace transitional_tools_do_not_use {
 template <typename T>
 inline std::vector<T*> unspool_vector(const std::vector<std::unique_ptr<T>>& v) {
@@ -64,4 +64,4 @@ inline std::vector<T*> leak_vector(std::vector<std::unique_ptr<T>>& v) noexcept 
     return result;
 }
 }  // namespace transitional_tools_do_not_use
-}  // namespace mongo
+}  // namespace monger

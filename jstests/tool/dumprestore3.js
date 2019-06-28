@@ -1,4 +1,4 @@
-// mongodump/mongoexport from primary should succeed.  mongorestore and mongoimport to a
+// mongerdump/mongerexport from primary should succeed.  mongerrestore and mongerimport to a
 // secondary node should fail.
 
 (function() {
@@ -27,38 +27,38 @@
     jsTestLog("wait for secondary");
     replTest.awaitReplication();
 
-    jsTestLog("mongodump from primary");
+    jsTestLog("mongerdump from primary");
     var data = MongoRunner.dataDir + "/dumprestore3-other1/";
     resetDbpath(data);
-    var ret = MongoRunner.runMongoTool("mongodump", {
+    var ret = MongoRunner.runMongoTool("mongerdump", {
         host: primary.host,
         out: data,
     });
-    assert.eq(ret, 0, "mongodump should exit w/ 0 on primary");
+    assert.eq(ret, 0, "mongerdump should exit w/ 0 on primary");
 
-    jsTestLog("try mongorestore to secondary");
-    ret = MongoRunner.runMongoTool("mongorestore", {
+    jsTestLog("try mongerrestore to secondary");
+    ret = MongoRunner.runMongoTool("mongerrestore", {
         host: secondary.host,
         dir: data,
     });
-    assert.neq(ret, 0, "mongorestore should exit w/ 1 on secondary");
+    assert.neq(ret, 0, "mongerrestore should exit w/ 1 on secondary");
 
-    jsTestLog("mongoexport from primary");
+    jsTestLog("mongerexport from primary");
     dataFile = MongoRunner.dataDir + "/dumprestore3-other2.json";
-    ret = MongoRunner.runMongoTool("mongoexport", {
+    ret = MongoRunner.runMongoTool("mongerexport", {
         host: primary.host,
         out: dataFile,
         db: "foo",
         collection: "bar",
     });
-    assert.eq(ret, 0, "mongoexport should exit w/ 0 on primary");
+    assert.eq(ret, 0, "mongerexport should exit w/ 0 on primary");
 
-    jsTestLog("mongoimport from secondary");
-    ret = MongoRunner.runMongoTool("mongoimport", {
+    jsTestLog("mongerimport from secondary");
+    ret = MongoRunner.runMongoTool("mongerimport", {
         host: secondary.host,
         file: dataFile,
     });
-    assert.neq(ret, 0, "mongoimport should exit w/ 1 on secondary");
+    assert.neq(ret, 0, "mongerimport should exit w/ 1 on secondary");
 
     jsTestLog("stopSet");
     replTest.stopSet();

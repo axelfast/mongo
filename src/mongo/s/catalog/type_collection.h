@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,12 +32,12 @@
 #include <boost/optional.hpp>
 #include <string>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/keypattern.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/util/uuid.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/keypattern.h"
+#include "monger/db/namespace_string.h"
+#include "monger/util/uuid.h"
 
-namespace mongo {
+namespace monger {
 
 class Status;
 template <typename T>
@@ -85,7 +85,7 @@ public:
      * Constructs a new DatabaseType object from BSON. Also does validation of the contents.
      *
      * Dropped collections accumulate in the collections list, through 3.6, so that
-     * mongos <= 3.4.x, when it retrieves the list from the config server, can delete its
+     * mongers <= 3.4.x, when it retrieves the list from the config server, can delete its
      * cache entries for dropped collections.  See SERVER-27475, SERVER-27474
      */
     static StatusWith<CollectionType> fromBSON(const BSONObj& source);
@@ -202,4 +202,4 @@ private:
     boost::optional<bool> _isAssignedShardKey;
 };
 
-}  // namespace mongo
+}  // namespace monger

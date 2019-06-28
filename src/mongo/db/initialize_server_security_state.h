@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-namespace mongo {
+namespace monger {
 
 class ServiceContext;
 
 /**
- * Perform security initialization activity for mongod and mongos.
+ * Perform security initialization activity for mongerd and mongers.
  */
 bool initializeServerSecurityGlobalState(ServiceContext* service);
 
-}  // namespace mongo
+}  // namespace monger

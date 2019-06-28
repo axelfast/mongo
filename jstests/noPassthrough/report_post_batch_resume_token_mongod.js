@@ -1,5 +1,5 @@
 /**
- * Tests mongoD-specific semantics of postBatchResumeToken for $changeStream aggregations.
+ * Tests mongerD-specific semantics of postBatchResumeToken for $changeStream aggregations.
  * @tags: [uses_transactions]
  */
 (function() {

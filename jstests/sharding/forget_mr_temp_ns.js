@@ -2,12 +2,12 @@
 // Tests whether we forget M/R's temporary namespaces for sharded output
 //
 
-var st = new ShardingTest({shards: 1, mongos: 1});
+var st = new ShardingTest({shards: 1, mongers: 1});
 
-var mongos = st.s0;
-var admin = mongos.getDB("admin");
-var coll = mongos.getCollection("foo.bar");
-var outputColl = mongos.getCollection((coll.getDB() + "") + ".mrOutput");
+var mongers = st.s0;
+var admin = mongers.getDB("admin");
+var coll = mongers.getCollection("foo.bar");
+var outputColl = mongers.getCollection((coll.getDB() + "") + ".mrOutput");
 
 var bulk = coll.initializeUnorderedBulkOp();
 for (var i = 0; i < 10; i++) {
@@ -27,11 +27,11 @@ out = coll.mapReduce(map, reduce, {out: {reduce: outputColl.getName(), sharded: 
 printjson(out);
 printjson(outputColl.find().toArray());
 
-var mongodThreadStats = st.shard0.getDB("admin").runCommand({shardConnPoolStats: 1}).threads;
-var mongosThreadStats = admin.runCommand({shardConnPoolStats: 1}).threads;
+var mongerdThreadStats = st.shard0.getDB("admin").runCommand({shardConnPoolStats: 1}).threads;
+var mongersThreadStats = admin.runCommand({shardConnPoolStats: 1}).threads;
 
-printjson(mongodThreadStats);
-printjson(mongosThreadStats);
+printjson(mongerdThreadStats);
+printjson(mongersThreadStats);
 
 var checkForSeenNS = function(threadStats, regex) {
     for (var i = 0; i < threadStats.length; i++) {
@@ -42,7 +42,7 @@ var checkForSeenNS = function(threadStats, regex) {
     }
 };
 
-checkForSeenNS(mongodThreadStats, /^foo.tmp/);
-checkForSeenNS(mongosThreadStats, /^foo.tmp/);
+checkForSeenNS(mongerdThreadStats, /^foo.tmp/);
+checkForSeenNS(mongersThreadStats, /^foo.tmp/);
 
 st.stop();

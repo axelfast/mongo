@@ -15,13 +15,13 @@ cd /data
 rm -rf /data/charybdefs
 rm -rf /data/thrift
 
-# Use the mongo branch and fork from here
-git clone -b mongo_42 https://github.com/markbenvenuto/charybdefs.git
+# Use the monger branch and fork from here
+git clone -b monger_42 https://github.com/markbenvenuto/charybdefs.git
 
-# Run the build script in the mongo branch
-cd charybdefs/mongo
+# Run the build script in the monger branch
+cd charybdefs/monger
 
 # Build and setup thrift and charybdefs
-PATH=/opt/mongodbtoolchain/v3/bin:$PATH bash ./build.sh
+PATH=/opt/mongerdbtoolchain/v3/bin:$PATH bash ./build.sh
 
 echo Done - charybdefs_setup.sh

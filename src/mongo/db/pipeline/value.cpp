@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,28 +27,28 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/value.h"
+#include "monger/db/pipeline/value.h"
 
 #include <boost/functional/hash.hpp>
 #include <cmath>
 #include <limits>
 
-#include "mongo/base/compare_numbers.h"
-#include "mongo/base/data_type_endian.h"
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/bson/bson_depth.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/pipeline/document.h"
-#include "mongo/db/query/datetime/date_time_support.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/represent_as.h"
-#include "mongo/util/str.h"
+#include "monger/base/compare_numbers.h"
+#include "monger/base/data_type_endian.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/bson/bson_depth.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/pipeline/document.h"
+#include "monger/db/query/datetime/date_time_support.h"
+#include "monger/platform/decimal128.h"
+#include "monger/util/hex.h"
+#include "monger/util/represent_as.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using boost::intrusive_ptr;
 using std::min;
@@ -873,7 +873,7 @@ void Value::hash_combine(size_t& seed,
             boost::hash_combine(seed, _storage.dateValue);
             break;
 
-        case mongo::NumberDecimal: {
+        case monger::NumberDecimal: {
             const Decimal128 dcml = getDecimal();
             if (dcml.toAbs().isGreater(Decimal128(std::numeric_limits<double>::max(),
                                                   Decimal128::kRoundTo34Digits,
@@ -1379,4 +1379,4 @@ Value Value::deserializeForIDL(const BSONElement& element) {
     return Value(element);
 }
 
-}  // namespace mongo
+}  // namespace monger

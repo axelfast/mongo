@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,11 +31,11 @@
 
 #include <vector>
 
-#include "mongo/db/jsobj.h"
-#include "mongo/db/query/index_entry.h"
-#include "mongo/db/query/query_knobs_gen.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/query/index_entry.h"
+#include "monger/db/query/query_knobs_gen.h"
 
-namespace mongo {
+namespace monger {
 
 struct QueryPlannerParams {
     QueryPlannerParams()
@@ -48,7 +48,7 @@ struct QueryPlannerParams {
         DEFAULT = 0,
 
         // Set this if you don't want a table scan.
-        // See http://docs.mongodb.org/manual/reference/parameters/
+        // See http://docs.mongerdb.org/manual/reference/parameters/
         NO_TABLE_SCAN = 1,
 
         // Set this if you *always* want a collscan outputted, even if there's an ixscan.  This
@@ -120,4 +120,4 @@ struct QueryPlannerParams {
     size_t maxIndexedSolutions;
 };
 
-}  // namespace mongo
+}  // namespace monger

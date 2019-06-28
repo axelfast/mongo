@@ -81,9 +81,9 @@ def generate_scons_cache_expansions():
 
     # Get the host uuid
     if sys.platform.startswith("win"):
-        system_id_path = r"c:\mongodb-build-system-id"
+        system_id_path = r"c:\mongerdb-build-system-id"
     else:
-        system_id_path = "/etc/mongodb-build-system-id"
+        system_id_path = "/etc/mongerdb-build-system-id"
 
     if os.path.isfile(system_id_path):
         with open(system_id_path, "r") as fh:

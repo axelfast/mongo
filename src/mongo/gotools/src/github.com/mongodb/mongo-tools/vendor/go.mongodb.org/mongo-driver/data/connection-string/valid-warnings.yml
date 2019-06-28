@@ -1,7 +1,7 @@
 tests:
     -
         description: "Unrecognized option keys are ignored"
-        uri: "mongodb://example.com/?foo=bar"
+        uri: "mongerdb://example.com/?foo=bar"
         valid: true
         warning: true
         hosts:
@@ -13,7 +13,7 @@ tests:
         options: ~
     -
         description: "Unsupported option values are ignored"
-        uri: "mongodb://example.com/?fsync=ifPossible"
+        uri: "mongerdb://example.com/?fsync=ifPossible"
         valid: true
         warning: true
         hosts:
@@ -25,7 +25,7 @@ tests:
         options: ~
     -
         description: "Repeated option keys"
-        uri: "mongodb://example.com/?replicaSet=test&replicaSet=test"
+        uri: "mongerdb://example.com/?replicaSet=test&replicaSet=test"
         valid: true
         warning: true
         hosts:
@@ -38,7 +38,7 @@ tests:
             replicaset: "test"
     -
         description: "Deprecated (or unknown) options are ignored if replacement exists"
-        uri: "mongodb://example.com/?wtimeout=5&wtimeoutMS=10"
+        uri: "mongerdb://example.com/?wtimeout=5&wtimeoutMS=10"
         valid: true
         warning: true
         hosts:

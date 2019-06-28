@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/s/sharding_mongod_test_fixture.h"
+#include "monger/s/sharding_mongerd_test_fixture.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 class ChunkType;
@@ -151,7 +151,7 @@ public:
 
 protected:
     /**
-     * Sets this node up as a mongod with sharding components for ClusterRole::ConfigServer.
+     * Sets this node up as a mongerd with sharding components for ClusterRole::ConfigServer.
      */
     void setUp() override;
     void tearDown() override;
@@ -178,4 +178,4 @@ private:
     std::unique_ptr<executor::NetworkTestEnv> _addShardNetworkTestEnv;
 };
 
-}  // namespace mongo
+}  // namespace monger

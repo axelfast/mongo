@@ -9,7 +9,7 @@ selector:
   # The following tests start their own ReplSetTest.
   - jstests/aggregation/testSlave.js
   - jstests/aggregation/sources/changeStream/*.js
-  # The following tests start their own mongod.
+  # The following tests start their own mongerd.
   - jstests/aggregation/bugs/cursor_timeout.js
   - jstests/aggregation/bugs/lookup_unwind_getmore.js
   - jstests/aggregation/bugs/lookup_unwind_killcursor.js
@@ -52,9 +52,9 @@ executor:
   fixture:
     class: ShardedClusterFixture
     num_shards: 2
-    mongos_options:
+    mongers_options:
       set_parameters:
         enableTestCommands: 1
-    mongod_options:
+    mongerd_options:
       set_parameters:
         enableTestCommands: 1

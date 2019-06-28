@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,41 +27,41 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/service_entry_point_mongod.h"
+#include "monger/db/service_entry_point_mongerd.h"
 
-#include "mongo/db/commands/fsync_locked.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/read_concern.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/speculative_majority_read_info.h"
-#include "mongo/db/s/implicit_create_collection.h"
-#include "mongo/db/s/scoped_operation_completion_sharding_actions.h"
-#include "mongo/db/s/shard_filtering_metadata_refresh.h"
-#include "mongo/db/s/sharding_config_optime_gossip.h"
-#include "mongo/db/s/sharding_state.h"
-#include "mongo/db/service_entry_point_common.h"
-#include "mongo/logger/redaction.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/metadata/config_server_metadata.h"
-#include "mongo/rpc/metadata/sharding_metadata.h"
-#include "mongo/s/cannot_implicitly_create_collection_info.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/stale_exception.h"
-#include "mongo/util/log.h"
+#include "monger/db/commands/fsync_locked.h"
+#include "monger/db/curop.h"
+#include "monger/db/read_concern.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/speculative_majority_read_info.h"
+#include "monger/db/s/implicit_create_collection.h"
+#include "monger/db/s/scoped_operation_completion_sharding_actions.h"
+#include "monger/db/s/shard_filtering_metadata_refresh.h"
+#include "monger/db/s/sharding_config_optime_gossip.h"
+#include "monger/db/s/sharding_state.h"
+#include "monger/db/service_entry_point_common.h"
+#include "monger/logger/redaction.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/metadata/config_server_metadata.h"
+#include "monger/rpc/metadata/sharding_metadata.h"
+#include "monger/s/cannot_implicitly_create_collection_info.h"
+#include "monger/s/grid.h"
+#include "monger/s/stale_exception.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 constexpr auto kLastCommittedOpTimeFieldName = "lastCommittedOpTime"_sd;
 
 class ServiceEntryPointMongod::Hooks final : public ServiceEntryPointCommon::Hooks {
 public:
     bool lockedForWriting() const override {
-        return mongo::lockedForWriting();
+        return monger::lockedForWriting();
     }
 
     void waitForReadConcern(OperationContext* opCtx,
@@ -71,7 +71,7 @@ public:
             ? PrepareConflictBehavior::kIgnoreConflicts
             : PrepareConflictBehavior::kEnforce;
 
-        Status rcStatus = mongo::waitForReadConcern(opCtx,
+        Status rcStatus = monger::waitForReadConcern(opCtx,
                                                     repl::ReadConcernArgs::get(opCtx),
                                                     invocation->allowsAfterClusterTime(),
                                                     prepareConflictBehavior);
@@ -95,7 +95,7 @@ public:
         if (!speculativeReadInfo.isSpeculativeRead()) {
             return;
         }
-        uassertStatusOK(mongo::waitForSpeculativeMajorityReadConcern(opCtx, speculativeReadInfo));
+        uassertStatusOK(monger::waitForSpeculativeMajorityReadConcern(opCtx, speculativeReadInfo));
     }
 
 
@@ -108,7 +108,7 @@ public:
         auto waitForWriteConcernAndAppendStatus = [&]() {
             WriteConcernResult res;
             auto waitForWCStatus =
-                mongo::waitForWriteConcern(opCtx, lastOpAfterRun, opCtx->getWriteConcern(), &res);
+                monger::waitForWriteConcern(opCtx, lastOpAfterRun, opCtx->getWriteConcern(), &res);
 
             CommandHelpers::appendCommandWCStatus(commandResponseBuilder, waitForWCStatus, res);
         };
@@ -161,7 +161,7 @@ public:
         // from the primary.
         if (repl::ReadConcernArgs::get(opCtx).getLevel() ==
             repl::ReadConcernLevel::kLinearizableReadConcern) {
-            uassertStatusOK(mongo::waitForLinearizableReadConcern(opCtx, 0));
+            uassertStatusOK(monger::waitForLinearizableReadConcern(opCtx, 0));
         }
     }
 
@@ -224,7 +224,7 @@ public:
             repl::OpTime lastOpTimeFromClient =
                 repl::ReplClientInfo::forClient(opCtx->getClient()).getLastOp();
             replCoord->prepareReplMetadata(request.body, lastOpTimeFromClient, metadataBob);
-            // For commands from mongos, append some info to help getLastError(w) work.
+            // For commands from mongers, append some info to help getLastError(w) work.
             // TODO: refactor out of here as part of SERVER-18236
             if (isShardingAware || isConfig) {
                 rpc::ShardingMetadata(lastOpTimeFromClient, replCoord->getElectionId())
@@ -261,4 +261,4 @@ DbResponse ServiceEntryPointMongod::handleRequest(OperationContext* opCtx, const
     return ServiceEntryPointCommon::handleRequest(opCtx, m, Hooks{});
 }
 
-}  // namespace mongo
+}  // namespace monger

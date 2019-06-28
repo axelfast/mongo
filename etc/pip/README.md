@@ -12,9 +12,9 @@ lint, build, and test MongoDB.
 ## How to modify a pypa project requirement in a component
 
 The most common edit of our requirements is likely a change to the constraints on a pypa project
-that we already use. For example, say that we currently require `pymongo >= 3.0, < 3.6.0` in the
+that we already use. For example, say that we currently require `pymonger >= 3.0, < 3.6.0` in the
 component `core`. You would like to use PyMongo 3.7, so you instead modify the line in
-`etc/pip/components/core.req` to read `pymongo >= 3.0, != 3.6.0`.
+`etc/pip/components/core.req` to read `pymonger >= 3.0, != 3.6.0`.
 
 ## How to add a new component (`*.req`) file
 

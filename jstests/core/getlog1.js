@@ -1,7 +1,7 @@
 // @tags: [does_not_support_stepdowns]
 
 // to run:
-//   ./mongo jstests/<this-file>
+//   ./monger jstests/<this-file>
 
 contains = function(arr, obj) {
     var i = arr.length;

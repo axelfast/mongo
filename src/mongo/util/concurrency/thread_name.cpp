@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/concurrency/thread_name.h"
+#include "monger/util/concurrency/thread_name.h"
 
 #if defined(__APPLE__) || defined(__linux__)
 #include <pthread.h>
@@ -49,13 +49,13 @@
 #include <sys/types.h>
 #endif
 
-#include "mongo/base/init.h"
-#include "mongo/config.h"
-#include "mongo/platform/atomic_word.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/init.h"
+#include "monger/config.h"
+#include "monger/platform/atomic_word.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -92,12 +92,12 @@ void setWindowsThreadName(DWORD dwThreadID, const char* threadName) {
 AtomicWord<long long> nextUnnamedThreadId{1};
 
 // It is unsafe to access threadName before its dynamic initialization has completed. Use
-// the execution of mongo initializers (which only happens once we have entered main, and
+// the execution of monger initializers (which only happens once we have entered main, and
 // therefore after dynamic initialization is complete) to signal that it is safe to use
 // 'threadName'.
-bool mongoInitializersHaveRun{};
+bool mongerInitializersHaveRun{};
 MONGO_INITIALIZER(ThreadNameInitializer)(InitializerContext*) {
-    mongoInitializersHaveRun = true;
+    mongerInitializersHaveRun = true;
     // The global initializers should only ever be run from main, so setting thread name
     // here makes sense.
     setThreadName("main");
@@ -114,7 +114,7 @@ thread_local StringData threadName;
 using for_debuggers::threadName;
 
 void setThreadName(StringData name) {
-    invariant(mongoInitializersHaveRun);
+    invariant(mongerInitializersHaveRun);
     threadNameStorage = name.toString();
     threadName = threadNameStorage;
 
@@ -160,7 +160,7 @@ void setThreadName(StringData name) {
 }
 
 StringData getThreadName() {
-    if (MONGO_unlikely(!mongoInitializersHaveRun)) {
+    if (MONGO_unlikely(!mongerInitializersHaveRun)) {
         // 'getThreadName' has been called before dynamic initialization for this
         // translation unit has completed, so return a fallback value rather than accessing
         // the 'threadName' variable, which requires dynamic initialization. We assume that
@@ -175,4 +175,4 @@ StringData getThreadName() {
     return threadName;
 }
 
-}  // namespace mongo
+}  // namespace monger

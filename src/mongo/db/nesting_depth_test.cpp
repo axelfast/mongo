@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <exception>
 
-#include "mongo/bson/bson_depth.h"
-#include "mongo/bson/bson_validate.h"
-#include "mongo/bson/json.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/executor/network_interface_integration_fixture.h"
-#include "mongo/util/concurrency/thread_pool.h"
+#include "monger/bson/bson_depth.h"
+#include "monger/bson/bson_validate.h"
+#include "monger/bson/json.h"
+#include "monger/client/connection_string.h"
+#include "monger/executor/network_interface_integration_fixture.h"
+#include "monger/util/concurrency/thread_pool.h"
 
-namespace mongo {
+namespace monger {
 namespace executor {
 namespace {
 class NestingDepthFixture : public NetworkInterfaceIntegrationFixture {
@@ -474,4 +474,4 @@ TEST_F(NestingDepthFixture, CannotReplaceArrayToExceedDepthLimit) {
 }
 }  // namespace
 }  // namespace executor
-}  // namespace mongo
+}  // namespace monger

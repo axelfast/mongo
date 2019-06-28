@@ -4,14 +4,14 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongoimport
+package mongerimport
 
 import (
 	"testing"
 
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
 
-	"github.com/mongodb/mongo-tools-common/testtype"
+	"github.com/mongerdb/monger-tools-common/testtype"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -44,12 +44,12 @@ func TestWriteConcernWithURIParsing(t *testing.T) {
 
 		Convey("Parsing with no writeconcern in URI should set a majority write concern",
 			validateParseOptions([]string{
-				"--uri", "mongodb://localhost:27017/test",
+				"--uri", "mongerdb://localhost:27017/test",
 			}, true, "", writeconcern.New(writeconcern.WMajority())))
 
 		Convey("Parsing with writeconcern only in URI should set it correctly",
 			validateParseOptions([]string{
-				"--uri", "mongodb://localhost:27017/test?w=2",
+				"--uri", "mongerdb://localhost:27017/test?w=2",
 			}, true, "", writeconcern.New(writeconcern.W(2))))
 
 		Convey("Parsing with writeconcern only in command line should set it correctly",
@@ -59,7 +59,7 @@ func TestWriteConcernWithURIParsing(t *testing.T) {
 
 		Convey("Parsing with writeconcern in URI and command line should set to command line",
 			validateParseOptions([]string{
-				"--uri", "mongodb://localhost:27017/test?w=2",
+				"--uri", "mongerdb://localhost:27017/test?w=2",
 				"--writeConcern", "{w: 3}",
 			}, true, "{w: 3}", writeconcern.New(writeconcern.W(3))))
 	})

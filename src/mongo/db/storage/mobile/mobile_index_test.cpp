@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,17 +31,17 @@
 #include <boost/system/error_code.hpp>
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/storage/mobile/mobile_index.h"
-#include "mongo/db/storage/mobile/mobile_recovery_unit.h"
-#include "mongo/db/storage/mobile/mobile_session_pool.h"
-#include "mongo/db/storage/sorted_data_interface_test_harness.h"
-#include "mongo/platform/basic.h"
-#include "mongo/unittest/temp_dir.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/base/init.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/storage/mobile/mobile_index.h"
+#include "monger/db/storage/mobile/mobile_recovery_unit.h"
+#include "monger/db/storage/mobile/mobile_session_pool.h"
+#include "monger/db/storage/sorted_data_interface_test_harness.h"
+#include "monger/platform/basic.h"
+#include "monger/unittest/temp_dir.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 int inc = 0;
 
 class MobileIndexTestHarnessHelper final : public virtual SortedDataInterfaceHarnessHelper {
@@ -83,7 +83,7 @@ std::unique_ptr<HarnessHelper> makeHarnessHelper() {
 }
 
 MONGO_INITIALIZER(RegisterHarnessFactory)(InitializerContext* const) {
-    mongo::registerHarnessHelperFactory(makeHarnessHelper);
+    monger::registerHarnessHelperFactory(makeHarnessHelper);
     return Status::OK();
 }
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/sessions_collection_sharded.h"
+#include "monger/db/sessions_collection_sharded.h"
 
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/query_request.h"
-#include "mongo/db/sessions_collection_rs.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/rpc/op_msg.h"
-#include "mongo/rpc/op_msg_rpc_impls.h"
-#include "mongo/s/catalog_cache.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/query/cluster_find.h"
-#include "mongo/s/write_ops/batch_write_exec.h"
-#include "mongo/s/write_ops/batched_command_request.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/s/write_ops/cluster_write.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/query_request.h"
+#include "monger/db/sessions_collection_rs.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/rpc/op_msg.h"
+#include "monger/rpc/op_msg_rpc_impls.h"
+#include "monger/s/catalog_cache.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/grid.h"
+#include "monger/s/query/cluster_find.h"
+#include "monger/s/write_ops/batch_write_exec.h"
+#include "monger/s/write_ops/batched_command_request.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/s/write_ops/cluster_write.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -228,4 +228,4 @@ StatusWith<LogicalSessionIdSet> SessionsCollectionSharded::findRemovedSessions(
                          send);
 }
 
-}  // namespace mongo
+}  // namespace monger

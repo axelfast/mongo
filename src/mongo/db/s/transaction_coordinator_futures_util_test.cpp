@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,17 +27,17 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/s/transaction_coordinator_futures_util.h"
-#include "mongo/s/catalog/sharding_catalog_client_mock.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/shard_server_test_fixture.h"
-#include "mongo/unittest/barrier.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/s/transaction_coordinator_futures_util.h"
+#include "monger/s/catalog/sharding_catalog_client_mock.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/shard_server_test_fixture.h"
+#include "monger/unittest/barrier.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 namespace txn {
 namespace {
 
@@ -822,4 +822,4 @@ TEST_F(DoWhileTest, LoopObeysShutdown) {
 
 }  // namespace
 }  // namespace txn
-}  // namespace mongo
+}  // namespace monger

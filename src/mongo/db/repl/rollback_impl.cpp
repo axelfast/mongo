@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,46 +28,46 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kReplicationRollback
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kReplicationRollback
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/rollback_impl.h"
-#include "mongo/db/repl/rollback_impl_gen.h"
+#include "monger/db/repl/rollback_impl.h"
+#include "monger/db/repl/rollback_impl_gen.h"
 
 #include <fmt/format.h>
 
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/db/background.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/concurrency/replication_state_transition_lock_guard.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/index_builds_coordinator.h"
-#include "mongo/db/kill_sessions_local.h"
-#include "mongo/db/logical_time_validator.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/apply_ops.h"
-#include "mongo/db/repl/drop_pending_collection_reaper.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_process.h"
-#include "mongo/db/repl/roll_back_local_operations.h"
-#include "mongo/db/repl/storage_interface.h"
-#include "mongo/db/repl/transaction_oplog_application.h"
-#include "mongo/db/s/shard_identity_rollback_notifier.h"
-#include "mongo/db/s/type_shard_identity.h"
-#include "mongo/db/server_recovery.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/session_txn_record_gen.h"
-#include "mongo/db/storage/remove_saver.h"
-#include "mongo/db/transaction_history_iterator.h"
-#include "mongo/s/catalog/type_config_version.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/db/background.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/commands.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/concurrency/replication_state_transition_lock_guard.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/index_builds_coordinator.h"
+#include "monger/db/kill_sessions_local.h"
+#include "monger/db/logical_time_validator.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/apply_ops.h"
+#include "monger/db/repl/drop_pending_collection_reaper.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_process.h"
+#include "monger/db/repl/roll_back_local_operations.h"
+#include "monger/db/repl/storage_interface.h"
+#include "monger/db/repl/transaction_oplog_application.h"
+#include "monger/db/s/shard_identity_rollback_notifier.h"
+#include "monger/db/s/type_shard_identity.h"
+#include "monger/db/server_recovery.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/session_txn_record_gen.h"
+#include "monger/db/storage/remove_saver.h"
+#include "monger/db/transaction_history_iterator.h"
+#include "monger/s/catalog/type_config_version.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
 using namespace fmt::literals;
@@ -1250,4 +1250,4 @@ void RollbackImpl::_summarizeRollback(OperationContext* opCtx) const {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

@@ -1,4 +1,4 @@
-// Tests that mongos will wait for CSRS replica set to initiate.
+// Tests that mongers will wait for CSRS replica set to initiate.
 
 load("jstests/libs/feature_compatibility_version.js");
 
@@ -6,26 +6,26 @@ var configRS = new ReplSetTest({name: "configRS", nodes: 1, useHostName: true});
 configRS.startSet({configsvr: '', journal: "", storageEngine: 'wiredTiger'});
 var replConfig = configRS.getReplSetConfig();
 replConfig.configsvr = true;
-var mongos = MongoRunner.runMongos({configdb: configRS.getURL(), waitForConnect: false});
+var mongers = MongoRunner.runMongos({configdb: configRS.getURL(), waitForConnect: false});
 
 assert.throws(function() {
-    new Mongo(mongos.host);
+    new Mongo(mongers.host);
 });
 
 jsTestLog("Initiating CSRS");
 configRS.initiate(replConfig);
 
-// Ensure the featureCompatibilityVersion is lastStableFCV so that the mongos can connect if it is
+// Ensure the featureCompatibilityVersion is lastStableFCV so that the mongers can connect if it is
 // binary version last-stable.
 assert.commandWorked(
     configRS.getPrimary().adminCommand({setFeatureCompatibilityVersion: lastStableFCV}));
 
-jsTestLog("getting mongos");
+jsTestLog("getting mongers");
 var e;
 assert.soon(
     function() {
         try {
-            mongos2 = new Mongo(mongos.host);
+            mongers2 = new Mongo(mongers.host);
             return true;
         } catch (ex) {
             e = ex;
@@ -33,11 +33,11 @@ assert.soon(
         }
     },
     function() {
-        return "mongos " + mongos.host +
+        return "mongers " + mongers.host +
             " did not begin accepting connections in time; final exception: " + tojson(e);
     });
 
-jsTestLog("got mongos");
-assert.commandWorked(mongos2.getDB('admin').runCommand('serverStatus'));
+jsTestLog("got mongers");
+assert.commandWorked(mongers2.getDB('admin').runCommand('serverStatus'));
 configRS.stopSet();
-MongoRunner.stopMongos(mongos);
+MongoRunner.stopMongos(mongers);

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,9 +29,9 @@
 
 #pragma once
 
-#include "mongo/db/pipeline/document_comparator.h"
-#include "mongo/db/pipeline/value_comparator.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/pipeline/document_comparator.h"
+#include "monger/db/pipeline/value_comparator.h"
+#include "monger/unittest/unittest.h"
 
 /**
  * Use to compare two instances of type Value under the default ValueComparator in unit tests.
@@ -57,9 +57,9 @@
  * Document/Value comparison utility macro. Do not use directly.
  */
 #define _ASSERT_DOCVAL_COMPARISON(NAME, a, b) \
-    ::mongo::unittest::assertComparison_##NAME(__FILE__, __LINE__, #a, #b, a, b)
+    ::monger::unittest::assertComparison_##NAME(__FILE__, __LINE__, #a, #b, a, b)
 
-namespace mongo {
+namespace monger {
 namespace unittest {
 
 #define _DECLARE_DOCVAL_CMP_FUNC(DOCVAL, NAME)                       \
@@ -86,4 +86,4 @@ _DECLARE_DOCVAL_CMP_FUNC(Document, NE);
 #undef _DECLARE_DOCVAL_CMP_FUNC
 
 }  // namespace unittest
-}  // namespace mongo
+}  // namespace monger

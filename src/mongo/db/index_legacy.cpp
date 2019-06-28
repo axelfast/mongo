@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/db/index_legacy.h"
+#include "monger/db/index_legacy.h"
 
 #include <string>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/client.h"
-#include "mongo/db/fts/fts_spec.h"
-#include "mongo/db/index/expression_keys_private.h"
-#include "mongo/db/index/s2_access_method.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/jsobj.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/client.h"
+#include "monger/db/fts/fts_spec.h"
+#include "monger/db/index/expression_keys_private.h"
+#include "monger/db/index/s2_access_method.h"
+#include "monger/db/index_names.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 // static
 StatusWith<BSONObj> IndexLegacy::adjustIndexSpecObject(const BSONObj& obj) {
@@ -85,4 +85,4 @@ BSONObj IndexLegacy::getMissingField(Collection* collection, const BSONObj& info
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

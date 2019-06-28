@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <functional>
 
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/server_options.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/server_options.h"
 
-namespace mongo {
+namespace monger {
 class BSONObj;
 class CollatorInterface;
 class NamespaceString;
@@ -95,4 +95,4 @@ extern std::function<void(std::set<StringData>& allowedIndexFieldNames)>
     filterAllowedIndexFieldNames;
 
 }  // namespace index_key_validate
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,14 +31,14 @@
 
 #include <functional>
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/op_observer.h"
-#include "mongo/db/repl/oplog_entry.h"
-#include "mongo/db/repl/roll_back_local_operations.h"
-#include "mongo/db/repl/rollback.h"
-#include "mongo/db/repl/storage_interface.h"
+#include "monger/base/status_with.h"
+#include "monger/db/op_observer.h"
+#include "monger/db/repl/oplog_entry.h"
+#include "monger/db/repl/roll_back_local_operations.h"
+#include "monger/db/repl/rollback.h"
+#include "monger/db/repl/storage_interface.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 
@@ -498,4 +498,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

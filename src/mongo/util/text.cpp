@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/text.h"
+#include "monger/util/text.h"
 
 #include <boost/integer_traits.hpp>
 #include <errno.h>
@@ -41,11 +41,11 @@
 #include <io.h>
 #endif
 
-#include "mongo/platform/basic.h"
-#include "mongo/util/allocator.h"
-#include "mongo/util/str.h"
+#include "monger/platform/basic.h"
+#include "monger/util/allocator.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 // --- StringSplitter ----
 
@@ -277,7 +277,7 @@ WindowsCommandLine::WindowsCommandLine(int argc, wchar_t* argvW[], wchar_t* envp
         utf8argLength.push_back(argLength);
         blockSize += argLength;
     }
-    _argv = static_cast<char**>(mongoMalloc(blockSize));
+    _argv = static_cast<char**>(mongerMalloc(blockSize));
     for (int i = 0; i < argc; ++i) {
         _argv[i] = reinterpret_cast<char*>(_argv) + blockPtr;
         strcpy_s(_argv[i], utf8argLength[i], utf8args[i].c_str());
@@ -300,7 +300,7 @@ WindowsCommandLine::WindowsCommandLine(int argc, wchar_t* argvW[], wchar_t* envp
         utf8envLength.push_back(envLength);
         blockSize += envLength;
     }
-    _envp = static_cast<char**>(mongoMalloc(blockSize));
+    _envp = static_cast<char**>(mongerMalloc(blockSize));
     size_t i;
     for (i = 0; i < envCount; ++i) {
         _envp[i] = reinterpret_cast<char*>(_envp) + blockPtr;
@@ -362,4 +362,4 @@ std::string constructUtf8WindowsCommandLine(const std::vector<std::string>& argv
     }
     return commandLine.str();
 }
-}  // namespace mongo
+}  // namespace monger

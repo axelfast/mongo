@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/status.h"
+#include "monger/scripting/mozjs/status.h"
 
-#include "mongo/scripting/jsexception.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/internedstring.h"
-#include "mongo/scripting/mozjs/objectwrapper.h"
-#include "mongo/scripting/mozjs/valuereader.h"
-#include "mongo/scripting/mozjs/wrapconstrainedmethod.h"
+#include "monger/scripting/jsexception.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/internedstring.h"
+#include "monger/scripting/mozjs/objectwrapper.h"
+#include "monger/scripting/mozjs/valuereader.h"
+#include "monger/scripting/mozjs/wrapconstrainedmethod.h"
 
-namespace mongo {
+namespace monger {
 namespace mozjs {
 
 const char* const MongoStatusInfo::className = "MongoStatus";
@@ -151,4 +151,4 @@ void MongoStatusInfo::postInstall(JSContext* cx, JS::HandleObject global, JS::Ha
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

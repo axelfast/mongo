@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -29,14 +29,14 @@
 # IDL Unit Tests IDL file
 global:
     # Use a nested namespace simply to exercise nested namespace support for the code generator.
-    cpp_namespace: "mongo::idl::test"
+    cpp_namespace: "monger::idl::test"
     cpp_includes:
-        - "mongo/idl/idl_test_types.h"
-        - "mongo/idl/idl_test.h"
+        - "monger/idl/idl_test_types.h"
+        - "monger/idl/idl_test.h"
 
 imports:
-    - "mongo/idl/basic_types.idl"
-    - "mongo/idl/unittest_import.idl"
+    - "monger/idl/basic_types.idl"
+    - "monger/idl/unittest_import.idl"
 
 types:
 
@@ -50,9 +50,9 @@ types:
         bson_serialization_type: bindata
         bindata_subtype: generic
         description: "A MongoDB BinDataCustomType"
-        cpp_type: "mongo::BinDataCustomType"
-        serializer: mongo::BinDataCustomType::serializeToBSON
-        deserializer: mongo::BinDataCustomType::parseFromBSON
+        cpp_type: "monger::BinDataCustomType"
+        serializer: monger::BinDataCustomType::serializeToBSON
+        deserializer: monger::BinDataCustomType::parseFromBSON
 
 ##################################################################################################
 #
@@ -63,9 +63,9 @@ types:
     any_basic_type:
         bson_serialization_type: any
         description: "An Any Type"
-        cpp_type: "mongo::AnyBasicType"
-        serializer: mongo::AnyBasicType::serializeToBSON
-        deserializer: mongo::AnyBasicType::parseFromBSON
+        cpp_type: "monger::AnyBasicType"
+        serializer: monger::AnyBasicType::serializeToBSON
+        deserializer: monger::AnyBasicType::parseFromBSON
 
 ##################################################################################################
 #
@@ -76,9 +76,9 @@ types:
     object_basic_type:
         bson_serialization_type: object
         description: "An object Type"
-        cpp_type: "mongo::ObjectBasicType"
-        serializer: mongo::ObjectBasicType::serializeToBSON
-        deserializer: mongo::ObjectBasicType::parseFromBSON
+        cpp_type: "monger::ObjectBasicType"
+        serializer: monger::ObjectBasicType::serializeToBSON
+        deserializer: monger::ObjectBasicType::parseFromBSON
 
 ##################################################################################################
 #
@@ -89,16 +89,16 @@ types:
     ChainedType:
         bson_serialization_type: chain
         description: "An Chain Type to test chaining"
-        cpp_type: "mongo::ChainedType"
-        serializer: mongo::ChainedType::serializeToBSON
-        deserializer: mongo::ChainedType::parseFromBSON
+        cpp_type: "monger::ChainedType"
+        serializer: monger::ChainedType::serializeToBSON
+        deserializer: monger::ChainedType::parseFromBSON
 
     AnotherChainedType:
         bson_serialization_type: chain
         description: "Another Chain Type to test chaining"
-        cpp_type: "mongo::AnotherChainedType"
-        serializer: mongo::AnotherChainedType::serializeToBSON
-        deserializer: mongo::AnotherChainedType::parseFromBSON
+        cpp_type: "monger::AnotherChainedType"
+        serializer: monger::AnotherChainedType::serializeToBSON
+        deserializer: monger::AnotherChainedType::parseFromBSON
 
 
 ##################################################################################################

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,16 +31,16 @@
 
 #include <string>
 
-#include "mongo/db/client.h"
-#include "mongo/db/repl/repl_settings.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/repl/replication_coordinator_impl.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/executor/network_interface_mock.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/db/client.h"
+#include "monger/db/repl/repl_settings.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/repl/replication_coordinator_impl.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/executor/network_interface_mock.h"
+#include "monger/executor/task_executor.h"
+#include "monger/unittest/unittest.h"
 
-namespace mongo {
+namespace monger {
 
 class BSONObj;
 struct HostAndPort;
@@ -330,4 +330,4 @@ private:
 };
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

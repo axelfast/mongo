@@ -2,7 +2,7 @@
 
 class IndexBuildTest {
     /**
-     * Starts an index build in a separate mongo shell process with given options.
+     * Starts an index build in a separate monger shell process with given options.
      */
     static startIndexBuild(conn, ns, keyPattern, options) {
         options = options || {};

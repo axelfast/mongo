@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kControl;
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kControl;
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/util/exit.h"
+#include "monger/util/exit.h"
 
 #include <boost/optional.hpp>
 #include <functional>
 #include <stack>
 
-#include "mongo/stdx/condition_variable.h"
-#include "mongo/stdx/mutex.h"
-#include "mongo/stdx/thread.h"
-#include "mongo/util/log.h"
-#include "mongo/util/quick_exit.h"
+#include "monger/stdx/condition_variable.h"
+#include "monger/stdx/mutex.h"
+#include "monger/stdx/thread.h"
+#include "monger/util/log.h"
+#include "monger/util/quick_exit.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -173,4 +173,4 @@ void shutdownNoTerminate(const ShutdownTaskArgs& shutdownArgs) {
     shutdownTasksComplete.notify_all();
 }
 
-}  // namespace mongo
+}  // namespace monger

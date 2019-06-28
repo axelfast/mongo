@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/db/storage/ephemeral_for_test/ephemeral_for_test_engine.h"
+#include "monger/db/storage/ephemeral_for_test/ephemeral_for_test_engine.h"
 
 #include <memory>
 
-#include "mongo/base/init.h"
-#include "mongo/db/storage/kv/kv_engine_test_harness.h"
+#include "monger/base/init.h"
+#include "monger/db/storage/kv/kv_engine_test_harness.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 class EphemeralForTestKVHarnessHelper : public KVHarnessHelper {
@@ -65,4 +65,4 @@ MONGO_INITIALIZER(RegisterKVHarnessFactory)(InitializerContext*) {
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

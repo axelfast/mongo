@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,29 +34,29 @@
 #error This file assumes a UNICODE WIN32 build
 #endif
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <string>
 #include <vector>
 #include <versionhelpers.h>
 #include <winhttp.h>
 
-#include "mongo/base/status.h"
-#include "mongo/base/string_data.h"
-#include "mongo/bson/bsonobj.h"
-#include "mongo/bson/bsonobjbuilder.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/errno_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/http_client.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
-#include "mongo/util/text.h"
-#include "mongo/util/winutil.h"
+#include "monger/base/status.h"
+#include "monger/base/string_data.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/bson/bsonobjbuilder.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/errno_util.h"
+#include "monger/util/log.h"
+#include "monger/util/net/http_client.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
+#include "monger/util/text.h"
+#include "monger/util/winutil.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const LPCWSTR kAcceptTypes[] = {
@@ -311,4 +311,4 @@ BSONObj HttpClient::getServerStatus() {
                 << "winhttp");
 }
 
-}  // namespace mongo
+}  // namespace monger

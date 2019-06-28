@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -30,16 +30,16 @@
 #pragma once
 
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/exec/requires_collection_stage.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/ops/parsed_update.h"
-#include "mongo/db/ops/update_request.h"
-#include "mongo/db/ops/update_result.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/update/update_driver.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/exec/requires_collection_stage.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/ops/parsed_update.h"
+#include "monger/db/ops/update_request.h"
+#include "monger/db/ops/update_result.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/update/update_driver.h"
 
-namespace mongo {
+namespace monger {
 
 class OperationContext;
 class OpDebug;
@@ -250,4 +250,4 @@ private:
     mutablebson::DamageVector _damages;
 };
 
-}  // namespace mongo
+}  // namespace monger

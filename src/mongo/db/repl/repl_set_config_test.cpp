@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/bson/json.h"
-#include "mongo/bson/mutable/document.h"
-#include "mongo/bson/mutable/element.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/server_options.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/bson/json.h"
+#include "monger/bson/mutable/document.h"
+#include "monger/bson/mutable/element.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/server_options.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -2113,4 +2113,4 @@ TEST(ReplSetConfig, ReplSetId) {
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

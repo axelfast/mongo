@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kCommand
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kCommand
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/client.h"
-#include "mongo/db/command_generic_argument.h"
-#include "mongo/db/commands.h"
-#include "mongo/db/curop.h"
-#include "mongo/db/field_parser.h"
-#include "mongo/db/lasterror.h"
-#include "mongo/db/repl/bson_extract_optime.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/write_concern.h"
-#include "mongo/util/log.h"
+#include "monger/db/client.h"
+#include "monger/db/command_generic_argument.h"
+#include "monger/db/commands.h"
+#include "monger/db/curop.h"
+#include "monger/db/field_parser.h"
+#include "monger/db/lasterror.h"
+#include "monger/db/repl/bson_extract_optime.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/write_concern.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using std::string;
@@ -134,7 +134,7 @@ public:
         // reported with ok : 0.0, to match legacy behavior.
         //
         // There is a special case when "wOpTime" and "wElectionId" are explicitly provided by
-        // the client (mongos) - in this case we *only* enforce the write concern if it is
+        // the client (mongers) - in this case we *only* enforce the write concern if it is
         // valid.
         //
         // We always need to either report "err" (if ok : 1) or "errmsg" (if ok : 0), even if
@@ -252,7 +252,7 @@ public:
         if (electionIdPresent) {
             if (repl::ReplicationCoordinator::get(opCtx)->getReplicationMode() !=
                 repl::ReplicationCoordinator::modeReplSet) {
-                // Ignore electionIds of 0 from mongos.
+                // Ignore electionIds of 0 from mongers.
                 if (electionId != OID()) {
                     errmsg = "wElectionId passed but no replication active";
                     result.append("code", ErrorCodes::BadValue);
@@ -297,4 +297,4 @@ public:
 } cmdGetLastError;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

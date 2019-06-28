@@ -48,14 +48,14 @@ if platform_family? 'debian'
 
   # dpkg returns 1 if dependencies are not satisfied, which they will not be
   # for enterprise builds. We install dependencies in the next block.
-  execute 'install mongod' do
+  execute 'install mongerd' do
     command 'dpkg -i `find . -name "*server*.deb"`'
     cwd homedir
     returns [0, 1]
   end
 
   # install the tools so we can test install_compass
-  execute 'install mongo tools' do
+  execute 'install monger tools' do
     command 'dpkg -i `find . -name "*tools*.deb"`'
     cwd homedir
     returns [0, 1]
@@ -74,25 +74,25 @@ if platform_family? 'debian'
     command 'apt-get install -y python'
   end
 
-  execute 'install mongo shell' do
+  execute 'install monger shell' do
     command 'dpkg -i `find . -name "*shell*.deb"`'
     cwd homedir
   end
 end
 
 if platform_family? 'rhel'
-  execute 'install mongod' do
+  execute 'install mongerd' do
     command 'yum install -y `find . -name "*server*.rpm"`'
     cwd homedir
   end
 
   # install the tools so we can test install_compass
-  execute 'install mongo tools' do
+  execute 'install monger tools' do
     command 'yum install -y `find . -name "*tools*.rpm"`'
     cwd homedir
   end
 
-  execute 'install mongo shell' do
+  execute 'install monger shell' do
     command 'yum install -y `find . -name "*shell*.rpm"`'
     cwd homedir
   end
@@ -125,12 +125,12 @@ if platform_family? 'suse'
     end
   end
 
-  execute 'install mongod' do
+  execute 'install mongerd' do
     command 'zypper -n install `find . -name "*server*.rpm"`'
     cwd homedir
   end
 
-  execute 'install mongo' do
+  execute 'install monger' do
     command 'zypper -n install `find . -name "*shell*.rpm"`'
     cwd homedir
   end
@@ -141,7 +141,7 @@ inspec_wait = <<HEREDOC
 ulimit -v unlimited
 for i in {1..60}
 do
-  mongo --eval "db.smoke.insert({answer: 42})"
+  monger --eval "db.smoke.insert({answer: 42})"
   if [ $? -eq 0 ]
   then
     exit 0

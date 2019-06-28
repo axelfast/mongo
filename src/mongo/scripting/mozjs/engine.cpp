@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,25 +27,25 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/scripting/mozjs/engine.h"
+#include "monger/scripting/mozjs/engine.h"
 
 #include <js/Initialization.h>
 
-#include "mongo/db/operation_context.h"
-#include "mongo/scripting/mozjs/engine_gen.h"
-#include "mongo/scripting/mozjs/implscope.h"
-#include "mongo/scripting/mozjs/proxyscope.h"
-#include "mongo/util/log.h"
+#include "monger/db/operation_context.h"
+#include "monger/scripting/mozjs/engine_gen.h"
+#include "monger/scripting/mozjs/implscope.h"
+#include "monger/scripting/mozjs/proxyscope.h"
+#include "monger/util/log.h"
 
 namespace js {
 void DisableExtraThreads();
 }
 
-namespace mongo {
+namespace monger {
 
 void ScriptEngine::setup() {
     if (getGlobalScriptEngine())
@@ -73,11 +73,11 @@ MozJSScriptEngine::~MozJSScriptEngine() {
     JS_ShutDown();
 }
 
-mongo::Scope* MozJSScriptEngine::createScope() {
+monger::Scope* MozJSScriptEngine::createScope() {
     return new MozJSProxyScope(this);
 }
 
-mongo::Scope* MozJSScriptEngine::createScopeForCurrentThread() {
+monger::Scope* MozJSScriptEngine::createScopeForCurrentThread() {
     return new MozJSImplScope(this);
 }
 
@@ -168,4 +168,4 @@ void MozJSScriptEngine::unregisterOperation(unsigned int opId) {
 }
 
 }  // namespace mozjs
-}  // namespace mongo
+}  // namespace monger

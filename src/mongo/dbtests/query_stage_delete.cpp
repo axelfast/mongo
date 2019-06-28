@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,22 +31,22 @@
  * This file tests db/exec/delete.cpp.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection.h"
-#include "mongo/db/catalog/database.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/db_raii.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/queued_data_stage.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/service_context.h"
-#include "mongo/dbtests/dbtests.h"
+#include "monger/db/catalog/collection.h"
+#include "monger/db/catalog/database.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/db_raii.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/queued_data_stage.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/service_context.h"
+#include "monger/dbtests/dbtests.h"
 
 namespace QueryStageDelete {
 

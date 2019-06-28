@@ -20,16 +20,16 @@
         rs: {nodes: 1, setParameter: {internalQueryExecYieldIterations: 1}}
     });
 
-    // Obtain one mongoS connection and a second direct to the shard.
+    // Obtain one mongerS connection and a second direct to the shard.
     const rsConn = st.rs0.getPrimary();
-    const mongosConn = st.s;
+    const mongersConn = st.s;
 
-    const mongosDB = mongosConn.getDB("currentop_query");
-    const mongosColl = mongosDB.currentop_query;
+    const mongersDB = mongersConn.getDB("currentop_query");
+    const mongersColl = mongersDB.currentop_query;
 
     // Enable sharding on the the test database and ensure that the primary is on shard0.
-    assert.commandWorked(mongosDB.adminCommand({enableSharding: mongosDB.getName()}));
-    st.ensurePrimaryShard(mongosDB.getName(), rsConn.name);
+    assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));
+    st.ensurePrimaryShard(mongersDB.getName(), rsConn.name);
 
     // On a sharded cluster, aggregations which are dispatched to multiple shards first establish
     // zero-batch cursors and only hit the failpoints on the following getMore. This helper takes a
@@ -45,9 +45,9 @@
 
     // Drops and re-creates the sharded test collection.
     function dropAndRecreateTestCollection() {
-        assert(mongosColl.drop());
-        assert.commandWorked(mongosDB.adminCommand(
-            {shardCollection: mongosColl.getFullName(), key: {_id: "hashed"}}));
+        assert(mongersColl.drop());
+        assert.commandWorked(mongersDB.adminCommand(
+            {shardCollection: mongersColl.getFullName(), key: {_id: "hashed"}}));
     }
 
     /**
@@ -63,7 +63,7 @@
      * tests designed to exercise that scenario. If false, we expect the entire operation to be
      * returned.
      * @params {boolean} localOps - if true, we expect currentOp to return operations running on a
-     * mongoS itself rather than on the shards.
+     * mongerS itself rather than on the shards.
      */
     function runTests({conn, readMode, currentOp, truncatedOps, localOps}) {
         const testDB = conn.getDB("currentop_query");
@@ -107,7 +107,7 @@
                 cmdObj: {
                     configureFailPoint: "setYieldAllLocksHang",
                     mode: "alwaysOn",
-                    data: {namespace: mongosColl.getFullName()}
+                    data: {namespace: mongersColl.getFullName()}
                 }
             });
 
@@ -403,8 +403,8 @@
 
                 TestData.commandResult = cmdRes;
 
-                // If this is a non-localOps test running via mongoS, then the cursorID we obtained
-                // above is the ID of the mongoS cursor, and will not match the IDs of any of the
+                // If this is a non-localOps test running via mongerS, then the cursorID we obtained
+                // above is the ID of the mongerS cursor, and will not match the IDs of any of the
                 // individual shard cursors in the currentOp output. We therefore don't perform an
                 // exact match on 'command.getMore', but only verify that the cursor ID is non-zero.
                 const filter = {
@@ -622,7 +622,7 @@
         };
     }
 
-    for (let connType of[rsConn, mongosConn]) {
+    for (let connType of[rsConn, mongersConn]) {
         for (let readMode of["commands", "legacy"]) {
             for (let truncatedOps of[false, true]) {
                 for (let localOps of[false, true]) {

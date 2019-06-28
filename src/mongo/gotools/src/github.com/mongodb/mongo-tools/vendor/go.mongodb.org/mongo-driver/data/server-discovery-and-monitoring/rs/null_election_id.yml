@@ -1,6 +1,6 @@
 description: "Primaries with and without electionIds"
 
-uri: "mongodb://a/?replicaSet=rs"
+uri: "mongerdb://a/?replicaSet=rs"
 
 phases: [
 

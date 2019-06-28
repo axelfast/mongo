@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <algorithm>
 #include <cmath>
@@ -40,22 +40,22 @@
 #include <typeinfo>
 #include <vector>
 
-#include "mongo/base/owned_pointer_vector.h"
-#include "mongo/base/simple_string_data_comparator.h"
-#include "mongo/bson/bsonobj_comparator.h"
-#include "mongo/bson/simple_bsonobj_comparator.h"
-#include "mongo/config.h"
-#include "mongo/db/storage/key_string.h"
-#include "mongo/platform/decimal128.h"
-#include "mongo/stdx/future.h"
-#include "mongo/unittest/death_test.h"
-#include "mongo/unittest/unittest.h"
-#include "mongo/util/hex.h"
-#include "mongo/util/log.h"
-#include "mongo/util/timer.h"
+#include "monger/base/owned_pointer_vector.h"
+#include "monger/base/simple_string_data_comparator.h"
+#include "monger/bson/bsonobj_comparator.h"
+#include "monger/bson/simple_bsonobj_comparator.h"
+#include "monger/config.h"
+#include "monger/db/storage/key_string.h"
+#include "monger/platform/decimal128.h"
+#include "monger/stdx/future.h"
+#include "monger/unittest/death_test.h"
+#include "monger/unittest/unittest.h"
+#include "monger/util/hex.h"
+#include "monger/util/log.h"
+#include "monger/util/timer.h"
 
 using std::string;
-using namespace mongo;
+using namespace monger;
 
 BSONObj toBson(const KeyString& ks, Ordering ord) {
     return KeyString::toBson(ks.getBuffer(), ks.getSize(), ord, ks.getTypeBits());
@@ -74,10 +74,10 @@ Ordering ALL_ASCENDING = Ordering::make(BSONObj());
 Ordering ONE_ASCENDING = Ordering::make(BSON("a" << 1));
 Ordering ONE_DESCENDING = Ordering::make(BSON("a" << -1));
 
-class KeyStringTest : public mongo::unittest::Test {
+class KeyStringTest : public monger::unittest::Test {
 public:
     void run() {
-        auto base = static_cast<mongo::unittest::Test*>(this);
+        auto base = static_cast<monger::unittest::Test*>(this);
         try {
             version = KeyString::Version::V0;
             base->run();
@@ -85,7 +85,7 @@ public:
             base->run();
         } catch (...) {
             log() << "exception while testing KeyString version "
-                  << mongo::KeyString::versionToString(version);
+                  << monger::KeyString::versionToString(version);
             throw;
         }
     }
@@ -1507,7 +1507,7 @@ void perfTest(KeyString::Version version, const Numbers& numbers) {
         numbers.begin(), numbers.end(), SimpleBSONObjComparator::kInstance.makeLessThan());
 
     log() << 1E3 * micros / static_cast<double>(iters * numbers.size()) << " ns per "
-          << mongo::KeyString::versionToString(version) << " roundtrip"
+          << monger::KeyString::versionToString(version) << " roundtrip"
           << (kDebugBuild ? " (DEBUG BUILD!)" : "") << " min " << (*minmax.first)[""] << ", max"
           << (*minmax.second)[""];
 }

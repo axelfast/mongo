@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,18 +27,18 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/pipeline/document.h"
+#include "monger/db/pipeline/document.h"
 
 #include <boost/functional/hash.hpp>
 
-#include "mongo/bson/bson_depth.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/pipeline/field_path.h"
-#include "mongo/util/str.h"
+#include "monger/bson/bson_depth.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/pipeline/field_path.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 using boost::intrusive_ptr;
 using std::string;
 using std::vector;

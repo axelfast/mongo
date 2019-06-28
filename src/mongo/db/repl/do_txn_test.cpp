@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,29 +27,29 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/db/catalog/collection_options.h"
-#include "mongo/db/catalog/database_holder.h"
-#include "mongo/db/client.h"
-#include "mongo/db/op_observer_noop.h"
-#include "mongo/db/op_observer_registry.h"
-#include "mongo/db/repl/do_txn.h"
-#include "mongo/db/repl/oplog_interface_local.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/replication_coordinator_mock.h"
-#include "mongo/db/repl/storage_interface_impl.h"
-#include "mongo/db/repl/storage_interface_mock.h"
-#include "mongo/db/s/op_observer_sharding_impl.h"
-#include "mongo/db/service_context_d_test_fixture.h"
-#include "mongo/db/session_catalog_mongod.h"
-#include "mongo/db/transaction_participant.h"
-#include "mongo/logger/logger.h"
-#include "mongo/rpc/get_status_from_command_result.h"
+#include "monger/db/catalog/collection_options.h"
+#include "monger/db/catalog/database_holder.h"
+#include "monger/db/client.h"
+#include "monger/db/op_observer_noop.h"
+#include "monger/db/op_observer_registry.h"
+#include "monger/db/repl/do_txn.h"
+#include "monger/db/repl/oplog_interface_local.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/replication_coordinator_mock.h"
+#include "monger/db/repl/storage_interface_impl.h"
+#include "monger/db/repl/storage_interface_mock.h"
+#include "monger/db/s/op_observer_sharding_impl.h"
+#include "monger/db/service_context_d_test_fixture.h"
+#include "monger/db/session_catalog_mongerd.h"
+#include "monger/db/transaction_participant.h"
+#include "monger/logger/logger.h"
+#include "monger/rpc/get_status_from_command_result.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 namespace {
 
@@ -141,7 +141,7 @@ protected:
 };
 
 void DoTxnTest::setUp() {
-    // Set up mongod.
+    // Set up mongerd.
     ServiceContextMongoDTest::setUp();
 
     const auto service = getServiceContext();
@@ -344,4 +344,4 @@ TEST_F(DoTxnTest, AtomicDoTxnInsertWithoutUuidIntoCollectionWithUuid) {
 
 }  // namespace
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

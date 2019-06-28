@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,11 +27,11 @@
  *    it in the license file.
  */
 
-#include "mongo/db/keypattern.h"
+#include "monger/db/keypattern.h"
 
-#include "mongo/db/index_names.h"
+#include "monger/db/index_names.h"
 
-namespace mongo {
+namespace monger {
 
 KeyPattern::KeyPattern(const BSONObj& pattern) : _pattern(pattern) {}
 
@@ -67,7 +67,7 @@ StringBuilder& operator<<(StringBuilder& sb, const KeyPattern& keyPattern) {
             sb << ", ";
         }
 
-        if (mongo::String == elem.type()) {
+        if (monger::String == elem.type()) {
             sb << elem;
         } else if (elem.number() >= 0) {
             // The canonical check as to whether a key pattern element is "ascending" or
@@ -126,4 +126,4 @@ BSONObj KeyPattern::globalMax() const {
     return extendRangeBound(BSONObj(), true);
 }
 
-}  // namespace mongo
+}  // namespace monger

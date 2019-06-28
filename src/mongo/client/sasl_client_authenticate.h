@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,13 +29,13 @@
 
 #pragma once
 
-#include "mongo/base/status.h"
-#include "mongo/bson/bsontypes.h"
-#include "mongo/client/authenticate.h"
-#include "mongo/executor/remote_command_request.h"
-#include "mongo/executor/remote_command_response.h"
+#include "monger/base/status.h"
+#include "monger/bson/bsontypes.h"
+#include "monger/client/authenticate.h"
+#include "monger/executor/remote_command_request.h"
+#include "monger/executor/remote_command_response.h"
 
-namespace mongo {
+namespace monger {
 class BSONObj;
 
 /**
@@ -44,7 +44,7 @@ class BSONObj;
  * Do not use directly in client code.  Use the auth::authenticateClient() method, instead.
  *
  * Test against NULL for availability.  Client driver must be compiled with SASL support _and_
- * client application must have successfully executed mongo::runGlobalInitializersOrDie() or its
+ * client application must have successfully executed monger::runGlobalInitializersOrDie() or its
  * ilk to make this functionality available.
  *
  * The "saslParameters" BSONObj should be initialized with zero or more of the
@@ -58,9 +58,9 @@ class BSONObj;
  *     "user": The std::string name of the user to authenticate.
  *     "db": The database target of the auth command, which identifies the location
  *         of the credential information for the user.  May be "$external" if credential
- *         information is stored outside of the mongo cluster.
+ *         information is stored outside of the monger cluster.
  *     "pwd": The password.
- *     "serviceName": The GSSAPI service name to use.  Defaults to "mongodb".
+ *     "serviceName": The GSSAPI service name to use.  Defaults to "mongerdb".
  *     "serviceHostname": The GSSAPI hostname to use.  Defaults to the name of the remote host.
  *
  * Other fields in saslParameters are silently ignored.

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <vector>
 
-#include "mongo/db/commands.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_commands_helpers.h"
-#include "mongo/s/grid.h"
+#include "monger/db/commands.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_commands_helpers.h"
+#include "monger/s/grid.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 void aggregateResults(int scale,
@@ -68,7 +68,7 @@ void aggregateResults(int scale,
     // TODO SERVER-26110: Add aggregated 'collections' and 'views' metrics.
     output.appendNumber("objects", objects);
 
-    // avgObjSize on mongod is not scaled based on the argument to db.stats(), so we use
+    // avgObjSize on mongerd is not scaled based on the argument to db.stats(), so we use
     // unscaledDataSize here for consistency.  See SERVER-7347.
     output.append("avgObjSize", objects == 0 ? 0 : double(unscaledDataSize) / double(objects));
     output.appendNumber("dataSize", dataSize);
@@ -138,4 +138,4 @@ public:
 } clusterDBStatsCmd;
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

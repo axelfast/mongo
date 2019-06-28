@@ -46,11 +46,11 @@ executor:
     n: 20
   fixture:
     class: ShardedClusterFixture
-    mongos_options:
+    mongers_options:
       bind_ip_all: ''
       set_parameters:
         enableTestCommands: 1
-    mongod_options:
+    mongerd_options:
       bind_ip_all: ''
       set_parameters:
         enableTestCommands: 1

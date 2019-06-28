@@ -45,8 +45,8 @@ load('jstests/ssl/libs/ssl_helpers.js');
         const keyVault = shell.getKeyVault();
 
         assert.writeOK(
-            keyVault.createKey(kmsType, "arn:aws:kms:us-east-1:fake:fake:fake", ['mongoKey']));
-        const keyId = keyVault.getKeyByAltName("mongoKey").toArray()[0]._id;
+            keyVault.createKey(kmsType, "arn:aws:kms:us-east-1:fake:fake:fake", ['mongerKey']));
+        const keyId = keyVault.getKeyByAltName("mongerKey").toArray()[0]._id;
 
         func(keyId, shell);
     }
@@ -63,7 +63,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     testFaults((keyId, shell) => {
         collection.drop();
 
-        const str = "mongo";
+        const str = "monger";
         assert.throws(() => {
             const encStr = shell.getClientEncryption().encrypt(keyId, str);
         });
@@ -73,7 +73,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     testFaults((keyId, shell) => {
         collection.deleteMany({});
 
-        const str = "mongo";
+        const str = "monger";
         assert.throws(() => {
             const encStr = shell.getClientEncryption().encrypt(keyId, str);
         });
@@ -83,7 +83,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     testFaults((keyId, shell) => {
         collection.updateMany({}, {$set: {"masterKey.provider": "fake"}});
 
-        const str = "mongo";
+        const str = "monger";
         assert.throws(() => {
             const encStr = shell.getClientEncryption().encrypt(keyId, str);
         });

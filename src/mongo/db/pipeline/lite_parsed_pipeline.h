@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -33,12 +33,12 @@
 #include <memory>
 #include <vector>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/pipeline/aggregation_request.h"
-#include "mongo/db/pipeline/lite_parsed_document_source.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/pipeline/aggregation_request.h"
+#include "monger/db/pipeline/lite_parsed_document_source.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * A semi-parsed version of a Pipeline, parsed just enough to determine information like what
@@ -145,4 +145,4 @@ private:
     std::vector<std::unique_ptr<LiteParsedDocumentSource>> _stageSpecs;
 };
 
-}  // namespace mongo
+}  // namespace monger

@@ -7,14 +7,14 @@
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 1}});
 
-    const mongosDB = st.s.getDB("test_db");
+    const mongersDB = st.s.getDB("test_db");
 
-    const inColl = mongosDB["inColl"];
+    const inColl = mongersDB["inColl"];
     // Two different output collections will be sharded by different keys.
-    const outCollById = mongosDB["outCollById"];
-    const outCollBySK = mongosDB["outCollBySK"];
-    st.shardColl(outCollById, {_id: 1}, {_id: 500}, {_id: 500}, mongosDB.getName());
-    st.shardColl(outCollBySK, {sk: 1}, {sk: 500}, {sk: 500}, mongosDB.getName());
+    const outCollById = mongersDB["outCollById"];
+    const outCollBySK = mongersDB["outCollBySK"];
+    st.shardColl(outCollById, {_id: 1}, {_id: 500}, {_id: 500}, mongersDB.getName());
+    st.shardColl(outCollBySK, {sk: 1}, {sk: 500}, {sk: 500}, mongersDB.getName());
     const numDocs = 1000;
 
     function insertData(coll) {
@@ -26,7 +26,7 @@
     }
 
     // Shard the input collection.
-    st.shardColl(inColl, {_id: 1}, {_id: 500}, {_id: 500}, mongosDB.getName());
+    st.shardColl(inColl, {_id: 1}, {_id: 500}, {_id: 500}, mongersDB.getName());
 
     // Insert some data to the input collection.
     insertData(inColl);

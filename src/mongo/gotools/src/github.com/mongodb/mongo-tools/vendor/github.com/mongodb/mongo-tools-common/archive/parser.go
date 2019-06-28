@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/mongodb/mongo-tools-common/db"
+	"github.com/mongerdb/monger-tools-common/db"
 )
 
 // parser.go implements the parsing of the low-level archive format

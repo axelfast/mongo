@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -29,20 +29,20 @@
 
 #pragma once
 
-#include "mongo/base/status_with.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/repl/optime_with.h"
-#include "mongo/db/s/config/namespace_serializer.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/s/catalog/type_chunk.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/shard_key_pattern.h"
-#include "mongo/stdx/mutex.h"
+#include "monger/base/status_with.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/repl/optime_with.h"
+#include "monger/db/s/config/namespace_serializer.h"
+#include "monger/executor/task_executor.h"
+#include "monger/s/catalog/type_chunk.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/shard_key_pattern.h"
+#include "monger/stdx/mutex.h"
 
-namespace mongo {
+namespace monger {
 
 struct CollectionOptions;
 class OperationContext;
@@ -318,7 +318,7 @@ public:
 
     /**
      *
-     * Adds a new shard. It expects a standalone mongod process or replica set to be running on the
+     * Adds a new shard. It expects a standalone mongerd process or replica set to be running on the
      * provided address.
      *
      * 'shardProposedName' is an optional string with the proposed name of the shard. If it is
@@ -528,7 +528,7 @@ private:
      * requests).
      * TODO: Currently only taken during addShard requests, this should also be taken in X mode
      * during removeShard, once removeShard is moved to run on the config server primary instead of
-     * on mongos.  At that point we should also change any operations that expect the shard not to
+     * on mongers.  At that point we should also change any operations that expect the shard not to
      * be removed while they are running (such as removeShardFromZone) to take this in shared mode.
      */
     Lock::ResourceMutex _kShardMembershipLock;
@@ -536,4 +536,4 @@ private:
     NamespaceSerializer _namespaceSerializer;
 };
 
-}  // namespace mongo
+}  // namespace monger

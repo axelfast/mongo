@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,10 +31,10 @@
 
 #include <string>
 
-#include "mongo/base/string_data.h"
-#include "mongo/util/md5.hpp"
+#include "monger/base/string_data.h"
+#include "monger/util/md5.hpp"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Hashes the password so that it can be stored in a user object or used for MONGODB-CR
@@ -42,4 +42,4 @@ namespace mongo {
  */
 std::string createPasswordDigest(StringData username, StringData clearTextPassword);
 
-}  // namespace mongo
+}  // namespace monger

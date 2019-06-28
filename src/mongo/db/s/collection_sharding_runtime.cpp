@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,19 +27,19 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/collection_sharding_runtime.h"
+#include "monger/db/s/collection_sharding_runtime.h"
 
-#include "mongo/base/checked_cast.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/s/sharding_runtime_d_params_gen.h"
-#include "mongo/util/duration.h"
-#include "mongo/util/log.h"
+#include "monger/base/checked_cast.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/s/sharding_runtime_d_params_gen.h"
+#include "monger/util/duration.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -181,7 +181,7 @@ boost::optional<ChunkRange> CollectionShardingRuntime::getNextOrphanRange(BSONOb
 }
 
 boost::optional<ScopedCollectionMetadata> CollectionShardingRuntime::_getMetadata(
-    const boost::optional<mongo::LogicalTime>& atClusterTime) {
+    const boost::optional<monger::LogicalTime>& atClusterTime) {
     return _metadataManager->getActiveMetadata(_metadataManager, atClusterTime);
 }
 
@@ -221,4 +221,4 @@ void CollectionCriticalSection::enterCommitPhase() {
     csr->enterCriticalSectionCommitPhase(_opCtx, csrLock);
 }
 
-}  // namespace mongo
+}  // namespace monger

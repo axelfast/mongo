@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,67 +27,67 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/query/get_executor.h"
+#include "monger/db/query/get_executor.h"
 
 #include <boost/optional.hpp>
 #include <limits>
 #include <memory>
 
-#include "mongo/base/error_codes.h"
-#include "mongo/base/parse_number.h"
-#include "mongo/db/catalog/index_catalog.h"
-#include "mongo/db/exec/cached_plan.h"
-#include "mongo/db/exec/collection_scan.h"
-#include "mongo/db/exec/count.h"
-#include "mongo/db/exec/delete.h"
-#include "mongo/db/exec/eof.h"
-#include "mongo/db/exec/idhack.h"
-#include "mongo/db/exec/multi_plan.h"
-#include "mongo/db/exec/projection.h"
-#include "mongo/db/exec/record_store_fast_count.h"
-#include "mongo/db/exec/shard_filter.h"
-#include "mongo/db/exec/sort_key_generator.h"
-#include "mongo/db/exec/subplan.h"
-#include "mongo/db/exec/update_stage.h"
-#include "mongo/db/index/index_descriptor.h"
-#include "mongo/db/index/wildcard_access_method.h"
-#include "mongo/db/index_names.h"
-#include "mongo/db/matcher/extensions_callback_noop.h"
-#include "mongo/db/matcher/extensions_callback_real.h"
-#include "mongo/db/query/canonical_query.h"
-#include "mongo/db/query/canonical_query_encoder.h"
-#include "mongo/db/query/collation/collator_factory_interface.h"
-#include "mongo/db/query/explain.h"
-#include "mongo/db/query/index_bounds_builder.h"
-#include "mongo/db/query/internal_plans.h"
-#include "mongo/db/query/plan_cache.h"
-#include "mongo/db/query/plan_executor.h"
-#include "mongo/db/query/planner_access.h"
-#include "mongo/db/query/planner_analysis.h"
-#include "mongo/db/query/planner_ixselect.h"
-#include "mongo/db/query/planner_wildcard_helpers.h"
-#include "mongo/db/query/query_knobs_gen.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/db/query/query_settings.h"
-#include "mongo/db/query/stage_builder.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/collection_sharding_state.h"
-#include "mongo/db/s/operation_sharding_state.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/service_context.h"
-#include "mongo/db/storage/oplog_hack.h"
-#include "mongo/db/storage/storage_options.h"
-#include "mongo/scripting/engine.h"
-#include "mongo/util/log.h"
-#include "mongo/util/str.h"
+#include "monger/base/error_codes.h"
+#include "monger/base/parse_number.h"
+#include "monger/db/catalog/index_catalog.h"
+#include "monger/db/exec/cached_plan.h"
+#include "monger/db/exec/collection_scan.h"
+#include "monger/db/exec/count.h"
+#include "monger/db/exec/delete.h"
+#include "monger/db/exec/eof.h"
+#include "monger/db/exec/idhack.h"
+#include "monger/db/exec/multi_plan.h"
+#include "monger/db/exec/projection.h"
+#include "monger/db/exec/record_store_fast_count.h"
+#include "monger/db/exec/shard_filter.h"
+#include "monger/db/exec/sort_key_generator.h"
+#include "monger/db/exec/subplan.h"
+#include "monger/db/exec/update_stage.h"
+#include "monger/db/index/index_descriptor.h"
+#include "monger/db/index/wildcard_access_method.h"
+#include "monger/db/index_names.h"
+#include "monger/db/matcher/extensions_callback_noop.h"
+#include "monger/db/matcher/extensions_callback_real.h"
+#include "monger/db/query/canonical_query.h"
+#include "monger/db/query/canonical_query_encoder.h"
+#include "monger/db/query/collation/collator_factory_interface.h"
+#include "monger/db/query/explain.h"
+#include "monger/db/query/index_bounds_builder.h"
+#include "monger/db/query/internal_plans.h"
+#include "monger/db/query/plan_cache.h"
+#include "monger/db/query/plan_executor.h"
+#include "monger/db/query/planner_access.h"
+#include "monger/db/query/planner_analysis.h"
+#include "monger/db/query/planner_ixselect.h"
+#include "monger/db/query/planner_wildcard_helpers.h"
+#include "monger/db/query/query_knobs_gen.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/db/query/query_settings.h"
+#include "monger/db/query/stage_builder.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/collection_sharding_state.h"
+#include "monger/db/s/operation_sharding_state.h"
+#include "monger/db/server_options.h"
+#include "monger/db/service_context.h"
+#include "monger/db/storage/oplog_hack.h"
+#include "monger/db/storage/storage_options.h"
+#include "monger/scripting/engine.h"
+#include "monger/util/log.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::unique_ptr;
@@ -117,7 +117,7 @@ void filterAllowedIndexEntries(const AllowedIndicesFilter& allowedIndicesFilter,
 }
 
 namespace {
-namespace wcp = ::mongo::wildcard_planning;
+namespace wcp = ::monger::wildcard_planning;
 // The body is below in the "count hack" section but getExecutor calls it.
 bool turnIxscanIntoCount(QuerySolution* soln);
 }  // namespace
@@ -613,9 +613,9 @@ namespace {
 /**
  * Returns true if 'me' is a GTE or GE predicate over the "ts" field.
  */
-bool isOplogTsLowerBoundPred(const mongo::MatchExpression* me) {
-    if (mongo::MatchExpression::GT != me->matchType() &&
-        mongo::MatchExpression::GTE != me->matchType()) {
+bool isOplogTsLowerBoundPred(const monger::MatchExpression* me) {
+    if (monger::MatchExpression::GT != me->matchType() &&
+        monger::MatchExpression::GTE != me->matchType()) {
         return false;
     }
 
@@ -1809,4 +1809,4 @@ StatusWith<unique_ptr<PlanExecutor, PlanExecutor::Deleter>> getExecutorDistinct(
     }
 }
 
-}  // namespace mongo
+}  // namespace monger

@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,11 +34,11 @@
 #include <ostream>
 #include <string>
 
-#include "mongo/base/status.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/storage/data_protector.h"
+#include "monger/base/status.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/storage/data_protector.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * This class provides facility for saving bson objects to a flat file. The common use case is for
@@ -84,4 +84,4 @@ private:
     std::unique_ptr<std::ostream> _out;
 };
 
-}  // namespace mongo
+}  // namespace monger

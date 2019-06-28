@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,14 +32,14 @@
 #include <boost/intrusive_ptr.hpp>
 #include <boost/optional/optional.hpp>
 
-#include "mongo/db/exec/plan_stage.h"
-#include "mongo/db/exec/plan_stats.h"
-#include "mongo/db/pipeline/pipeline.h"
-#include "mongo/db/query/plan_summary_stats.h"
-#include "mongo/db/record_id.h"
-#include "mongo/util/assert_util.h"
+#include "monger/db/exec/plan_stage.h"
+#include "monger/db/exec/plan_stats.h"
+#include "monger/db/pipeline/pipeline.h"
+#include "monger/db/query/plan_summary_stats.h"
+#include "monger/db/record_id.h"
+#include "monger/util/assert_util.h"
 
-namespace mongo {
+namespace monger {
 
 /**
  * Stage for pulling results out from an aggregation pipeline.
@@ -103,4 +103,4 @@ private:
     WorkingSet* _ws;
 };
 
-}  // namespace mongo
+}  // namespace monger

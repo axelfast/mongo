@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kDefault;
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kDefault;
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/shell/shell_options.h"
+#include "monger/shell/shell_options.h"
 
 #include <boost/filesystem/operations.hpp>
 
 #include <iostream>
 
-#include "mongo/base/status.h"
-#include "mongo/bson/util/builder.h"
-#include "mongo/client/mongo_uri.h"
-#include "mongo/config.h"
-#include "mongo/db/auth/sasl_command_constants.h"
-#include "mongo/db/server_options.h"
-#include "mongo/rpc/protocol.h"
-#include "mongo/shell/shell_utils.h"
-#include "mongo/transport/message_compressor_registry.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/socket_utils.h"
-#include "mongo/util/options_parser/startup_options.h"
-#include "mongo/util/str.h"
-#include "mongo/util/version.h"
+#include "monger/base/status.h"
+#include "monger/bson/util/builder.h"
+#include "monger/client/monger_uri.h"
+#include "monger/config.h"
+#include "monger/db/auth/sasl_command_constants.h"
+#include "monger/db/server_options.h"
+#include "monger/rpc/protocol.h"
+#include "monger/shell/shell_utils.h"
+#include "monger/transport/message_compressor_registry.h"
+#include "monger/util/log.h"
+#include "monger/util/net/socket_utils.h"
+#include "monger/util/options_parser/startup_options.h"
+#include "monger/util/str.h"
+#include "monger/util/version.h"
 
-namespace mongo {
+namespace monger {
 
 using std::cout;
 using std::endl;
@@ -71,7 +71,7 @@ std::string getMongoShellHelp(StringData name, const moe::OptionSection& options
        << "  foo                   foo database on local machine\n"
        << "  192.168.0.5/foo       foo database on 192.168.0.5 machine\n"
        << "  192.168.0.5:9999/foo  foo database on 192.168.0.5 machine on port 9999\n"
-       << "  mongodb://192.168.0.5:9999/foo  connection string URI can also be used\n"
+       << "  mongerdb://192.168.0.5:9999/foo  connection string URI can also be used\n"
        << options.helpString() << "\n"
        << "file names: a list of files to run. files have to end in .js and will exit after "
        << "unless --shell is specified";
@@ -83,7 +83,7 @@ bool handlePreValidationMongoShellOptions(const moe::Environment& params,
     auto&& vii = VersionInfoInterface::instance();
     if (params.count("version") || params.count("help")) {
         setPlainConsoleLogger();
-        log() << mongoShellVersion(vii);
+        log() << mongerShellVersion(vii);
         if (params.count("help")) {
             log() << getMongoShellHelp(args[0], moe::startupOptions);
         } else {
@@ -97,11 +97,11 @@ bool handlePreValidationMongoShellOptions(const moe::Environment& params,
 Status storeMongoShellOptions(const moe::Environment& params,
                               const std::vector<std::string>& args) {
     if (params.count("quiet")) {
-        mongo::serverGlobalParams.quiet.store(true);
+        monger::serverGlobalParams.quiet.store(true);
     }
 
     if (params.count("ipv6")) {
-        mongo::enableIPv6();
+        monger::enableIPv6();
         shellGlobalParams.enableIPv6 = true;
     }
 
@@ -219,7 +219,7 @@ Status storeMongoShellOptions(const moe::Environment& params,
             string basename = dbaddress.substr(dbaddress.find_last_of("/\\") + 1);
             if (basename.find_first_of('.') == string::npos ||
                 (basename.find(".js", basename.size() - 3) == string::npos &&
-                 !::mongo::shell_utils::fileExists(dbaddress))) {
+                 !::monger::shell_utils::fileExists(dbaddress))) {
                 shellGlobalParams.url = dbaddress;
             } else {
                 shellGlobalParams.files.insert(shellGlobalParams.files.begin(), dbaddress);
@@ -245,8 +245,8 @@ Status storeMongoShellOptions(const moe::Environment& params,
         return Status(ErrorCodes::BadValue, sb.str());
     }
 
-    if ((shellGlobalParams.url.find("mongodb://") == 0) ||
-        (shellGlobalParams.url.find("mongodb+srv://") == 0)) {
+    if ((shellGlobalParams.url.find("mongerdb://") == 0) ||
+        (shellGlobalParams.url.find("mongerdb+srv://") == 0)) {
         auto cs_status = MongoURI::parse(shellGlobalParams.url);
         if (!cs_status.isOK()) {
             return cs_status.getStatus();
@@ -332,4 +332,4 @@ Status storeMongoShellOptions(const moe::Environment& params,
     return Status::OK();
 }
 
-}  // namespace mongo
+}  // namespace monger

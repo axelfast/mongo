@@ -14,7 +14,7 @@ executor:
     n: 20
   fixture:
     class: MongoDFixture
-    mongod_options:
+    mongerd_options:
       auditDestination: console
       set_parameters:
         enableTestCommands: 1

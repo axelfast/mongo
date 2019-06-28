@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,31 +27,31 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kQuery
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kQuery
 
-#include "mongo/db/query/planner_analysis.h"
+#include "monger/db/query/planner_analysis.h"
 
 #include <set>
 #include <vector>
 
-#include "mongo/bson/simple_bsonelement_comparator.h"
-#include "mongo/db/bson/dotted_path_support.h"
-#include "mongo/db/index/expression_params.h"
-#include "mongo/db/index/s2_common.h"
-#include "mongo/db/jsobj.h"
-#include "mongo/db/matcher/expression_geo.h"
-#include "mongo/db/query/query_planner.h"
-#include "mongo/db/query/query_planner_common.h"
-#include "mongo/util/log.h"
+#include "monger/bson/simple_bsonelement_comparator.h"
+#include "monger/db/bson/dotted_path_support.h"
+#include "monger/db/index/expression_params.h"
+#include "monger/db/index/s2_common.h"
+#include "monger/db/jsobj.h"
+#include "monger/db/matcher/expression_geo.h"
+#include "monger/db/query/query_planner.h"
+#include "monger/db/query/query_planner_common.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 using std::unique_ptr;
 using std::endl;
 using std::string;
 using std::vector;
 
-namespace dps = ::mongo::dotted_path_support;
+namespace dps = ::monger::dotted_path_support;
 
 //
 // Helpers for bounds explosion AKA quick-and-dirty SERVER-1205.
@@ -432,7 +432,7 @@ BSONObj QueryPlannerAnalysis::getSortPattern(const BSONObj& indexKeyPattern) {
     BSONObjIterator kpIt(indexKeyPattern);
     while (kpIt.more()) {
         BSONElement elt = kpIt.next();
-        if (elt.type() == mongo::String) {
+        if (elt.type() == monger::String) {
             break;
         }
         // The canonical check as to whether a key pattern element is "ascending" or "descending" is
@@ -837,4 +837,4 @@ std::unique_ptr<QuerySolution> QueryPlannerAnalysis::analyzeDataAccess(
     return soln;
 }
 
-}  // namespace mongo
+}  // namespace monger

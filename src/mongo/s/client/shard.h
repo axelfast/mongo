@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,17 +31,17 @@
 
 #include <boost/optional.hpp>
 
-#include "mongo/bson/bsonobj.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/db/logical_time.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/repl/optime.h"
-#include "mongo/db/repl/read_concern_args.h"
-#include "mongo/executor/remote_command_response.h"
-#include "mongo/s/shard_id.h"
+#include "monger/bson/bsonobj.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/read_preference.h"
+#include "monger/db/logical_time.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/repl/optime.h"
+#include "monger/db/repl/read_concern_args.h"
+#include "monger/executor/remote_command_response.h"
+#include "monger/s/shard_id.h"
 
-namespace mongo {
+namespace monger {
 
 class BatchedCommandRequest;
 class BatchedCommandResponse;
@@ -320,4 +320,4 @@ private:
     const ShardId _id;
 };
 
-}  // namespace mongo
+}  // namespace monger

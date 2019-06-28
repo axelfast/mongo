@@ -2,12 +2,12 @@
 (function() {
     "use strict";
 
-    // Prevent the mongo shell from gossiping its cluster time, since this will increase the amount
+    // Prevent the monger shell from gossiping its cluster time, since this will increase the amount
     // of data logged for each op.
     TestData.skipGossipingClusterTime = true;
 
     const conn = MongoRunner.runMongod();
-    assert.neq(null, conn, "mongod was unable to start up");
+    assert.neq(null, conn, "mongerd was unable to start up");
     const testDB = conn.getDB("test");
     const coll = testDB.do_not_drop_coll_after_succesful_out;
 

@@ -25,7 +25,7 @@ const (
 // process of being restored through the "Finish" hook.
 //
 // Oplog entries and auth entries are not handled by the prioritizer,
-// as these are special cases handled by the regular mongorestore code.
+// as these are special cases handled by the regular mongerrestore code.
 type IntentPrioritizer interface {
 	Get() *Intent
 	Finish(*Intent)
@@ -34,7 +34,7 @@ type IntentPrioritizer interface {
 //===== Legacy =====
 
 // legacyPrioritizer processes the intents in the order they were read off the
-// file system, keeping with legacy mongorestore behavior.
+// file system, keeping with legacy mongerrestore behavior.
 type legacyPrioritizer struct {
 	sync.Mutex
 	queue []*Intent

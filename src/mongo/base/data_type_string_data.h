@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -32,16 +32,16 @@
 #include <cstring>
 #include <stddef.h>
 
-#include "mongo/base/data_type.h"
-#include "mongo/base/string_data.h"
+#include "monger/base/data_type.h"
+#include "monger/base/string_data.h"
 
 #ifndef MONGO_BASE_DATA_TYPE_H_INCLUDE_HANDSHAKE_
-#error "do not include directly. Use mongo/base/data_type.h"
+#error "do not include directly. Use monger/base/data_type.h"
 #endif  // MONGO_BASE_DATA_TYPE_H_INCLUDE_HANDSHAKE_
 
 // Provides a DataType::Handler specialization for StringData.
 
-namespace mongo {
+namespace monger {
 
 template <>
 struct DataType::Handler<StringData> {
@@ -67,4 +67,4 @@ struct DataType::Handler<StringData> {
     }
 };
 
-}  // namespace mongo
+}  // namespace monger

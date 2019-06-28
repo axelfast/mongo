@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,33 +27,33 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 #define LOG_FOR_RECOVERY(level) \
-    MONGO_LOG_COMPONENT(level, ::mongo::logger::LogComponent::kStorageRecovery)
+    MONGO_LOG_COMPONENT(level, ::monger::logger::LogComponent::kStorageRecovery)
 
-#include "mongo/db/storage/storage_engine_impl.h"
+#include "monger/db/storage/storage_engine_impl.h"
 
 #include <algorithm>
 
-#include "mongo/db/catalog/catalog_control.h"
-#include "mongo/db/catalog/collection_catalog.h"
-#include "mongo/db/catalog/collection_catalog_helper.h"
-#include "mongo/db/client.h"
-#include "mongo/db/concurrency/d_concurrency.h"
-#include "mongo/db/logical_clock.h"
-#include "mongo/db/operation_context_noop.h"
-#include "mongo/db/server_options.h"
-#include "mongo/db/storage/durable_catalog_feature_tracker.h"
-#include "mongo/db/storage/kv/kv_engine.h"
-#include "mongo/db/storage/kv/temporary_kv_record_store.h"
-#include "mongo/db/storage/storage_repair_observer.h"
-#include "mongo/db/unclean_shutdown.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/db/catalog/catalog_control.h"
+#include "monger/db/catalog/collection_catalog.h"
+#include "monger/db/catalog/collection_catalog_helper.h"
+#include "monger/db/client.h"
+#include "monger/db/concurrency/d_concurrency.h"
+#include "monger/db/logical_clock.h"
+#include "monger/db/operation_context_noop.h"
+#include "monger/db/server_options.h"
+#include "monger/db/storage/durable_catalog_feature_tracker.h"
+#include "monger/db/storage/kv/kv_engine.h"
+#include "monger/db/storage/kv/temporary_kv_record_store.h"
+#include "monger/db/storage/storage_repair_observer.h"
+#include "monger/db/unclean_shutdown.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 using std::string;
 using std::vector;
@@ -116,7 +116,7 @@ void StorageEngineImpl::loadCatalog(OperationContext* opCtx) {
 
     _catalogRecordStore = _engine->getGroupedRecordStore(
         opCtx, catalogInfo, catalogInfo, CollectionOptions(), KVPrefix::kNotPrefixed);
-    if (shouldLog(::mongo::logger::LogComponent::kStorageRecovery, kCatalogLogLevel)) {
+    if (shouldLog(::monger::logger::LogComponent::kStorageRecovery, kCatalogLogLevel)) {
         LOG_FOR_RECOVERY(kCatalogLogLevel) << "loadCatalog:";
         _dumpCatalog(opCtx);
     }
@@ -250,7 +250,7 @@ void StorageEngineImpl::_initCollection(OperationContext* opCtx,
 
 void StorageEngineImpl::closeCatalog(OperationContext* opCtx) {
     dassert(opCtx->lockState()->isLocked());
-    if (shouldLog(::mongo::logger::LogComponent::kStorageRecovery, kCatalogLogLevel)) {
+    if (shouldLog(::monger::logger::LogComponent::kStorageRecovery, kCatalogLogLevel)) {
         LOG_FOR_RECOVERY(kCatalogLogLevel) << "loadCatalog:";
         _dumpCatalog(opCtx);
     }
@@ -829,7 +829,7 @@ void StorageEngineImpl::_onMinOfCheckpointAndOldestTimestampChanged(const Timest
             log() << "Removing drop-pending idents with drop timestamps before timestamp "
                   << timestamp;
             auto opCtx = cc().getOperationContext();
-            mongo::ServiceContext::UniqueOperationContext uOpCtx;
+            monger::ServiceContext::UniqueOperationContext uOpCtx;
             if (!opCtx) {
                 uOpCtx = cc().makeOperationContext();
                 opCtx = uOpCtx.get();
@@ -879,7 +879,7 @@ void StorageEngineImpl::TimestampMonitor::startup() {
             // rollback-to-stable isn't running concurrently.
             try {
                 auto opCtx = client->getOperationContext();
-                mongo::ServiceContext::UniqueOperationContext uOpCtx;
+                monger::ServiceContext::UniqueOperationContext uOpCtx;
                 if (!opCtx) {
                     uOpCtx = client->makeOperationContext();
                     opCtx = uOpCtx.get();
@@ -889,8 +889,8 @@ void StorageEngineImpl::TimestampMonitor::startup() {
                     opCtx->lockState());
                 Lock::GlobalLock lock(opCtx, MODE_IS);
 
-                // The checkpoint timestamp is not cached in mongod and needs to be fetched with a
-                // call into WiredTiger, all the other timestamps are cached in mongod.
+                // The checkpoint timestamp is not cached in mongerd and needs to be fetched with a
+                // call into WiredTiger, all the other timestamps are cached in mongerd.
                 checkpoint = _engine->getCheckpointTimestamp();
                 oldest = _engine->getOldestTimestamp();
                 stable = _engine->getStableTimestamp();
@@ -982,4 +982,4 @@ int64_t StorageEngineImpl::sizeOnDiskForDb(OperationContext* opCtx, StringData d
     return size;
 }
 
-}  // namespace mongo
+}  // namespace monger

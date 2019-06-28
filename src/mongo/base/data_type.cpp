@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,13 +27,13 @@
  *    it in the license file.
  */
 
-#include "mongo/base/data_type.h"
+#include "monger/base/data_type.h"
 
 #include <fmt/format.h>
 
-#include "mongo/util/str.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 namespace {
 auto makeOverflowStatus(StringData action, size_t sizeOfT, size_t length, size_t debug_offset) {
@@ -52,4 +52,4 @@ Status DataType::makeTrivialStoreStatus(size_t sizeOfT, size_t length, size_t de
     return makeOverflowStatus("write", sizeOfT, length, debug_offset);
 }
 
-}  // namespace mongo
+}  // namespace monger

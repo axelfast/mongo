@@ -1,5 +1,5 @@
 /**
- * Ensure that we allow mongod to shutdown cleanly while being fsync locked.
+ * Ensure that we allow mongerd to shutdown cleanly while being fsync locked.
  */
 (function() {
     "use strict";

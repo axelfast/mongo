@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,27 +27,27 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <sqlite3.h>
 #include <string>
 
-#include "mongo/db/concurrency/write_conflict_exception.h"
-#include "mongo/db/storage/mobile/mobile_sqlite_statement.h"
-#include "mongo/db/storage/mobile/mobile_util.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/db/concurrency/write_conflict_exception.h"
+#include "monger/db/storage/mobile/mobile_sqlite_statement.h"
+#include "monger/db/storage/mobile/mobile_util.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
 #define SQLITE_STMT_TRACE() LOG(MOBILE_TRACE_LEVEL) << "MobileSE: SQLite Stmt ID:" << _id << " "
 #define SQLITE_STMT_TRACE_ENABLED()                 \
-    (::mongo::logger::globalLogDomain()->shouldLog( \
+    (::monger::logger::globalLogDomain()->shouldLog( \
         MongoLogDefaultComponent_component,         \
-        ::mongo::LogstreamBuilder::severityCast(MOBILE_TRACE_LEVEL)))
+        ::monger::LogstreamBuilder::severityCast(MOBILE_TRACE_LEVEL)))
 
-namespace mongo {
+namespace monger {
 
 AtomicWord<long long> SqliteStatement::_nextID(0);
 
@@ -172,4 +172,4 @@ void SqliteStatement::reset() {
     embedded::checkStatus(status, SQLITE_OK, "sqlite3_reset");
 }
 
-}  // namespace mongo
+}  // namespace monger

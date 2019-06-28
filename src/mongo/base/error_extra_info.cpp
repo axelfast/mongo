@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/base/error_extra_info.h"
+#include "monger/base/error_extra_info.h"
 
-#include "mongo/base/init.h"
-#include "mongo/db/jsobj.h"
+#include "monger/base/init.h"
+#include "monger/db/jsobj.h"
 
-namespace mongo {
+namespace monger {
 
 bool ErrorExtraInfoExample::isParserEnabledForTest = false;
 
@@ -71,4 +71,4 @@ MONGO_INIT_REGISTER_ERROR_EXTRA_INFO(NestedErrorExtraInfoExample);
 
 }  // namespace nested::twice
 
-}  // namespace mongo
+}  // namespace monger

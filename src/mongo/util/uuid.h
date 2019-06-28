@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -34,13 +34,13 @@
 
 #include <third_party/murmurhash3/MurmurHash3.h>
 
-#include "mongo/base/data_range.h"
-#include "mongo/base/status_with.h"
-#include "mongo/bson/bsonelement.h"
-#include "mongo/bson/bsonmisc.h"
-#include "mongo/bson/bsonobj.h"
+#include "monger/base/data_range.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/bsonelement.h"
+#include "monger/bson/bsonmisc.h"
+#include "monger/bson/bsonobj.h"
 
-namespace mongo {
+namespace monger {
 
 namespace repl {
 class OplogEntryBase;
@@ -223,4 +223,4 @@ inline StringBuilder& operator<<(StringBuilder& s, const UUID& uuid) {
 template <>
 BSONObjBuilder& BSONObjBuilderValueStream::operator<<<UUID>(UUID value);
 
-}  // namespace mongo
+}  // namespace monger

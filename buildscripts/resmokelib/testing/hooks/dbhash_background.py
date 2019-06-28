@@ -27,11 +27,11 @@ class CheckReplDBHashInBackground(jsfile.JSHook):
 
     def before_suite(self, test_report):
         """Start the background thread."""
-        client = self.fixture.mongo_client()
-        # mongos does not provide storageEngine information. And the hook
+        client = self.fixture.monger_client()
+        # mongers does not provide storageEngine information. And the hook
         # run_check_repl_dbhash_background.js will check whether the storage engine of the CSRS and
         # replica set shards supports snapshot reads.
-        if not client.is_mongos:
+        if not client.is_mongers:
             server_status = client.admin.command("serverStatus")
             if not server_status["storageEngine"].get("supportsSnapshotReadConcern", False):
                 self.logger.info(
@@ -75,7 +75,7 @@ class CheckReplDBHashInBackground(jsfile.JSHook):
 
         if self._background_job.exc_info is not None:
             if isinstance(self._background_job.exc_info[1], errors.TestFailure):
-                # If the mongo shell process running the JavaScript file exited with a non-zero
+                # If the monger shell process running the JavaScript file exited with a non-zero
                 # return code, then we raise an errors.ServerFailure exception to cause resmoke.py's
                 # test execution to stop.
                 raise errors.ServerFailure(self._background_job.exc_info[1].args[0])

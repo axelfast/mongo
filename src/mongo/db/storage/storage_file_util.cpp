@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,9 +27,9 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kStorage
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kStorage
 
-#include "mongo/db/storage/storage_file_util.h"
+#include "monger/db/storage/storage_file_util.h"
 
 #include <cerrno>
 #include <cstring>
@@ -42,10 +42,10 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "mongo/util/file.h"
-#include "mongo/util/log.h"
+#include "monger/util/file.h"
+#include "monger/util/log.h"
 
-namespace mongo {
+namespace monger {
 
 Status fsyncFile(const boost::filesystem::path& path) {
     File file;
@@ -124,4 +124,4 @@ Status fsyncRename(const boost::filesystem::path& source, const boost::filesyste
 }
 
 
-}  // namespace mongo
+}  // namespace monger

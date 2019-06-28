@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,21 +27,21 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/remote_command_targeter_mock.h"
-#include "mongo/db/commands/txn_cmds_gen.h"
-#include "mongo/db/commands/txn_two_phase_commit_cmds_gen.h"
-#include "mongo/db/dbdirectclient.h"
-#include "mongo/db/s/transaction_coordinator_service.h"
-#include "mongo/db/s/transaction_coordinator_test_fixture.h"
-#include "mongo/db/write_concern_options.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
+#include "monger/client/remote_command_targeter_mock.h"
+#include "monger/db/commands/txn_cmds_gen.h"
+#include "monger/db/commands/txn_two_phase_commit_cmds_gen.h"
+#include "monger/db/dbdirectclient.h"
+#include "monger/db/s/transaction_coordinator_service.h"
+#include "monger/db/s/transaction_coordinator_test_fixture.h"
+#include "monger/db/write_concern_options.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 const Date_t kCommitDeadline = Date_t::max();
@@ -755,4 +755,4 @@ TEST_F(TransactionCoordinatorServiceTestSingleTxn,
 }
 
 }  // namespace
-}  // namespace mongo
+}  // namespace monger

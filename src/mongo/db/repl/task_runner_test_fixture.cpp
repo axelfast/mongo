@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,20 +27,20 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/repl/task_runner_test_fixture.h"
+#include "monger/db/repl/task_runner_test_fixture.h"
 
 #include <functional>
 #include <memory>
 
-#include "mongo/db/repl/task_runner.h"
+#include "monger/db/repl/task_runner.h"
 
-namespace mongo {
+namespace monger {
 namespace repl {
 
-using namespace mongo;
-using namespace mongo::repl;
+using namespace monger;
+using namespace monger::repl;
 
 Status TaskRunnerTest::getDetectableErrorStatus() {
     return Status(ErrorCodes::InternalError, "Not mutated");
@@ -76,4 +76,4 @@ void TaskRunnerTest::tearDown() {
 }
 
 }  // namespace repl
-}  // namespace mongo
+}  // namespace monger

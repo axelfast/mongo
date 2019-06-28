@@ -158,25 +158,25 @@
         assert.eq([{"name": "foo", "type": "collection"}], resWithFilter.cursor.firstBatch);
     }
 
-    const mongod = MongoRunner.runMongod({auth: ''});
-    runTestOnConnection(mongod);
-    MongoRunner.stopMongod(mongod);
+    const mongerd = MongoRunner.runMongod({auth: ''});
+    runTestOnConnection(mongerd);
+    MongoRunner.stopMongod(mongerd);
 
     const st = new ShardingTest({
         shards: 1,
-        mongos: 1,
+        mongers: 1,
         config: 1,
         other: {keyFile: 'jstests/libs/key1', shardAsReplicaSet: false}
     });
     runTestOnConnection(st.s0);
     st.stop();
 
-    const mongodNoAuth = MongoRunner.runMongod();
-    runNoAuthTestOnConnection(mongodNoAuth);
-    MongoRunner.stopMongod(mongodNoAuth);
+    const mongerdNoAuth = MongoRunner.runMongod();
+    runNoAuthTestOnConnection(mongerdNoAuth);
+    MongoRunner.stopMongod(mongerdNoAuth);
 
     const stNoAuth =
-        new ShardingTest({shards: 1, mongos: 1, config: 1, other: {shardAsReplicaSet: false}});
+        new ShardingTest({shards: 1, mongers: 1, config: 1, other: {shardAsReplicaSet: false}});
     runNoAuthTestOnConnection(stNoAuth.s0);
     stNoAuth.stop();
 

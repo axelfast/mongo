@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/index_spec.h"
+#include "monger/client/index_spec.h"
 
-#include "mongo/client/dbclient_base.h"
-#include "mongo/client/read_preference.h"
+#include "monger/client/dbclient_base.h"
+#include "monger/client/read_preference.h"
 
-namespace mongo {
+namespace monger {
 
 const char IndexSpec::kIndexValText[] = "text";
 const char IndexSpec::kIndexValGeo2D[] = "2d";
@@ -238,4 +238,4 @@ void IndexSpec::_rename() {
     _name = DBClientBase::genIndexName(_keys.asTempObj());
 }
 
-}  // namespace mongo
+}  // namespace monger

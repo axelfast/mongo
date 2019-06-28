@@ -6,12 +6,12 @@
 
 // NOTE: This documentation should be kept in line with the Example* test functions.
 
-// Package mongo provides a MongoDB Driver API for Go.
+// Package monger provides a MongoDB Driver API for Go.
 //
 // Basic usage of the driver starts with creating a Client from a connection
 // string. To do so, call the NewClient and Connect functions:
 //
-// 		client, err := NewClient(options.Client().ApplyURI("mongodb://foo:bar@localhost:27017"))
+// 		client, err := NewClient(options.Client().ApplyURI("mongerdb://foo:bar@localhost:27017"))
 // 		if err != nil { return err }
 // 		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 // 		defer cancel()
@@ -72,10 +72,10 @@
 //
 // Potential DNS Issues
 //
-// Building with Go 1.11+ and using connection strings with the "mongodb+srv"[1] scheme is
+// Building with Go 1.11+ and using connection strings with the "mongerdb+srv"[1] scheme is
 // incompatible with some DNS servers in the wild due to the change introduced in
 // https://github.com/golang/go/issues/10622. If you receive an error with the message "cannot
 // unmarshal DNS message" while running an operation, we suggest you use a different DNS server.
 //
-// [1] See https://docs.mongodb.com/manual/reference/connection-string/#dns-seedlist-connection-format
-package mongo
+// [1] See https://docs.mongerdb.com/manual/reference/connection-string/#dns-seedlist-connection-format
+package monger

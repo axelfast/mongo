@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,16 +27,16 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
 #include <memory>
 
-#include "mongo/crypto/sha1_block.h"
-#include "mongo/crypto/sha256_block.h"
-#include "mongo/crypto/sha512_block.h"
+#include "monger/crypto/sha1_block.h"
+#include "monger/crypto/sha256_block.h"
+#include "monger/crypto/sha512_block.h"
 
-#include "mongo/config.h"
-#include "mongo/util/assert_util.h"
+#include "monger/config.h"
+#include "monger/util/assert_util.h"
 
 #ifndef MONGO_CONFIG_SSL
 #error This file should only be included in SSL-enabled builds
@@ -83,7 +83,7 @@ void HMAC_CTX_free(HMAC_CTX* ctx) {
 }  // namespace
 #endif
 
-namespace mongo {
+namespace monger {
 
 namespace {
 
@@ -166,4 +166,4 @@ void SHA512BlockTraits::computeHmac(const uint8_t* key,
     return computeHmacImpl<SHA512BlockTraits::HashType>(EVP_sha512(), key, keyLen, input, output);
 }
 
-}  // namespace mongo
+}  // namespace monger

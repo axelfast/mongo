@@ -13,7 +13,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -28,25 +28,25 @@
  *    it in the license file.
  */
 
-package com.mongodb.embedded.capi;
+package com.mongerdb.embedded.capi;
 
-import com.mongodb.embedded.capi.internal.CAPI;
+import com.mongerdb.embedded.capi.internal.CAPI;
 import com.sun.jna.NativeLibrary;
 
 import static java.lang.String.format;
 
 /**
- * The embedded mongodb CAPI.
+ * The embedded mongerdb CAPI.
  */
 public final class MongoEmbeddedCAPI {
-    private static final String NATIVE_LIBRARY_NAME = "mongo_embedded";
+    private static final String NATIVE_LIBRARY_NAME = "monger_embedded";
 
     /**
-     * Initializes the embedded mongodb library, required before any other call.
+     * Initializes the embedded mongerdb library, required before any other call.
      *
      * <p>Cannot be called multiple times without first calling {@link MongoEmbeddedLibrary#close()}.</p>
      *
-     * @param yamlConfig the yaml configuration for the embedded mongodb capi library
+     * @param yamlConfig the yaml configuration for the embedded mongerdb capi library
      * @return the initialized MongoEmbedded.
      */
     public static MongoEmbeddedLibrary create(final String yamlConfig) {
@@ -54,11 +54,11 @@ public final class MongoEmbeddedCAPI {
     }
 
     /**
-     * Initializes the embedded mongodb library, required before any other call.
+     * Initializes the embedded mongerdb library, required before any other call.
      *
      * <p>Cannot be called multiple times without first calling {@link MongoEmbeddedLibrary#close()}.</p>
      *
-     * @param yamlConfig the yaml configuration for the embedded mongodb capi library
+     * @param yamlConfig the yaml configuration for the embedded mongerdb capi library
      * @param logLevel   the logging level
      * @return the initialized MongoEmbedded.
      */
@@ -67,12 +67,12 @@ public final class MongoEmbeddedCAPI {
     }
 
     /**
-     * Initializes the embedded mongodb library, required before any other call.
+     * Initializes the embedded mongerdb library, required before any other call.
      *
      * <p>Cannot be called multiple times without first calling {@link MongoEmbeddedLibrary#close()}.</p>
      *
-     * @param yamlConfig the yaml configuration for the embedded mongodb capi library
-     * @param libraryPath the path to the embedded mongodb capi library.
+     * @param yamlConfig the yaml configuration for the embedded mongerdb capi library
+     * @param libraryPath the path to the embedded mongerdb capi library.
      * @param logLevel   the logging level
      * @return the initialized MongoEmbedded.
      */

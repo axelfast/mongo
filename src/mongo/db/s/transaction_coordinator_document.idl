@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the Server Side Public License
 # along with this program. If not, see
-# <http://www.mongodb.com/licensing/server-side-public-license>.
+# <http://www.mongerdb.com/licensing/server-side-public-license>.
 #
 # As a special exception, the copyright holders give permission to link the
 # code of portions of this program with the OpenSSL library under certain
@@ -27,14 +27,14 @@
 #
 
 global:
-    cpp_namespace: "mongo::txn"
+    cpp_namespace: "monger::txn"
     cpp_includes:
-        - "mongo/db/s/transaction_coordinator_structures.h"
+        - "monger/db/s/transaction_coordinator_structures.h"
 
 imports:
-    - "mongo/idl/basic_types.idl"
-    - "mongo/db/logical_session_id.idl"
-    - "mongo/s/sharding_types.idl"
+    - "monger/idl/basic_types.idl"
+    - "monger/db/logical_session_id.idl"
+    - "monger/s/sharding_types.idl"
 
 types:
     commit_decision_enum:
@@ -42,8 +42,8 @@ types:
         description: "Ensures that the commit decision serializes/deserializes to a fixed set of
                       string values"
         cpp_type: "txn::CommitDecision"
-        serializer: "::mongo::txn::writeCommitDecisionEnumProperty"
-        deserializer: "::mongo::txn::readCommitDecisionEnumProperty"
+        serializer: "::monger::txn::writeCommitDecisionEnumProperty"
+        deserializer: "::monger::txn::readCommitDecisionEnumProperty"
 
 structs:
     CoordinatorCommitDecision:

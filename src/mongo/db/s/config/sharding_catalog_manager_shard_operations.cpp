@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,59 +27,59 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kSharding
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kSharding
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/db/s/config/sharding_catalog_manager.h"
+#include "monger/db/s/config/sharding_catalog_manager.h"
 
 #include <iomanip>
 #include <pcrecpp.h>
 #include <set>
 
-#include "mongo/base/status_with.h"
-#include "mongo/bson/util/bson_extract.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/remote_command_targeter.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/audit.h"
-#include "mongo/db/catalog_raii.h"
-#include "mongo/db/client.h"
-#include "mongo/db/commands/feature_compatibility_version.h"
-#include "mongo/db/commands/feature_compatibility_version_command_parser.h"
-#include "mongo/db/commands/feature_compatibility_version_parser.h"
-#include "mongo/db/namespace_string.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/db/repl/repl_client_info.h"
-#include "mongo/db/repl/repl_set_config.h"
-#include "mongo/db/repl/replication_coordinator.h"
-#include "mongo/db/s/add_shard_cmd_gen.h"
-#include "mongo/db/s/add_shard_util.h"
-#include "mongo/db/s/sharding_logging.h"
-#include "mongo/db/s/type_shard_identity.h"
-#include "mongo/db/wire_version.h"
-#include "mongo/executor/task_executor.h"
-#include "mongo/rpc/get_status_from_command_result.h"
-#include "mongo/s/catalog/config_server_version.h"
-#include "mongo/s/catalog/sharding_catalog_client.h"
-#include "mongo/s/catalog/type_database.h"
-#include "mongo/s/catalog/type_shard.h"
-#include "mongo/s/client/shard.h"
-#include "mongo/s/client/shard_connection.h"
-#include "mongo/s/client/shard_registry.h"
-#include "mongo/s/cluster_identity_loader.h"
-#include "mongo/s/database_version_helpers.h"
-#include "mongo/s/grid.h"
-#include "mongo/s/shard_util.h"
-#include "mongo/s/write_ops/batched_command_request.h"
-#include "mongo/s/write_ops/batched_command_response.h"
-#include "mongo/util/fail_point_service.h"
-#include "mongo/util/log.h"
-#include "mongo/util/scopeguard.h"
-#include "mongo/util/str.h"
+#include "monger/base/status_with.h"
+#include "monger/bson/util/bson_extract.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/remote_command_targeter.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/audit.h"
+#include "monger/db/catalog_raii.h"
+#include "monger/db/client.h"
+#include "monger/db/commands/feature_compatibility_version.h"
+#include "monger/db/commands/feature_compatibility_version_command_parser.h"
+#include "monger/db/commands/feature_compatibility_version_parser.h"
+#include "monger/db/namespace_string.h"
+#include "monger/db/operation_context.h"
+#include "monger/db/repl/repl_client_info.h"
+#include "monger/db/repl/repl_set_config.h"
+#include "monger/db/repl/replication_coordinator.h"
+#include "monger/db/s/add_shard_cmd_gen.h"
+#include "monger/db/s/add_shard_util.h"
+#include "monger/db/s/sharding_logging.h"
+#include "monger/db/s/type_shard_identity.h"
+#include "monger/db/wire_version.h"
+#include "monger/executor/task_executor.h"
+#include "monger/rpc/get_status_from_command_result.h"
+#include "monger/s/catalog/config_server_version.h"
+#include "monger/s/catalog/sharding_catalog_client.h"
+#include "monger/s/catalog/type_database.h"
+#include "monger/s/catalog/type_shard.h"
+#include "monger/s/client/shard.h"
+#include "monger/s/client/shard_connection.h"
+#include "monger/s/client/shard_registry.h"
+#include "monger/s/cluster_identity_loader.h"
+#include "monger/s/database_version_helpers.h"
+#include "monger/s/grid.h"
+#include "monger/s/shard_util.h"
+#include "monger/s/write_ops/batched_command_request.h"
+#include "monger/s/write_ops/batched_command_response.h"
+#include "monger/util/fail_point_service.h"
+#include "monger/util/log.h"
+#include "monger/util/scopeguard.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 namespace {
 
 using CallbackHandle = executor::TaskExecutor::CallbackHandle;
@@ -324,10 +324,10 @@ StatusWith<ShardType> ShardingCatalogManager::_validateHostAsShard(
 
     auto resIsMaster = std::move(swCommandResponse.getValue().response);
 
-    // Fail if the node being added is a mongos.
+    // Fail if the node being added is a mongers.
     const std::string msg = resIsMaster.getStringField("msg");
     if (msg == "isdbgrid") {
-        return {ErrorCodes::IllegalOperation, "cannot add a mongos as a shard"};
+        return {ErrorCodes::IllegalOperation, "cannot add a mongers as a shard"};
     }
 
     // Extract the maxWireVersion so we can verify that the node being added has a binary version
@@ -565,7 +565,7 @@ StatusWith<std::string> ShardingCatalogManager::addShard(
     // replica set that has recently been removed, we have detached the ReplicaSetMonitor for the
     // set with that setName from the ReplicaSetMonitorManager and will create a new
     // ReplicaSetMonitor when targeting the set below.
-    // Note: This is necessary because as of 3.4, removeShard is performed by mongos (unlike
+    // Note: This is necessary because as of 3.4, removeShard is performed by mongers (unlike
     // addShard), so the ShardRegistry is not synchronously reloaded on the config server when a
     // shard is removed.
     if (!Grid::get(opCtx)->shardRegistry()->reload(opCtx)) {
@@ -961,4 +961,4 @@ StatusWith<long long> ShardingCatalogManager::_runCountCommandOnConfig(Operation
     return result;
 }
 
-}  // namespace mongo
+}  // namespace monger

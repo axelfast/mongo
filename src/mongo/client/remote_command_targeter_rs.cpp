@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,23 +27,23 @@
  *    it in the license file.
  */
 
-#define MONGO_LOG_DEFAULT_COMPONENT ::mongo::logger::LogComponent::kNetwork
+#define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/client/remote_command_targeter_rs.h"
+#include "monger/client/remote_command_targeter_rs.h"
 
-#include "mongo/base/status_with.h"
-#include "mongo/client/connection_string.h"
-#include "mongo/client/read_preference.h"
-#include "mongo/client/replica_set_monitor.h"
-#include "mongo/db/operation_context.h"
-#include "mongo/util/assert_util.h"
-#include "mongo/util/log.h"
-#include "mongo/util/net/hostandport.h"
-#include "mongo/util/str.h"
+#include "monger/base/status_with.h"
+#include "monger/client/connection_string.h"
+#include "monger/client/read_preference.h"
+#include "monger/client/replica_set_monitor.h"
+#include "monger/db/operation_context.h"
+#include "monger/util/assert_util.h"
+#include "monger/util/log.h"
+#include "monger/util/net/hostandport.h"
+#include "monger/util/str.h"
 
-namespace mongo {
+namespace monger {
 
 RemoteCommandTargeterRS::RemoteCommandTargeterRS(const std::string& rsName,
                                                  const std::vector<HostAndPort>& seedHosts)
@@ -79,7 +79,7 @@ StatusWith<HostAndPort> RemoteCommandTargeterRS::findHost(OperationContext* opCt
     }
 
     // Enforce a 20-second ceiling on the time spent looking for a host. This conforms with the
-    // behavior used throughout mongos prior to version 3.4, but is not fundamentally desirable.
+    // behavior used throughout mongers prior to version 3.4, but is not fundamentally desirable.
     // See comment in remote_command_targeter.h for details.
     return _rsMonitor
         ->getHostOrRefresh(readPref,
@@ -99,4 +99,4 @@ void RemoteCommandTargeterRS::markHostUnreachable(const HostAndPort& host, const
     _rsMonitor->failedHost(host, status);
 }
 
-}  // namespace mongo
+}  // namespace monger

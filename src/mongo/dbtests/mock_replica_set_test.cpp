@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -27,32 +27,32 @@
  *    it in the license file.
  */
 
-#include "mongo/platform/basic.h"
+#include "monger/platform/basic.h"
 
-#include "mongo/dbtests/mock/mock_dbclient_connection.h"
-#include "mongo/dbtests/mock/mock_replica_set.h"
-#include "mongo/unittest/unittest.h"
+#include "monger/dbtests/mock/mock_dbclient_connection.h"
+#include "monger/dbtests/mock/mock_replica_set.h"
+#include "monger/unittest/unittest.h"
 
 #include <set>
 #include <string>
 
-using mongo::BSONArrayBuilder;
-using mongo::BSONElement;
-using mongo::BSONObj;
-using mongo::BSONObjBuilder;
-using mongo::BSONObjIterator;
-using mongo::ConnectionString;
-using mongo::HostAndPort;
-using mongo::MockDBClientConnection;
-using mongo::MockRemoteDBServer;
-using mongo::MockReplicaSet;
-using mongo::repl::ReplSetConfig;
+using monger::BSONArrayBuilder;
+using monger::BSONElement;
+using monger::BSONObj;
+using monger::BSONObjBuilder;
+using monger::BSONObjIterator;
+using monger::ConnectionString;
+using monger::HostAndPort;
+using monger::MockDBClientConnection;
+using monger::MockRemoteDBServer;
+using monger::MockReplicaSet;
+using monger::repl::ReplSetConfig;
 
 using std::set;
 using std::string;
 using std::vector;
 
-namespace mongo_test {
+namespace monger_test {
 TEST(MockReplicaSetTest, SetName) {
     MockReplicaSet replSet("n", 3);
     ASSERT_EQUALS("n", replSet.getSetName());

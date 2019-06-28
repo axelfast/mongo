@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package options // import "go.mongodb.org/mongo-driver/mongo/options"
+package options // import "go.mongerdb.org/monger-driver/monger/options"
 
 import (
 	"bytes"
@@ -19,13 +19,13 @@ import (
 	"strings"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson/bsoncodec"
-	"go.mongodb.org/mongo-driver/event"
-	"go.mongodb.org/mongo-driver/mongo/readconcern"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"go.mongodb.org/mongo-driver/tag"
-	"go.mongodb.org/mongo-driver/x/network/connstring"
+	"go.mongerdb.org/monger-driver/bson/bsoncodec"
+	"go.mongerdb.org/monger-driver/event"
+	"go.mongerdb.org/monger-driver/monger/readconcern"
+	"go.mongerdb.org/monger-driver/monger/readpref"
+	"go.mongerdb.org/monger-driver/monger/writeconcern"
+	"go.mongerdb.org/monger-driver/tag"
+	"go.mongerdb.org/monger-driver/x/network/connstring"
 )
 
 // ContextDialer makes new network connections
@@ -40,7 +40,7 @@ type ContextDialer interface {
 //
 // AuthMechanismProperties specifies additional configuration options which may be used by certain
 // authentication mechanisms. Supported properties are:
-// SERVICE_NAME: Specifies the name of the service. Defaults to mongodb.
+// SERVICE_NAME: Specifies the name of the service. Defaults to mongerdb.
 // CANONICALIZE_HOST_NAME: If true, tells the driver to canonicalize the given hostname. Defaults to false. This
 // property may not be used on Linux and Darwin systems and may not be used at the same time as SERVICE_HOST.
 // SERVICE_REALM: Specifies the realm of the service.
@@ -237,7 +237,7 @@ func (c *ClientOptions) ApplyURI(uri string) *ClientOptions {
 			}
 
 			// If a username wasn't specified, add one from the certificate.
-			if c.Auth != nil && strings.ToLower(c.Auth.AuthMechanism) == "mongodb-x509" && c.Auth.Username == "" {
+			if c.Auth != nil && strings.ToLower(c.Auth.AuthMechanism) == "mongerdb-x509" && c.Auth.Username == "" {
 				// The Go x509 package gives the subject with the pairs in reverse order that we want.
 				pairs := strings.Split(s, ",")
 				for left, right := 0, len(pairs)-1; left < right; left, right = left+1, right-1 {

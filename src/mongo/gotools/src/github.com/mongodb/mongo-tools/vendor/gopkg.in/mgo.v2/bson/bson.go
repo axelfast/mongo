@@ -196,7 +196,7 @@ type RawDocElem struct {
 // long. MongoDB objects by default have such a property set in their "_id"
 // property.
 //
-// http://www.mongodb.org/display/DOCS/Object+IDs
+// http://www.mongerdb.org/display/DOCS/Object+IDs
 type ObjectId string
 
 // ObjectIdHex returns an ObjectId from the provided hex representation.

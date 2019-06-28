@@ -18,7 +18,7 @@ package json
 import (
 	"bytes"
 	"compress/gzip"
-	"github.com/mongodb/mongo-tools/legacy/testtype"
+	"github.com/mongerdb/monger-tools/legacy/testtype"
 	"io/ioutil"
 	"os"
 	"testing"

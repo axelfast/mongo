@@ -12,7 +12,7 @@
  *
  *    You should have received a copy of the Server Side Public License
  *    along with this program. If not, see
- *    <http://www.mongodb.com/licensing/server-side-public-license>.
+ *    <http://www.mongerdb.com/licensing/server-side-public-license>.
  *
  *    As a special exception, the copyright holders give permission to link the
  *    code of portions of this program with the OpenSSL library under certain
@@ -31,12 +31,12 @@
 
 #include <memory>
 
-#include "mongo/db/exec/requires_collection_stage.h"
-#include "mongo/db/fts/fts_spec.h"
-#include "mongo/db/matcher/expression.h"
-#include "mongo/db/record_id.h"
+#include "monger/db/exec/requires_collection_stage.h"
+#include "monger/db/fts/fts_spec.h"
+#include "monger/db/matcher/expression.h"
+#include "monger/db/record_id.h"
 
-namespace mongo {
+namespace monger {
 
 using fts::FTSSpec;
 
@@ -157,4 +157,4 @@ private:
     WorkingSetID _idRetrying;
     std::unique_ptr<SeekableRecordCursor> _recordCursor;
 };
-}  // namespace mongo
+}  // namespace monger
