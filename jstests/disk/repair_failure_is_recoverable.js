@@ -1,5 +1,5 @@
 /**
- * This test ensures that a failure during repair does not allow MongoDB to start normally and
+ * This test ensures that a failure during repair does not allow MongerDB to start normally and
  * requires it to be restarted with --repair again.
  *
  * This is not storage-engine specific.
@@ -16,20 +16,20 @@
     const dbName = "repair_failure_is_recoverable";
     const collName = "test";
 
-    const dbpath = MongoRunner.dataPath + baseName + "/";
+    const dbpath = MongerRunner.dataPath + baseName + "/";
     resetDbpath(dbpath);
 
-    let mongerd = MongoRunner.runMongod({dbpath: dbpath});
+    let mongerd = MongerRunner.runMongerd({dbpath: dbpath});
     const port = mongerd.port;
 
     let testColl = mongerd.getDB(dbName)[collName];
 
     assert.commandWorked(testColl.insert({_id: 0, foo: "bar"}));
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     /**
-     * Test 1. Cause an exit before repairing data. MongoDB should not be able to restart without
+     * Test 1. Cause an exit before repairing data. MongerDB should not be able to restart without
      * --repair.
      */
     assertRepairFailsWithFailpoint(dbpath, port, exitBeforeRepairParameter);
@@ -45,7 +45,7 @@
     });
 
     /**
-     * Test 2. Fail after repairing data, before invalidating the replica set config. MongoDB should
+     * Test 2. Fail after repairing data, before invalidating the replica set config. MongerDB should
      * not be able to restart without --repair.
      */
     assertRepairFailsWithFailpoint(dbpath, port, exitBeforeRepairInvalidatesConfigParameter);

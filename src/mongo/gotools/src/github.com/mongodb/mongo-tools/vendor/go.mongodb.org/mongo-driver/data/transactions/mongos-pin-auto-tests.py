@@ -23,7 +23,7 @@ data: &data
 
 tests:
   - description: remain pinned after non-transient Interrupted error on insertOne
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - &startTransaction
         name: startTransaction
@@ -116,7 +116,7 @@ tests:
           - {_id: 3}
 
   - description: unpin after transient error within a transaction
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - &startTransaction
         name: startTransaction
@@ -213,7 +213,7 @@ tests:
 
 TEMPLATE = '''
   - description: {test_name} {error_name} error on {op_name} {command_name}
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand

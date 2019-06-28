@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -94,12 +94,12 @@ int mongereBenchMain(int argc, char* argv[], char** envp) {
 
     setupSignalHandlers();
 
-    log() << "MongoDB embedded benchRun application, for testing purposes only";
+    log() << "MongerDB embedded benchRun application, for testing purposes only";
 
     try {
         optionenvironment::OptionSection startupOptions("Options");
         uassertStatusOK(embedded::addOptions(&startupOptions));
-        uassertStatusOK(addMongoeBenchOptions(&startupOptions));
+        uassertStatusOK(addMongereBenchOptions(&startupOptions));
         uassertStatusOK(
             embedded_integration_helpers::parseCommandLineOptions(argc, argv, startupOptions));
         serviceContext = embedded::initialize(nullptr);

@@ -65,7 +65,7 @@ function checkRollbackFiles(dbPath, nss, expectedDocs) {
     // out in an arbitrary order so we just check the document set.
     let tmpJSONFile = "rollback_tmp.json";
     let exitCode =
-        MongoRunner.runMongoTool("bsondump", {outFile: tmpJSONFile, bsonFile: rollbackFile});
+        MongerRunner.runMongerTool("bsondump", {outFile: tmpJSONFile, bsonFile: rollbackFile});
     assert.eq(exitCode, 0, "bsondump failed to parse the rollback file");
     let docs = cat(tmpJSONFile).split("\n").filter(l => l.length).map(JSON.parse);
     assert.sameMembers(docs, expectedDocs);

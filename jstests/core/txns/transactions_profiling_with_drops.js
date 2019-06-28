@@ -9,7 +9,7 @@
     const collName = "transactions_profiling_with_drops";
     const adminDB = db.getSiblingDB("admin");
     const testDB = db.getSiblingDB(dbName);
-    const session = db.getMongo().startSession({causalConsistency: false});
+    const session = db.getMonger().startSession({causalConsistency: false});
     const sessionDb = session.getDatabase(dbName);
     const sessionColl = sessionDb[collName];
 

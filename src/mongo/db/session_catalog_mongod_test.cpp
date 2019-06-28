@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -40,7 +40,7 @@
 namespace monger {
 namespace {
 
-class MongoDSessionCatalogTest : public ServiceContextMongoDTest {
+class MongerDSessionCatalogTest : public ServiceContextMongerDTest {
 protected:
     void setUp() override {
         const auto service = getServiceContext();
@@ -65,7 +65,7 @@ protected:
         std::make_shared<MockSessionsCollection>(_collectionMock)};
 };
 
-TEST_F(MongoDSessionCatalogTest, ReapSomeExpiredSomeNot) {
+TEST_F(MongerDSessionCatalogTest, ReapSomeExpiredSomeNot) {
     // Create some "old" sessions
     DBDirectClient client(_opCtx);
     SessionTxnRecord txn1(
@@ -82,7 +82,7 @@ TEST_F(MongoDSessionCatalogTest, ReapSomeExpiredSomeNot) {
     _collectionMock->add(LogicalSessionRecord(makeLogicalSessionIdForTest(), clock()->now()));
 
     ASSERT_EQ(2,
-              MongoDSessionCatalog::reapSessionsOlderThan(
+              MongerDSessionCatalog::reapSessionsOlderThan(
                   _opCtx, *_collection, clock()->now() - Minutes{30}));
 }
 

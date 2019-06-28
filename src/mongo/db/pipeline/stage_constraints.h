@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -69,7 +69,7 @@ struct StageConstraints {
         // Indicates that the stage must run on any participating shard.
         kAnyShard,
         // Indicates that the stage can only run on mongerS.
-        kMongoS,
+        kMongerS,
     };
 
     /**
@@ -170,7 +170,7 @@ struct StageConstraints {
         // Stages which write persistent data cannot be used in a $lookup pipeline.
         invariant(!(isAllowedInLookupPipeline() && writesPersistentData()));
         invariant(
-            !(isAllowedInLookupPipeline() && hostRequirement == HostTypeRequirement::kMongoS));
+            !(isAllowedInLookupPipeline() && hostRequirement == HostTypeRequirement::kMongerS));
 
         // Only streaming stages are permitted in $changeStream pipelines.
         invariant(!(isAllowedInChangeStream() && streamType == StreamType::kBlocking));
@@ -202,13 +202,13 @@ struct StageConstraints {
 
     /**
      * Returns the literal HostTypeRequirement used to initialize the StageConstraints, or the
-     * effective HostTypeRequirement (kAnyShard or kMongoS) if kLocalOnly was specified.
+     * effective HostTypeRequirement (kAnyShard or kMongerS) if kLocalOnly was specified.
      */
     HostTypeRequirement resolvedHostTypeRequirement(
         const boost::intrusive_ptr<ExpressionContext>& expCtx) const {
         return (hostRequirement != HostTypeRequirement::kLocalOnly
                     ? hostRequirement
-                    : (expCtx->inMongos ? HostTypeRequirement::kMongoS
+                    : (expCtx->inMongers ? HostTypeRequirement::kMongerS
                                         : HostTypeRequirement::kAnyShard));
     }
 

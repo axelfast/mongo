@@ -18,10 +18,10 @@ load('jstests/libs/parallelTester.js');  // For ScopedThread
         return;
     }
 
-    var dbpath = MongoRunner.dataPath + 'wt_unclean_shutdown';
+    var dbpath = MongerRunner.dataPath + 'wt_unclean_shutdown';
     resetDbpath(dbpath);
 
-    var conn = MongoRunner.runMongod({
+    var conn = MongerRunner.runMongerd({
         dbpath: dbpath,
         noCleanData: true,
         // Modify some WT settings:
@@ -36,7 +36,7 @@ load('jstests/libs/parallelTester.js');  // For ScopedThread
     assert.neq(null, conn, 'mongerd was unable to start up');
 
     var insertWorkload = function(host, start, end) {
-        var conn = new Mongo(host);
+        var conn = new Monger(host);
         var testDB = conn.getDB('test');
 
         // Create a record larger than 128K which is the threshold to doing an unbuffered log
@@ -81,9 +81,9 @@ load('jstests/libs/parallelTester.js');  // For ScopedThread
     // records.  Sleep for 40 seconds to generate plenty of workload.
     sleep(40000);
 
-    // Mongod needs an unclean shutdown so that WT recovery is forced on restart and we can detect
+    // Mongerd needs an unclean shutdown so that WT recovery is forced on restart and we can detect
     // any missing records.
-    MongoRunner.stopMongod(conn, 9, {allowedExitCode: MongoRunner.EXIT_SIGKILL});
+    MongerRunner.stopMongerd(conn, 9, {allowedExitCode: MongerRunner.EXIT_SIGKILL});
 
     // Retrieve the start and end data from each thread.
     var retData = [];
@@ -93,7 +93,7 @@ load('jstests/libs/parallelTester.js');  // For ScopedThread
     });
 
     // Restart the mongerd.  This forces WT to run recovery.
-    conn = MongoRunner.runMongod({
+    conn = MongerRunner.runMongerd({
         dbpath: dbpath,
         noCleanData: true,
         wiredTigerEngineConfigString: 'log=(archive=false,compressor=none,file_max=10M)'
@@ -127,5 +127,5 @@ load('jstests/libs/parallelTester.js');  // For ScopedThread
                       tojson(retData));
     }
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

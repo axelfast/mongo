@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,7 +28,7 @@
  */
 
 /**
- * Connect to a Mongo database as a database, from C++.
+ * Connect to a Monger database as a database, from C++.
  */
 
 #define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
@@ -160,7 +160,7 @@ rpc::UniqueReply DBClientBase::parseCommandReplyMessage(const std::string& host,
     // level. Routing clients only expect StaleConfig from shards, so the exception should not be
     // thrown when connected to a mongers, which allows StaleConfig to be returned to clients that
     // connect to a mongers with DBClient, e.g. the shell.
-    if (!isMongos()) {
+    if (!isMongers()) {
         auto status = getStatusFromCommandResult(commandReply->getCommandReply());
         if (status == ErrorCodes::StaleConfig) {
             uassertStatusOK(status.withContext("stale config in runCommand"));

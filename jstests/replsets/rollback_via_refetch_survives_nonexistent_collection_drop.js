@@ -54,7 +54,7 @@
     rollbackTest.transitionToSyncSourceOperationsDuringRollback();
 
     // Make sure we exit the rollback early by checking for the correct log messages.
-    checkLog.contains(rollbackDB.getMongo(),
+    checkLog.contains(rollbackDB.getMonger(),
                       "rollbackExitEarlyAfterCollectionDrop fail point enabled.");
 
     jsTestLog("Turning off the rollbackExitEarlyAfterCollectionDrop fail point");
@@ -68,7 +68,7 @@
     // After a successful rollback attempt, we should have seen the following log message to ensure
     // that we tried to drop a non-existent collection and continued without acquiring a database
     // lock.
-    checkLog.contains(rollbackDB.getMongo(), "This collection does not exist");
+    checkLog.contains(rollbackDB.getMonger(), "This collection does not exist");
 
     rollbackTest.stop();
 }());

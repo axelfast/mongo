@@ -1357,7 +1357,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 License notice for gopkg.in/mgo.v2
 ----------------------------------------------------------------------
 
-mgo - MongoDB driver for Go
+mgo - MongerDB driver for Go
 
 Copyright (c) 2010-2013 - Gustavo Niemeyer <gustavo@niemeyer.net>
 

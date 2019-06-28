@@ -4,7 +4,7 @@
 (function() {
     'use strict';
 
-    let mongerd = MongoRunner.runMongod(
+    let mongerd = MongerRunner.runMongerd(
         {auth: "", setParameter: "authenticationMechanisms=SCRAM-SHA-1,SCRAM-SHA-256,PLAIN"});
     assert(mongerd);
     const admin = mongerd.getDB('admin');
@@ -203,10 +203,10 @@
     });
     assert.eq(["sha256user", "user"], foundUsers);
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     // Ensure mechanisms can be enabled and disabled.
-    mongerd = MongoRunner.runMongod({
+    mongerd = MongerRunner.runMongerd({
         auth: "",
         setParameter: "authenticationMechanisms=SCRAM-SHA-1",
         restart: mongerd,
@@ -214,8 +214,8 @@
     });
     assert(mongerd.getDB("test").auth("sha1user", "pass"));
     assert(!mongerd.getDB("test").auth("sha256user", "pass"));
-    MongoRunner.stopMongod(mongerd);
-    mongerd = MongoRunner.runMongod({
+    MongerRunner.stopMongerd(mongerd);
+    mongerd = MongerRunner.runMongerd({
         auth: "",
         setParameter: "authenticationMechanisms=SCRAM-SHA-256",
         restart: mongerd,
@@ -223,6 +223,6 @@
     });
     assert(!mongerd.getDB("test").auth("sha1user", "pass"));
     assert(mongerd.getDB("test").auth("sha256user", "pass"));
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
 })();

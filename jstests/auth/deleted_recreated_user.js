@@ -35,7 +35,7 @@
         // Perform administrative commands via separate shell.
         function evalCmd(cmd) {
             const uri = 'mongerdb://admin:pass@localhost:' + s1.port + '/admin';
-            const result = runMongoProgram('./monger', uri, '--eval', cmd);
+            const result = runMongerProgram('./monger', uri, '--eval', cmd);
             assert.eq(result, 0, "Command failed");
         }
         evalCmd('db.dropUser("user"); ');
@@ -52,9 +52,9 @@
         assert.eq(thrown.code, ErrorCodes.Unauthorized, "Threw something other than unauthorized");
     }
 
-    const mongerd = MongoRunner.runMongod({auth: ''});
+    const mongerd = MongerRunner.runMongerd({auth: ''});
     runTest(mongerd, mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     const st = new ShardingTest({

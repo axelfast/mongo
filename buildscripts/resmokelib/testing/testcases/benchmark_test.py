@@ -1,4 +1,4 @@
-"""The unittest.TestCase for tests using a MongoDB vendored version of Google Benchmark."""
+"""The unittest.TestCase for tests using a MongerDB vendored version of Google Benchmark."""
 
 from buildscripts.resmokelib import config as _config
 from buildscripts.resmokelib import core

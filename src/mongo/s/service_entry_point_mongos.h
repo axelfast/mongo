@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,11 +36,11 @@
 namespace monger {
 
 /**
- * The entry point from the TransportLayer into Mongos.
+ * The entry point from the TransportLayer into Mongers.
  */
-class ServiceEntryPointMongos final : public ServiceEntryPointImpl {
-    ServiceEntryPointMongos(const ServiceEntryPointMongos&) = delete;
-    ServiceEntryPointMongos& operator=(const ServiceEntryPointMongos&) = delete;
+class ServiceEntryPointMongers final : public ServiceEntryPointImpl {
+    ServiceEntryPointMongers(const ServiceEntryPointMongers&) = delete;
+    ServiceEntryPointMongers& operator=(const ServiceEntryPointMongers&) = delete;
 
 public:
     using ServiceEntryPointImpl::ServiceEntryPointImpl;

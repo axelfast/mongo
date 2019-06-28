@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,7 +38,7 @@
 namespace monger {
 
 std::unique_ptr<Pipeline, PipelineDeleter>
-StubMongoProcessInterfaceLookupSingleDocument::makePipeline(
+StubMongerProcessInterfaceLookupSingleDocument::makePipeline(
     const std::vector<BSONObj>& rawPipeline,
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const MakePipelineOptions opts) {
@@ -56,7 +56,7 @@ StubMongoProcessInterfaceLookupSingleDocument::makePipeline(
 }
 
 std::unique_ptr<Pipeline, PipelineDeleter>
-StubMongoProcessInterfaceLookupSingleDocument::attachCursorSourceToPipelineForLocalRead(
+StubMongerProcessInterfaceLookupSingleDocument::attachCursorSourceToPipelineForLocalRead(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* ownedPipeline) {
     std::unique_ptr<Pipeline, PipelineDeleter> pipeline(ownedPipeline,
                                                         PipelineDeleter(expCtx->opCtx));
@@ -65,13 +65,13 @@ StubMongoProcessInterfaceLookupSingleDocument::attachCursorSourceToPipelineForLo
 }
 
 std::unique_ptr<Pipeline, PipelineDeleter>
-StubMongoProcessInterfaceLookupSingleDocument::attachCursorSourceToPipeline(
+StubMongerProcessInterfaceLookupSingleDocument::attachCursorSourceToPipeline(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* ownedPipeline) {
     return attachCursorSourceToPipelineForLocalRead(expCtx, ownedPipeline);
 }
 
 
-boost::optional<Document> StubMongoProcessInterfaceLookupSingleDocument::lookupSingleDocument(
+boost::optional<Document> StubMongerProcessInterfaceLookupSingleDocument::lookupSingleDocument(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
     UUID collectionUUID,

@@ -16,7 +16,7 @@
         return doc;
     }
 
-    db.getMongo().forceWriteMode('legacy');
+    db.getMonger().forceWriteMode('legacy');
     var t = db.foo;
 
     t.drop();

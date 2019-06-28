@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -66,7 +66,7 @@
 
 #ifdef _DOXYGEN
 /**
- * Embeddable MongoDB Library.
+ * Embeddable MongerDB Library.
  *
  * @invariant All functions in this library (those `extern "C"` functions starting with
  * `monger_embedded_v1_` in their names) have undefined behavior unless their thread safety
@@ -105,7 +105,7 @@ extern "C" {
 /**
  * An object which describes the details of the failure of an operation.
  *
- * The Embedded MongoDB Library (most `monger_embedded_v1_` prefixed functions) uses allocated
+ * The Embedded MongerDB Library (most `monger_embedded_v1_` prefixed functions) uses allocated
  * objects
  * of this type to report the details of any failure, when an operation cannot be completed.
  * Several `monger_embedded_v1_status` functions are provided which permit observing the details of
@@ -149,7 +149,7 @@ typedef struct monger_embedded_v1_status monger_embedded_v1_status;
  * if detailed error reporting is unnecessary; however, if allocation of status objects fails it is
  * likely that all other `monger_embedded_v1` operations will fail as well.
  *
- * @note Allocation of an Embedded MongoDB Status buffer should rarely fail, except for
+ * @note Allocation of an Embedded MongerDB Status buffer should rarely fail, except for
  * out-of-memory reasons.
  *
  * @note This function may be called before `monger_embedded_v1_lib_init`.
@@ -292,7 +292,7 @@ monger_embedded_v1_status_get_explanation(const monger_embedded_v1_status* statu
  *
  * Any `monger_embedded_v1` function which reports failure must, when it fails, update the specified
  * `monger_embedded_v1_status` object, if it exists, to contain a numeric code indicating a
- * sub-category of failure. This error code is one specified by the normal MongoDB Driver interface,
+ * sub-category of failure. This error code is one specified by the normal MongerDB Driver interface,
  * if `monger_embedded_v1_error == MONGO_EMBEDDED_V1_ERROR_EXCEPTION`.
  *
  * @pre The specified `status` must not be `NULL`.
@@ -325,7 +325,7 @@ monger_embedded_v1_status_get_code(const monger_embedded_v1_status* status);
 
 
 /**
- * An object which describes the runtime state of the Embedded MongoDB Library.
+ * An object which describes the runtime state of the Embedded MongerDB Library.
  *
  * The `monger_embedded_v1` library uses allocated objects of this type to indicate the present state
  * of the library. Some operations which the library provides need access to this object. Further a
@@ -340,7 +340,7 @@ monger_embedded_v1_status_get_code(const monger_embedded_v1_status* status);
 typedef struct monger_embedded_v1_lib monger_embedded_v1_lib;
 
 /**
- * An object which describes the runtime state of the Embedded MongoDB Library.
+ * An object which describes the runtime state of the Embedded MongerDB Library.
  *
  * The `monger_embedded_v1` library uses structures of this type to indicate the desired
  * configuration of the library.
@@ -385,7 +385,7 @@ typedef enum {
 // See the documentation of this object on the comments above its forward declaration
 struct monger_embedded_v1_init_params {
     /**
-     * Optional null-terminated YAML formatted MongoDB configuration string.
+     * Optional null-terminated YAML formatted MongerDB configuration string.
      * See documentation for valid options.
      */
     const char* yaml_config;
@@ -412,9 +412,9 @@ struct monger_embedded_v1_init_params {
  * Initializes the monger_embedded_capi library; required before any other call except as otherwise
  * noted.
  *
- * The Embedded MongoDB Library must be initialized before it can be used. However, it is
+ * The Embedded MongerDB Library must be initialized before it can be used. However, it is
  * permissible to create and destroy `monger_embedded_v1_status` objects without the library having
- * been initialized. Initializing the library sets up internal state for all Embedded MongoDB
+ * been initialized. Initializing the library sets up internal state for all Embedded MongerDB
  * Library operations, including creating embedded "server-like" instances and creating clients.
  *
  * @pre The specified `params` object must either be a valid `monger_embedded_v1_lib_params` object
@@ -438,7 +438,7 @@ struct monger_embedded_v1_init_params {
  * @param status A pointer to a `monger_embedded_v1_status` object which will not be modified unless
  * this function reports a failure.
  *
- * @post Either the Embedded MongoDB Library will be initialized, or an error will be reported.
+ * @post Either the Embedded MongerDB Library will be initialized, or an error will be reported.
  *
  * @returns A pointer to a `monger_embedded_v1_lib` object on success.
  * @returns `NULL` and modifies `status` on failure.
@@ -457,7 +457,7 @@ MONGO_EMBEDDED_API monger_embedded_v1_lib* MONGO_API_CALL monger_embedded_v1_lib
 /**
  * Tears down the state of the library, all databases must be closed before calling this.
  *
- * The Embedded MongoDB Library must be quiesced before the containg process can be safely
+ * The Embedded MongerDB Library must be quiesced before the containg process can be safely
  * terminated. Dataloss is not a risk; however, some database repair routines may be executed at
  * next initialization if the library is not properly quiesced. It is permissible to create and
  * destroy `monger_embedded_v1_status` objects after the library has been quiesced. The library may
@@ -477,7 +477,7 @@ MONGO_EMBEDDED_API monger_embedded_v1_lib* MONGO_API_CALL monger_embedded_v1_lib
  * @param status A pointer to a `monger_embedded_v1_status` object which will not be modified unless
  * this function reports a failure.
  *
- * @post Either the Embedded MongoDB Library will be deinitialized, or an error will be reported.
+ * @post Either the Embedded MongerDB Library will be deinitialized, or an error will be reported.
  *
  * @returns Returns `MONGO_EMBEDDED_V1_SUCCESS` on success.
  *
@@ -501,10 +501,10 @@ MONGO_EMBEDDED_API int MONGO_API_CALL monger_embedded_v1_lib_fini(monger_embedde
                                                                  monger_embedded_v1_status* status);
 
 /**
- * An object which represents an instance of an Embedded MongoDB Server.
+ * An object which represents an instance of an Embedded MongerDB Server.
  *
- * The Embedded MongoDB Library uses allocated objects of this type (`monger_embedded_v1_instance`)
- * to indicate the present state of a single "server-like" MongoDB instance. Some operations which
+ * The Embedded MongerDB Library uses allocated objects of this type (`monger_embedded_v1_instance`)
+ * to indicate the present state of a single "server-like" MongerDB instance. Some operations which
  * the library provides need access to this object. Further a construction function and a
  * destruction function for these objects are also provided. No more than a single object instance
  * of this type may exist at any given time.
@@ -517,7 +517,7 @@ MONGO_EMBEDDED_API int MONGO_API_CALL monger_embedded_v1_lib_fini(monger_embedde
 typedef struct monger_embedded_v1_instance monger_embedded_v1_instance;
 
 /**
- * Creates an embedded MongoDB instance and returns a handle with the service context.
+ * Creates an embedded MongerDB instance and returns a handle with the service context.
  *
  * A `monger_embedded_v1_instance` object which represents a single embedded "server-like" context is
  * created and returned by this function. At present, only a single server-like instance is
@@ -533,16 +533,16 @@ typedef struct monger_embedded_v1_instance monger_embedded_v1_instance;
  * @pre The specified `status` object must be either a valid `monger_embedded_v1_status` object or
  * `NULL`.
  *
- * @param lib A pointer to a `monger_embedded_v1_lib` handle which represents the Embedded MongoDB
+ * @param lib A pointer to a `monger_embedded_v1_lib` handle which represents the Embedded MongerDB
  * Library.
  *
- * @param yaml_config A null-terminated YAML formatted Embedded MongoDB Instance configuration. See
+ * @param yaml_config A null-terminated YAML formatted Embedded MongerDB Instance configuration. See
  * documentation for valid options.
  *
  * @param status A pointer to a `monger_embedded_v1_status` object which will not be modified unless
  * this function reports a failure.
  *
- * @post Either a new Embedded MongoDB Server will be created, or an error will be reported.
+ * @post Either a new Embedded MongerDB Server will be created, or an error will be reported.
  *
  * @return A pointer to a newly constructed, valid `monger_embedded_v1_instance`.
  * @return `NULL` and modifies `status` on failure.
@@ -558,7 +558,7 @@ MONGO_EMBEDDED_API monger_embedded_v1_instance* MONGO_API_CALL monger_embedded_v
     monger_embedded_v1_lib* lib, const char* yaml_config, monger_embedded_v1_status* status);
 
 /**
- * Shuts down an embedded MongoDB instance.
+ * Shuts down an embedded MongerDB instance.
  *
  * A `monger_embedded_v1_instance` embedded "server-like" instance can be terminated by this
  * function.
@@ -578,7 +578,7 @@ MONGO_EMBEDDED_API monger_embedded_v1_instance* MONGO_API_CALL monger_embedded_v
  * @param status A pointer to a `monger_embedded_v1_status` object which will not be modified unless
  * this function reports a failure.
  *
- * @post Either the specified Embedded MongoDB Server will be destroyed, or an error will be
+ * @post Either the specified Embedded MongerDB Server will be destroyed, or an error will be
  * reported.
  *
  * @returns `MONGO_EMBEDDED_V1_SUCCESS` on success.
@@ -601,7 +601,7 @@ MONGO_EMBEDDED_API int MONGO_API_CALL monger_embedded_v1_instance_destroy(
     monger_embedded_v1_instance* instance, monger_embedded_v1_status* status);
 
 /**
- * An object which represents "client connection" to an Embedded MongoDB Server.
+ * An object which represents "client connection" to an Embedded MongerDB Server.
  *
  * A `monger_embedded_v1_client` connection object is necessary to perform most database operations,
  * such as queries. Some operations which the library provides need access to this object. Further a
@@ -623,9 +623,9 @@ typedef struct monger_embedded_v1_client monger_embedded_v1_client;
  * @pre The specified `status` object must be either a valid `monger_embedded_v1_status` object or
  * `NULL`.
  *
- * @post Either a new Embedded MongoDB Client will be created, or an error will be reported.
+ * @post Either a new Embedded MongerDB Client will be created, or an error will be reported.
  *
- * @param instance The Embedded MongoDB Server instance that will be attached to this client and
+ * @param instance The Embedded MongerDB Server instance that will be attached to this client and
  * execute its RPC calls
  *
  * @param status A pointer to a `monger_embedded_v1_status` object which will not be modified unless
@@ -640,7 +640,7 @@ MONGO_EMBEDDED_API monger_embedded_v1_client* MONGO_API_CALL monger_embedded_v1_
     monger_embedded_v1_instance* instance, monger_embedded_v1_status* status);
 
 /**
- * Destroys an Embedded MongoDB Client.
+ * Destroys an Embedded MongerDB Client.
  *
  * A client must be destroyed before the owning db is destroyed. Database clients must be destroyed
  * before the instance associated with them can be destroyed. Further, any resources associated with
@@ -657,7 +657,7 @@ MONGO_EMBEDDED_API monger_embedded_v1_client* MONGO_API_CALL monger_embedded_v1_
  * @param status A pointer to a `monger_embedded_v1_status` object which will not be modified unless
  * this function reports a failure.
  *
- * @post Either the specified Embedded MongoDB Client will be destroyed, or an error will be
+ * @post Either the specified Embedded MongerDB Client will be destroyed, or an error will be
  * reported.
  *
  * @returns `MONGO_EMBEDDED_V1_SUCCESS` on success.
@@ -678,7 +678,7 @@ MONGO_EMBEDDED_API int MONGO_API_CALL monger_embedded_v1_client_destroy(
 /**
  * Makes an RPC call to the database.
  *
- * A MongoDB client operation is performed according to the provided BSON object specified by
+ * A MongerDB client operation is performed according to the provided BSON object specified by
  * `input` and `input_size`.
  *
  * @pre The specified `client` object must not be `NULL`.

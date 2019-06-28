@@ -4,7 +4,7 @@ CRUD Tests
 
 The YAML and JSON files in this directory tree are platform-independent tests
 meant to exercise the translation from the API to underlying commands that
-MongoDB understands. Given the variety of languages and implementations and
+MongerDB understands. Given the variety of languages and implementations and
 limited nature of a description of a test, there are a number of things that
 aren't testable. For instance, none of these tests assert that maxTimeMS was
 properly sent to the server. This would involve a lot of infrastructure to
@@ -16,7 +16,7 @@ Version
 =======
 
 Files in the "specifications" repository have no version scheme. They are not
-tied to a MongoDB server version, and it is our intention that each
+tied to a MongerDB server version, and it is our intention that each
 specification moves from "draft" to "final" with no further revisions; it is
 superseded by a future spec, not revised.
 

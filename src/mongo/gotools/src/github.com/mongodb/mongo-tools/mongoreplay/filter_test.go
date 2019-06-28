@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -17,7 +17,7 @@ import (
 )
 
 func TestRemoveDriverOpsFromFile(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	cases := []struct {
 		name string
 
@@ -131,7 +131,7 @@ func TestRemoveDriverOpsFromFile(t *testing.T) {
 }
 
 func TestSplitInputFile(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	cases := []struct {
 		name string
 
@@ -219,7 +219,7 @@ func TestSplitInputFile(t *testing.T) {
 }
 
 func TestRemoveOpsBeforeTime(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	// array of times to use for testing
 	timesForTest := make([]time.Time, 16)
 	now := time.Now()
@@ -319,7 +319,7 @@ func TestRemoveOpsBeforeTime(t *testing.T) {
 }
 
 func TestRemoveOpsAfterDuration(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	// array of times to use for testing
 	timesForTest := make([]time.Time, 16)
 	now := time.Now()

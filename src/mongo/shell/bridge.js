@@ -1,5 +1,5 @@
 /**
- * Wrapper around a mongerbridge process. Construction of a MongoBridge instance will start a new
+ * Wrapper around a mongerbridge process. Construction of a MongerBridge instance will start a new
  * mongerbridge process that listens on 'options.port' and forwards messages to 'options.dest'.
  *
  * @param {Object} options
@@ -11,11 +11,11 @@
  * @returns {Proxy} Acts as a typical connection object to options.hostName:options.port that has
  * additional functions exposed to shape network traffic from other processes.
  */
-function MongoBridge(options) {
+function MongerBridge(options) {
     'use strict';
 
-    if (!(this instanceof MongoBridge)) {
-        return new MongoBridge(options);
+    if (!(this instanceof MongerBridge)) {
+        return new MongerBridge(options);
     }
 
     options = options || {};
@@ -60,7 +60,7 @@ function MongoBridge(options) {
         }
     });
 
-    var pid = _startMongoProgram.apply(null, args);
+    var pid = _startMongerProgram.apply(null, args);
 
     /**
      * Initializes the monger shell's connections to the mongerbridge process. Throws an error if the
@@ -73,8 +73,8 @@ function MongoBridge(options) {
      * connections, connections to the mongerbridge process should only be made after the other
      * process is known to be reachable:
      *
-     *     var bridge = new MongoBridge(...);
-     *     var conn = MongoRunner.runMongoXX(...);
+     *     var bridge = new MongerBridge(...);
+     *     var conn = MongerRunner.runMongerXX(...);
      *     assert.neq(null, conn);
      *     bridge.connectToBridge();
      */
@@ -87,7 +87,7 @@ function MongoBridge(options) {
             }
 
             try {
-                userConn = new Mongo(hostName + ':' + this.port);
+                userConn = new Monger(hostName + ':' + this.port);
             } catch (e) {
                 return false;
             }
@@ -95,7 +95,7 @@ function MongoBridge(options) {
         }, 'failed to connect to the mongerbridge on port ' + this.port);
         assert(!failedToStart, 'mongerbridge failed to start on port ' + this.port);
 
-        // The MongoRunner.runMongoXX() functions define a 'name' property on the returned
+        // The MongerRunner.runMongerXX() functions define a 'name' property on the returned
         // connection object that is equivalent to its 'host' property. Certain functions in
         // ReplSetTest and ShardingTest use the 'name' property instead of the 'host' property, so
         // we define it here for consistency.
@@ -106,20 +106,20 @@ function MongoBridge(options) {
             },
         });
 
-        controlConn = new Mongo(hostName + ':' + this.port);
+        controlConn = new Monger(hostName + ':' + this.port);
     };
 
     /**
      * Terminates the mongerbridge process.
      */
     this.stop = function stop() {
-        return _stopMongoProgram(this.port);
+        return _stopMongerProgram(this.port);
     };
 
-    // Throws an error if 'obj' is not a MongoBridge instance.
-    function throwErrorIfNotMongoBridgeInstance(obj) {
-        if (!(obj instanceof MongoBridge)) {
-            throw new Error('Expected MongoBridge instance, but got ' + tojson(obj));
+    // Throws an error if 'obj' is not a MongerBridge instance.
+    function throwErrorIfNotMongerBridgeInstance(obj) {
+        if (!(obj instanceof MongerBridge)) {
+            throw new Error('Expected MongerBridge instance, but got ' + tojson(obj));
         }
     }
 
@@ -147,13 +147,13 @@ function MongoBridge(options) {
      * Configures 'this' bridge to accept new connections from the 'dest' of each of the 'bridges'.
      * Additionally configures each of the 'bridges' to accept new connections from 'this.dest'.
      *
-     * @param {(MongoBridge|MongoBridge[])} bridges
+     * @param {(MongerBridge|MongerBridge[])} bridges
      */
     this.reconnect = function reconnect(bridges) {
         if (!Array.isArray(bridges)) {
             bridges = [bridges];
         }
-        bridges.forEach(throwErrorIfNotMongoBridgeInstance);
+        bridges.forEach(throwErrorIfNotMongerBridgeInstance);
 
         this.acceptConnectionsFrom(bridges);
         bridges.forEach(bridge => bridge.acceptConnectionsFrom(this));
@@ -166,13 +166,13 @@ function MongoBridge(options) {
      * 'dest' of each of the 'bridges'. Additionally configures each of the 'bridges' to close
      * existing connections and reject new connections from 'this.dest'.
      *
-     * @param {(MongoBridge|MongoBridge[])} bridges
+     * @param {(MongerBridge|MongerBridge[])} bridges
      */
     this.disconnect = function disconnect(bridges) {
         if (!Array.isArray(bridges)) {
             bridges = [bridges];
         }
-        bridges.forEach(throwErrorIfNotMongoBridgeInstance);
+        bridges.forEach(throwErrorIfNotMongerBridgeInstance);
 
         this.rejectConnectionsFrom(bridges);
         bridges.forEach(bridge => bridge.rejectConnectionsFrom(this));
@@ -181,13 +181,13 @@ function MongoBridge(options) {
     /**
      * Configures 'this' bridge to accept new connections from the 'dest' of each of the 'bridges'.
      *
-     * @param {(MongoBridge|MongoBridge[])} bridges
+     * @param {(MongerBridge|MongerBridge[])} bridges
      */
     this.acceptConnectionsFrom = function acceptConnectionsFrom(bridges) {
         if (!Array.isArray(bridges)) {
             bridges = [bridges];
         }
-        bridges.forEach(throwErrorIfNotMongoBridgeInstance);
+        bridges.forEach(throwErrorIfNotMongerBridgeInstance);
 
         bridges.forEach(bridge => {
             var res = runBridgeCommand(controlConn, 'acceptConnectionsFrom', {host: bridge.dest});
@@ -201,13 +201,13 @@ function MongoBridge(options) {
      * Configures 'this' bridge to close existing connections and reject new connections from the
      * 'dest' of each of the 'bridges'.
      *
-     * @param {(MongoBridge|MongoBridge[])} bridges
+     * @param {(MongerBridge|MongerBridge[])} bridges
      */
     this.rejectConnectionsFrom = function rejectConnectionsFrom(bridges) {
         if (!Array.isArray(bridges)) {
             bridges = [bridges];
         }
-        bridges.forEach(throwErrorIfNotMongoBridgeInstance);
+        bridges.forEach(throwErrorIfNotMongerBridgeInstance);
 
         bridges.forEach(bridge => {
             var res = runBridgeCommand(controlConn, 'rejectConnectionsFrom', {host: bridge.dest});
@@ -221,14 +221,14 @@ function MongoBridge(options) {
      * Configures 'this' bridge to delay forwarding requests from the 'dest' of each of the
      * 'bridges' to 'this.dest' by the specified amount.
      *
-     * @param {(MongoBridge|MongoBridge[])} bridges
+     * @param {(MongerBridge|MongerBridge[])} bridges
      * @param {number} delay - The delay to apply in milliseconds.
      */
     this.delayMessagesFrom = function delayMessagesFrom(bridges, delay) {
         if (!Array.isArray(bridges)) {
             bridges = [bridges];
         }
-        bridges.forEach(throwErrorIfNotMongoBridgeInstance);
+        bridges.forEach(throwErrorIfNotMongerBridgeInstance);
 
         bridges.forEach(bridge => {
             var res = runBridgeCommand(controlConn, 'delayMessagesFrom', {
@@ -246,14 +246,14 @@ function MongoBridge(options) {
      * Configures 'this' bridge to uniformly discard requests from the 'dest' of each of the
      * 'bridges' to 'this.dest' with probability 'lossProbability'.
      *
-     * @param {(MongoBridge|MongoBridge[])} bridges
+     * @param {(MongerBridge|MongerBridge[])} bridges
      * @param {number} lossProbability
      */
     this.discardMessagesFrom = function discardMessagesFrom(bridges, lossProbability) {
         if (!Array.isArray(bridges)) {
             bridges = [bridges];
         }
-        bridges.forEach(throwErrorIfNotMongoBridgeInstance);
+        bridges.forEach(throwErrorIfNotMongerBridgeInstance);
 
         bridges.forEach(bridge => {
             var res = runBridgeCommand(controlConn, 'discardMessagesFrom', {
@@ -268,13 +268,13 @@ function MongoBridge(options) {
     };
 
     // Use a Proxy to "extend" the underlying connection object. The C++ functions, e.g.
-    // runCommand(), require that they are called on the Mongo instance itself and so typical
+    // runCommand(), require that they are called on the Monger instance itself and so typical
     // prototypical inheritance isn't possible.
     return new Proxy(this, {
         get: function get(target, property, receiver) {
-            // If the property is defined on the MongoBridge instance itself, then
+            // If the property is defined on the MongerBridge instance itself, then
             // return it.
-            // Otherwise, get the value of the property from the Mongo instance.
+            // Otherwise, get the value of the property from the Monger instance.
             if (target.hasOwnProperty(property)) {
                 return target[property];
             }
@@ -286,11 +286,11 @@ function MongoBridge(options) {
         },
 
         set: function set(target, property, value, receiver) {
-            // Delegate setting the value of any property to the Mongo instance so
+            // Delegate setting the value of any property to the Monger instance so
             // that it can be
-            // accessed in functions acting on the Mongo instance directly instead of
+            // accessed in functions acting on the Monger instance directly instead of
             // this Proxy.
-            // For example, the "slaveOk" property needs to be set on the Mongo
+            // For example, the "slaveOk" property needs to be set on the Monger
             // instance in order
             // for the query options bit to be set correctly.
             userConn[property] = value;
@@ -301,5 +301,5 @@ function MongoBridge(options) {
 
 // The number of ports that ReplSetTest and ShardingTest should stagger the port number of the
 // mongerbridge process and its corresponding mongerd/mongers process by. The resulting port number of
-// the mongerd/mongers process is MongoBridge#port + MongoBridge.kBridgeOffset.
-MongoBridge.kBridgeOffset = 10;
+// the mongerd/mongers process is MongerBridge#port + MongerBridge.kBridgeOffset.
+MongerBridge.kBridgeOffset = 10;

@@ -35,7 +35,7 @@ var fsm = (function() {
                 // or killed a primary. We therefore use the connect() function defined in
                 // network_error_and_transaction_override.js to add automatic retries to
                 // connections. The override is loaded in worker_thread.js.
-                const conn = connect(connStr).getMongo();
+                const conn = connect(connStr).getMonger();
                 conn._defaultSession = new _DelegatingDriverSession(conn, args.db.getSession());
                 return conn;
             };

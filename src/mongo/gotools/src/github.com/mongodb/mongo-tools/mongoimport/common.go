@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -409,7 +409,7 @@ func validateFields(fields []string) error {
 				return fmt.Errorf("fields '%v' and '%v' are incompatible", field, latterField)
 			}
 			// NOTE: this means we will not support imports that have fields like
-			// a, a - since this is invalid in MongoDB
+			// a, a - since this is invalid in MongerDB
 			if field == latterField {
 				return fmt.Errorf("fields cannot be identical: '%v' and '%v'", field, latterField)
 			}

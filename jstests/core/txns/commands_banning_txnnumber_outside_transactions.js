@@ -5,9 +5,9 @@
 (function() {
     "use strict";
 
-    const isMongos = assert.commandWorked(db.runCommand("ismaster")).msg === "isdbgrid";
+    const isMongers = assert.commandWorked(db.runCommand("ismaster")).msg === "isdbgrid";
 
-    const session = db.getMongo().startSession();
+    const session = db.getMonger().startSession();
     const sessionDb = session.getDatabase("admin");
 
     const nonRetryableWriteCommands = [
@@ -32,7 +32,7 @@
         {mapReduce: "c"}
     ];
 
-    const nonRetryableWriteCommandsMongodOnly = [
+    const nonRetryableWriteCommandsMongerdOnly = [
         // Commands that are allowed in transactions.
         {coordinateCommitTransaction: 1, participants: []},
         {geoSearch: 1},
@@ -48,8 +48,8 @@
             [50768, 50889]);
     });
 
-    if (!isMongos) {
-        nonRetryableWriteCommandsMongodOnly.forEach(function(command) {
+    if (!isMongers) {
+        nonRetryableWriteCommandsMongerdOnly.forEach(function(command) {
             jsTest.log("Testing command: " + tojson(command));
             assert.commandFailedWithCode(
                 sessionDb.runCommand(Object.assign({}, command, {txnNumber: NumberLong(0)})),

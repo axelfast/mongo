@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -956,11 +956,11 @@ StatusWith<stdx::unordered_set<RoleName>> parsePeerRoles(ConstDataRange cdrExten
     ConstDataRangeCursor cdcExtension(cdrExtension);
 
     /**
-     * MongoDBAuthorizationGrants ::= SET OF MongoDBAuthorizationGrant
+     * MongerDBAuthorizationGrants ::= SET OF MongerDBAuthorizationGrant
      *
-     * MongoDBAuthorizationGrant ::= CHOICE {
-     *  MongoDBRole,
-     *  ...!UTF8String:"Unrecognized entity in MongoDBAuthorizationGrant"
+     * MongerDBAuthorizationGrant ::= CHOICE {
+     *  MongerDBRole,
+     *  ...!UTF8String:"Unrecognized entity in MongerDBAuthorizationGrant"
      * }
      */
     auto swSet = cdcExtension.readAndAdvanceNoThrow<DERToken>();
@@ -979,7 +979,7 @@ StatusWith<stdx::unordered_set<RoleName>> parsePeerRoles(ConstDataRange cdrExten
 
     while (!cdcSet.empty()) {
         /**
-         * MongoDBRole ::= SEQUENCE {
+         * MongerDBRole ::= SEQUENCE {
          *  role     UTF8String,
          *  database UTF8String
          * }
@@ -1073,7 +1073,7 @@ std::string escapeRfc2253(StringData str) {
 
 namespace {
 /**
- * Status section of which tls versions connected to MongoDB and completed an SSL handshake.
+ * Status section of which tls versions connected to MongerDB and completed an SSL handshake.
  * Note: Clients are only not counted if they try to connect to the server with a unsupported TLS
  * version. They are still counted if the server rejects them for certificate issues in
  * parseAndValidatePeerCertificate.

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -129,7 +129,7 @@ explain_cleanup:
     return res;
 }
 
-class MongodbEmbeddedTransportLayerTest : public monger::unittest::Test {
+class MongerdbEmbeddedTransportLayerTest : public monger::unittest::Test {
 protected:
     void setUp() {
         if (!globalTempDir) {
@@ -194,10 +194,10 @@ private:
     mongerc_collection_t* cd_collection;
 };
 
-TEST_F(MongodbEmbeddedTransportLayerTest, CreateAndDestroyDB) {
+TEST_F(MongerdbEmbeddedTransportLayerTest, CreateAndDestroyDB) {
     // Test the setUp() and tearDown() test fixtures
 }
-TEST_F(MongodbEmbeddedTransportLayerTest, InsertAndExplain) {
+TEST_F(MongerdbEmbeddedTransportLayerTest, InsertAndExplain) {
     auto client = getClient();
     auto collection = getCollection();
     ASSERT(client);
@@ -207,7 +207,7 @@ TEST_F(MongodbEmbeddedTransportLayerTest, InsertAndExplain) {
 
     ASSERT(explain(collection));
 }
-TEST_F(MongodbEmbeddedTransportLayerTest, InsertAndCount) {
+TEST_F(MongerdbEmbeddedTransportLayerTest, InsertAndCount) {
     auto client = getClient();
     auto collection = getCollection();
     ASSERT(client);
@@ -218,7 +218,7 @@ TEST_F(MongodbEmbeddedTransportLayerTest, InsertAndCount) {
     count = mongerc_collection_count(collection, MONGOC_QUERY_NONE, nullptr, 0, 0, NULL, &err);
     ASSERT(count == 4);
 }
-TEST_F(MongodbEmbeddedTransportLayerTest, InsertAndDelete) {
+TEST_F(MongerdbEmbeddedTransportLayerTest, InsertAndDelete) {
     auto client = getClient();
     auto collection = getCollection();
     ASSERT(client);
@@ -264,7 +264,7 @@ int main(int argc, char** argv, char** envp) {
     moe::OptionSection options;
     std::map<std::string, std::string> env;
 
-    auto ret = monger::embedded::addMongocEmbeddedTestOptions(&options);
+    auto ret = monger::embedded::addMongercEmbeddedTestOptions(&options);
     if (!ret.isOK()) {
         std::cerr << ret << std::endl;
         return EXIT_FAILURE;

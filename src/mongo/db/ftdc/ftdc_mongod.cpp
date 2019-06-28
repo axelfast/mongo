@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,7 +42,7 @@
 namespace monger {
 
 namespace {
-void registerMongoDCollectors(FTDCController* controller) {
+void registerMongerDCollectors(FTDCController* controller) {
     // These metrics are only collected if replication is enabled
     if (repl::ReplicationCoordinator::get(getGlobalServiceContext())->getReplicationMode() !=
         repl::ReplicationCoordinator::modeNone) {
@@ -62,7 +62,7 @@ void registerMongoDCollectors(FTDCController* controller) {
 
 }  // namespace
 
-void startMongoDFTDC() {
+void startMongerDFTDC() {
     auto dir = getFTDCDirectoryPathParameter();
 
     if (dir.empty()) {
@@ -70,10 +70,10 @@ void startMongoDFTDC() {
         dir /= kFTDCDefaultDirectory.toString();
     }
 
-    startFTDC(dir, FTDCStartMode::kStart, registerMongoDCollectors);
+    startFTDC(dir, FTDCStartMode::kStart, registerMongerDCollectors);
 }
 
-void stopMongoDFTDC() {
+void stopMongerDFTDC() {
     stopFTDC();
 }
 

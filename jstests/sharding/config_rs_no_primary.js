@@ -28,7 +28,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     st.configRS.awaitNoPrimary();
 
     jsTestLog("Starting a new mongers when the config servers have no primary which should work");
-    var mongers2 = MongoRunner.runMongos({configdb: st.configRS.getURL()});
+    var mongers2 = MongerRunner.runMongers({configdb: st.configRS.getURL()});
     assert.neq(null, mongers2);
 
     var testOps = function(mongers) {
@@ -56,5 +56,5 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     testOps(st.s);
 
     st.stop();
-    MongoRunner.stopMongos(mongers2);
+    MongerRunner.stopMongers(mongers2);
 }());

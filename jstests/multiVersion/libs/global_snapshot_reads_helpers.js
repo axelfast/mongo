@@ -3,10 +3,10 @@
  */
 
 function supportsSnapshotReadConcern() {
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     const supportsSnapshotReadConcern =
         conn.getDB("test").serverStatus().storageEngine.supportsSnapshotReadConcern;
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     return supportsSnapshotReadConcern;
 }

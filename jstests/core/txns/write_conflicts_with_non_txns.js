@@ -2,7 +2,7 @@
  * Test the write conflict behavior between transactional and non-transactional (single document)
  * writes.
  *
- * All writes in MongoDB execute inside transactions. Single document writes (which, until 4.0,
+ * All writes in MongerDB execute inside transactions. Single document writes (which, until 4.0,
  * categorized all writes), will indefinitely retry, if their associated transaction encounters a
  * WriteConflict error. This differs from the behavior of multi-document transactions, where
  * WriteConflict exceptions that occur inside a transaction are not automatically retried, and are
@@ -34,7 +34,7 @@
     assert.commandWorked(testDB.runCommand({create: collName, writeConcern: {w: "majority"}}));
 
     const sessionOptions = {causalConsistency: false};
-    const session = db.getMongo().startSession(sessionOptions);
+    const session = db.getMonger().startSession(sessionOptions);
     const sessionDb = session.getDatabase(dbName);
     const sessionColl = sessionDb[collName];
 

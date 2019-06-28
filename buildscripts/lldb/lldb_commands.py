@@ -25,6 +25,6 @@ def PrintGlobalServiceContext(debugger, *args):
     debugger.HandleCommand("print *globalServiceContext")
 
 
-def MongoDBDumpLocks(debugger, *args):
+def MongerDBDumpLocks(debugger, *args):
     """Dump locks in the mongerd process."""
     debugger.HandleCommand("call globalLockManager.dump()")

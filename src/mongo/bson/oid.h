@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -259,7 +259,7 @@ enum JsonStringFormat {
     /** strict RFC format */
     Strict,
     /** 10gen format, which is close to JS format.  This form is understandable by
-        javascript running inside the Mongo server via $where, mr, etc... */
+        javascript running inside the Monger server via $where, mr, etc... */
     TenGen,
 };
 

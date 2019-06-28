@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -48,9 +48,9 @@ static const std::string kRepairIncompleteFileName = "_repair_incomplete";
 
 using boost::filesystem::path;
 
-class StorageRepairObserverTest : public ServiceContextMongoDTest {
+class StorageRepairObserverTest : public ServiceContextMongerDTest {
 public:
-    StorageRepairObserverTest() : ServiceContextMongoDTest("ephemeralForTest") {
+    StorageRepairObserverTest() : ServiceContextMongerDTest("ephemeralForTest") {
 
         repl::ReplicationCoordinator::set(
             getServiceContext(),

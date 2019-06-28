@@ -28,8 +28,8 @@
     ];
 
     // Any write concern can be sent to a mongers, because mongers will upconvert it to majority.
-    const unacceptableWCsForMongos = [];
-    const acceptableWCsForMongos = [
+    const unacceptableWCsForMongers = [];
+    const acceptableWCsForMongers = [
         {},
         {writeConcern: {w: 0}},
         {writeConcern: {w: 0, wtimeout: 15000}},
@@ -105,11 +105,11 @@
         });
     }
 
-    function checkCommandMongos(command, setupFunc, cleanupFunc) {
+    function checkCommandMongers(command, setupFunc, cleanupFunc) {
         checkCommand(st.s,
                      command,
-                     unacceptableWCsForMongos,
-                     acceptableWCsForMongos,
+                     unacceptableWCsForMongers,
+                     acceptableWCsForMongers,
                      true,
                      setupFunc,
                      cleanupFunc);
@@ -128,12 +128,12 @@
     var st = new ShardingTest({shards: 1});
 
     // enableSharding
-    checkCommandMongos({enableSharding: dbName}, setupFuncs.noop, cleanupFuncs.dropDatabase);
+    checkCommandMongers({enableSharding: dbName}, setupFuncs.noop, cleanupFuncs.dropDatabase);
     checkCommandConfigSvr(
         {_configsvrEnableSharding: dbName}, setupFuncs.noop, cleanupFuncs.dropDatabase);
 
     // movePrimary
-    checkCommandMongos({movePrimary: dbName, to: st.shard0.name},
+    checkCommandMongers({movePrimary: dbName, to: st.shard0.name},
                        setupFuncs.createDatabase,
                        cleanupFuncs.dropDatabase);
     checkCommandConfigSvr({_configsvrMovePrimary: dbName, to: st.shard0.name},
@@ -146,7 +146,7 @@
                           cleanupFuncs.dropDatabase);
 
     // shardCollection
-    checkCommandMongos(
+    checkCommandMongers(
         {shardCollection: ns, key: {_id: 1}}, setupFuncs.enableSharding, cleanupFuncs.dropDatabase);
     checkCommandConfigSvr({_configsvrShardCollection: ns, key: {_id: 1}},
                           setupFuncs.enableSharding,
@@ -160,8 +160,8 @@
                           cleanupFuncs.dropDatabase);
 
     // addShard
-    var newShard = MongoRunner.runMongod({shardsvr: ""});
-    checkCommandMongos({addShard: newShard.name, name: newShardName},
+    var newShard = MongerRunner.runMongerd({shardsvr: ""});
+    checkCommandMongers({addShard: newShard.name, name: newShardName},
                        setupFuncs.noop,
                        cleanupFuncs.removeShardIfExists);
     checkCommandConfigSvr({_configsvrAddShard: newShard.name, name: newShardName},
@@ -169,29 +169,29 @@
                           cleanupFuncs.removeShardIfExists);
 
     // removeShard
-    checkCommandMongos({removeShard: newShardName}, setupFuncs.addShard, cleanupFuncs.noop);
+    checkCommandMongers({removeShard: newShardName}, setupFuncs.addShard, cleanupFuncs.noop);
     checkCommandConfigSvr(
         {_configsvrRemoveShard: newShardName}, setupFuncs.addShard, cleanupFuncs.noop);
 
     // dropCollection
-    checkCommandMongos({drop: ns}, setupFuncs.createDatabase, cleanupFuncs.dropDatabase);
+    checkCommandMongers({drop: ns}, setupFuncs.createDatabase, cleanupFuncs.dropDatabase);
     checkCommandConfigSvr(
         {_configsvrDropCollection: ns}, setupFuncs.createDatabase, cleanupFuncs.dropDatabase);
 
     // dropDatabase
 
-    // We can't use the checkCommandMongos wrapper because we need a connection to the test
+    // We can't use the checkCommandMongers wrapper because we need a connection to the test
     // database.
     checkCommand(st.s.getDB(dbName),
                  {dropDatabase: 1},
-                 unacceptableWCsForMongos,
-                 acceptableWCsForMongos,
+                 unacceptableWCsForMongers,
+                 acceptableWCsForMongers,
                  false,
                  setupFuncs.createDatabase,
                  cleanupFuncs.dropDatabase);
     checkCommandConfigSvr(
         {_configsvrDropDatabase: dbName}, setupFuncs.createDatabase, cleanupFuncs.dropDatabase);
 
-    MongoRunner.stopMongos(newShard);
+    MongerRunner.stopMongers(newShard);
     st.stop();
 })();

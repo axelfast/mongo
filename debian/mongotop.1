@@ -2,7 +2,7 @@
 .
 .TH "MONGOTOP" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongertop \- MongoDB Activity Monitor
+mongertop \- MongerDB Activity Monitor
 .
 .nr rst2man-indent-level 0
 .
@@ -54,7 +54,7 @@ of  mongertop\&.
 .SH SYNOPSIS
 .sp
 \fI\%mongertop\fP provides a method to track the amount of time a
-MongoDB instance spends reading and writing data. \fI\%mongertop\fP
+MongerDB instance spends reading and writing data. \fI\%mongertop\fP
 provides statistics on a per\-collection level. By default,
 \fI\%mongertop\fP returns values every second.
 .sp
@@ -63,10 +63,10 @@ Run \fI\%mongertop\fP from the system command line, not the \fBmonger\fP shell.
 \fBSEE ALSO:\fP
 .INDENT 0.0
 .INDENT 3.5
-For more information about monitoring MongoDB, see
+For more information about monitoring MongerDB, see
 /administration/monitoring\&.
 .sp
-For additional background on various other MongoDB status outputs
+For additional background on various other MongerDB status outputs
 see:
 .INDENT 0.0
 .IP \(bu 2
@@ -79,7 +79,7 @@ see:
 /reference/command/collStats
 .UNINDENT
 .sp
-For an additional utility that provides MongoDB metrics
+For an additional utility that provides MongerDB metrics
 see mongerstat\&.
 .UNINDENT
 .UNINDENT
@@ -192,7 +192,7 @@ URI connection string)
 \fIDefault\fP: localhost:27017
 .sp
 Specifies a resolvable hostname for the \fBmongerd\fP to which to
-connect. By default, the \fBmongertop\fP attempts to connect to a MongoDB
+connect. By default, the \fBmongertop\fP attempts to connect to a MongerDB
 instance running on the localhost on port number \fB27017\fP\&.
 .sp
 To connect to a replica set, specify the
@@ -209,7 +209,7 @@ the following:
 .UNINDENT
 .UNINDENT
 .sp
-You can always connect directly to a single MongoDB instance by
+You can always connect directly to a single MongerDB instance by
 specifying the host and port number directly.
 .sp
 Changed in version 3.0.0: If you use IPv6 and use the \fB<address>:<port>\fP format, you must
@@ -225,7 +225,7 @@ reachable, \fBmongertop\fP returns an error message.
 .B \-\-port <port>
 \fIDefault\fP: 27017
 .sp
-Specifies the TCP port on which the MongoDB instance listens for
+Specifies the TCP port on which the MongerDB instance listens for
 client connections.
 .UNINDENT
 .INDENT 0.0
@@ -234,8 +234,8 @@ client connections.
 \fIRemoved in version 3.0.\fP
 .sp
 Enables IPv6 support and allows \fBmongertop\fP to connect to the
-MongoDB instance using an IPv6 network. Prior to MongoDB 3.0, you
-had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongoDB 3.0 and later, IPv6
+MongerDB instance using an IPv6 network. Prior to MongerDB 3.0, you
+had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongerDB 3.0 and later, IPv6
 is always enabled.
 .UNINDENT
 .INDENT 0.0
@@ -247,7 +247,7 @@ New in version 2.6.
 Enables connection to a \fBmongerd\fP or \fBmongers\fP that has
 TLS/SSL support enabled.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -284,7 +284,7 @@ intrusion is a possibility.
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -303,7 +303,7 @@ to a \fBmongerd\fP or \fBmongers\fP that has
 \fBCAFile\fP enabled \fIwithout\fP
 \fBallowConnectionsWithoutCertificates\fP\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -322,7 +322,7 @@ If the private key in the PEM file is encrypted and you do not specify
 the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmongertop\fP will prompt for a passphrase. See
 ssl\-certificate\-password\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -336,7 +336,7 @@ Specifies the \fB\&.pem\fP file that contains the Certificate Revocation
 List. Specify the file name of the \fB\&.pem\fP file using relative or
 absolute paths.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -348,10 +348,10 @@ New in version 2.6.
 .sp
 Bypasses the validation checks for server certificates and allows
 the use of invalid certificates. When using the
-\fBallowInvalidCertificates\fP setting, MongoDB logs as a
+\fBallowInvalidCertificates\fP setting, MongerDB logs as a
 warning the use of the invalid certificate.
 .sp
-Starting in MongoDB 4.0, if you specify
+Starting in MongerDB 4.0, if you specify
 \fB\-\-sslAllowInvalidCertificates\fP or \fBssl.allowInvalidCertificates:
 true\fP when using x.509 authentication, an invalid certificate is
 only sufficient to establish a TLS/SSL connection but is
@@ -378,7 +378,7 @@ well as to foreign processes posing as valid
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -389,10 +389,10 @@ New in version 3.0.
 
 .sp
 Disables the validation of the hostnames in TLS/SSL certificates. Allows
-\fBmongertop\fP to connect to MongoDB instances even if the hostname in their
+\fBmongertop\fP to connect to MongerDB instances even if the hostname in their
 certificates do not match the specified hostname.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -410,7 +410,7 @@ the \fI\%\-\-sslFIPSMode\fP option.
 .INDENT 7.0
 .INDENT 3.5
 FIPS\-compatible TLS/SSL is
-available only in \fI\%MongoDB Enterprise\fP\&. See
+available only in \fI\%MongerDB Enterprise\fP\&. See
 /tutorial/configure\-fips for more information.
 .UNINDENT
 .UNINDENT
@@ -418,14 +418,14 @@ available only in \fI\%MongoDB Enterprise\fP\&. See
 .INDENT 0.0
 .TP
 .B \-\-username <username>, \-u <username>
-Specifies a username with which to authenticate to a MongoDB database
+Specifies a username with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-password\fP and
 \fB\-\-authenticationDatabase\fP options.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password <password>, \-p <password>
-Specifies a password with which to authenticate to a MongoDB database
+Specifies a password with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-username\fP and
 \fB\-\-authenticationDatabase\fP options.
 .sp
@@ -457,10 +457,10 @@ and \fBmongers\fP instances that use authentication\&.
 Specifies the authentication mechanism the \fBmongertop\fP instance uses to
 authenticate to the \fBmongerd\fP or \fBmongers\fP\&.
 .sp
-Changed in version 4.0: MongoDB removes support for the deprecated MongoDB
+Changed in version 4.0: MongerDB removes support for the deprecated MongerDB
 Challenge\-Response (\fBMONGODB\-CR\fP) authentication mechanism.
 .sp
-MongoDB adds support for SCRAM mechanism using the SHA\-256 hash
+MongerDB adds support for SCRAM mechanism using the SHA\-256 hash
 function (\fBSCRAM\-SHA\-256\fP).
 
 .TS
@@ -496,14 +496,14 @@ _
 T{
 MONGODB\-X509
 T}	T{
-MongoDB TLS/SSL certificate authentication.
+MongerDB TLS/SSL certificate authentication.
 T}
 _
 T{
 GSSAPI (Kerberos)
 T}	T{
 External authentication using Kerberos. This mechanism is
-available only in \fI\%MongoDB Enterprise\fP\&.
+available only in \fI\%MongerDB Enterprise\fP\&.
 T}
 _
 T{
@@ -512,7 +512,7 @@ T}	T{
 External authentication using LDAP. You can also use \fBPLAIN\fP
 for authenticating in\-database users. \fBPLAIN\fP transmits
 passwords in plain text. This mechanism is available only in
-\fI\%MongoDB Enterprise\fP\&.
+\fI\%MongerDB Enterprise\fP\&.
 T}
 _
 .TE
@@ -526,7 +526,7 @@ New in version 2.6.
 Specify the name of the service using GSSAPI/Kerberos\&. Only required if the service does not use the
 default name of \fBmongerdb\fP\&.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -537,14 +537,14 @@ New in version 2.6.
 Specify the hostname of a service using GSSAPI/Kerberos\&. \fIOnly\fP required if the hostname of a machine does
 not match the hostname resolved by DNS.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-locks
 Toggles the mode of \fI\%mongertop\fP to report on use of per\-database
 locks\&. This data is only available when connected to a
-MongoDB 2.6 or older instance.
+MongerDB 2.6 or older instance.
 .sp
 \fI\%\-\-locks\fP returns an error when called against a \fBmongerd\fP 3.0 or
 newer instance that does not report per\-database lock usage.
@@ -622,7 +622,7 @@ Provides a time stamp for the returned data.
 .UNINDENT
 .SH USE
 .sp
-By default \fI\%mongertop\fP connects to the MongoDB instance
+By default \fI\%mongertop\fP connects to the MongerDB instance
 running on the localhost port \fB27017\fP\&. However, \fI\%mongertop\fP can optionally
 connect to remote \fBmongerd\fP
 instances. See the \fI\%mongertop options\fP for more
@@ -674,7 +674,7 @@ local.system.namespaces      0ms     0ms      0ms
 .UNINDENT
 .UNINDENT
 .sp
-The output varies depending on your MongoDB setup. For example,
+The output varies depending on your MongerDB setup. For example,
 \fBlocal.system.indexes\fP and \fBlocal.system.namespaces\fP only appear
 for \fBmongerd\fP instances using the MMAPv1
 storage engine.
@@ -692,7 +692,7 @@ mongertop 300
 .UNINDENT
 .UNINDENT
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

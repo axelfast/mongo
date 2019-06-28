@@ -61,7 +61,7 @@
 
         // Start a session and introduce a document that is in a prepared state, but should be
         // ignored by the index build, at least until the transaction commits.
-        const session = primaryDB.getMongo().startSession();
+        const session = primaryDB.getMonger().startSession();
         const sessionDB = session.getDatabase('test');
         const sessionColl = sessionDB.getCollection(collName);
         session.startTransaction();
@@ -74,7 +74,7 @@
         // before the second drain, which would take lock that conflicts with the prepared
         // transaction and prevent the index build from completing entirely.
         const failPointName = "hangAfterIndexBuildFirstDrain";
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
         assert.commandWorked(
             conn.adminCommand({configureFailPoint: failPointName, mode: "alwaysOn"}));
 
@@ -82,7 +82,7 @@
         // next failpoint.
         IndexBuildTest.resumeIndexBuilds(conn);
         assert.soon(
-            () => rawMongoProgramOutput().indexOf("Hanging after index build first drain") >= 0);
+            () => rawMongerProgramOutput().indexOf("Hanging after index build first drain") >= 0);
 
         // Right before the index build completes, ensure no prepare conflicts were hit.
         IndexBuildTest.assertIndexBuildCurrentOpContents(testDB, opId, (op) => {

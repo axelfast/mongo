@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -24,7 +24,7 @@ type readPrefDoc struct {
 }
 
 const (
-	WarningNonPrimaryMongosConnection = "Warning: using a non-primary readPreference with a " +
+	WarningNonPrimaryMongersConnection = "Warning: using a non-primary readPreference with a " +
 		"connection to mongers may produce inconsistent duplicates or miss some documents."
 )
 

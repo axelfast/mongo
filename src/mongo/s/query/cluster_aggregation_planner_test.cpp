@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -61,7 +61,7 @@ const NamespaceString kTestOutNss = NamespaceString{"unittests", "out_ns"};
  * setup. For example, to compute its constraints, the $merge stage needs to know if the output
  * collection is sharded.
  */
-class FakeMongoProcessInterface : public StubMongoProcessInterface {
+class FakeMongerProcessInterface : public StubMongerProcessInterface {
 public:
     bool isSharded(OperationContext* opCtx, const NamespaceString& ns) override {
         return true;
@@ -74,8 +74,8 @@ public:
         CatalogCacheTestFixture::setUp();
         _expCtx = new ExpressionContextForTest(operationContext(),
                                                AggregationRequest{kTestAggregateNss, {}});
-        _expCtx->mongerProcessInterface = std::make_shared<FakeMongoProcessInterface>();
-        _expCtx->inMongos = true;
+        _expCtx->mongerProcessInterface = std::make_shared<FakeMongerProcessInterface>();
+        _expCtx->inMongers = true;
     }
 
     boost::intrusive_ptr<ExpressionContext> expCtx() {
@@ -145,9 +145,9 @@ TEST_F(ClusterExchangeTest, ShouldNotExchangeIfPipelineEndsWithOut) {
     setupNShards(2);
 
     // For this test pretend 'kTestOutNss' is not sharded so that we can use $out.
-    const auto originalMongoProcessInterface = expCtx()->mongerProcessInterface;
-    expCtx()->mongerProcessInterface = std::make_shared<StubMongoProcessInterface>();
-    ON_BLOCK_EXIT([&]() { expCtx()->mongerProcessInterface = originalMongoProcessInterface; });
+    const auto originalMongerProcessInterface = expCtx()->mongerProcessInterface;
+    expCtx()->mongerProcessInterface = std::make_shared<StubMongerProcessInterface>();
+    ON_BLOCK_EXIT([&]() { expCtx()->mongerProcessInterface = originalMongerProcessInterface; });
 
     auto mergePipe = unittest::assertGet(
         Pipeline::create({DocumentSourceOut::create(kTestOutNss, expCtx())}, expCtx()));

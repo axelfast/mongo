@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -64,7 +64,7 @@ const std::set<std::string> kSetShellParameterWhitelist = {
     "disabledSecureAllocatorDomains", "newLineAfterPasswordPromptForTest",
 };
 
-std::string getMongoShellHelp(StringData name, const moe::OptionSection& options) {
+std::string getMongerShellHelp(StringData name, const moe::OptionSection& options) {
     StringBuilder sb;
     sb << "usage: " << name << " [options] [db address] [file names (ending in .js)]\n"
        << "db address can be:\n"
@@ -78,14 +78,14 @@ std::string getMongoShellHelp(StringData name, const moe::OptionSection& options
     return sb.str();
 }
 
-bool handlePreValidationMongoShellOptions(const moe::Environment& params,
+bool handlePreValidationMongerShellOptions(const moe::Environment& params,
                                           const std::vector<std::string>& args) {
     auto&& vii = VersionInfoInterface::instance();
     if (params.count("version") || params.count("help")) {
         setPlainConsoleLogger();
         log() << mongerShellVersion(vii);
         if (params.count("help")) {
-            log() << getMongoShellHelp(args[0], moe::startupOptions);
+            log() << getMongerShellHelp(args[0], moe::startupOptions);
         } else {
             vii.logBuildInfo();
         }
@@ -94,7 +94,7 @@ bool handlePreValidationMongoShellOptions(const moe::Environment& params,
     return true;
 }
 
-Status storeMongoShellOptions(const moe::Environment& params,
+Status storeMongerShellOptions(const moe::Environment& params,
                               const std::vector<std::string>& args) {
     if (params.count("quiet")) {
         monger::serverGlobalParams.quiet.store(true);
@@ -241,13 +241,13 @@ Status storeMongoShellOptions(const moe::Environment& params,
         StringBuilder sb;
         sb << "ERROR: "
            << "\"*\" is an invalid db address";
-        sb << getMongoShellHelp(args[0], moe::startupOptions);
+        sb << getMongerShellHelp(args[0], moe::startupOptions);
         return Status(ErrorCodes::BadValue, sb.str());
     }
 
     if ((shellGlobalParams.url.find("mongerdb://") == 0) ||
         (shellGlobalParams.url.find("mongerdb+srv://") == 0)) {
-        auto cs_status = MongoURI::parse(shellGlobalParams.url);
+        auto cs_status = MongerURI::parse(shellGlobalParams.url);
         if (!cs_status.isOK()) {
             return cs_status.getStatus();
         }

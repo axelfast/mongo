@@ -23,7 +23,7 @@
         ],
         parallel: 2,
         seconds: 1,
-        host: db.getMongo().host,
+        host: db.getMonger().host,
     };
     if (jsTest.options().auth) {
         benchArgs['db'] = 'admin';

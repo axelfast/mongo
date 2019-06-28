@@ -31,7 +31,7 @@
     TestData = TestData || {};
     TestData.traceExceptions = false;
 
-    const conn = db.getMongo();
+    const conn = db.getMonger();
     const topology = DiscoverTopology.findConnectedNodes(conn);
 
     function checkReplDbhashBackgroundThread(hosts) {
@@ -88,7 +88,7 @@
             }),
                                                    debugInfo);
             debugInfo.push({
-                "node": db.getMongo(),
+                "node": db.getMonger(),
                 "session": session,
                 "preserveFailPointOpTime": preserveRes['operationTime']
             });
@@ -108,7 +108,7 @@
                 dbNames.add(dbInfo.name);
             }
             debugInfo.push({
-                "node": db.getMongo(),
+                "node": db.getMonger(),
                 "session": session,
                 "listDatabaseOpTime": res['operationTime']
             });
@@ -151,7 +151,7 @@
                     }),
                                                    debugInfo);
                     debugInfo.push({
-                        "node": db.getMongo(),
+                        "node": db.getMonger(),
                         "session": session,
                         "majorityReadOpTime": res['operationTime']
                     });
@@ -168,7 +168,7 @@
                             const appliedOpTime = rsStatus.optimes.appliedOpTime;
                             if (bsonWoCompare(appliedOpTime.ts, clusterTime) >= 0) {
                                 debugInfo.push({
-                                    "node": db.getMongo(),
+                                    "node": db.getMonger(),
                                     "session": session,
                                     "appliedOpTime": appliedOpTime.ts
                                 });

@@ -4,26 +4,26 @@
 
 (function() {
     assert.throws(function() {
-        db.getMongo().advanceClusterTime();
+        db.getMonger().advanceClusterTime();
     });
 
     assert.throws(function() {
-        db.getMongo().advanceClusterTime(123);
+        db.getMonger().advanceClusterTime(123);
     });
 
     assert.throws(function() {
-        db.getMongo().advanceClusterTime('abc');
+        db.getMonger().advanceClusterTime('abc');
     });
 
-    db.getMongo().advanceClusterTime({'clusterTime': 123});
+    db.getMonger().advanceClusterTime({'clusterTime': 123});
 
-    assert.eq({'clusterTime': 123}, db.getMongo().getClusterTime());
+    assert.eq({'clusterTime': 123}, db.getMonger().getClusterTime());
 
-    db.getMongo().advanceClusterTime({'clusterTime': 100});
+    db.getMonger().advanceClusterTime({'clusterTime': 100});
 
-    assert.eq({'clusterTime': 123}, db.getMongo().getClusterTime());
+    assert.eq({'clusterTime': 123}, db.getMonger().getClusterTime());
 
-    db.getMongo().advanceClusterTime({'clusterTime': 456});
+    db.getMonger().advanceClusterTime({'clusterTime': 456});
 
-    assert.eq({'clusterTime': 456}, db.getMongo().getClusterTime());
+    assert.eq({'clusterTime': 456}, db.getMonger().getClusterTime());
 })();

@@ -11,7 +11,7 @@
      ****************************************************************************/
 
     // cleanupOrphaned fails against unsharded mongerd.
-    var mongerd = MongoRunner.runMongod();
+    var mongerd = MongerRunner.runMongerd();
     assert.commandFailed(mongerd.getDB('admin').runCommand({cleanupOrphaned: 'foo.bar'}));
 
     /*****************************************************************************
@@ -117,6 +117,6 @@
         {cleanupOrphaned: coll2.getFullName(), startingFromKey: {a: 'someValue', c: 1}}));
 
     st.stop();
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
 })();

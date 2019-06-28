@@ -16,7 +16,7 @@
 
     db.foo.drop();
     //	SERVER-29678 changed collStats so versions > 4.0 now return 0s on NS not found
-    if (MongoRunner.getBinVersionFor(jsTest.options().mongersBinVersion) === '4.0') {
+    if (MongerRunner.getBinVersionFor(jsTest.options().mongersBinVersion) === '4.0') {
         // TODO: This should be fixed in 4.4
         let res = db.foo.stats();
         if (res.ok === 1) {

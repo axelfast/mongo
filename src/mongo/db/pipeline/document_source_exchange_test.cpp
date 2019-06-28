@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,10 +46,10 @@
 namespace monger {
 
 /**
- * An implementation of the MongoProcessInterface that is okay with changing the OperationContext,
+ * An implementation of the MongerProcessInterface that is okay with changing the OperationContext,
  * but has no other parts of the interface implemented.
  */
-class StubMongoProcessOkWithOpCtxChanges : public StubMongoProcessInterface {
+class StubMongerProcessOkWithOpCtxChanges : public StubMongerProcessInterface {
 public:
     void setOperationContext(OperationContext* opCtx) final {
         return;
@@ -60,7 +60,7 @@ class DocumentSourceExchangeTest : public AggregationContextFixture {
 protected:
     std::unique_ptr<executor::TaskExecutor> _executor;
     virtual void setUp() override {
-        getExpCtx()->mongerProcessInterface = std::make_shared<StubMongoProcessOkWithOpCtxChanges>();
+        getExpCtx()->mongerProcessInterface = std::make_shared<StubMongerProcessOkWithOpCtxChanges>();
 
         auto net = executor::makeNetworkInterface("ExchangeTest");
 

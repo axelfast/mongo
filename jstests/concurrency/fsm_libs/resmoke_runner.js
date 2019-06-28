@@ -115,7 +115,7 @@
             // the effects of each setup function. This is only required for snapshot read concern.
             if (cluster.isSharded() && TestData.runInsideTransaction &&
                 transactionsWouldUseSnapshotReadConcern) {
-                cluster.synchronizeMongosClusterTimes();
+                cluster.synchronizeMongersClusterTimes();
             }
 
             // After the $config.setup() function has been called, it is safe for the stepdown
@@ -218,7 +218,7 @@
     // The TestData.discoverTopoloy is false when we only care about connecting to either a
     // standalone or primary node in a replica set.
     if (TestData.discoverTopology !== false) {
-        const topology = DiscoverTopology.findConnectedNodes(db.getMongo());
+        const topology = DiscoverTopology.findConnectedNodes(db.getMonger());
 
         if (topology.type === Topology.kReplicaSet) {
             clusterOptions.replication.enabled = true;
@@ -232,7 +232,7 @@
             clusterOptions.sharded.enableBalancer = TestData.hasOwnProperty('runningWithBalancer')
                 ? TestData.runningWithBalancer
                 : true;
-            clusterOptions.sharded.numMongos = topology.mongers.nodes.length;
+            clusterOptions.sharded.numMongers = topology.mongers.nodes.length;
             clusterOptions.sharded.numShards = Object.keys(topology.shards).length;
             clusterOptions.sharded.stepdownOptions = {};
             clusterOptions.sharded.stepdownOptions.configStepdown =

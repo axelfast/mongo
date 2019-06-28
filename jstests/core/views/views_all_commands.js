@@ -570,7 +570,7 @@
     // Are we on a mongers?
     var isMaster = db.runCommand("ismaster");
     assert.commandWorked(isMaster);
-    var isMongos = (isMaster.msg === "isdbgrid");
+    var isMongers = (isMaster.msg === "isdbgrid");
 
     // Obtain a list of all commands.
     let res = db.runCommand({listCommands: 1});
@@ -597,12 +597,12 @@
             let commandHandle = dbHandle;
 
             // Skip tests depending on sharding configuration.
-            if (subtest.skipSharded && isMongos) {
+            if (subtest.skipSharded && isMongers) {
                 print("Skipping " + command + ": not applicable to mongerS");
                 continue;
             }
 
-            if (subtest.skipStandalone && !isMongos) {
+            if (subtest.skipStandalone && !isMongers) {
                 print("Skipping " + command + ": not applicable to mongerD");
                 continue;
             }

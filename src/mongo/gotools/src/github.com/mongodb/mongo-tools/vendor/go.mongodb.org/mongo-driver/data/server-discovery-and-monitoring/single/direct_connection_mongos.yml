@@ -23,7 +23,7 @@ phases: [
 
                 "a:27017": {
 
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 }
             },

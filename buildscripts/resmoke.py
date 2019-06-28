@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Command line utility for executing MongoDB tests of all kinds."""
+"""Command line utility for executing MongerDB tests of all kinds."""
 
 import os.path
 import platform

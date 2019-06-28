@@ -129,7 +129,7 @@ var $config = (function() {
      */
     function setup(db, collName, cluster) {
         // Lower the following parameters to force even more yields.
-        cluster.executeOnMongodNodes(function lowerYieldParams(db) {
+        cluster.executeOnMongerdNodes(function lowerYieldParams(db) {
             assertAlways.commandWorked(
                 db.adminCommand({setParameter: 1, internalQueryExecYieldIterations: 5}));
             assertAlways.commandWorked(
@@ -151,7 +151,7 @@ var $config = (function() {
      * Reset parameters and disable failpoint.
      */
     function teardown(db, collName, cluster) {
-        cluster.executeOnMongodNodes(function resetYieldParams(db) {
+        cluster.executeOnMongerdNodes(function resetYieldParams(db) {
             assertAlways.commandWorked(
                 db.adminCommand({setParameter: 1, internalQueryExecYieldIterations: 128}));
             assertAlways.commandWorked(

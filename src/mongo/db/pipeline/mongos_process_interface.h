@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,7 +43,7 @@ namespace monger {
  * Class to provide access to mongers-specific implementations of methods required by some
  * document sources.
  */
-class MongoSInterface : public MongoProcessCommon {
+class MongerSInterface : public MongerProcessCommon {
 public:
     static BSONObj createPassthroughCommandForShard(OperationContext* opCtx,
                                                     const AggregationRequest& request,
@@ -73,9 +73,9 @@ public:
     static StatusWith<CachedCollectionRoutingInfo> getExecutionNsRoutingInfo(
         OperationContext* opCtx, const NamespaceString& execNss);
 
-    MongoSInterface() = default;
+    MongerSInterface() = default;
 
-    virtual ~MongoSInterface() = default;
+    virtual ~MongerSInterface() = default;
 
     void setOperationContext(OperationContext* opCtx) final {}
 
@@ -203,7 +203,7 @@ public:
     }
 
     /**
-     * Mongos does not have a plan cache, so this method should never be called on mongers. Upstream
+     * Mongers does not have a plan cache, so this method should never be called on mongers. Upstream
      * checks are responsible for generating an error if a user attempts to introspect the plan
      * cache on mongers.
      */

@@ -5,7 +5,7 @@
 (function() {
     "use strict";
 
-    load("jstests/libs/fixture_helpers.js");  // For isMongos.
+    load("jstests/libs/fixture_helpers.js");  // For isMongers.
 
     const coll = db.find_and_modify_pipeline_update;
     coll.drop();
@@ -40,7 +40,7 @@
 
     // We skip the following test for sharded fixtures as it will fail as the query for
     // findAndModify must contain the shard key.
-    if (!FixtureHelpers.isMongos(db)) {
+    if (!FixtureHelpers.isMongers(db)) {
         // Test that 'sort' works with pipeline-style update.
         assert(coll.drop());
         assert.commandWorked(

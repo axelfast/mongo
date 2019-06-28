@@ -7,7 +7,7 @@
     "use strict";
 
     load("jstests/aggregation/extras/utils.js");  // For assertArrayEq.
-    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongos.
+    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongers.
 
     const source = db[`${jsTest.name()}_source`];
     source.drop();

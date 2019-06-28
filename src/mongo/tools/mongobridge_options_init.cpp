@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,8 +39,8 @@
 
 namespace monger {
 
-MONGO_STARTUP_OPTIONS_VALIDATE(MongoBridgeOptions)(InitializerContext* context) {
-    if (!handlePreValidationMongoBridgeOptions(moe::startupOptionsParsed)) {
+MONGO_STARTUP_OPTIONS_VALIDATE(MongerBridgeOptions)(InitializerContext* context) {
+    if (!handlePreValidationMongerBridgeOptions(moe::startupOptionsParsed)) {
         quickExit(EXIT_SUCCESS);
     }
     Status ret = moe::startupOptionsParsed.validate();
@@ -50,8 +50,8 @@ MONGO_STARTUP_OPTIONS_VALIDATE(MongoBridgeOptions)(InitializerContext* context) 
     return Status::OK();
 }
 
-MONGO_STARTUP_OPTIONS_STORE(MongoBridgeOptions)(InitializerContext* context) {
-    Status ret = storeMongoBridgeOptions(moe::startupOptionsParsed, context->args());
+MONGO_STARTUP_OPTIONS_STORE(MongerBridgeOptions)(InitializerContext* context) {
+    Status ret = storeMongerBridgeOptions(moe::startupOptionsParsed, context->args());
     if (!ret.isOK()) {
         std::cerr << ret.toString() << std::endl;
         std::cerr << "try '" << context->args()[0] << " --help' for more information" << std::endl;

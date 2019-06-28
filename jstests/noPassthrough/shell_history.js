@@ -5,7 +5,7 @@
     "use strict";
 
     // Use dataPath because it includes the trailing "/" or "\".
-    var tmpHome = MongoRunner.dataPath;
+    var tmpHome = MongerRunner.dataPath;
     // Ensure it exists and is a dir (eg. if running without resmoke.py and /data/db doesn't exist).
     mkdir(tmpHome);
     removeFile(tmpHome + ".dbshell");
@@ -61,7 +61,7 @@
     cmdline += " " + redirection;
     args.push(cmdline);
     jsTestLog("Running args:\n    " + tojson(args) + "\nwith env:\n    " + tojson(env));
-    var pid = _startMongoProgram({args, env});
+    var pid = _startMongerProgram({args, env});
     var rc = waitProgram(pid);
 
     assert.eq(rc, 0);
@@ -91,11 +91,11 @@
         // There is no stat utility in POSIX.
         // `ls -l` is POSIX, so this is the best that we have.
         // Check for exactly "-rw-------".
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
         var rc = runProgram("ls", "-l", file.name);
         assert.eq(rc, 0);
 
-        var output = rawMongoProgramOutput();
+        var output = rawMongerProgramOutput();
         var fields = output.split(" ");
         // First field is the prefix, second field is the `ls -l` permissions.
         assert.eq(fields[1].substr(0, 10), "-rw-------", targetFile + " has bad permissions");

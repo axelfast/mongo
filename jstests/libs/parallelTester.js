@@ -62,7 +62,7 @@ if (typeof _threadInject != "undefined") {
     EventGenerator = function(me, collectionName, mean, host) {
         this.mean = mean;
         if (host == undefined)
-            host = db.getMongo().host;
+            host = db.getMonger().host;
         this.events = new Array(me, collectionName, host);
     };
 
@@ -110,7 +110,7 @@ if (typeof _threadInject != "undefined") {
         var me = args.shift();
         var collectionName = args.shift();
         var host = args.shift();
-        var m = new Mongo(host);
+        var m = new Monger(host);
 
         // We define 'db' and 't' as local variables so that calling eval() on the stringified
         // JavaScript expression 'args[i][1]' can take advantage of using them.
@@ -125,7 +125,7 @@ if (typeof _threadInject != "undefined") {
     // Helper class for running tests in parallel.  It assembles a set of tests
     // and then calls assert.parallelests to run them.
     ParallelTester = function() {
-        assert.neq(db.getMongo().writeMode(), "legacy", "wrong shell write mode");
+        assert.neq(db.getMonger().writeMode(), "legacy", "wrong shell write mode");
         this.params = new Array();
     };
 
@@ -211,7 +211,7 @@ if (typeof _threadInject != "undefined") {
         ]);
 
         // The following tests cannot run when shell readMode is legacy.
-        if (db.getMongo().readMode() === "legacy") {
+        if (db.getMonger().readMode() === "legacy") {
             var requires_find_command = [
                 "update_pipeline_shell_helpers.js",
                 "update_with_pipeline.js",
@@ -335,7 +335,7 @@ if (typeof _threadInject != "undefined") {
             var time = Date.timeFunc(function() {
                 // Create a new connection to the db for each file. If tests share the same
                 // connection it can create difficult to debug issues.
-                db = new Mongo(db.getMongo().host).getDB(db.getName());
+                db = new Monger(db.getMonger().host).getDB(db.getName());
                 gc();
                 load(x);
             }, 1);

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -57,11 +57,11 @@ namespace {
 using repl::OplogEntry;
 using unittest::assertGet;
 
-class OpObserverTest : public ServiceContextMongoDTest {
+class OpObserverTest : public ServiceContextMongerDTest {
 public:
     void setUp() override {
         // Set up mongerd.
-        ServiceContextMongoDTest::setUp();
+        ServiceContextMongerDTest::setUp();
 
         auto service = getServiceContext();
         auto opCtx = cc().makeOperationContext();
@@ -437,7 +437,7 @@ public:
         OpObserverTest::setUp();
 
         auto opCtx = cc().makeOperationContext();
-        MongoDSessionCatalog::onStepUp(opCtx.get());
+        MongerDSessionCatalog::onStepUp(opCtx.get());
     }
 
     /**
@@ -478,7 +478,7 @@ TEST_F(OpObserverSessionCatalogRollbackTest,
     {
         auto opCtx = cc().makeOperationContext();
         opCtx->setLogicalSessionId(sessionId);
-        MongoDOperationContextSession ocs(opCtx.get());
+        MongerDOperationContextSession ocs(opCtx.get());
         auto txnParticipant = TransactionParticipant::get(opCtx.get());
         txnParticipant.refreshFromStorageIfNeeded(opCtx.get());
 
@@ -502,7 +502,7 @@ TEST_F(OpObserverSessionCatalogRollbackTest,
     {
         auto opCtx = cc().makeOperationContext();
         opCtx->setLogicalSessionId(sessionId);
-        MongoDOperationContextSession ocs(opCtx.get());
+        MongerDOperationContextSession ocs(opCtx.get());
         auto txnParticipant = TransactionParticipant::get(opCtx.get());
         ASSERT(txnParticipant.checkStatementExecutedNoOplogEntryFetch(stmtId));
     }
@@ -562,12 +562,12 @@ public:
 
         _opObserver.emplace();
 
-        MongoDSessionCatalog::onStepUp(opCtx());
+        MongerDSessionCatalog::onStepUp(opCtx());
         _times.emplace(opCtx());
 
         opCtx()->setLogicalSessionId(makeLogicalSessionIdForTest());
         opCtx()->setTxnNumber(txnNum());
-        _sessionCheckout = std::make_unique<MongoDOperationContextSession>(opCtx());
+        _sessionCheckout = std::make_unique<MongerDOperationContextSession>(opCtx());
 
         auto txnParticipant = TransactionParticipant::get(opCtx());
         txnParticipant.beginOrContinue(opCtx(), *opCtx()->getTxnNumber(), false, true);
@@ -676,7 +676,7 @@ private:
     boost::optional<OpObserverImpl> _opObserver;
     boost::optional<ExposeOpObserverTimes::ReservedTimes> _times;
 
-    std::unique_ptr<MongoDOperationContextSession> _sessionCheckout;
+    std::unique_ptr<MongerDOperationContextSession> _sessionCheckout;
     TxnNumber _txnNum = 0;
 };
 

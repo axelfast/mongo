@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -111,7 +111,7 @@ BSONObj createCommandForMergingShard(const AggregationRequest& request,
     MutableDocument mergeCmd(request.serializeToCommandObj());
 
     mergeCmd["pipeline"] = Value(pipelineForMerging->serialize());
-    mergeCmd[AggregationRequest::kFromMongosName] = Value(true);
+    mergeCmd[AggregationRequest::kFromMongersName] = Value(true);
 
     mergeCmd[AggregationRequest::kRuntimeConstants] =
         Value(mergeCtx->getRuntimeConstants().toBSON());
@@ -236,7 +236,7 @@ Status appendExplainResults(sharded_agg_helpers::DispatchShardPipelineResults&& 
     if (dispatchResults.splitPipeline) {
         auto* mergePipeline = dispatchResults.splitPipeline->mergePipeline.get();
         const char* mergeType = [&]() {
-            if (mergePipeline->canRunOnMongos()) {
+            if (mergePipeline->canRunOnMongers()) {
                 return "mongers";
             } else if (dispatchResults.exchangeSpec) {
                 return "exchange";
@@ -320,7 +320,7 @@ AsyncRequestsSender::Response establishMergingShardCursor(OperationContext* opCt
     return response;
 }
 
-BSONObj establishMergingMongosCursor(OperationContext* opCtx,
+BSONObj establishMergingMongersCursor(OperationContext* opCtx,
                                      const AggregationRequest& request,
                                      const NamespaceString& requestedNss,
                                      const LiteParsedPipeline& liteParsedPipeline,
@@ -568,7 +568,7 @@ auto resolveInvolvedNamespaces(OperationContext* opCtx, const LiteParsedPipeline
 }
 
 // Build an appropriate ExpressionContext for the pipeline. This helper instantiates an appropriate
-// collator, creates a MongoProcessInterface for use by the pipeline's stages, and optionally
+// collator, creates a MongerProcessInterface for use by the pipeline's stages, and optionally
 // extracts the UUID from the collection info if present.
 boost::intrusive_ptr<ExpressionContext> makeExpressionContext(
     OperationContext* opCtx,
@@ -585,22 +585,22 @@ boost::intrusive_ptr<ExpressionContext> makeExpressionContext(
             CollatorFactoryInterface::get(opCtx->getServiceContext())->makeFromBSON(collationObj));
     }
 
-    // Create the expression context, and set 'inMongos' to true. We explicitly do *not* set
+    // Create the expression context, and set 'inMongers' to true. We explicitly do *not* set
     // mergeCtx->tempDir.
     auto mergeCtx = new ExpressionContext(opCtx,
                                           request,
                                           std::move(collation),
-                                          std::make_shared<MongoSInterface>(),
+                                          std::make_shared<MongerSInterface>(),
                                           std::move(resolvedNamespaces),
                                           uuid);
 
-    mergeCtx->inMongos = true;
+    mergeCtx->inMongers = true;
     return mergeCtx;
 }
 
 // Runs a pipeline on mongerS, having first validated that it is eligible to do so. This can be a
 // pipeline which is split for merging, or an intact pipeline which must run entirely on mongerS.
-Status runPipelineOnMongoS(const boost::intrusive_ptr<ExpressionContext>& expCtx,
+Status runPipelineOnMongerS(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                            const ClusterAggregate::Namespaces& namespaces,
                            const AggregationRequest& request,
                            const LiteParsedPipeline& litePipe,
@@ -609,7 +609,7 @@ Status runPipelineOnMongoS(const boost::intrusive_ptr<ExpressionContext>& expCtx
                            const PrivilegeVector& privileges) {
     // We should never receive a pipeline which cannot run on mongerS.
     invariant(!expCtx->explain);
-    invariant(pipeline->canRunOnMongos());
+    invariant(pipeline->canRunOnMongers());
 
     const auto& requestedNss = namespaces.requestedNss;
     const auto opCtx = expCtx->opCtx;
@@ -622,7 +622,7 @@ Status runPipelineOnMongoS(const boost::intrusive_ptr<ExpressionContext>& expCtx
             !pipeline->getSources().front()->constraints().requiresInputDocSource);
 
     // Register the new mongerS cursor, and retrieve the initial batch of results.
-    auto cursorResponse = establishMergingMongosCursor(
+    auto cursorResponse = establishMergingMongersCursor(
         opCtx, request, requestedNss, litePipe, std::move(pipeline), privileges);
 
     // We don't need to storePossibleCursor or propagate writeConcern errors; a pipeline with
@@ -663,10 +663,10 @@ Status dispatchMergingPipeline(
         Grid::get(opCtx)->getExecutorPool()->getArbitraryExecutor());
 
     // First, check whether we can merge on the mongerS. If the merge pipeline MUST run on mongerS,
-    // then ignore the internalQueryProhibitMergingOnMongoS parameter.
-    if (mergePipeline->requiredToRunOnMongos() ||
-        (!internalQueryProhibitMergingOnMongoS.load() && mergePipeline->canRunOnMongos())) {
-        return runPipelineOnMongoS(expCtx,
+    // then ignore the internalQueryProhibitMergingOnMongerS parameter.
+    if (mergePipeline->requiredToRunOnMongers() ||
+        (!internalQueryProhibitMergingOnMongerS.load() && mergePipeline->canRunOnMongers())) {
+        return runPipelineOnMongerS(expCtx,
                                    namespaces,
                                    request,
                                    litePipe,
@@ -740,9 +740,9 @@ Status ClusterAggregate::runAggregate(OperationContext* opCtx,
     uassert(51089,
             str::stream() << "Internal parameter(s) [" << AggregationRequest::kNeedsMergeName
                           << ", "
-                          << AggregationRequest::kFromMongosName
+                          << AggregationRequest::kFromMongersName
                           << "] cannot be set to 'true' when sent to mongers",
-            !request.needsMerge() && !request.isFromMongos());
+            !request.needsMerge() && !request.isFromMongers());
     auto executionNsRoutingInfoStatus =
         sharded_agg_helpers::getExecutionNsRoutingInfo(opCtx, namespaces.executionNss);
     boost::optional<CachedCollectionRoutingInfo> routingInfo;
@@ -787,7 +787,7 @@ Status ClusterAggregate::runAggregate(OperationContext* opCtx,
     // 3. Does not need to run on all shards.
     // 4. Doesn't need transformation via DocumentSource::serialize().
     if (routingInfo && !routingInfo->cm() && !mustRunOnAll &&
-        litePipe.allowedToPassthroughFromMongos() && !involvesShardedCollections) {
+        litePipe.allowedToPassthroughFromMongers() && !involvesShardedCollections) {
         const auto primaryShardId = routingInfo->db().primary()->getId();
         return aggPassthrough(
             opCtx, namespaces, primaryShardId, request, litePipe, privileges, result);
@@ -799,7 +799,7 @@ Status ClusterAggregate::runAggregate(OperationContext* opCtx,
     boost::optional<UUID> uuid = collInfo.second;
 
     // Build an ExpressionContext for the pipeline. This instantiates an appropriate collator,
-    // resolves all involved namespaces, and creates a shared MongoProcessInterface for use by the
+    // resolves all involved namespaces, and creates a shared MongerProcessInterface for use by the
     // pipeline's stages.
     auto expCtx = makeExpressionContext(
         opCtx, request, litePipe, collationObj, uuid, std::move(resolvedNamespaces));
@@ -809,7 +809,7 @@ Status ClusterAggregate::runAggregate(OperationContext* opCtx,
     pipeline->optimizePipeline();
 
     // Check whether the entire pipeline must be run on mongerS.
-    if (pipeline->requiredToRunOnMongos()) {
+    if (pipeline->requiredToRunOnMongers()) {
         // If this is an explain write the explain output and return.
         if (expCtx->explain) {
             *result << "splitPipeline" << BSONNULL << "mongers"
@@ -818,7 +818,7 @@ Status ClusterAggregate::runAggregate(OperationContext* opCtx,
             return Status::OK();
         }
 
-        return runPipelineOnMongoS(
+        return runPipelineOnMongerS(
             expCtx, namespaces, request, litePipe, std::move(pipeline), result, privileges);
     }
 
@@ -876,7 +876,7 @@ Status ClusterAggregate::aggPassthrough(OperationContext* opCtx,
                                         const LiteParsedPipeline& liteParsedPipeline,
                                         const PrivilegeVector& privileges,
                                         BSONObjBuilder* out) {
-    // Format the command for the shard. This adds the 'fromMongos' field, wraps the command as an
+    // Format the command for the shard. This adds the 'fromMongers' field, wraps the command as an
     // explain if necessary, and rewrites the result into a format safe to forward to shards.
     BSONObj cmdObj = CommandHelpers::filterCommandRequestForPassthrough(
         sharded_agg_helpers::createPassthroughCommandForShard(

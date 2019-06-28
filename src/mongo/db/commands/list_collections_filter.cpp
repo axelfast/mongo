@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,7 +35,7 @@
 
 namespace monger {
 
-// TODO SERVER-25493: Remove $exists clause once MongoDB versions <= 3.2 are no longer supported.
+// TODO SERVER-25493: Remove $exists clause once MongerDB versions <= 3.2 are no longer supported.
 BSONObj ListCollectionsFilter::makeTypeCollectionFilter() {
     return BSON("$or" << BSON_ARRAY(BSON("type"
                                          << "collection")

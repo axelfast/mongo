@@ -6,7 +6,7 @@
 (function() {
     "use strict";
 
-    const standalone = MongoRunner.runMongod();
+    const standalone = MongerRunner.runMongerd();
 
     const collName = "prepare_transaction_fails_on_standalone";
     const dbName = "test";
@@ -16,5 +16,5 @@
 
     assert.commandFailedWithCode(testDB.adminCommand({prepareTransaction: 1}), 51239);
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 }());

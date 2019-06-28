@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -878,7 +878,7 @@ DEATH_TEST_F(RollbackImplTest,
     _storageInterface->setStableTimestamp(nullptr, Timestamp(1, 1));
 
     auto status = _rollback->runRollback(_opCtx.get());
-    unittest::log() << "Mongod did not crash. Status: " << status;
+    unittest::log() << "Mongerd did not crash. Status: " << status;
     MONGO_UNREACHABLE;
 }
 
@@ -1751,7 +1751,7 @@ DEATH_TEST_F(RollbackImplObserverInfoTest,
         Timestamp(2, 2), boost::none, "admin.$cmd", BSON("applyOps" << subops.arr()), 2);
 
     auto status = _rollback->_namespacesForOp_forTest(OplogEntry(applyOpsCmdOp.first));
-    unittest::log() << "Mongod did not crash. Status: " << status.getStatus();
+    unittest::log() << "Mongerd did not crash. Status: " << status.getStatus();
     MONGO_UNREACHABLE;
 }
 
@@ -1859,7 +1859,7 @@ DEATH_TEST_F(RollbackImplObserverInfoTest,
     ASSERT_OK(_insertOplogEntry(unknownCmdOp.first));
 
     auto status = _rollback->runRollback(_opCtx.get());
-    unittest::log() << "Mongod did not crash. Status: " << status;
+    unittest::log() << "Mongerd did not crash. Status: " << status;
     MONGO_UNREACHABLE;
 }
 

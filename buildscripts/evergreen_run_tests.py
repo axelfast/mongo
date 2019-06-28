@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Command line utility for executing MongoDB tests in Evergreen."""
+"""Command line utility for executing MongerDB tests in Evergreen."""
 
 import collections
 import os.path

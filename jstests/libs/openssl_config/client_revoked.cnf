@@ -14,7 +14,7 @@ req_extensions = client_revoked_extensions
 C = US
 ST = New York
 L = New York City
-O  = MongoDB
+O  = MongerDB
 OU = KernelUser
 CN = client_revoked
 

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -29,7 +29,7 @@ type SaslClientCloser interface {
 	Close()
 }
 
-// ConductSaslConversation handles running a sasl conversation with MongoDB.
+// ConductSaslConversation handles running a sasl conversation with MongerDB.
 func ConductSaslConversation(ctx context.Context, desc description.Server, rw wiremessage.ReadWriter, db string, client SaslClient) error {
 
 	if db == "" {

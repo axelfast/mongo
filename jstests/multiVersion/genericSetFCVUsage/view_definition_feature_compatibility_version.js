@@ -12,7 +12,7 @@
     load("jstests/libs/feature_compatibility_version.js");
 
     const testName = "view_definition_feature_compatibility_version_multiversion";
-    const dbpath = MongoRunner.dataPath + testName;
+    const dbpath = MongerRunner.dataPath + testName;
 
     // The 'pipelinesWithNewFeatures' array should be populated with aggregation pipelines that use
     // aggregation features new in the latest version of mongerd. This test ensures that a view
@@ -21,7 +21,7 @@
     // version.
     const pipelinesWithNewFeatures = [];
 
-    let conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest"});
+    let conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "latest"});
     assert.neq(null, conn, "mongerd was unable to start up");
     let testDB = conn.getDB(testName);
 
@@ -73,13 +73,13 @@
             `Expected *not* to be able to modify view to use pipeline ${tojson(pipe)} while in` +
                 `FCV ${lastStableFCV}`));
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Starting up the last-stable version of mongerd with new query features will succeed.
-    conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
+    conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
     assert.neq(null,
                conn,
-               `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd was` +
+               `version ${MongerRunner.getBinVersionFor("last-stable")} of mongerd was` +
                    " unable to start up");
     testDB = conn.getDB(testName);
 
@@ -90,16 +90,16 @@
         (pipe, i) => assert.commandFailed(
             testDB.runCommand({find: "firstView" + i}),
             `Expected read against view with pipeline ${tojson(pipe)} to fail on version` +
-                ` ${MongoRunner.getBinVersionFor("last-stable")}`));
+                ` ${MongerRunner.getBinVersionFor("last-stable")}`));
 
     // Test that a read against a view that does not contain new query features succeeds.
     assert.commandWorked(testDB.runCommand({find: "emptyView"}));
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Starting up the latest version of mongerd should succeed, even though the feature
     // compatibility version is still set to the last-stable version.
-    conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest", noCleanData: true});
+    conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "latest", noCleanData: true});
     assert.neq(null, conn, "mongerd was unable to start up");
     testDB = conn.getDB(testName);
 
@@ -133,8 +133,8 @@
     // Set the feature compatibility version to the last-stable version and then restart with
     // internalValidateFeaturesAsMaster=false.
     assert.commandWorked(testDB.adminCommand({setFeatureCompatibilityVersion: lastStableFCV}));
-    MongoRunner.stopMongod(conn);
-    conn = MongoRunner.runMongod({
+    MongerRunner.stopMongerd(conn);
+    conn = MongerRunner.runMongerd({
         dbpath: dbpath,
         binVersion: "latest",
         noCleanData: true,
@@ -161,13 +161,13 @@
                 ` ${lastStableFCV} with internalValidateFeaturesAsMaster=false`);
     });
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Starting up the last-stable version of mongerd with new query features should succeed.
-    conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
+    conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
     assert.neq(null,
                conn,
-               `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd was` +
+               `version ${MongerRunner.getBinVersionFor("last-stable")} of mongerd was` +
                    " unable to start up");
     testDB = conn.getDB(testName);
 
@@ -177,5 +177,5 @@
                             `Drop of view with pipeline ${tojson(pipe)} failed`));
     assert(testDB.system.views.drop(), "Drop of system.views collection failed");
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

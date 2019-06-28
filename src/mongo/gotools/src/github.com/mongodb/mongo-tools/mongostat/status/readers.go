@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -152,7 +152,7 @@ func getStorageEngine(stat *ServerStatus) string {
 // mongersProcessRE matches mongers not followed by any slashes before next whitespace
 var mongersProcessRE = regexp.MustCompile(`^.*\bmongers\b[^\\\/]*(\s.*)?$`)
 
-func IsMongos(stat *ServerStatus) bool {
+func IsMongers(stat *ServerStatus) bool {
 	return stat.ShardCursorType != nil || mongersProcessRE.MatchString(stat.Process)
 }
 
@@ -258,7 +258,7 @@ func ReadFlushes(_ *ReaderConfig, newStat, oldStat *ServerStatus) string {
 }
 
 func ReadMapped(c *ReaderConfig, newStat, _ *ServerStatus) (val string) {
-	if util.IsTruthy(newStat.Mem.Supported) && IsMongos(newStat) {
+	if util.IsTruthy(newStat.Mem.Supported) && IsMongers(newStat) {
 		val = formatMegabyteAmount(c.HumanReadable, newStat.Mem.Mapped)
 	}
 	return
@@ -279,7 +279,7 @@ func ReadRes(c *ReaderConfig, newStat, _ *ServerStatus) (val string) {
 }
 
 func ReadNonMapped(c *ReaderConfig, newStat, _ *ServerStatus) (val string) {
-	if util.IsTruthy(newStat.Mem.Supported) && !IsMongos(newStat) {
+	if util.IsTruthy(newStat.Mem.Supported) && !IsMongers(newStat) {
 		val = formatMegabyteAmount(c.HumanReadable, newStat.Mem.Virtual-newStat.Mem.Mapped)
 	}
 	return
@@ -299,7 +299,7 @@ func ReadFaults(_ *ReaderConfig, newStat, oldStat *ServerStatus) string {
 }
 
 func ReadLRW(_ *ReaderConfig, newStat, oldStat *ServerStatus) (val string) {
-	if !IsMongos(newStat) && newStat.Locks != nil && oldStat.Locks != nil {
+	if !IsMongers(newStat) && newStat.Locks != nil && oldStat.Locks != nil {
 		global, ok := oldStat.Locks["Global"]
 		if ok && global.AcquireCount != nil {
 			newColl, inNew := newStat.Locks["Collection"]
@@ -319,7 +319,7 @@ func ReadLRW(_ *ReaderConfig, newStat, oldStat *ServerStatus) (val string) {
 }
 
 func ReadLRWT(_ *ReaderConfig, newStat, oldStat *ServerStatus) (val string) {
-	if !IsMongos(newStat) && newStat.Locks != nil && oldStat.Locks != nil {
+	if !IsMongers(newStat) && newStat.Locks != nil && oldStat.Locks != nil {
 		global, ok := oldStat.Locks["Global"]
 		if ok && global.AcquireCount != nil {
 			newColl, inNew := newStat.Locks["Collection"]
@@ -339,7 +339,7 @@ func ReadLRWT(_ *ReaderConfig, newStat, oldStat *ServerStatus) (val string) {
 }
 
 func ReadLockedDB(_ *ReaderConfig, newStat, oldStat *ServerStatus) (val string) {
-	if !IsMongos(newStat) && newStat.Locks != nil && oldStat.Locks != nil {
+	if !IsMongers(newStat) && newStat.Locks != nil && oldStat.Locks != nil {
 		global, ok := oldStat.Locks["Global"]
 		if !ok || global.AcquireCount == nil {
 			prevLocks := parseLocks(oldStat)
@@ -444,7 +444,7 @@ func ReadSet(_ *ReaderConfig, newStat, _ *ServerStatus) (name string) {
 
 func ReadRepl(_ *ReaderConfig, newStat, _ *ServerStatus) string {
 	switch {
-	case newStat.Repl == nil && IsMongos(newStat):
+	case newStat.Repl == nil && IsMongers(newStat):
 		return "RTR"
 	case newStat.Repl == nil:
 		return ""

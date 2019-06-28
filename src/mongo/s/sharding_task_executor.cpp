@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -180,7 +180,7 @@ StatusWith<TaskExecutor::CallbackHandle> ShardingTaskExecutor::scheduleRemoteCom
                 LOG(1) << "Could not find shard containing host: " << target;
             }
 
-            if (isMongos() && args.response.status == ErrorCodes::IncompatibleWithUpgradedServer) {
+            if (isMongers() && args.response.status == ErrorCodes::IncompatibleWithUpgradedServer) {
                 severe() << "This mongers server must be upgraded. It is attempting to communicate "
                             "with "
                             "an upgraded cluster with which it is incompatible. Error: '"

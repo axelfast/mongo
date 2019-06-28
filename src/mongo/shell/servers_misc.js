@@ -3,7 +3,7 @@ ToolTest = function(name, extraOptions) {
     this.options = extraOptions;
     this.port = allocatePort();
     this.baseName = "jstests_tool_" + name;
-    this.root = MongoRunner.dataPath + this.baseName;
+    this.root = MongerRunner.dataPath + this.baseName;
     this.dbpath = this.root + "/";
     this.ext = this.root + "_external/";
     this.extFile = this.root + "_external/a";
@@ -18,7 +18,7 @@ ToolTest.prototype.startDB = function(coll) {
 
     Object.extend(options, this.options);
 
-    this.m = startMongoProgram.apply(null, MongoRunner.arrOptions("mongerd", options));
+    this.m = startMongerProgram.apply(null, MongerRunner.arrOptions("mongerd", options));
     this.db = this.m.getDB(this.baseName);
     if (coll)
         return this.db.getCollection(coll);
@@ -28,7 +28,7 @@ ToolTest.prototype.startDB = function(coll) {
 ToolTest.prototype.stop = function() {
     if (!this.m)
         return;
-    _stopMongoProgram(this.port);
+    _stopMongerProgram(this.port);
     this.m = null;
     this.db = null;
 
@@ -59,7 +59,7 @@ ToolTest.prototype.runTool = function() {
         a.push("30");
     }
 
-    return runMongoProgram.apply(null, a);
+    return runMongerProgram.apply(null, a);
 };
 
 /**
@@ -71,8 +71,8 @@ var allocatePort;
  * Resets the range of ports which have already been given out to callers of allocatePort().
  *
  * This function can be used to allow a test to allocate a large number of ports as part of starting
- * many MongoDB deployments without worrying about hitting the configured maximum. Callers of this
- * function should take care to ensure MongoDB deployments started earlier have been terminated and
+ * many MongerDB deployments without worrying about hitting the configured maximum. Callers of this
+ * function should take care to ensure MongerDB deployments started earlier have been terminated and
  * won't be reused.
  */
 var resetAllocatedPorts;
@@ -116,16 +116,16 @@ allocatePorts = function(numPorts) {
 };
 
 function startParallelShell(jsCode, port, noConnect) {
-    var shellPath = MongoRunner.mongerShellPath;
+    var shellPath = MongerRunner.mongerShellPath;
     var args = [shellPath];
 
     if (typeof db == "object") {
         if (!port) {
             // If no port override specified, just passthrough connect string.
-            args.push("--host", db.getMongo().host);
+            args.push("--host", db.getMonger().host);
         } else {
             // Strip port numbers from connect string.
-            const uri = new MongoURI(db.getMongo().host);
+            const uri = new MongerURI(db.getMonger().host);
             var connString = uri.servers
                                  .map(function(server) {
                                      return server.host;
@@ -163,7 +163,7 @@ function startParallelShell(jsCode, port, noConnect) {
 
     args.push("--eval", jsCode);
 
-    var pid = startMongoProgramNoConnect.apply(null, args);
+    var pid = startMongerProgramNoConnect.apply(null, args);
 
     // Returns a function that when called waits for the parallel shell to exit and returns the exit
     // code of the process. By default an error is thrown if the parallel shell exits with a nonzero

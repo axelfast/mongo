@@ -269,7 +269,7 @@ def main():
     global fault_type
     global disable_faults
 
-    parser = argparse.ArgumentParser(description='MongoDB Mock Free Monitoring Endpoint.')
+    parser = argparse.ArgumentParser(description='MongerDB Mock Free Monitoring Endpoint.')
 
     parser.add_argument('-p', '--port', type=int, default=8000, help="Port to listen on")
 

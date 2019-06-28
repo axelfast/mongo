@@ -39,7 +39,7 @@
     const subShellCommand = function(hosts) {
         var Ms = [];
         for (var i = 0; i < 10; i++) {
-            Ms.push(new Mongo("mongerdb://" + hosts[0] + "," + hosts[1] +
+            Ms.push(new Monger("mongerdb://" + hosts[0] + "," + hosts[1] +
                               "/?ssl=true&replicaSet=sslSet"));
         }
 
@@ -76,7 +76,7 @@
         subShellCommandFormatter(rst)
     ];
 
-    const retVal = _runMongoProgram(...subShellArgs);
+    const retVal = _runMongerProgram(...subShellArgs);
     assert.eq(retVal, 0, 'monger shell did not succeed with exit code 0');
 
     rst.stopSet();

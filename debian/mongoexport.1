@@ -2,7 +2,7 @@
 .
 .TH "MONGOEXPORT" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongerexport \- MongoDB Export Utility
+mongerexport \- MongerDB Export Utility
 .
 .nr rst2man-indent-level 0
 .
@@ -56,7 +56,7 @@ of  mongerexport\&.
 .SH SYNOPSIS
 .sp
 \fI\%mongerexport\fP is a utility that produces a JSON or CSV export
-of data stored in a MongoDB instance.
+of data stored in a MongerDB instance.
 .sp
 See the mongerimport document for more
 information regarding the \fBmongerimport\fP utility, which
@@ -266,7 +266,7 @@ URI connection string)
 \fIDefault\fP: localhost:27017
 .sp
 Specifies a resolvable hostname for the \fBmongerd\fP to which to
-connect. By default, the \fBmongerexport\fP attempts to connect to a MongoDB
+connect. By default, the \fBmongerexport\fP attempts to connect to a MongerDB
 instance running on the localhost on port number \fB27017\fP\&.
 .sp
 To connect to a replica set, specify the
@@ -283,7 +283,7 @@ the following:
 .UNINDENT
 .UNINDENT
 .sp
-You can always connect directly to a single MongoDB instance by
+You can always connect directly to a single MongerDB instance by
 specifying the host and port number directly.
 .sp
 Changed in version 3.0.0: If you use IPv6 and use the \fB<address>:<port>\fP format, you must
@@ -296,7 +296,7 @@ brackets (e.g. \fB[<address>]\fP).
 .B \-\-port <port>
 \fIDefault\fP: 27017
 .sp
-Specifies the TCP port on which the MongoDB instance listens for
+Specifies the TCP port on which the MongerDB instance listens for
 client connections.
 .UNINDENT
 .INDENT 0.0
@@ -305,8 +305,8 @@ client connections.
 \fIRemoved in version 3.0.\fP
 .sp
 Enables IPv6 support and allows \fBmongerexport\fP to connect to the
-MongoDB instance using an IPv6 network. Prior to MongoDB 3.0, you
-had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongoDB 3.0 and later, IPv6
+MongerDB instance using an IPv6 network. Prior to MongerDB 3.0, you
+had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongerDB 3.0 and later, IPv6
 is always enabled.
 .UNINDENT
 .INDENT 0.0
@@ -318,7 +318,7 @@ New in version 2.6.
 Enables connection to a \fBmongerd\fP or \fBmongers\fP that has
 TLS/SSL support enabled.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -355,7 +355,7 @@ intrusion is a possibility.
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -374,7 +374,7 @@ to a \fBmongerd\fP or \fBmongers\fP that has
 \fBCAFile\fP enabled \fIwithout\fP
 \fBallowConnectionsWithoutCertificates\fP\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -393,7 +393,7 @@ If the private key in the PEM file is encrypted and you do not specify
 the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmongerexport\fP will prompt for a passphrase. See
 ssl\-certificate\-password\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -407,7 +407,7 @@ Specifies the \fB\&.pem\fP file that contains the Certificate Revocation
 List. Specify the file name of the \fB\&.pem\fP file using relative or
 absolute paths.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -419,10 +419,10 @@ New in version 2.6.
 .sp
 Bypasses the validation checks for server certificates and allows
 the use of invalid certificates. When using the
-\fBallowInvalidCertificates\fP setting, MongoDB logs as a
+\fBallowInvalidCertificates\fP setting, MongerDB logs as a
 warning the use of the invalid certificate.
 .sp
-Starting in MongoDB 4.0, if you specify
+Starting in MongerDB 4.0, if you specify
 \fB\-\-sslAllowInvalidCertificates\fP or \fBssl.allowInvalidCertificates:
 true\fP when using x.509 authentication, an invalid certificate is
 only sufficient to establish a TLS/SSL connection but is
@@ -449,7 +449,7 @@ well as to foreign processes posing as valid
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -460,10 +460,10 @@ New in version 3.0.
 
 .sp
 Disables the validation of the hostnames in TLS/SSL certificates. Allows
-\fBmongerexport\fP to connect to MongoDB instances even if the hostname in their
+\fBmongerexport\fP to connect to MongerDB instances even if the hostname in their
 certificates do not match the specified hostname.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -481,7 +481,7 @@ the \fI\%\-\-sslFIPSMode\fP option.
 .INDENT 7.0
 .INDENT 3.5
 FIPS\-compatible TLS/SSL is
-available only in \fI\%MongoDB Enterprise\fP\&. See
+available only in \fI\%MongerDB Enterprise\fP\&. See
 /tutorial/configure\-fips for more information.
 .UNINDENT
 .UNINDENT
@@ -489,14 +489,14 @@ available only in \fI\%MongoDB Enterprise\fP\&. See
 .INDENT 0.0
 .TP
 .B \-\-username <username>, \-u <username>
-Specifies a username with which to authenticate to a MongoDB database
+Specifies a username with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-password\fP and
 \fB\-\-authenticationDatabase\fP options.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password <password>, \-p <password>
-Specifies a password with which to authenticate to a MongoDB database
+Specifies a password with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-username\fP and
 \fB\-\-authenticationDatabase\fP options.
 .sp
@@ -527,10 +527,10 @@ assumes that the database specified to export holds the user’s credentials.
 Specifies the authentication mechanism the \fBmongerexport\fP instance uses to
 authenticate to the \fBmongerd\fP or \fBmongers\fP\&.
 .sp
-Changed in version 4.0: MongoDB removes support for the deprecated MongoDB
+Changed in version 4.0: MongerDB removes support for the deprecated MongerDB
 Challenge\-Response (\fBMONGODB\-CR\fP) authentication mechanism.
 .sp
-MongoDB adds support for SCRAM mechanism using the SHA\-256 hash
+MongerDB adds support for SCRAM mechanism using the SHA\-256 hash
 function (\fBSCRAM\-SHA\-256\fP).
 
 .TS
@@ -566,14 +566,14 @@ _
 T{
 MONGODB\-X509
 T}	T{
-MongoDB TLS/SSL certificate authentication.
+MongerDB TLS/SSL certificate authentication.
 T}
 _
 T{
 GSSAPI (Kerberos)
 T}	T{
 External authentication using Kerberos. This mechanism is
-available only in \fI\%MongoDB Enterprise\fP\&.
+available only in \fI\%MongerDB Enterprise\fP\&.
 T}
 _
 T{
@@ -582,7 +582,7 @@ T}	T{
 External authentication using LDAP. You can also use \fBPLAIN\fP
 for authenticating in\-database users. \fBPLAIN\fP transmits
 passwords in plain text. This mechanism is available only in
-\fI\%MongoDB Enterprise\fP\&.
+\fI\%MongerDB Enterprise\fP\&.
 T}
 _
 .TE
@@ -596,7 +596,7 @@ New in version 2.6.
 Specify the name of the service using GSSAPI/Kerberos\&. Only required if the service does not use the
 default name of \fBmongerdb\fP\&.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -607,7 +607,7 @@ New in version 2.6.
 Specify the hostname of a service using GSSAPI/Kerberos\&. \fIOnly\fP required if the hostname of a machine does
 not match the hostname resolved by DNS.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -743,7 +743,7 @@ name, the \fI\%mongerexport\fP writes data to standard output
 Modifies the output of \fI\%mongerexport\fP to write the
 entire contents of the export as a single JSON array. By
 default \fI\%mongerexport\fP writes data using one JSON document
-for every MongoDB document.
+for every MongerDB document.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -777,7 +777,7 @@ Sets the replica\-set\-read\-preference to \fBnearest\fP,
 allowing \fI\%mongerexport\fP to read data from secondary
 replica set members.
 .sp
-\fI\%\-\-readPreference\fP replaces \fB\-\-slaveOk\fP in MongoDB 3.2. You cannot
+\fI\%\-\-readPreference\fP replaces \fB\-\-slaveOk\fP in MongerDB 3.2. You cannot
 specify \fB\-\-slaveOk\fP when \fI\%\-\-readPreference\fP is specified.
 .sp
 \fBWARNING:\fP
@@ -958,7 +958,7 @@ mongerexport \-\-db users \-\-collection contacts \-\-type=csv \-\-fieldFile fie
 New in version 3.4.
 
 .sp
-MongoDB 3.4 added the \fI\%\-\-noHeaderLine\fP option for excluding the
+MongerDB 3.4 added the \fI\%\-\-noHeaderLine\fP option for excluding the
 field names in a CSV export. The following example exports the \fBname\fP
 and \fBaddress\fP fields in the \fBcontacts\fP collection in the \fBusers\fP
 database and uses \fI\%\-\-noHeaderLine\fP to suppress the output
@@ -989,7 +989,7 @@ Charles Yu, 345 Sample Street
 .SS Export in JSON Format
 .sp
 This example creates an export of the \fBcontacts\fP collection from the
-MongoDB instance running on the localhost port number \fB27017\fP\&. This
+MongerDB instance running on the localhost port number \fB27017\fP\&. This
 writes the export to the \fBcontacts.json\fP file in JSON format.
 .INDENT 0.0
 .INDENT 3.5
@@ -1006,7 +1006,7 @@ mongerexport \-\-db sales \-\-collection contacts \-\-out contacts.json
 The following example exports the \fBcontacts\fP collection from the
 \fBmarketing\fP database, which requires authentication.
 .sp
-This data resides on the MongoDB instance located on the host
+This data resides on the MongerDB instance located on the host
 \fBmongerdb1.example.net\fP running on port \fB37017\fP, which requires the username
 \fBuser\fP and the password \fBpass\fP\&.
 .INDENT 0.0
@@ -1042,7 +1042,7 @@ mongerexport \-\-db sales \-\-collection contacts \-\-query \(aq{"field": 1}\(aq
 You must enclose the query in single quotes (e.g. \fB\(aq\fP) to ensure that it does
 not interact with your shell environment.
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

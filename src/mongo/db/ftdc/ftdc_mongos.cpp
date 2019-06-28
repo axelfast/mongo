@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -84,12 +84,12 @@ public:
     }
 };
 
-void registerMongoSCollectors(FTDCController* controller) {
+void registerMongerSCollectors(FTDCController* controller) {
     // PoolStats
     controller->addPeriodicCollector(std::make_unique<ConnPoolStatsCollector>());
 }
 
-void startMongoSFTDC() {
+void startMongerSFTDC() {
     // Get the path to use for FTDC:
     // 1. Check if the user set one.
     // 2. If not, check if the user has a logpath and derive one.
@@ -106,18 +106,18 @@ void startMongoSFTDC() {
             startMode = FTDCStartMode::kSkipStart;
         } else {
             directory = boost::filesystem::absolute(
-                FTDCUtil::getMongoSPath(serverGlobalParams.logpath), serverGlobalParams.cwd);
+                FTDCUtil::getMongerSPath(serverGlobalParams.logpath), serverGlobalParams.cwd);
 
             // Note: If the computed FTDC directory conflicts with an existing file, then FTDC will
-            // warn about the conflict, and not startup. It will not terminate MongoS in this
+            // warn about the conflict, and not startup. It will not terminate MongerS in this
             // situation.
         }
     }
 
-    startFTDC(directory, startMode, registerMongoSCollectors);
+    startFTDC(directory, startMode, registerMongerSCollectors);
 }
 
-void stopMongoSFTDC() {
+void stopMongerSFTDC() {
     stopFTDC();
 }
 

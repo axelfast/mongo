@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -246,7 +246,7 @@ func (c *Client) configure(opts *options.ClientOptions) error {
 
 		if len(cred.Source) == 0 {
 			switch strings.ToUpper(mechanism) {
-			case auth.MongoDBX509, auth.GSSAPI, auth.PLAIN:
+			case auth.MongerDBX509, auth.GSSAPI, auth.PLAIN:
 				cred.Source = "$external"
 			default:
 				cred.Source = "admin"

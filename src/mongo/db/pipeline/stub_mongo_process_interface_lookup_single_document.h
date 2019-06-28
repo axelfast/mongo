@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -57,11 +57,11 @@ public:
 };
 
 /**
- * A mock MongoProcessInterface which allows mocking a foreign pipeline.
+ * A mock MongerProcessInterface which allows mocking a foreign pipeline.
  */
-class StubMongoProcessInterfaceLookupSingleDocument final : public StubMongoProcessInterface {
+class StubMongerProcessInterfaceLookupSingleDocument final : public StubMongerProcessInterface {
 public:
-    StubMongoProcessInterfaceLookupSingleDocument(
+    StubMongerProcessInterfaceLookupSingleDocument(
         std::deque<DocumentSource::GetNextResult> mockResults)
         : _mockResults(std::move(mockResults)) {}
 
@@ -86,7 +86,7 @@ public:
     std::unique_ptr<ShardFilterer> getShardFilterer(
         const boost::intrusive_ptr<ExpressionContext>& expCtx) const override {
         // Try to emulate the behavior mongers and mongerd would each follow.
-        if (expCtx->inMongos) {
+        if (expCtx->inMongers) {
             return nullptr;
         } else {
             return std::make_unique<StubShardFilterer>();

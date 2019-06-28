@@ -29,7 +29,7 @@
     ];
 
     function startStandalone() {
-        let mongerd = MongoRunner.runMongod({cleanData: true});
+        let mongerd = MongerRunner.runMongerd({cleanData: true});
         let db = mongerd.getDB(dbName);
         db.dropDatabase();
         return mongerd;
@@ -37,12 +37,12 @@
 
     function restartStandalone(old) {
         jsTest.log("Restarting mongerd");
-        MongoRunner.stopMongod(old);
-        return MongoRunner.runMongod({restart: true, dbpath: old.dbpath, cleanData: false});
+        MongerRunner.stopMongerd(old);
+        return MongerRunner.runMongerd({restart: true, dbpath: old.dbpath, cleanData: false});
     }
 
     function shutdownStandalone(mongerd) {
-        MongoRunner.stopMongod(mongerd);
+        MongerRunner.stopMongerd(mongerd);
     }
 
     function startReplSet() {

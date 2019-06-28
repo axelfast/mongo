@@ -2,7 +2,7 @@
 .
 .TH "MONGOD" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongerd \- MongoDB Server
+mongerd \- MongerDB Server
 .
 .nr rst2man-indent-level 0
 .
@@ -69,7 +69,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .UNINDENT
 .SH SYNOPSIS
 .sp
-\fI\%mongerd\fP is the primary daemon process for the MongoDB
+\fI\%mongerd\fP is the primary daemon process for the MongerDB
 system. It handles data requests, manages data access, and performs
 background management operations.
 .sp
@@ -82,7 +82,7 @@ your database.
 \fBNOTE:\fP
 .INDENT 0.0
 .INDENT 3.5
-Starting in version 4.0, MongoDB disables support for TLS 1.0
+Starting in version 4.0, MongerDB disables support for TLS 1.0
 encryption on systems where TLS 1.1+ is available. For
 more details, see 4.0\-disable\-tls\&.
 .UNINDENT
@@ -142,7 +142,7 @@ connection closed events
 .B \-\-port <port>
 \fIDefault\fP: 27017
 .sp
-Specifies the TCP port on which the MongoDB instance listens for
+Specifies the TCP port on which the MongerDB instance listens for
 client connections.
 .UNINDENT
 .INDENT 0.0
@@ -153,7 +153,7 @@ client connections.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Starting in MongoDB 3.6, \fBmongerd\fP bind to localhost
+Starting in MongerDB 3.6, \fBmongerd\fP bind to localhost
 (\fB127.0.0.1\fP) by default. See 3.6\-bind\-to\-localhost\&.
 .UNINDENT
 .UNINDENT
@@ -296,7 +296,7 @@ encounter errors during normal application operation.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Changed in version 2.6: MongoDB removed the upward limit on the \fBmaxIncomingConnections\fP
+Changed in version 2.6: MongerDB removed the upward limit on the \fBmaxIncomingConnections\fP
 setting.
 
 .UNINDENT
@@ -306,10 +306,10 @@ setting.
 .TP
 .B \-\-logpath <path>
 Sends all diagnostic logging information to a log file instead of to
-standard output or to the host’s syslog system. MongoDB creates
+standard output or to the host’s syslog system. MongerDB creates
 the log file at the path you specify.
 .sp
-By default, MongoDB will move any existing log file rather than overwrite
+By default, MongerDB will move any existing log file rather than overwrite
 it. To instead append to the log file, set the \fI\%\-\-logappend\fP option.
 .UNINDENT
 .INDENT 0.0
@@ -324,7 +324,7 @@ The \fI\%\-\-syslog\fP option is not supported on Windows.
 .INDENT 7.0
 .INDENT 3.5
 The \fBsyslog\fP daemon generates timestamps when it logs a message, not
-when MongoDB issues the message. This can lead to misleading timestamps
+when MongerDB issues the message. This can lead to misleading timestamps
 for log entries, especially when the system is under heavy load. We
 recommend using the \fI\%\-\-logpath\fP option for production systems to
 ensure accurate timestamps.
@@ -429,7 +429,7 @@ process creates no PID file.
 .TP
 .B \-\-keyFile <file>
 Specifies the path to a key file that stores the shared secret
-that MongoDB instances use to authenticate to each other in a
+that MongerDB instances use to authenticate to each other in a
 sharded cluster or replica set\&. \fI\%\-\-keyFile\fP implies
 \fI\%\-\-auth\fP\&. See inter\-process\-auth for more
 information.
@@ -437,7 +437,7 @@ information.
 .INDENT 0.0
 .TP
 .B \-\-setParameter <options>
-Specifies one of the MongoDB parameters described in
+Specifies one of the MongerDB parameters described in
 /reference/parameters\&. You can specify multiple \fBsetParameter\fP
 fields.
 .UNINDENT
@@ -472,7 +472,7 @@ The path for the UNIX socket. \fI\%\-\-unixSocketPrefix\fP applies only
 to Unix\-based systems.
 .sp
 If this option has no value, the
-\fBmongerd\fP process creates a socket with \fB/tmp\fP as a prefix. MongoDB
+\fBmongerd\fP process creates a socket with \fB/tmp\fP as a prefix. MongerDB
 creates and listens on a UNIX socket unless one of the following is true:
 .INDENT 7.0
 .IP \(bu 2
@@ -507,7 +507,7 @@ daemonization process (e.g. as with \fBupstart\fP and \fBsystemd\fP).
 .TP
 .B \-\-auth
 Enables authorization to control user’s access to database resources
-and operations. When authorization is enabled, MongoDB requires all
+and operations. When authorization is enabled, MongerDB requires all
 clients to authenticate themselves first in order to determine the
 access for the client.
 .sp
@@ -593,7 +593,7 @@ The \fI\%\-\-shutdown\fP option is available only on Linux systems.
 .INDENT 0.0
 .TP
 .B \-\-redactClientLogData
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 A \fBmongerd\fP running with \fI\%\-\-redactClientLogData\fP redacts any message accompanying a given
@@ -605,7 +605,7 @@ names are still visible in the logs.
 Use \fI\%\-\-redactClientLogData\fP in conjunction with encryption to assist compliance with regulatory
 requirements.
 .sp
-For example, a MongoDB deployment might store Personally Identifiable
+For example, a MongerDB deployment might store Personally Identifiable
 Information (PII) in one or more collections. The \fBmongerd\fP logs events
 such as those related to CRUD operations, sharding metadata, etc. It is
 possible that the \fBmongerd\fP may expose PII as a part of these logging
@@ -696,15 +696,15 @@ between \fBmonger\fP shell and \fI\%mongerd\fP are not compressed.
 .TP
 .B \-\-timeZoneInfo <path>
 The full path from which to load the time zone database. If this option
-is not provided, then MongoDB will use its built\-in time zone database.
+is not provided, then MongerDB will use its built\-in time zone database.
 .sp
 The configuration file included with Linux and macOS packages sets the time
 zone database path to \fB/usr/share/zoneinfo\fP by default.
 .sp
 The built\-in time zone database is a copy of the \fI\%Olson/IANA time zone
-database\fP\&. It is updated along with MongoDB
+database\fP\&. It is updated along with MongerDB
 releases, but the release cycle of the time zone database differs from the
-release cycle of MongoDB. A copy of the most recent release of the time zone
+release cycle of MongerDB. A copy of the most recent release of the time zone
 database can be downloaded from
 \fI\%https://downloads.mongerdb.org/olson_tz_db/timezonedb\-latest.zip\fP\&.
 .INDENT 7.0
@@ -753,7 +753,7 @@ T{
 T}	T{
 The \fBmongerd\fP uses synchronous networking and manages its
 networking thread pool on a per connection basis. Previous
-versions of MongoDB managed threads in this way.
+versions of MongerDB managed threads in this way.
 T}
 _
 T{
@@ -775,10 +775,10 @@ New in version 4.0.
 .INDENT 0.0
 .TP
 .B \-\-enableFreeMonitoring <runtime|on|off>
-New in version 4.0: Available for MongoDB Community Edition.
+New in version 4.0: Available for MongerDB Community Edition.
 
 .sp
-Enables or disables free MongoDB Cloud monitoring\&. \fI\%\-\-enableFreeMonitoring\fP accepts the following
+Enables or disables free MongerDB Cloud monitoring\&. \fI\%\-\-enableFreeMonitoring\fP accepts the following
 values:
 .TS
 center;
@@ -828,11 +828,11 @@ For the corresponding configuration file setting, see
 .INDENT 0.0
 .TP
 .B \-\-enableFreeMonitoringTag <string>
-New in version 4.0: Available for MongoDB Community Edition.
+New in version 4.0: Available for MongerDB Community Edition.
 
 .sp
 Optional tag to describe environment context. The tag can be sent as
-part of the free MongoDB Cloud monitoring registration at start up.
+part of the free MongerDB Cloud monitoring registration at start up.
 .sp
 For the corresponding configuration file setting, see
 \fBcloud.monitoring.free.tag\fP\&.
@@ -841,7 +841,7 @@ For the corresponding configuration file setting, see
 .INDENT 0.0
 .TP
 .B \-\-ldapServers <host1>:<port>,<host2>:<port>,...,<hostN>:<port>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The LDAP server against which the \fBmongerd\fP executes LDAP operations
@@ -852,7 +852,7 @@ server in a comma\-delimited list.
 .sp
 If your LDAP infrastrucure partitions the LDAP directory over multiple LDAP
 servers, specify \fIone\fP LDAP server any of its replicated instances to
-\fI\%\-\-ldapServers\fP\&. MongoDB supports following LDAP referrals as defined in \fI\%RFC 4511
+\fI\%\-\-ldapServers\fP\&. MongerDB supports following LDAP referrals as defined in \fI\%RFC 4511
 4.1.10\fP\&. Do not use \fI\%\-\-ldapServers\fP
 for listing every LDAP server in your infrastucture.
 .sp
@@ -864,7 +864,7 @@ If unset, \fBmongerd\fP cannot use LDAP authentication or authorization\&.
 .INDENT 0.0
 .TP
 .B \-\-ldapQueryUser <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The identity with which \fBmongerd\fP binds as, when connecting to or
@@ -890,7 +890,7 @@ This setting can be configured on a running \fBmongerd\fP using
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Windows MongoDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
+Windows MongerDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
 instead of \fI\%\-\-ldapQueryUser\fP and \fI\%\-\-ldapQueryPassword\fP\&. You cannot specify
 both \fI\%\-\-ldapQueryUser\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the same time.
 .UNINDENT
@@ -899,7 +899,7 @@ both \fI\%\-\-ldapQueryUser\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the sam
 .INDENT 0.0
 .TP
 .B \-\-ldapQueryPassword <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 .sp
 The password used to bind to an LDAP server when using
 \fI\%\-\-ldapQueryUser\fP\&. You must use \fI\%\-\-ldapQueryPassword\fP with
@@ -914,7 +914,7 @@ This setting can be configured on a running \fBmongerd\fP using
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Windows MongoDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
+Windows MongerDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
 instead of \fI\%\-\-ldapQueryPassword\fP and \fI\%\-\-ldapQueryPassword\fP\&. You cannot specify
 both \fI\%\-\-ldapQueryPassword\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the same time.
 .UNINDENT
@@ -925,7 +925,7 @@ both \fI\%\-\-ldapQueryPassword\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the
 .B \-\-ldapBindWithOSDefaults <bool>
 \fIDefault\fP: False
 .sp
-New in version 3.4: Available in MongoDB Enterprise for the Windows platform only.
+New in version 3.4: Available in MongerDB Enterprise for the Windows platform only.
 
 .sp
 Allows \fBmongerd\fP to authenticate, or bind, using your Windows login
@@ -949,7 +949,7 @@ Use \fI\%\-\-ldapBindWithOSDefaults\fP to replace \fI\%\-\-ldapQueryUser\fP and
 .B \-\-ldapBindMethod <string>
 \fIDefault\fP: simple
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The method \fBmongerd\fP uses to authenticate to an LDAP server.
@@ -973,7 +973,7 @@ using \fBDIGEST\-MD5\fP mechanism.
 .B \-\-ldapBindSASLMechanisms <string>
 \fIDefault\fP: DIGEST\-MD5
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 A comma\-separated list of SASL mechanisms \fBmongerd\fP can
@@ -1027,8 +1027,8 @@ Defer to the documentation for your LDAP or Active Directory
 service for identifying the SASL mechanisms compatible with the
 service.
 .sp
-MongoDB is not a source of SASL mechanism libraries, nor
-is the MongoDB documentation a definitive source for
+MongerDB is not a source of SASL mechanism libraries, nor
+is the MongerDB documentation a definitive source for
 installing or configuring any given SASL mechanism. For
 documentation and support, defer to the SASL mechanism
 library vendor or owner.
@@ -1048,7 +1048,7 @@ For Windows, please see the \fI\%Windows SASL documentation\fP\&.
 .B \-\-ldapTransportSecurity <string>
 \fIDefault\fP: tls
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 By default, \fBmongerd\fP creates a TLS/SSL secured connection to the LDAP
@@ -1056,7 +1056,7 @@ server.
 .sp
 For Linux deployments, you must configure the appropriate TLS Options in
 \fB/etc/openldap/ldap.conf\fP file. Your operating system’s package manager
-creates this file as part of the MongoDB Enterprise installation, via the
+creates this file as part of the MongerDB Enterprise installation, via the
 \fBlibldap\fP dependency. See the documentation for \fBTLS Options\fP in the
 \fI\%ldap.conf OpenLDAP documentation\fP
 for more complete instructions.
@@ -1083,16 +1083,16 @@ credentials between \fBmongerd\fP and the LDAP server.
 .B \-\-ldapTimeoutMS <long>
 \fIDefault\fP: 10000
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The amount of time in milliseconds \fBmongerd\fP should wait for an LDAP server
 to respond to a request.
 .sp
 Increasing the value of \fI\%\-\-ldapTimeoutMS\fP may prevent connection failure between the
-MongoDB server and the LDAP server, if the source of the failure is a
+MongerDB server and the LDAP server, if the source of the failure is a
 connection timeout. Decreasing the value of \fI\%\-\-ldapTimeoutMS\fP reduces the time
-MongoDB waits for a response from the LDAP server.
+MongerDB waits for a response from the LDAP server.
 .sp
 This setting can be configured on a running \fBmongerd\fP using
 \fBsetParameter\fP\&.
@@ -1100,7 +1100,7 @@ This setting can be configured on a running \fBmongerd\fP using
 .INDENT 0.0
 .TP
 .B \-\-ldapUserToDNMapping <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 Maps the username provided to \fBmongerd\fP for authentication to a LDAP
@@ -1109,11 +1109,11 @@ username into an LDAP DN in the following scenarios:
 .INDENT 7.0
 .IP \(bu 2
 Performing LDAP authentication with simple LDAP binding, where users
-authenticate to MongoDB with usernames that are not full LDAP DNs.
+authenticate to MongerDB with usernames that are not full LDAP DNs.
 .IP \(bu 2
 Using an \fI\%LDAP authorization query template\fP that requires a DN.
 .IP \(bu 2
-Transforming the usernames of clients authenticating to Mongo DB using
+Transforming the usernames of clients authenticating to Monger DB using
 different authentication mechanisms (e.g. x.509, kerberos) to a full LDAP
 DN for authorization.
 .UNINDENT
@@ -1269,7 +1269,7 @@ This setting can be configured on a running \fBmongerd\fP using the
 .INDENT 3.5
 An explanation of \fI\%RFC4515\fP,
 \fI\%RFC4516\fP or LDAP queries is out
-of scope for the MongoDB Documentation. Please review the RFC directly or
+of scope for the MongerDB Documentation. Please review the RFC directly or
 use your preferred LDAP resource.
 .UNINDENT
 .UNINDENT
@@ -1277,7 +1277,7 @@ use your preferred LDAP resource.
 .INDENT 0.0
 .TP
 .B \-\-ldapAuthzQueryTemplate <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 A relative LDAP query URL formatted conforming to \fI\%RFC4515\fP and \fI\%RFC4516\fP that \fBmongerd\fP executes to obtain
@@ -1345,7 +1345,7 @@ This setting can be configured on a running \fBmongerd\fP using the
 .INDENT 3.5
 An explanation of \fI\%RFC4515\fP,
 \fI\%RFC4516\fP or LDAP queries is out
-of scope for the MongoDB Documentation. Please review the RFC directly or
+of scope for the MongerDB Documentation. Please review the RFC directly or
 use your preferred LDAP resource.
 .UNINDENT
 .UNINDENT
@@ -1356,7 +1356,7 @@ use your preferred LDAP resource.
 .B \-\-storageEngine string
 \fIDefault\fP: \fBwiredTiger\fP
 .sp
-Changed in version 4.0: MongoDB deprecates the MMAPv1 storage engine.
+Changed in version 4.0: MongerDB deprecates the MMAPv1 storage engine.
 
 .sp
 Specifies the storage engine for the \fBmongerd\fP database. Available
@@ -1382,11 +1382,11 @@ T{
 T}	T{
 To specify the /core/inmemory\&.
 .sp
-New in version 3.2: Available in MongoDB Enterprise only.
+New in version 3.2: Available in MongerDB Enterprise only.
 T}
 _
 T{
-\fBmmapv1\fP (Deprecated in MongoDB 4.0)
+\fBmmapv1\fP (Deprecated in MongerDB 4.0)
 T}	T{
 To specify the /core/mmapv1\&.
 T}
@@ -1406,7 +1406,7 @@ will refuse to start.
 The directory where the \fBmongerd\fP instance stores its data.
 .sp
 If you
-installed MongoDB using a package management system, check the
+installed MongerDB using a package management system, check the
 \fB/etc/mongerd.conf\fP file provided by your packages to see the
 directory is specified.
 .sp
@@ -1466,7 +1466,7 @@ in\-memory storage engine\&.
 .INDENT 0.0
 .TP
 .B \-\-noprealloc
-Deprecated since version 2.6: By default, MongoDB does not preallocate data files. The option
+Deprecated since version 2.6: By default, MongerDB does not preallocate data files. The option
 exists for compatibility and clarity.
 
 .sp
@@ -1489,7 +1489,7 @@ approximately 24,000 namespaces.
 .TP
 .B \-\-quota
 Enables a maximum limit for the number data files each database can
-have. When running with the \fI\%\-\-quota\fP option, MongoDB has a maximum of 8
+have. When running with the \fI\%\-\-quota\fP option, MongerDB has a maximum of 8
 data files per database. Adjust the quota with
 \fI\%\-\-quotaFiles\fP\&.
 .UNINDENT
@@ -1504,7 +1504,7 @@ option requires that you set \fI\%\-\-quota\fP\&.
 .INDENT 0.0
 .TP
 .B \-\-smallfiles
-Sets MongoDB to use a smaller default file size. The \fI\%\-\-smallfiles\fP option
+Sets MongerDB to use a smaller default file size. The \fI\%\-\-smallfiles\fP option
 reduces the initial size for data files and limits the maximum size to
 512 megabytes. \fI\%\-\-smallfiles\fP also reduces the size of each journal
 file from 1 gigabyte to 128 megabytes. Use \fI\%\-\-smallfiles\fP if you have a large
@@ -1518,7 +1518,7 @@ number of files, which can affect performance for larger databases.
 .B \-\-syncdelay <value>
 \fIDefault\fP: 60
 .sp
-Controls how much time can pass before MongoDB flushes data to the data
+Controls how much time can pass before MongerDB flushes data to the data
 files via an fsync operation.
 .sp
 \fBDo not set this value on
@@ -1528,7 +1528,7 @@ default setting.
 \fBWARNING:\fP
 .INDENT 7.0
 .INDENT 3.5
-If you set \fI\%\-\-syncdelay\fP to \fB0\fP, MongoDB will not sync the
+If you set \fI\%\-\-syncdelay\fP to \fB0\fP, MongerDB will not sync the
 memory mapped files to disk.
 .UNINDENT
 .UNINDENT
@@ -1557,7 +1557,7 @@ This option only affects the operation of the \fBmongerd\fP if the data
 files are in an old format.
 .sp
 In most cases you should not set this value, so you can exercise the
-most control over your upgrade process. See the MongoDB \fI\%release notes\fP (on the download page) for more
+most control over your upgrade process. See the MongerDB \fI\%release notes\fP (on the download page) for more
 information about the upgrade process.
 .UNINDENT
 .INDENT 0.0
@@ -1619,7 +1619,7 @@ files with the repaired data files.
 \fIDefault\fP: A \fB_tmp_repairDatabase_<num>\fP directory under the
 \fBdbPath\fP\&.
 .sp
-Specifies a working directory that MongoDB will use during the
+Specifies a working directory that MongerDB will use during the
 \fI\%\-\-repair\fP operation. When \fB\-\-repair\fP completes, the
 \fI\%\-\-repairpath\fP directory is empty, and
 \fBdbPath\fP contains the repaired files.
@@ -1653,7 +1653,7 @@ enables journaling by default.
 Not available for \fI\%mongerd\fP instances that use the
 in\-memory storage engine\&.
 .sp
-Starting in MongoDB 4.0, you cannot specify \fI\%\-\-nojournal\fP option or \fBstorage.journal.enabled:
+Starting in MongerDB 4.0, you cannot specify \fI\%\-\-nojournal\fP option or \fBstorage.journal.enabled:
 false\fP for replica set members that use the
 WiredTiger storage engine.
 .UNINDENT
@@ -1721,10 +1721,10 @@ total RAM minus one gigabyte (\fB0.5 * (1.25 GB \- 1 GB) = 128 MB < 256 MB\fP).
 Avoid increasing the WiredTiger internal cache size above its
 default value.
 .sp
-With WiredTiger, MongoDB utilizes both the WiredTiger internal cache
+With WiredTiger, MongerDB utilizes both the WiredTiger internal cache
 and the filesystem cache.
 .sp
-Via the filesystem cache, MongoDB automatically uses all free memory
+Via the filesystem cache, MongerDB automatically uses all free memory
 that is not used by the WiredTiger cache or by other processes.
 .sp
 \fBNOTE:\fP
@@ -1732,7 +1732,7 @@ that is not used by the WiredTiger cache or by other processes.
 .INDENT 3.5
 The \fI\%\-\-wiredTigerCacheSizeGB\fP limits the size of the WiredTiger internal
 cache. The operating system will use the available free memory
-for filesystem cache, which allows the compressed MongoDB data
+for filesystem cache, which allows the compressed MongerDB data
 files to stay in memory. In addition, the operating system will
 use any free RAM to buffer file system blocks and file system
 cache.
@@ -1744,7 +1744,7 @@ decrease WiredTiger internal cache size.
 .sp
 The default WiredTiger internal cache size value assumes that there is a
 single \fI\%mongerd\fP instance per machine. If a single machine
-contains multiple MongoDB instances, then you should decrease the setting to
+contains multiple MongerDB instances, then you should decrease the setting to
 accommodate the other \fI\%mongerd\fP
 instances.
 .sp
@@ -1816,7 +1816,7 @@ zlib
 .UNINDENT
 .sp
 \fI\%\-\-wiredTigerCollectionBlockCompressor\fP affects all collections created. If you change
-the value of \fI\%\-\-wiredTigerCollectionBlockCompressor\fP on an existing MongoDB deployment, all new
+the value of \fI\%\-\-wiredTigerCollectionBlockCompressor\fP on an existing MongerDB deployment, all new
 collections will use the specified compressor. Existing collections
 will continue to use the compressor specified when they were
 created, or the default compressor at that time.
@@ -1835,7 +1835,7 @@ Specify \fBtrue\fP for \fI\%\-\-wiredTigerIndexPrefixCompression\fP to enable pr
 index data, or \fBfalse\fP to disable prefix compression for index data.
 .sp
 The \fI\%\-\-wiredTigerIndexPrefixCompression\fP setting affects all indexes created. If you change
-the value of \fI\%\-\-wiredTigerIndexPrefixCompression\fP on an existing MongoDB deployment, all new
+the value of \fI\%\-\-wiredTigerIndexPrefixCompression\fP on an existing MongerDB deployment, all new
 indexes will use prefix compression. Existing indexes
 are not affected.
 .UNINDENT
@@ -1846,7 +1846,7 @@ are not affected.
 Configures replication. Specify a replica set name as an argument to
 this set. All hosts in the replica set must have the same set name.
 .sp
-Starting in MongoDB 4.0,
+Starting in MongerDB 4.0,
 .INDENT 7.0
 .IP \(bu 2
 \fI\%\-\-replSet\fP cannot be used in conjunction with
@@ -1930,7 +1930,7 @@ _
 .INDENT 0.0
 .TP
 .B \-\-enableMajorityReadConcern
-Deprecated since version 3.6: Starting in MongoDB 3.6, \fB"majority"\fP read concern
+Deprecated since version 3.6: Starting in MongerDB 3.6, \fB"majority"\fP read concern
 is always enabled, and this option has no effect.
 
 .UNINDENT
@@ -1968,7 +1968,7 @@ servers cannot be a shard server.
 .INDENT 0.0
 .TP
 .B \-\-configsvrMode <string>
-\fBAvailable in MongoDB 3.2 version only\fP
+\fBAvailable in MongerDB 3.2 version only\fP
 .sp
 If set to \fBsccc\fP, indicates that the config servers are deployed
 as three mirrored \fI\%mongerd\fP instances, even if one or more
@@ -2006,13 +2006,13 @@ If specified, during chunk migration, a shard saves,
 to the \fBmoveChunk\fP directory of the \fB\-\-dbpath\fP, all documents
 migrated from that shard.
 .sp
-MongoDB does not automatically delete the data saved in the
+MongerDB does not automatically delete the data saved in the
 \fBmoveChunk\fP directory.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-noMoveParanoia
-Changed in version 3.2: Starting in 3.2, MongoDB uses \fB\-\-noMoveParanoia\fP as the default.
+Changed in version 3.2: Starting in 3.2, MongerDB uses \fB\-\-noMoveParanoia\fP as the default.
 
 .sp
 During chunk migration, a shard does not save documents migrated from
@@ -2024,7 +2024,7 @@ the shard.
 .SS See
 .sp
 /tutorial/configure\-ssl for full
-documentation of MongoDB’s support.
+documentation of MongerDB’s support.
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
@@ -2036,11 +2036,11 @@ Deprecated since version 2.6: Use \fI\%\-\-sslMode requireSSL\fP instead.
 Enables TLS/SSL for \fBmongerd\fP\&.
 .sp
 With \fI\%\-\-sslOnNormalPorts\fP, a \fBmongerd\fP requires TLS/SSL encryption for all
-connections on the default MongoDB port, or the port specified by
+connections on the default MongerDB port, or the port specified by
 \fI\%\-\-port\fP\&. By default, \fI\%\-\-sslOnNormalPorts\fP is
 disabled.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2098,7 +2098,7 @@ TLS/SSL\-enabled server.
 If using x.509 authentication, \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP
 must be specified.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2111,7 +2111,7 @@ or absolute paths.
 .sp
 You must specify \fI\%\-\-sslPEMKeyFile\fP when TLS/SSL is enabled.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2128,7 +2128,7 @@ specify the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmongerd\fP will prompt 
 passphrase. See ssl\-certificate\-password\&.
 
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2193,7 +2193,7 @@ TLS/SSL\-enabled server.
 If using x.509 authentication, \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP
 must be specified.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2214,7 +2214,7 @@ authentication, the cluster uses the \fB\&.pem\fP file specified in the
 If using x.509 authentication, \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP
 must be specified.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2233,7 +2233,7 @@ If the x.509 key file is encrypted and you do not specify the
 \fI\%\-\-sslClusterPassword\fP option, the \fBmongerd\fP will prompt for a passphrase. See
 ssl\-certificate\-password\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2252,7 +2252,7 @@ TLS/SSL\-enabled server.
 If using x.509 authentication, \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP
 must be specified.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2263,7 +2263,7 @@ Specifies the the \fB\&.pem\fP file that contains the Certificate Revocation
 List. Specify the file name of the \fB\&.pem\fP file using relative or
 absolute paths.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2277,7 +2277,7 @@ connect.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Starting in MongoDB 4.0, if you specify
+Starting in MongerDB 4.0, if you specify
 \fB\-\-sslAllowInvalidCertificates\fP or \fBssl.allowInvalidCertificates:
 true\fP when using x.509 authentication, an invalid certificate is
 only sufficient to establish a TLS/SSL connection but is
@@ -2286,10 +2286,10 @@ only sufficient to establish a TLS/SSL connection but is
 .UNINDENT
 .sp
 When using
-the \fI\%\-\-sslAllowInvalidCertificates\fP setting, MongoDB
+the \fI\%\-\-sslAllowInvalidCertificates\fP setting, MongerDB
 logs a warning regarding the use of the invalid certificate.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2305,7 +2305,7 @@ for inter\-process authentication. This allows \fBmongerd\fP to connect
 to other members if the hostnames in their certificates do not match
 their configured hostname.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2325,7 +2325,7 @@ with invalid certificates.
 Use the \fI\%\-\-sslAllowConnectionsWithoutCertificates\fP option if you have a mixed deployment that includes
 clients that do not or cannot present certificates to the \fBmongerd\fP\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -2335,7 +2335,7 @@ For more information about TLS/SSL and MongoDB, see
 New in version 3.0.7.
 
 .sp
-Prevents a MongoDB server running with TLS/SSL from accepting
+Prevents a MongerDB server running with TLS/SSL from accepting
 incoming connections that use a specific protocol or protocols. To
 specify multiple protocols, use a comma separated list of protocols.
 .sp
@@ -2357,7 +2357,7 @@ The specified disabled protocols overrides any default disabled
 protocols.
 .UNINDENT
 .sp
-Starting in version 4.0, MongoDB disables the use of TLS 1.0 if TLS
+Starting in version 4.0, MongerDB disables the use of TLS 1.0 if TLS
 1.1+ is available on the system. To enable the disabled TLS 1.0,
 specify \fBnone\fP to \fI\%\-\-sslDisabledProtocols\fP\&. 4.0\-disable\-tls
 .sp
@@ -2382,7 +2382,7 @@ compliant OpenSSL library to use the \fI\%\-\-sslFIPSMode\fP option.
 .INDENT 7.0
 .INDENT 3.5
 FIPS\-compatible TLS/SSL is
-available only in \fI\%MongoDB Enterprise\fP\&. See
+available only in \fI\%MongerDB Enterprise\fP\&. See
 /tutorial/configure\-fips for more information.
 .UNINDENT
 .UNINDENT
@@ -2448,7 +2448,7 @@ potential performance degradation.
 The \fIslow\fP operation time threshold, in milliseconds. Operations
 that run for longer than this threshold are considered \fIslow\fP\&.
 .sp
-When \fBlogLevel\fP is set to \fB0\fP, MongoDB
+When \fBlogLevel\fP is set to \fB0\fP, MongerDB
 records \fIslow\fP operations to the diagnostic log at a rate determined by
 \fBslowOpSampleRate\fP\&. At higher
 \fBlogLevel\fP settings, all operations appear in the diagnostic
@@ -2524,7 +2524,7 @@ _
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Available only in \fI\%MongoDB Enterprise\fP\&.
+Available only in \fI\%MongerDB Enterprise\fP\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2568,7 +2568,7 @@ performance more than printing to a file in BSON format.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Available only in \fI\%MongoDB Enterprise\fP\&.
+Available only in \fI\%MongerDB Enterprise\fP\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2585,7 +2585,7 @@ option can take either a full path name or a relative path name.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Available only in \fI\%MongoDB Enterprise\fP\&.
+Available only in \fI\%MongerDB Enterprise\fP\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2621,7 +2621,7 @@ the configuration file.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Available only in \fI\%MongoDB Enterprise\fP\&.
+Available only in \fI\%MongerDB Enterprise\fP\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2630,7 +2630,7 @@ Available only in \fI\%MongoDB Enterprise\fP\&.
 \fBNOTE:\fP
 .INDENT 0.0
 .INDENT 3.5
-MongoDB Enterprise on macOS does \fInot\fP include support for SNMP due
+MongerDB Enterprise on macOS does \fInot\fP include support for SNMP due
 to \fI\%SERVER\-29352\fP\&.
 .UNINDENT
 .UNINDENT
@@ -2666,7 +2666,7 @@ By default, the in\-memory storage engine uses 50% of physical RAM minus
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2685,7 +2685,7 @@ to \fBtrue\fP to pass in encryption keys and configurations.
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2722,7 +2722,7 @@ T}	T{
 .sp
 Available only on Linux.
 .sp
-Changed in version 4.0: MongoDB Enterprise on Windows no longer supports \fBAES256\-GCM\fP\&.
+Changed in version 4.0: MongerDB Enterprise on Windows no longer supports \fBAES256\-GCM\fP\&.
 T}
 _
 .TE
@@ -2730,7 +2730,7 @@ _
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2742,14 +2742,14 @@ New in version 3.2.
 .sp
 The path to the local keyfile when managing keys via process \fIother
 than\fP KMIP. Only set when managing keys via process other than KMIP.
-If data is already encrypted using KMIP, MongoDB will throw an error.
+If data is already encrypted using KMIP, MongerDB will throw an error.
 .sp
 Requires \fBenableEncryption\fP to be \fBtrue\fP\&.
 .INDENT 7.0
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2765,17 +2765,17 @@ key. You can only use the setting the first time you enable
 encryption for the \fI\%mongerd\fP instance. Requires
 \fBenableEncryption\fP to be true.
 .sp
-If unspecified, MongoDB will request that the KMIP server create a
+If unspecified, MongerDB will request that the KMIP server create a
 new key to utilize as the system key.
 .sp
 If the KMIP server cannot locate a key with the specified identifier
-or the data is already encrypted with a key, MongoDB will throw an
+or the data is already encrypted with a key, MongerDB will throw an
 error
 .INDENT 7.0
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2793,7 +2793,7 @@ keystore.
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .sp
@@ -2816,7 +2816,7 @@ server. Requires \fBenableEncryption\fP to be true.
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2835,7 +2835,7 @@ Port number the KMIP server is listening on. Requires that a
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2846,13 +2846,13 @@ New in version 3.2.
 
 .sp
 String containing the path to the client certificate used for
-authenticating MongoDB to the KMIP server. Requires that a
+authenticating MongerDB to the KMIP server. Requires that a
 \fBkmipServerName\fP be provided.
 .INDENT 7.0
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2864,13 +2864,13 @@ New in version 3.2.
 .sp
 The password (if one exists) for the client certificate passed into
 \fBkmipClientCertificateFile\fP\&. Is used for
-authenticating MongoDB to the KMIP server. Requires that a
+authenticating MongerDB to the KMIP server. Requires that a
 \fBkmipClientCertificateFile\fP be provided.
 .INDENT 7.0
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -2897,12 +2897,12 @@ text search operations.
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

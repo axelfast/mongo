@@ -317,8 +317,8 @@
         function executeOp(opName, opFn) {
             // Override 'runCommand' so we can capture the raw command object for each operation
             // and log it, to improve diagnostics.
-            const runCommandOriginal = Mongo.prototype.runCommand;
-            Mongo.prototype.runCommand = function(dbName, commandObj, options) {
+            const runCommandOriginal = Monger.prototype.runCommand;
+            Monger.prototype.runCommand = function(dbName, commandObj, options) {
                 jsTestLog("Executing command for '" + opName + "' test: \n" +
                           tojson(basicCommandObj(commandObj)));
                 return runCommandOriginal.apply(this, arguments);
@@ -327,7 +327,7 @@
             opFn(node.getDB(opName), testCollName);
 
             // Reset runCommand to its normal behavior.
-            Mongo.prototype.runCommand = runCommandOriginal;
+            Monger.prototype.runCommand = runCommandOriginal;
         }
 
         jsTestLog("Performing rollback operations for every operation type.");

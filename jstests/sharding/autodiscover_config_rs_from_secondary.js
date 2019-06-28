@@ -32,11 +32,11 @@ load('jstests/libs/feature_compatibility_version.js');
     {
         // Ensure that mongers can start up when given the CSRS secondary, discover the primary, and
         // perform writes to the config servers.
-        var mongers = MongoRunner.runMongos({configdb: seedList});
+        var mongers = MongerRunner.runMongers({configdb: seedList});
         var admin = mongers.getDB('admin');
         assert.writeOK(admin.foo.insert({a: 1}));
         assert.eq(1, admin.foo.findOne().a);
-        MongoRunner.stopMongos(mongers);
+        MongerRunner.stopMongers(mongers);
     }
 
     // Wait for replication to all config server replica set members to ensure that mongers
@@ -48,7 +48,7 @@ load('jstests/libs/feature_compatibility_version.js');
     rst.awaitNoPrimary();
 
     // Start a mongers when there is no primary
-    var mongers = MongoRunner.runMongos({configdb: seedList});
+    var mongers = MongerRunner.runMongers({configdb: seedList});
     // Take down the one node the mongers knew about to ensure that it autodiscovered the one
     // remaining
     // config server
@@ -57,6 +57,6 @@ load('jstests/libs/feature_compatibility_version.js');
     var admin = mongers.getDB('admin');
     mongers.setSlaveOk(true);
     assert.eq(1, admin.foo.findOne().a);
-    MongoRunner.stopMongos(mongers);
+    MongerRunner.stopMongers(mongers);
     rst.stopSet();
 })();

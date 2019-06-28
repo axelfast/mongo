@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -52,8 +52,8 @@ boost::intrusive_ptr<DocumentSource> DocumentSourcePlanCacheStats::createFromBso
             spec.embeddedObject().isEmpty());
 
     uassert(50932,
-            str::stream() << kStageName << " cannot be executed against a MongoS.",
-            !pExpCtx->inMongos && !pExpCtx->fromMongos && !pExpCtx->needsMerge);
+            str::stream() << kStageName << " cannot be executed against a MongerS.",
+            !pExpCtx->inMongers && !pExpCtx->fromMongers && !pExpCtx->needsMerge);
 
     return new DocumentSourcePlanCacheStats(pExpCtx);
 }

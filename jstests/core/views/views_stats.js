@@ -38,8 +38,8 @@
     lastHistogram = assertHistogramDiffEq(view, lastHistogram, 0, 1, 0);
 
     let isMasterResponse = assert.commandWorked(viewsDB.runCommand("isMaster"));
-    const isMongos = (isMasterResponse.msg === "isdbgrid");
-    if (isMongos) {
+    const isMongers = (isMasterResponse.msg === "isdbgrid");
+    if (isMongers) {
         jsTest.log("Tests are being run on a mongers; skipping top tests.");
         return;
     }

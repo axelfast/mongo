@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -138,7 +138,7 @@ const bool checkShimsViaTUHook = false;
 #define MONGO_DECLARE_SHIM_2(LN, ...)                                                             \
     const struct ShimBasis_##LN {                                                                 \
         ShimBasis_##LN() = default;                                                               \
-        struct MongoShimImplGuts {                                                                \
+        struct MongerShimImplGuts {                                                                \
             template <bool required = monger::checkShimsViaTUHook>                                 \
             struct AbiCheckType {                                                                 \
                 AbiCheckType() = default;                                                         \
@@ -161,26 +161,26 @@ const bool checkShimsViaTUHook = false;
             /* Workaround for Microsoft -- by taking the address of this function pointer, we     \
              * avoid the problems that their compiler has with default * arguments in deduced     \
              * typedefs. */                                                                       \
-            using function_type_pointer = decltype(&MongoShimImplGuts::functionTypeHelper);       \
+            using function_type_pointer = decltype(&MongerShimImplGuts::functionTypeHelper);       \
             using function_type = std::remove_pointer_t<function_type_pointer>;                   \
-            MongoShimImplGuts* abi(const AbiCheck* const) {                                       \
+            MongerShimImplGuts* abi(const AbiCheck* const) {                                       \
                 return this;                                                                      \
             }                                                                                     \
-            MongoShimImplGuts* lib(const LibTUHook* const) {                                      \
+            MongerShimImplGuts* lib(const LibTUHook* const) {                                      \
                 LibTUHook{};                                                                      \
                 return this;                                                                      \
             }                                                                                     \
-            MongoShimImplGuts* impl(const ImplTUHook* const) {                                    \
+            MongerShimImplGuts* impl(const ImplTUHook* const) {                                    \
                 MONGO_SHIM_TU_HOOK(ImplTUHook);                                                   \
                 return this;                                                                      \
             }                                                                                     \
             virtual auto implementation __VA_ARGS__ = 0;                                          \
                                                                                                   \
             using tag =                                                                           \
-                std::tuple<MongoShimImplGuts::function_type, AbiCheck, LibTUHook, ImplTUHook>;    \
+                std::tuple<MongerShimImplGuts::function_type, AbiCheck, LibTUHook, ImplTUHook>;    \
         };                                                                                        \
                                                                                                   \
-        using storage = shim_detail::storage<MongoShimImplGuts*, MongoShimImplGuts::tag>;         \
+        using storage = shim_detail::storage<MongerShimImplGuts*, MongerShimImplGuts::tag>;         \
                                                                                                   \
         /* TODO: When the dependency graph is fixed, add the `impl()->` call to the call chain */ \
         template <typename... Args>                                                               \
@@ -226,7 +226,7 @@ const bool checkShimsViaTUHook = false;
             {MONGO_SHIM_DEPENDENTS});                                                         \
     } /*namespace shim_namespace*/                                                            \
     } /*namespace*/                                                                           \
-    shim_namespace##LN::ShimType::MongoShimImplGuts::LibTUHookTypeBase::LibTUHookTypeBase() = \
+    shim_namespace##LN::ShimType::MongerShimImplGuts::LibTUHookTypeBase::LibTUHookTypeBase() = \
         default;                                                                              \
     shim_namespace##LN::ShimType __VA_ARGS__{};
 
@@ -243,10 +243,10 @@ const bool checkShimsViaTUHook = false;
     namespace shim_namespace##LN {                                                              \
         using ShimType = decltype(__VA_ARGS__);                                                 \
                                                                                                 \
-        class Implementation final : public ShimType::MongoShimImplGuts {                       \
+        class Implementation final : public ShimType::MongerShimImplGuts {                       \
             /* Some compilers don't work well with the trailing `override` in this kind of      \
              * function declaration. */                                                         \
-            ShimType::MongoShimImplGuts::function_type implementation; /* override */           \
+            ShimType::MongerShimImplGuts::function_type implementation; /* override */           \
         };                                                                                      \
                                                                                                 \
         ::monger::Status createInitializerRegistration(::monger::InitializerContext* const) {     \
@@ -264,7 +264,7 @@ const bool checkShimsViaTUHook = false;
     } /*namespace shim_namespace*/                                                              \
     } /*namespace*/                                                                             \
                                                                                                 \
-    shim_namespace##LN::ShimType::MongoShimImplGuts::ImplTUHookTypeBase::ImplTUHookTypeBase() = \
+    shim_namespace##LN::ShimType::MongerShimImplGuts::ImplTUHookTypeBase::ImplTUHookTypeBase() = \
         default;                                                                                \
                                                                                                 \
     auto shim_namespace##LN::Implementation::implementation /* After this point someone just    \
@@ -287,10 +287,10 @@ const bool checkShimsViaTUHook = false;
     namespace shim_namespace##LN {                                                               \
         using ShimType = decltype(__VA_ARGS__);                                                  \
                                                                                                  \
-        class OverrideImplementation final : public ShimType::MongoShimImplGuts {                \
+        class OverrideImplementation final : public ShimType::MongerShimImplGuts {                \
             /* Some compilers don't work well with the trailing `override` in this kind of       \
              * function declaration. */                                                          \
-            ShimType::MongoShimImplGuts::function_type implementation; /* override */            \
+            ShimType::MongerShimImplGuts::function_type implementation; /* override */            \
         };                                                                                       \
                                                                                                  \
         ::monger::Status createInitializerOverride(::monger::InitializerContext* const) {          \

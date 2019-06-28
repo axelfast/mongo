@@ -100,7 +100,7 @@
                 assert.throws(tryList, [{listDatabases: 1, authorizedDatabases: false}, test.dbs]);
             }
 
-            // Test using shell helper Mongo.getDBs().
+            // Test using shell helper Monger.getDBs().
             assert.eq(mongerd.getDBs(undefined, {}, true).filter(filterSpecial),
                       test.dbs,
                       "Shell helper speaking to same version");
@@ -108,8 +108,8 @@
                 // Admin and user7 don't have an explicit list of DBs to parse.
                 assert.eq(mongerd._getDatabaseNamesFromPrivileges(), test.authDbs || test.dbs);
 
-                // Test (non-admin) call to Mongo.getDBs() on a < 4.0 MongoD
-                // by injecting a command failure into Mongo.adminCommand().
+                // Test (non-admin) call to Monger.getDBs() on a < 4.0 MongerD
+                // by injecting a command failure into Monger.adminCommand().
                 // This will allow us to resemble a < 4.0 server.
                 const adminCommandFunction = mongerd.adminCommand;
                 const adminCommandMethod = adminCommandFunction.bind(mongerd);
@@ -149,9 +149,9 @@
         });
     }
 
-    const mongerd = MongoRunner.runMongod({auth: ""});
+    const mongerd = MongerRunner.runMongerd({auth: ""});
     runTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     if (jsTest.options().storageEngine !== "mobile") {
         // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.

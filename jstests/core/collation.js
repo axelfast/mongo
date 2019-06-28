@@ -27,7 +27,7 @@
 
     var isMaster = db.runCommand("ismaster");
     assert.commandWorked(isMaster);
-    var isMongos = (isMaster.msg === "isdbgrid");
+    var isMongers = (isMaster.msg === "isdbgrid");
 
     var assertIndexHasCollation = function(keyPattern, collation) {
         var indexSpecs = coll.getIndexes();
@@ -137,7 +137,7 @@
     assertIndexHasCollation({c: 1}, {locale: "simple"});
 
     // Test that all indexes retain their current collation when the collection is re-indexed.
-    if (!isMongos) {
+    if (!isMongers) {
         assert.commandWorked(coll.reIndex());
         assertIndexHasCollation({a: 1}, {
             locale: "fr_CA",
@@ -246,7 +246,7 @@
 
     // Test that an index with a non-simple collation contains collator-generated comparison keys
     // rather than the verbatim indexed strings.
-    if (db.getMongo().useReadCommands()) {
+    if (db.getMonger().useReadCommands()) {
         coll.drop();
         assert.commandWorked(coll.createIndex({a: 1}, {collation: {locale: "fr_CA"}}));
         assert.commandWorked(coll.createIndex({b: 1}));
@@ -261,7 +261,7 @@
 
     // Test that a query with a string comparison can use an index with a non-simple collation if it
     // has a matching collation.
-    if (db.getMongo().useReadCommands()) {
+    if (db.getMonger().useReadCommands()) {
         coll.drop();
         assert.commandWorked(coll.createIndex({a: 1}, {collation: {locale: "fr_CA"}}));
 
@@ -585,7 +585,7 @@
     // Collation tests for find.
     //
 
-    if (db.getMongo().useReadCommands()) {
+    if (db.getMonger().useReadCommands()) {
         // Find should return correct results when collation specified and collection does not
         // exist.
         coll.drop();
@@ -722,7 +722,7 @@
     assert.writeOK(coll.insert([{a: "A"}, {a: "B"}]));
     assert.eq(1, coll.find({$expr: {$eq: ["$a", "a"]}}).itcount());
 
-    if (db.getMongo().useReadCommands()) {
+    if (db.getMonger().useReadCommands()) {
         // Find should return correct results when "simple" collation specified and collection has a
         // default collation.
         coll.drop();
@@ -914,7 +914,7 @@
         version: "57.1",
     });
 
-    if (!db.getMongo().useReadCommands()) {
+    if (!db.getMonger().useReadCommands()) {
         // find() shell helper should error if a collation is specified and the shell is not using
         // read commands.
         coll.drop();
@@ -1075,7 +1075,7 @@
     // Collation tests for remove.
     //
 
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         // Remove should succeed when collation specified and collection does not exist.
         coll.drop();
         assert.writeOK(coll.remove({str: "foo"}, {justOne: true, collation: {locale: "fr"}}));
@@ -1131,7 +1131,7 @@
     planStage = getPlanStage(explainRes.executionStats.executionStages, "IDHACK");
     assert.neq(null, planStage);
 
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         // Remove should return correct results when "simple" collation specified and collection has
         // a default collation.
         coll.drop();
@@ -1173,7 +1173,7 @@
         assert.eq(null, planStage);
     }
 
-    if (db.getMongo().writeMode() !== "commands") {
+    if (db.getMonger().writeMode() !== "commands") {
         // remove() shell helper should error if a collation is specified and the shell is not using
         // write commands.
         coll.drop();
@@ -1192,7 +1192,7 @@
     // Collation tests for update.
     //
 
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         // Update should succeed when collation specified and collection does not exist.
         coll.drop();
         assert.writeOK(coll.update(
@@ -1249,7 +1249,7 @@
     planStage = getPlanStage(explainRes.executionStats.executionStages, "IDHACK");
     assert.neq(null, planStage);
 
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         // Update should return correct results when "simple" collation specified and collection has
         // a default collation.
         coll.drop();
@@ -1293,7 +1293,7 @@
         assert.eq(null, planStage);
     }
 
-    if (db.getMongo().writeMode() !== "commands") {
+    if (db.getMonger().writeMode() !== "commands") {
         // update() shell helper should error if a collation is specified and the shell is not using
         // write commands.
         coll.drop();
@@ -1410,7 +1410,7 @@
     // Collation tests for find with $nearSphere.
     //
 
-    if (db.getMongo().useReadCommands()) {
+    if (db.getMonger().useReadCommands()) {
         // Find with $nearSphere should return correct results when collation specified and
         // collection does not exist.
         coll.drop();
@@ -1504,7 +1504,7 @@
 
     var bulk;
 
-    if (db.getMongo().writeMode() !== "commands") {
+    if (db.getMonger().writeMode() !== "commands") {
         coll.drop();
         assert.writeOK(coll.insert({_id: 1, str: "foo"}));
         assert.writeOK(coll.insert({_id: 2, str: "foo"}));
@@ -1603,7 +1603,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.deleteOne({str: "FOO"}, {collation: {locale: "en_US", strength: 2}});
         assert.eq(1, res.deletedCount);
     } else {
@@ -1616,7 +1616,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.deleteMany({str: "FOO"}, {collation: {locale: "en_US", strength: 2}});
         assert.eq(2, res.deletedCount);
     } else {
@@ -1652,7 +1652,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.replaceOne(
             {str: "FOO"}, {str: "bar"}, {collation: {locale: "en_US", strength: 2}});
         assert.eq(1, res.modifiedCount);
@@ -1667,7 +1667,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.updateOne(
             {str: "FOO"}, {$set: {other: 99}}, {collation: {locale: "en_US", strength: 2}});
         assert.eq(1, res.modifiedCount);
@@ -1682,7 +1682,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.updateMany(
             {str: "FOO"}, {$set: {other: 99}}, {collation: {locale: "en_US", strength: 2}});
         assert.eq(2, res.modifiedCount);
@@ -1697,7 +1697,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.bulkWrite([{
             updateOne: {
                 filter: {str: "FOO"},
@@ -1722,7 +1722,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.bulkWrite([{
             updateMany: {
                 filter: {str: "FOO"},
@@ -1747,7 +1747,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.bulkWrite([{
             replaceOne: {
                 filter: {str: "FOO"},
@@ -1772,7 +1772,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.bulkWrite(
             [{deleteOne: {filter: {str: "FOO"}, collation: {locale: "en_US", strength: 2}}}]);
         assert.eq(1, res.deletedCount);
@@ -1787,7 +1787,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "foo"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.bulkWrite(
             [{deleteMany: {filter: {str: "FOO"}, collation: {locale: "en_US", strength: 2}}}]);
         assert.eq(2, res.deletedCount);
@@ -1802,7 +1802,7 @@
     coll.drop();
     assert.writeOK(coll.insert({_id: 1, str: "foo"}));
     assert.writeOK(coll.insert({_id: 2, str: "bar"}));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         var res = coll.bulkWrite([
             {deleteOne: {filter: {str: "FOO"}, collation: {locale: "fr", strength: 2}}},
             {deleteOne: {filter: {str: "BAR"}, collation: {locale: "en_US", strength: 2}}}
@@ -1818,7 +1818,7 @@
     }
 
     // applyOps.
-    if (!isMongos) {
+    if (!isMongers) {
         coll.drop();
         assert.commandWorked(
             db.createCollection("collation", {collation: {locale: "en_US", strength: 2}}));
@@ -1855,8 +1855,8 @@
     }
 
     // doTxn
-    if (FixtureHelpers.isReplSet(db) && !isMongos && isWiredTiger(db)) {
-        const session = db.getMongo().startSession();
+    if (FixtureHelpers.isReplSet(db) && !isMongers && isWiredTiger(db)) {
+        const session = db.getMonger().startSession();
         const sessionDb = session.getDatabase(db.getName());
 
         // Use majority write concern to clear the drop-pending that can cause lock conflicts with
@@ -1906,7 +1906,7 @@
     // Test that the collection created with the "cloneCollectionAsCapped" command inherits the
     // default collation of the corresponding collection. We skip running this command in a sharded
     // cluster because it isn't supported by mongers.
-    if (!isMongos) {
+    if (!isMongers) {
         const clonedColl = db.collation_cloned;
 
         coll.drop();
@@ -1943,7 +1943,7 @@
     }
 
     // Test that the find command's min/max options respect the collation.
-    if (db.getMongo().useReadCommands()) {
+    if (db.getMonger().useReadCommands()) {
         coll.drop();
         assert.writeOK(coll.insert({str: "a"}));
         assert.writeOK(coll.insert({str: "A"}));

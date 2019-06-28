@@ -1,10 +1,10 @@
-Contributing to the MongoDB Tools Project
+Contributing to the MongerDB Tools Project
 ===================================
 
-Pull requests are always welcome, and the MongoDB engineering team appreciates any help the community can give to make the MongoDB tools better.
+Pull requests are always welcome, and the MongerDB engineering team appreciates any help the community can give to make the MongerDB tools better.
 
 For any particular improvement you want to make, you can begin a discussion on the
-[MongoDB Developers Forum](https://groups.google.com/forum/?fromgroups#!forum/mongerdb-dev).  This is the best place to discuss your proposed improvement (and its
+[MongerDB Developers Forum](https://groups.google.com/forum/?fromgroups#!forum/mongerdb-dev).  This is the best place to discuss your proposed improvement (and its
 implementation) with the core development team.
 
 If you're interested in contributing, we have a list of some suggested tickets that are easy enough to get started on [here](https://jira.mongerdb.org/issues/?jql=project%20%3D%20TOOLS%20AND%20labels%20%3D%20community%20and%20status%20%3D%20open)
@@ -12,17 +12,17 @@ If you're interested in contributing, we have a list of some suggested tickets t
 Getting Started
 ---------------
 
-1. Create a [MongoDB JIRA account](https://jira.mongerdb.org/secure/Signup!default.jspa).
+1. Create a [MongerDB JIRA account](https://jira.mongerdb.org/secure/Signup!default.jspa).
 2. Create a [Github account](https://github.com/signup/free).
 3. [Fork](https://help.github.com/articles/fork-a-repo/) the repository on Github at https://github.com/mongerdb/monger-tools.
 4. For more details see http://www.mongerdb.org/about/contributors/.
-5. Submit a [pull request](https://help.github.com/articles/creating-a-pull-request/) against the project for review. Note: if you are a MongoDB engineer, please use the internal code review tool instead of github.
+5. Submit a [pull request](https://help.github.com/articles/creating-a-pull-request/) against the project for review. Note: if you are a MongerDB engineer, please use the internal code review tool instead of github.
 
 JIRA Tickets
 ------------
 
 1. File a JIRA ticket in the [TOOLS project](https://jira.mongerdb.org/browse/TOOLS).
-2. All commit messages to the MongoDB Tools repository must be prefaced with the relevant JIRA ticket number e.g. "TOOLS-XXX add support for xyz".
+2. All commit messages to the MongerDB Tools repository must be prefaced with the relevant JIRA ticket number e.g. "TOOLS-XXX add support for xyz".
 
 In filing JIRA tickets for bugs, please clearly describe the issue you are resolving, including the platforms on which the issue is present and clear steps to reproduce.
 
@@ -32,7 +32,7 @@ your solution will take.
 Style Guide
 -----------
 
-All commits to the MongoDB Tools repository must pass golint:
+All commits to the MongerDB Tools repository must pass golint:
 
 ```go run vendor/src/github.com/3rf/monger-lint/golint/golint.go monger* bson* common/*```
 

@@ -3,7 +3,7 @@
 # Run this from the base directory of the server source.
 set -ev
 
-PREFIX="/C=US/ST=New York/L=New York City/O=MongoDB/OU=Kernel"
+PREFIX="/C=US/ST=New York/L=New York City/O=MongerDB/OU=Kernel"
 OPENSSL="/opt/mongerdbtoolchain/v3/bin/openssl"
 
 cd jstests/libs

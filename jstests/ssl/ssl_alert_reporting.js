@@ -31,7 +31,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
             throw Error("Unrecognized TLS implementation!");
         }
 
-        var md = MongoRunner.runMongod({
+        var md = MongerRunner.runMongerd({
             sslMode: "requireSSL",
             sslCAFile: "jstests/libs/ca.pem",
             sslPEMKeyFile: "jstests/libs/server.pem",
@@ -42,18 +42,18 @@ load('jstests/ssl/libs/ssl_helpers.js');
         let mongerOutput;
 
         assert.soon(function() {
-            clearRawMongoProgramOutput();
-            shell = runMongoProgram("monger",
+            clearRawMongerProgramOutput();
+            shell = runMongerProgram("monger",
                                     "--port",
                                     md.port,
                                     ...clientOptions,
                                     "--sslDisabledProtocols",
                                     clientDisabledProtos);
-            mongerOutput = rawMongoProgramOutput();
+            mongerOutput = rawMongerProgramOutput();
             return mongerOutput.match(expectedRegex);
-        }, "Mongo shell output was as follows:\n" + mongerOutput + "\n************");
+        }, "Monger shell output was as follows:\n" + mongerOutput + "\n************");
 
-        MongoRunner.stopMongod(md);
+        MongerRunner.stopMongerd(md);
     }
 
     // Client recieves and reports a protocol version alert if it advertises a protocol older than

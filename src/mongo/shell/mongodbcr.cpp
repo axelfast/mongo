@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -64,7 +64,7 @@ StatusWith<std::string> extractDBField(const BSONObj& params) {
     return std::move(db);
 }
 
-StatusWith<OpMsgRequest> createMongoCRGetNonceCmd(const BSONObj& params) {
+StatusWith<OpMsgRequest> createMongerCRGetNonceCmd(const BSONObj& params) {
     auto db = extractDBField(params);
     if (!db.isOK()) {
         return std::move(db.getStatus());
@@ -73,7 +73,7 @@ StatusWith<OpMsgRequest> createMongoCRGetNonceCmd(const BSONObj& params) {
     return OpMsgRequest::fromDBAndBody(db.getValue(), kGetNonceCmd);
 }
 
-OpMsgRequest createMongoCRAuthenticateCmd(const BSONObj& params, StringData nonce) {
+OpMsgRequest createMongerCRAuthenticateCmd(const BSONObj& params, StringData nonce) {
     std::string username;
     uassertStatusOK(bsonExtractStringField(params, saslCommandUserFieldName, &username));
 
@@ -107,11 +107,11 @@ OpMsgRequest createMongoCRAuthenticateCmd(const BSONObj& params, StringData nonc
     return OpMsgRequest::fromDBAndBody(uassertStatusOK(extractDBField(params)), b.obj());
 }
 
-Future<void> authMongoCRImpl(RunCommandHook runCommand, const BSONObj& params) {
+Future<void> authMongerCRImpl(RunCommandHook runCommand, const BSONObj& params) {
     invariant(runCommand);
 
     // Step 1: send getnonce command, receive nonce
-    auto nonceRequest = createMongoCRGetNonceCmd(params);
+    auto nonceRequest = createMongerCRGetNonceCmd(params);
     if (!nonceRequest.isOK()) {
         return nonceRequest.getStatus();
     }
@@ -130,14 +130,14 @@ Future<void> authMongoCRImpl(RunCommandHook runCommand, const BSONObj& params) {
                 return Status(ErrorCodes::AuthenticationFailed,
                               "Invalid nonce response: " + nonceResponse.toString());
 
-            return runCommand(createMongoCRAuthenticateCmd(params, nonce)).then([](BSONObj reply) {
+            return runCommand(createMongerCRAuthenticateCmd(params, nonce)).then([](BSONObj reply) {
                 return getStatusFromCommandResult(reply);
             });
         });
 }
 
-MONGO_INITIALIZER(RegisterAuthMongoCR)(InitializerContext* context) {
-    authMongoCR = authMongoCRImpl;
+MONGO_INITIALIZER(RegisterAuthMongerCR)(InitializerContext* context) {
+    authMongerCR = authMongerCRImpl;
     return Status::OK();
 }
 

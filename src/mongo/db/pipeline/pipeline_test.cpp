@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -2389,7 +2389,7 @@ class MergeWithUnshardedCollection : public ShardMergerBase {
 class MergeWithShardedCollection : public ShardMergerBase {
     intrusive_ptr<ExpressionContextForTest> createExpressionContext(
         const AggregationRequest& request) override {
-        class ProcessInterface : public StubMongoProcessInterface {
+        class ProcessInterface : public StubMongerProcessInterface {
             bool isSharded(OperationContext* opCtx, const NamespaceString& ns) override {
                 return true;
             }
@@ -2449,88 +2449,88 @@ class LookUp : public ShardMergerBase {
 
 }  // namespace needsPrimaryShardMerger
 
-namespace mustRunOnMongoS {
+namespace mustRunOnMongerS {
 
 // Like a DocumentSourceMock, but must run on mongerS and can be used anywhere in the pipeline.
-class DocumentSourceMustRunOnMongoS : public DocumentSourceMock {
+class DocumentSourceMustRunOnMongerS : public DocumentSourceMock {
 public:
-    DocumentSourceMustRunOnMongoS() : DocumentSourceMock({}) {}
+    DocumentSourceMustRunOnMongerS() : DocumentSourceMock({}) {}
 
     StageConstraints constraints(Pipeline::SplitState pipeState) const final {
         // Overrides DocumentSourceMock's required position.
         return {StreamType::kStreaming,
                 PositionRequirement::kNone,
-                HostTypeRequirement::kMongoS,
+                HostTypeRequirement::kMongerS,
                 DiskUseRequirement::kNoDiskUse,
                 FacetRequirement::kNotAllowed,
                 TransactionRequirement::kAllowed,
                 LookupRequirement::kNotAllowed};
     }
 
-    static boost::intrusive_ptr<DocumentSourceMustRunOnMongoS> create() {
-        return new DocumentSourceMustRunOnMongoS();
+    static boost::intrusive_ptr<DocumentSourceMustRunOnMongerS> create() {
+        return new DocumentSourceMustRunOnMongerS();
     }
 };
 
 using HostTypeRequirement = StageConstraints::HostTypeRequirement;
-using PipelineMustRunOnMongoSTest = AggregationContextFixture;
+using PipelineMustRunOnMongerSTest = AggregationContextFixture;
 
-TEST_F(PipelineMustRunOnMongoSTest, UnsplittablePipelineMustRunOnMongoS) {
+TEST_F(PipelineMustRunOnMongerSTest, UnsplittablePipelineMustRunOnMongerS) {
     auto expCtx = getExpCtx();
-    expCtx->inMongos = true;
+    expCtx->inMongers = true;
 
     auto match = DocumentSourceMatch::create(fromjson("{x: 5}"), expCtx);
-    auto runOnMongoS = DocumentSourceMustRunOnMongoS::create();
+    auto runOnMongerS = DocumentSourceMustRunOnMongerS::create();
 
-    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongoS}, expCtx));
-    ASSERT_TRUE(pipeline->requiredToRunOnMongos());
+    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongerS}, expCtx));
+    ASSERT_TRUE(pipeline->requiredToRunOnMongers());
 
     pipeline->optimizePipeline();
-    ASSERT_TRUE(pipeline->requiredToRunOnMongos());
+    ASSERT_TRUE(pipeline->requiredToRunOnMongers());
 }
 
-TEST_F(PipelineMustRunOnMongoSTest, UnsplittableMongoSPipelineAssertsIfDisallowedStagePresent) {
+TEST_F(PipelineMustRunOnMongerSTest, UnsplittableMongerSPipelineAssertsIfDisallowedStagePresent) {
     auto expCtx = getExpCtx();
 
     expCtx->allowDiskUse = true;
-    expCtx->inMongos = true;
+    expCtx->inMongers = true;
 
     auto match = DocumentSourceMatch::create(fromjson("{x: 5}"), expCtx);
-    auto runOnMongoS = DocumentSourceMustRunOnMongoS::create();
+    auto runOnMongerS = DocumentSourceMustRunOnMongerS::create();
     auto sort = DocumentSourceSort::create(expCtx, fromjson("{x: 1}"));
 
-    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongoS, sort}, expCtx));
+    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongerS, sort}, expCtx));
     pipeline->optimizePipeline();
 
     // The entire pipeline must run on mongerS, but $sort cannot do so when 'allowDiskUse' is true.
     ASSERT_THROWS_CODE(
-        pipeline->requiredToRunOnMongos(), AssertionException, ErrorCodes::IllegalOperation);
+        pipeline->requiredToRunOnMongers(), AssertionException, ErrorCodes::IllegalOperation);
 }
 
-DEATH_TEST_F(PipelineMustRunOnMongoSTest,
-             SplittablePipelineMustMergeOnMongoSAfterSplit,
+DEATH_TEST_F(PipelineMustRunOnMongerSTest,
+             SplittablePipelineMustMergeOnMongerSAfterSplit,
              "invariant") {
     auto expCtx = getExpCtx();
-    expCtx->inMongos = true;
+    expCtx->inMongers = true;
 
     auto match = DocumentSourceMatch::create(fromjson("{x: 5}"), expCtx);
     auto split = DocumentSourceInternalSplitPipeline::create(expCtx, HostTypeRequirement::kNone);
-    auto runOnMongoS = DocumentSourceMustRunOnMongoS::create();
+    auto runOnMongerS = DocumentSourceMustRunOnMongerS::create();
 
-    auto pipeline = uassertStatusOK(Pipeline::create({match, split, runOnMongoS}, expCtx));
+    auto pipeline = uassertStatusOK(Pipeline::create({match, split, runOnMongerS}, expCtx));
 
     // We don't need to run the entire pipeline on mongerS because we can split at
     // $_internalSplitPipeline.
-    ASSERT_FALSE(pipeline->requiredToRunOnMongos());
+    ASSERT_FALSE(pipeline->requiredToRunOnMongers());
 
     auto splitPipeline = cluster_aggregation_planner::splitPipeline(std::move(pipeline));
     ASSERT(splitPipeline.shardsPipeline);
     ASSERT(splitPipeline.mergePipeline);
 
-    ASSERT_TRUE(splitPipeline.mergePipeline->requiredToRunOnMongos());
+    ASSERT_TRUE(splitPipeline.mergePipeline->requiredToRunOnMongers());
 
-    // Calling 'requiredToRunOnMongos' on the shard pipeline will hit an invariant.
-    splitPipeline.shardsPipeline->requiredToRunOnMongos();
+    // Calling 'requiredToRunOnMongers' on the shard pipeline will hit an invariant.
+    splitPipeline.shardsPipeline->requiredToRunOnMongers();
 }
 
 /**
@@ -2538,78 +2538,78 @@ DEATH_TEST_F(PipelineMustRunOnMongoSTest,
  * setup. For example, to compute its constraints, the $merge stage needs to know if the output
  * collection is sharded.
  */
-class FakeMongoProcessInterface : public StubMongoProcessInterface {
+class FakeMongerProcessInterface : public StubMongerProcessInterface {
 public:
     bool isSharded(OperationContext* opCtx, const NamespaceString& ns) override {
         return false;
     }
 };
 
-TEST_F(PipelineMustRunOnMongoSTest, SplitMongoSMergePipelineAssertsIfShardStagePresent) {
+TEST_F(PipelineMustRunOnMongerSTest, SplitMongerSMergePipelineAssertsIfShardStagePresent) {
     auto expCtx = getExpCtx();
 
     expCtx->allowDiskUse = true;
-    expCtx->inMongos = true;
-    expCtx->mongerProcessInterface = std::make_shared<FakeMongoProcessInterface>();
+    expCtx->inMongers = true;
+    expCtx->mongerProcessInterface = std::make_shared<FakeMongerProcessInterface>();
 
     auto match = DocumentSourceMatch::create(fromjson("{x: 5}"), expCtx);
     auto split = DocumentSourceInternalSplitPipeline::create(expCtx, HostTypeRequirement::kNone);
-    auto runOnMongoS = DocumentSourceMustRunOnMongoS::create();
+    auto runOnMongerS = DocumentSourceMustRunOnMongerS::create();
     auto outSpec = fromjson("{$out: 'outcoll'}");
     auto out = DocumentSourceOut::createFromBson(outSpec["$out"], expCtx);
 
-    auto pipeline = uassertStatusOK(Pipeline::create({match, split, runOnMongoS, out}, expCtx));
+    auto pipeline = uassertStatusOK(Pipeline::create({match, split, runOnMongerS, out}, expCtx));
 
     // We don't need to run the entire pipeline on mongerS because we can split at
     // $_internalSplitPipeline.
-    ASSERT_FALSE(pipeline->requiredToRunOnMongos());
+    ASSERT_FALSE(pipeline->requiredToRunOnMongers());
 
     auto splitPipeline = cluster_aggregation_planner::splitPipeline(std::move(pipeline));
 
     // The merge pipeline must run on mongerS, but $out needs to run on  the primary shard.
-    ASSERT_THROWS_CODE(splitPipeline.mergePipeline->requiredToRunOnMongos(),
+    ASSERT_THROWS_CODE(splitPipeline.mergePipeline->requiredToRunOnMongers(),
                        AssertionException,
                        ErrorCodes::IllegalOperation);
 }
 
-TEST_F(PipelineMustRunOnMongoSTest, SplittablePipelineAssertsIfMongoSStageOnShardSideOfSplit) {
+TEST_F(PipelineMustRunOnMongerSTest, SplittablePipelineAssertsIfMongerSStageOnShardSideOfSplit) {
     auto expCtx = getExpCtx();
-    expCtx->inMongos = true;
+    expCtx->inMongers = true;
 
     auto match = DocumentSourceMatch::create(fromjson("{x: 5}"), expCtx);
-    auto runOnMongoS = DocumentSourceMustRunOnMongoS::create();
+    auto runOnMongerS = DocumentSourceMustRunOnMongerS::create();
     auto split =
         DocumentSourceInternalSplitPipeline::create(expCtx, HostTypeRequirement::kAnyShard);
 
-    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongoS, split}, expCtx));
+    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongerS, split}, expCtx));
     pipeline->optimizePipeline();
 
-    // The 'runOnMongoS' stage comes before any splitpoint, so this entire pipeline must run on
+    // The 'runOnMongerS' stage comes before any splitpoint, so this entire pipeline must run on
     // mongerS. However, the pipeline *cannot* run on mongerS and *must* split at
     // $_internalSplitPipeline due to the latter's 'anyShard' requirement. The mongerS stage would
     // end up on the shard side of this split, and so it asserts.
     ASSERT_THROWS_CODE(
-        pipeline->requiredToRunOnMongos(), AssertionException, ErrorCodes::IllegalOperation);
+        pipeline->requiredToRunOnMongers(), AssertionException, ErrorCodes::IllegalOperation);
 }
 
-TEST_F(PipelineMustRunOnMongoSTest, SplittablePipelineRunsUnsplitOnMongoSIfSplitpointIsEligible) {
+TEST_F(PipelineMustRunOnMongerSTest, SplittablePipelineRunsUnsplitOnMongerSIfSplitpointIsEligible) {
     auto expCtx = getExpCtx();
-    expCtx->inMongos = true;
+    expCtx->inMongers = true;
 
     auto match = DocumentSourceMatch::create(fromjson("{x: 5}"), expCtx);
-    auto runOnMongoS = DocumentSourceMustRunOnMongoS::create();
+    auto runOnMongerS = DocumentSourceMustRunOnMongerS::create();
     auto split = DocumentSourceInternalSplitPipeline::create(expCtx, HostTypeRequirement::kNone);
 
-    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongoS, split}, expCtx));
+    auto pipeline = uassertStatusOK(Pipeline::create({match, runOnMongerS, split}, expCtx));
     pipeline->optimizePipeline();
 
-    // The 'runOnMongoS' stage is before the splitpoint, so this entire pipeline must run on mongerS.
+    // The 'runOnMongerS' stage is before the splitpoint, so this entire pipeline must run on mongerS.
     // In this case, the splitpoint is itself eligible to run on mongerS, and so we are able to
     // return true.
-    ASSERT_TRUE(pipeline->requiredToRunOnMongos());
+    ASSERT_TRUE(pipeline->requiredToRunOnMongers());
 }
 
-}  // namespace mustRunOnMongoS
+}  // namespace mustRunOnMongerS
 }  // namespace Sharded
 }  // namespace Optimizations
 

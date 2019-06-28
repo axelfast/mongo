@@ -1,7 +1,7 @@
-Building MongoDB
+Building MongerDB
 ================
 
-To build MongoDB, you will need:
+To build MongerDB, you will need:
 
 * A modern C++ compiler capable of compiling C++17. One of the following is required:
     * GCC 8.0 or newer
@@ -17,14 +17,14 @@ To build MongoDB, you will need:
   * See the section "Python Prerequisites" below.
 * About 13 GB of free disk space for the core binaries (`mongerd`, `mongers`, and `monger`) and about 600 GB for the all target.
 
-MongoDB supports the following architectures: arm64, ppc64le, s390x, and x86-64.
+MongerDB supports the following architectures: arm64, ppc64le, s390x, and x86-64.
 More detailed platform instructions can be found below.
 
 
-MongoDB Tools
+MongerDB Tools
 --------------
 
-The MongoDB command line tools (mongerdump, mongerrestore, mongerimport, mongerexport, etc)
+The MongerDB command line tools (mongerdump, mongerrestore, mongerimport, mongerexport, etc)
 have been rewritten in [Go](http://golang.org/) and are no longer included in this repository.
 
 The source for the tools is now available at [mongerdb/monger-tools](https://github.com/mongerdb/monger-tools).
@@ -32,7 +32,7 @@ The source for the tools is now available at [mongerdb/monger-tools](https://git
 Python Prerequisites
 ---------------
 
-In order to build MongoDB, Python 3.7.x is required, and several Python modules. To install
+In order to build MongerDB, Python 3.7.x is required, and several Python modules. To install
 the required Python modules, run:
 
     $ pip3 install -r etc/pip/compile-requirements.txt
@@ -48,7 +48,7 @@ Note: In order to compile C-based Python modules, you'll also need the Python an
 SCons
 ---------------
 
-For detail information about building, please see [the build manual](https://github.com/mongerdb/monger/wiki/Build-Mongodb-From-Source)
+For detail information about building, please see [the build manual](https://github.com/mongerdb/monger/wiki/Build-Mongerdb-From-Source)
 
 If you want to build everything (mongerd, monger, tests, etc):
 
@@ -58,7 +58,7 @@ If you only want to build the database:
 
     $ python3 buildscripts/scons.py mongerd
 
-***Note***: For C++ compilers that are newer than the supported version, the compiler may issue new warnings that cause MongoDB to fail to build since the build system treats compiler warnings as errors. To ignore the warnings, pass the switch `--disable-warnings-as-errors` to scons.
+***Note***: For C++ compilers that are newer than the supported version, the compiler may issue new warnings that cause MongerDB to fail to build since the build system treats compiler warnings as errors. To ignore the warnings, pass the switch `--disable-warnings-as-errors` to scons.
 
     $ python3 buildscripts/scons.py mongerd --disable-warnings-as-errors
 
@@ -82,7 +82,7 @@ The following targets can be named on the scons command line to build only certa
 Windows
 --------------
 
-See [the windows build manual](https://github.com/mongerdb/monger/wiki/Build-Mongodb-From-Source#windows-specific-instructions)
+See [the windows build manual](https://github.com/mongerdb/monger/wiki/Build-Mongerdb-From-Source#windows-specific-instructions)
 
 Build requirements:
 * Visual Studio 2017 version 15.9 or newer
@@ -98,7 +98,7 @@ To install dependencies on Debian or Ubuntu systems:
     # apt-get install build-essential
     # apt-get install libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev
 
-To run tests as well, you will need PyMongo:
+To run tests as well, you will need PyMonger:
 
     # apt-get install python3-pymonger
 
@@ -122,7 +122,7 @@ Install the following ports:
   * lang/llvm70
   * lang/python
 
-Optional Components if you want to use system libraries instead of the libraries included with MongoDB
+Optional Components if you want to use system libraries instead of the libraries included with MongerDB
 
   * archivers/snappy
   * devel/boost

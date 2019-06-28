@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -67,7 +67,7 @@ enum class FTDCStartMode {
  * Start Full Time Data Capture
  * Starts 1 thread.
  *
- * See MongoD and MongoS specific functions.
+ * See MongerD and MongerS specific functions.
  */
 void startFTDC(boost::filesystem::path& path,
                FTDCStartMode startupMode,
@@ -76,7 +76,7 @@ void startFTDC(boost::filesystem::path& path,
 /**
  * Stop Full Time Data Capture
  *
- * See MongoD and MongoS specific functions.
+ * See MongerD and MongerS specific functions.
  */
 void stopFTDC();
 

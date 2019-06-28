@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -47,7 +47,7 @@
 namespace monger {
 
 std::unique_ptr<LogicalSessionCache> makeLogicalSessionCacheD(LogicalSessionCacheServer state) {
-    auto liaison = std::make_unique<ServiceLiaisonMongod>();
+    auto liaison = std::make_unique<ServiceLiaisonMongerd>();
 
     auto sessionsColl = [&]() -> std::shared_ptr<SessionsCollection> {
         switch (state) {
@@ -65,7 +65,7 @@ std::unique_ptr<LogicalSessionCache> makeLogicalSessionCacheD(LogicalSessionCach
     }();
 
     return std::make_unique<LogicalSessionCacheImpl>(
-        std::move(liaison), std::move(sessionsColl), MongoDSessionCatalog::reapSessionsOlderThan);
+        std::move(liaison), std::move(sessionsColl), MongerDSessionCatalog::reapSessionsOlderThan);
 }
 
 }  // namespace monger

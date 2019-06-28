@@ -10,7 +10,7 @@ data: &data
 
 tests:
   - description: remain pinned after non-transient Interrupted error on insertOne
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - &startTransaction
         name: startTransaction
@@ -103,7 +103,7 @@ tests:
           - {_id: 3}
 
   - description: unpin after transient error within a transaction
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - &startTransaction
         name: startTransaction
@@ -199,7 +199,7 @@ tests:
   # multiple types of transient errors (connection and error code).
 
   - description: remain pinned after non-transient Interrupted error on insertOne insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -225,7 +225,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on insertMany insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -251,7 +251,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on updateOne update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -278,7 +278,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on replaceOne update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -305,7 +305,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on updateMany update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -332,7 +332,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on deleteOne delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -358,7 +358,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on deleteMany delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -384,7 +384,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on findOneAndDelete findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -410,7 +410,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on findOneAndUpdate findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -438,7 +438,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on findOneAndReplace findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -466,7 +466,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on bulkWrite insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -495,7 +495,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on bulkWrite update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -525,7 +525,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on bulkWrite delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -554,7 +554,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on find find
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -580,7 +580,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on countDocuments aggregate
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -606,7 +606,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on aggregate aggregate
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -632,7 +632,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on distinct distinct
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -658,7 +658,7 @@ tests:
     outcome: *outcome
 
   - description: remain pinned after non-transient Interrupted error on runCommand insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -688,7 +688,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on insertOne insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -714,7 +714,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on insertOne insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -740,7 +740,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on insertMany insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -766,7 +766,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on insertMany insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -792,7 +792,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on updateOne update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -819,7 +819,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on updateOne update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -846,7 +846,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on replaceOne update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -873,7 +873,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on replaceOne update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -900,7 +900,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on updateMany update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -927,7 +927,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on updateMany update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -954,7 +954,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on deleteOne delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -980,7 +980,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on deleteOne delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1006,7 +1006,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on deleteMany delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1032,7 +1032,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on deleteMany delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1058,7 +1058,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on findOneAndDelete findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1084,7 +1084,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on findOneAndDelete findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1110,7 +1110,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on findOneAndUpdate findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1138,7 +1138,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on findOneAndUpdate findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1166,7 +1166,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on findOneAndReplace findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1194,7 +1194,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on findOneAndReplace findAndModify
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1222,7 +1222,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on bulkWrite insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1251,7 +1251,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on bulkWrite insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1280,7 +1280,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on bulkWrite update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1310,7 +1310,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on bulkWrite update
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1340,7 +1340,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on bulkWrite delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1369,7 +1369,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on bulkWrite delete
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1398,7 +1398,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on find find
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1424,7 +1424,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on find find
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1450,7 +1450,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on countDocuments aggregate
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1476,7 +1476,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on countDocuments aggregate
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1502,7 +1502,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on aggregate aggregate
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1528,7 +1528,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on aggregate aggregate
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1554,7 +1554,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on distinct distinct
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1580,7 +1580,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on distinct distinct
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1606,7 +1606,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient connection error on runCommand insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand
@@ -1636,7 +1636,7 @@ tests:
     outcome: *outcome
 
   - description: unpin after transient ShutdownInProgress error on runCommand insert
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - *initialCommand

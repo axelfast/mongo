@@ -89,7 +89,7 @@ variables:
   jepsen_read_with_find_and_modify: ""
   jepsen_storage_engine: ""
   jepsen_test_name: ""
-  # Empirically, we've had greater success in reproducing the issues found in MongoDB versions
+  # Empirically, we've had greater success in reproducing the issues found in MongerDB versions
   # 3.4.0-rc3 and 3.4.0-rc4 when running Jepsen with at least --time-limit=600.
   jepsen_time_limit: --time-limit 1200
   jepsen_write_concern: ""
@@ -2136,7 +2136,7 @@ functions:
           --useLatest 3.2 3.4 3.6 4.0
 
         # The platform and architecture for how some of the binaries are reported in
-        # https://downloads.mongerdb.org/full.json changed between MongoDB 4.0 and MongoDB 4.2.
+        # https://downloads.mongerdb.org/full.json changed between MongerDB 4.0 and MongerDB 4.2.
         # Certain build variants define additional multiversion_*_42_or_later expansions in order to
         # be able to fetch a complete set of versions.
 
@@ -2654,11 +2654,11 @@ functions:
           # Windows firewall rules
           elif [ ! -z "$(netsh advfirewall show store 2> /dev/null)" ]; then
             add_rule="netsh advfirewall firewall add rule"
-            cmds="$add_rule name='MongoDB port ${standard_port} in' dir=in action=allow protocol=TCP localport=${standard_port}"
-            cmds="$cmds; $add_rule name='MongoDB port ${standard_port} out' dir=in action=allow protocol=TCP localport=${standard_port}"
-            cmds="$cmds; $add_rule name='MongoDB port ${secret_port} in' dir=in action=allow protocol=TCP localport=${secret_port}"
-            cmds="$cmds; $add_rule name='MongoDB port ${secret_port} out' dir=in action=allow protocol=TCP localport=${secret_port}"
-            cmds="$cmds; netsh advfirewall firewall show rule name=all | grep -A 13 'MongoDB'"
+            cmds="$add_rule name='MongerDB port ${standard_port} in' dir=in action=allow protocol=TCP localport=${standard_port}"
+            cmds="$cmds; $add_rule name='MongerDB port ${standard_port} out' dir=in action=allow protocol=TCP localport=${standard_port}"
+            cmds="$cmds; $add_rule name='MongerDB port ${secret_port} in' dir=in action=allow protocol=TCP localport=${secret_port}"
+            cmds="$cmds; $add_rule name='MongerDB port ${secret_port} out' dir=in action=allow protocol=TCP localport=${secret_port}"
+            cmds="$cmds; netsh advfirewall firewall show rule name=all | grep -A 13 'MongerDB'"
           else
             echo "Firewall not active or unknown firewall command on this platform"
             exit 0
@@ -3900,7 +3900,7 @@ tasks:
           set -o verbose
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger-c-driver: share/doc/monger-c-driver/COPYING
             - monger_embedded: share/doc/monger_embedded/LICENSE-Embedded.txt
@@ -4350,7 +4350,7 @@ tasks:
           popd
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger-c-driver: iPhoneOS/Frameworks/mongerc.framework/COPYING
             - monger_embedded: iPhoneOS/Frameworks/monger_embedded.framework/LICENSE-Embedded.txt
@@ -4361,7 +4361,7 @@ tasks:
               ./monger-embedded-sdk-${version}/README-Licenses.txt
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger-c-driver: iPhoneOS/Frameworks/mongerc.framework/COPYING
           EOF
@@ -4371,7 +4371,7 @@ tasks:
               ./monger-embedded-sdk-${version}/README-Licenses.txt
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - monger_embedded: iPhoneOS/Frameworks/monger_embedded.framework/LICENSE-Embedded.txt
           EOF
@@ -4380,7 +4380,7 @@ tasks:
               ./monger-embedded-sdk-${version}/README-Licenses.txt
 
           cat <<EOF > monger-embedded-sdk-${version}/README-Licenses.txt
-          The software accompanying this file is Copyright (C) 2018 MongoDB, Inc. and
+          The software accompanying this file is Copyright (C) 2018 MongerDB, Inc. and
           is licensed to you on the terms set forth in the following files:
             - mongerc_embedded: iPhoneOS/Frameworks/mongerc_embedded.framework/LICENSE-Embedded.txt
           EOF
@@ -4408,7 +4408,7 @@ tasks:
         bucket: mciuploads
         permissions: public-read
         content_type: application/tar
-        display_name: "MongoDB C Driver Tar Archive"
+        display_name: "MongerDB C Driver Tar Archive"
 
     - command: s3.put
       params:
@@ -4419,7 +4419,7 @@ tasks:
         bucket: mciuploads
         permissions: public-read
         content_type: application/tar
-        display_name: "MongoDB Embedded Tar Archive"
+        display_name: "MongerDB Embedded Tar Archive"
 
     - command: s3.put
       params:
@@ -4430,7 +4430,7 @@ tasks:
         bucket: mciuploads
         permissions: public-read
         content_type: application/tar
-        display_name: "MongoDB Embedded C Driver Transport Tar Archive"
+        display_name: "MongerDB Embedded C Driver Transport Tar Archive"
 
 - name: embedded_sdk_multiarch_apple_release
   depends_on:
@@ -6427,7 +6427,7 @@ tasks:
       resmoke_args: --storageEngine=wiredTiger
       fallback_num_sub_suites: 11
 
-- name: noPassthroughWithMongod_gen
+- name: noPassthroughWithMongerd_gen
   tags: ["misc_js"]
   commands:
   - func: "generate resmoke tasks"
@@ -9009,7 +9009,7 @@ buildvariants:
   - name: .jstestfuzz .common
   - name: .logical_session_cache .one_sec
   - name: noPassthrough_gen
-  - name: noPassthroughWithMongod_gen
+  - name: noPassthroughWithMongerd_gen
   - name: powercycle
   - name: .replica_sets .common
   - name: sasl
@@ -9126,7 +9126,7 @@ buildvariants:
   - name: .jstestfuzz .common
   - name: .logical_session_cache .one_sec
   - name: noPassthrough_gen
-  - name: noPassthroughWithMongod_gen
+  - name: noPassthroughWithMongerd_gen
   - name: .replica_sets .common
   - name: sasl
   - name: serial_run
@@ -9369,7 +9369,7 @@ buildvariants:
   - name: jsCore_txns_large_txns_format
   - name: .jstestfuzz .common
   - name: noPassthrough_gen
-  - name: noPassthroughWithMongod_gen
+  - name: noPassthroughWithMongerd_gen
   - name: .replica_sets .common
   - name: .replica_sets .multi_oplog
   - name: replica_sets_ese_gen

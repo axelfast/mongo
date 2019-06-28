@@ -13,7 +13,7 @@ selector:
   roots:
   - jstests/core/**/*.js
   exclude_files:
-  # In MongoDB 4.0, transactions are not supported in sharded clusters.
+  # In MongerDB 4.0, transactions are not supported in sharded clusters.
   - jstests/core/txns/**/*.js
   # Skip any tests that run with auth explicitly.
   - jstests/core/*[aA]uth*.js
@@ -165,7 +165,7 @@ executor:
           keyFileData: *keyFileData
           roleGraphInvalidationIsFatal: true
       eval: |
-        jsTest.authenticate(db.getMongo());
+        jsTest.authenticate(db.getMonger());
         (function() {
           const username = "misha";
           const password = "pwd";
@@ -196,13 +196,13 @@ executor:
     shell_options:
       global_vars:
         TestData: *TestData
-        eval: jsTest.authenticate(db.getMongo())
+        eval: jsTest.authenticate(db.getMonger())
       <<: *authOptions
   - class: ValidateCollections
     shell_options:
       global_vars:
         TestData: *TestData
-        eval: jsTest.authenticate(db.getMongo())
+        eval: jsTest.authenticate(db.getMonger())
       <<: *authOptions
   - class: CleanEveryN
     n: 20

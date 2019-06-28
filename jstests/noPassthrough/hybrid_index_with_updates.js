@@ -9,7 +9,7 @@
 
     load("jstests/libs/check_log.js");
 
-    let conn = MongoRunner.runMongod();
+    let conn = MongerRunner.runMongerd();
     let testDB = conn.getDB('test');
 
     let turnFailPointOn = function(failPointName, data) {
@@ -130,5 +130,5 @@
     assert.eq(totalDocs, testDB.hybrid.count());
     assert.commandWorked(testDB.hybrid.validate({full: true}));
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

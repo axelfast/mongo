@@ -23,7 +23,7 @@
 
     load("jstests/libs/geo_math.js");
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd failed to start.");
     const db = conn.getDB("test");
 
@@ -563,5 +563,5 @@
         assert.eq(results.poly.docsIn, res.nRemoved);
     }
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

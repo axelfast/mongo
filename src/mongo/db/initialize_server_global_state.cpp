@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -322,7 +322,7 @@ MONGO_INITIALIZER_GENERAL(
 /**
  * atexit handler to terminate the process before static destructors run.
  *
- * Mongo server processes cannot safely call ::exit() or std::exit(), but
+ * Monger server processes cannot safely call ::exit() or std::exit(), but
  * some third-party libraries may call one of those functions.  In that
  * case, to avoid static-destructor problems in the server, this exits the
  * process immediately with code EXIT_FAILURE.

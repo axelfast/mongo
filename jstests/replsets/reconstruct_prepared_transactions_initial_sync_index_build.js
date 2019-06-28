@@ -77,7 +77,7 @@
     assert.commandWorked(sessionColl.update({_id: 1, a: 1}, {_id: 1, a: 2}));
     const prepareTimestamp = PrepareHelpers.prepareTransaction(session, {w: 1});
 
-    clearRawMongoProgramOutput();
+    clearRawMongerProgramOutput();
     jsTestLog("Resuming initial sync");
 
     // Resume initial sync.
@@ -87,7 +87,7 @@
     // Wait for log message.
     assert.soon(
         () =>
-            rawMongoProgramOutput().indexOf(
+            rawMongerProgramOutput().indexOf(
                 "blocking replication until index builds are finished on test.reconstruct_prepared_transactions_initial_sync_index_build, due to prepared transaction") >=
             0,
         "replication not hanging");

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -83,7 +83,7 @@ int main(int argc, char* argv[], char** envp) {
 
         // Handle the help option
         if (vm.count("help")) {
-            std::cout << "Mongo Traffic Reader Help: \n\n\t./mongertrafficreader "
+            std::cout << "Monger Traffic Reader Help: \n\n\t./mongertrafficreader "
                          "-i trafficinput.txt -o mongertrafficreader_dump.bson \n\n"
                       << desc << std::endl;
             return EXIT_SUCCESS;
@@ -127,7 +127,7 @@ int main(int argc, char* argv[], char** envp) {
         return EXIT_FAILURE;
     }
 
-    monger::trafficRecordingFileToMongoReplayFile(inputFd, outputStream);
+    monger::trafficRecordingFileToMongerReplayFile(inputFd, outputStream);
 
     return 0;
 }

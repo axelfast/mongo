@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,7 +43,7 @@
 namespace monger {
 namespace {
 
-class FreeMonQueueTest : public ServiceContextMongoDTest {
+class FreeMonQueueTest : public ServiceContextMongerDTest {
 private:
     void setUp() final;
     void tearDown() final;
@@ -57,7 +57,7 @@ protected:
 };
 
 void FreeMonQueueTest::setUp() {
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
 
     // Set up a NetworkInterfaceMock. Note, unlike NetworkInterfaceASIO, which has its own pool of
     // threads, tasks in the NetworkInterfaceMock must be carried out synchronously by the (single)
@@ -80,7 +80,7 @@ void FreeMonQueueTest::setUp() {
 void FreeMonQueueTest::tearDown() {
     _opCtx = {};
 
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 // Postive: Can we enqueue and dequeue one item

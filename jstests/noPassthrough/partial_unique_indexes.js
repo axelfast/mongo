@@ -5,7 +5,7 @@
 (function() {
     "strict";
 
-    let conn = MongoRunner.runMongod();
+    let conn = MongerRunner.runMongerd();
     let testDB = conn.getDB("test");
 
     let t = testDB.jstests_parallel_allops;
@@ -25,7 +25,7 @@
 
     let seconds = 5;
     let parallel = 5;
-    let host = testDB.getMongo().host;
+    let host = testDB.getMonger().host;
 
     let benchArgs = {ops, seconds, parallel, host};
 
@@ -44,5 +44,5 @@
         testDB.adminCommand({configureFailPoint: 'WTWriteConflictExceptionForReads', mode: "off"}));
     res = t.validate();
     assert(res.valid, tojson(res));
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -253,7 +253,7 @@ void Pipeline::validateCommon() const {
         // Verify that we are not attempting to run a mongerS-only stage on mongerD.
         uassert(40644,
                 str::stream() << stage->getSourceName() << " can only be run on mongerS",
-                !(constraints.hostRequirement == HostTypeRequirement::kMongoS && !pCtx->inMongos));
+                !(constraints.hostRequirement == HostTypeRequirement::kMongerS && !pCtx->inMongers));
 
         if (pCtx->inMultiDocumentTransaction) {
             uassert(ErrorCodes::OperationNotSupportedInTransaction,
@@ -382,10 +382,10 @@ bool Pipeline::needsPrimaryShardMerger() const {
     });
 }
 
-bool Pipeline::needsMongosMerger() const {
+bool Pipeline::needsMongersMerger() const {
     return std::any_of(_sources.begin(), _sources.end(), [&](const auto& stage) {
         return stage->constraints(SplitState::kSplitForMerge).resolvedHostTypeRequirement(pCtx) ==
-            HostTypeRequirement::kMongoS;
+            HostTypeRequirement::kMongerS;
     });
 }
 
@@ -397,11 +397,11 @@ bool Pipeline::needsShard() const {
     });
 }
 
-bool Pipeline::canRunOnMongos() const {
-    return _pipelineCanRunOnMongoS().isOK();
+bool Pipeline::canRunOnMongers() const {
+    return _pipelineCanRunOnMongerS().isOK();
 }
 
-bool Pipeline::requiredToRunOnMongos() const {
+bool Pipeline::requiredToRunOnMongers() const {
     invariant(_splitState != SplitState::kSplitForShards);
 
     for (auto&& stage : _sources) {
@@ -415,9 +415,9 @@ bool Pipeline::requiredToRunOnMongos() const {
 
         // If a mongerS-only stage occurs before a splittable stage, or if the pipeline is already
         // split, this entire pipeline must run on mongerS.
-        if (hostRequirement == HostTypeRequirement::kMongoS) {
+        if (hostRequirement == HostTypeRequirement::kMongerS) {
             // Verify that the remainder of this pipeline can run on mongerS.
-            auto mongersRunStatus = _pipelineCanRunOnMongoS();
+            auto mongersRunStatus = _pipelineCanRunOnMongerS();
 
             uassertStatusOKWithContext(mongersRunStatus,
                                        str::stream() << stage->getSourceName()
@@ -604,7 +604,7 @@ DepsTracker Pipeline::getDependencies(DepsTracker::MetadataAvailable metadataAva
     return deps;
 }
 
-Status Pipeline::_pipelineCanRunOnMongoS() const {
+Status Pipeline::_pipelineCanRunOnMongerS() const {
     for (auto&& stage : _sources) {
         auto constraints = stage->constraints(_splitState);
         auto hostRequirement = constraints.resolvedHostTypeRequirement(pCtx);
@@ -620,7 +620,7 @@ Status Pipeline::_pipelineCanRunOnMongoS() const {
         const bool needsDisk = (mustWriteToDisk || mayWriteTmpDataAndDiskUseIsAllowed);
 
         const bool needsToBlock = (constraints.streamType == StreamType::kBlocking);
-        const bool blockingIsPermitted = !internalQueryProhibitBlockingMergeOnMongoS.load();
+        const bool blockingIsPermitted = !internalQueryProhibitBlockingMergeOnMongerS.load();
 
         // If nothing prevents this stage from running on mongerS, continue to the next stage.
         if (!needsShard && !needsDisk && (!needsToBlock || blockingIsPermitted)) {

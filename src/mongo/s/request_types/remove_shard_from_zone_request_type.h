@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -47,7 +47,7 @@ public:
      *   zone: <string zoneName>
      * }
      */
-    static StatusWith<RemoveShardFromZoneRequest> parseFromMongosCommand(const BSONObj& cmdObj);
+    static StatusWith<RemoveShardFromZoneRequest> parseFromMongersCommand(const BSONObj& cmdObj);
 
     /**
      * Parses the provided BSON content as the internal _configsvrRemoveShardFromZone command, and
@@ -72,7 +72,7 @@ public:
 private:
     RemoveShardFromZoneRequest(std::string shardName, std::string zoneName);
     static StatusWith<RemoveShardFromZoneRequest> _parseFromCommand(const BSONObj& cmdObj,
-                                                                    bool forMongos);
+                                                                    bool forMongers);
 
     std::string _shardName;
     std::string _zoneName;

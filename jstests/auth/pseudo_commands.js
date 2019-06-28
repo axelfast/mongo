@@ -10,7 +10,7 @@ function runTest(conn) {
 
     conn.getDB('admin').createUser({user: 'admin', pwd: 'pwd', roles: ['root']});
 
-    var adminConn = new Mongo(conn.host);
+    var adminConn = new Monger(conn.host);
     adminConn.getDB('admin').auth('admin', 'pwd');
     var admin = adminConn.getDB('admin');
     admin.createRole({role: 'myRole', roles: [], privileges: []});
@@ -45,7 +45,7 @@ function runTest(conn) {
      * Returns true if conn is a connection to mongers,
      * and false otherwise.
      */
-    function isMongos(db) {
+    function isMongers(db) {
         var res = db.adminCommand({isdbgrid: 1});
         return (res.ok == 1 && res.isdbgrid == 1);
     }
@@ -114,7 +114,7 @@ function runTest(conn) {
             var passed = true;
             try {
                 var opid;
-                if (isMongos(db)) {  // opid format different between mongers and mongerd
+                if (isMongers(db)) {  // opid format different between mongers and mongerd
                     opid = "shard0000:1234";
                 } else {
                     opid = 1234;
@@ -132,7 +132,7 @@ function runTest(conn) {
     })();
 
     (function testUnlock() {
-        if (isMongos(db)) {
+        if (isMongers(db)) {
             return;  // unlock doesn't work on mongers
         }
 
@@ -186,9 +186,9 @@ function runTest(conn) {
 }
 
 jsTest.log('Test standalone');
-var conn = MongoRunner.runMongod({auth: ''});
+var conn = MongerRunner.runMongerd({auth: ''});
 runTest(conn);
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
 jsTest.log('Test sharding');
 // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.

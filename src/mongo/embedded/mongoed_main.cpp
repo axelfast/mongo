@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -55,9 +55,9 @@
 namespace monger {
 namespace {
 
-class ServiceEntryPointMongoe : public ServiceEntryPointImpl {
+class ServiceEntryPointMongere : public ServiceEntryPointImpl {
 public:
-    explicit ServiceEntryPointMongoe(ServiceContext* svcCtx)
+    explicit ServiceEntryPointMongere(ServiceContext* svcCtx)
         : ServiceEntryPointImpl(svcCtx),
           _sepEmbedded(std::make_unique<ServiceEntryPointEmbedded>()) {}
 
@@ -103,27 +103,27 @@ int mongeredMain(int argc, char* argv[], char** envp) {
 
     setupSignalHandlers();
 
-    log() << "MongoDB embedded standalone application, for testing purposes only";
+    log() << "MongerDB embedded standalone application, for testing purposes only";
 
     try {
         optionenvironment::OptionSection startupOptions("Options");
         // Adding all options mongerd we don't have to maintain a separate set for this executable,
         // some will be unused but that's fine as this is just an executable for testing purposes
         // anyway.
-        uassertStatusOK(addMongodGeneralOptions(&startupOptions));
-        uassertStatusOK(addMongodReplicationOptions(&startupOptions));
+        uassertStatusOK(addMongerdGeneralOptions(&startupOptions));
+        uassertStatusOK(addMongerdReplicationOptions(&startupOptions));
         uassertStatusOK(embedded::addOptions(&startupOptions));
         uassertStatusOK(
             embedded_integration_helpers::parseCommandLineOptions(argc, argv, startupOptions));
 
         serviceContext = embedded::initialize("");
 
-        // storeMongodOptions() triggers cmdline censoring, which must happen after initializers.
-        uassertStatusOK(storeMongodOptions(optionenvironment::startupOptionsParsed));
+        // storeMongerdOptions() triggers cmdline censoring, which must happen after initializers.
+        uassertStatusOK(storeMongerdOptions(optionenvironment::startupOptionsParsed));
 
         // Override the ServiceEntryPoint with one that can support transport layers.
         serviceContext->setServiceEntryPoint(
-            std::make_unique<ServiceEntryPointMongoe>(serviceContext));
+            std::make_unique<ServiceEntryPointMongere>(serviceContext));
 
         auto tl =
             transport::TransportLayerManager::createWithConfig(&serverGlobalParams, serviceContext);

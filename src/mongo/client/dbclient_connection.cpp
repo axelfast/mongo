@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,7 +28,7 @@
  */
 
 /**
- * Connect to a Mongo database as a database, from C++.
+ * Connect to a Monger database as a database, from C++.
  */
 
 #define MONGO_LOG_DEFAULT_COMPONENT ::monger::logger::LogComponent::kNetwork
@@ -113,12 +113,12 @@ private:
 */
 executor::RemoteCommandResponse initWireVersion(DBClientConnection* conn,
                                                 StringData applicationName,
-                                                const MongoURI& uri,
+                                                const MongerURI& uri,
                                                 std::vector<std::string>* saslMechsForAuth) {
     try {
         // We need to force the usage of OP_QUERY on this command, even if we have previously
         // detected support for OP_MSG on a connection. This is necessary to handle the case
-        // where we reconnect to an older version of MongoDB running at the same host/port.
+        // where we reconnect to an older version of MongerDB running at the same host/port.
         ScopedForceOpQuery forceOpQuery{conn};
 
         BSONObjBuilder bob;
@@ -142,7 +142,7 @@ executor::RemoteCommandResponse initWireVersion(DBClientConnection* conn,
         auto versionString = VersionInfoInterface::instance().version();
 
         Status serializeStatus = ClientMetadata::serialize(
-            "MongoDB Internal Client", versionString, applicationName, &bob);
+            "MongerDB Internal Client", versionString, applicationName, &bob);
         if (!serializeStatus.isOK()) {
             return serializeStatus;
         }
@@ -262,11 +262,11 @@ Status DBClientConnection::connect(const HostAndPort& serverAddress, StringData 
         auto msgFieldExtractStatus = bsonExtractStringField(swIsMasterReply.data, "msg", &msgField);
 
         if (msgFieldExtractStatus == ErrorCodes::NoSuchKey) {
-            _isMongos = false;
+            _isMongers = false;
         } else if (!msgFieldExtractStatus.isOK()) {
             return msgFieldExtractStatus;
         } else {
-            _isMongos = (msgField == "isdbgrid");
+            _isMongers = (msgField == "isdbgrid");
         }
     }
 
@@ -563,7 +563,7 @@ unsigned long long DBClientConnection::query(std::function<void(DBClientCursorBa
 
 DBClientConnection::DBClientConnection(bool _autoReconnect,
                                        double so_timeout,
-                                       MongoURI uri,
+                                       MongerURI uri,
                                        const HandshakeValidationHook& hook)
     : autoReconnect(_autoReconnect),
       _autoReconnectBackoff(Seconds(1), Seconds(2)),

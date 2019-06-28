@@ -266,7 +266,7 @@ jsTestOptions = function() {
         return Object.merge(_jsTestOptions, {
             serviceExecutor: TestData.serviceExecutor,
             setParameters: TestData.setParameters,
-            setParametersMongos: TestData.setParametersMongos,
+            setParametersMongers: TestData.setParametersMongers,
             storageEngine: TestData.storageEngine,
             storageEngineCacheSizeGB: TestData.storageEngineCacheSizeGB,
             transportLayer: TestData.transportLayer,
@@ -415,20 +415,20 @@ jsTest.authenticateNodes = function(nodes) {
     }, "Authenticate to nodes: " + nodes, 30000);
 };
 
-jsTest.isMongos = function(conn) {
+jsTest.isMongers = function(conn) {
     return conn.getDB('admin').isMaster().msg == 'isdbgrid';
 };
 
 defaultPrompt = function() {
-    var status = db.getMongo().authStatus;
-    var prefix = db.getMongo().promptPrefix;
+    var status = db.getMonger().authStatus;
+    var prefix = db.getMonger().promptPrefix;
 
     if (typeof prefix == 'undefined') {
         prefix = "";
         var buildInfo = db.runCommand({buildInfo: 1});
         try {
             if (buildInfo.modules.indexOf("enterprise") > -1) {
-                prefix += "MongoDB Enterprise ";
+                prefix += "MongerDB Enterprise ";
             }
         } catch (e) {
             // Don't do anything here. Just throw the error away.
@@ -441,7 +441,7 @@ defaultPrompt = function() {
         } catch (e) {
             // Don't do anything here. Just throw the error away.
         }
-        db.getMongo().promptPrefix = prefix;
+        db.getMonger().promptPrefix = prefix;
     }
 
     try {
@@ -450,7 +450,7 @@ defaultPrompt = function() {
             try {
                 var prompt = replSetMemberStatePrompt();
                 // set our status that it was good
-                db.getMongo().authStatus = {replSetGetStatus: true, isMaster: true};
+                db.getMonger().authStatus = {replSetGetStatus: true, isMaster: true};
                 return prefix + prompt;
             } catch (e) {
                 // don't have permission to run that, or requires auth
@@ -466,7 +466,7 @@ defaultPrompt = function() {
                 var prompt = replSetMemberStatePrompt();
                 // set our status that it was good
                 status.replSetGetStatus = true;
-                db.getMongo().authStatus = status;
+                db.getMonger().authStatus = status;
                 return prefix + prompt;
             } catch (e) {
                 // don't have permission to run that, or requires auth
@@ -481,7 +481,7 @@ defaultPrompt = function() {
             try {
                 var prompt = isMasterStatePrompt(isMasterRes);
                 status.isMaster = true;
-                db.getMongo().authStatus = status;
+                db.getMonger().authStatus = status;
                 return prefix + prompt;
             } catch (e) {
                 status.authRequired = true;
@@ -494,7 +494,7 @@ defaultPrompt = function() {
         status = {isMaster: true};
     }
 
-    db.getMongo().authStatus = status;
+    db.getMonger().authStatus = status;
     return prefix + "> ";
 };
 
@@ -599,8 +599,8 @@ shellPrintHelper = function(x) {
     if (typeof(x) == "undefined") {
         // Make sure that we have a db var before we use it
         // TODO: This implicit calling of GLE can cause subtle, hard to track issues - remove?
-        if (__callLastError && typeof(db) != "undefined" && db.getMongo &&
-            db.getMongo().writeMode() == "legacy") {
+        if (__callLastError && typeof(db) != "undefined" && db.getMonger &&
+            db.getMonger().writeMode() == "legacy") {
             __callLastError = false;
             // explicit w:1 so that replset getLastErrorDefaults aren't used here which would be bad
             var err = db.getLastError(1);
@@ -670,11 +670,11 @@ shellAutocomplete = function(
         "bsonsize create defineProperty defineProperties getPrototypeOf keys seal freeze preventExtensions isSealed isFrozen isExtensible getOwnPropertyDescriptor getOwnPropertyNames"
             .split(' ');
 
-    builtinMethods[Mongo] = "find update insert remove".split(' ');
+    builtinMethods[Monger] = "find update insert remove".split(' ');
     builtinMethods[BinData] = "hex base64 length subtype".split(' ');
 
     var extraGlobals =
-        "Infinity NaN undefined null true false decodeURI decodeURIComponent encodeURI encodeURIComponent escape eval isFinite isNaN parseFloat parseInt unescape Array Boolean Date Math Number RegExp String print load gc MinKey MaxKey Mongo NumberInt NumberLong ObjectId DBPointer UUID BinData HexData MD5 Map Timestamp JSON"
+        "Infinity NaN undefined null true false decodeURI decodeURIComponent encodeURI encodeURIComponent escape eval isFinite isNaN parseFloat parseInt unescape Array Boolean Date Math Number RegExp String print load gc MinKey MaxKey Monger NumberInt NumberLong ObjectId DBPointer UUID BinData HexData MD5 Map Timestamp JSON"
             .split(' ');
     if (typeof NumberDecimal !== 'undefined') {
         extraGlobals[extraGlobals.length] = "NumberDecimal";
@@ -898,7 +898,7 @@ shellHelper.show = function(what) {
     }
 
     if (what == "dbs" || what == "databases") {
-        var monger = db.getMongo();
+        var monger = db.getMonger();
         var dbs;
         try {
             dbs = monger.getDBs(db.getSession(), undefined, false);
@@ -1071,12 +1071,12 @@ shellHelper.show = function(what) {
                 } else if (freemonStatus.state === 'undecided') {
                     print(
                         "---\n" +
-                        "Enable MongoDB's free cloud-based monitoring service, which will then receive and display\n" +
+                        "Enable MongerDB's free cloud-based monitoring service, which will then receive and display\n" +
                         "metrics about your deployment (disk utilization, CPU, operation statistics, etc).\n" +
                         "\n" +
-                        "The monitoring data will be available on a MongoDB website with a unique URL accessible to you\n" +
-                        "and anyone you share the URL with. MongoDB may use this information to make product\n" +
-                        "improvements and to suggest MongoDB products and deployment options to you.\n" +
+                        "The monitoring data will be available on a MongerDB website with a unique URL accessible to you\n" +
+                        "and anyone you share the URL with. MongerDB may use this information to make product\n" +
+                        "improvements and to suggest MongerDB products and deployment options to you.\n" +
                         "\n" +
                         "To enable free monitoring, run the following command: db.enableFreeMonitoring()\n" +
                         "To permanently disable this reminder, run the following command: db.disableFreeMonitoring()\n" +
@@ -1106,12 +1106,12 @@ __promptWrapper__ = function(promptFunction) {
     // of the global "db" isn't accessed by the prompt function.
     let originalDB = db;
     try {
-        db = originalDB.getMongo().getDB(originalDB.getName());
+        db = originalDB.getMonger().getDB(originalDB.getName());
         // Setting db._session to be a _DummyDriverSession instance makes it so that
         // a logical session id isn't included in the isMaster and replSetGetStatus
         // commands and therefore won't interfere with the session associated with the
         // global "db" object.
-        db._session = new _DummyDriverSession(db.getMongo());
+        db._session = new _DummyDriverSession(db.getMonger());
         __prompt__ = promptFunction();
     } finally {
         db = originalDB;
@@ -1296,7 +1296,7 @@ rs = function() {
  * This method is intended to aid in the writing of tests. It takes a host's address, desired state,
  * and replicaset and waits either timeout milliseconds or until that reaches the desired state.
  *
- * It should be used instead of awaitRSClientHost when there is no MongoS with a connection to the
+ * It should be used instead of awaitRSClientHost when there is no MongerS with a connection to the
  * replica set.
  */
 _awaitRSHostViaRSMonitor = function(hostAddr, desiredState, rsName, timeout) {
@@ -1382,7 +1382,7 @@ rs.help = function() {
     print("\tan error, even if the command succeeds.");
 };
 rs.slaveOk = function(value) {
-    return db.getMongo().setSlaveOk(value);
+    return db.getMonger().setSlaveOk(value);
 };
 rs.status = function() {
     return db._adminCommand("replSetGetStatus");
@@ -1511,7 +1511,7 @@ rs.debug = {};
 rs.debug.nullLastOpWritten = function(primary, secondary) {
     var p = connect(primary + "/local");
     var s = connect(secondary + "/local");
-    s.getMongo().setSlaveOk();
+    s.getMonger().setSlaveOk();
 
     var secondToLast = s.oplog.rs.find().sort({$natural: -1}).limit(1).next();
     var last = p.runCommand({
@@ -1536,7 +1536,7 @@ rs.debug.getLastOpWritten = function(server) {
     if (server) {
         s = connect(server + "/local");
     }
-    s.getMongo().setSlaveOk();
+    s.getMonger().setSlaveOk();
 
     return s.oplog.rs.find().sort({$natural: -1}).limit(1).next();
 };
@@ -1591,7 +1591,7 @@ help = shellHelper.help = function(x) {
         print(
             "\nNormally one specifies the server on the monger shell command line.  Run monger --help to see those options.");
         print("Additional connections may be opened:\n");
-        print("    var x = new Mongo('host[:port]');");
+        print("    var x = new Monger('host[:port]');");
         print("    var mydb = x.getDB('mydb');");
         print("  or");
         print("    var mydb = connect('host[:port]/mydb');");
@@ -1651,7 +1651,7 @@ help = shellHelper.help = function(x) {
         print("\tgetMemInfo()                    diagnostic");
         return;
     } else if (x == "test") {
-        print("\tMongoRunner.runMongod(args)   DELETES DATA DIR and then starts mongerd");
+        print("\tMongerRunner.runMongerd(args)   DELETES DATA DIR and then starts mongerd");
         print("\t                              returns a connection to the new server");
         return;
     } else if (x == "") {

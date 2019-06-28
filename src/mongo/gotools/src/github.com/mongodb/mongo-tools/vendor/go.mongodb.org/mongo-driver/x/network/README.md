@@ -1,7 +1,7 @@
-MongoDB Go Driver Networking Library
+MongerDB Go Driver Networking Library
 ====================================
-The packages within this library allow users to build applications that speak the MongoDB RPC
-protocol. Knowledge of the MongoDB RPC protocol is assumed, so this library mostly contains advanced
+The packages within this library allow users to build applications that speak the MongerDB RPC
+protocol. Knowledge of the MongerDB RPC protocol is assumed, so this library mostly contains advanced
 features. The aim of this library is to provide an easy to use, high performance implementation of
 both the driver and server networking APIs. Combined, these APIs can be used to create a proxy.
 

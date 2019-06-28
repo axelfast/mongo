@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -869,7 +869,7 @@ TEST(JSONSchemaParserTest, RequiredTranslatesCorrectlyInsidePropertiesWithSiblin
 TEST(JSONSchemaParserTest, SharedJsonAndBsonTypeAliasesTranslateIdentically) {
     for (auto&& mapEntry : MatcherTypeSet::kJsonSchemaTypeAliasMap) {
         auto typeAlias = mapEntry.first;
-        // JSON Schema spells its bool type as "boolean", whereas MongoDB calls it "bool".
+        // JSON Schema spells its bool type as "boolean", whereas MongerDB calls it "bool".
         auto bsonTypeAlias =
             (typeAlias == JSONSchemaParser::kSchemaTypeBoolean) ? "bool" : typeAlias;
 

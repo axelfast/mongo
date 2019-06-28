@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -54,17 +54,17 @@ const std::string kShardName("TestShard");
 
 /**
  * This test suite validates that when the default OpObserver chain is set up (which happens to
- * include the ShardingMongodOpObserver), writes to the 'admin.system.version' collection (and the
+ * include the ShardingMongerdOpObserver), writes to the 'admin.system.version' collection (and the
  * shardIdentity document specifically) will invoke the sharding initialization code.
  */
-class ShardingInitializationOpObserverTest : public ShardingMongodTestFixture {
+class ShardingInitializationOpObserverTest : public ShardingMongerdTestFixture {
 public:
     void setUp() override {
-        ShardingMongodTestFixture::setUp();
+        ShardingMongerdTestFixture::setUp();
 
         // NOTE: this assumes that globalInit will always be called on the same thread as the main
         // test thread
-        ShardingInitializationMongoD::get(operationContext())
+        ShardingInitializationMongerD::get(operationContext())
             ->setGlobalInitMethodForTest([this](OperationContext* opCtx,
                                                 const ShardIdentity& shardIdentity,
                                                 StringData distLockProcessId) {
@@ -76,7 +76,7 @@ public:
     void tearDown() override {
         ShardingState::get(getServiceContext())->clearForTests();
 
-        ShardingMongodTestFixture::tearDown();
+        ShardingMongerdTestFixture::tearDown();
     }
 
     int getInitCallCount() const {

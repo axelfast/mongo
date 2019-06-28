@@ -11,7 +11,7 @@
 
     const baseName = "wt_repair_corrupt_metadata";
     const collName = "test";
-    const dbpath = MongoRunner.dataPath + baseName + "/";
+    const dbpath = MongerRunner.dataPath + baseName + "/";
 
     /**
      * This test runs repair using a version of the WiredTiger.turtle file that has checkpoint
@@ -39,7 +39,7 @@
         const turtleFile = dbpath + "WiredTiger.turtle";
         const turtleFileWithoutCollection = dbpath + "WiredTiger.turtle.1";
 
-        let mongerd = startMongodOnExistingPath(dbpath, mongerdOptions);
+        let mongerd = startMongerdOnExistingPath(dbpath, mongerdOptions);
 
         // Force a checkpoint and make a copy of the turtle file.
         assert.commandWorked(mongerd.getDB(baseName).adminCommand({fsync: 1}));
@@ -52,7 +52,7 @@
 
         // Force another checkpoint before a clean shutdown.
         assert.commandWorked(mongerd.getDB(baseName).adminCommand({fsync: 1}));
-        MongoRunner.stopMongod(mongerd);
+        MongerRunner.stopMongerd(mongerd);
 
         // Guarantee the turtle files changed between checkpoints.
         assert.neq(md5sumFile(turtleFileWithoutCollection), md5sumFile(turtleFile));
@@ -65,7 +65,7 @@
         // change in the future. See SERVER-41667.
         assertRepairSucceeds(dbpath, mongerd.port, mongerdOptions);
 
-        mongerd = startMongodOnExistingPath(dbpath, mongerdOptions);
+        mongerd = startMongerdOnExistingPath(dbpath, mongerdOptions);
         testColl = mongerd.getDB(baseName)[collName];
 
         // The collection exists despite using an older turtle file because salvage is able to find
@@ -74,7 +74,7 @@
         // We can assert that the data exists because the salvage only took place on the metadata,
         // not the data.
         assert.eq(testColl.find({}).itcount(), 1);
-        MongoRunner.stopMongod(mongerd);
+        MongerRunner.stopMongerd(mongerd);
 
         // Corrupt the .turtle file in a very specific way such that the log sequence numbers are
         // invalid.
@@ -97,7 +97,7 @@
 
             assertRepairSucceeds(dbpath, mongerd.port, mongerdOptions);
 
-            mongerd = startMongodOnExistingPath(dbpath, mongerdOptions);
+            mongerd = startMongerdOnExistingPath(dbpath, mongerdOptions);
             testColl = mongerd.getDB(baseName)[collName];
 
             // The collection exists despite using a salvaged turtle file because salvage is able to
@@ -107,7 +107,7 @@
             // We can assert that the data exists because the salvage only took place on the
             // metadata, not the data.
             assert.eq(testColl.find({}).itcount(), 1);
-            MongoRunner.stopMongod(mongerd);
+            MongerRunner.stopMongerd(mongerd);
         }
     };
 

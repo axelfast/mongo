@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -122,7 +122,7 @@ protected:
     }
 
     /**
-     * Schedules a "CommandOnShardedViewNotSupportedOnMongod" error response w/ view definition.
+     * Schedules a "CommandOnShardedViewNotSupportedOnMongerd" error response w/ view definition.
      */
     void scheduleNetworkViewResponse(const std::string& ns, const std::string& pipelineJsonArr) {
         BSONObjBuilder viewDefBob;

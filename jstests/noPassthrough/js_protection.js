@@ -13,14 +13,14 @@
 (function() {
     "use strict";
 
-    var testServer = MongoRunner.runMongod({setParameter: "javascriptProtection=true"});
+    var testServer = MongerRunner.runMongerd({setParameter: "javascriptProtection=true"});
     assert.neq(
         null, testServer, "failed to start mongerd with --setParameter=javascriptProtection=true");
 
     var db = testServer.getDB("test");
     var t = db.js_protection;
 
-    function assertMongoClientCorrect() {
+    function assertMongerClientCorrect() {
         var functionToEval = function() {
             var doc = db.js_protection.findOne({_id: 0});
             assert.neq(null, doc);
@@ -36,7 +36,7 @@
             assert.eq(5, addOne(4));
         };
 
-        var exitCode = runMongoProgram("monger",
+        var exitCode = runMongerProgram("monger",
                                        "--port",
                                        testServer.port,
                                        "--enableJavaScriptProtection",
@@ -88,8 +88,8 @@
         }
     });
 
-    assertMongoClientCorrect();
+    assertMongerClientCorrect();
     assertNoStoredWhere();
 
-    MongoRunner.stopMongod(testServer);
+    MongerRunner.stopMongerd(testServer);
 })();

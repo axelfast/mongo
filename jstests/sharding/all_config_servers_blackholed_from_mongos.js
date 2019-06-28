@@ -1,5 +1,5 @@
 /**
- * Ensures that if the config servers are blackholed from the point of view of MongoS, metadata
+ * Ensures that if the config servers are blackholed from the point of view of MongerS, metadata
  * operations do not get stuck forever.
  *
  * Checking UUID consistency involves talking to config servers through mongers, but mongers is

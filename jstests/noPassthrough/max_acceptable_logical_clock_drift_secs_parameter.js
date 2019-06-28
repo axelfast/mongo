@@ -8,31 +8,31 @@
     "use strict";
 
     // maxAcceptableLogicalClockDriftSecs cannot be negative, zero, or a non-number.
-    let conn = MongoRunner.runMongod({setParameter: {maxAcceptableLogicalClockDriftSecs: -1}});
+    let conn = MongerRunner.runMongerd({setParameter: {maxAcceptableLogicalClockDriftSecs: -1}});
     assert.eq(null, conn, "expected server to reject negative maxAcceptableLogicalClockDriftSecs");
 
-    conn = MongoRunner.runMongod({setParameter: {maxAcceptableLogicalClockDriftSecs: 0}});
+    conn = MongerRunner.runMongerd({setParameter: {maxAcceptableLogicalClockDriftSecs: 0}});
     assert.eq(null, conn, "expected server to reject zero maxAcceptableLogicalClockDriftSecs");
 
-    conn = MongoRunner.runMongod({setParameter: {maxAcceptableLogicalClockDriftSecs: "value"}});
+    conn = MongerRunner.runMongerd({setParameter: {maxAcceptableLogicalClockDriftSecs: "value"}});
     assert.eq(
         null, conn, "expected server to reject non-numeric maxAcceptableLogicalClockDriftSecs");
 
-    conn = MongoRunner.runMongod(
+    conn = MongerRunner.runMongerd(
         {setParameter: {maxAcceptableLogicalClockDriftSecs: new Timestamp(50, 0)}});
     assert.eq(
         null, conn, "expected server to reject non-numeric maxAcceptableLogicalClockDriftSecs");
 
     // Any positive number is valid.
-    conn = MongoRunner.runMongod({setParameter: {maxAcceptableLogicalClockDriftSecs: 1}});
+    conn = MongerRunner.runMongerd({setParameter: {maxAcceptableLogicalClockDriftSecs: 1}});
     assert.neq(null, conn, "failed to start mongerd with valid maxAcceptableLogicalClockDriftSecs");
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
-    conn = MongoRunner.runMongod({
+    conn = MongerRunner.runMongerd({
         setParameter: {maxAcceptableLogicalClockDriftSecs: 60 * 60 * 24 * 365 * 10}
     });  // 10 years.
     assert.neq(null, conn, "failed to start mongerd with valid maxAcceptableLogicalClockDriftSecs");
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Verify maxAcceptableLogicalClockDriftSecs works as expected in a sharded cluster.
     const maxDriftValue = 100;

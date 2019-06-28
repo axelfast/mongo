@@ -18,14 +18,14 @@ var db;
     function makePatternForValidate(dbName, collName) {
         return new RegExp(
             "COMMAND.*command " + dbName +
-                "\\.\\$cmd appName: \"MongoDB Shell\" command: validate { validate: \"" + collName +
+                "\\.\\$cmd appName: \"MongerDB Shell\" command: validate { validate: \"" + collName +
                 "\"",
             "g");
     }
 
     function makePatternForSetFCV(targetVersion) {
         return new RegExp(
-            "COMMAND.*command.*appName: \"MongoDB Shell\" command: setFeatureCompatibilityVersion" +
+            "COMMAND.*command.*appName: \"MongerDB Shell\" command: setFeatureCompatibilityVersion" +
                 " { setFeatureCompatibilityVersion: \"" + targetVersion + "\"",
             "g");
     }
@@ -44,14 +44,14 @@ var db;
         db = testCase.conn.getDB("test");
         TestData.forceValidationWithFeatureCompatibilityVersion = latestFCV;
         try {
-            clearRawMongoProgramOutput();
+            clearRawMongerProgramOutput();
 
             load("jstests/hooks/run_validate_collections.js");
 
-            // We terminate the processes to ensure that the next call to rawMongoProgramOutput()
+            // We terminate the processes to ensure that the next call to rawMongerProgramOutput()
             // will return all of their output.
             testCase.teardown();
-            return rawMongoProgramOutput();
+            return rawMongerProgramOutput();
         } finally {
             db = undefined;
             TestData.forceValidationWithFeatureCompatibilityVersion = undefined;
@@ -64,7 +64,7 @@ var db;
         expectedSetLatestFCV: expectedSetLatestFCV = 0
     } = {}) {
         const conn =
-            MongoRunner.runMongod({setParameter: {logComponentVerbosity: tojson({command: 1})}});
+            MongerRunner.runMongerd({setParameter: {logComponentVerbosity: tojson({command: 1})}});
         assert.neq(conn, "mongerd was unable to start up");
 
         // Insert a document so the "validate" command has some actual work to do.
@@ -79,7 +79,7 @@ var db;
                 // The validate hook should leave the server with a feature compatibility version of
                 // 'expectedAtTeardownFCV' and no targetVersion.
                 checkFCV(conn.getDB("admin"), expectedAtTeardownFCV);
-                MongoRunner.stopMongod(conn);
+                MongerRunner.stopMongerd(conn);
             }
         });
 
@@ -92,7 +92,7 @@ var db;
                                                    [latestFCV, expectedSetLatestFCV]]) {
             // Since the additionalSetupFn() function may run the setFeatureCompatibilityVersion
             // command and we don't have a guarantee those log messages were cleared when
-            // clearRawMongoProgramOutput() was called, we assert 'expectedSetLastStableFCV' and
+            // clearRawMongerProgramOutput() was called, we assert 'expectedSetLastStableFCV' and
             // 'expectedSetLatestFCV' as lower bounds.
             const pattern = makePatternForSetFCV(targetVersion);
             assert.lte(expectedCount,
@@ -105,7 +105,7 @@ var db;
         // We create a separate connection to the server exclusively for running the
         // setFeatureCompatibilityVersion command so only that operation is ever interrupted by
         // the checkForInterruptFail failpoint.
-        const setFCVConn = new Mongo(conn.host);
+        const setFCVConn = new Monger(conn.host);
         const myUriRes = assert.commandWorked(setFCVConn.adminCommand({whatsmyuri: 1}));
         const myUri = myUriRes.you;
 

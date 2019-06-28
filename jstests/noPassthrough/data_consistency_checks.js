@@ -18,14 +18,14 @@ var db;
 
     function makePatternForDBHash(dbName) {
         return new RegExp("COMMAND.*command " + dbName +
-                              "\\.\\$cmd appName: \"MongoDB Shell\" command: db[Hh]ash",
+                              "\\.\\$cmd appName: \"MongerDB Shell\" command: db[Hh]ash",
                           "g");
     }
 
     function makePatternForValidate(dbName, collName) {
         return new RegExp(
             "COMMAND.*command " + dbName +
-                "\\.\\$cmd appName: \"MongoDB Shell\" command: validate { validate: \"" + collName +
+                "\\.\\$cmd appName: \"MongerDB Shell\" command: validate { validate: \"" + collName +
                 "\"",
             "g");
     }
@@ -43,15 +43,15 @@ var db;
     function runDataConsistencyChecks(testCase) {
         db = testCase.conn.getDB("test");
         try {
-            clearRawMongoProgramOutput();
+            clearRawMongerProgramOutput();
 
             load("jstests/hooks/run_check_repl_dbhash.js");
             load("jstests/hooks/run_validate_collections.js");
 
-            // We terminate the processes to ensure that the next call to rawMongoProgramOutput()
+            // We terminate the processes to ensure that the next call to rawMongerProgramOutput()
             // will return all of their output.
             testCase.teardown();
-            return rawMongoProgramOutput();
+            return rawMongerProgramOutput();
         } finally {
             db = undefined;
         }

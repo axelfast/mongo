@@ -98,8 +98,8 @@ env.Library(
     ],
 )
 
-# Functionality for initializing all the services used by sharding, which are common between MongoS
-# and MongoD
+# Functionality for initializing all the services used by sharding, which are common between MongerS
+# and MongerD
 env.Library(
     target='sharding_initialization',
     source=[

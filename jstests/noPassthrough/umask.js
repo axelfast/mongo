@@ -27,7 +27,7 @@
         'mobile.sqlite-wal',
     ];
 
-    let mongerdOptions = MongoRunner.mongerdOptions({
+    let mongerdOptions = MongerRunner.mongerdOptions({
         useLogFiles: true,
         cleanData: true,
     });
@@ -64,14 +64,14 @@
 
     // First we start up the mongerd normally, all the files except mongerd.lock should have the mode
     // 0600
-    let conn = MongoRunner.runMongod(mongerdOptions);
-    MongoRunner.stopMongod(conn);
+    let conn = MongerRunner.runMongerd(mongerdOptions);
+    MongerRunner.stopMongerd(conn);
     checkMask(conn.fullOptions.dbpath, defaultUmask, false);
 
     // Restart the mongerd with honorSystemUmask, all files should have the mode 0666
     mongerdOptions.setParameter = {honorSystemUmask: true};
-    conn = MongoRunner.runMongod(mongerdOptions);
-    MongoRunner.stopMongod(conn);
+    conn = MongerRunner.runMongerd(mongerdOptions);
+    MongerRunner.stopMongerd(conn);
     checkMask(conn.fullOptions.dbpath, permissiveUmask, false);
 
     umask(oldUmask.valueOf());

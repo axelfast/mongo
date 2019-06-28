@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -190,7 +190,7 @@ Seconds ReplicaSetMonitor::getDefaultRefreshPeriod() {
 
 ReplicaSetMonitor::ReplicaSetMonitor(const SetStatePtr& initialState) : _state(initialState) {}
 
-ReplicaSetMonitor::ReplicaSetMonitor(const MongoURI& uri)
+ReplicaSetMonitor::ReplicaSetMonitor(const MongerURI& uri)
     : ReplicaSetMonitor(std::make_shared<SetState>(
           uri, &globalRSMonitorManager.getNotifier(), globalRSMonitorManager.getExecutor())) {}
 
@@ -384,7 +384,7 @@ std::string ReplicaSetMonitor::getServerAddress() const {
                                          : _state->setUri.connectionString().toString();
 }
 
-const MongoURI& ReplicaSetMonitor::getOriginalUri() const {
+const MongerURI& ReplicaSetMonitor::getOriginalUri() const {
     // setUri is const so no need to lock.
     return _state->setUri;
 }
@@ -400,7 +400,7 @@ shared_ptr<ReplicaSetMonitor> ReplicaSetMonitor::createIfNeeded(const string& na
         ConnectionString::forReplicaSet(name, vector<HostAndPort>(servers.begin(), servers.end())));
 }
 
-shared_ptr<ReplicaSetMonitor> ReplicaSetMonitor::createIfNeeded(const MongoURI& uri) {
+shared_ptr<ReplicaSetMonitor> ReplicaSetMonitor::createIfNeeded(const MongerURI& uri) {
     return globalRSMonitorManager.getOrCreateMonitor(uri);
 }
 
@@ -1021,7 +1021,7 @@ void Node::update(const IsMasterReply& reply) {
     lastWriteDateUpdateTime = Date_t::now();
 }
 
-SetState::SetState(const MongoURI& uri,
+SetState::SetState(const MongerURI& uri,
                    ReplicaSetChangeNotifier* notifier,
                    executor::TaskExecutor* executor)
     : setUri(std::move(uri)),

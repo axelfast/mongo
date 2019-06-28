@@ -77,7 +77,7 @@ These YAML and JSON files contain the following fields:
   contents of the SRV or TXT records included errors.
 - ``comment``: a comment to indicate why a test would fail.
 
-For each file, create MongoClient initialized with the mongerdb+srv connection
+For each file, create MongerClient initialized with the mongerdb+srv connection
 string. You SHOULD verify that the client's initial seed list matches the list of
 seeds. You MUST verify that the set of ServerDescriptions in the client's
 TopologyDescription eventually matches the list of hosts. You MUST verify that

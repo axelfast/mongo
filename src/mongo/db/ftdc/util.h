@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -197,9 +197,9 @@ boost::filesystem::path getInterimTempFile(const boost::filesystem::path& file);
 Date_t roundTime(Date_t now, Milliseconds period);
 
 /**
- * Get the storage path for MongoS from the log file path.
+ * Get the storage path for MongerS from the log file path.
  */
-boost::filesystem::path getMongoSPath(const boost::filesystem::path& logFile);
+boost::filesystem::path getMongerSPath(const boost::filesystem::path& logFile);
 
 }  // namespace FTDCUtil
 

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -99,7 +99,7 @@ TEST(CurrentOpExhaustCursorTest, CanSeeEachExhaustCursorPseudoGetMoreInCurrentOp
 
     // We need to set failpoints around getMore which cause it to hang, so only test against a
     // single server rather than a replica set or mongerS.
-    if (conn->isReplicaSetMember() || conn->isMongos()) {
+    if (conn->isReplicaSetMember() || conn->isMongers()) {
         return;
     }
 

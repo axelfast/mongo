@@ -1651,27 +1651,27 @@ def make_polyfill_regex():
   return re.compile(qualified_names_regex)
 _RE_PATTERN_MONGO_POLYFILL=make_polyfill_regex()
 
-def CheckForMongoPolyfill(filename, clean_lines, linenum, error):
+def CheckForMongerPolyfill(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search(_RE_PATTERN_MONGO_POLYFILL, line):
     error(filename, linenum, 'mongerdb/polyfill', 5,
           'Illegal use of banned name from std::/boost::, use monger::stdx:: variant instead')
 
-def CheckForMongoAtomic(filename, clean_lines, linenum, error):
+def CheckForMongerAtomic(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search('std::atomic', line):
     error(filename, linenum, 'mongerdb/stdatomic', 5,
           'Illegal use of prohibited std::atomic<T>, use AtomicWord<T> or other types '
           'from "monger/platform/atomic_word.h"')
 
-def CheckForMongoVolatile(filename, clean_lines, linenum, error):
+def CheckForMongerVolatile(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search('[^_]volatile', line) and not "__asm__" in line:
     error(filename, linenum, 'mongerdb/volatile', 5,
           'Illegal use of the volatile storage keyword, use AtomicWord instead '
           'from "monger/platform/atomic_word.h"')
 
-def CheckForNonMongoAssert(filename, clean_lines, linenum, error):
+def CheckForNonMongerAssert(filename, clean_lines, linenum, error):
   line = clean_lines.elided[linenum]
   if re.search(r'\bassert\s*\(', line):
     error(filename, linenum, 'mongerdb/assert', 5,
@@ -1695,7 +1695,7 @@ def CheckForServerSidePublicLicense(copyright_offset, filename, lines, error):
   license_header = '''\
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -1720,7 +1720,7 @@ def CheckForServerSidePublicLicense(copyright_offset, filename, lines, error):
  */'''.splitlines()
 
   # The following files are in the src/monger/ directory but technically belong
-  # in src/third_party/ because their copyright does not belong to MongoDB. Note
+  # in src/third_party/ because their copyright does not belong to MongerDB. Note
   # that we do not need to use os.path.normpath() to match these pathnames on
   # Windows because FileInfo.RepositoryName() normalizes the path separator for
   # us already.
@@ -5889,10 +5889,10 @@ def ProcessLine(filename, file_extension, clean_lines, line,
   nesting_state.Update(filename, clean_lines, line, error)
   CheckForNamespaceIndentation(filename, nesting_state, clean_lines, line,
                                error)
-  CheckForMongoPolyfill(filename, clean_lines, line, error)
-  CheckForMongoAtomic(filename, clean_lines, line, error)
-  CheckForMongoVolatile(filename, clean_lines, line, error)
-  CheckForNonMongoAssert(filename, clean_lines, line, error)
+  CheckForMongerPolyfill(filename, clean_lines, line, error)
+  CheckForMongerAtomic(filename, clean_lines, line, error)
+  CheckForMongerVolatile(filename, clean_lines, line, error)
+  CheckForNonMongerAssert(filename, clean_lines, line, error)
   if nesting_state.InAsmBlock(): return
   CheckForFunctionLengths(filename, clean_lines, line, function_state, error)
   CheckForMultilineCommentsAndStrings(filename, clean_lines, line, error)

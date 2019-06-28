@@ -6,14 +6,14 @@
     var CLIENT_CERT = "jstests/libs/client.pem";
     var BAD_SAN_CERT = "jstests/libs/badSAN.pem";
 
-    var mongerd = MongoRunner.runMongod({
+    var mongerd = MongerRunner.runMongerd({
         sslMode: "requireSSL",
         sslPEMKeyFile: SERVER_CERT,
         sslCAFile: CA_CERT,
         sslClusterFile: BAD_SAN_CERT
     });
 
-    var monger = runMongoProgram("monger",
+    var monger = runMongerProgram("monger",
                                 "--host",
                                 "localhost",
                                 "--port",
@@ -26,10 +26,10 @@
                                 "--eval",
                                 ";");
 
-    // runMongoProgram returns 0 on success
+    // runMongerProgram returns 0 on success
     assert.eq(
         0,
         monger,
         "Connection attempt failed when an irrelevant sslClusterFile was provided to the server!");
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 }());

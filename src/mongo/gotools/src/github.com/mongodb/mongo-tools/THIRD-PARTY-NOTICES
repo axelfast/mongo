@@ -1439,7 +1439,7 @@ License notice for github.com/mongerdb/monger-go-driver
 License notice for github.com/mongerdb/monger-tools-common
 ----------------------------------------------------------------------
 
-Copyright 2014 MongoDB, Inc.
+Copyright 2014 MongerDB, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -3280,7 +3280,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 License notice for gopkg.in/mgo.v2
 ----------------------------------------------------------------------
 
-mgo - MongoDB driver for Go
+mgo - MongerDB driver for Go
 
 Copyright (c) 2010-2013 - Gustavo Niemeyer <gustavo@niemeyer.net>
 

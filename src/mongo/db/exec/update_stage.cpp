@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -580,9 +580,9 @@ void UpdateStage::doInsert() {
     }
 
     // If in FCV 4.2 and this collection is sharded, check if the doc we plan to insert belongs to
-    // this shard. MongoS uses the query field to target a shard, and it is possible the shard key
+    // this shard. MongerS uses the query field to target a shard, and it is possible the shard key
     // fields in the 'q' field belong to this shard, but those in the 'u' field do not. In this case
-    // we need to throw so that MongoS can target the insert to the correct shard.
+    // we need to throw so that MongerS can target the insert to the correct shard.
     if (_shouldCheckForShardKeyUpdate) {
         auto* const css = CollectionShardingState::get(getOpCtx(), collection()->ns());
         const auto& metadata = css->getCurrentMetadata();

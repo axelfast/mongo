@@ -111,9 +111,9 @@ class Fixture(object, metaclass=registry.make_registry_metaclass(_FIXTURES)):
             "get_driver_connection_url must be implemented by Fixture subclasses")
 
     def monger_client(self, read_preference=pymonger.ReadPreference.PRIMARY, timeout_millis=30000):
-        """Return a pymonger.MongoClient connecting to this fixture with specified 'read_preference'.
+        """Return a pymonger.MongerClient connecting to this fixture with specified 'read_preference'.
 
-        The PyMongo driver will wait up to 'timeout_millis' milliseconds
+        The PyMonger driver will wait up to 'timeout_millis' milliseconds
         before concluding that the server is unavailable.
         """
 
@@ -122,7 +122,7 @@ class Fixture(object, metaclass=registry.make_registry_metaclass(_FIXTURES)):
             kwargs["serverSelectionTimeoutMS"] = timeout_millis
             kwargs["connect"] = True
 
-        return pymonger.MongoClient(host=self.get_driver_connection_url(),
+        return pymonger.MongerClient(host=self.get_driver_connection_url(),
                                    read_preference=read_preference, **kwargs)
 
     def __str__(self):
@@ -177,7 +177,7 @@ class ReplFixture(Fixture):
                 message = "Replication of write operation timed out."
                 self.logger.error(message)
                 raise errors.ServerFailure(message)
-            except pymonger.errors.PyMongoError as err:
+            except pymonger.errors.PyMongerError as err:
                 message = "Write operation on {} failed: {}".format(
                     self.get_driver_connection_url(), err)
                 raise errors.ServerFailure(message)
@@ -186,7 +186,7 @@ class ReplFixture(Fixture):
 class NoOpFixture(Fixture):
     """A Fixture implementation that does not start any servers.
 
-    Used when the MongoDB deployment is started by the JavaScript test itself with MongoRunner,
+    Used when the MongerDB deployment is started by the JavaScript test itself with MongerRunner,
     ReplSetTest, or ShardingTest.
     """
 

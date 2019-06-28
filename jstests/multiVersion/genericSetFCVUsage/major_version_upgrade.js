@@ -17,7 +17,7 @@
     load('jstests/multiVersion/libs/verify_versions.js');
 
     // Setup the dbpath for this test.
-    const dbpath = MongoRunner.dataPath + 'major_version_upgrade';
+    const dbpath = MongerRunner.dataPath + 'major_version_upgrade';
     resetDbpath(dbpath);
 
     // We set noCleanData to true in order to preserve the data files between iterations.
@@ -124,7 +124,7 @@
         let mongerdOptions = Object.extend({binVersion: version.binVersion}, defaultOptions);
 
         // Start a mongerd with specified version.
-        let conn = MongoRunner.runMongod(mongerdOptions);
+        let conn = MongerRunner.runMongerd(mongerdOptions);
 
         if ((conn === null) && (i > 0) && !authSchemaUpgraded) {
             // As of 4.0, mongerd will refuse to start up with authSchema 3
@@ -133,17 +133,17 @@
             // Then try startuing 4.0 again.
             print(
                 "Failed starting mongerd, going to try upgrading the auth schema on the prior version");
-            conn = MongoRunner.runMongod(
+            conn = MongerRunner.runMongerd(
                 Object.extend({binVersion: versions[i - 1].binVersion}, defaultOptions));
             assert.neq(null,
                        conn,
                        'mongerd was previously able to start with version ' +
                            tojson(version.binVersion) + " but now can't");
             assert.commandWorked(conn.getDB('admin').runCommand({authSchemaUpgrade: 1}));
-            MongoRunner.stopMongod(conn);
+            MongerRunner.stopMongerd(conn);
 
             authSchemaUpgraded = true;
-            conn = MongoRunner.runMongod(mongerdOptions);
+            conn = MongerRunner.runMongerd(mongerdOptions);
         }
 
         assert.neq(
@@ -204,7 +204,7 @@
         }
 
         // Shutdown the current mongerd.
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     }
 
     // Replica Sets

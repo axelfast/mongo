@@ -61,17 +61,17 @@
 
     let primaryDbpath = rst.getPrimary().dbpath;
     let primaryPort = rst.getPrimary().port;
-    rst.stopSet(9, true, {allowedExitCode: MongoRunner.EXIT_SIGKILL});
+    rst.stopSet(9, true, {allowedExitCode: MongerRunner.EXIT_SIGKILL});
 
     // This should succeed in rebuilding the indexes, but only after the databases have been
     // repaired.
     assert.eq(
-        0, runMongoProgram("mongerd", "--repair", "--port", primaryPort, "--dbpath", primaryDbpath));
+        0, runMongerProgram("mongerd", "--repair", "--port", primaryPort, "--dbpath", primaryDbpath));
 
     // Restarting the replica set would roll back the index drop. Instead we want to start a
     // standalone and verify that repair rebuilt the indexes.
-    let mongerd = MongoRunner.runMongod({dbpath: primaryDbpath, noCleanData: true});
+    let mongerd = MongerRunner.runMongerd({dbpath: primaryDbpath, noCleanData: true});
     assert.eq(3, mongerd.getDB(dbName)[collName].getIndexes().length);
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -30,7 +30,7 @@
 /**
  * Note: This file is included in the install package and used during installation.
  *
- * It supposed to be linked to a static C-runtime, and should not depend on other MongoDB
+ * It supposed to be linked to a static C-runtime, and should not depend on other MongerDB
  * components.
  */
 
@@ -49,19 +49,19 @@
 
 #include "monger/util/scopeguard.h"
 
-// UpdateMongoYAML CustomAction Constants
+// UpdateMongerYAML CustomAction Constants
 constexpr wchar_t kBIN[] = L"BIN";
-constexpr wchar_t kMongoDataPath[] = L"MONGO_DATA_PATH";
-constexpr wchar_t kMongoLogPath[] = L"MONGO_LOG_PATH";
+constexpr wchar_t kMongerDataPath[] = L"MONGO_DATA_PATH";
+constexpr wchar_t kMongerLogPath[] = L"MONGO_LOG_PATH";
 
 // YAML Subsitution Constants
-constexpr char kMongoDataPathYaml[] = "%MONGO_DATA_PATH%";
-constexpr char kMongoLogPathYaml[] = "%MONGO_LOG_PATH%";
+constexpr char kMongerDataPathYaml[] = "%MONGO_DATA_PATH%";
+constexpr char kMongerLogPathYaml[] = "%MONGO_LOG_PATH%";
 
 // Service Account Constants - from Installer_64.wxs
-constexpr wchar_t kMongoServiceAccountName[] = L"MONGO_SERVICE_ACCOUNT_NAME";
-constexpr wchar_t kMongoServiceAccountPassword[] = L"MONGO_SERVICE_ACCOUNT_PASSWORD";
-constexpr wchar_t kMongoServiceAccountDomain[] = L"MONGO_SERVICE_ACCOUNT_DOMAIN";
+constexpr wchar_t kMongerServiceAccountName[] = L"MONGO_SERVICE_ACCOUNT_NAME";
+constexpr wchar_t kMongerServiceAccountPassword[] = L"MONGO_SERVICE_ACCOUNT_PASSWORD";
+constexpr wchar_t kMongerServiceAccountDomain[] = L"MONGO_SERVICE_ACCOUNT_DOMAIN";
 
 /**
  * Log a messge to MSIExec's log file.
@@ -219,13 +219,13 @@ std::string toUtf8String(MSIHANDLE hInstall, const std::wstring& wide) {
     { LogMessage(hInstall, INSTALLMESSAGE_INFO, __VA_ARGS__); }
 
 /**
- * UpdateMongoYAML - MSI custom action entry point
+ * UpdateMongerYAML - MSI custom action entry point
  *
  * Transforms a template yaml file into a file contain data and log directory of user's choosing.
  *
  * TODO: ACL directories
  */
-extern "C" UINT __stdcall UpdateMongoYAML(MSIHANDLE hInstall) {
+extern "C" UINT __stdcall UpdateMongerYAML(MSIHANDLE hInstall) {
     HRESULT hr = S_OK;
 
     try {
@@ -257,9 +257,9 @@ extern "C" UINT __stdcall UpdateMongoYAML(MSIHANDLE hInstall) {
 
             if (keyword == kBIN) {
                 binPath = value;
-            } else if (keyword == kMongoDataPath) {
+            } else if (keyword == kMongerDataPath) {
                 dataDir = value;
-            } else if (keyword == kMongoLogPath) {
+            } else if (keyword == kMongerLogPath) {
                 logDir = value;
             }
 
@@ -321,8 +321,8 @@ extern "C" UINT __stdcall UpdateMongoYAML(MSIHANDLE hInstall) {
         std::string str(buf.get());
 
         // Do the string subsitutions
-        str = do_replace(hInstall, str, kMongoDataPathYaml, toUtf8String(hInstall, dataDir));
-        str = do_replace(hInstall, str, kMongoLogPathYaml, toUtf8String(hInstall, logDir));
+        str = do_replace(hInstall, str, kMongerDataPathYaml, toUtf8String(hInstall, dataDir));
+        str = do_replace(hInstall, str, kMongerLogPathYaml, toUtf8String(hInstall, logDir));
 
         LOG_INFO("CA - Writing file - '%s'", buf.get());
 
@@ -364,13 +364,13 @@ extern "C" UINT __stdcall ValidateServiceLogon(MSIHANDLE hInstall) {
         std::wstring password;
         std::wstring domain;
 
-        hr = GetProperty(hInstall, kMongoServiceAccountName, &userName);
+        hr = GetProperty(hInstall, kMongerServiceAccountName, &userName);
         CHECKHR_AND_LOG(hr, "Failed to get MONGO_SERVICE_ACCOUNT_NAME property");
 
-        hr = GetProperty(hInstall, kMongoServiceAccountPassword, &password);
+        hr = GetProperty(hInstall, kMongerServiceAccountPassword, &password);
         CHECKHR_AND_LOG(hr, "Failed to get MONGO_SERVICE_ACCOUNT_PASSWORD property");
 
-        hr = GetProperty(hInstall, kMongoServiceAccountDomain, &domain);
+        hr = GetProperty(hInstall, kMongerServiceAccountDomain, &domain);
         CHECKHR_AND_LOG(hr, "Failed to get MONGO_SERVICE_ACCOUNT_DOMAIN property");
 
         // Check if the user name and password is valid, and the user has the "Log on as a service"

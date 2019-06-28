@@ -3,12 +3,12 @@
     var t = db.create_indexes_shell_helper;
     t.drop();
 
-    var monger = db.getMongo();
+    var monger = db.getMonger();
 
     try {
         var commandsRan = [];
         var insertsRan = [];
-        var mockMongo = {
+        var mockMonger = {
             writeMode: function() {
                 return "commands";
             },
@@ -37,8 +37,8 @@
             isReplicaSetMember: function() {
                 return monger.isReplicaSetMember();
             },
-            isMongos: function() {
-                return monger.isMongos();
+            isMongers: function() {
+                return monger.isMongers();
             },
             isCausalConsistency: function() {
                 return false;
@@ -48,8 +48,8 @@
             },
         };
 
-        db._monger = mockMongo;
-        db._session = new _DummyDriverSession(mockMongo);
+        db._monger = mockMonger;
+        db._session = new _DummyDriverSession(mockMonger);
 
         t.createIndexes([{x: 1}]);
         assert.eq(commandsRan.length, 1);

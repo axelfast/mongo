@@ -51,9 +51,9 @@ var ManualInterventionActions = (function() {
 
 (function() {
 
-    const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+    const mongerRunCommandOriginal = Monger.prototype.runCommand;
 
-    Mongo.prototype.runCommand = function runCommand(dbName, cmdObj, options) {
+    Monger.prototype.runCommand = function runCommand(dbName, cmdObj, options) {
         const cmdName = Object.keys(cmdObj)[0];
         const commandsToRetry =
             new Set(["mapReduce", "mapreduce", "shardCollection", "shardcollection"]);

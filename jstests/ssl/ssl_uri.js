@@ -4,25 +4,25 @@
     "use strict";
 
     var shouldSucceed = function(uri) {
-        var conn = new Mongo(uri);
+        var conn = new Monger(uri);
         var res = conn.getDB('admin').runCommand({"ismaster": 1});
         assert(res.ok);
     };
 
     var shouldFail = function(uri) {
         assert.throws(function(uri) {
-            var conn = new Mongo(uri);
+            var conn = new Monger(uri);
         }, [uri], "network error while attempting to run command");
     };
 
     // Start up a mongerd with ssl required.
-    var sslMongo = MongoRunner.runMongod({
+    var sslMonger = MongerRunner.runMongerd({
         sslMode: "requireSSL",
         sslPEMKeyFile: "jstests/libs/server.pem",
         sslCAFile: "jstests/libs/ca.pem",
     });
 
-    var sslURI = "mongerdb://localhost:" + sslMongo.port + "/admin";
+    var sslURI = "mongerdb://localhost:" + sslMonger.port + "/admin";
 
     // When talking to a server with SSL, connecting with ssl=false fails.
     shouldSucceed(sslURI);
@@ -30,7 +30,7 @@
     shouldFail(sslURI + "?ssl=false");
 
     var connectWithURI = function(uri) {
-        return runMongoProgram('./monger',
+        return runMongerProgram('./monger',
                                '--ssl',
                                '--sslAllowInvalidCertificates',
                                '--sslCAFile',
@@ -57,9 +57,9 @@
 
     // Connecting with ssl=true without --ssl will not work
     var res =
-        runMongoProgram('./monger', sslURI + "?ssl=true", '--eval', 'db.runCommand({ismaster: 1})');
+        runMongerProgram('./monger', sslURI + "?ssl=true", '--eval', 'db.runCommand({ismaster: 1})');
     assert.eq(res, 1, "should not have been able to connect without --ssl");
 
     // Clean up
-    MongoRunner.stopMongod(sslMongo);
+    MongerRunner.stopMongerd(sslMonger);
 }());

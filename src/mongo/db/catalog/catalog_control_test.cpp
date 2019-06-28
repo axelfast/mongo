@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -136,7 +136,7 @@ void CatalogControlTest::setUp() {
         // Only need the IndexBuildsCoordinator to call into and check whether there are any index
         // builds in progress.
         IndexBuildsCoordinator::set(serviceContext.get(),
-                                    std::make_unique<IndexBuildsCoordinatorMongod>());
+                                    std::make_unique<IndexBuildsCoordinatorMongerd>());
         setGlobalServiceContext(std::move(serviceContext));
     }
 

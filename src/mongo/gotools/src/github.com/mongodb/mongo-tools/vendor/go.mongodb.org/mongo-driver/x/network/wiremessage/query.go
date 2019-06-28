@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -16,7 +16,7 @@ import (
 	"go.mongerdb.org/monger-driver/x/bsonx"
 )
 
-// Query represents the OP_QUERY message of the MongoDB wire protocol.
+// Query represents the OP_QUERY message of the MongerDB wire protocol.
 type Query struct {
 	MsgHeader            Header
 	Flags                QueryFlag

@@ -25,7 +25,7 @@
 
     const username = "user";
     const usernameNotTest = "userNotTest";
-    const usernameX509 = "C=US,ST=New York,L=New York City,O=MongoDB,OU=KernelUser,CN=client";
+    const usernameX509 = "C=US,ST=New York,L=New York City,O=MongerDB,OU=KernelUser,CN=client";
 
     const password = username;
     const passwordNotTest = usernameNotTest;
@@ -51,14 +51,14 @@
         print("=========================================> The command (" + (i++) +
               ") I am going to run is: " + command.join(' '));
 
-        clearRawMongoProgramOutput();
-        var clientPID = _startMongoProgram({args: command});
+        clearRawMongerProgramOutput();
+        var clientPID = _startMongerProgram({args: command});
 
         assert.soon(function() {
-            const output = rawMongoProgramOutput();
+            const output = rawMongerProgramOutput();
             if (expectPasswordPrompt) {
                 if (output.includes("Enter password:")) {
-                    stopMongoProgramByPid(clientPID);
+                    stopMongerProgramByPid(clientPID);
                     return true;
                 }
                 return false;

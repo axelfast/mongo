@@ -4,18 +4,18 @@
 (function() {
     "use strict";
 
-    load("jstests/libs/mongerebench.js");  // for runMongoeBench
+    load("jstests/libs/mongerebench.js");  // for runMongereBench
 
     if (jsTest.options().storageEngine !== "mobile") {
         print("Skipping test because storage engine isn't mobile");
         return;
     }
 
-    const dbpath = MongoRunner.dataPath + "mongerebench_test";
+    const dbpath = MongerRunner.dataPath + "mongerebench_test";
     resetDbpath(dbpath);
 
     // Test that the operations in the "pre" section of the configuration are run exactly once.
-    runMongoeBench(  // Force clang-format to break this line.
+    runMongereBench(  // Force clang-format to break this line.
         {
           pre: [{
               op: "insert",
@@ -40,12 +40,12 @@
     assert(stats.hasOwnProperty("totalOps/s"),
            () => "stats file doesn't report ops per second: " + tojson(stats));
 
-    const conn = MongoRunner.runMongod({dbpath, noCleanData: true});
+    const conn = MongerRunner.runMongerd({dbpath, noCleanData: true});
     assert.neq(null, conn, "failed to start mongerd after running mongerebench");
 
     const db = conn.getDB("test");
     const count = db.mongerebench_test.find().itcount();
     assert.eq(1, count, "ops in 'pre' section ran more than once or didn't run at all");
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

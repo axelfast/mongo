@@ -7,7 +7,7 @@
     "use strict";
 
     load("jstests/multiVersion/libs/multi_rs.js");
-    load("jstests/multiVersion/libs/multi_cluster.js");  // For restartMongoses.
+    load("jstests/multiVersion/libs/multi_cluster.js");  // For restartMongerses.
 
     function assertContainsValidLogicalTime(res, check) {
         assert.hasFields(res, ["$clusterTime"]);
@@ -65,8 +65,8 @@
             {"configureFailPoint": "disableKeyGeneration", "mode": "off"}));
     }
 
-    // Mongos should restart with no problems.
-    st.restartMongoses();
+    // Mongers should restart with no problems.
+    st.restartMongerses();
 
     // Eventually mongers will discover the new keys, and start signing cluster times.
     assert.soonNoExcept(function() {

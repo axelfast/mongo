@@ -23,11 +23,11 @@
     runTest();
 
     function runTest() {
-        var dbpath = MongoRunner.dataPath + 'wt_malformed_creation_string';
+        var dbpath = MongerRunner.dataPath + 'wt_malformed_creation_string';
         resetDbpath(dbpath);
 
         // Start a mongerd
-        var conn = MongoRunner.runMongod({
+        var conn = MongerRunner.runMongerd({
             dbpath: dbpath,
             noCleanData: true,
         });
@@ -55,6 +55,6 @@
                                          ErrorCodes.FailedToParse);
         }
 
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     }
 })();

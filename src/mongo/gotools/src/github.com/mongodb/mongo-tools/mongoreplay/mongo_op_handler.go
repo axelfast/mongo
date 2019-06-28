@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -40,7 +40,7 @@ type stream struct {
 }
 
 // Reassembled receives the new slice of reassembled data and forwards it to the
-// MongoOpStream->streamOps goroutine for which turns them in to protocol
+// MongerOpStream->streamOps goroutine for which turns them in to protocol
 // messages.
 // Since the tcpassembler reuses the tcpreassembly.Reassembled buffers, we wait
 // for streamOps to signal us that it's done with them before returning.
@@ -70,13 +70,13 @@ func (stream *stream) ReassemblyComplete() {
 type bidi struct {
 	streams          [2]*stream
 	openStreamCount  int32
-	opStream         *MongoOpStream
+	opStream         *MongerOpStream
 	responseStream   bool
 	sawStart         bool
 	connectionNumber int64
 }
 
-func newBidi(netFlow, tcpFlow gopacket.Flow, opStream *MongoOpStream, num int64) *bidi {
+func newBidi(netFlow, tcpFlow gopacket.Flow, opStream *MongerOpStream, num int64) *bidi {
 	bidi := &bidi{connectionNumber: num}
 	bidi.streams[0] = &stream{
 		bidi:        bidi,
@@ -121,8 +121,8 @@ type bidiKey struct {
 	net, transport gopacket.Flow
 }
 
-// MongoOpStream is the opstream which yields RecordedOps
-type MongoOpStream struct {
+// MongerOpStream is the opstream which yields RecordedOps
+type MongerOpStream struct {
 	Ops chan *RecordedOp
 
 	FirstSeen         time.Time
@@ -133,10 +133,10 @@ type MongoOpStream struct {
 	connectionNumber  int64
 }
 
-// NewMongoOpStream initializes a new MongoOpStream
-func NewMongoOpStream(heapBufSize int) *MongoOpStream {
+// NewMongerOpStream initializes a new MongerOpStream
+func NewMongerOpStream(heapBufSize int) *MongerOpStream {
 	h := make(orderedOps, 0, heapBufSize)
-	os := &MongoOpStream{
+	os := &MongerOpStream{
 		Ops:               make(chan *RecordedOp), // ordered
 		unorderedOps:      make(chan RecordedOp),  // unordered
 		opHeap:            &h,
@@ -156,7 +156,7 @@ func NewMongoOpStream(heapBufSize int) *MongoOpStream {
 }
 
 // New is the factory method called by the tcpassembly to generate new tcpassembly.Stream.
-func (os *MongoOpStream) New(netFlow, tcpFlow gopacket.Flow) tcpassembly.Stream {
+func (os *MongerOpStream) New(netFlow, tcpFlow gopacket.Flow) tcpassembly.Stream {
 	key := bidiKey{netFlow, tcpFlow}
 	rkey := bidiKey{netFlow.Reverse(), tcpFlow.Reverse()}
 	if bidi, ok := os.bidiMap[key]; ok {
@@ -173,24 +173,24 @@ func (os *MongoOpStream) New(netFlow, tcpFlow gopacket.Flow) tcpassembly.Stream 
 
 // Close is called by the tcpassembly to indicate that all of the packets
 // have been processed.
-func (os *MongoOpStream) Close() error {
+func (os *MongerOpStream) Close() error {
 	close(os.unorderedOps)
 	os.unorderedOps = nil
 	return nil
 }
 
-// SetFirstSeen sets the time for the first message on the MongoOpStream.
+// SetFirstSeen sets the time for the first message on the MongerOpStream.
 // All of this SetFirstSeen/FirstSeen/SetFirstseer stuff can go away ( from here
 // and from packet_handler.go ) it's a cruft and was how someone was trying to
 // get around the fact that using the tcpassembly.tcpreader library throws away
 // all of the metadata about the stream.
-func (os *MongoOpStream) SetFirstSeen(t time.Time) {
+func (os *MongerOpStream) SetFirstSeen(t time.Time) {
 	os.FirstSeen = t
 }
 
 // handleOps runs all of the ops read from the unorderedOps through a heapsort
 // and then runs them out on the Ops channel.
-func (os *MongoOpStream) handleOps() {
+func (os *MongerOpStream) handleOps() {
 	defer close(os.Ops)
 	var counter int64
 	for op := range os.unorderedOps {

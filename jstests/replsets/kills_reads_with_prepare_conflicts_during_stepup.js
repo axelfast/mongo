@@ -76,7 +76,7 @@
 
     const waitForSecondaryReadBlockedOnPrepareConflictThread = startParallelShell(() => {
         // Allow for secondary reads.
-        db.getMongo().setSlaveOk();
+        db.getMonger().setSlaveOk();
         const parallelTestDB = db.getSiblingDB(TestData.dbName);
         const parallelTestCollName = TestData.collName;
 

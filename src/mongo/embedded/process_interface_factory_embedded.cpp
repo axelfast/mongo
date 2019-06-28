@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -33,9 +33,9 @@
 
 namespace monger {
 
-MONGO_REGISTER_SHIM(MongoProcessInterface::create)
-(OperationContext* opCtx)->std::shared_ptr<MongoProcessInterface> {
-    return std::make_shared<MongoInterfaceStandalone>(opCtx);
+MONGO_REGISTER_SHIM(MongerProcessInterface::create)
+(OperationContext* opCtx)->std::shared_ptr<MongerProcessInterface> {
+    return std::make_shared<MongerInterfaceStandalone>(opCtx);
 }
 
 }  // namespace monger

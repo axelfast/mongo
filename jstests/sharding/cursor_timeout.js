@@ -51,7 +51,7 @@
     const routerColl = st.s.getDB('test').user;
 
     const shardHost = st.config.shards.findOne({_id: st.shard1.shardName}).host;
-    const mongerd = new Mongo(shardHost);
+    const mongerd = new Monger(shardHost);
     const shardColl = mongerd.getCollection(routerColl.getFullName());
 
     assert.commandWorked(adminDB.runCommand({enableSharding: routerColl.getDB().getName()}));

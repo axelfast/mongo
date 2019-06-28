@@ -9,11 +9,11 @@ var BAD_SAN_CERT = "jstests/libs/badSAN.pem";
 
 function testCombination(certPath, allowInvalidHost, allowInvalidCert, shouldSucceed) {
     var mongerd =
-        MongoRunner.runMongod({sslMode: "requireSSL", sslPEMKeyFile: certPath, sslCAFile: CA_CERT});
+        MongerRunner.runMongerd({sslMode: "requireSSL", sslPEMKeyFile: certPath, sslCAFile: CA_CERT});
 
     var monger;
     if (allowInvalidCert) {
-        monger = runMongoProgram("monger",
+        monger = runMongerProgram("monger",
                                 "--port",
                                 mongerd.port,
                                 "--ssl",
@@ -25,7 +25,7 @@ function testCombination(certPath, allowInvalidHost, allowInvalidCert, shouldSuc
                                 "--eval",
                                 ";");
     } else if (allowInvalidHost) {
-        monger = runMongoProgram("monger",
+        monger = runMongerProgram("monger",
                                 "--port",
                                 mongerd.port,
                                 "--ssl",
@@ -37,7 +37,7 @@ function testCombination(certPath, allowInvalidHost, allowInvalidCert, shouldSuc
                                 "--eval",
                                 ";");
     } else {
-        monger = runMongoProgram("monger",
+        monger = runMongerProgram("monger",
                                 "--port",
                                 mongerd.port,
                                 "--ssl",
@@ -50,15 +50,15 @@ function testCombination(certPath, allowInvalidHost, allowInvalidCert, shouldSuc
     }
 
     if (shouldSucceed) {
-        // runMongoProgram returns 0 on success
+        // runMongerProgram returns 0 on success
         assert.eq(
             0, monger, "Connection attempt failed when it should succeed certPath: " + certPath);
     } else {
-        // runMongoProgram returns 1 on failure
+        // runMongerProgram returns 1 on failure
         assert.eq(
             1, monger, "Connection attempt succeeded when it should fail certPath: " + certPath);
     }
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 }
 
 // 1. Test client connections with different server certificates

@@ -1,8 +1,8 @@
-/** *    Copyright (C) 2018-present MongoDB, Inc.
+/** *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -226,7 +226,7 @@ class TxnParticipantTest : public MockReplCoordServerFixture {
 protected:
     void setUp() override {
         MockReplCoordServerFixture::setUp();
-        MongoDSessionCatalog::onStepUp(opCtx());
+        MongerDSessionCatalog::onStepUp(opCtx());
 
         const auto service = opCtx()->getServiceContext();
         OpObserverRegistry* opObserverRegistry =
@@ -284,10 +284,10 @@ protected:
         func(newOpCtx.get());
     }
 
-    std::unique_ptr<MongoDOperationContextSession> checkOutSession(
+    std::unique_ptr<MongerDOperationContextSession> checkOutSession(
         boost::optional<bool> startNewTxn = true) {
         opCtx()->lockState()->setShouldConflictWithSecondaryBatchApplication(false);
-        auto opCtxSession = std::make_unique<MongoDOperationContextSession>(opCtx());
+        auto opCtxSession = std::make_unique<MongerDOperationContextSession>(opCtx());
         auto txnParticipant = TransactionParticipant::get(opCtx());
         txnParticipant.beginOrContinue(opCtx(), *opCtx()->getTxnNumber(), false, startNewTxn);
         return opCtxSession;
@@ -334,7 +334,7 @@ TEST_F(TxnParticipantTest, TransactionThrowsLockTimeoutIfLockIsUnavailable) {
         newOpCtx.get()->setLogicalSessionId(newSessionId);
         newOpCtx.get()->setTxnNumber(newTxnNum);
 
-        MongoDOperationContextSession newOpCtxSession(newOpCtx.get());
+        MongerDOperationContextSession newOpCtxSession(newOpCtx.get());
         auto newTxnParticipant = TransactionParticipant::get(newOpCtx.get());
         newTxnParticipant.beginOrContinue(newOpCtx.get(), newTxnNum, false, true);
         newTxnParticipant.unstashTransactionResources(newOpCtx.get(), "insert");
@@ -968,7 +968,7 @@ TEST_F(TxnParticipantTest, ContinuingATransactionWithNoResourcesAborts) {
     checkOutSession();
 
     // Check out the session again for a new operation.
-    MongoDOperationContextSession sessionCheckout(opCtx());
+    MongerDOperationContextSession sessionCheckout(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
 
     ASSERT_THROWS_CODE(
@@ -1031,7 +1031,7 @@ TEST_F(TxnParticipantTest, CannotStartNewTransactionIfNotPrimary) {
     ASSERT_OK(repl::ReplicationCoordinator::get(opCtx())->setFollowerMode(
         repl::MemberState::RS_SECONDARY));
 
-    auto opCtxSession = std::make_unique<MongoDOperationContextSession>(opCtx());
+    auto opCtxSession = std::make_unique<MongerDOperationContextSession>(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
 
     // Include 'autocommit=false' for transactions.
@@ -1045,7 +1045,7 @@ TEST_F(TxnParticipantTest, CannotStartRetryableWriteIfNotPrimary) {
     ASSERT_OK(repl::ReplicationCoordinator::get(opCtx())->setFollowerMode(
         repl::MemberState::RS_SECONDARY));
 
-    auto opCtxSession = std::make_unique<MongoDOperationContextSession>(opCtx());
+    auto opCtxSession = std::make_unique<MongerDOperationContextSession>(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
 
     // Omit the 'autocommit' field for retryable writes.
@@ -1104,7 +1104,7 @@ TEST_F(TxnParticipantTest, CannotStartNewTransactionWhilePreparedTransactionInPr
             newOpCtx->setLogicalSessionId(lsid);
             newOpCtx->setTxnNumber(txnNumberToStart);
 
-            MongoDOperationContextSession ocs(newOpCtx);
+            MongerDOperationContextSession ocs(newOpCtx);
             auto txnParticipant = TransactionParticipant::get(newOpCtx);
             ASSERT_THROWS_CODE(
                 txnParticipant.beginOrContinue(newOpCtx, txnNumberToStart, false, true),
@@ -1177,7 +1177,7 @@ DEATH_TEST_F(TxnParticipantTest,
 }
 
 TEST_F(TxnParticipantTest, CannotContinueNonExistentTransaction) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
     ASSERT_THROWS_CODE(
         txnParticipant.beginOrContinue(opCtx(), *opCtx()->getTxnNumber(), false, boost::none),
@@ -1346,7 +1346,7 @@ protected:
     }
 
     void canSpecifyStartTransactionOnRetryableWriteWithNoWritesExecuted() {
-        MongoDOperationContextSession opCtxSession(opCtx());
+        MongerDOperationContextSession opCtxSession(opCtx());
 
         auto txnParticipant = TransactionParticipant::get(opCtx());
         txnParticipant.beginOrContinue(opCtx(), *opCtx()->getTxnNumber(), boost::none, boost::none);
@@ -1520,7 +1520,7 @@ TEST_F(TxnParticipantTest, ReacquireLocksForPreparedTransactionsOnStepUp) {
 
     // Step-up will restore the locks of prepared transactions.
     ASSERT(opCtx()->writesAreReplicated());
-    MongoDSessionCatalog::onStepUp(opCtx());
+    MongerDSessionCatalog::onStepUp(opCtx());
     {
         auto sessionCheckout = checkOutSession({});
         auto txnParticipant = TransactionParticipant::get(opCtx());
@@ -2759,7 +2759,7 @@ TEST_F(TransactionsMetricsTest, ReportUnstashedResourcesForARetryableWrite) {
     ASSERT(opCtx()->lockState());
     ASSERT(opCtx()->recoveryUnit());
 
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
     txnParticipant.beginOrContinue(opCtx(), *opCtx()->getTxnNumber(), boost::none, boost::none);
     txnParticipant.unstashTransactionResources(opCtx(), "find");
@@ -3660,10 +3660,10 @@ TEST_F(TxnParticipantTest, AbortTransactionOnSessionCheckoutWithoutRefresh) {
 
     const auto txnNumber = *opCtx()->getTxnNumber();
 
-    // MongoDOperationContextSessionWithoutRefresh will begin a new transaction with txnNumber
+    // MongerDOperationContextSessionWithoutRefresh will begin a new transaction with txnNumber
     // unconditionally since the participant's _activeTxnNumber is kUninitializedTxnNumber at time
     // of session checkout.
-    MongoDOperationContextSessionWithoutRefresh sessionCheckout(opCtx());
+    MongerDOperationContextSessionWithoutRefresh sessionCheckout(opCtx());
 
     auto txnParticipant = TransactionParticipant::get(opCtx());
     ASSERT(txnParticipant.inMultiDocumentTransaction());
@@ -3675,13 +3675,13 @@ TEST_F(TxnParticipantTest, AbortTransactionOnSessionCheckoutWithoutRefresh) {
 }
 
 TEST_F(TxnParticipantTest, ResponseMetadataHasHasReadOnlyFalseIfNothingInProgress) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
     ASSERT_FALSE(txnParticipant.getResponseMetadata().getReadOnly());
 }
 
 TEST_F(TxnParticipantTest, ResponseMetadataHasReadOnlyFalseIfInRetryableWrite) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
     ASSERT_FALSE(txnParticipant.getResponseMetadata().getReadOnly());
 
@@ -3694,7 +3694,7 @@ TEST_F(TxnParticipantTest, ResponseMetadataHasReadOnlyFalseIfInRetryableWrite) {
 }
 
 TEST_F(TxnParticipantTest, ResponseMetadataHasReadOnlyTrueIfInProgressAndOperationsVectorEmpty) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
     ASSERT_FALSE(txnParticipant.getResponseMetadata().getReadOnly());
 
@@ -3709,7 +3709,7 @@ TEST_F(TxnParticipantTest, ResponseMetadataHasReadOnlyTrueIfInProgressAndOperati
 
 TEST_F(TxnParticipantTest,
        ResponseMetadataHasReadOnlyFalseIfInProgressAndOperationsVectorNotEmpty) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
     ASSERT_FALSE(txnParticipant.getResponseMetadata().getReadOnly());
 
@@ -3728,7 +3728,7 @@ TEST_F(TxnParticipantTest,
 }
 
 TEST_F(TxnParticipantTest, ResponseMetadataHasReadOnlyFalseIfAborted) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
     ASSERT_FALSE(txnParticipant.getResponseMetadata().getReadOnly());
 
@@ -3831,7 +3831,7 @@ TEST_F(TxnParticipantTest, OldestActiveTransactionTimestampTimeout) {
 };
 
 TEST_F(TxnParticipantTest, ExitPreparePromiseIsFulfilledOnAbortAfterPrepare) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
 
     txnParticipant.beginOrContinue(
@@ -3858,7 +3858,7 @@ TEST_F(TxnParticipantTest, ExitPreparePromiseIsFulfilledOnAbortAfterPrepare) {
 }
 
 TEST_F(TxnParticipantTest, ExitPreparePromiseIsFulfilledOnCommitAfterPrepare) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
 
     txnParticipant.beginOrContinue(
@@ -3884,7 +3884,7 @@ TEST_F(TxnParticipantTest, ExitPreparePromiseIsFulfilledOnCommitAfterPrepare) {
 }
 
 TEST_F(TxnParticipantTest, ExitPreparePromiseIsFulfilledOnAbortPreparedTransactionForRollback) {
-    MongoDOperationContextSession opCtxSession(opCtx());
+    MongerDOperationContextSession opCtxSession(opCtx());
     auto txnParticipant = TransactionParticipant::get(opCtx());
 
     txnParticipant.beginOrContinue(

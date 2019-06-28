@@ -18,13 +18,13 @@ var config = st.config0;
 var authzErrorCode = 13;
 
 // set up user/pwd on admin db with clusterAdmin role (for serverStatus)
-var conn = new Mongo(mongers.host);
+var conn = new Monger(mongers.host);
 var db = conn.getDB('admin');
 db.createUser({user: 'user', pwd: 'pwd', roles: ['clusterAdmin']});
 db.auth('user', 'pwd');
 
 // open a new connection to mongers (unauthorized)
-var conn = new Mongo(mongers.host);
+var conn = new Monger(mongers.host);
 db = conn.getDB('admin');
 
 // first serverStatus should fail since user is not authorized
@@ -37,10 +37,10 @@ assert.commandWorked(db.adminCommand('serverStatus'));
 jsTest.log('repeat without config server');
 
 // shut down only config server
-MongoRunner.stopMongod(config);
+MongerRunner.stopMongerd(config);
 
 // open a new connection to mongers (unauthorized)
-var conn2 = new Mongo(mongers.host);
+var conn2 = new Monger(mongers.host);
 var db2 = conn2.getDB('admin');
 
 // should fail since user is not authorized.

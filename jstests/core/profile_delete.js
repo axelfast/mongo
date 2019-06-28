@@ -24,7 +24,7 @@
     assert.commandWorked(coll.createIndex({a: 1}));
 
     assert.writeOK(coll.remove({a: {$gte: 2}, b: {$gte: 2}},
-                               db.getMongo().writeMode() === "commands"
+                               db.getMonger().writeMode() === "commands"
                                    ? {justOne: true, collation: {locale: "fr"}}
                                    : {justOne: true}));
 
@@ -32,7 +32,7 @@
 
     assert.eq(profileObj.ns, coll.getFullName(), tojson(profileObj));
     assert.eq(profileObj.op, "remove", tojson(profileObj));
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         assert.eq(profileObj.command.collation, {locale: "fr"}, tojson(profileObj));
     }
     assert.eq(profileObj.ndeleted, 1, tojson(profileObj));
@@ -44,7 +44,7 @@
     assert(profileObj.hasOwnProperty("millis"), tojson(profileObj));
     assert(profileObj.hasOwnProperty("numYield"), tojson(profileObj));
     assert(profileObj.hasOwnProperty("locks"), tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Confirm metrics for multiple document delete.
@@ -59,7 +59,7 @@
 
     assert.eq(profileObj.ndeleted, 8, tojson(profileObj));
     assert.eq(profileObj.keysDeleted, 8, tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Confirm "fromMultiPlanner" metric.
@@ -75,7 +75,7 @@
     profileObj = getLatestProfilerEntry(testDB);
 
     assert.eq(profileObj.fromMultiPlanner, true, tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Confirm killing a remove operation will not log 'ndeleted' to the profiler.

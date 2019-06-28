@@ -52,9 +52,9 @@
         assertErrorCode(admin.system.collections, pipeline, ErrorCodes.InvalidNamespace);
     }
 
-    const mongerd = MongoRunner.runMongod({auth: ""});
+    const mongerd = MongerRunner.runMongerd({auth: ""});
     runListAllSessionsTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     const st =
         new ShardingTest({shards: 1, mongers: 1, config: 1, other: {keyFile: 'jstests/libs/key1'}});

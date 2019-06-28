@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -82,9 +82,9 @@ StatusWith<std::string> extractDBField(const BSONObj& params) {
 // MONGODB-CR
 //
 
-Future<void> authMongoCRImpl(RunCommandHook cmd, const BSONObj& params) {
+Future<void> authMongerCRImpl(RunCommandHook cmd, const BSONObj& params) {
     return Status(ErrorCodes::AuthenticationFailed,
-                  "MONGODB-CR support was removed in MongoDB 4.0");
+                  "MONGODB-CR support was removed in MongerDB 4.0");
 }
 
 //
@@ -170,11 +170,11 @@ Future<void> authenticateClient(const BSONObj& params,
                       "You cannot specify both 'db' and 'userSource'. Please use only 'db'.");
     }
 
-    if (mechanism == kMechanismMongoCR)
-        return authMongoCR(runCommand, params).onError(errorHandler);
+    if (mechanism == kMechanismMongerCR)
+        return authMongerCR(runCommand, params).onError(errorHandler);
 
 #ifdef MONGO_CONFIG_SSL
-    else if (mechanism == kMechanismMongoX509)
+    else if (mechanism == kMechanismMongerX509)
         return authX509(runCommand, params, clientName).onError(errorHandler);
 #endif
 
@@ -185,7 +185,7 @@ Future<void> authenticateClient(const BSONObj& params,
                   mechanism + " mechanism support not compiled into client library.");
 };
 
-AuthMongoCRHandler authMongoCR = authMongoCRImpl;
+AuthMongerCRHandler authMongerCR = authMongerCRImpl;
 
 static stdx::mutex internalAuthKeysMutex;
 static bool internalAuthSet = false;

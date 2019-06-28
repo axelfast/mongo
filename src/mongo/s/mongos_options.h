@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,21 +45,21 @@ class Environment;
 
 namespace moe = monger::optionenvironment;
 
-struct MongosGlobalParams {
+struct MongersGlobalParams {
     // The config server connection string
     ConnectionString configdbs;
 };
 
-extern MongosGlobalParams mongersGlobalParams;
+extern MongersGlobalParams mongersGlobalParams;
 
-void printMongosHelp(const moe::OptionSection& options);
+void printMongersHelp(const moe::OptionSection& options);
 
 /**
  * Handle options that should come before validation, such as "help".
  *
  * Returns false if an option was found that implies we should prematurely exit with success.
  */
-bool handlePreValidationMongosOptions(const moe::Environment& params,
+bool handlePreValidationMongersOptions(const moe::Environment& params,
                                       const std::vector<std::string>& args);
 
 /**
@@ -67,7 +67,7 @@ bool handlePreValidationMongosOptions(const moe::Environment& params,
  * Constraints in the Environment.  See the "validate" function in the Environment class for
  * more details.
  */
-Status validateMongosOptions(const moe::Environment& params);
+Status validateMongersOptions(const moe::Environment& params);
 
 /**
  * Canonicalize mongers options for the given environment.
@@ -75,7 +75,7 @@ Status validateMongosOptions(const moe::Environment& params);
  * For example, the options "dur", "nodur", "journal", "nojournal", and
  * "storage.journaling.enabled" should all be merged into "storage.journaling.enabled".
  */
-Status canonicalizeMongosOptions(moe::Environment* params);
+Status canonicalizeMongersOptions(moe::Environment* params);
 
-Status storeMongosOptions(const moe::Environment& params);
+Status storeMongersOptions(const moe::Environment& params);
 }

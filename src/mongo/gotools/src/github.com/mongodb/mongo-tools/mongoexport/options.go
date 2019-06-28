@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -17,7 +17,7 @@ import (
 
 var Usage = `<options>
 
-Export data from MongoDB in CSV or JSON format.
+Export data from MongerDB in CSV or JSON format.
 
 See http://docs.mongerdb.org/manual/reference/program/mongerexport/ for more information.`
 

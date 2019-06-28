@@ -1,6 +1,6 @@
 #
 # This file defines the tasks and platforms for WiredTiger in the
-# MongoDB continuous integration system (see https://mci.mongerdb.com).
+# MongerDB continuous integration system (see https://mci.mongerdb.com).
 #
 
 functions:

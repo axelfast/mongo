@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -621,7 +621,7 @@ int main(const int argc, const char* const* const argv) {
 
     const auto result = ::monger::unittest::Suite::run(std::vector<std::string>(), "", 1);
 
-    // This is the standard exit path for Mongo processes. See the monger::quickExit() declaration
+    // This is the standard exit path for Monger processes. See the monger::quickExit() declaration
     // for more information.
     monger::quickExit(result);
 }

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -441,7 +441,7 @@ public:
     /**
      * Constructs a cursor over a record store that returns documents in a randomized order, and
      * allows storage engines to provide a more efficient way of random sampling of a record store
-     * than MongoDB's default sampling methods, which is used when this method returns {}.
+     * than MongerDB's default sampling methods, which is used when this method returns {}.
      *
      * This method may be implemented using a pseudo-random walk over B-trees or a similar approach.
      * Different cursors should return documents in a different order. Random cursors may return

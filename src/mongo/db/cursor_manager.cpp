@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -236,7 +236,7 @@ void CursorManager::appendActiveSessions(LogicalSessionIdSet* lsids) const {
 }
 
 std::vector<GenericCursor> CursorManager::getIdleCursors(
-    OperationContext* opCtx, MongoProcessInterface::CurrentOpUserMode userMode) const {
+    OperationContext* opCtx, MongerProcessInterface::CurrentOpUserMode userMode) const {
     std::vector<GenericCursor> cursors;
     AuthorizationSession* ctxAuth = AuthorizationSession::get(opCtx->getClient());
 
@@ -247,7 +247,7 @@ std::vector<GenericCursor> CursorManager::getIdleCursors(
 
             // Exclude cursors that this user does not own if auth is enabled.
             if (ctxAuth->getAuthorizationManager().isAuthEnabled() &&
-                userMode == MongoProcessInterface::CurrentOpUserMode::kExcludeOthers &&
+                userMode == MongerProcessInterface::CurrentOpUserMode::kExcludeOthers &&
                 !ctxAuth->isCoauthorizedWith(cursor->getAuthenticatedUsers())) {
                 continue;
             }

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -161,8 +161,8 @@ public:
     std::string longDescription;   // A long form description of the entity associated with the OID
 };
 const ASN1OID mongerdbRolesOID("1.3.6.1.4.1.34601.2.1.1",
-                              "MongoRoles",
-                              "Sequence of MongoDB Database Roles");
+                              "MongerRoles",
+                              "Sequence of MongerDB Database Roles");
 
 /**
  * Counts of negogtiated version used by TLS connections.

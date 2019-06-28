@@ -51,9 +51,9 @@ if (0) {
 
         step("dump cluster");
 
-        dumpdir = MongoRunner.dataDir + "/dumprestore9-dump1/";
+        dumpdir = MongerRunner.dataDir + "/dumprestore9-dump1/";
         resetDbpath(dumpdir);
-        var exitCode = MongoRunner.runMongoTool("mongerdump", {
+        var exitCode = MongerRunner.runMongerTool("mongerdump", {
             host: s.s0.host,
             out: dumpdir,
         });
@@ -73,7 +73,7 @@ if (0) {
 
         step("Restore data and config");
 
-        exitCode = MongoRunner.runMongoTool("mongerrestore", {
+        exitCode = MongerRunner.runMongerTool("mongerrestore", {
             dir: dumpdir,
             host: s.s1.host,
             restoreShardingConfig: "",

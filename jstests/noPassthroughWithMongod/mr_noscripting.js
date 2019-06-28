@@ -1,4 +1,4 @@
-var conn = MongoRunner.runMongod({noscripting: ''});
+var conn = MongerRunner.runMongerd({noscripting: ''});
 var testDB = conn.getDB('foo');
 var coll = testDB.bar;
 
@@ -19,4 +19,4 @@ assert.eq(0, mrResult.ok, 'mr result: ' + tojson(mrResult));
 // Confirm that mongerd did not crash
 var cmdResult = testDB.adminCommand({serverStatus: 1});
 assert(cmdResult.ok, 'serverStatus failed, result: ' + tojson(cmdResult));
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);

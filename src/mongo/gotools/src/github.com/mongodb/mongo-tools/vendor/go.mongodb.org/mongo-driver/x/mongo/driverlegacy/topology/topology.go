@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -51,7 +51,7 @@ const (
 	SingleMode
 )
 
-// Topology represents a MongoDB deployment.
+// Topology represents a MongerDB deployment.
 type Topology struct {
 	registry *bsoncodec.Registry
 

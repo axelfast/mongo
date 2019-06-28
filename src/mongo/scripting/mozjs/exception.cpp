@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -110,7 +110,7 @@ void throwCurrentJSException(JSContext* cx, ErrorCodes::Error altCode, StringDat
  * Turns a status into a js exception
  */
 void statusToJSException(JSContext* cx, Status status, JS::MutableHandleValue out) {
-    MongoStatusInfo::fromStatus(cx, std::move(status), out);
+    MongerStatusInfo::fromStatus(cx, std::move(status), out);
 }
 
 /**
@@ -126,8 +126,8 @@ Status jsExceptionToStatus(JSContext* cx,
         return Status(altCode, ValueWriter(cx, excn).toString());
     }
 
-    if (scope->getProto<MongoStatusInfo>().instanceOf(excn)) {
-        return MongoStatusInfo::toStatus(cx, excn);
+    if (scope->getProto<MongerStatusInfo>().instanceOf(excn)) {
+        return MongerStatusInfo::toStatus(cx, excn);
     }
 
     JS::RootedObject obj(cx, excn.toObjectOrNull());

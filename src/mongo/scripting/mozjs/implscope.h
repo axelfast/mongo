@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -235,13 +235,13 @@ public:
     }
 
     template <typename T>
-    typename std::enable_if<std::is_same<T, MongoExternalInfo>::value, WrapType<T>&>::type
+    typename std::enable_if<std::is_same<T, MongerExternalInfo>::value, WrapType<T>&>::type
     getProto() {
         return _mongerExternalProto;
     }
 
     template <typename T>
-    typename std::enable_if<std::is_same<T, MongoHelpersInfo>::value, WrapType<T>&>::type
+    typename std::enable_if<std::is_same<T, MongerHelpersInfo>::value, WrapType<T>&>::type
     getProto() {
         return _mongerHelpersProto;
     }
@@ -294,7 +294,7 @@ public:
     }
 
     template <typename T>
-    typename std::enable_if<std::is_same<T, MongoStatusInfo>::value, WrapType<T>&>::type
+    typename std::enable_if<std::is_same<T, MongerStatusInfo>::value, WrapType<T>&>::type
     getProto() {
         return _statusProto;
     }
@@ -445,8 +445,8 @@ private:
     WrapType<JSThreadInfo> _jsThreadProto;
     WrapType<MaxKeyInfo> _maxKeyProto;
     WrapType<MinKeyInfo> _minKeyProto;
-    WrapType<MongoExternalInfo> _mongerExternalProto;
-    WrapType<MongoHelpersInfo> _mongerHelpersProto;
+    WrapType<MongerExternalInfo> _mongerExternalProto;
+    WrapType<MongerHelpersInfo> _mongerHelpersProto;
     WrapType<NativeFunctionInfo> _nativeFunctionProto;
     WrapType<NumberDecimalInfo> _numberDecimalProto;
     WrapType<NumberIntInfo> _numberIntProto;
@@ -455,7 +455,7 @@ private:
     WrapType<OIDInfo> _oidProto;
     WrapType<RegExpInfo> _regExpProto;
     WrapType<SessionInfo> _sessionProto;
-    WrapType<MongoStatusInfo> _statusProto;
+    WrapType<MongerStatusInfo> _statusProto;
     WrapType<TimestampInfo> _timestampProto;
     WrapType<URIInfo> _uriProto;
 };

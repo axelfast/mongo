@@ -219,7 +219,7 @@ function requireSSLProvider(required, fn) {
 }
 
 function detectDefaultTLSProtocol() {
-    const conn = MongoRunner.runMongod({
+    const conn = MongerRunner.runMongerd({
         sslMode: 'allowSSL',
         sslPEMKeyFile: SERVER_CERT,
         sslDisabledProtocols: 'none',
@@ -229,7 +229,7 @@ function detectDefaultTLSProtocol() {
     });
 
     assert.eq(0,
-              runMongoProgram('monger',
+              runMongerProgram('monger',
                               '--ssl',
                               '--port',
                               conn.port,
@@ -242,7 +242,7 @@ function detectDefaultTLSProtocol() {
 
     const res = conn.getDB("admin").serverStatus().transportSecurity;
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Verify that the default protocol is either TLS1.2 or TLS1.3.
     // No supported platform should default to an older protocol version.

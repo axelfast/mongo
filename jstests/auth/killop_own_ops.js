@@ -10,7 +10,7 @@
 (function() {
     'use strict';
 
-    load("jstests/libs/fixture_helpers.js");  // For isMongos.
+    load("jstests/libs/fixture_helpers.js");  // For isMongers.
 
     function runTest(m, failPointName) {
         var db = m.getDB("foo");
@@ -31,7 +31,7 @@
         var t = db.jstests_killop;
         t.save({x: 1});
 
-        if (!FixtureHelpers.isMongos(db)) {
+        if (!FixtureHelpers.isMongers(db)) {
             assert.commandWorked(
                 db.adminCommand({setParameter: 1, internalQueryExecYieldIterations: 1}));
         }
@@ -146,9 +146,9 @@
         assert.lt(diff, 30000, "Start: " + start + "; end: " + end + "; diff: " + diff);
     }
 
-    var conn = MongoRunner.runMongod({auth: ""});
+    var conn = MongerRunner.runMongerd({auth: ""});
     runTest(conn, "setYieldAllLocksHang");
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     var st = new ShardingTest(

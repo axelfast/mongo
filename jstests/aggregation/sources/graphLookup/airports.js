@@ -2,7 +2,7 @@
 // for target collection of $lookup and $graphLookup.
 // @tags: [assumes_unsharded_collection]
 
-// In MongoDB 3.4, $graphLookup was introduced. In this file, we test some complex graphs.
+// In MongerDB 3.4, $graphLookup was introduced. In this file, we test some complex graphs.
 
 (function() {
     "use strict";

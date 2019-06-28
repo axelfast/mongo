@@ -7,7 +7,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
 (function() {
 
     const x509_options = {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT};
-    const conn = MongoRunner.runMongod(x509_options);
+    const conn = MongerRunner.runMongerd(x509_options);
 
     const shellOpts = [
         "monger",
@@ -36,6 +36,6 @@ load('jstests/ssl/libs/ssl_helpers.js');
     ];
 
     for (const file of testFiles) {
-        runMongoProgram(...shellOpts, file);
+        runMongerProgram(...shellOpts, file);
     }
 }());

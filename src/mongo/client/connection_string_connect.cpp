@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -49,8 +49,8 @@ ConnectionString::ConnectionHook* ConnectionString::_connectHook = nullptr;
 std::unique_ptr<DBClientBase> ConnectionString::connect(StringData applicationName,
                                                         std::string& errmsg,
                                                         double socketTimeout,
-                                                        const MongoURI* uri) const {
-    MongoURI newURI{};
+                                                        const MongerURI* uri) const {
+    MongerURI newURI{};
     if (uri) {
         newURI = *uri;
     }

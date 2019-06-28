@@ -28,10 +28,10 @@ load('./jstests/libs/chunk_manipulation_util.js');
     pauseMigrateAtStep(st.shard1, migrateStepNames.deletedPriorDataInRange);
 
     // For startParallelOps to write its state
-    var staticMongod = MongoRunner.runMongod({});
+    var staticMongerd = MongerRunner.runMongerd({});
 
     var joinMoveChunk = moveChunkParallel(
-        staticMongod, mongers.host, {Key: 0}, null, 'TestDB.TestColl', st.shard1.shardName);
+        staticMongerd, mongers.host, {Key: 0}, null, 'TestDB.TestColl', st.shard1.shardName);
     waitForMigrateStep(st.shard1, migrateStepNames.deletedPriorDataInRange);
 
     // Stepdown the primary in order to force the balancer to stop. Use a timeout of 5 seconds for
@@ -73,5 +73,5 @@ load('./jstests/libs/chunk_manipulation_util.js');
                   .itcount());
 
     st.stop();
-    MongoRunner.stopMongod(staticMongod);
+    MongerRunner.stopMongerd(staticMongerd);
 })();

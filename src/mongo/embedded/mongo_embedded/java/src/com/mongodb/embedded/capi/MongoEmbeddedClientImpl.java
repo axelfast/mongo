@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,11 +39,11 @@ import com.sun.jna.ptr.PointerByReference;
 
 import java.nio.ByteBuffer;
 
-class MongoEmbeddedClientImpl implements MongoEmbeddedClient {
+class MongerEmbeddedClientImpl implements MongerEmbeddedClient {
     private final CAPI.monger_embedded_v1_status status;
     private final CAPI.monger_embedded_v1_client client;
 
-    MongoEmbeddedClientImpl(final CAPI.monger_embedded_v1_instance instance) {
+    MongerEmbeddedClientImpl(final CAPI.monger_embedded_v1_instance instance) {
         status = CAPIHelper.createStatusPointer();
 
         try {

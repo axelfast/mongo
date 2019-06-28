@@ -21,13 +21,13 @@
     // 'duringFailpointFunc' while the failpoint is active.
     let doDuringFailpoint = function(
         failPointName, logMessage, hitFailpointFunc, duringFailpointFunc, i) {
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
         assert.commandWorked(testDB.adminCommand(
             {configureFailPoint: failPointName, mode: "alwaysOn", data: {"i": i}}));
 
         hitFailpointFunc();
 
-        assert.soon(() => rawMongoProgramOutput().indexOf(logMessage) >= 0);
+        assert.soon(() => rawMongerProgramOutput().indexOf(logMessage) >= 0);
 
         duringFailpointFunc();
 
@@ -47,7 +47,7 @@
 
     let buildIndexInBackground = function(coll, expectDuplicateKeyError) {
         const createIndexFunction = function(collFullName) {
-            const coll = db.getMongo().getCollection(collFullName);
+            const coll = db.getMonger().getCollection(collFullName);
             return coll.createIndex({i: 1}, {background: true, unique: true});
         };
         const assertFunction = expectDuplicateKeyError ? function(collFullName) {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -54,7 +54,7 @@ namespace {
 using namespace monger;
 using namespace monger::repl;
 
-class OplogBufferCollectionTest : public ServiceContextMongoDTest {
+class OplogBufferCollectionTest : public ServiceContextMongerDTest {
 protected:
     Client* getClient() const;
 
@@ -70,7 +70,7 @@ private:
 };
 
 void OplogBufferCollectionTest::setUp() {
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
     auto service = getServiceContext();
 
     // AutoGetCollectionForReadCommand requires a valid replication coordinator in order to check
@@ -87,7 +87,7 @@ void OplogBufferCollectionTest::setUp() {
 void OplogBufferCollectionTest::tearDown() {
     _opCtx.reset();
     _storageInterface = nullptr;
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 ServiceContext::UniqueOperationContext OplogBufferCollectionTest::makeOperationContext() const {

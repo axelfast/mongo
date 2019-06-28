@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -54,7 +54,7 @@ public:
     static constexpr StringData kCommandName = "aggregate"_sd;
     static constexpr StringData kCursorName = "cursor"_sd;
     static constexpr StringData kBatchSizeName = "batchSize"_sd;
-    static constexpr StringData kFromMongosName = "fromMongos"_sd;
+    static constexpr StringData kFromMongersName = "fromMongers"_sd;
     static constexpr StringData kNeedsMergeName = "needsMerge"_sd;
     static constexpr StringData kPipelineName = "pipeline"_sd;
     static constexpr StringData kCollationName = "collation"_sd;
@@ -158,8 +158,8 @@ public:
     /**
      * Returns true if this request originated from a mongerS.
      */
-    bool isFromMongos() const {
-        return _fromMongos;
+    bool isFromMongers() const {
+        return _fromMongers;
     }
 
     /**
@@ -253,8 +253,8 @@ public:
         _allowDiskUse = allowDiskUse;
     }
 
-    void setFromMongos(bool isFromMongos) {
-        _fromMongos = isFromMongos;
+    void setFromMongers(bool isFromMongers) {
+        _fromMongers = isFromMongers;
     }
 
     void setNeedsMerge(bool needsMerge) {
@@ -323,7 +323,7 @@ private:
     boost::optional<ExplainOptions::Verbosity> _explainMode;
 
     bool _allowDiskUse = false;
-    bool _fromMongos = false;
+    bool _fromMongers = false;
     bool _needsMerge = false;
     bool _bypassDocumentValidation = false;
 

@@ -85,7 +85,7 @@
                 writeConcern: {w: "majority"}
             }));
 
-        }, writeDB.getMongo().port);
+        }, writeDB.getMonger().port);
 
         // Confirm that the index build has started.
         assert.soon(() => indexBuildIsRunning(readDB, "most_selective"),

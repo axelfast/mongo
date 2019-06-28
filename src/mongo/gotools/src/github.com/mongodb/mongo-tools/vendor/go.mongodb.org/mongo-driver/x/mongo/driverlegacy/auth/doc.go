@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -11,7 +11,7 @@
 //
 // The packages within the 'private' directory would normally be put into an
 // 'internal' directory to prohibit their use outside the 'monger' directory.
-// However, some MongoDB tools require very low-level access to the building
+// However, some MongerDB tools require very low-level access to the building
 // blocks of a driver, so we have placed them under 'private' to allow these
 // packages to be imported by projects that need them.
 //

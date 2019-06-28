@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -172,7 +172,7 @@ func shouldSkipSystemNamespace(dbName, collName string) bool {
 
 // shouldSkipCollection returns true when a collection name is excluded
 // by the mongerdump options.
-func (dump *MongoDump) shouldSkipCollection(colName string) bool {
+func (dump *MongerDump) shouldSkipCollection(colName string) bool {
 	for _, excludedCollection := range dump.OutputOptions.ExcludedCollections {
 		if colName == excludedCollection {
 			return true
@@ -187,7 +187,7 @@ func (dump *MongoDump) shouldSkipCollection(colName string) bool {
 }
 
 // outputPath creates a path for the collection to be written to (sans file extension).
-func (dump *MongoDump) outputPath(dbName, colName string) string {
+func (dump *MongerDump) outputPath(dbName, colName string) string {
 	var root string
 	if dump.OutputOptions.Out == "" {
 		root = "dump"
@@ -208,7 +208,7 @@ func checkStringForPathSeparator(s string, c *rune) bool {
 }
 
 // CreateOplogIntents creates an intents.Intent for the oplog and adds it to the manager
-func (dump *MongoDump) CreateOplogIntents() error {
+func (dump *MongerDump) CreateOplogIntents() error {
 	err := dump.determineOplogCollectionName()
 	if err != nil {
 		return err
@@ -229,7 +229,7 @@ func (dump *MongoDump) CreateOplogIntents() error {
 // CreateUsersRolesVersionIntentsForDB create intents to be written in to the specific
 // database folder, for the users, roles and version admin database collections
 // And then it adds the intents in to the manager
-func (dump *MongoDump) CreateUsersRolesVersionIntentsForDB(db string) error {
+func (dump *MongerDump) CreateUsersRolesVersionIntentsForDB(db string) error {
 
 	outDir := dump.outputPath(db, "")
 
@@ -263,7 +263,7 @@ func (dump *MongoDump) CreateUsersRolesVersionIntentsForDB(db string) error {
 
 // CreateCollectionIntent builds an intent for a given collection and
 // puts it into the intent manager.
-func (dump *MongoDump) CreateCollectionIntent(dbName, colName string) error {
+func (dump *MongerDump) CreateCollectionIntent(dbName, colName string) error {
 	if dump.shouldSkipCollection(colName) {
 		log.Logvf(log.DebugLow, "skipping dump of %v.%v, it is excluded", dbName, colName)
 		return nil
@@ -288,7 +288,7 @@ func (dump *MongoDump) CreateCollectionIntent(dbName, colName string) error {
 	return nil
 }
 
-func (dump *MongoDump) NewIntentFromOptions(dbName string, ci *db.CollectionInfo) (*intents.Intent, error) {
+func (dump *MongerDump) NewIntentFromOptions(dbName string, ci *db.CollectionInfo) (*intents.Intent, error) {
 	intent := &intents.Intent{
 		DB:      dbName,
 		C:       ci.Name,
@@ -363,7 +363,7 @@ func (dump *MongoDump) NewIntentFromOptions(dbName string, ci *db.CollectionInfo
 
 // CreateIntentsForDatabase iterates through collections in a db
 // and builds dump intents for each collection.
-func (dump *MongoDump) CreateIntentsForDatabase(dbName string) error {
+func (dump *MongerDump) CreateIntentsForDatabase(dbName string) error {
 	// we must ensure folders for empty databases are still created, for legacy purposes
 
 	session, err := dump.SessionProvider.GetSession()
@@ -407,7 +407,7 @@ func (dump *MongoDump) CreateIntentsForDatabase(dbName string) error {
 
 // CreateAllIntents iterates through all dbs and collections and builds
 // dump intents for each collection.
-func (dump *MongoDump) CreateAllIntents() error {
+func (dump *MongerDump) CreateAllIntents() error {
 	dbs, err := dump.SessionProvider.DatabaseNames()
 	if err != nil {
 		return fmt.Errorf("error getting database names: %v", err)

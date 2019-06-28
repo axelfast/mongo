@@ -15,7 +15,7 @@
     rst.startSet();
     rst.initiate();
     let session =
-        rst.getPrimary().getDB(dbName).getMongo().startSession({causalConsistency: false});
+        rst.getPrimary().getDB(dbName).getMonger().startSession({causalConsistency: false});
     let sessionDb = session.getDatabase(dbName);
     if (!sessionDb.serverStatus().storageEngine.supportsSnapshotReadConcern) {
         // Transactions with readConcern snapshot fail.
@@ -39,7 +39,7 @@
     rst.stopSet();
 
     // readConcern 'snapshot' is not allowed on a standalone.
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     session = conn.startSession({causalConsistency: false});
     sessionDb = session.getDatabase(dbName);
     assert.neq(null, conn, "mongerd was unable to start up");
@@ -49,7 +49,7 @@
     assert.commandFailedWithCode(session.abortTransaction_forTesting(),
                                  ErrorCodes.IllegalOperation);
     session.endSession();
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // readConcern 'snapshot' is allowed on a replica set primary.
     rst = new ReplSetTest({nodes: 2});
@@ -57,7 +57,7 @@
     rst.initiate();
     assert.commandWorked(rst.getPrimary().getDB(dbName).runCommand(
         {create: collName, writeConcern: {w: "majority"}}));
-    session = rst.getPrimary().getDB(dbName).getMongo().startSession({causalConsistency: false});
+    session = rst.getPrimary().getDB(dbName).getMonger().startSession({causalConsistency: false});
     sessionDb = session.getDatabase(dbName);
     session.startTransaction({writeConcern: {w: "majority"}, readConcern: {level: "snapshot"}});
     assert.commandWorked(sessionDb.coll.insert({}));
@@ -111,7 +111,7 @@
         writeConcern: {w: "majority"}
     }));
 
-    session = testDB.getMongo().startSession({causalConsistency: false});
+    session = testDB.getMonger().startSession({causalConsistency: false});
     sessionDb = session.getDatabase(dbName);
 
     // readConcern 'snapshot' is supported by find.

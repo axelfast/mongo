@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2015-present.
+// Copyright (C) MongerDB, Inc. 2015-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -60,8 +60,8 @@ const (
 type Session struct {
 	m                sync.RWMutex
 	cluster_         *mongerCluster
-	slaveSocket      *MongoSocket
-	masterSocket     *MongoSocket
+	slaveSocket      *MongerSocket
+	masterSocket     *MongerSocket
 	slaveOk          bool
 	consistency      Mode
 	queryConfig      query
@@ -76,8 +76,8 @@ type Session struct {
 	bypassValidation bool
 }
 
-type MongoSession interface {
-	AcquireSocketPrivate(slaveOk bool) (*MongoSocket, error)
+type MongerSession interface {
+	AcquireSocketPrivate(slaveOk bool) (*MongerSocket, error)
 }
 
 type Database struct {
@@ -115,7 +115,7 @@ type Iter struct {
 	m              sync.Mutex
 	gotReply       sync.Cond
 	session        *Session
-	server         *MongoServer
+	server         *MongerServer
 	docData        queue
 	err            error
 	op             GetMoreOp
@@ -184,7 +184,7 @@ const defaultPrefetch = 0.25
 //     authSource=<db>
 //
 //         Informs the database used to establish credentials and privileges
-//         with a MongoDB server. Defaults to the database name provided via
+//         with a MongerDB server. Defaults to the database name provided via
 //         the URL path, and "admin" if that's unset.
 //
 //
@@ -233,7 +233,7 @@ func DialWithTimeout(url string, timeout time.Duration) (*Session, error) {
 	return DialWithInfo(info)
 }
 
-// ParseURL parses a MongoDB URL as accepted by the Dial function and returns
+// ParseURL parses a MongerDB URL as accepted by the Dial function and returns
 // a value suitable for providing into DialWithInfo.
 //
 // See Dial for more details on the format of url.
@@ -291,7 +291,7 @@ func ParseURL(url string) (*DialInfo, error) {
 	return &info, nil
 }
 
-// DialInfo holds options for establishing a session with a MongoDB cluster.
+// DialInfo holds options for establishing a session with a MongerDB cluster.
 // To use a URL, see the Dial function.
 type DialInfo struct {
 	// Addrs holds the addresses for the seed servers.
@@ -327,7 +327,7 @@ type DialInfo struct {
 	ReplicaSetName string
 
 	// Source is the database used to establish credentials and privileges
-	// with a MongoDB server. Defaults to the value of Database, if that is
+	// with a MongerDB server. Defaults to the value of Database, if that is
 	// set, or "admin" otherwise.
 	Source string
 
@@ -336,7 +336,7 @@ type DialInfo struct {
 	Service string
 
 	// ServiceHost defines which hostname to use when authenticating
-	// with the GSSAPI mechanism. If not specified, defaults to the MongoDB
+	// with the GSSAPI mechanism. If not specified, defaults to the MongerDB
 	// server's address.
 	ServiceHost string
 
@@ -354,7 +354,7 @@ type DialInfo struct {
 	PoolLimit int
 
 	// DialServer optionally specifies the dial function for establishing
-	// connections with the MongoDB servers.
+	// connections with the MongerDB servers.
 	DialServer func(addr *ServerAddr) (net.Conn, error)
 
 	// WARNING: This field is obsolete. See DialServer above.
@@ -364,7 +364,7 @@ type DialInfo struct {
 // mgo.v3: Drop DialInfo.Dial.
 
 // ServerAddr represents the address for establishing a connection to an
-// individual MongoDB server.
+// individual MongerDB server.
 type ServerAddr struct {
 	str string
 	tcp *net.TCPAddr
@@ -599,7 +599,7 @@ func (db *Database) GridFS(prefix string) *GridFS {
 // a string with the command name itself, in which case an empty document of
 // the form bson.M{cmd: 1} will be used, or it may be a full command document.
 //
-// Note that MongoDB considers the first marshalled key as the command
+// Note that MongerDB considers the first marshalled key as the command
 // name, so when providing a command with options, it's important to
 // use an ordering-preserving document, such as a struct value or an
 // instance of bson.D.  For instance:
@@ -627,7 +627,7 @@ func (db *Database) Run(cmd interface{}, result interface{}) error {
 }
 
 //returns metadata, bodydata, an array of reply documents, a reply, and an error
-func ExecOpWithReply(socket *MongoSocket, op OpWithReply) ([]byte, []byte, [][]byte, interface{}, error) {
+func ExecOpWithReply(socket *MongerSocket, op OpWithReply) ([]byte, []byte, [][]byte, interface{}, error) {
 	var wait sync.Mutex
 	var reply interface{}
 	var err error
@@ -693,7 +693,7 @@ func ExecOpWithReply(socket *MongoSocket, op OpWithReply) ([]byte, []byte, [][]b
 	return metaData, bodyData, replyData, reply, replyErr
 }
 
-func ExecOpWithoutReply(socket *MongoSocket, op interface{}) error {
+func ExecOpWithoutReply(socket *MongerSocket, op interface{}) error {
 	err := socket.Query(op)
 	if err != nil {
 		return err
@@ -701,7 +701,7 @@ func ExecOpWithoutReply(socket *MongoSocket, op interface{}) error {
 	return nil
 }
 
-// Credential holds details to authenticate with a MongoDB server.
+// Credential holds details to authenticate with a MongerDB server.
 type Credential struct {
 	// Username and Password hold the basic details for authentication.
 	// Password is optional with some authentication mechanisms.
@@ -709,7 +709,7 @@ type Credential struct {
 	Password string
 
 	// Source is the database used to establish credentials and privileges
-	// with a MongoDB server. Defaults to the default database provided
+	// with a MongerDB server. Defaults to the default database provided
 	// during dial, or "admin" if that was unset.
 	Source string
 
@@ -718,7 +718,7 @@ type Credential struct {
 	Service string
 
 	// ServiceHost defines which hostname to use when authenticating
-	// with the GSSAPI mechanism. If not specified, defaults to the MongoDB
+	// with the GSSAPI mechanism. If not specified, defaults to the MongerDB
 	// server's address.
 	ServiceHost string
 
@@ -727,7 +727,7 @@ type Credential struct {
 	Mechanism string
 }
 
-// Login authenticates with MongoDB using the provided credential.  The
+// Login authenticates with MongerDB using the provided credential.  The
 // authentication is valid for the whole session and will stay valid until
 // Logout is explicitly called for the same database, or the session is
 // closed.
@@ -735,7 +735,7 @@ func (db *Database) Login(user, pass string) error {
 	return db.Session.Login(&Credential{Username: user, Password: pass, Source: db.Name})
 }
 
-// Login authenticates with MongoDB using the provided credential.  The
+// Login authenticates with MongerDB using the provided credential.  The
 // authentication is valid for the whole session and will stay valid until
 // Logout is explicitly called for the same database, or the session is
 // closed.
@@ -765,7 +765,7 @@ func (s *Session) Login(cred *Credential) error {
 	return nil
 }
 
-func (s *Session) socketLogin(socket *MongoSocket) error {
+func (s *Session) socketLogin(socket *MongerSocket) error {
 	for _, cred := range s.creds {
 		if err := socket.Login(cred); err != nil {
 			return err
@@ -814,7 +814,7 @@ func (s *Session) LogoutAll() {
 	s.m.Unlock()
 }
 
-// User represents a MongoDB user.
+// User represents a MongerDB user.
 //
 // Relevant documentation:
 //
@@ -851,7 +851,7 @@ type User struct {
 	// consulting an external resource such as Kerberos. UserSource
 	// must not be set if Password or PasswordHash are present.
 	//
-	// WARNING: This setting was only ever supported in MongoDB 2.4,
+	// WARNING: This setting was only ever supported in MongerDB 2.4,
 	// and is now obsolete.
 	UserSource string `bson:"userSource,omitempty"`
 }
@@ -876,11 +876,11 @@ const (
 )
 
 // UpsertUser updates the authentication credentials and the roles for
-// a MongoDB user within the db database. If the named user doesn't exist
+// a MongerDB user within the db database. If the named user doesn't exist
 // it will be created.
 //
-// This method should only be used from MongoDB 2.4 and on. For older
-// MongoDB releases, use the obsolete AddUser method instead.
+// This method should only be used from MongerDB 2.4 and on. For older
+// MongerDB releases, use the obsolete AddUser method instead.
 //
 // Relevant documentation:
 //
@@ -901,7 +901,7 @@ func (db *Database) UpsertUser(user *User) error {
 	// Attempt to run this using 2.6+ commands.
 	rundb := db
 	if user.UserSource != "" {
-		// Compatibility logic for the userSource field of MongoDB <= 2.4.X
+		// Compatibility logic for the userSource field of MongerDB <= 2.4.X
 		rundb = db.Session.DB(user.UserSource)
 	}
 	err := rundb.runUserCmd("updateUser", user)
@@ -941,7 +941,7 @@ func (db *Database) UpsertUser(user *User) error {
 	if err == ErrNotFound {
 		set = append(set, bson.DocElem{"user", user.Username})
 		if user.Roles == nil && user.OtherDBRoles == nil {
-			// Roles must be sent, as it's the way MongoDB distinguishes
+			// Roles must be sent, as it's the way MongerDB distinguishes
 			// old-style documents from new-style documents in pre-2.6.
 			set = append(set, bson.DocElem{"roles", user.Roles})
 		}
@@ -985,7 +985,7 @@ func (db *Database) runUserCmd(cmdName string, user *User) error {
 	}
 	err := db.Run(cmd, nil)
 	if !isNoCmd(err) && user.UserSource != "" && (user.UserSource != "$external" || db.Name != "$external") {
-		return fmt.Errorf("MongoDB 2.6+ does not support the UserSource setting")
+		return fmt.Errorf("MongerDB 2.6+ does not support the UserSource setting")
 	}
 	return err
 }
@@ -993,8 +993,8 @@ func (db *Database) runUserCmd(cmdName string, user *User) error {
 // AddUser creates or updates the authentication credentials of user within
 // the db database.
 //
-// WARNING: This method is obsolete and should only be used with MongoDB 2.2
-// or earlier. For MongoDB 2.4 and on, use UpsertUser instead.
+// WARNING: This method is obsolete and should only be used with MongerDB 2.2
+// or earlier. For MongerDB 2.4 and on, use UpsertUser instead.
 func (db *Database) AddUser(username, password string, readOnly bool) error {
 	// Try to emulate the old behavior on 2.6+
 	user := &User{Username: username, Password: password}
@@ -1748,7 +1748,7 @@ func (s *Session) SetPoolLimit(limit int) {
 // being modfified. The default is to not bypass, and thus to perform the
 // validation expressions registered for modified collections.
 //
-// Document validation was introuced in MongoDB 3.2.
+// Document validation was introuced in MongerDB 3.2.
 //
 // Relevant documentation:
 //
@@ -1765,7 +1765,7 @@ func (s *Session) SetBypassValidation(bypass bool) {
 // well, using the Query.Batch method.
 //
 // The default batch size is defined by the database itself.  As of this
-// writing, MongoDB will use an initial size of min(100 docs, 4MB) on the
+// writing, MongerDB will use an initial size of min(100 docs, 4MB) on the
 // first batch, and 4MB on remaining ones.
 func (s *Session) SetBatch(n int) {
 	if n == 1 {
@@ -1799,7 +1799,7 @@ func (s *Session) SetPrefetch(p float64) {
 // See SetSafe for details on the Safe type.
 type Safe struct {
 	W        int    // Min # of servers to ack before success
-	WMode    string // Write mode for MongoDB 2.0+ (e.g. "majority")
+	WMode    string // Write mode for MongerDB 2.0+ (e.g. "majority")
 	WTimeout int    // Milliseconds to wait for W before timing out
 	FSync    bool   // Sync via the journal if present, or via data files sync otherwise
 	J        bool   // Sync via the journal if present
@@ -1838,18 +1838,18 @@ func (s *Session) Safe() (safe *Safe) {
 // If safe.WTimeout is greater than zero, it determines how many milliseconds
 // to wait for the safe.W servers to respond before returning an error.
 //
-// Starting with MongoDB 2.0.0 the safe.WMode parameter can be used instead
+// Starting with MongerDB 2.0.0 the safe.WMode parameter can be used instead
 // of W to request for richer semantics. If set to "majority" the server will
 // wait for a majority of members from the replica set to respond before
 // returning. Custom modes may also be defined within the server to create
 // very detailed placement schemas. See the data awareness documentation in
-// the links below for more details (note that MongoDB internally reuses the
+// the links below for more details (note that MongerDB internally reuses the
 // "w" field name for WMode).
 //
 // If safe.J is true, servers will block until write operations have been
 // committed to the journal. Cannot be used in combination with FSync. Prior
-// to MongoDB 2.6 this option was ignored if the server was running without
-// journaling. Starting with MongoDB 2.6 write operations will fail with an
+// to MongerDB 2.6 this option was ignored if the server was running without
+// journaling. Starting with MongerDB 2.6 write operations will fail with an
 // exception if this option is used when the server is running without
 // journaling.
 //
@@ -1859,7 +1859,7 @@ func (s *Session) Safe() (safe *Safe) {
 // operations have been committed to the journal. Cannot be used in
 // combination with J.
 //
-// Since MongoDB 2.0.0, the safe.J option can also be used instead of FSync
+// Since MongerDB 2.0.0, the safe.J option can also be used instead of FSync
 // to force the server to wait for a group commit in case journaling is
 // enabled. The option has no effect if the server has journaling disabled.
 //
@@ -1869,7 +1869,7 @@ func (s *Session) Safe() (safe *Safe) {
 //     session.SetSafe(&mgo.Safe{})
 //
 // The following statement will force the server to wait for a majority of
-// members of a replica set to return (MongoDB 2.0+ only):
+// members of a replica set to return (MongerDB 2.0+ only):
 //
 //     session.SetSafe(&mgo.Safe{WMode: "majority"})
 //
@@ -1980,7 +1980,7 @@ func (s *Session) ensureSafe(safe *Safe) {
 // which case an empty document of the form bson.M{cmd: 1} will be used,
 // or it may be a full command document.
 //
-// Note that MongoDB considers the first marshalled key as the command
+// Note that MongerDB considers the first marshalled key as the command
 // name, so when providing a command with options, it's important to
 // use an ordering-preserving document, such as a struct value or an
 // instance of bson.D.  For instance:
@@ -2080,7 +2080,7 @@ func (s *Session) FsyncUnlock() error {
 // Iter, or Tail.
 //
 // In case the resulting document includes a field named $err or errmsg, which
-// are standard ways for MongoDB to return query errors, the returned err will
+// are standard ways for MongerDB to return query errors, the returned err will
 // be set to a *QueryError value including the Err message and the Code.  In
 // those cases, the result argument is still unmarshalled into with the
 // received document so that any other custom values may be obtained if
@@ -2115,7 +2115,7 @@ type repairCmdCursor struct {
 // damaged data files. Multiple copies of the same document may be returned
 // by the iterator.
 //
-// Repair is supported in MongoDB 2.7.8 and later.
+// Repair is supported in MongerDB 2.7.8 and later.
 func (c *Collection) Repair() *Iter {
 	// Clone session and set it to Monotonic mode so that the server
 	// used for the query may be safely obtained afterwards, if
@@ -2262,7 +2262,7 @@ func (p *Pipe) Iter() *Iter {
 // parameter may be in any mode or state, though.
 //
 func (c *Collection) NewIter(session *Session, firstBatch []bson.Raw, cursorId int64, err error) *Iter {
-	var server *MongoServer
+	var server *MongerServer
 	csession := c.Database.Session
 	csession.m.RLock()
 	socket := csession.masterSocket
@@ -2324,7 +2324,7 @@ func (p *Pipe) One(result interface{}) error {
 	return ErrNotFound
 }
 
-// Explain returns a number of details about how the MongoDB server would
+// Explain returns a number of details about how the MongerDB server would
 // execute the requested pipeline, such as the number of objects examined,
 // the number of times the read lock was yielded to allow writes to go in,
 // and so on.
@@ -2406,7 +2406,7 @@ func (err *QueryError) Error() string {
 // a primary key index or a secondary unique index already has an entry
 // with the given value.
 func IsDup(err error) bool {
-	// Besides being handy, helps with MongoDB bugs SERVER-7164 and SERVER-11493.
+	// Besides being handy, helps with MongerDB bugs SERVER-7164 and SERVER-11493.
 	// What follows makes me sad. Hopefully conventions will be more clear over time.
 	switch e := err.(type) {
 	case *LastError:
@@ -2639,7 +2639,7 @@ type CollectionInfo struct {
 }
 
 // Create explicitly creates the c collection with details of info.
-// MongoDB creates collections automatically on use, so this method
+// MongerDB creates collections automatically on use, so this method
 // is only necessary when creating collection with non-default
 // characteristics, such as capped collections.
 //
@@ -2675,7 +2675,7 @@ func (c *Collection) Create(info *CollectionInfo) error {
 // the Batch method of Session.
 //
 // The default batch size is defined by the database itself.  As of this
-// writing, MongoDB will use an initial size of min(100 docs, 4MB) on the
+// writing, MongerDB will use an initial size of min(100 docs, 4MB) on the
 // first batch, and 4MB on remaining ones.
 func (q *Query) Batch(n int) *Query {
 	if n == 1 {
@@ -2806,7 +2806,7 @@ func (q *Query) Sort(fields ...string) *Query {
 	return q
 }
 
-// Explain returns a number of details about how the MongoDB server would
+// Explain returns a number of details about how the MongerDB server would
 // execute the requested query, such as the number of objects examined,
 // the number of times the read lock was yielded to allow writes to go in,
 // and so on.
@@ -2883,7 +2883,7 @@ func (q *Query) SetMaxScan(n int) *Query {
 
 // SetMaxTime constrains the query to stop after running for the specified time.
 //
-// When the time limit is reached MongoDB automatically cancels the query.
+// When the time limit is reached MongerDB automatically cancels the query.
 // This can be used to efficiently prevent and identify unexpectedly slow queries.
 //
 // A few important notes about the mechanism enforcing this limit:
@@ -2905,7 +2905,7 @@ func (q *Query) SetMaxScan(n int) *Query {
 //  - This limit does not override the inactive cursor timeout for idle cursors
 //    (default is 10 min).
 //
-// This mechanism was introduced in MongoDB 2.6.
+// This mechanism was introduced in MongerDB 2.6.
 //
 // Relevant documentation:
 //
@@ -2940,7 +2940,7 @@ func (q *Query) SetMaxTime(d time.Duration) *Query {
 //
 // Relevant documentation:
 //
-//     http://www.mongerdb.org/display/DOCS/How+to+do+Snapshotted+Queries+in+the+Mongo+Database
+//     http://www.mongerdb.org/display/DOCS/How+to+do+Snapshotted+Queries+in+the+Monger+Database
 //
 func (q *Query) Snapshot() *Query {
 	q.m.Lock()
@@ -2967,7 +2967,7 @@ func (q *Query) Comment(comment string) *Query {
 }
 
 // LogReplay enables an option that optimizes queries that are typically
-// made on the MongoDB oplog for replaying it. This is an internal
+// made on the MongerDB oplog for replaying it. This is an internal
 // implementation aspect and most likely uninteresting for other uses.
 // It has seen at least one use case, though, so it's exposed via the API.
 func (q *Query) LogReplay() *Query {
@@ -3021,7 +3021,7 @@ Error:
 //     err := collection.Find(bson.M{"a", 1}).One(&result)
 //
 // In case the resulting document includes a field named $err or errmsg, which
-// are standard ways for MongoDB to return query errors, the returned err will
+// are standard ways for MongerDB to return query errors, the returned err will
 // be set to a *QueryError value including the Err message and the Code.  In
 // those cases, the result argument is still unmarshalled into with the
 // received document so that any other custom values may be obtained if
@@ -3064,7 +3064,7 @@ func (q *Query) One(result interface{}) (err error) {
 // run duplicates the behavior of collection.Find(query).One(&result)
 // as performed by Database.Run, specializing the logic for running
 // database commands on a given socket.
-func (db *Database) run(socket *MongoSocket, cmd, result interface{}) (replyOp *ReplyOp, err error) {
+func (db *Database) run(socket *MongerSocket, cmd, result interface{}) (replyOp *ReplyOp, err error) {
 	// Database.Run:
 	if name, ok := cmd.(string); ok {
 		cmd = bson.D{{name, 1}}
@@ -3103,7 +3103,7 @@ func (db *Database) run(socket *MongoSocket, cmd, result interface{}) (replyOp *
 	return replyOp, checkQueryError(op.Collection, data)
 }
 
-// The DBRef type implements support for the database reference MongoDB
+// The DBRef type implements support for the database reference MongerDB
 // convention as supported by multiple drivers.  This convention enables
 // cross-referencing documents between collections and databases using
 // a structure which includes a collection name, a document id, and
@@ -3389,7 +3389,7 @@ func (s *Session) prepareQuery(op *QueryOp) {
 // error otherwise.
 //
 // In case a resulting document included a field named $err or errmsg, which are
-// standard ways for MongoDB to report an improper query, the returned value has
+// standard ways for MongerDB to report an improper query, the returned value has
 // a *QueryError type, and includes the Err message and the Code.
 func (iter *Iter) Err() error {
 	iter.m.Lock()
@@ -3414,7 +3414,7 @@ func (iter *Iter) Err() error {
 // return the same result every time.
 //
 // In case a resulting document included a field named $err or errmsg, which are
-// standard ways for MongoDB to report an improper query, the returned value has
+// standard ways for MongerDB to report an improper query, the returned value has
 // a *QueryError type.
 func (iter *Iter) Close() error {
 	iter.m.Lock()
@@ -3655,7 +3655,7 @@ func (iter *Iter) For(result interface{}, f func() error) (err error) {
 // WARNING: This method must not be called with iter.m locked. Acquiring the
 // socket depends on the cluster sync loop, and the cluster sync loop might
 // attempt actions which cause replyFunc to be called, inducing a deadlock.
-func (iter *Iter) acquireSocket() (*MongoSocket, error) {
+func (iter *Iter) acquireSocket() (*MongerSocket, error) {
 	socket, err := iter.session.AcquireSocketPrivate(true)
 	if err != nil {
 		return nil, err
@@ -3885,7 +3885,7 @@ type MapReduceTime struct {
 //         fmt.Println(item.Value)
 //     }
 //
-// This function is compatible with MongoDB 1.7.4+.
+// This function is compatible with MongerDB 1.7.4+.
 //
 // Relevant documentation:
 //
@@ -3968,7 +3968,7 @@ func (q *Query) MapReduce(job *MapReduce, result interface{}) (info *MapReduceIn
 // The "out" option in the MapReduce command must be ordered. This was
 // found after the implementation was accepting maps for a long time,
 // so rather than breaking the API, we'll fix the order if necessary.
-// Details about the order requirement may be seen in MongoDB's code:
+// Details about the order requirement may be seen in MongerDB's code:
 //
 //     http://goo.gl/L8jwJX
 //
@@ -3995,7 +3995,7 @@ func fixMROut(out interface{}) interface{} {
 	return outs
 }
 
-// Change holds fields for running a findAndModify MongoDB command via
+// Change holds fields for running a findAndModify MongerDB command via
 // the Query.Apply method.
 type Change struct {
 	Update    interface{} // The update document
@@ -4015,7 +4015,7 @@ type valueResult struct {
 	LastError LastError "lastErrorObject"
 }
 
-// Apply runs the findAndModify MongoDB command, which allows updating, upserting
+// Apply runs the findAndModify MongerDB command, which allows updating, upserting
 // or removing a document matching a query and atomically returning either the old
 // version (the default) or the new version of the document (when ReturnNew is true).
 // If no objects are found Apply returns ErrNotFound.
@@ -4034,7 +4034,7 @@ type valueResult struct {
 //     info, err = col.Find(M{"_id": id}).Apply(change, &doc)
 //     fmt.Println(doc.N)
 //
-// This method depends on MongoDB >= 2.0 to work properly.
+// This method depends on MongerDB >= 2.0 to work properly.
 //
 // Relevant documentation:
 //
@@ -4100,17 +4100,17 @@ func (q *Query) Apply(change Change, result interface{}) (info *ChangeInfo, err 
 	return info, nil
 }
 
-// The BuildInfo type encapsulates details about the running MongoDB server.
+// The BuildInfo type encapsulates details about the running MongerDB server.
 //
-// Note that the VersionArray field was introduced in MongoDB 2.0+, but it is
+// Note that the VersionArray field was introduced in MongerDB 2.0+, but it is
 // internally assembled from the Version information for previous versions.
 // In both cases, VersionArray is guaranteed to have at least 4 entries.
 type BuildInfo struct {
 	Version        string
-	VersionArray   []int  `bson:"versionArray"` // On MongoDB 2.0+; assembled from Version otherwise
+	VersionArray   []int  `bson:"versionArray"` // On MongerDB 2.0+; assembled from Version otherwise
 	GitVersion     string `bson:"gitVersion"`
 	OpenSSLVersion string `bson:"OpenSSLVersion"`
-	SysInfo        string `bson:"sysInfo"` // Deprecated and empty on MongoDB 3.2+.
+	SysInfo        string `bson:"sysInfo"` // Deprecated and empty on MongerDB 3.2+.
 	Bits           int
 	Debug          bool
 	MaxObjectSize  int `bson:"maxBsonObjectSize"`
@@ -4132,7 +4132,7 @@ func (bi *BuildInfo) VersionAtLeast(version ...int) bool {
 }
 
 // BuildInfo retrieves the version and other details about the
-// running MongoDB server.
+// running MongerDB server.
 func (s *Session) BuildInfo() (info BuildInfo, err error) {
 	err = s.Run(bson.D{{"buildInfo", "1"}}, &info)
 	if len(info.VersionArray) == 0 {
@@ -4161,7 +4161,7 @@ func (s *Session) BuildInfo() (info BuildInfo, err error) {
 // ---------------------------------------------------------------------------
 // Internal session handling helpers.
 
-func (s *Session) AcquireSocketPrivate(slaveOk bool) (*MongoSocket, error) {
+func (s *Session) AcquireSocketPrivate(slaveOk bool) (*MongerSocket, error) {
 
 	// Read-only lock to check for previously reserved socket.
 	s.m.RLock()
@@ -4224,7 +4224,7 @@ func (s *Session) AcquireSocketPrivate(slaveOk bool) (*MongoSocket, error) {
 	return sock, nil
 }
 
-func (s *Session) AcquireSocketDirect() (*MongoSocket, error) {
+func (s *Session) AcquireSocketDirect() (*MongerSocket, error) {
 	sock, err := s.cluster().AcquireSocket(Strong, false, s.syncTimeout, s.sockTimeout, s.queryConfig.op.ServerTags, s.poolLimit)
 	if err != nil {
 		return nil, err
@@ -4237,7 +4237,7 @@ func (s *Session) AcquireSocketDirect() (*MongoSocket, error) {
 }
 
 // setSocket binds socket to this section.
-func (s *Session) setSocket(socket *MongoSocket) {
+func (s *Session) setSocket(socket *MongerSocket) {
 	info := socket.Acquire()
 	if info.Master {
 		if s.masterSocket != nil {
@@ -4419,7 +4419,7 @@ func (c *Collection) writeOp(op interface{}, ordered bool) (lerr *LastError, err
 	return c.writeOpQuery(socket, safeOp, op, ordered)
 }
 
-func (c *Collection) writeOpQuery(socket *MongoSocket, safeOp *QueryOp, op interface{}, ordered bool) (lerr *LastError, err error) {
+func (c *Collection) writeOpQuery(socket *MongerSocket, safeOp *QueryOp, op interface{}, ordered bool) (lerr *LastError, err error) {
 	if safeOp == nil {
 		return nil, socket.Query(op)
 	}
@@ -4462,7 +4462,7 @@ func (c *Collection) writeOpQuery(socket *MongoSocket, safeOp *QueryOp, op inter
 	return result, nil
 }
 
-func (c *Collection) writeOpCommand(socket *MongoSocket, safeOp *QueryOp, op interface{}, ordered, bypassValidation bool) (lerr *LastError, err error) {
+func (c *Collection) writeOpCommand(socket *MongerSocket, safeOp *QueryOp, op interface{}, ordered, bypassValidation bool) (lerr *LastError, err error) {
 	var writeConcern interface{}
 	if safeOp == nil {
 		writeConcern = bson.D{{"w", 0}}

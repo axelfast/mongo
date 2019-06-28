@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -73,12 +73,12 @@ MONGO_FAIL_POINT_DEFINE(failUpdateShardIdentityConfigString);
 
 namespace {
 
-const auto getInstance = ServiceContext::declareDecoration<ShardingInitializationMongoD>();
+const auto getInstance = ServiceContext::declareDecoration<ShardingInitializationMongerD>();
 
 auto makeEgressHooksList(ServiceContext* service) {
     auto unshardedHookList = std::make_unique<rpc::EgressMetadataHookList>();
     unshardedHookList->addHook(std::make_unique<rpc::LogicalTimeMetadataHook>(service));
-    unshardedHookList->addHook(std::make_unique<rpc::ShardingEgressMetadataHookForMongod>(service));
+    unshardedHookList->addHook(std::make_unique<rpc::ShardingEgressMetadataHookForMongerd>(service));
 
     return unshardedHookList;
 }
@@ -125,7 +125,7 @@ public:
             ThreadClient tc("updateShardIdentityConfigString", serviceContext);
             auto opCtx = tc->makeOperationContext();
 
-            ShardingInitializationMongoD::updateShardIdentityConfigString(opCtx.get(), connStr);
+            ShardingInitializationMongerD::updateShardIdentityConfigString(opCtx.get(), connStr);
         });
     }
     void onPossibleSet(const State& state) final {
@@ -139,9 +139,9 @@ private:
 
 }  // namespace
 
-void ShardingInitializationMongoD::initializeShardingEnvironmentOnShardServer(
+void ShardingInitializationMongerD::initializeShardingEnvironmentOnShardServer(
     OperationContext* opCtx, const ShardIdentity& shardIdentity, StringData distLockProcessId) {
-    initializeGlobalShardingStateForMongoD(
+    initializeGlobalShardingStateForMongerD(
         opCtx, shardIdentity.getConfigsvrConnectionString(), distLockProcessId);
 
     _replicaSetChangeListener =
@@ -170,22 +170,22 @@ void ShardingInitializationMongoD::initializeShardingEnvironmentOnShardServer(
            << (isStandaloneOrPrimary ? "primary" : "secondary") << " node.";
 }
 
-ShardingInitializationMongoD::ShardingInitializationMongoD()
+ShardingInitializationMongerD::ShardingInitializationMongerD()
     : _initFunc([this](auto... args) {
           this->initializeShardingEnvironmentOnShardServer(std::forward<decltype(args)>(args)...);
       }) {}
 
-ShardingInitializationMongoD::~ShardingInitializationMongoD() = default;
+ShardingInitializationMongerD::~ShardingInitializationMongerD() = default;
 
-ShardingInitializationMongoD* ShardingInitializationMongoD::get(OperationContext* opCtx) {
+ShardingInitializationMongerD* ShardingInitializationMongerD::get(OperationContext* opCtx) {
     return get(opCtx->getServiceContext());
 }
 
-ShardingInitializationMongoD* ShardingInitializationMongoD::get(ServiceContext* service) {
+ShardingInitializationMongerD* ShardingInitializationMongerD::get(ServiceContext* service) {
     return &getInstance(service);
 }
 
-void ShardingInitializationMongoD::shutDown(OperationContext* opCtx) {
+void ShardingInitializationMongerD::shutDown(OperationContext* opCtx) {
     auto const shardingState = ShardingState::get(opCtx);
     auto const grid = Grid::get(opCtx);
 
@@ -198,7 +198,7 @@ void ShardingInitializationMongoD::shutDown(OperationContext* opCtx) {
     _replicaSetChangeListener.reset();
 }
 
-bool ShardingInitializationMongoD::initializeShardingAwarenessIfNeeded(OperationContext* opCtx) {
+bool ShardingInitializationMongerD::initializeShardingAwarenessIfNeeded(OperationContext* opCtx) {
     invariant(!opCtx->lockState()->isLocked());
 
     // In sharded readOnly mode, we ignore the shardIdentity document on disk and instead *require*
@@ -291,7 +291,7 @@ bool ShardingInitializationMongoD::initializeShardingAwarenessIfNeeded(Operation
     }
 }
 
-void ShardingInitializationMongoD::initializeFromShardIdentity(
+void ShardingInitializationMongerD::initializeFromShardIdentity(
     OperationContext* opCtx, const ShardIdentityType& shardIdentity) {
     invariant(serverGlobalParams.clusterRole == ClusterRole::ShardServer);
     invariant(opCtx->lockState()->isLocked());
@@ -336,7 +336,7 @@ void ShardingInitializationMongoD::initializeFromShardIdentity(
     }
 }
 
-void ShardingInitializationMongoD::updateShardIdentityConfigString(
+void ShardingInitializationMongerD::updateShardIdentityConfigString(
     OperationContext* opCtx, const ConnectionString& newConnectionString) {
     BSONObj updateObj(
         ShardIdentityType::createConfigServerUpdateObject(newConnectionString.toString()));
@@ -366,7 +366,7 @@ void ShardingInitializationMongoD::updateShardIdentityConfigString(
     }
 }
 
-void initializeGlobalShardingStateForMongoD(OperationContext* opCtx,
+void initializeGlobalShardingStateForMongerD(OperationContext* opCtx,
                                             const ConnectionString& configCS,
                                             StringData distLockProcessId) {
     auto targeterFactory = std::make_unique<RemoteCommandTargeterFactoryImpl>();

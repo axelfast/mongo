@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -84,17 +84,17 @@ struct ShellGlobalParams {
 
 extern ShellGlobalParams shellGlobalParams;
 
-std::string getMongoShellHelp(StringData name, const moe::OptionSection& options);
+std::string getMongerShellHelp(StringData name, const moe::OptionSection& options);
 
 /**
  * Handle options that should come before validation, such as "help".
  *
  * Returns false if an option was found that implies we should prematurely exit with success.
  */
-bool handlePreValidationMongoShellOptions(const moe::Environment& params,
+bool handlePreValidationMongerShellOptions(const moe::Environment& params,
                                           const std::vector<std::string>& args);
 
-Status storeMongoShellOptions(const moe::Environment& params, const std::vector<std::string>& args);
+Status storeMongerShellOptions(const moe::Environment& params, const std::vector<std::string>& args);
 
 void redactPasswordOptions(int argc, char** argv);
 }

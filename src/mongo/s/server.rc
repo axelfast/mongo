@@ -37,8 +37,8 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "MongoDB, Inc"
-            VALUE "FileDescription", "MongoDB Shard Server"
+            VALUE "CompanyName", "MongerDB, Inc"
+            VALUE "FileDescription", "MongerDB Shard Server"
             VALUE "FileVersion", MONGO_FILE_VERSION_STR
             VALUE "InternalName", "mongers.exe"
             VALUE "OriginalFilename", "mongers.exe"

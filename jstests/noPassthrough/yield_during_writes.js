@@ -17,7 +17,7 @@
     const worksPerYield = 50;
 
     // Start a mongerd that will yield every 50 work cycles.
-    const mongerd = MongoRunner.runMongod({
+    const mongerd = MongerRunner.runMongerd({
         setParameter: `internalQueryExecYieldIterations=${worksPerYield}`,
         profile: 2,
     });
@@ -39,5 +39,5 @@
     assert.writeOK(coll.remove({}, {multi: true}));
     assert.gt(countOpYields(coll, 'remove'), (nDocsToInsert / worksPerYield) - 2);
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

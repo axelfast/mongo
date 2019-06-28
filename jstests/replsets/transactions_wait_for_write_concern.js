@@ -37,7 +37,7 @@
             [{x: 1}, {x: 2}, {x: 3}, {x: 4}, {x: 5}, {x: 6}], {writeConcern: {w: "majority"}}));
 
         jsTestLog("Unprepared Abort Setup");
-        const monger1 = new Mongo(primary.host);
+        const monger1 = new Monger(primary.host);
         const session1 = monger1.startSession();
         const sessionDB1 = session1.getDatabase(dbName);
         session1.startTransaction({
@@ -48,7 +48,7 @@
         printjson(assert.commandWorked(sessionDB1.runCommand(fruitlessUpdate1)));
 
         jsTestLog("Prepared Abort Setup");
-        const monger2 = new Mongo(primary.host);
+        const monger2 = new Monger(primary.host);
         const session2 = monger2.startSession();
         const sessionDB2 = session2.getDatabase(dbName);
         session2.startTransaction({
@@ -60,7 +60,7 @@
         PrepareHelpers.prepareTransaction(session2);
 
         jsTestLog("Prepare Setup");
-        const monger3 = new Mongo(primary.host);
+        const monger3 = new Monger(primary.host);
         const session3 = monger3.startSession();
         const sessionDB3 = session3.getDatabase(dbName);
         session3.startTransaction({
@@ -71,7 +71,7 @@
         printjson(assert.commandWorked(sessionDB3.runCommand(fruitlessUpdate3)));
 
         jsTestLog("Unprepared Commit Setup");
-        const monger4 = new Mongo(primary.host);
+        const monger4 = new Monger(primary.host);
         const session4 = monger4.startSession();
         const sessionDB4 = session4.getDatabase(dbName);
         session4.startTransaction({
@@ -82,7 +82,7 @@
         printjson(assert.commandWorked(sessionDB4.runCommand(fruitlessUpdate4)));
 
         jsTestLog("Prepared Commit Setup");
-        const monger5 = new Mongo(primary.host);
+        const monger5 = new Monger(primary.host);
         const session5 = monger5.startSession();
         const sessionDB5 = session5.getDatabase(dbName);
         session5.startTransaction({
@@ -94,7 +94,7 @@
         let prepareTS5 = PrepareHelpers.prepareTransaction(session5);
 
         jsTestLog("Unprepared Abort On Used Connection Setup");
-        const session6 = primary.getDB("admin").getMongo().startSession();
+        const session6 = primary.getDB("admin").getMonger().startSession();
         const sessionDB6 = session6.getDatabase(dbName);
         session6.startTransaction({
             writeConcern: {w: "majority", wtimeout: failTimeoutMS},

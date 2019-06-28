@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -99,18 +99,18 @@ func main() {
 	}
 
 	// fail fast if connecting to a mongers
-	isMongos, err := sessionProvider.IsMongos()
+	isMongers, err := sessionProvider.IsMongers()
 	if err != nil {
 		log.Logvf(log.Always, "Failed: %v", err)
 		os.Exit(util.ExitFailure)
 	}
-	if isMongos {
+	if isMongers {
 		log.Logvf(log.Always, "cannot run mongertop against a mongers")
 		os.Exit(util.ExitFailure)
 	}
 
 	// instantiate a mongertop instance
-	top := &mongertop.MongoTop{
+	top := &mongertop.MongerTop{
 		Options:         opts,
 		OutputOptions:   outputOpts,
 		SessionProvider: sessionProvider,

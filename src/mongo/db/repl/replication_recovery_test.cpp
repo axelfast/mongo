@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -130,7 +130,7 @@ public:
     const repl::OpTime dropOpTime = {Timestamp(Seconds(100), 1U), 1LL};
 };
 
-class ReplicationRecoveryTest : public ServiceContextMongoDTest {
+class ReplicationRecoveryTest : public ServiceContextMongerDTest {
 protected:
     OperationContext* getOperationContext() {
         return _opCtx.get();
@@ -166,7 +166,7 @@ protected:
 
 private:
     void setUp() override {
-        ServiceContextMongoDTest::setUp();
+        ServiceContextMongerDTest::setUp();
 
         auto service = getServiceContext();
         StorageInterface::set(service, std::make_unique<StorageInterfaceRecovery>());
@@ -185,7 +185,7 @@ private:
         ASSERT_OK(_storageInterface->createCollection(
             getOperationContext(), testNs, generateOptionsWithUuid()));
 
-        MongoDSessionCatalog::onStepUp(_opCtx.get());
+        MongerDSessionCatalog::onStepUp(_opCtx.get());
 
         auto observerRegistry = checked_cast<OpObserverRegistry*>(service->getOpObserver());
         observerRegistry->addObserver(std::make_unique<ReplicationRecoveryTestObObserver>());
@@ -200,7 +200,7 @@ private:
         _opCtx.reset(nullptr);
         _consistencyMarkers.reset();
 
-        ServiceContextMongoDTest::tearDown();
+        ServiceContextMongerDTest::tearDown();
     }
 
     void _createOpCtx() {

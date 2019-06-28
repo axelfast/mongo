@@ -10,7 +10,7 @@
 (function() {
     "use strict";
 
-    var testServer = MongoRunner.runMongod();
+    var testServer = MongerRunner.runMongerd();
     assert.neq(null, testServer, "failed to start mongerd");
     var db = testServer.getDB("test");
     var t = db.js_protection_roundtrip;
@@ -34,7 +34,7 @@
         var evalString = "(" + tojson(evalFunc) + ")();";
         var protectionFlag =
             jsProtection ? "--enableJavaScriptProtection" : "--disableJavaScriptProtection";
-        var exitCode = runMongoProgram(
+        var exitCode = runMongerProgram(
             "monger", "--port", testServer.port, protectionFlag, "--eval", evalString);
         assert.eq(exitCode, 0);
     }
@@ -53,5 +53,5 @@
     testFunctionUnmarshall(true, withJavaScriptProtection);
     testFunctionUnmarshall(false, withoutJavaScriptProtection);
 
-    MongoRunner.stopMongod(testServer);
+    MongerRunner.stopMongerd(testServer);
 })();

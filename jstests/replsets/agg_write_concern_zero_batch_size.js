@@ -57,14 +57,14 @@
 
         // Now switch to legacy OP_GET_MORE read mode. We should get a different error indicating
         // that using writeConcern in this way is unsupported.
-        source.getDB().getMongo().forceReadMode("legacy");
+        source.getDB().getMonger().forceReadMode("legacy");
         error = assert.throws(
             () => source
                       .aggregate([stageSpec],
                                  {cursor: {batchSize: 0}, writeConcern: {w: 2, wtimeout: 100}})
                       .itcount());
         assert.eq(error.code, 31124);
-        source.getDB().getMongo().forceReadMode("commands");
+        source.getDB().getMonger().forceReadMode("commands");
 
         restartServerReplication(rst.getSecondary());
     });

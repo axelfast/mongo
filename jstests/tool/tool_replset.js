@@ -39,9 +39,9 @@
         "tool_replset/127.0.0.1:" + replTest.ports[0] + ",127.0.0.1:" + replTest.ports[1];
 
     // Test with mongerdump/mongerrestore
-    var data = MongoRunner.dataDir + "/tool_replset-dump1/";
+    var data = MongerRunner.dataDir + "/tool_replset-dump1/";
     print("using mongerdump to dump the db to " + data);
-    var exitCode = MongoRunner.runMongoTool("mongerdump", {
+    var exitCode = MongerRunner.runMongerTool("mongerdump", {
         host: replSetConnString,
         out: data,
     });
@@ -53,7 +53,7 @@
     replTest.awaitReplication();
 
     print("using mongerrestore to restore the db from " + data);
-    exitCode = MongoRunner.runMongoTool("mongerrestore", {
+    exitCode = MongerRunner.runMongerTool("mongerrestore", {
         host: replSetConnString,
         dir: data,
     });
@@ -67,8 +67,8 @@
 
     // Test with mongerexport/mongerimport
     print("export the collection");
-    var extFile = MongoRunner.dataDir + "/tool_replset/export";
-    exitCode = MongoRunner.runMongoTool("mongerexport", {
+    var extFile = MongerRunner.dataDir + "/tool_replset/export";
+    exitCode = MongerRunner.runMongerTool("mongerexport", {
         host: replSetConnString,
         out: extFile,
         db: "foo",
@@ -82,7 +82,7 @@
     replTest.awaitReplication();
 
     print("import the collection");
-    exitCode = MongoRunner.runMongoTool("mongerimport", {
+    exitCode = MongerRunner.runMongerTool("mongerimport", {
         host: replSetConnString,
         file: extFile,
         db: "foo",

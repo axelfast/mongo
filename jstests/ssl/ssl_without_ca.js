@@ -1,11 +1,11 @@
 var SERVER_CERT = "jstests/libs/server.pem";
 var CLIENT_CERT = "jstests/libs/client.pem";
-var CLIENT_USER = "C=US,ST=New York,L=New York City,O=MongoDB,OU=KernelUser,CN=client";
+var CLIENT_USER = "C=US,ST=New York,L=New York City,O=MongerDB,OU=KernelUser,CN=client";
 
 jsTest.log("Assert x509 auth is not allowed when a standalone mongerd is run without a CA file.");
 
 // allowSSL instead of requireSSL so that the non-SSL connection succeeds.
-var conn = MongoRunner.runMongod({sslMode: 'allowSSL', sslPEMKeyFile: SERVER_CERT, auth: ''});
+var conn = MongerRunner.runMongerd({sslMode: 'allowSSL', sslPEMKeyFile: SERVER_CERT, auth: ''});
 
 var external = conn.getDB('$external');
 external.createUser({
@@ -18,7 +18,7 @@ external.createUser({
 
 // Should not be able to authenticate with x509.
 // Authenticate call will return 1 on success, 0 on error.
-var exitStatus = runMongoProgram('monger',
+var exitStatus = runMongerProgram('monger',
                                  '--ssl',
                                  '--sslAllowInvalidCertificates',
                                  '--sslPEMKeyFile',
@@ -32,12 +32,12 @@ var exitStatus = runMongoProgram('monger',
 
 assert.eq(exitStatus, 0, "authentication via MONGODB-X509 without CA succeeded");
 
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
 jsTest.log("Assert mongerd doesn\'t start with CA file missing and clusterAuthMode=x509.");
 
 var sslParams = {clusterAuthMode: 'x509', sslMode: 'requireSSL', sslPEMKeyFile: SERVER_CERT};
-var conn = MongoRunner.runMongod(sslParams);
+var conn = MongerRunner.runMongerd(sslParams);
 assert.isnull(conn, "server started with x509 clusterAuthMode but no CA file");
 
 jsTest.log("Assert mongers doesn\'t start with CA file missing and clusterAuthMode=x509.");

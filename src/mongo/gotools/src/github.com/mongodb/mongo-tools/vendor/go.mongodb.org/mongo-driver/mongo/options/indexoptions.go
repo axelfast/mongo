@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -202,8 +202,8 @@ func (i *IndexOptions) SetLanguageOverride(override string) *IndexOptions {
 }
 
 // SetTextVersion specifies the text index version number.
-// MongoDB version 2.4 can only support version 1.
-// MongoDB versions 2.6 and higher can support versions 1 or 2.
+// MongerDB version 2.4 can only support version 1.
+// MongerDB versions 2.6 and higher can support versions 1 or 2.
 func (i *IndexOptions) SetTextVersion(version int32) *IndexOptions {
 	i.TextVersion = &version
 	return i
@@ -216,8 +216,8 @@ func (i *IndexOptions) SetWeights(weights interface{}) *IndexOptions {
 }
 
 // SetSphereVersion specifies the 2dsphere index version number.
-// MongoDB version 2.4 can only support version 1.
-// MongoDB versions 2.6 and higher can support versions 1 or 2.
+// MongerDB version 2.4 can only support version 1.
+// MongerDB versions 2.6 and higher can support versions 1 or 2.
 func (i *IndexOptions) SetSphereVersion(version int32) *IndexOptions {
 	i.SphereVersion = &version
 	return i

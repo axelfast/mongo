@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -108,7 +108,7 @@ static Status coordToPoint(double lng, double lat, S2Point* out) {
     // spherical.
     if (!isValidLngLat(lng, lat))
         return BAD_VALUE("longitude/latitude is out of bounds, lng: " << lng << " lat: " << lat);
-    // Note that it's (lat, lng) for S2 but (lng, lat) for MongoDB.
+    // Note that it's (lat, lng) for S2 but (lng, lat) for MongerDB.
     S2LatLng ll = S2LatLng::FromDegrees(lat, lng).Normalized();
     // This shouldn't happen since we should only have valid lng/lats.
     if (!ll.is_valid()) {

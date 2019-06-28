@@ -90,18 +90,18 @@ Each YAML file has the following keys:
   - ``skipReason``: Optional, string describing why this test should be
     skipped.
 
-  - ``useMultipleMongoses``: Optional, boolean. If true and this test is
-    running against a sharded cluster, intialize the MongoClient for this
+  - ``useMultipleMongerses``: Optional, boolean. If true and this test is
+    running against a sharded cluster, intialize the MongerClient for this
     test with multiple mongers seed addresses.
 
-  - ``clientOptions``: Optional, parameters to pass to MongoClient().
+  - ``clientOptions``: Optional, parameters to pass to MongerClient().
 
   - ``failPoint``: Optional, a server failpoint to enable expressed as the
     configureFailPoint command to run on the admin database. This option and
-    ``useMultipleMongoses: true`` are mutually exclusive.
+    ``useMultipleMongerses: true`` are mutually exclusive.
 
   - ``sessionOptions``: Optional, parameters to pass to
-    MongoClient.startSession().
+    MongerClient.startSession().
 
   - ``operations``: Array of documents, each describing an operation to be
     executed. Each document has the following fields:
@@ -152,15 +152,15 @@ Each YAML file has the following keys:
 Use as integration tests
 ========================
 
-Run a MongoDB replica set with a primary, a secondary, and an arbiter,
+Run a MongerDB replica set with a primary, a secondary, and an arbiter,
 **server version 4.0.0 or later**. (Including a secondary ensures that
 server selection in a transaction works properly. Including an arbiter helps
 ensure that no new bugs have been introduced related to arbiters.)
 
 A driver that implements support for sharded transactions MUST also run these
-tests against a MongoDB sharded cluster with multiple mongerses and
+tests against a MongerDB sharded cluster with multiple mongerses and
 **server version 4.2 or later**. Some tests require
-initializing the MongoClient with multiple mongers seeds to ensures that mongers
+initializing the MongerClient with multiple mongers seeds to ensures that mongers
 transaction pinning and the recoveryToken works properly.
 
 Load each YAML (or JSON) file using a Canonical Extended JSON parser.
@@ -168,7 +168,7 @@ Load each YAML (or JSON) file using a Canonical Extended JSON parser.
 Then for each element in ``tests``:
 
 #. If the ``skipReason`` field is present, skip this test completely.
-#. Create a MongoClient and call
+#. Create a MongerClient and call
    ``client.admin.runCommand({killAllSessions: []})`` to clean up any open
    transactions from previous test failures.
 
@@ -178,7 +178,7 @@ Then for each element in ``tests``:
      and once after each failed test.
    - When testing against a sharded cluster run this command on ALL mongerses.
 
-#. Create a collection object from the MongoClient, using the ``database_name``
+#. Create a collection object from the MongerClient, using the ``database_name``
    and ``collection_name`` fields of the YAML file.
 #. Drop the test collection, using writeConcern "majority".
 #. Execute the "create" command to recreate the collection, using writeConcern
@@ -188,13 +188,13 @@ Then for each element in ``tests``:
    into the test collection, using writeConcern "majority".
 #. If ``failPoint`` is specified, its value is a configureFailPoint command.
    Run the command on the admin database to enable the fail point.
-#. Create a **new** MongoClient ``client``, with Command Monitoring listeners
-   enabled. (Using a new MongoClient for each test ensures a fresh session pool
+#. Create a **new** MongerClient ``client``, with Command Monitoring listeners
+   enabled. (Using a new MongerClient for each test ensures a fresh session pool
    that hasn't executed any transactions previously, so the tests can assert
    actual txnNumbers, starting from 1.) Pass this test's ``clientOptions`` if
    present.
 
-   - When testing against a sharded cluster and ``useMultipleMongoses`` is
+   - When testing against a sharded cluster and ``useMultipleMongerses`` is
      ``true`` the client MUST be created with multiple (valid) mongers seed
      addreses.
 
@@ -207,7 +207,7 @@ Then for each element in ``tests``:
    - If the operation ``name`` is a special test operation type, execute it and
      go to the next operation, otherwise proceed to the next step.
    - Enter a "try" block or your programming language's closest equivalent.
-   - Create a Database object from the MongoClient, using the ``database_name``
+   - Create a Database object from the MongerClient, using the ``database_name``
      field at the top level of the test file.
    - Create a Collection object from the Database, using the
      ``collection_name`` field at the top level of the test file.
@@ -262,7 +262,7 @@ Then for each element in ``tests``:
    - If ``name`` is "collection", verify that the test collection contains
      exactly the documents in the ``data`` array. Ensure this find reads the
      latest data by using **primary read preference** with
-     **local read concern** even when the MongoClient is configured with
+     **local read concern** even when the MongerClient is configured with
      another read preference or read concern.
 
 Special Test Operations
@@ -293,7 +293,7 @@ point may be disabled like so::
 Here is an example which instructs the test runner to enable the failCommand
 fail point on the mongers server which "session0" is pinned to::
 
-      # Enable the fail point only on the Mongos that session0 is pinned to.
+      # Enable the fail point only on the Mongers that session0 is pinned to.
       - name: targetedFailPoint
         object: testRunner
         arguments:
@@ -372,11 +372,11 @@ placeholder for an arbitrary recovery token. Drivers MUST assert that the
 actual command includes a "recoveryToken" field and SHOULD assert that field
 is a BSON document.
 
-Mongos Pinning Prose Tests
+Mongers Pinning Prose Tests
 ==========================
 
 The following tests ensure that a ClientSession is properly unpinned after
-a sharded transaction. Initialize these tests with a MongoClient connected
+a sharded transaction. Initialize these tests with a MongerClient connected
 to multiple mongerses.
 
 These tests use a cursor's address field to track which server an operation
@@ -393,12 +393,12 @@ instead.
       def test_unpin_for_next_transaction(self):
         # Increase localThresholdMS and wait until both nodes are discovered
         # to avoid false positives.
-        client = MongoClient(mongers_hosts, localThresholdMS=1000)
+        client = MongerClient(mongers_hosts, localThresholdMS=1000)
         wait_until(lambda: len(client.nodes) > 1)
         # Create the collection.
         client.test.test.insert_one({})
         with client.start_session() as s:
-          # Session is pinned to Mongos.
+          # Session is pinned to Mongers.
           with s.start_transaction():
             client.test.test.insert_one({}, session=s)
 
@@ -421,12 +421,12 @@ instead.
       def test_unpin_for_non_transaction_operation(self):
         # Increase localThresholdMS and wait until both nodes are discovered
         # to avoid false positives.
-        client = MongoClient(mongers_hosts, localThresholdMS=1000)
+        client = MongerClient(mongers_hosts, localThresholdMS=1000)
         wait_until(lambda: len(client.nodes) > 1)
         # Create the collection.
         client.test.test.insert_one({})
         with client.start_session() as s:
-          # Session is pinned to Mongos.
+          # Session is pinned to Mongers.
           with s.start_transaction():
             client.test.test.insert_one({}, session=s)
 
@@ -454,7 +454,7 @@ recovering the outcome of an uncommitted transaction should immediately abort
 the transaction.
 
 The second case is when a *single-shard* transaction is committed successfully
-on mongers A and then explicitly committed again on mongers B. Mongos B will also
+on mongers A and then explicitly committed again on mongers B. Mongers B will also
 block until the transactionLifetimeLimitSeconds timeout is hit at which point
 ``{ok:1}`` will be returned. `SERVER-39349`_ requests that recovering the
 outcome of a completed single-shard transaction should not block.
@@ -478,8 +478,8 @@ manually.
 **Changelog**
 =============
 
-:2019-02-28: ``useMultipleMongoses: true`` and non-targeted fail points are
+:2019-02-28: ``useMultipleMongerses: true`` and non-targeted fail points are
              mutually exclusive.
 :2019-02-13: Modify test format for 4.2 sharded transactions, including
-             "useMultipleMongoses", ``object: testRunner``, the
+             "useMultipleMongerses", ``object: testRunner``, the
              ``targetedFailPoint`` operation, and recoveryToken assertions.

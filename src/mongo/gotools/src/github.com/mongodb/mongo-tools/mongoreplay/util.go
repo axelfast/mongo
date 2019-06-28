@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -442,7 +442,7 @@ func ConvertBSONValueToJSON(x interface{}) (interface{}, error) {
 	case bson.RegEx: // RegExp
 		return json.RegExp{v.Pattern, v.Options}, nil
 
-	case bson.MongoTimestamp: // Timestamp
+	case bson.MongerTimestamp: // Timestamp
 		timestamp := int64(v)
 		return json.Timestamp{
 			Seconds:   uint32(timestamp >> 32),

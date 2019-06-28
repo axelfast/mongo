@@ -10,7 +10,7 @@ Version
 -------
 
 Files in the "specifications" repository have no version scheme.
-They are not tied to a MongoDB server version,
+They are not tied to a MongerDB server version,
 and it is our intention that each specification moves from "draft" to "final"
 with no further versions; it is superseded by a future spec, not revised.
 
@@ -74,7 +74,7 @@ Drivers should be able to test their server discovery and monitoring logic
 without any network I/O, by parsing ismaster responses from the test file
 and passing them into the driver code. Parts of the client and monitoring
 code may need to be mocked or subclassed to achieve this. `A reference
-implementation for PyMongo 3.x is available here
+implementation for PyMonger 3.x is available here
 <https://github.com/mongerdb/monger-python-driver/blob/3.0-dev/test/test_discovery_and_monitoring.py>`_.
 
 Initialization

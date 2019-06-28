@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -336,8 +336,8 @@ DocumentSourceGroup::DocumentSourceGroup(const intrusive_ptr<ExpressionContext>&
       _initialized(false),
       _groups(pExpCtx->getValueComparator().makeUnorderedValueMap<Accumulators>()),
       _spilled(false),
-      _allowDiskUse(pExpCtx->allowDiskUse && !pExpCtx->inMongos) {
-    if (!pExpCtx->inMongos && (pExpCtx->allowDiskUse || kDebugBuild)) {
+      _allowDiskUse(pExpCtx->allowDiskUse && !pExpCtx->inMongers) {
+    if (!pExpCtx->inMongers && (pExpCtx->allowDiskUse || kDebugBuild)) {
         // We spill to disk in debug mode, regardless of allowDiskUse, to stress the system.
         _fileName = pExpCtx->tempDir + "/" + nextFileName();
     }
@@ -523,7 +523,7 @@ DocumentSource::GetNextResult DocumentSourceGroup::initialize() {
         if (kDebugBuild && !storageGlobalParams.readOnly) {
             // In debug mode, spill every time we have a duplicate id to stress merge logic.
             if (!inserted &&                 // is a dup
-                !pExpCtx->inMongos &&        // can't spill to disk in mongers
+                !pExpCtx->inMongers &&        // can't spill to disk in mongers
                 !_allowDiskUse &&            // don't change behavior when testing external sort
                 _sortedFiles.size() < 20) {  // don't open too many FDs
 

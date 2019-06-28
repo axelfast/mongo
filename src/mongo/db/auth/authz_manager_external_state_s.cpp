@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,7 +51,7 @@ namespace monger {
 
 MONGO_REGISTER_SHIM(AuthzManagerExternalState::create)
 ()->std::unique_ptr<AuthzManagerExternalState> {
-    return std::make_unique<AuthzManagerExternalStateMongos>();
+    return std::make_unique<AuthzManagerExternalStateMongers>();
 }
 
 namespace {
@@ -83,20 +83,20 @@ void addShowToBuilder(BSONObjBuilder* builder,
 
 }  // namespace
 
-AuthzManagerExternalStateMongos::AuthzManagerExternalStateMongos() = default;
+AuthzManagerExternalStateMongers::AuthzManagerExternalStateMongers() = default;
 
-AuthzManagerExternalStateMongos::~AuthzManagerExternalStateMongos() = default;
+AuthzManagerExternalStateMongers::~AuthzManagerExternalStateMongers() = default;
 
-Status AuthzManagerExternalStateMongos::initialize(OperationContext* opCtx) {
+Status AuthzManagerExternalStateMongers::initialize(OperationContext* opCtx) {
     return Status::OK();
 }
 
 std::unique_ptr<AuthzSessionExternalState>
-AuthzManagerExternalStateMongos::makeAuthzSessionExternalState(AuthorizationManager* authzManager) {
-    return std::make_unique<AuthzSessionExternalStateMongos>(authzManager);
+AuthzManagerExternalStateMongers::makeAuthzSessionExternalState(AuthorizationManager* authzManager) {
+    return std::make_unique<AuthzSessionExternalStateMongers>(authzManager);
 }
 
-Status AuthzManagerExternalStateMongos::getStoredAuthorizationVersion(OperationContext* opCtx,
+Status AuthzManagerExternalStateMongers::getStoredAuthorizationVersion(OperationContext* opCtx,
                                                                       int* outVersion) {
     // NOTE: We are treating the command "{ 'getParameter' : 1, 'authSchemaVersion' : 1 }" as a user
     // management command since this is the *only* part of mongers that runs this command.
@@ -118,7 +118,7 @@ Status AuthzManagerExternalStateMongos::getStoredAuthorizationVersion(OperationC
     return Status::OK();
 }
 
-Status AuthzManagerExternalStateMongos::getUserDescription(OperationContext* opCtx,
+Status AuthzManagerExternalStateMongers::getUserDescription(OperationContext* opCtx,
                                                            const UserName& userName,
                                                            BSONObj* result) {
     if (!shouldUseRolesFromConnection(opCtx, userName)) {
@@ -208,7 +208,7 @@ Status AuthzManagerExternalStateMongos::getUserDescription(OperationContext* opC
     }
 }
 
-Status AuthzManagerExternalStateMongos::getRoleDescription(
+Status AuthzManagerExternalStateMongers::getRoleDescription(
     OperationContext* opCtx,
     const RoleName& roleName,
     PrivilegeFormat showPrivileges,
@@ -245,7 +245,7 @@ Status AuthzManagerExternalStateMongos::getRoleDescription(
     *result = foundRoles[0].Obj().getOwned();
     return Status::OK();
 }
-Status AuthzManagerExternalStateMongos::getRolesDescription(
+Status AuthzManagerExternalStateMongers::getRolesDescription(
     OperationContext* opCtx,
     const std::vector<RoleName>& roles,
     PrivilegeFormat showPrivileges,
@@ -281,7 +281,7 @@ Status AuthzManagerExternalStateMongos::getRolesDescription(
 
     return Status::OK();
 }
-Status AuthzManagerExternalStateMongos::getRoleDescriptionsForDB(
+Status AuthzManagerExternalStateMongers::getRoleDescriptionsForDB(
     OperationContext* opCtx,
     StringData dbname,
     PrivilegeFormat showPrivileges,
@@ -307,7 +307,7 @@ Status AuthzManagerExternalStateMongos::getRoleDescriptionsForDB(
     return Status::OK();
 }
 
-bool AuthzManagerExternalStateMongos::hasAnyPrivilegeDocuments(OperationContext* opCtx) {
+bool AuthzManagerExternalStateMongers::hasAnyPrivilegeDocuments(OperationContext* opCtx) {
     BSONObj usersInfoCmd = BSON("usersInfo" << 1);
     BSONObjBuilder userBuilder;
     bool ok = Grid::get(opCtx)->catalogClient()->runUserManagementReadCommand(

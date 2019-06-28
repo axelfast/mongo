@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -1132,7 +1132,7 @@ Status StorageInterfaceImpl::isAdminDbValid(OperationContext* opCtx) {
             << "This indicates that the primary of this replica set was not successfully "
                "upgraded to schema version "
             << AuthorizationManager::schemaVersion26Final
-            << ", which is the minimum supported schema version in this version of MongoDB";
+            << ", which is the minimum supported schema version in this version of MongerDB";
         return {ErrorCodes::AuthSchemaIncompatible, msg};
     }
     long long foundSchemaVersion;
@@ -1149,7 +1149,7 @@ Status StorageInterfaceImpl::isAdminDbValid(OperationContext* opCtx) {
         (foundSchemaVersion != AuthorizationManager::schemaVersion28SCRAM)) {
         std::string msg = str::stream()
             << "During initial sync, found auth schema version " << foundSchemaVersion
-            << ", but this version of MongoDB only supports schema versions "
+            << ", but this version of MongerDB only supports schema versions "
             << AuthorizationManager::schemaVersion26Final << " and "
             << AuthorizationManager::schemaVersion28SCRAM;
         return {ErrorCodes::AuthSchemaIncompatible, msg};

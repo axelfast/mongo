@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -340,7 +340,7 @@ typedef struct stitch_support_v1_projection stitch_support_v1_projection;
 /**
  * Creates a stitch_support_v1_projection object, which is used to apply a projection to a BSON
  * document. The projection specification is also represented as a BSON document, which is passed in
- * the 'specBSON' argument. The syntax used for projection is the same as a MongoDB "find" command
+ * the 'specBSON' argument. The syntax used for projection is the same as a MongerDB "find" command
  * (i.e., not an aggregation $project stage).
  *
  * This function will fail if the projection specification is invalid, returning NULL and populating

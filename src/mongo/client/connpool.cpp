@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -388,7 +388,7 @@ DBClientBase* DBConnectionPool::get(const string& host, double socketTimeout) {
     return Detail::get(this, host, socketTimeout, connect);
 }
 
-DBClientBase* DBConnectionPool::get(const MongoURI& uri, double socketTimeout) {
+DBClientBase* DBConnectionPool::get(const MongerURI& uri, double socketTimeout) {
     auto connect = [&] {
         string errmsg;
         std::unique_ptr<DBClientBase> c(uri.connect(StringData(), errmsg, socketTimeout));
@@ -518,7 +518,7 @@ void DBConnectionPool::appendConnectionStats(executor::ConnectionPoolStats* stat
             if (i->second.numCreated() == 0)
                 continue;
 
-            // Mongos may use either a replica set uri or a list of addresses as
+            // Mongers may use either a replica set uri or a list of addresses as
             // the identifier here, so we always take the first server parsed out
             // as our label for connPoolStats. Note that these stats will collide
             // with any existing stats for the chosen host.
@@ -629,7 +629,7 @@ ScopedDbConnection::ScopedDbConnection(const ConnectionString& host, double sock
     _setSocketTimeout();
 }
 
-ScopedDbConnection::ScopedDbConnection(const MongoURI& uri, double socketTimeout)
+ScopedDbConnection::ScopedDbConnection(const MongerURI& uri, double socketTimeout)
     : _host(uri.toString()),
       _conn(globalConnPool.get(uri, socketTimeout)),
       _socketTimeoutSecs(socketTimeout) {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -452,7 +452,7 @@ public:
      * Returns a list of GenericCursors for all idle (non-pinned) cursors in the cursor manager.
      */
     std::vector<GenericCursor> getIdleCursors(
-        const OperationContext* opCtx, MongoProcessInterface::CurrentOpUserMode userMode) const;
+        const OperationContext* opCtx, MongerProcessInterface::CurrentOpUserMode userMode) const;
 
     std::pair<Status, int> killCursorsWithMatchingSessions(OperationContext* opCtx,
                                                            const SessionKiller::Matcher& matcher);

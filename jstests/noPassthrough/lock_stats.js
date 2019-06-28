@@ -61,8 +61,8 @@
         });
     }
 
-    var conn = MongoRunner.runMongod();
+    var conn = MongerRunner.runMongerd();
     var db = conn.getDB('test');
     printjson([1, 10, 100, 500, 1000, 1500].map(testBlockTime));
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

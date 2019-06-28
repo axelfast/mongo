@@ -139,7 +139,7 @@
                        {ok: true, secondary: true, tags: {tag: "closestSecondary"}},
                        rst);
     awaitRSClientHosts(st.s,
-                       originalClosestSecondaryDB.getMongo(),
+                       originalClosestSecondaryDB.getMonger(),
                        {ok: true, secondary: true, tags: {tag: "fartherSecondary"}},
                        rst);
     assert.commandWorked(newClosestSecondaryDB.setProfilingLevel(2));
@@ -169,7 +169,7 @@
     const joinResumeReplicationShell =
         startParallelShell(`load('jstests/libs/write_concern_util.js');
 
-            const pausedSecondary = new Mongo("${newClosestSecondary.host}");
+            const pausedSecondary = new Monger("${newClosestSecondary.host}");
 
             // Wait for the update lookup to appear in currentOp.
             const changeStreamDB = pausedSecondary.getDB("${mongersDB.getName()}");

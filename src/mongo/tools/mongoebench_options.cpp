@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,17 +45,17 @@
 
 namespace monger {
 
-MongoeBenchGlobalParams mongereBenchGlobalParams;
+MongereBenchGlobalParams mongereBenchGlobalParams;
 
-void printMongoeBenchHelp(std::ostream* out) {
+void printMongereBenchHelp(std::ostream* out) {
     *out << "Usage: mongerebench <config file> [options]" << std::endl;
     *out << moe::startupOptions.helpString();
     *out << std::flush;
 }
 
-bool handlePreValidationMongoeBenchOptions(const moe::Environment& params) {
+bool handlePreValidationMongereBenchOptions(const moe::Environment& params) {
     if (params.count("help")) {
-        printMongoeBenchHelp(&std::cout);
+        printMongereBenchHelp(&std::cout);
         return false;
     }
     return true;
@@ -73,7 +73,7 @@ boost::filesystem::path kDefaultOutputFile("perf.json");
 
 }  // namespace
 
-Status storeMongoeBenchOptions(const moe::Environment& params,
+Status storeMongereBenchOptions(const moe::Environment& params,
                                const std::vector<std::string>& args) {
     if (!params.count("benchRunConfigFile")) {
         return {ErrorCodes::BadValue, "No benchRun config file was specified"};

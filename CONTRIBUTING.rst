@@ -1,9 +1,9 @@
-Contributing to the MongoDB project
+Contributing to the MongerDB project
 ===================================
 
-Pull requests are always welcome, and the MongoDB dev team appreciates any help the community can
-give to help make MongoDB better.
+Pull requests are always welcome, and the MongerDB dev team appreciates any help the community can
+give to help make MongerDB better.
 
-For more information about how to contribute, please read `the MongoDB Wiki on GitHub`_.
+For more information about how to contribute, please read `the MongerDB Wiki on GitHub`_.
 
-.. _the MongoDB Wiki on GitHub: https://github.com/mongerdb/monger/wiki
+.. _the MongerDB Wiki on GitHub: https://github.com/mongerdb/monger/wiki

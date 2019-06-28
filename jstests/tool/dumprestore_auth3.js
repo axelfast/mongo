@@ -6,12 +6,12 @@
 function runTool(toolName, mongerd, options) {
     var opts = {host: mongerd.host};
     Object.extend(opts, options);
-    MongoRunner.runMongoTool(toolName, opts);
+    MongerRunner.runMongerTool(toolName, opts);
 }
 
 var dumpRestoreAuth3 = function(backup_role, restore_role) {
 
-    var mongerd = MongoRunner.runMongod();
+    var mongerd = MongerRunner.runMongerd();
     var admindb = mongerd.getDB("admin");
     var db = mongerd.getDB("foo");
 
@@ -51,7 +51,7 @@ var dumpRestoreAuth3 = function(backup_role, restore_role) {
     var versionDoc = admindb.system.version.findOne();
 
     jsTestLog("Dump foo database without dumping user data");
-    var dumpDir = MongoRunner.getAndPrepareDumpDirectory("dumprestore_auth3");
+    var dumpDir = MongerRunner.getAndPrepareDumpDirectory("dumprestore_auth3");
     runTool("mongerdump", mongerd, {out: dumpDir, db: "foo"});
     db = mongerd.getDB('foo');
 
@@ -226,7 +226,7 @@ var dumpRestoreAuth3 = function(backup_role, restore_role) {
                  db.getSiblingDB('admin').system.version.findOne(),
                  "version doc was changed by restore");
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 };
 
 // Tests that the default auth roles of backup and restore work properly.

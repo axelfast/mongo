@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -19,8 +19,8 @@ import (
 
 // IsMaster represents the isMaster command.
 //
-// The isMaster command is used for setting up a connection to MongoDB and
-// for monitoring a MongoDB server.
+// The isMaster command is used for setting up a connection to MongerDB and
+// for monitoring a MongerDB server.
 //
 // Since IsMaster can only be run on a connection, there is no Dispatch method.
 type IsMaster struct {

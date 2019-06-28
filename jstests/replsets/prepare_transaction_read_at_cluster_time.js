@@ -13,7 +13,7 @@
     load("jstests/libs/parallelTester.js");
 
     const runDBHashFn = (host, dbName, clusterTime) => {
-        const conn = new Mongo(host);
+        const conn = new Monger(host);
         const db = conn.getDB(dbName);
 
         conn.setSlaveOk();
@@ -34,7 +34,7 @@
     };
 
     const runFindFn = (host, dbName, collName, clusterTime) => {
-        const conn = new Mongo(host);
+        const conn = new Monger(host);
         const db = conn.getDB(dbName);
 
         conn.setSlaveOk();
@@ -59,7 +59,7 @@
                 return false;
             },
             () =>
-                `Failed to find '${commandName}' command in the ${db.getMongo().host} currentOp()` +
+                `Failed to find '${commandName}' command in the ${db.getMonger().host} currentOp()` +
                 ` output: ${tojson(db.currentOp())}`);
     };
 

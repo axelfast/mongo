@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,7 +35,7 @@ import java.nio.ByteBuffer;
 /**
  * The embedded client
  */
-public interface MongoEmbeddedClient {
+public interface MongerEmbeddedClient {
 
     /**
      * Writes the input to the embedded mongerdb client

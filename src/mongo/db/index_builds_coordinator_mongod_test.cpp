@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,7 +46,7 @@ using unittest::log;
 
 namespace {
 
-class IndexBuildsCoordinatorMongodTest : public CatalogTestFixture {
+class IndexBuildsCoordinatorMongerdTest : public CatalogTestFixture {
 private:
     void setUp() override;
     void tearDown() override;
@@ -68,15 +68,15 @@ public:
     std::unique_ptr<IndexBuildsCoordinator> _indexBuildsCoord;
 };
 
-void IndexBuildsCoordinatorMongodTest::setUp() {
+void IndexBuildsCoordinatorMongerdTest::setUp() {
     CatalogTestFixture::setUp();
     createCollection(_testFooNss, _testFooUUID);
     createCollection(_testBarNss, _testBarUUID);
     createCollection(_othertestFooNss, _othertestFooUUID);
-    _indexBuildsCoord = std::make_unique<IndexBuildsCoordinatorMongod>();
+    _indexBuildsCoord = std::make_unique<IndexBuildsCoordinatorMongerd>();
 }
 
-void IndexBuildsCoordinatorMongodTest::tearDown() {
+void IndexBuildsCoordinatorMongerdTest::tearDown() {
     _indexBuildsCoord->verifyNoIndexBuilds_forTestOnly();
     _indexBuildsCoord->shutdown();
     _indexBuildsCoord.reset();
@@ -84,7 +84,7 @@ void IndexBuildsCoordinatorMongodTest::tearDown() {
     CatalogTestFixture::tearDown();
 }
 
-void IndexBuildsCoordinatorMongodTest::createCollection(const NamespaceString& nss,
+void IndexBuildsCoordinatorMongerdTest::createCollection(const NamespaceString& nss,
                                                         CollectionUUID uuid) {
     CollectionOptions options;
     options.uuid = uuid;
@@ -102,7 +102,7 @@ std::vector<BSONObj> makeSpecs(const NamespaceString& nss, std::vector<std::stri
     return indexSpecs;
 }
 
-TEST_F(IndexBuildsCoordinatorMongodTest, AttemptBuildSameIndexReturnsImmediateSuccess) {
+TEST_F(IndexBuildsCoordinatorMongerdTest, AttemptBuildSameIndexReturnsImmediateSuccess) {
     _indexBuildsCoord->sleepIndexBuilds_forTestOnly(true);
 
     // Register an index build on _testFooNss.
@@ -135,7 +135,7 @@ TEST_F(IndexBuildsCoordinatorMongodTest, AttemptBuildSameIndexReturnsImmediateSu
 
 // Incrementally registering index builds and checking both that the registration was successful and
 // that the access functions convey the expected state of the manager.
-TEST_F(IndexBuildsCoordinatorMongodTest, Registration) {
+TEST_F(IndexBuildsCoordinatorMongerdTest, Registration) {
     _indexBuildsCoord->sleepIndexBuilds_forTestOnly(true);
 
     // Register an index build on _testFooNss.
@@ -249,7 +249,7 @@ TEST_F(IndexBuildsCoordinatorMongodTest, Registration) {
 // functions, checking that they correctly disallow and allow index builds when
 // ScopedStopNewCollectionIndexBuilds and ScopedStopNewDatabaseIndexBuilds are present on a
 // collection or database name.
-TEST_F(IndexBuildsCoordinatorMongodTest, DisallowNewBuildsOnNamespace) {
+TEST_F(IndexBuildsCoordinatorMongerdTest, DisallowNewBuildsOnNamespace) {
     {
         _indexBuildsCoord->sleepIndexBuilds_forTestOnly(true);
 
@@ -406,7 +406,7 @@ TEST_F(IndexBuildsCoordinatorMongodTest, DisallowNewBuildsOnNamespace) {
     }
 }
 
-TEST_F(IndexBuildsCoordinatorMongodTest, SetCommitQuorumWithBadArguments) {
+TEST_F(IndexBuildsCoordinatorMongerdTest, SetCommitQuorumWithBadArguments) {
     _indexBuildsCoord->sleepIndexBuilds_forTestOnly(true);
 
     CommitQuorumOptions newCommitQuorum("majority");

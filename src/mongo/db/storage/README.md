@@ -1,7 +1,7 @@
 Storage Engine API
 ==================
 
-The purpose of the Storage Engine API is to allow for pluggable storage engines in MongoDB (refer
+The purpose of the Storage Engine API is to allow for pluggable storage engines in MongerDB (refer
 to the [Storage FAQ][]). This document gives a brief overview of the API, and provides pointers
 to places with more detailed documentation. Where referencing code, links are to the version that
 was current at the time when the reference was made. Always compare with the latest version for
@@ -10,7 +10,7 @@ use the [mongerdb-dev][] Google group. Everybody involved in the Storage Engine 
 post.
 
 Third-party storage engines are integrated through self-contained modules that can be dropped into
-an existing MongoDB source tree, and will be automatically configured and included. A typical
+an existing MongerDB source tree, and will be automatically configured and included. A typical
 module would at least have the following files:
 
     src/             Directory with the actual source files
@@ -26,7 +26,7 @@ Concepts
 
 ### Record Stores
 A database contains one or more collections, each with a number of indexes, and a catalog listing
-them. All MongoDB collections are implemented with record stores: one for the documents themselves,
+them. All MongerDB collections are implemented with record stores: one for the documents themselves,
 and one for each index. By using the KVEngine class, you only have to deal with the abstraction, as
 the StorageEngineImpl implements the StorageEngine interface, using record stores for catalogs and
 indexes.
@@ -43,15 +43,15 @@ Currently all cloning, [initial sync][] and other operations are done in terms o
 individual documents, though there is a BulkBuilder class for more efficiently building indexes.
 
 ### Locking and Concurrency
-MongoDB uses multi-granular intent locking; see the [Concurrency FAQ][]. In all cases, this will
+MongerDB uses multi-granular intent locking; see the [Concurrency FAQ][]. In all cases, this will
 ensure that operations to meta-data, such as creation and deletion of record stores, are serialized
 with respect to other accesses. Storage engines can choose to support document-level concurrency,
 in which case the storage engine is responsible for any additional synchronization necessary. For
-storage engines not supporting document-level concurrency, MongoDB will use shared/exclusive locks
+storage engines not supporting document-level concurrency, MongerDB will use shared/exclusive locks
 at the collection level, so all record store accesses will be serialized.
 
-MongoDB uses [two-phase locking][] (2PL) to guarantee serializability of accesses to resources it
-manages. For storage engines that support document level concurrency, MongoDB will only use intent
+MongerDB uses [two-phase locking][] (2PL) to guarantee serializability of accesses to resources it
+manages. For storage engines that support document level concurrency, MongerDB will only use intent
 locks for the most common operations, leaving synchronization at the record store layer up to the
 storage engine.
 
@@ -95,7 +95,7 @@ storage engine may wait for durability at commit time.
 Systems with optimistic concurrency control (OCC) or multi-version concurrency control (MVCC) may
 find that a transaction conflicts with other transactions, that executing an operation would result
 in deadlock or violate other resource constraints. In such cases the storage engine may throw a
-WriteConflictException to signal the transient failure. MongoDB will handle the exception, abort
+WriteConflictException to signal the transient failure. MongerDB will handle the exception, abort
 and restart the transaction.
 
 ### Point-in-time snapshot reads

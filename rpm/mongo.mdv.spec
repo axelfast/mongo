@@ -5,7 +5,7 @@
 Name:    %{name}
 Version: %{version}
 Release: %{release}
-Summary: MongoDB client shell and tools
+Summary: MongerDB client shell and tools
 License: AGPL 3.0
 URL: http://www.mongerdb.org
 Group: Databases
@@ -16,13 +16,13 @@ BuildRequires: js-devel, readline-devel, boost-devel, pcre-devel
 BuildRequires: gcc-c++, scons
 
 %description
-MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
 
-MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
 
-MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
 
-MongoDB features:
+MongerDB features:
 * JSON Data Model with Dynamic Schemas
 * Auto-Sharding for Horizontal Scalability
 * Built-In Replication for High Availability
@@ -35,18 +35,18 @@ This package contains the monger shell, import/export tools, and other client ut
 
 
 %package server
-Summary: MongoDB server, sharding server, and support scripts
+Summary: MongerDB server, sharding server, and support scripts
 Group: Databases
 Requires: mongerdb
 
 %description server
-MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
 
-MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
 
-MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
 
-MongoDB features:
+MongerDB features:
 * JSON Data Model with Dynamic Schemas
 * Auto-Sharding for Horizontal Scalability
 * Built-In Replication for High Availability
@@ -55,21 +55,21 @@ MongoDB features:
 * Text Search
 * Aggregation Framework & Native MapReduce
 
-This package contains the MongoDB server software, MongoDB sharded cluster query router, default configuration files, and init.d scripts.
+This package contains the MongerDB server software, MongerDB sharded cluster query router, default configuration files, and init.d scripts.
 
 
 %package devel
-Summary: Headers and libraries for MongoDB development
+Summary: Headers and libraries for MongerDB development
 Group: Databases
 
 %description devel
-MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
 
-MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
 
-MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
 
-MongoDB features:
+MongerDB features:
 * JSON Data Model with Dynamic Schemas
 * Auto-Sharding for Horizontal Scalability
 * Built-In Replication for High Availability
@@ -78,7 +78,7 @@ MongoDB features:
 * Text Search
 * Aggregation Framework & Native MapReduce
 
-This package provides the MongoDB static library and header files needed to develop MongoDB client software.
+This package provides the MongerDB static library and header files needed to develop MongerDB client software.
 
 %prep
 %setup -n %{name}-src-r%{version}

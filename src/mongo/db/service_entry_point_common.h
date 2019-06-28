@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -48,7 +48,7 @@ MONGO_FAIL_POINT_DECLARE(skipCheckingForNotMasterInCommandDispatch);
 
 /**
  * Helpers for writing ServiceEntryPointImpl implementations from a reusable core.
- * Implementations are ServiceEntryPointMongo and ServiceEntryPointEmbedded, which share
+ * Implementations are ServiceEntryPointMonger and ServiceEntryPointEmbedded, which share
  * most of their code, but vary in small details captured by the Hooks customization
  * interface.
  */

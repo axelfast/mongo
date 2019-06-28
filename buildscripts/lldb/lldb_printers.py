@@ -1,4 +1,4 @@
-"""LLDB Pretty-printers for MongoDB.
+"""LLDB Pretty-printers for MongerDB.
 
 To import script in lldb, run:
 

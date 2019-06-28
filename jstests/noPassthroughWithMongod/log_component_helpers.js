@@ -2,7 +2,7 @@
 
 (function(db) {
     "use strict";
-    var monger = db.getMongo();
+    var monger = db.getMonger();
 
     // Get current log component setttings. We will reset to these later.
     var originalSettings =

@@ -17,7 +17,7 @@ load("jstests/core/txns/libs/prepare_helpers.js");
     testColl.drop({writeConcern: {w: "majority"}});
     assert.commandWorked(testDB.runCommand({create: collName, writeConcern: {w: "majority"}}));
 
-    const session = db.getMongo().startSession({causalConsistency: false});
+    const session = db.getMonger().startSession({causalConsistency: false});
     const sessionDB = session.getDatabase(dbName);
     const sessionColl = sessionDB.getCollection(collName);
 
@@ -40,7 +40,7 @@ load("jstests/core/txns/libs/prepare_helpers.js");
     // This portion of the test needs to run on a connection without implicit sessions, because
     // writes to `config.transactions` are disallowed under sessions.
     {
-        var conn = new Mongo(db.getMongo().host);
+        var conn = new Monger(db.getMonger().host);
         conn._setDummyDefaultSession();
         var configDB = conn.getDB('config');
         assert.commandFailed(configDB.transactions.remove({"_id.id": session.getSessionId().id}));

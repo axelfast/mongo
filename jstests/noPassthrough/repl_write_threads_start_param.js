@@ -8,26 +8,26 @@
     "use strict";
 
     // too low a count
-    clearRawMongoProgramOutput();
-    var monger = MongoRunner.runMongod({setParameter: 'replWriterThreadCount=0'});
+    clearRawMongerProgramOutput();
+    var monger = MongerRunner.runMongerd({setParameter: 'replWriterThreadCount=0'});
     assert.soon(function() {
-        return rawMongoProgramOutput().match(
+        return rawMongerProgramOutput().match(
             "Invalid value for parameter replWriterThreadCount: 0 is not greater than or equal to 1");
     }, "mongerd started with too low a value for replWriterThreadCount");
 
     // too high a count
-    clearRawMongoProgramOutput();
-    monger = MongoRunner.runMongod({setParameter: 'replWriterThreadCount=257'});
+    clearRawMongerProgramOutput();
+    monger = MongerRunner.runMongerd({setParameter: 'replWriterThreadCount=257'});
     assert.soon(function() {
-        return rawMongoProgramOutput().match(
+        return rawMongerProgramOutput().match(
             "Invalid value for parameter replWriterThreadCount: 257 is not less than or equal to 256");
     }, "mongerd started with too high a value for replWriterThreadCount");
 
     // proper count
-    clearRawMongoProgramOutput();
-    monger = MongoRunner.runMongod({setParameter: 'replWriterThreadCount=24'});
+    clearRawMongerProgramOutput();
+    monger = MongerRunner.runMongerd({setParameter: 'replWriterThreadCount=24'});
     assert.neq(null, monger, "mongerd failed to start with a suitable replWriterThreadCount value");
-    assert(!rawMongoProgramOutput().match("Invalid value for parameter replWriterThreadCount"),
+    assert(!rawMongerProgramOutput().match("Invalid value for parameter replWriterThreadCount"),
            "despite accepting the replWriterThreadCount value, mongerd logged an error");
 
     // getParameter to confirm the value was set
@@ -37,5 +37,5 @@
     // setParameter to ensure it is not possible
     assert.commandFailed(
         monger.getDB("admin").runCommand({setParameter: 1, replWriterThreadCount: 1}));
-    MongoRunner.stopMongod(monger);
+    MongerRunner.stopMongerd(monger);
 }());

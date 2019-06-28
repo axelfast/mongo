@@ -26,7 +26,7 @@
 
     // Initiate the session.
     const sessionOptions = {causalConsistency: false};
-    let session = db.getMongo().startSession(sessionOptions);
+    let session = db.getMonger().startSession(sessionOptions);
     let sessionDb = session.getDatabase(dbName);
 
     /***********************************************************************************************
@@ -177,8 +177,8 @@
     }),
                                  ErrorCodes.InvalidOptions);
 
-    // Mongos has special handling for commitTransaction to support commit recovery.
-    if (!FixtureHelpers.isMongos(sessionDb)) {
+    // Mongers has special handling for commitTransaction to support commit recovery.
+    if (!FixtureHelpers.isMongers(sessionDb)) {
         // Committing the transaction should fail.
         assert.commandFailedWithCode(sessionDb.adminCommand({
             commitTransaction: 1,

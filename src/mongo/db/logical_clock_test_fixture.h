@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,9 +42,9 @@ class LogicalTime;
 /**
  * A test fixture that installs a LogicalClock instance with a TimeProofService onto a service
  * context, in addition to the mock storage engine, network, and OpObserver provided by
- * ShardingMongodTestFixture.
+ * ShardingMongerdTestFixture.
  */
-class LogicalClockTestFixture : public ShardingMongodTestFixture {
+class LogicalClockTestFixture : public ShardingMongerdTestFixture {
 public:
     LogicalClockTestFixture();
     ~LogicalClockTestFixture();

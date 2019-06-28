@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -75,7 +75,7 @@ public:
             : _liteParsedPipelines(std::move(liteParsedPipelines)),
               _requiredPrivileges(std::move(privileges)) {}
 
-        PrivilegeVector requiredPrivileges(bool isMongos) const final {
+        PrivilegeVector requiredPrivileges(bool isMongers) const final {
             return _requiredPrivileges;
         }
 
@@ -83,12 +83,12 @@ public:
 
         bool allowShardedForeignCollection(NamespaceString nss) const final;
 
-        bool allowedToPassthroughFromMongos() const {
+        bool allowedToPassthroughFromMongers() const {
             // If any of the sub-pipelines doesn't allow pass through, then return false.
             return std::all_of(_liteParsedPipelines.cbegin(),
                                _liteParsedPipelines.cend(),
                                [](const auto& subPipeline) {
-                                   return subPipeline.allowedToPassthroughFromMongos();
+                                   return subPipeline.allowedToPassthroughFromMongers();
                                });
         }
 

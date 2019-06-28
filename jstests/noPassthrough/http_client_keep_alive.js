@@ -55,8 +55,8 @@
 
     const web = new ConfigExpandRestServer();
     web.start();
-    const mongerd = MongoRunner.runMongod({setParameter: 'enableTestCommands=1'});
+    const mongerd = MongerRunner.runMongerd({setParameter: 'enableTestCommands=1'});
     runTest(mongerd, web);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
     web.stop();
 })();

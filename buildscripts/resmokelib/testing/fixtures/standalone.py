@@ -14,7 +14,7 @@ from ... import errors
 from ... import utils
 
 
-class MongoDFixture(interface.Fixture):
+class MongerDFixture(interface.Fixture):
     """Fixture which provides JSTests with a standalone mongerd to run against."""
 
     AWAIT_READY_TIMEOUT_SECS = 300
@@ -22,7 +22,7 @@ class MongoDFixture(interface.Fixture):
     def __init__(  # pylint: disable=too-many-arguments
             self, logger, job_num, mongerd_executable=None, mongerd_options=None, dbpath_prefix=None,
             preserve_dbpath=False):
-        """Initialize MongoDFixture with different options for the mongerd process."""
+        """Initialize MongerDFixture with different options for the mongerd process."""
 
         interface.Fixture.__init__(self, logger, job_num, dbpath_prefix=dbpath_prefix)
 
@@ -74,10 +74,10 @@ class MongoDFixture(interface.Fixture):
 
     def await_ready(self):
         """Block until the fixture can be used for testing."""
-        deadline = time.time() + MongoDFixture.AWAIT_READY_TIMEOUT_SECS
+        deadline = time.time() + MongerDFixture.AWAIT_READY_TIMEOUT_SECS
 
         # Wait until the mongerd is accepting connections. The retry logic is necessary to support
-        # versions of PyMongo <3.0 that immediately raise a ConnectionFailure if a connection cannot
+        # versions of PyMonger <3.0 that immediately raise a ConnectionFailure if a connection cannot
         # be established.
         while True:
             # Check whether the mongerd exited for some reason.
@@ -97,7 +97,7 @@ class MongoDFixture(interface.Fixture):
                 if remaining <= 0.0:
                     raise errors.ServerFailure(
                         "Failed to connect to mongerd on port {} after {} seconds".format(
-                            self.port, MongoDFixture.AWAIT_READY_TIMEOUT_SECS))
+                            self.port, MongerDFixture.AWAIT_READY_TIMEOUT_SECS))
 
                 self.logger.info("Waiting to connect to mongerd on port %d.", self.port)
                 time.sleep(0.1)  # Wait a little bit before trying again.

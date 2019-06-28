@@ -375,9 +375,9 @@ function runTest(conn) {
 }
 
 jsTest.log('Test standalone');
-var conn = MongoRunner.runMongod({auth: ''});
+var conn = MongerRunner.runMongerd({auth: ''});
 runTest(conn);
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
 jsTest.log('Test sharding');
 // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.

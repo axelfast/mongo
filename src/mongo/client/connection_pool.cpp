@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -175,7 +175,7 @@ ConnectionPool::ConnectionList::iterator ConnectionPool::acquireConnection(
         conn.reset(new DBClientConnection(
             false,  // auto reconnect
             0,      // socket timeout
-            {},     // MongoURI
+            {},     // MongerURI
             [this, target](const executor::RemoteCommandResponse& isMasterReply) {
                 return _hook->validateHost(target, BSONObj(), isMasterReply);
             }));

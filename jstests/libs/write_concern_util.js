@@ -118,7 +118,7 @@ function runWriteConcernRetryabilityTest(priConn, secConn, cmd, kNodes, dbName, 
     jsTestLog(`Testing ${tojson(cmd)} on ${dbName}.`);
 
     // Send a dummy write to this connection so it will have the Client object initialized.
-    const secondPriConn = new Mongo(priConn.host);
+    const secondPriConn = new Monger(priConn.host);
     const testDB2 = secondPriConn.getDB(dbName);
     assert.commandWorked(testDB2.dummy.insert({x: 1}, {writeConcern: {w: kNodes}}));
 

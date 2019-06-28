@@ -5,12 +5,12 @@
     var t = db.server18198;
     t.drop();
 
-    var monger = db.getMongo();
+    var monger = db.getMonger();
 
     try {
         var commandsRan = [];
         // hook in our patched monger
-        var mockMongo = {
+        var mockMonger = {
             getSlaveOk: function() {
                 return true;
             },
@@ -33,8 +33,8 @@
             isReplicaSetMember: function() {
                 return monger.isReplicaSetMember();
             },
-            isMongos: function() {
-                return monger.isMongos();
+            isMongers: function() {
+                return monger.isMongers();
             },
             isCausalConsistency: function() {
                 return false;
@@ -44,8 +44,8 @@
             },
         };
 
-        db._monger = mockMongo;
-        db._session = new _DummyDriverSession(mockMongo);
+        db._monger = mockMonger;
+        db._session = new _DummyDriverSession(mockMonger);
 
         // this query should not get a read pref
         t.aggregate([{$sort: {"x": 1}}, {$out: "foo"}]);

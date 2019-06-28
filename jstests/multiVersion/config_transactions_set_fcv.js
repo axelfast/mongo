@@ -159,7 +159,7 @@
     function runTest({shouldRestart}) {
         // The test waits for failpoints to log a message when hit, so clear the program output
         // before starting so messages from previous iterations aren't in it.
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
 
         const txnIds = {
             write: {lsid: {id: UUID()}, txnNumber: 0},   // Retryable write.
@@ -393,7 +393,7 @@
     //
     // Verify setFCV is interruptible between modifying sessions.
     //
-    clearRawMongoProgramOutput();
+    clearRawMongerProgramOutput();
     checkFCV(adminDB, latestFCV);
 
     // Construct a config.transactions entry that would be modified by downgrade.

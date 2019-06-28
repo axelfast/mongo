@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,7 +28,7 @@
  */
 
 /**
- * This module implements the client side of SASL authentication in MongoDB, in terms of the Cyrus
+ * This module implements the client side of SASL authentication in MongerDB, in terms of the Cyrus
  * SASL library.  See <sasl/sasl.h> and http://cyrusimap.web.cmu.edu/ for relevant documentation.
  *
  * The primary entry point at runtime is saslClientAuthenticateImpl().

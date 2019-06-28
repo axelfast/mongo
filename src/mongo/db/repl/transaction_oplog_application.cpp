@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -180,7 +180,7 @@ Status applyCommitTransaction(OperationContext* opCtx,
     // The write on transaction table may be applied concurrently, so refreshing state
     // from disk may read that write, causing starting a new transaction on an existing
     // txnNumber. Thus, we start a new transaction without refreshing state from disk.
-    MongoDOperationContextSessionWithoutRefresh sessionCheckout(opCtx);
+    MongerDOperationContextSessionWithoutRefresh sessionCheckout(opCtx);
 
     auto transaction = TransactionParticipant::get(opCtx);
     invariant(transaction);
@@ -215,7 +215,7 @@ Status applyAbortTransaction(OperationContext* opCtx,
     // The write on transaction table may be applied concurrently, so refreshing state
     // from disk may read that write, causing starting a new transaction on an existing
     // txnNumber. Thus, we start a new transaction without refreshing state from disk.
-    MongoDOperationContextSessionWithoutRefresh sessionCheckout(opCtx);
+    MongerDOperationContextSessionWithoutRefresh sessionCheckout(opCtx);
 
     auto transaction = TransactionParticipant::get(opCtx);
     transaction.unstashTransactionResources(opCtx, "abortTransaction");
@@ -334,7 +334,7 @@ Status _applyPrepareTransaction(OperationContext* opCtx,
     // The write on transaction table may be applied concurrently, so refreshing state
     // from disk may read that write, causing starting a new transaction on an existing
     // txnNumber. Thus, we start a new transaction without refreshing state from disk.
-    MongoDOperationContextSessionWithoutRefresh sessionCheckout(opCtx);
+    MongerDOperationContextSessionWithoutRefresh sessionCheckout(opCtx);
 
     auto transaction = TransactionParticipant::get(opCtx);
     transaction.unstashTransactionResources(opCtx, "prepareTransaction");

@@ -22,7 +22,7 @@
 
     // Test for SERVER-6549, make sure that repeatedly logging in always passes.
     for (var i = 0; i < 100; i++) {
-        adminDB = new Mongo(mongers.host).getDB('admin');
+        adminDB = new Monger(mongers.host).getDB('admin');
         assert(adminDB.auth('admin', 'password'), "Auth failed on attempt #: " + i);
     }
 

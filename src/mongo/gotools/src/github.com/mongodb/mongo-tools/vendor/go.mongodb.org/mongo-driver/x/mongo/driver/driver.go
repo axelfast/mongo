@@ -12,13 +12,13 @@ type Deployment interface {
 	Description() description.Topology
 }
 
-// Server represents a MongoDB server. Implementations should pool connections and handle the
+// Server represents a MongerDB server. Implementations should pool connections and handle the
 // retrieving and returning of connections.
 type Server interface {
 	Connection(context.Context) (Connection, error)
 }
 
-// Connection represents a connection to a MongoDB server.
+// Connection represents a connection to a MongerDB server.
 type Connection interface {
 	WriteWireMessage(context.Context, []byte) error
 	ReadWireMessage(ctx context.Context, dst []byte) ([]byte, error)

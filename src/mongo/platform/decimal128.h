@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -44,7 +44,7 @@
 namespace monger {
 
 /**
- * Wrapper class for the MongoDB Decimal128 data type. Sample usage:
+ * Wrapper class for the MongerDB Decimal128 data type. Sample usage:
  *     Decimal128 d1("+10.0");
  *     Decimal128 d2("+0.1")
  *     Decimal128 sum = d1.add(d2)
@@ -415,7 +415,7 @@ public:
      * Otherwise, display using F with no exponent (add leading zeros if necessary).
      *
      * This conversion to string is roughly based on the G C99 printf specifier and
-     * existing behavior for the double numeric type in MongoDB.
+     * existing behavior for the double numeric type in MongerDB.
      */
     std::string toString() const;
 

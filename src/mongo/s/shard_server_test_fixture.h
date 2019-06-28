@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,10 +38,10 @@ class RemoteCommandTargeterMock;
 
 /**
  * Test fixture for shard components, as opposed to config or mongers components. Provides a mock
- * network and ephemeral storage engine via ShardingMongodTestFixture. Additionally sets up mock
+ * network and ephemeral storage engine via ShardingMongerdTestFixture. Additionally sets up mock
  * dist lock catalog and manager with a real catalog client.
  */
-class ShardServerTestFixture : public ShardingMongodTestFixture {
+class ShardServerTestFixture : public ShardingMongerdTestFixture {
 public:
     ShardServerTestFixture();
     ~ShardServerTestFixture();

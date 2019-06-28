@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -53,7 +53,7 @@ constexpr auto kType = "type"_sd;
 constexpr auto kVersion = "version"_sd;
 constexpr auto kOperatingSystem = "os"_sd;
 constexpr auto kArchitecture = "architecture"_sd;
-constexpr auto kMongos = "mongers"_sd;
+constexpr auto kMongers = "mongers"_sd;
 constexpr auto kClient = "client"_sd;
 constexpr auto kHost = "host"_sd;
 
@@ -255,10 +255,10 @@ TEST(ClientMetadatTest, TestNegativeWrongTypes) {
 
 // Negative: document larger than 512 bytes
 TEST(ClientMetadatTest, TestNegativeLargeDocument) {
-    bool savedMongos = isMongos();
-    auto unsetMongoS = makeGuard([&] { setMongos(savedMongos); });
+    bool savedMongers = isMongers();
+    auto unsetMongerS = makeGuard([&] { setMongers(savedMongers); });
 
-    setMongos(true);
+    setMongers(true);
     {
         std::string str(350, 'x');
         ASSERT_DOC_OK(kApplication << BSON(kName << "1") << kDriver
@@ -304,7 +304,7 @@ TEST(ClientMetadatTest, TestNegativeLargeAppName) {
 }
 
 // Serialize and attach mongers information
-TEST(ClientMetadatTest, TestMongoSAppend) {
+TEST(ClientMetadatTest, TestMongerSAppend) {
     BSONObjBuilder builder;
     ASSERT_OK(ClientMetadata::serializePrivate("a", "b", "c", "d", "e", "f", "g", &builder));
 
@@ -313,12 +313,12 @@ TEST(ClientMetadatTest, TestMongoSAppend) {
     ASSERT_OK(swParseStatus.getStatus());
     ASSERT_EQUALS("g", swParseStatus.getValue().get().getApplicationName());
 
-    swParseStatus.getValue().get().setMongoSMetadata("h", "i", "j");
+    swParseStatus.getValue().get().setMongerSMetadata("h", "i", "j");
     ASSERT_EQUALS("g", swParseStatus.getValue().get().getApplicationName());
 
     auto doc = swParseStatus.getValue().get().getDocument();
 
-    constexpr auto kMongos = "mongers"_sd;
+    constexpr auto kMongers = "mongers"_sd;
     constexpr auto kClient = "client"_sd;
     constexpr auto kHost = "host"_sd;
 
@@ -327,7 +327,7 @@ TEST(ClientMetadatTest, TestMongoSAppend) {
                           << kOperatingSystem
                           << BSON(kType << "c" << kName << "d" << kArchitecture << "e" << kVersion
                                         << "f")
-                          << kMongos
+                          << kMongers
                           << BSON(kHost << "h" << kClient << "i" << kVersion << "j"));
     ASSERT_BSONOBJ_EQ(doc, outDoc);
 }

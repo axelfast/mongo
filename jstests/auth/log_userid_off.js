@@ -1,7 +1,7 @@
 /**
  * Tests that logged users will not show up in the log.
  *
- * @param monger {Mongo} connection object.
+ * @param monger {Monger} connection object.
  * @tags: [requires_sharding]
  */
 var doTest = function(monger, callSetParam) {
@@ -31,9 +31,9 @@ var doTest = function(monger, callSetParam) {
     });
 };
 
-var monger = MongoRunner.runMongod({verbose: 5});
+var monger = MongerRunner.runMongerd({verbose: 5});
 doTest(monger);
-MongoRunner.stopMongod(monger);
+MongerRunner.stopMongerd(monger);
 
 var st = new ShardingTest({shards: 1, verbose: 5});
 doTest(st.s);

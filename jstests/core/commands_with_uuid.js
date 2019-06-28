@@ -29,8 +29,8 @@
     // No support for UUIDs on mongers.
     const isMaster = db.runCommand("ismaster");
     assert.commandWorked(isMaster);
-    const isMongos = (isMaster.msg === "isdbgrid");
-    if (isMongos) {
+    const isMongers = (isMaster.msg === "isdbgrid");
+    if (isMongers) {
         return;
     }
 

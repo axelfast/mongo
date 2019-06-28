@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -53,7 +53,7 @@ int main(int argc, char** argv, char** envp) {
         return 1;
 
 #ifndef MONGO_CONFIG_OPTIMIZED_BUILD
-    ::monger::log() << "***WARNING*** MongoDB was built with --opt=off. Function timings may be "
+    ::monger::log() << "***WARNING*** MongerDB was built with --opt=off. Function timings may be "
                       "affected. Always verify any code change against the production environment "
                       "(e.g. --opt=on).";
 #endif

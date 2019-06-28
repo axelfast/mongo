@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -527,7 +527,7 @@ BatchedCommandRequest BatchWriteOp::buildBatchRequest(
         if (_clientRequest.isVerboseWC()) {
             request.setWriteConcern(_clientRequest.getWriteConcern());
         } else {
-            // Mongos needs to send to the shard with w > 0 so it will be able to see the
+            // Mongers needs to send to the shard with w > 0 so it will be able to see the
             // writeErrors
             request.setWriteConcern(upgradeWriteConcern(_clientRequest.getWriteConcern()));
         }

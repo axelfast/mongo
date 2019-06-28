@@ -39,7 +39,7 @@
         mongersColl.insert([{shard: 0, _id: "initial_doc"}, {shard: 1, _id: "initial doc"}]));
 
     // Start a transaction which will be used to write documents across both shards.
-    const session = mongersDB.getMongo().startSession();
+    const session = mongersDB.getMonger().startSession();
     const sessionDB = session.getDatabase(mongersDB.getName());
     const sessionColl = sessionDB[mongersColl.getName()];
     session.startTransaction({readConcern: {level: "majority"}});

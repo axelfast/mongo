@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,13 +41,13 @@ using std::string;
 
 namespace {
 
-const char kMongosAddShardToZone[] = "addShardToZone";
+const char kMongersAddShardToZone[] = "addShardToZone";
 const char kConfigsvrAddShardToZone[] = "_configsvrAddShardToZone";
 const char kZoneName[] = "zone";
 
 }  // unnamed namespace
 
-StatusWith<AddShardToZoneRequest> AddShardToZoneRequest::parseFromMongosCommand(
+StatusWith<AddShardToZoneRequest> AddShardToZoneRequest::parseFromMongersCommand(
     const BSONObj& cmdObj) {
     return _parseFromCommand(cmdObj, true);
 }
@@ -66,10 +66,10 @@ AddShardToZoneRequest::AddShardToZoneRequest(string shardName, string zoneName)
     : _shardName(std::move(shardName)), _zoneName(std::move(zoneName)) {}
 
 StatusWith<AddShardToZoneRequest> AddShardToZoneRequest::_parseFromCommand(const BSONObj& cmdObj,
-                                                                           bool forMongos) {
+                                                                           bool forMongers) {
     string shardName;
     auto parseShardNameStatus = bsonExtractStringField(
-        cmdObj, (forMongos ? kMongosAddShardToZone : kConfigsvrAddShardToZone), &shardName);
+        cmdObj, (forMongers ? kMongersAddShardToZone : kConfigsvrAddShardToZone), &shardName);
 
     if (!parseShardNameStatus.isOK()) {
         return parseShardNameStatus;

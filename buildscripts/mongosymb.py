@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Script and library for symbolizing MongoDB stack traces.
+"""Script and library for symbolizing MongerDB stack traces.
 
 To use as a script, paste the JSON object on the line after ----- BEGIN BACKTRACE ----- into the
 standard input of this script. There are numerous caveats. In the default mode, you need
@@ -26,7 +26,7 @@ import sys
 
 def symbolize_frames(  # pylint: disable=too-many-locals
         trace_doc, dbg_path_resolver, symbolizer_path=None, dsym_hint=None):
-    """Return a list of symbolized stack frames from a trace_doc in MongoDB stack dump format."""
+    """Return a list of symbolized stack frames from a trace_doc in MongerDB stack dump format."""
 
     if symbolizer_path is None:
         symbolizer_path = os.environ.get("MONGOSYMB_SYMBOLIZER_PATH", "llvm-symbolizer")

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,26 +51,26 @@ class Environment;
 
 namespace moe = monger::optionenvironment;
 
-struct MongoeBenchGlobalParams {
+struct MongereBenchGlobalParams {
     std::unique_ptr<BenchRunConfig> preConfig;
     std::unique_ptr<BenchRunConfig> opsConfig;
     boost::filesystem::path outputFile;
 };
 
-extern MongoeBenchGlobalParams mongereBenchGlobalParams;
+extern MongereBenchGlobalParams mongereBenchGlobalParams;
 
-Status addMongoeBenchOptions(moe::OptionSection* options);
+Status addMongereBenchOptions(moe::OptionSection* options);
 
-void printMongoeBenchHelp(std::ostream* out);
+void printMongereBenchHelp(std::ostream* out);
 
 /**
  * Handle options that should come before validation, such as "help".
  *
  * Returns false if an option was found that implies we should prematurely exit with success.
  */
-bool handlePreValidationMongoeBenchOptions(const moe::Environment& params);
+bool handlePreValidationMongereBenchOptions(const moe::Environment& params);
 
-Status storeMongoeBenchOptions(const moe::Environment& params,
+Status storeMongereBenchOptions(const moe::Environment& params,
                                const std::vector<std::string>& args);
 
 }  // namespace monger

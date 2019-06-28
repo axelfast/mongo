@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -178,7 +178,7 @@ int dbtestsMain(int argc, char** argv, char** envp) {
     setGlobalServiceContext(ServiceContext::make());
 
     const auto service = getGlobalServiceContext();
-    service->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongod>(service));
+    service->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongerd>(service));
 
     auto logicalClock = std::make_unique<LogicalClock>(service);
     LogicalClock::set(service, std::move(logicalClock));

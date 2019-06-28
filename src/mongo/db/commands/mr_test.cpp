@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -351,7 +351,7 @@ repl::OpTime MapReduceOpObserver::onDropCollection(OperationContext* opCtx,
 /**
  * Test fixture for MapReduceCommand.
  */
-class MapReduceCommandTest : public ServiceContextMongoDTest {
+class MapReduceCommandTest : public ServiceContextMongerDTest {
 public:
     static const NamespaceString inputNss;
     static const NamespaceString outputNss;
@@ -395,7 +395,7 @@ const NamespaceString MapReduceCommandTest::inputNss("myDB.myCollection");
 const NamespaceString MapReduceCommandTest::outputNss(inputNss.getSisterNS("outCollection"));
 
 void MapReduceCommandTest::setUp() {
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
     ScriptEngine::setup();
     auto service = getServiceContext();
     DBDirectClientFactory::get(service).registerImplementation(
@@ -428,7 +428,7 @@ void MapReduceCommandTest::tearDown() {
     _opCtx = {};
     _opObserver = nullptr;
     ScriptEngine::dropScopeCache();
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 repl::ReplicationCoordinatorMock* MapReduceCommandTest::_getReplCoord() const {

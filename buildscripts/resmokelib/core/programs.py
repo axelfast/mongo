@@ -1,4 +1,4 @@
-"""Utility functions to create MongoDB processes.
+"""Utility functions to create MongerDB processes.
 
 Handles all the nitty-gritty parameter conversion.
 """
@@ -263,7 +263,7 @@ def monger_shell_program(  # pylint: disable=too-many-branches,too-many-locals,t
     # they are dictionaries, they will be converted to JavaScript objects when passed to the shell
     # by the _format_shell_vars() function.
     mongerd_set_parameters = test_data.get("setParameters", {}).copy()
-    mongers_set_parameters = test_data.get("setParametersMongos", {}).copy()
+    mongers_set_parameters = test_data.get("setParametersMongers", {}).copy()
 
     # Propagate additional setParameters to mongerd processes spawned by the monger shell. Command
     # line options to resmoke.py override the YAML configuration.
@@ -291,7 +291,7 @@ def monger_shell_program(  # pylint: disable=too-many-branches,too-many-locals,t
                                      default_mongers_log_component_verbosity())
 
     test_data["setParameters"] = mongerd_set_parameters
-    test_data["setParametersMongos"] = mongers_set_parameters
+    test_data["setParametersMongers"] = mongers_set_parameters
 
     # There's a periodic background thread that checks for and aborts expired transactions.
     # "transactionLifetimeLimitSeconds" specifies for how long a transaction can run before expiring

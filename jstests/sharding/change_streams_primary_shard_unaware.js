@@ -77,10 +77,10 @@
 
     // Establish change stream cursor on the second mongers, which is not aware that the
     // collection is sharded.
-    let cstMongos1 = new ChangeStreamTest(mongers1DB);
-    let cursorMongos1 = cstMongos1.startWatchingChanges(
+    let cstMongers1 = new ChangeStreamTest(mongers1DB);
+    let cursorMongers1 = cstMongers1.startWatchingChanges(
         {pipeline: [{$changeStream: {fullDocument: "updateLookup"}}], collection: mongers1Coll});
-    assert.eq(0, cursorMongos1.firstBatch.length, "Cursor had changes: " + tojson(cursorMongos1));
+    assert.eq(0, cursorMongers1.firstBatch.length, "Cursor had changes: " + tojson(cursorMongers1));
 
     // Establish a change stream cursor on the now sharded collection through the first mongers.
     let cst = new ChangeStreamTest(mongersDB);
@@ -105,7 +105,7 @@
             operationType: "insert",
         }]
     });
-    let mongers1ChangeDoc = cstMongos1.getOneChange(cursorMongos1);
+    let mongers1ChangeDoc = cstMongers1.getOneChange(cursorMongers1);
     assert.docEq({_id: 1, a: 1}, mongers1ChangeDoc.documentKey);
     assert.docEq({_id: 1, a: 1}, mongers1ChangeDoc.fullDocument);
     assert.eq({db: mongers1DB.getName(), coll: mongers1Coll.getName()}, mongers1ChangeDoc.ns);
@@ -140,7 +140,7 @@
             updateDescription: {removedFields: [], updatedFields: {b: 1}}
         }]
     });
-    mongers1ChangeDoc = cstMongos1.getOneChange(cursorMongos1);
+    mongers1ChangeDoc = cstMongers1.getOneChange(cursorMongers1);
     assert.docEq({_id: 1, a: 1}, mongers1ChangeDoc.documentKey);
     assert.docEq({_id: 1, a: 1, b: 1}, mongers1ChangeDoc.fullDocument);
     assert.eq({db: mongers1DB.getName(), coll: mongers1Coll.getName()}, mongers1ChangeDoc.ns);
@@ -152,18 +152,18 @@
     assert.eq(false, isShardAware(st.rs0.getPrimary(), mongersColl.getFullName()));
 
     // Establish change stream cursor on mongers2 using the resume token from the change steam on
-    // mongers1. Mongos2 is aware that the collection exists and thinks that it's unsharded, so it
+    // mongers1. Mongers2 is aware that the collection exists and thinks that it's unsharded, so it
     // won't trigger a routing table refresh. This must be done using a resume token from an update
     // otherwise the shard will generate the documentKey based on the assumption that the shard key
     // is _id which will cause the cursor establishment to fail due to SERVER-32085.
-    let cstMongos2 = new ChangeStreamTest(mongers2DB);
-    let cursorMongos2 = cstMongos2.startWatchingChanges({
+    let cstMongers2 = new ChangeStreamTest(mongers2DB);
+    let cursorMongers2 = cstMongers2.startWatchingChanges({
         pipeline: [{$changeStream: {resumeAfter: mongers1ChangeDoc._id}}],
         collection: mongers2Coll
     });
 
-    cstMongos2.assertNextChangesEqual({
-        cursor: cursorMongos2,
+    cstMongers2.assertNextChangesEqual({
+        cursor: cursorMongers2,
         expectedChanges: [{
             documentKey: {_id: -2, a: -2},
             fullDocument: {_id: -2, a: -2},
@@ -172,8 +172,8 @@
         }]
     });
 
-    cstMongos2.assertNextChangesEqual({
-        cursor: cursorMongos2,
+    cstMongers2.assertNextChangesEqual({
+        cursor: cursorMongers2,
         expectedChanges: [{
             documentKey: {_id: 2, a: 2},
             fullDocument: {_id: 2, a: 2},

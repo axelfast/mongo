@@ -15,17 +15,17 @@ load('jstests/ssl/libs/ssl_helpers.js');
     const CLIENT_CERT_NO_ROLES = "jstests/libs/client.pem";
 
     const CLIENT_USER =
-        "C=US,ST=New York,L=New York City,O=MongoDB,OU=Kernel Users,CN=Kernel Client Peer Role";
+        "C=US,ST=New York,L=New York City,O=MongerDB,OU=Kernel Users,CN=Kernel Client Peer Role";
 
     const CLIENT_USER_NO_ROLES =
-        "CN=client,OU=KernelUser,O=MongoDB,L=New York City,ST=New York,C=US";
+        "CN=client,OU=KernelUser,O=MongerDB,L=New York City,ST=New York,C=US";
     const smokeScript =
         'assert(db.getSiblingDB(\'$external\').auth({ mechanism: \'MONGODB-X509\' }));';
 
     function authAndTest(port, expectSuccess) {
         // First we run the shell with the "smoke" user that has no embedded roles to verify
         // that X509 auth works overall.
-        const smoke = runMongoProgram("monger",
+        const smoke = runMongerProgram("monger",
                                       "--host",
                                       "localhost",
                                       "--port",
@@ -40,7 +40,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
         assert.eq(smoke, 0, "Could not auth with smoke user");
 
         const runTest = function(cert, script) {
-            const res = runMongoProgram("monger",
+            const res = runMongerProgram("monger",
                                         "--host",
                                         "localhost",
                                         "--port",
@@ -85,24 +85,24 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     print("1. Testing x.509 auth to mongerd");
     {
-        let monger = MongoRunner.runMongod(Object.merge(x509_options, {auth: ""}));
+        let monger = MongerRunner.runMongerd(Object.merge(x509_options, {auth: ""}));
         prepConn(monger);
 
         authAndTest(monger.port, true);
 
-        MongoRunner.stopMongod(monger);
+        MongerRunner.stopMongerd(monger);
     }
 
     jsTestLog("2. Testing disabling x.509 auth with roles");
     {
-        const monger = MongoRunner.runMongod(Object.merge(
+        const monger = MongerRunner.runMongerd(Object.merge(
             x509_options, {auth: "", setParameter: "allowRolesFromX509Certificates=false"}));
 
         prepConn(monger);
 
         authAndTest(monger.port, false);
 
-        MongoRunner.stopMongod(monger);
+        MongerRunner.stopMongerd(monger);
     }
 
     print("3. Testing x.509 auth to mongers");

@@ -21,18 +21,18 @@
                 "\n************************************************************");
     };
 
-    // Test MongoD
-    let testMongoD = function() {
-        let conn = MongoRunner.runMongod({useLogFiles: true});
+    // Test MongerD
+    let testMongerD = function() {
+        let conn = MongerRunner.runMongerd({useLogFiles: true});
         assert.neq(null, conn, 'mongerd was unable to start up');
 
         checkLog(conn);
 
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     };
 
-    // Test MongoS
-    let testMongoS = function() {
+    // Test MongerS
+    let testMongerS = function() {
         let options = {
             mongersOptions: {useLogFiles: true},
         };
@@ -61,6 +61,6 @@
         st.stop();
     };
 
-    testMongoD();
-    testMongoS();
+    testMongerD();
+    testMongerS();
 })();

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -124,15 +124,15 @@ public:
 
     StatusWith<PrivilegeVector> getPrivilegesForAggregate(const NamespaceString& ns,
                                                           const BSONObj& cmdObj,
-                                                          bool isMongos) override;
+                                                          bool isMongers) override;
 
     Status checkAuthForCreate(const NamespaceString& ns,
                               const BSONObj& cmdObj,
-                              bool isMongos) override;
+                              bool isMongers) override;
 
     Status checkAuthForCollMod(const NamespaceString& ns,
                                const BSONObj& cmdObj,
-                               bool isMongos) override;
+                               bool isMongers) override;
 
     StatusWith<PrivilegeVector> checkAuthorizedToListCollections(StringData dbname,
                                                                  const BSONObj& cmdObj) override;

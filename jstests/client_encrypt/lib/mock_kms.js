@@ -63,11 +63,11 @@ class MockKMSServer {
             }
         }
 
-        this.pid = _startMongoProgram({args: args});
+        this.pid = _startMongerProgram({args: args});
         assert(checkProgram(this.pid));
 
         assert.soon(function() {
-            return rawMongoProgramOutput().search("Mock KMS Web Server Listening") !== -1;
+            return rawMongerProgramOutput().search("Mock KMS Web Server Listening") !== -1;
         });
         sleep(1000);
         print("Mock KMS Server successfully started");
@@ -156,6 +156,6 @@ class MockKMSServer {
      * Stop the web server
      */
     stop() {
-        stopMongoProgramByPid(this.pid);
+        stopMongerProgramByPid(this.pid);
     }
 }

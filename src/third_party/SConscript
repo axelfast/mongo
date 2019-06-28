@@ -206,7 +206,7 @@ murmurEnv.SConscript('murmurhash3/SConscript', exports={ 'env' : murmurEnv })
 
 s2Env = env.Clone()
 s2Env.InjectThirdParty(libraries=['s2', 'boost', 'abseil-cpp', 'fmt', 'safeint'])
-s2Env.InjectMongoIncludePaths()
+s2Env.InjectMongerIncludePaths()
 s2Env.SConscript('s2/SConscript', exports={'env' : s2Env})
 
 
@@ -218,7 +218,7 @@ if use_system_version_of_library("fmt"):
 else:
     fmtEnv = env.Clone()
     fmtEnv.InjectThirdParty(libraries=['fmt'])
-    fmtEnv.InjectMongoIncludePaths()
+    fmtEnv.InjectMongerIncludePaths()
     fmtEnv.SConscript('fmt/SConscript', exports={'env' : fmtEnv})
     fmtEnv = fmtEnv.Clone(
         LIBDEPS_INTERFACE=[
@@ -320,7 +320,7 @@ if use_system_version_of_library("snappy"):
 else:
     snappyEnv = env.Clone()
     snappyEnv.InjectThirdParty(libraries=['snappy'])
-    snappyEnv.InjectMongoIncludePaths()
+    snappyEnv.InjectMongerIncludePaths()
     snappyEnv.SConscript('snappy' + snappySuffix + '/SConscript', exports={ 'env' : snappyEnv })
     snappyEnv = snappyEnv.Clone(
         LIBDEPS_INTERFACE=[

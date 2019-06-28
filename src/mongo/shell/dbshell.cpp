@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -90,9 +90,9 @@ bool inMultiLine = false;
 static AtomicWord<bool> atPrompt(false);  // can eval before getting to prompt
 
 namespace {
-const std::string kDefaultMongoHost = "127.0.0.1"s;
-const std::string kDefaultMongoPort = "27017"s;
-const std::string kDefaultMongoURL = "mongerdb://"s + kDefaultMongoHost + ":"s + kDefaultMongoPort;
+const std::string kDefaultMongerHost = "127.0.0.1"s;
+const std::string kDefaultMongerPort = "27017"s;
+const std::string kDefaultMongerURL = "mongerdb://"s + kDefaultMongerHost + ":"s + kDefaultMongerPort;
 
 // Initialize the featureCompatibilityVersion server parameter since the monger shell does not have a
 // featureCompatibilityVersion document from which to initialize the parameter. The parameter is set
@@ -169,7 +169,7 @@ enum ShellExitCode : int {
     kDBException = 1,
     kInputFileError = -3,
     kEvalError = -4,
-    kMongorcError = -5,
+    kMongerrcError = -5,
     kUnterminatedProcess = -6,
     kProcessTerminationError = -7,
 };
@@ -243,7 +243,7 @@ void shellHistoryAdd(const char* line) {
     static pcrecpp::RE hiddenCommands(
         "(run|admin)Command\\s*\\(\\s*{\\s*(createUser|updateUser)\\s*:");
 
-    static pcrecpp::RE hiddenFLEConstructor(".*Mongo\\(([\\s\\S]*)secretAccessKey([\\s\\S]*)");
+    static pcrecpp::RE hiddenFLEConstructor(".*Monger\\(([\\s\\S]*)secretAccessKey([\\s\\S]*)");
     if (!hiddenHelpers.PartialMatch(line) && !hiddenCommands.PartialMatch(line) &&
         !hiddenFLEConstructor.PartialMatch(line)) {
         linenoiseHistoryAdd(line);
@@ -293,7 +293,7 @@ std::string getURIFromArgs(const std::string& arg,
                            const std::string& port) {
     if (host.empty() && arg.empty() && port.empty()) {
         // Nothing provided, just play the default.
-        return kDefaultMongoURL;
+        return kDefaultMongerURL;
     }
 
     if ((str::startsWith(arg, "mongerdb://") || str::startsWith(arg, "mongerdb+srv://")) &&
@@ -633,7 +633,7 @@ static void edit(const std::string& whatToEdit) {
 }
 
 namespace {
-bool mechanismRequiresPassword(const MongoURI& uri) {
+bool mechanismRequiresPassword(const MongerURI& uri) {
     if (const auto authMechanisms = uri.getOption("authMechanism")) {
         constexpr std::array<StringData, 2> passwordlessMechanisms{"GSSAPI"_sd, "MONGODB-X509"_sd};
         const std::string& authMechanism = authMechanisms.get();
@@ -696,8 +696,8 @@ int _main(int argc, char* argv[], char** envp) {
     std::string& cmdlineURI = shellGlobalParams.url;
 
     // Parse the output of getURIFromArgs which will determine if --host passed in a URI
-    MongoURI parsedURI;
-    parsedURI = uassertStatusOK(MongoURI::parse(getURIFromArgs(
+    MongerURI parsedURI;
+    parsedURI = uassertStatusOK(MongerURI::parse(getURIFromArgs(
         cmdlineURI, str::escape(shellGlobalParams.dbhost), str::escape(shellGlobalParams.port))));
 
     // TODO: add in all of the relevant shellGlobalParams to parsedURI
@@ -751,8 +751,8 @@ int _main(int argc, char* argv[], char** envp) {
         if (shellGlobalParams.shouldRetryWrites || parsedURI.getRetryWrites()) {
             // If the --retryWrites cmdline argument or retryWrites URI param was specified, then
             // replace the global `db` object with a DB object started in a session. The resulting
-            // Mongo connection checks its _retryWrites property.
-            ss << "db = db.getMongo().startSession().getDatabase(db.getName());" << std::endl;
+            // Monger connection checks its _retryWrites property.
+            ss << "db = db.getMonger().startSession().getDatabase(db.getName());" << std::endl;
         }
 
         monger::shell_utils::dbConnect += ss.str();
@@ -782,7 +782,7 @@ int _main(int argc, char* argv[], char** envp) {
     wchar_t programDataPath[MAX_PATH];
     if (S_OK == SHGetFolderPathW(nullptr, CSIDL_COMMON_APPDATA, nullptr, 0, programDataPath)) {
         rcGlobalLocation = str::stream() << toUtf8String(programDataPath)
-                                         << "\\MongoDB\\mongerrc.js";
+                                         << "\\MongerDB\\mongerrc.js";
     }
 #endif
     if (!rcGlobalLocation.empty() && ::monger::shell_utils::fileExists(rcGlobalLocation)) {
@@ -793,7 +793,7 @@ int _main(int argc, char* argv[], char** envp) {
     }
 
     if (!shellGlobalParams.script.empty()) {
-        monger::shell_utils::MongoProgramScope s;
+        monger::shell_utils::MongerProgramScope s;
         if (!scope->exec(shellGlobalParams.script, "(shell eval)", false, true, false)) {
             error() << "exiting with code " << static_cast<int>(kEvalError);
             return kEvalError;
@@ -802,7 +802,7 @@ int _main(int argc, char* argv[], char** envp) {
     }
 
     for (size_t i = 0; i < shellGlobalParams.files.size(); ++i) {
-        monger::shell_utils::MongoProgramScope s;
+        monger::shell_utils::MongerProgramScope s;
 
         if (shellGlobalParams.files.size() > 1)
             std::cout << "loading file: " << shellGlobalParams.files[i] << std::endl;
@@ -814,7 +814,7 @@ int _main(int argc, char* argv[], char** envp) {
         }
 
         // Check if the process left any running child processes.
-        std::vector<ProcessId> pids = monger::shell_utils::getRunningMongoChildProcessIds();
+        std::vector<ProcessId> pids = monger::shell_utils::getRunningMongerChildProcessIds();
 
         if (!pids.empty()) {
             std::cout << "terminating the following processes started by "
@@ -822,7 +822,7 @@ int _main(int argc, char* argv[], char** envp) {
             std::copy(pids.begin(), pids.end(), std::ostream_iterator<ProcessId>(std::cout, " "));
             std::cout << std::endl;
 
-            if (monger::shell_utils::KillMongoProgramInstances() != EXIT_SUCCESS) {
+            if (monger::shell_utils::KillMongerProgramInstances() != EXIT_SUCCESS) {
                 severe() << "one more more child processes exited with an error during "
                          << shellGlobalParams.files[i];
                 error() << "exiting with code " << static_cast<int>(kProcessTerminationError);
@@ -839,7 +839,7 @@ int _main(int argc, char* argv[], char** envp) {
 
             if (failIfUnterminatedProcesses) {
                 severe() << "exiting with a failure due to unterminated processes, "
-                            "a call to MongoRunner.stopMongod(), ReplSetTest#stopSet(), or "
+                            "a call to MongerRunner.stopMongerd(), ReplSetTest#stopSet(), or "
                             "ShardingTest#stop() may be missing from the test";
                 error() << "exiting with code " << static_cast<int>(kUnterminatedProcess);
                 return kUnterminatedProcess;
@@ -852,9 +852,9 @@ int _main(int argc, char* argv[], char** envp) {
 
     bool lastLineSuccessful = true;
     if (shellGlobalParams.runShell) {
-        monger::shell_utils::MongoProgramScope s;
+        monger::shell_utils::MongerProgramScope s;
         // If they specify norc, assume it's not their first time
-        bool hasMongoRC = shellGlobalParams.norc;
+        bool hasMongerRC = shellGlobalParams.norc;
         std::string rcLocation;
         if (!shellGlobalParams.norc) {
 #ifndef _WIN32
@@ -867,19 +867,19 @@ int _main(int argc, char* argv[], char** envp) {
                                            << "\\.mongerrc.js";
 #endif
             if (!rcLocation.empty() && ::monger::shell_utils::fileExists(rcLocation)) {
-                hasMongoRC = true;
+                hasMongerRC = true;
                 if (!scope->execFile(rcLocation, false, true)) {
                     severe() << "The \".mongerrc.js\" file located in your home folder could not be "
                                 "executed";
-                    error() << "exiting with code " << static_cast<int>(kMongorcError);
-                    return kMongorcError;
+                    error() << "exiting with code " << static_cast<int>(kMongerrcError);
+                    return kMongerrcError;
                 }
             }
         }
 
-        if (!hasMongoRC && isatty(fileno(stdin))) {
+        if (!hasMongerRC && isatty(fileno(stdin))) {
             std::cout
-                << "Welcome to the MongoDB shell.\n"
+                << "Welcome to the MongerDB shell.\n"
                    "For interactive help, type \"help\".\n"
                    "For more comprehensive documentation, see\n\thttp://docs.mongerdb.org/\n"
                    "Questions? Try the support group\n\thttp://groups.google.com/group/mongerdb-user"

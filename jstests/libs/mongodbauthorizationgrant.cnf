@@ -1,14 +1,14 @@
-#1.3.6.1.4.1.34601.2.1.1 = ASN1:SET:MongoDBAuthorizationGrant
-asn1=SET:MongoDBAuthorizationGrant
+#1.3.6.1.4.1.34601.2.1.1 = ASN1:SET:MongerDBAuthorizationGrant
+asn1=SET:MongerDBAuthorizationGrant
 
-[MongoDBAuthorizationGrant]
-grant1 = SEQUENCE:MongoDBRole
-grant2 = SEQUENCE:MongoDBRole2
+[MongerDBAuthorizationGrant]
+grant1 = SEQUENCE:MongerDBRole
+grant2 = SEQUENCE:MongerDBRole2
 
-[MongoDBRole]
+[MongerDBRole]
 role  = UTF8:backup
 database = UTF8:admin
 
-[MongoDBRole2]
+[MongerDBRole2]
 role  = UTF8:readAnyDatabase
 database = UTF8:admin

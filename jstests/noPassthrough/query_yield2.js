@@ -12,7 +12,7 @@
         var start;
         var insertTime;
 
-        const conn = MongoRunner.runMongod({nojournal: ""});
+        const conn = MongerRunner.runMongerd({nojournal: ""});
         assert.neq(null, conn, "mongerd failed to start.");
         db = conn.getDB("test");
 
@@ -148,6 +148,6 @@
             throw Error("TEST FAILED!");
         }
         print("Shell ==== Test completed successfully, shutting down server");
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     }
 })();

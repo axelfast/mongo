@@ -7,7 +7,7 @@
     "use strict";
 
     load("jstests/aggregation/extras/utils.js");  // For assertArrayEq.
-    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongos.
+    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongers.
 
     // A helper function to create a pipeline with a $merge stage using a custom 'updatePipeline'
     // for the whenMatched mode. If 'initialStages' array is specified, the $merge stage will be
@@ -399,7 +399,7 @@
             updatePipeline: [{$addFields: {z: 1}}]
         });
 
-        if (!FixtureHelpers.isMongos(db)) {
+        if (!FixtureHelpers.isMongers(db)) {
             assert.doesNotThrow(() => source.aggregate(foreignPipeline));
             assertArrayEq({actual: foreignTarget.find().toArray(), expected: [{_id: 1, z: 1}]});
         } else {

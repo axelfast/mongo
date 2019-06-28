@@ -22,7 +22,7 @@ data: &data
 
 tests:
   - description: countDocuments
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - &startTransaction
         name: startTransaction
@@ -51,7 +51,7 @@ tests:
         data: *data
 
   - description: distinct
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - *startTransaction
       - &distinct
@@ -75,7 +75,7 @@ tests:
         data: *data
 
   - description: find
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -102,7 +102,7 @@ tests:
         data: *data
 
   - description: insertOne
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -187,7 +187,7 @@ tests:
           - {_id: 10}
 
   - description: mixed read write operations
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -257,7 +257,7 @@ tests:
           - {_id: 7}
 
   - description: multiple commits
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -298,7 +298,7 @@ tests:
           - {_id: 4}
 
   - description: remain pinned after non-transient error on commit
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -344,7 +344,7 @@ tests:
           - {_id: 4}
 
   - description: unpin after transient error within a transaction
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -356,7 +356,7 @@ tests:
             _id: 3
         result:
           insertedId: 3
-      # Enable the fail point only on the Mongos that session0 is pinned to.
+      # Enable the fail point only on the Mongers that session0 is pinned to.
       - name: targetedFailPoint
         object: testRunner
         arguments:
@@ -439,7 +439,7 @@ tests:
   # However since the abortTransaction helper ignores errors, this test uses
   # commitTransaction to prove the session was unpinned.
   - description: unpin after transient error within a transaction and commit
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     clientOptions:
       # Increase heartbeatFrequencyMS to avoid the race condition where an in
       # flight heartbeat refreshes the first mongeres' SDAM state in between
@@ -456,7 +456,7 @@ tests:
             _id: 3
         result:
           insertedId: 3
-      # Enable the fail point only on the Mongos that session0 is pinned to.
+      # Enable the fail point only on the Mongers that session0 is pinned to.
       # Fail isMaster to prevent the heartbeat requested directly after the
       # insert error from racing with server selection for the commit.
       # Note: times: 7 is slightly artbitrary but it accounts for one failed

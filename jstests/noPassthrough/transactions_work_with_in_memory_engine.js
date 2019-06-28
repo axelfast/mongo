@@ -1,6 +1,6 @@
 /**
  * Verify that transactions can be run on the in-memory storage engine. inMemory transactions are
- * not fully supported, but should work for basic MongoDB user testing.
+ * not fully supported, but should work for basic MongerDB user testing.
  *
  * TODO: remove this test when general transaction testing is turned on with the inMemory storage
  * engine (SERVER-36023).
@@ -24,7 +24,7 @@
 
     // Initiate a session.
     const sessionOptions = {causalConsistency: false};
-    const session = primary.getDB(dbName).getMongo().startSession(sessionOptions);
+    const session = primary.getDB(dbName).getMonger().startSession(sessionOptions);
     const sessionDb = session.getDatabase(dbName);
 
     // Create collection.

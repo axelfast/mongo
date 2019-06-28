@@ -16,7 +16,7 @@
     rst.startSet();
     rst.initiate();
     let session =
-        rst.getPrimary().getDB(kDBName).getMongo().startSession({causalConsistency: false});
+        rst.getPrimary().getDB(kDBName).getMonger().startSession({causalConsistency: false});
     let sessionDB = session.getDatabase(kDBName);
 
     let txnNumber = NumberLong(0);

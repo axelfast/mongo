@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    const monger = MongoRunner.runMongod({ipv6: '', bind_ip: 'localhost', useLogFiles: true});
+    const monger = MongerRunner.runMongerd({ipv6: '', bind_ip: 'localhost', useLogFiles: true});
     assert.neq(monger, null, "Database is not running");
     const log = cat(monger.fullOptions.logFile);
     print(log);
@@ -11,5 +11,5 @@
     if (!_isWindows()) {
         assert(log.match(/Listening on .*\.sock/), "Not listening on AF_UNIX");
     }
-    MongoRunner.stopMongod(monger);
+    MongerRunner.stopMongerd(monger);
 }());

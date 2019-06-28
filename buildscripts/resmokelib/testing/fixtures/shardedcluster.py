@@ -263,7 +263,7 @@ class ShardedClusterFixture(interface.Fixture):  # pylint: disable=too-many-inst
             replset_config_options=replset_config_options, **shard_options)
 
     def _new_standalone_shard(self, index):
-        """Return a standalone.MongoDFixture configured as a shard in a sharded cluster."""
+        """Return a standalone.MongerDFixture configured as a shard in a sharded cluster."""
 
         mongerd_logger = self.logger.new_fixture_node_logger("shard{}".format(index))
 
@@ -277,17 +277,17 @@ class ShardedClusterFixture(interface.Fixture):  # pylint: disable=too-many-inst
         mongerd_options["shardsvr"] = ""
         mongerd_options["dbpath"] = os.path.join(self._dbpath_prefix, "shard{}".format(index))
 
-        return standalone.MongoDFixture(
+        return standalone.MongerDFixture(
             mongerd_logger, self.job_num, mongerd_executable=mongerd_executable,
             mongerd_options=mongerd_options, preserve_dbpath=preserve_dbpath, **shard_options)
 
     def _new_mongers(self, index, total):
         """
-        Return a _MongoSFixture configured to be used as the mongers for a sharded cluster.
+        Return a _MongerSFixture configured to be used as the mongers for a sharded cluster.
 
         :param index: The index of the current mongers.
         :param total: The total number of mongers routers
-        :return: _MongoSFixture
+        :return: _MongerSFixture
         """
 
         if total == 1:
@@ -300,7 +300,7 @@ class ShardedClusterFixture(interface.Fixture):  # pylint: disable=too-many-inst
         mongers_options = self.mongers_options.copy()
         mongers_options["configdb"] = self.configsvr.get_internal_connection_string()
 
-        return _MongoSFixture(mongers_logger, self.job_num, mongers_executable=self.mongers_executable,
+        return _MongerSFixture(mongers_logger, self.job_num, mongers_executable=self.mongers_executable,
                               mongers_options=mongers_options)
 
     def _add_shard(self, client, shard):
@@ -315,13 +315,13 @@ class ShardedClusterFixture(interface.Fixture):  # pylint: disable=too-many-inst
         client.admin.command({"addShard": connection_string})
 
 
-class _MongoSFixture(interface.Fixture):
+class _MongerSFixture(interface.Fixture):
     """Fixture which provides JSTests with a mongers to connect to."""
 
     REGISTERED_NAME = registry.LEAVE_UNREGISTERED  # type: ignore
 
     def __init__(self, logger, job_num, mongers_executable=None, mongers_options=None):
-        """Initialize _MongoSFixture."""
+        """Initialize _MongerSFixture."""
 
         interface.Fixture.__init__(self, logger, job_num)
 
@@ -354,10 +354,10 @@ class _MongoSFixture(interface.Fixture):
 
     def await_ready(self):
         """Block until the fixture can be used for testing."""
-        deadline = time.time() + standalone.MongoDFixture.AWAIT_READY_TIMEOUT_SECS
+        deadline = time.time() + standalone.MongerDFixture.AWAIT_READY_TIMEOUT_SECS
 
         # Wait until the mongers is accepting connections. The retry logic is necessary to support
-        # versions of PyMongo <3.0 that immediately raise a ConnectionFailure if a connection cannot
+        # versions of PyMonger <3.0 that immediately raise a ConnectionFailure if a connection cannot
         # be established.
         while True:
             # Check whether the mongers exited for some reason.
@@ -377,7 +377,7 @@ class _MongoSFixture(interface.Fixture):
                 if remaining <= 0.0:
                     raise errors.ServerFailure(
                         "Failed to connect to mongers on port {} after {} seconds".format(
-                            self.port, standalone.MongoDFixture.AWAIT_READY_TIMEOUT_SECS))
+                            self.port, standalone.MongerDFixture.AWAIT_READY_TIMEOUT_SECS))
 
                 self.logger.info("Waiting to connect to mongers on port %d.", self.port)
                 time.sleep(0.1)  # Wait a little bit before trying again.

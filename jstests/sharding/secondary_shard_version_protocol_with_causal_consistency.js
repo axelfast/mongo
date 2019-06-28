@@ -21,14 +21,14 @@
     assert.commandWorked(st.s0.adminCommand({shardCollection: ns, key: {x: 1}}));
     assert.commandWorked(st.s0.adminCommand({split: ns, middle: {x: 0}}));
 
-    let freshMongos = st.s0;
-    let staleMongos = st.s1;
+    let freshMongers = st.s0;
+    let staleMongers = st.s1;
 
     jsTest.log("do insert from stale mongers to make it load the routing table before the move");
-    assert.writeOK(staleMongos.getCollection(ns).insert({x: 1}));
+    assert.writeOK(staleMongers.getCollection(ns).insert({x: 1}));
 
     jsTest.log("do moveChunk from fresh mongers");
-    assert.commandWorked(freshMongos.adminCommand({
+    assert.commandWorked(freshMongers.adminCommand({
         moveChunk: ns,
         find: {x: 0},
         to: st.shard1.shardName,
@@ -46,24 +46,24 @@
     // Note: this query will not be registered by the profiler because it errors before reaching the
     // storage level.
     jsTest.log("Do a secondary read from stale mongers with afterClusterTime and level 'available'");
-    const staleMongosDB = staleMongos.getDB(dbName);
-    assert.commandFailedWithCode(staleMongosDB.runCommand({
+    const staleMongersDB = staleMongers.getDB(dbName);
+    assert.commandFailedWithCode(staleMongersDB.runCommand({
         count: collName,
         query: {x: 1},
         $readPreference: {mode: "secondary"},
         readConcern: {
-            'afterClusterTime': staleMongosDB.getSession().getOperationTime(),
+            'afterClusterTime': staleMongersDB.getSession().getOperationTime(),
             'level': 'available'
         }
     }),
                                  ErrorCodes.InvalidOptions);
 
     jsTest.log("Do a secondary read from stale mongers with afterClusterTime and no level");
-    let res = staleMongosDB.runCommand({
+    let res = staleMongersDB.runCommand({
         count: collName,
         query: {x: 1},
         $readPreference: {mode: "secondary"},
-        readConcern: {'afterClusterTime': staleMongosDB.getSession().getOperationTime()},
+        readConcern: {'afterClusterTime': staleMongersDB.getSession().getOperationTime()},
     });
     assert(res.ok);
     assert.eq(1, res.n, tojson(res));

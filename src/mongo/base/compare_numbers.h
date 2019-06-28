@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -115,7 +115,7 @@ inline int compareDoubleToLong(double lhs, long long rhs) {
  *    Check for exact conversion and determine ordering based on result.
  */
 
-// Case 1: Compare two decimal values, but enforce MongoDB's total ordering convention
+// Case 1: Compare two decimal values, but enforce MongerDB's total ordering convention
 inline int compareDecimals(Decimal128 lhs, Decimal128 rhs) {
     // When we're comparing, lhs is always a decimal, which means more often than not
     // the rhs will be less than the lhs (decimal type has the largest capacity)

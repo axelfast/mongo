@@ -10,7 +10,7 @@ templates:
       Codename: {{ .CodeName }}/mongerdb-org
       Architectures: {{ .Architectures }}
       Components: {{ .Component }}
-      Description: MongoDB packages
+      Description: MongerDB packages
     enterprise: |
       Origin: mongerdb
       Label: mongerdb
@@ -18,7 +18,7 @@ templates:
       Codename: {{ .CodeName }}/mongerdb-enterprise
       Architectures: {{ .Architectures }}
       Components: {{ .Component }}
-      Description: MongoDB packages
+      Description: MongerDB packages
   index_page: |
     <!DOCTYPE html>
     <html>

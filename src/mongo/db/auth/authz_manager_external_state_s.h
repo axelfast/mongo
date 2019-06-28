@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,13 +43,13 @@ namespace monger {
 /**
  * The implementation of AuthzManagerExternalState functionality for mongers.
  */
-class AuthzManagerExternalStateMongos : public AuthzManagerExternalState {
-    AuthzManagerExternalStateMongos(const AuthzManagerExternalStateMongos&) = delete;
-    AuthzManagerExternalStateMongos& operator=(const AuthzManagerExternalStateMongos&) = delete;
+class AuthzManagerExternalStateMongers : public AuthzManagerExternalState {
+    AuthzManagerExternalStateMongers(const AuthzManagerExternalStateMongers&) = delete;
+    AuthzManagerExternalStateMongers& operator=(const AuthzManagerExternalStateMongers&) = delete;
 
 public:
-    AuthzManagerExternalStateMongos();
-    ~AuthzManagerExternalStateMongos() override;
+    AuthzManagerExternalStateMongers();
+    ~AuthzManagerExternalStateMongers() override;
 
     Status initialize(OperationContext* opCtx) override;
     std::unique_ptr<AuthzSessionExternalState> makeAuthzSessionExternalState(

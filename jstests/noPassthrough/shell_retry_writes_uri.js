@@ -24,9 +24,9 @@
     function runShellScript(uri, cmdArgs, insertShouldHaveTxnNumber, shellFn) {
         // This function is stringified and called immediately in the monger --eval.
         function testWrapper(insertShouldHaveTxnNumber, shellFn) {
-            const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+            const mongerRunCommandOriginal = Monger.prototype.runCommand;
             let insertFound = false;
-            Mongo.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
+            Monger.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
                 let cmdObjSeen = cmdObj;
                 let cmdName = Object.keys(cmdObjSeen)[0];
 
@@ -59,7 +59,7 @@
         script += ")";
 
         let args = ["./monger", uri, "--eval", script].concat(cmdArgs);
-        let exitCode = runMongoProgram(...args);
+        let exitCode = runMongerProgram(...args);
         assert.eq(exitCode, 0, `shell script "${shellFn.name}" exited with ${exitCode}`);
     }
 
@@ -83,8 +83,8 @@
                    ["--retryWrites"],
                    true,
                    function flagNotOverridenByNewConn() {
-                       let connUri = db.getMongo().host;  // does not have ?retryWrites=false.
-                       let sess = new Mongo(connUri).startSession();
+                       let connUri = db.getMonger().host;  // does not have ?retryWrites=false.
+                       let sess = new Monger(connUri).startSession();
                        assert(sess.getOptions().shouldRetryWrites(), "retryWrites should be true");
                        assert.writeOK(sess.getDatabase("test").coll.insert({}), "cannot insert");
                    });
@@ -94,8 +94,8 @@
                    ["--retryWrites"],
                    false,
                    function flagOverridenInNewConn() {
-                       let connUri = "mongerdb://" + db.getMongo().host + "/test?retryWrites=false";
-                       let sess = new Mongo(connUri).startSession();
+                       let connUri = "mongerdb://" + db.getMonger().host + "/test?retryWrites=false";
+                       let sess = new Monger(connUri).startSession();
                        assert(!sess.getOptions().shouldRetryWrites(),
                               "retryWrites should be false");
                        assert.writeOK(sess.getDatabase("test").coll.insert({}), "cannot insert");
@@ -103,8 +103,8 @@
 
     // Session options should override --retryWrites as well.
     runShellScript(mongerUri, ["--retryWrites"], false, function flagOverridenByOpts() {
-        let connUri = "mongerdb://" + db.getMongo().host + "/test";
-        let sess = new Mongo(connUri).startSession({retryWrites: false});
+        let connUri = "mongerdb://" + db.getMonger().host + "/test";
+        let sess = new Monger(connUri).startSession({retryWrites: false});
         assert(!sess.getOptions().shouldRetryWrites(), "retryWrites should be false");
         assert.writeOK(sess.getDatabase("test").coll.insert({}), "cannot insert");
     });
@@ -123,23 +123,23 @@
 
     // Test SessionOptions retryWrites option.
     runShellScript(mongerUri, [], true, function sessOptTrueWorks() {
-        let connUri = "mongerdb://" + db.getMongo().host + "/test";
-        let sess = new Mongo(connUri).startSession({retryWrites: true});
+        let connUri = "mongerdb://" + db.getMonger().host + "/test";
+        let sess = new Monger(connUri).startSession({retryWrites: true});
         assert(sess.getOptions().shouldRetryWrites(), "retryWrites should be true");
         assert.writeOK(sess.getDatabase("test").coll.insert({}), "cannot insert");
     });
 
     // Test that SessionOptions retryWrites:false works.
     runShellScript(mongerUri, [], false, function sessOptFalseWorks() {
-        let connUri = "mongerdb://" + db.getMongo().host + "/test";
-        let sess = new Mongo(connUri).startSession({retryWrites: false});
+        let connUri = "mongerdb://" + db.getMonger().host + "/test";
+        let sess = new Monger(connUri).startSession({retryWrites: false});
         assert(!sess.getOptions().shouldRetryWrites(), "retryWrites should be false");
         assert.writeOK(sess.getDatabase("test").coll.insert({}), "cannot insert");
     });
 
     // Test that session option overrides uri option.
     runShellScript(mongerUri + "?retryWrites=true", [], false, function sessOptOverridesUri() {
-        let sess = db.getMongo().startSession({retryWrites: false});
+        let sess = db.getMonger().startSession({retryWrites: false});
         assert(!sess.getOptions().shouldRetryWrites(), "retryWrites should be false");
         assert.writeOK(sess.getDatabase("test").coll.insert({}), "cannot insert");
     });

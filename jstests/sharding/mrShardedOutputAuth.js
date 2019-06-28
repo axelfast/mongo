@@ -52,7 +52,7 @@
     var adminDb = mongers.getDB("admin");
     adminDb.createUser({user: "user", pwd: "pass", roles: jsTest.adminUserRoles});
 
-    var authenticatedConn = new Mongo(mongers.host);
+    var authenticatedConn = new Monger(mongers.host);
     authenticatedConn.getDB('admin').auth("user", "pass");
     adminDb = authenticatedConn.getDB("admin");
 
@@ -72,20 +72,20 @@
     assert.eq(inputDb.numbers.count(), 50);
 
     // Setup a connection authenticated to both input and output db
-    var inputOutputAuthConn = new Mongo(mongers.host);
+    var inputOutputAuthConn = new Monger(mongers.host);
     inputOutputAuthConn.getDB('input').auth("user", "pass");
     inputOutputAuthConn.getDB('output').auth("user", "pass");
     doMapReduce(inputOutputAuthConn, outputDb);
     assertSuccess(configDb, outputDb);
 
     // setup a connection authenticated to only input db
-    var inputAuthConn = new Mongo(mongers.host);
+    var inputAuthConn = new Monger(mongers.host);
     inputAuthConn.getDB('input').auth("user", "pass");
     doMapReduce(inputAuthConn, outputDb);
     assertFailure(configDb, outputDb);
 
     // setup a connection authenticated to only output db
-    var outputAuthConn = new Mongo(mongers.host);
+    var outputAuthConn = new Monger(mongers.host);
     outputAuthConn.getDB('output').auth("user", "pass");
     doMapReduce(outputAuthConn, outputDb);
     assertFailure(configDb, outputDb);

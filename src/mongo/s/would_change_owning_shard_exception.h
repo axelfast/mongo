@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,7 +38,7 @@ namespace monger {
 /**
  * This error is thrown when an update would cause a document to be owned by a different
  * shard. If the update is part of a multi statement transaction, we will attach the
- * pre image and the post image returned by the update stage. MongoS will use these to delete
+ * pre image and the post image returned by the update stage. MongerS will use these to delete
  * the original doc and insert the new doc. If the update is a retryable write, we will attach
  * only the pre image.
  */

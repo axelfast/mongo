@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongerdump creates BSON data from the contents of a MongoDB instance.
+// Package mongerdump creates BSON data from the contents of a MongerDB instance.
 package mongerdump
 
 import (
@@ -38,9 +38,9 @@ import (
 
 const defaultPermissions = 0755
 
-// MongoDump is a container for the user-specified options and
+// MongerDump is a container for the user-specified options and
 // internal state used for running mongerdump.
-type MongoDump struct {
+type MongerDump struct {
 	// basic monger tool options
 	ToolOptions   *options.ToolOptions
 	InputOptions  *InputOptions
@@ -58,7 +58,7 @@ type MongoDump struct {
 	oplogCollection string
 	oplogStart      primitive.Timestamp
 	oplogEnd        primitive.Timestamp
-	isMongos        bool
+	isMongers        bool
 	authVersion     int
 	archive         *archive.Writer
 	// shutdownIntentsNotifier is provided to the multiplexer
@@ -84,7 +84,7 @@ func (n *notifier) Notify() { n.once.Do(func() { close(n.notified) }) }
 func newNotifier() *notifier { return &notifier{notified: make(chan struct{})} }
 
 // ValidateOptions checks for any incompatible sets of options.
-func (dump *MongoDump) ValidateOptions() error {
+func (dump *MongerDump) ValidateOptions() error {
 	switch {
 	case dump.OutputOptions.Out == "-" && dump.ToolOptions.Namespace.Collection == "":
 		return fmt.Errorf("can only dump a single collection to stdout")
@@ -122,8 +122,8 @@ func (dump *MongoDump) ValidateOptions() error {
 	return nil
 }
 
-// Init performs preliminary setup operations for MongoDump.
-func (dump *MongoDump) Init() error {
+// Init performs preliminary setup operations for MongerDump.
+func (dump *MongerDump) Init() error {
 	log.Logvf(log.DebugHigh, "initializing mongerdump object")
 	err := dump.ValidateOptions()
 	if err != nil {
@@ -144,26 +144,26 @@ func (dump *MongoDump) Init() error {
 		return fmt.Errorf("can't create session: %v", err)
 	}
 
-	dump.isMongos, err = dump.SessionProvider.IsMongos()
+	dump.isMongers, err = dump.SessionProvider.IsMongers()
 	if err != nil {
-		return fmt.Errorf("error checking for Mongos: %v", err)
+		return fmt.Errorf("error checking for Mongers: %v", err)
 	}
 
-	if dump.isMongos && dump.OutputOptions.Oplog {
+	if dump.isMongers && dump.OutputOptions.Oplog {
 		return fmt.Errorf("can't use --oplog option when dumping from a mongers")
 	}
 
 	// warn if we are trying to dump from a secondary in a sharded cluster
-	if dump.isMongos && pref != readpref.Primary() {
-		log.Logvf(log.Always, db.WarningNonPrimaryMongosConnection)
+	if dump.isMongers && pref != readpref.Primary() {
+		log.Logvf(log.Always, db.WarningNonPrimaryMongersConnection)
 	}
 
 	dump.manager = intents.NewIntentManager()
 	return nil
 }
 
-func (dump *MongoDump) verifyCollectionExists() (bool, error) {
-	// Running MongoDump against a DB with no collection specified works. In this case, return true so the process
+func (dump *MongerDump) verifyCollectionExists() (bool, error) {
+	// Running MongerDump against a DB with no collection specified works. In this case, return true so the process
 	// can continue.
 	if dump.ToolOptions.Namespace.Collection == "" {
 		return true, nil
@@ -178,8 +178,8 @@ func (dump *MongoDump) verifyCollectionExists() (bool, error) {
 	return collInfo != nil, nil
 }
 
-// Dump handles some final options checking and executes MongoDump.
-func (dump *MongoDump) Dump() (err error) {
+// Dump handles some final options checking and executes MongerDump.
+func (dump *MongerDump) Dump() (err error) {
 	defer dump.SessionProvider.Close()
 
 	exists, err := dump.verifyCollectionExists()
@@ -456,7 +456,7 @@ func (w closableBufioWriter) Close() error {
 	return w.Flush()
 }
 
-func (dump *MongoDump) getResettableOutputBuffer() resettableOutputBuffer {
+func (dump *MongerDump) getResettableOutputBuffer() resettableOutputBuffer {
 	if dump.OutputOptions.Archive != "" {
 		return nil
 	} else if dump.OutputOptions.Gzip {
@@ -467,7 +467,7 @@ func (dump *MongoDump) getResettableOutputBuffer() resettableOutputBuffer {
 
 // DumpIntents iterates through the previously-created intents and
 // dumps all of the found collections.
-func (dump *MongoDump) DumpIntents() error {
+func (dump *MongerDump) DumpIntents() error {
 	resultChan := make(chan error)
 
 	jobs := dump.OutputOptions.NumParallelCollections
@@ -518,7 +518,7 @@ func (dump *MongoDump) DumpIntents() error {
 }
 
 // DumpIntent dumps the specified database's collection.
-func (dump *MongoDump) DumpIntent(intent *intents.Intent, buffer resettableOutputBuffer) error {
+func (dump *MongerDump) DumpIntent(intent *intents.Intent, buffer resettableOutputBuffer) error {
 	session, err := dump.SessionProvider.GetSession()
 	if err != nil {
 		return err
@@ -573,14 +573,14 @@ type documentValidator func([]byte) error
 // dumpQueryToIntent takes an mgo Query, its intent, and a writer, performs the query,
 // and writes the raw bson results to the writer. Returns a final count of documents
 // dumped, and any errors that occurred.
-func (dump *MongoDump) dumpQueryToIntent(
+func (dump *MongerDump) dumpQueryToIntent(
 	query *db.DeferredQuery, intent *intents.Intent, buffer resettableOutputBuffer) (dumpCount int64, err error) {
 	return dump.dumpValidatedQueryToIntent(query, intent, buffer, nil)
 }
 
 // getCount counts the number of documents in the namespace for the given intent. It does not run the count for
 // the oplog collection to avoid the performance issue in TOOLS-2068.
-func (dump *MongoDump) getCount(query *db.DeferredQuery, intent *intents.Intent) (int64, error) {
+func (dump *MongerDump) getCount(query *db.DeferredQuery, intent *intents.Intent) (int64, error) {
 	if len(dump.query) != 0 || intent.IsOplog() {
 		log.Logvf(log.DebugLow, "not counting query on %v", intent.Namespace())
 		return 0, nil
@@ -599,7 +599,7 @@ func (dump *MongoDump) getCount(query *db.DeferredQuery, intent *intents.Intent)
 // validates the results with the validator,
 // and writes the raw bson results to the writer. Returns a final count of documents
 // dumped, and any errors that occurred.
-func (dump *MongoDump) dumpValidatedQueryToIntent(
+func (dump *MongerDump) dumpValidatedQueryToIntent(
 	query *db.DeferredQuery, intent *intents.Intent, buffer resettableOutputBuffer, validator documentValidator) (dumpCount int64, err error) {
 
 	// restore of views from archives require an empty collection as the trigger to create the view
@@ -657,14 +657,14 @@ func (dump *MongoDump) dumpValidatedQueryToIntent(
 
 // dumpIterToWriter takes an mgo iterator, a writer, and a pointer to
 // a counter, and dumps the iterator's contents to the writer.
-func (dump *MongoDump) dumpIterToWriter(
+func (dump *MongerDump) dumpIterToWriter(
 	iter *monger.Cursor, writer io.Writer, progressCount progress.Updateable) error {
 	return dump.dumpValidatedIterToWriter(iter, writer, progressCount, nil)
 }
 
 // dumpValidatedIterToWriter takes a cursor, a writer, an Updateable object, and a documentValidator and validates and
 // dumps the iterator's contents to the writer.
-func (dump *MongoDump) dumpValidatedIterToWriter(
+func (dump *MongerDump) dumpValidatedIterToWriter(
 	iter *monger.Cursor, writer io.Writer, progressCount progress.Updateable, validator documentValidator) error {
 	defer iter.Close(context.Background())
 	var termErr error
@@ -727,7 +727,7 @@ func (dump *MongoDump) dumpValidatedIterToWriter(
 
 // DumpUsersAndRolesForDB queries and dumps the users and roles tied to the given
 // database. Only works with an authentication schema version >= 3.
-func (dump *MongoDump) DumpUsersAndRolesForDB(name string) error {
+func (dump *MongerDump) DumpUsersAndRolesForDB(name string) error {
 	session, err := dump.SessionProvider.GetSession()
 	buffer := dump.getResettableOutputBuffer()
 	if err != nil {
@@ -766,7 +766,7 @@ func (dump *MongoDump) DumpUsersAndRolesForDB(name string) error {
 
 // DumpUsersAndRoles dumps all of the users and roles and versions
 // TODO: This and DumpUsersAndRolesForDB should be merged, correctly
-func (dump *MongoDump) DumpUsersAndRoles() error {
+func (dump *MongerDump) DumpUsersAndRoles() error {
 	var err error
 	buffer := dump.getResettableOutputBuffer()
 	if dump.manager.Users() != nil {
@@ -792,7 +792,7 @@ func (dump *MongoDump) DumpUsersAndRoles() error {
 }
 
 // DumpSystemIndexes dumps all of the system.indexes
-func (dump *MongoDump) DumpSystemIndexes() error {
+func (dump *MongerDump) DumpSystemIndexes() error {
 	buffer := dump.getResettableOutputBuffer()
 	for _, dbName := range dump.manager.SystemIndexDBs() {
 		err := dump.DumpIntent(dump.manager.SystemIndexes(dbName), buffer)
@@ -805,7 +805,7 @@ func (dump *MongoDump) DumpSystemIndexes() error {
 
 // DumpMetadata dumps the metadata for each intent in the manager
 // that has metadata
-func (dump *MongoDump) DumpMetadata() error {
+func (dump *MongerDump) DumpMetadata() error {
 	allIntents := dump.manager.Intents()
 	buffer := dump.getResettableOutputBuffer()
 	for _, intent := range allIntents {
@@ -829,7 +829,7 @@ func (*nopCloseWriter) Close() error {
 	return nil
 }
 
-func (dump *MongoDump) getArchiveOut() (out io.WriteCloser, err error) {
+func (dump *MongerDump) getArchiveOut() (out io.WriteCloser, err error) {
 	if dump.OutputOptions.Archive == "-" {
 		out = &nopCloseWriter{dump.OutputWriter}
 	} else {
@@ -863,7 +863,7 @@ func docPlural(count int64) string {
 	return util.Pluralize(int(count), "document", "documents")
 }
 
-func (dump *MongoDump) HandleInterrupt() {
+func (dump *MongerDump) HandleInterrupt() {
 	if dump.shutdownIntentsNotifier != nil {
 		dump.shutdownIntentsNotifier.Notify()
 	}

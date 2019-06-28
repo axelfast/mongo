@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -601,7 +601,7 @@ private:
 
 /**
  * Returns Status::OK() if the current Auth schema version is at least the auth schema version
- * for the MongoDB 3.0 SCRAM auth mode.
+ * for the MongerDB 3.0 SCRAM auth mode.
  * Returns an error otherwise.
  */
 StatusWith<AuthzLockGuard> requireWritableAuthSchema28SCRAM(OperationContext* opCtx,
@@ -635,7 +635,7 @@ StatusWith<AuthzLockGuard> requireWritableAuthSchema28SCRAM(OperationContext* op
 
 /**
  * Returns Status::OK() if the current Auth schema version is at least the auth schema version
- * for MongoDB 2.6 during the upgrade process.
+ * for MongerDB 2.6 during the upgrade process.
  * Returns an error otherwise.
  *
  * This method should only be called by READ-ONLY commands (usersInfo & rolesInfo)

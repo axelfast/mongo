@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -78,7 +78,7 @@ constexpr T cf_cast(::CFTypeRef val) {
 // Unix Epoch (and thereby Date_t) is relative to Jan 1, 1970 00:00:00 GMT
 static const ::CFAbsoluteTime k20010101_000000_GMT = 978307200;
 
-::CFStringRef kMongoDBRolesOID = nullptr;
+::CFStringRef kMongerDBRolesOID = nullptr;
 
 StatusWith<std::string> toString(::CFStringRef str) {
     const auto len =
@@ -422,11 +422,11 @@ StatusWith<monger::Date_t> extractValidityDate(::CFDictionaryRef dict,
 }
 
 StatusWith<stdx::unordered_set<RoleName>> parsePeerRoles(::CFDictionaryRef dict) {
-    if (!::CFDictionaryContainsKey(dict, kMongoDBRolesOID)) {
+    if (!::CFDictionaryContainsKey(dict, kMongerDBRolesOID)) {
         return stdx::unordered_set<RoleName>();
     }
 
-    auto swRolesKey = extractDictionaryValue<::CFDictionaryRef>(dict, kMongoDBRolesOID);
+    auto swRolesKey = extractDictionaryValue<::CFDictionaryRef>(dict, kMongerDBRolesOID);
     if (!swRolesKey.isOK()) {
         return swRolesKey.getStatus();
     }
@@ -1537,7 +1537,7 @@ StatusWith<SSLPeerInfo> SSLManagerApple::parseAndValidatePeerCertificate(
     ::CFArrayAppendValue(oids.get(), ::kSecOIDX509V1SubjectName);
     ::CFArrayAppendValue(oids.get(), ::kSecOIDSubjectAltName);
     if (remoteHost.empty()) {
-        ::CFArrayAppendValue(oids.get(), kMongoDBRolesOID);
+        ::CFArrayAppendValue(oids.get(), kMongerDBRolesOID);
     }
 
     ::CFErrorRef err = nullptr;
@@ -1570,7 +1570,7 @@ StatusWith<SSLPeerInfo> SSLManagerApple::parseAndValidatePeerCertificate(
         return SSLPeerInfo(peerSubjectName, sniName, std::move(swPeerCertificateRoles.getValue()));
     }
 
-    // If this is an SSL client context (on a MongoDB server or client)
+    // If this is an SSL client context (on a MongerDB server or client)
     // perform hostname validation of the remote server
     bool sanMatch = false;
     bool cnMatch = false;
@@ -1681,7 +1681,7 @@ std::unique_ptr<SSLManagerInterface> SSLManagerInterface::create(const SSLParams
 
 MONGO_INITIALIZER_WITH_PREREQUISITES(SSLManager, ("EndStartupOptionHandling"))
 (InitializerContext*) {
-    kMongoDBRolesOID = ::CFStringCreateWithCString(
+    kMongerDBRolesOID = ::CFStringCreateWithCString(
         nullptr, mongerdbRolesOID.identifier.c_str(), ::kCFStringEncodingUTF8);
 
     if (!isSSLServer || (sslGlobalParams.sslMode.load() != SSLParams::SSLMode_disabled)) {

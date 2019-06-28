@@ -14,14 +14,14 @@
         return;
     }
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd was unable to start up");
     if (!assert.commandWorked(conn.getDB("test").serverStatus())
              .storageEngine.supportsSnapshotReadConcern) {
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
         return;
     }
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     const st = new ShardingTest({shards: 2, rs: {nodes: 2}});
 
@@ -40,9 +40,9 @@
     const PropagationPreferenceOptions = Object.freeze({kShard: 0, kConfig: 1});
 
     let testNoopWrite = (fromDbName, fromColl, toRS, toDbName, toColl, propagationPreference) => {
-        const fromDBFromMongos = st.s.getDB(fromDbName);
-        const toDBFromMongos = st.s.getDB(toDbName);
-        const configFromMongos = st.s.getDB("config");
+        const fromDBFromMongers = st.s.getDB(fromDbName);
+        const toDBFromMongers = st.s.getDB(toDbName);
+        const configFromMongers = st.s.getDB("config");
 
         const oplog = toRS.getPrimary().getCollection("local.oplog.rs");
         let findRes =
@@ -51,31 +51,31 @@
 
         // Perform a write on the fromDB and get its op time.
         let res = assert.commandWorked(
-            fromDBFromMongos.runCommand({insert: fromColl, documents: [{_id: 0}]}));
+            fromDBFromMongers.runCommand({insert: fromColl, documents: [{_id: 0}]}));
         assert(res.hasOwnProperty("operationTime"), tojson(res));
         let clusterTime = res.operationTime;
 
         // Propagate 'clusterTime' to toRS or the config server. This ensures that its next
-        // write will be at time >= 'clusterTime'. We cannot use toDBFromMongos to propagate
+        // write will be at time >= 'clusterTime'. We cannot use toDBFromMongers to propagate
         // 'clusterTime' to the config server, because mongers only routes to the config server
         // for the 'config' and 'admin' databases.
         if (propagationPreference == PropagationPreferenceOptions.kConfig) {
-            configFromMongos.coll1.find().itcount();
+            configFromMongers.coll1.find().itcount();
         } else {
-            toDBFromMongos.toColl.find().itcount();
+            toDBFromMongers.toColl.find().itcount();
         }
 
         // Attempt a snapshot read at 'clusterTime' on toRS. Test that it performs a noop write
         // to advance its lastApplied optime past 'clusterTime'. The snapshot read itself may
         // fail if the noop write advances the node's majority commit point past 'clusterTime'
         // and it releases that snapshot.
-        const toRSSession = toRS.getPrimary().getDB(toDBFromMongos).getMongo().startSession({
+        const toRSSession = toRS.getPrimary().getDB(toDBFromMongers).getMonger().startSession({
             causalConsistency: false
         });
 
         toRSSession.startTransaction(
             {readConcern: {level: "snapshot", atClusterTime: clusterTime}});
-        res = toRSSession.getDatabase(toDBFromMongos).runCommand({find: toColl});
+        res = toRSSession.getDatabase(toDBFromMongers).runCommand({find: toColl});
         if (res.ok === 0) {
             assert.commandFailedWithCode(res, ErrorCodes.SnapshotTooOld);
             assert.commandFailedWithCode(toRSSession.abortTransaction_forTesting(),

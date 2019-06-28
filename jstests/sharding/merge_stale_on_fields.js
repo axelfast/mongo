@@ -15,28 +15,28 @@
 
     // Test that an $merge through a stale mongers can still use the correct "on" fields and succeed.
     (function testDefaultOnFieldsIsRecent() {
-        const freshMongos = st.s0;
-        const staleMongos = st.s1;
+        const freshMongers = st.s0;
+        const staleMongers = st.s1;
 
         // Set up two collections for an aggregate with an $merge: The source collection will be
         // unsharded and the target collection will be sharded amongst the two shards.
-        const staleMongosDB = staleMongos.getDB(dbName);
+        const staleMongersDB = staleMongers.getDB(dbName);
         st.shardColl(source, {_id: 1}, {_id: 0}, {_id: 1});
 
-        (function setupStaleMongos() {
-            // Shard the collection through 'staleMongos', setting up 'staleMongos' to believe the
+        (function setupStaleMongers() {
+            // Shard the collection through 'staleMongers', setting up 'staleMongers' to believe the
             // collection is sharded by {sk: 1, _id: 1}.
-            assert.commandWorked(staleMongosDB.adminCommand(
+            assert.commandWorked(staleMongersDB.adminCommand(
                 {shardCollection: target.getFullName(), key: {sk: 1, _id: 1}}));
             // Perform a query through that mongers to ensure the cache is populated.
-            assert.eq(0, staleMongosDB[target.getName()].find().itcount());
+            assert.eq(0, staleMongersDB[target.getName()].find().itcount());
 
             // Drop the collection from the other mongers - it is no longer sharded but the stale
             // mongers doesn't know that yet.
             target.drop();
         }());
 
-        // At this point 'staleMongos' will believe that the target collection is sharded. This
+        // At this point 'staleMongers' will believe that the target collection is sharded. This
         // should not prevent it from running an $merge without "on" fields specified.
         // Specifically, the mongers should force a refresh of its cache before defaulting the "on"
         // fields.
@@ -44,7 +44,7 @@
 
         // If we had used the stale "on" fields, this aggregation would fail since the documents do
         // not have an 'sk' field.
-        assert.doesNotThrow(() => staleMongosDB[source.getName()].aggregate([
+        assert.doesNotThrow(() => staleMongersDB[source.getName()].aggregate([
             {$merge: {into: target.getName(), whenMatched: 'fail', whenNotMatched: 'insert'}}
         ]));
         assert.eq(target.find().toArray(), [{_id: 'seed'}]);

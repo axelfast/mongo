@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -754,7 +754,7 @@ HeartbeatResponseAction TopologyCoordinator::processHeartbeatResponse(
             } else {
                 LOG(2) << "Config from heartbeat response was same as ours.";
             }
-            if (logger::globalLogDomain()->shouldLog(MongoLogDefaultComponent_component,
+            if (logger::globalLogDomain()->shouldLog(MongerLogDefaultComponent_component,
                                                      ::monger::LogstreamBuilder::severityCast(2))) {
                 LogstreamBuilder lsb = log();
                 if (_rsConfig.isInitialized()) {

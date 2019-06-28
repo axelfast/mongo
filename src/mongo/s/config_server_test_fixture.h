@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -47,9 +47,9 @@ class StatusWith;
 
 /**
  * Provides config-specific functionality in addition to the mock storage engine and mock network
- * provided by ShardingMongodTestFixture.
+ * provided by ShardingMongerdTestFixture.
  */
-class ConfigServerTestFixture : public ShardingMongodTestFixture {
+class ConfigServerTestFixture : public ShardingMongerdTestFixture {
 public:
     ConfigServerTestFixture();
     ~ConfigServerTestFixture();
@@ -140,7 +140,7 @@ public:
     executor::TaskExecutor* executorForAddShard() const;
 
     /**
-     * Same as ShardingMongodTestFixture::onCommand but run against _addShardNetworkTestEnv.
+     * Same as ShardingMongerdTestFixture::onCommand but run against _addShardNetworkTestEnv.
      */
     void onCommandForAddShard(executor::NetworkTestEnv::OnCommandFunction func);
 

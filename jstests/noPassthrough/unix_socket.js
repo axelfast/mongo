@@ -17,7 +17,7 @@
     }
 
     // Do not fail if this test leaves unterminated processes because testSockOptions
-    // is expected to throw before it calls stopMongod.
+    // is expected to throw before it calls stopMongerd.
     TestData.failIfUnterminatedProcesses = false;
 
     var doesLogMatchRegex = function(logArray, regex) {
@@ -32,32 +32,32 @@
 
     var checkSocket = function(path) {
         assert.eq(fileExists(path), true);
-        var conn = new Mongo(path);
+        var conn = new Monger(path);
         assert.commandWorked(conn.getDB("admin").runCommand("ping"),
                              `Expected ping command to succeed for ${path}`);
     };
 
-    var testSockOptions = function(bindPath, expectSockPath, optDict, bindSep = ',', optMongos) {
+    var testSockOptions = function(bindPath, expectSockPath, optDict, bindSep = ',', optMongers) {
         var optDict = optDict || {};
         if (bindPath) {
-            optDict["bind_ip"] = `${MongoRunner.dataDir}/${bindPath}${bindSep}127.0.0.1`;
+            optDict["bind_ip"] = `${MongerRunner.dataDir}/${bindPath}${bindSep}127.0.0.1`;
         }
 
         var conn, shards;
-        if (optMongos) {
+        if (optMongers) {
             shards = new ShardingTest({shards: 1, mongers: 1, other: {mongersOptions: optDict}});
             assert.neq(shards, null, "Expected cluster to start okay");
             conn = shards.s0;
         } else {
-            conn = MongoRunner.runMongod(optDict);
+            conn = MongerRunner.runMongerd(optDict);
         }
 
-        assert.neq(conn, null, `Expected ${optMongos ? "mongers" : "mongerd"} to start okay`);
+        assert.neq(conn, null, `Expected ${optMongers ? "mongers" : "mongerd"} to start okay`);
 
         const defaultUNIXSocket = `/tmp/mongerdb-${conn.port}.sock`;
         var checkPath = defaultUNIXSocket;
         if (expectSockPath) {
-            checkPath = `${MongoRunner.dataDir}/${expectSockPath}`;
+            checkPath = `${MongerRunner.dataDir}/${expectSockPath}`;
         }
 
         checkSocket(checkPath);
@@ -69,10 +69,10 @@
         var re = new RegExp("anonymous unix socket");
         assert(doesLogMatchRegex(ll, re), "Log message did not contain 'anonymous unix socket'");
 
-        if (optMongos) {
+        if (optMongers) {
             shards.stop();
         } else {
-            MongoRunner.stopMongod(conn);
+            MongerRunner.stopMongerd(conn);
         }
 
         assert.eq(fileExists(checkPath), false);
@@ -106,7 +106,7 @@
     });
 
     // Check the unixSocketPrefix option
-    var socketPrefix = `${MongoRunner.dataDir}/socketdir`;
+    var socketPrefix = `${MongerRunner.dataDir}/socketdir`;
     mkdir(socketPrefix);
     var port = allocatePort();
     testSockOptions(

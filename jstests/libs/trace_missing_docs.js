@@ -7,12 +7,12 @@ function traceMissingDoc(coll, doc, mongers) {
     if (mongers)
         coll = mongers.getCollection(coll + "");
     else
-        mongers = coll.getMongo();
+        mongers = coll.getMonger();
 
     var config = mongers.getDB("config");
     var shards = config.shards.find().toArray();
     for (var i = 0; i < shards.length; i++) {
-        shards[i].conn = new Mongo(shards[i].host);
+        shards[i].conn = new Monger(shards[i].host);
     }
 
     var shardKeyPatt = config.collections.findOne({_id: coll + ""}).key;

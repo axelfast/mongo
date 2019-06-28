@@ -12,7 +12,7 @@
 
     const isMaster = db.runCommand("ismaster");
     assert.commandWorked(isMaster);
-    const isMongos = (isMaster.msg === "isdbgrid");
+    const isMongers = (isMaster.msg === "isdbgrid");
 
     //
     // $expr in aggregate.
@@ -163,7 +163,7 @@
     });
 
     // $expr is not allowed in arrayFilters.
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         coll.drop();
         assert.writeOK(coll.insert({_id: 0, a: [{b: 5}]}));
         assert.throws(function() {
@@ -300,7 +300,7 @@
     assert.writeError(coll.update({_id: 0}, {$pull: {a: {$expr: {$eq: ["$b", 5]}}}}));
 
     // $expr is not allowed in arrayFilters.
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         coll.drop();
         assert.writeOK(coll.insert({_id: 0, a: [{b: 5}]}));
         assert.writeError(coll.update({_id: 0},

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -570,7 +570,7 @@ BenchRunOp opFromBson(const BSONObj& op) {
         } else if (name == "writeCmd") {
             myOp.useWriteCmd = arg.trueValue();
         } else if (name == "writeConcern") {
-            // Mongo-perf wants to pass the write concern into all calls. It is only used for
+            // Monger-perf wants to pass the write concern into all calls. It is only used for
             // update, insert, delete
             myOp.writeConcern = arg.Obj();
         } else if (name == "value") {

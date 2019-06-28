@@ -12,7 +12,7 @@
     load("jstests/libs/feature_compatibility_version.js");
 
     const testName = "collection_validator_feature_compatibility_version";
-    const dbpath = MongoRunner.dataPath + testName;
+    const dbpath = MongerRunner.dataPath + testName;
 
     // The 'testCases' array should be populated with
     //
@@ -25,7 +25,7 @@
     // version is the last-stable version.
     const testCases = [];
 
-    let conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest"});
+    let conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "latest"});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     let testDB = conn.getDB(testName);
@@ -103,22 +103,22 @@
                 res.errmsg);
     });
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     if (testCases.length > 0) {
         // If we try to start up the last-stable version of mongerd, it will fail, because it will
         // not be able to parse the validator using new query features.
         conn =
-            MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
+            MongerRunner.runMongerd({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
         assert.eq(null,
                   conn,
-                  `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd started, even` +
+                  `version ${MongerRunner.getBinVersionFor("last-stable")} of mongerd started, even` +
                       " with a validator using new query features in place.");
     }
 
     // Starting up the latest version of mongerd, however, should succeed, even though the feature
     // compatibility version is still set to the last-stable version.
-    conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest", noCleanData: true});
+    conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "latest", noCleanData: true});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     adminDB = conn.getDB("admin");
@@ -137,20 +137,20 @@
         assert.commandWorked(testDB.runCommand({collMod: coll.getName(), validator: {}}));
     });
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Now, we should be able to start up the last-stable version of mongerd.
-    conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
+    conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "last-stable", noCleanData: true});
     assert.neq(
         null,
         conn,
-        `version ${MongoRunner.getBinVersionFor("last-stable")} of mongerd failed to start, even` +
+        `version ${MongerRunner.getBinVersionFor("last-stable")} of mongerd failed to start, even` +
             " after we removed the validator using new query features");
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // The rest of the test uses the latest version of mongerd.
-    conn = MongoRunner.runMongod({dbpath: dbpath, binVersion: "latest", noCleanData: true});
+    conn = MongerRunner.runMongerd({dbpath: dbpath, binVersion: "latest", noCleanData: true});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     adminDB = conn.getDB("admin");
@@ -178,8 +178,8 @@
     // Set the feature compatibility version to the last-stable version and then restart with
     // internalValidateFeaturesAsMaster=false.
     assert.commandWorked(adminDB.runCommand({setFeatureCompatibilityVersion: lastStableFCV}));
-    MongoRunner.stopMongod(conn);
-    conn = MongoRunner.runMongod({
+    MongerRunner.stopMongerd(conn);
+    conn = MongerRunner.runMongerd({
         dbpath: dbpath,
         binVersion: "latest",
         noCleanData: true,
@@ -207,6 +207,6 @@
             `Expected to be able to modify collection validator to be ${tojson(test.validator)}`);
     });
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
 }());

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,7 +51,7 @@
 namespace monger {
 namespace {
 
-class FreeMonStorageTest : public ServiceContextMongoDTest {
+class FreeMonStorageTest : public ServiceContextMongerDTest {
 private:
     void setUp() final;
     void tearDown() final;
@@ -73,7 +73,7 @@ protected:
 };
 
 void FreeMonStorageTest::setUp() {
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
     auto service = getServiceContext();
 
     repl::ReplicationCoordinator::set(service,
@@ -90,7 +90,7 @@ void FreeMonStorageTest::setUp() {
 
 void FreeMonStorageTest::tearDown() {
     _opCtx = {};
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 repl::ReplicationCoordinatorMock* FreeMonStorageTest::_getReplCoord() const {

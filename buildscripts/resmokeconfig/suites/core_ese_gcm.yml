@@ -8,7 +8,7 @@ selector:
   roots:
   - jstests/core/**/*.js
   exclude_files:
-  # Transactions are not supported on MongoDB standalone nodes.
+  # Transactions are not supported on MongerDB standalone nodes.
   - jstests/core/txns/**/*.js
 executor:
   archive:
@@ -26,7 +26,7 @@ executor:
   - class: CleanEveryN
     n: 20
   fixture:
-    class: MongoDFixture
+    class: MongerDFixture
     mongerd_options:
       enableEncryption: ''
       encryptionKeyFile: *keyFile

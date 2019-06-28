@@ -52,14 +52,14 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         let participant1 = st.shard1;
         let participant2 = st.shard2;
 
-        const runCommitThroughMongosInParallelShellExpectSuccess = function() {
+        const runCommitThroughMongersInParallelShellExpectSuccess = function() {
             const runCommitExpectSuccessCode = "assert.commandWorked(db.adminCommand({" +
                 "commitTransaction: 1," + "lsid: " + tojson(lsid) + "," + "txnNumber: NumberLong(" +
                 txnNumber + ")," + "stmtId: NumberInt(0)," + "autocommit: false," + "}));";
             return startParallelShell(runCommitExpectSuccessCode, st.s.port);
         };
 
-        const runCommitThroughMongosInParallelShellExpectAbort = function() {
+        const runCommitThroughMongersInParallelShellExpectAbort = function() {
             const runCommitExpectSuccessCode = "assert.commandFailedWithCode(db.adminCommand({" +
                 "commitTransaction: 1," + "lsid: " + tojson(lsid) + "," + "txnNumber: NumberLong(" +
                 txnNumber + ")," + "stmtId: NumberInt(0)," + "autocommit: false," + "})," +
@@ -130,9 +130,9 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
             // Run commitTransaction through a parallel shell.
             let awaitResult;
             if (expectAbortResponse) {
-                awaitResult = runCommitThroughMongosInParallelShellExpectAbort();
+                awaitResult = runCommitThroughMongersInParallelShellExpectAbort();
             } else {
-                awaitResult = runCommitThroughMongosInParallelShellExpectSuccess();
+                awaitResult = runCommitThroughMongersInParallelShellExpectSuccess();
             }
 
             var numTimesShouldBeHit = failpointData.numTimesShouldBeHit;
@@ -173,7 +173,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
             }
 
             st.s.getDB(dbName).getCollection(collName).drop();
-            clearRawMongoProgramOutput();
+            clearRawMongerProgramOutput();
         };
 
         //

@@ -5,7 +5,7 @@
  * replica set, a sharded cluster, etc.
  */
 var FixtureHelpers = (function() {
-    load("jstests/concurrency/fsm_workload_helpers/server_types.js");  // For isMongos.
+    load("jstests/concurrency/fsm_workload_helpers/server_types.js");  // For isMongers.
 
     function _getHostStringForReplSet(connectionToNodeInSet) {
         const isMaster = assert.commandWorked(connectionToNodeInSet.getDB("test").isMaster());
@@ -21,11 +21,11 @@ var FixtureHelpers = (function() {
      */
     function _getAllReplicas(db) {
         let replicas = [];
-        if (isMongos(db)) {
+        if (isMongers(db)) {
             const shardObjs = db.getSiblingDB("config").shards.find().sort({_id: 1});
             replicas = shardObjs.map((shardObj) => new ReplSetTest(shardObj.host));
         } else {
-            replicas = [new ReplSetTest(_getHostStringForReplSet(db.getMongo()))];
+            replicas = [new ReplSetTest(_getHostStringForReplSet(db.getMonger()))];
         }
         return replicas;
     }
@@ -72,7 +72,7 @@ var FixtureHelpers = (function() {
      * this collection can change at any moment.
      */
     function numberOfShardsForCollection(coll) {
-        if (!isMongos(coll.getDB()) || !isSharded(coll)) {
+        if (!isMongers(coll.getDB()) || !isSharded(coll)) {
             // If we're not talking to a mongers, or the collection is not sharded, there is one
             // shard.
             return 1;
@@ -88,7 +88,7 @@ var FixtureHelpers = (function() {
      */
     function runCommandOnEachPrimary({db, cmdObj}) {
         function getConnToPrimaryOrStandalone(host) {
-            const conn = new Mongo(host);
+            const conn = new Monger(host);
             const isMaster = conn.getDB("test").isMaster();
 
             if (isMaster.hasOwnProperty("setName")) {
@@ -102,14 +102,14 @@ var FixtureHelpers = (function() {
         }
 
         const connList = [];
-        if (isMongos(db)) {
+        if (isMongers(db)) {
             const shardObjs = db.getSiblingDB("config").shards.find().sort({_id: 1}).toArray();
 
             for (let shardObj of shardObjs) {
                 connList.push(getConnToPrimaryOrStandalone(shardObj.host));
             }
         } else {
-            connList.push(getConnToPrimaryOrStandalone(db.getMongo().host));
+            connList.push(getConnToPrimaryOrStandalone(db.getMonger().host));
         }
 
         return connList.map((conn) =>
@@ -121,15 +121,15 @@ var FixtureHelpers = (function() {
      * Returns the same connection that 'db' is using if the fixture is not a sharded cluster.
      */
     function getPrimaryForNodeHostingDatabase(db) {
-        if (!isMongos(db)) {
-            return db.getMongo();
+        if (!isMongers(db)) {
+            return db.getMonger();
         }
         const configDB = db.getSiblingDB("config");
         let shardConn = null;
         configDB.databases.find().forEach(function(dbObj) {
             if (dbObj._id === db.getName()) {
                 const shardObj = configDB.shards.findOne({_id: dbObj.primary});
-                shardConn = new Mongo(shardObj.host);
+                shardConn = new Monger(shardObj.host);
             }
         });
         assert.neq(null, shardConn, "could not find shard hosting database " + db.getName());
@@ -145,7 +145,7 @@ var FixtureHelpers = (function() {
     }
 
     return {
-        isMongos: isMongos,
+        isMongers: isMongers,
         isSharded: isSharded,
         getViewDefinition: getViewDefinition,
         numberOfShardsForCollection: numberOfShardsForCollection,

@@ -4,7 +4,7 @@
     'use strict';
 
     const port = allocatePort();
-    const mongerd = MongoRunner.runMongod({auth: '', port: port});
+    const mongerd = MongerRunner.runMongerd({auth: '', port: port});
     const admin = mongerd.getDB('admin');
 
     admin.createUser({user: 'admin', pwd: 'pass', roles: jsTest.adminUserRoles});
@@ -12,8 +12,8 @@
     // Connect via shell round-trip in order to verify handling of mongerdb:// uri with password.
     const uri = 'mongerdb://admin:pass@localhost:' + port + '/admin';
     // Be sure to actually do something requiring authentication.
-    const monger = runMongoProgram('monger', uri, '--eval', 'db.system.users.find({});');
+    const monger = runMongerProgram('monger', uri, '--eval', 'db.system.users.find({});');
     assert.eq(monger, 0, "Failed connecting to mongerd via shell+mongerdb uri");
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

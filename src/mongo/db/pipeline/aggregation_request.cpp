@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,7 +51,7 @@ namespace monger {
 constexpr StringData AggregationRequest::kCommandName;
 constexpr StringData AggregationRequest::kCursorName;
 constexpr StringData AggregationRequest::kBatchSizeName;
-constexpr StringData AggregationRequest::kFromMongosName;
+constexpr StringData AggregationRequest::kFromMongersName;
 constexpr StringData AggregationRequest::kNeedsMergeName;
 constexpr StringData AggregationRequest::kPipelineName;
 constexpr StringData AggregationRequest::kCollationName;
@@ -88,7 +88,7 @@ StatusWith<AggregationRequest> AggregationRequest::parseFromBSON(
     bool hasCursorElem = false;
     bool hasExplainElem = false;
 
-    bool hasFromMongosElem = false;
+    bool hasFromMongersElem = false;
     bool hasNeedsMergeElem = false;
 
     // Parse optional parameters.
@@ -164,15 +164,15 @@ StatusWith<AggregationRequest> AggregationRequest::parseFromBSON(
             if (elem.Bool()) {
                 request.setExplain(ExplainOptions::Verbosity::kQueryPlanner);
             }
-        } else if (kFromMongosName == fieldName) {
+        } else if (kFromMongersName == fieldName) {
             if (elem.type() != BSONType::Bool) {
                 return {ErrorCodes::TypeMismatch,
-                        str::stream() << kFromMongosName << " must be a boolean, not a "
+                        str::stream() << kFromMongersName << " must be a boolean, not a "
                                       << typeName(elem.type())};
             }
 
-            hasFromMongosElem = true;
-            request.setFromMongos(elem.Bool());
+            hasFromMongersElem = true;
+            request.setFromMongers(elem.Bool());
         } else if (kNeedsMergeName == fieldName) {
             if (elem.type() != BSONType::Bool) {
                 return {ErrorCodes::TypeMismatch,
@@ -258,10 +258,10 @@ StatusWith<AggregationRequest> AggregationRequest::parseFromBSON(
                               << "' option"};
     }
 
-    if (hasNeedsMergeElem && !hasFromMongosElem) {
+    if (hasNeedsMergeElem && !hasFromMongersElem) {
         return {ErrorCodes::FailedToParse,
                 str::stream() << "Cannot specify '" << kNeedsMergeName << "' without '"
-                              << kFromMongosName
+                              << kFromMongersName
                               << "'"};
     }
 
@@ -301,7 +301,7 @@ Document AggregationRequest::serializeToCommandObj() const {
         {kPipelineName, _pipeline},
         // Only serialize booleans if different than their default.
         {kAllowDiskUseName, _allowDiskUse ? Value(true) : Value()},
-        {kFromMongosName, _fromMongos ? Value(true) : Value()},
+        {kFromMongersName, _fromMongers ? Value(true) : Value()},
         {kNeedsMergeName, _needsMerge ? Value(true) : Value()},
         {bypassDocumentValidationCommandOption(),
          _bypassDocumentValidation ? Value(true) : Value()},

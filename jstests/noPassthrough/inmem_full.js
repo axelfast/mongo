@@ -39,7 +39,7 @@
     const batchSize = 100;
     const batch = randomBatch(batchSize);
 
-    var mongerd = MongoRunner.runMongod({
+    var mongerd = MongerRunner.runMongerd({
         storageEngine: 'inMemory',
         inMemoryEngineConfigString: 'cache_size=' + cacheMB + "M,",
     });

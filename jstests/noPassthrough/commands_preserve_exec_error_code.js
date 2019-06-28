@@ -5,7 +5,7 @@
 (function() {
     "use strict";
 
-    const mongerd = MongoRunner.runMongod({});
+    const mongerd = MongerRunner.runMongerd({});
     assert.neq(mongerd, null, "mongerd failed to start up");
     const db = mongerd.getDB("test");
     const coll = db.commands_preserve_exec_error_code;
@@ -45,5 +45,5 @@
 
     assert.commandWorked(
         db.adminCommand({configureFailPoint: "planExecutorAlwaysFails", mode: "off"}));
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 }());

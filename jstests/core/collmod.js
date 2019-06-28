@@ -20,7 +20,7 @@ var coll = "collModTest";
 var t = db.getCollection(coll);
 t.drop();
 
-var isMongos = ("isdbgrid" == db.runCommand("ismaster").msg);
+var isMongers = ("isdbgrid" == db.runCommand("ismaster").msg);
 
 db.createCollection(coll);
 

@@ -397,7 +397,7 @@ class ReplicaSetFixture(interface.ReplFixture):  # pylint: disable=too-many-inst
         Return the node for which makes `fn` become truthy.
 
         Two arguments are passed to fn: the client for a node and
-        the MongoDFixture corresponding to that node.
+        the MongerDFixture corresponding to that node.
         """
 
         start = time.time()
@@ -418,7 +418,7 @@ class ReplicaSetFixture(interface.ReplFixture):  # pylint: disable=too-many-inst
                         return node
 
                 except pymonger.errors.AutoReconnect:
-                    # AutoReconnect exceptions may occur if the primary stepped down since PyMongo
+                    # AutoReconnect exceptions may occur if the primary stepped down since PyMonger
                     # last contacted it. We'll just try contacting the node again in the next round
                     # of isMaster requests.
                     continue
@@ -433,7 +433,7 @@ class ReplicaSetFixture(interface.ReplFixture):  # pylint: disable=too-many-inst
         return self.initial_sync_node
 
     def _new_mongerd(self, index, replset_name):
-        """Return a standalone.MongoDFixture configured to be used as replica-set member."""
+        """Return a standalone.MongerDFixture configured to be used as replica-set member."""
 
         mongerd_logger = self._get_logger_for_mongerd(index)
         mongerd_options = self.mongerd_options.copy()
@@ -441,7 +441,7 @@ class ReplicaSetFixture(interface.ReplFixture):  # pylint: disable=too-many-inst
         mongerd_options["dbpath"] = os.path.join(self._dbpath_prefix, "node{}".format(index))
         mongerd_options["set_parameters"] = mongerd_options.get("set_parameters", {}).copy()
 
-        return standalone.MongoDFixture(
+        return standalone.MongerDFixture(
             mongerd_logger, self.job_num, mongerd_executable=self.mongerd_executable,
             mongerd_options=mongerd_options, preserve_dbpath=self.preserve_dbpath)
 

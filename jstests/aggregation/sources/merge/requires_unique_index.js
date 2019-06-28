@@ -276,7 +276,7 @@
             {source: source, onFields: ["geo", "a"], target: target});
 
         dropWithoutImplicitRecreate(target);
-        // MongoDB does not support unique hashed indexes.
+        // MongerDB does not support unique hashed indexes.
         assert.commandFailedWithCode(target.createIndex({a: "hashed"}, {unique: true}), 16764);
         assert.commandWorked(target.createIndex({a: "hashed"}));
         assertMergeFailsWithoutUniqueIndex({source: source, onFields: "a", target: target});

@@ -21,17 +21,17 @@
         <File Id="f_mongerdWithService" Name="mongerd.exe" Source="$(var.BinarySource)\mongerd.exe"
               DiskId ="1" KeyPath="yes"/>
         <ServiceInstall Id='MyServiceInstall'
-              Description="MongoDB Database Server"
+              Description="MongerDB Database Server"
               Arguments='--config "[BIN]mongerd.cfg" --service'
-              DisplayName='MongoDB Server'
-              Name='MongoDB'
+              DisplayName='MongerDB Server'
+              Name='MongerDB'
               ErrorControl='normal'
               Start='auto'
               Type='ownProcess'
               Account='[MONGO_SERVICE_FULL_ACCOUNT_NAME]'
               Password='[MONGO_SERVICE_ACCOUNT_PASSWORD]'
               Vital='yes' />
-        <ServiceControl Id="StartStopService" Name="MongoDB" Start="install" Stop="both" Remove="uninstall" Wait="no" />
+        <ServiceControl Id="StartStopService" Name="MongerDB" Start="install" Stop="both" Remove="uninstall" Wait="no" />
       </Component>
       <Component Id="c_mongerdWithServiceUser" Guid="961B0579-4074-4437-B168-9B6C5E3C9E6A" KeyPath="yes">
         <Condition><![CDATA[MONGO_SERVICE_INSTALL AND MONGO_SERVICE_ACCOUNT_TYPE <> "ServiceLocalNetwork"]]></Condition>
@@ -136,12 +136,12 @@
           <File Id="f_snmpConfSubagent" Name="mongerd.conf.subagent" Source="$(var.EnterpriseBase)\docs\mongerd.conf.subagent"
                 DiskId="1" KeyPath="yes" />
         </Component>
-        <Component Id="c_snmpMongodMib" Guid="F3E98C6B-FE42-44E7-8A1F-E47BDDD0A3D7">
-          <File Id="f_snmpMongodMib" Name="MONGOD-MIB.txt" Source="$(var.EnterpriseBase)\docs\MONGOD-MIB.txt"
+        <Component Id="c_snmpMongerdMib" Guid="F3E98C6B-FE42-44E7-8A1F-E47BDDD0A3D7">
+          <File Id="f_snmpMongerdMib" Name="MONGOD-MIB.txt" Source="$(var.EnterpriseBase)\docs\MONGOD-MIB.txt"
                 DiskId="1" KeyPath="yes" />
         </Component>
-        <Component Id="c_snmpMongodbincMib" Guid="58c6bd8e-a785-48a0-af48-42f6bf9f68b4">
-          <File Id="f_snmpMongodbincMib" Name="MONGODBINC-MIB.txt" Source="$(var.EnterpriseBase)\docs\MONGODBINC-MIB.txt"
+        <Component Id="c_snmpMongerdbincMib" Guid="58c6bd8e-a785-48a0-af48-42f6bf9f68b4">
+          <File Id="f_snmpMongerdbincMib" Name="MONGODBINC-MIB.txt" Source="$(var.EnterpriseBase)\docs\MONGODBINC-MIB.txt"
                 DiskId="1" KeyPath="yes" />
         </Component>
       </DirectoryRef>
@@ -180,8 +180,8 @@
         <ComponentRef Id="c_snmpReadme" />
         <ComponentRef Id="c_snmpConfMaster" />
         <ComponentRef Id="c_snmpConfSubagent" />
-        <ComponentRef Id="c_snmpMongodMib" />
-        <ComponentRef Id="c_snmpMongodbincMib" />
+        <ComponentRef Id="c_snmpMongerdMib" />
+        <ComponentRef Id="c_snmpMongerdbincMib" />
       </ComponentGroup>
     <?endif ?>
   </Fragment>

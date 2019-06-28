@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -70,7 +70,7 @@ func NewResultFromBulkResult(result *monger.BulkWriteResult, err error) Result {
 }
 
 // RestoreIntents iterates through all of the intents stored in the IntentManager, and restores them.
-func (restore *MongoRestore) RestoreIntents() Result {
+func (restore *MongerRestore) RestoreIntents() Result {
 	log.Logvf(log.DebugLow, "restoring up to %v collections in parallel", restore.OutputOptions.NumParallelCollections)
 
 	if restore.OutputOptions.NumParallelCollections > 0 {
@@ -142,8 +142,8 @@ func (restore *MongoRestore) RestoreIntents() Result {
 	return totalResult
 }
 
-// RestoreIntent attempts to restore a given intent into MongoDB.
-func (restore *MongoRestore) RestoreIntent(intent *intents.Intent) Result {
+// RestoreIntent attempts to restore a given intent into MongerDB.
+func (restore *MongerRestore) RestoreIntent(intent *intents.Intent) Result {
 
 	collectionExists, err := restore.CollectionExists(intent)
 	if err != nil {
@@ -303,7 +303,7 @@ func (restore *MongoRestore) RestoreIntent(intent *intents.Intent) Result {
 
 // RestoreCollectionToDB pipes the given BSON data into the database.
 // Returns the number of documents restored and any errors that occurred.
-func (restore *MongoRestore) RestoreCollectionToDB(dbName, colName string,
+func (restore *MongerRestore) RestoreCollectionToDB(dbName, colName string,
 	bsonSource *db.DecodedBSONSource, file PosReader, fileSize int64) Result {
 
 	var termErr error

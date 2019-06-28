@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,7 +39,7 @@ namespace mozjs {
  * Wraps a DBClientCursor in javascript
  *
  * Note that the install is private, so this class should only be constructible
- * from C++. Current callers are all via the Mongo object.
+ * from C++. Current callers are all via the Monger object.
  */
 struct CursorInfo : public BaseInfo {
     static void finalize(js::FreeOp* fop, JSObject* obj);

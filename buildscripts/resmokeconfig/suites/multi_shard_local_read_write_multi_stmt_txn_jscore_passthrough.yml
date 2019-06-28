@@ -151,13 +151,13 @@ selector:
   - jstests/core/updateh.js
   - jstests/core/updatej.js
 
-  # SERVER-38096 Mongos opCounter doesn't increase when last op causes the transaction to implicitly abort
+  # SERVER-38096 Mongers opCounter doesn't increase when last op causes the transaction to implicitly abort
   - jstests/core/opcounters_write_cmd.js
 
   # TODO: SERVER-38207 Cannot insert document with MaxKey shard key.
   - jstests/core/type8.js
 
-  # TODO: SERVER-38690 Mongos should throw write targeting errors in a transaction.
+  # TODO: SERVER-38690 Mongers should throw write targeting errors in a transaction.
   - jstests/core/update_setOnInsert.js
 
   ##
@@ -265,7 +265,7 @@ selector:
   # using a single txnNumber.
   - jstests/core/json_schema/misc_validation.js
 
-  # Fails with implicit sessions because it will use multiple sessions on the same Mongo connection.
+  # Fails with implicit sessions because it will use multiple sessions on the same Monger connection.
   - jstests/core/dropdb.js
 
   # Committing a transaction when the server is fsync locked fails.

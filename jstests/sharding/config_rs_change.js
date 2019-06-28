@@ -22,11 +22,11 @@ for (var i = 0; i < configRS.ports.length; i++) {
 }
 var configSeedList = configRS.name + "/" + configHosts.join(",");
 
-var mongers = MongoRunner.runMongos({configdb: configSeedList});
+var mongers = MongerRunner.runMongers({configdb: configSeedList});
 
 // Do some basic operations to ensure that mongers started up successfully despite the discrepancy
 // in the config server replset configuration.
 assert.commandWorked(mongers.getDB('admin').runCommand('serverStatus'));
 
-MongoRunner.stopMongos(mongers);
+MongerRunner.stopMongers(mongers);
 configRS.stopSet();

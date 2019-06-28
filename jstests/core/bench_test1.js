@@ -20,7 +20,7 @@
 
     const seconds = 10;
 
-    const benchArgs = {ops: ops, parallel: 2, seconds: seconds, host: db.getMongo().host};
+    const benchArgs = {ops: ops, parallel: 2, seconds: seconds, host: db.getMonger().host};
 
     if (jsTest.options().auth) {
         benchArgs['db'] = 'admin';

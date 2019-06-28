@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -101,7 +101,7 @@ std::ostream& operator<<(std::ostream& out, const ResumeTokenData& tokenData);
  *     _typeBits: BinData - The keystring type bits used for deserialization.
  *   }
  *   The _data field data is encoded such that string comparisons provide the correct ordering of
- *   tokens. Unlike the BinData, this can be sorted correctly using a MongoDB sort. BinData
+ *   tokens. Unlike the BinData, this can be sorted correctly using a MongerDB sort. BinData
  *   unfortunately orders by the length of the data first, then by the contents.
  *
  *   As an optimization, the _typeBits field may be missing and should not affect token comparison.

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,18 +36,18 @@
 #include "monger/util/str.h"
 
 namespace monger {
-const NamespaceString MongosType::ConfigNS("config.mongers");
+const NamespaceString MongersType::ConfigNS("config.mongers");
 
-const BSONField<std::string> MongosType::name("_id");
-const BSONField<Date_t> MongosType::ping("ping");
-const BSONField<long long> MongosType::uptime("up");
-const BSONField<bool> MongosType::waiting("waiting");
-const BSONField<std::string> MongosType::mongerVersion("mongerVersion");
-const BSONField<long long> MongosType::configVersion("configVersion");
-const BSONField<BSONArray> MongosType::advisoryHostFQDNs("advisoryHostFQDNs");
+const BSONField<std::string> MongersType::name("_id");
+const BSONField<Date_t> MongersType::ping("ping");
+const BSONField<long long> MongersType::uptime("up");
+const BSONField<bool> MongersType::waiting("waiting");
+const BSONField<std::string> MongersType::mongerVersion("mongerVersion");
+const BSONField<long long> MongersType::configVersion("configVersion");
+const BSONField<BSONArray> MongersType::advisoryHostFQDNs("advisoryHostFQDNs");
 
-StatusWith<MongosType> MongosType::fromBSON(const BSONObj& source) {
-    MongosType mt;
+StatusWith<MongersType> MongersType::fromBSON(const BSONObj& source) {
+    MongersType mt;
 
     {
         std::string mtName;
@@ -82,11 +82,11 @@ StatusWith<MongosType> MongosType::fromBSON(const BSONObj& source) {
     }
 
     if (source.hasField(mongerVersion.name())) {
-        std::string mtMongoVersion;
-        Status status = bsonExtractStringField(source, mongerVersion.name(), &mtMongoVersion);
+        std::string mtMongerVersion;
+        Status status = bsonExtractStringField(source, mongerVersion.name(), &mtMongerVersion);
         if (!status.isOK())
             return status;
-        mt._mongerVersion = mtMongoVersion;
+        mt._mongerVersion = mtMongerVersion;
     }
 
     if (source.hasField(configVersion.name())) {
@@ -120,7 +120,7 @@ StatusWith<MongosType> MongosType::fromBSON(const BSONObj& source) {
     return mt;
 }
 
-Status MongosType::validate() const {
+Status MongersType::validate() const {
     if (!_name.is_initialized() || _name->empty()) {
         return {ErrorCodes::NoSuchKey, str::stream() << "missing " << name.name() << " field"};
     }
@@ -140,7 +140,7 @@ Status MongosType::validate() const {
     return Status::OK();
 }
 
-BSONObj MongosType::toBSON() const {
+BSONObj MongersType::toBSON() const {
     BSONObjBuilder builder;
 
     if (_name)
@@ -152,7 +152,7 @@ BSONObj MongosType::toBSON() const {
     if (_waiting)
         builder.append(waiting.name(), getWaiting());
     if (_mongerVersion)
-        builder.append(mongerVersion.name(), getMongoVersion());
+        builder.append(mongerVersion.name(), getMongerVersion());
     if (_configVersion)
         builder.append(configVersion.name(), getConfigVersion());
     if (_advisoryHostFQDNs)
@@ -161,37 +161,37 @@ BSONObj MongosType::toBSON() const {
     return builder.obj();
 }
 
-void MongosType::setName(const std::string& name) {
+void MongersType::setName(const std::string& name) {
     invariant(!name.empty());
     _name = name;
 }
 
-void MongosType::setPing(const Date_t& ping) {
+void MongersType::setPing(const Date_t& ping) {
     _ping = ping;
 }
 
-void MongosType::setUptime(long long uptime) {
+void MongersType::setUptime(long long uptime) {
     _uptime = uptime;
 }
 
-void MongosType::setWaiting(bool waiting) {
+void MongersType::setWaiting(bool waiting) {
     _waiting = waiting;
 }
 
-void MongosType::setMongoVersion(const std::string& mongerVersion) {
+void MongersType::setMongerVersion(const std::string& mongerVersion) {
     invariant(!mongerVersion.empty());
     _mongerVersion = mongerVersion;
 }
 
-void MongosType::setConfigVersion(const long long configVersion) {
+void MongersType::setConfigVersion(const long long configVersion) {
     _configVersion = configVersion;
 }
 
-void MongosType::setAdvisoryHostFQDNs(const std::vector<std::string>& advisoryHostFQDNs) {
+void MongersType::setAdvisoryHostFQDNs(const std::vector<std::string>& advisoryHostFQDNs) {
     _advisoryHostFQDNs = advisoryHostFQDNs;
 }
 
-std::string MongosType::toString() const {
+std::string MongersType::toString() const {
     return toBSON().toString();
 }
 

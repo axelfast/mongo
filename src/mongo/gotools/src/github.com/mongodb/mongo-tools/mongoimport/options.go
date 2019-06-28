@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -16,7 +16,7 @@ import (
 
 var Usage = `<options> <file>
 
-Import CSV, TSV or JSON data into MongoDB. If no file is provided, mongerimport reads from stdin.
+Import CSV, TSV or JSON data into MongerDB. If no file is provided, mongerimport reads from stdin.
 
 See http://docs.mongerdb.org/manual/reference/program/mongerimport/ for more information.`
 
@@ -130,7 +130,7 @@ func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, erro
 	log.SetVerbosity(opts.Verbosity)
 	opts.URI.LogUnsupportedOptions()
 
-	wc, err := db.NewMongoWriteConcern(ingestOpts.WriteConcern, opts.URI.ParsedConnString())
+	wc, err := db.NewMongerWriteConcern(ingestOpts.WriteConcern, opts.URI.ParsedConnString())
 	if err != nil {
 		return Options{}, fmt.Errorf("error constructing write concern: %v", err)
 	}

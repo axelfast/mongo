@@ -1,11 +1,11 @@
 /**
- * Helpers for verifying versions of started MongoDB processes.
+ * Helpers for verifying versions of started MongerDB processes.
  */
 
-var Mongo, assert;
+var Monger, assert;
 (function() {
     "use strict";
-    Mongo.prototype.getBinVersion = function() {
+    Monger.prototype.getBinVersion = function() {
         var result = this.getDB("admin").runCommand({serverStatus: 1});
         return result.version;
     };
@@ -13,10 +13,10 @@ var Mongo, assert;
     // Checks that our mongerdb process is of a certain version
     assert.binVersion = function(monger, version) {
         var currVersion = monger.getBinVersion();
-        assert(MongoRunner.areBinVersionsTheSame(MongoRunner.getBinVersionFor(currVersion),
-                                                 MongoRunner.getBinVersionFor(version)),
-               "version " + version + " (" + MongoRunner.getBinVersionFor(version) + ")" +
-                   " is not the same as " + MongoRunner.getBinVersionFor(currVersion));
+        assert(MongerRunner.areBinVersionsTheSame(MongerRunner.getBinVersionFor(currVersion),
+                                                 MongerRunner.getBinVersionFor(version)),
+               "version " + version + " (" + MongerRunner.getBinVersionFor(version) + ")" +
+                   " is not the same as " + MongerRunner.getBinVersionFor(currVersion));
     };
 
     // Compares an array of desired versions and an array of found versions,
@@ -27,7 +27,7 @@ var Mongo, assert;
             var version = versionsWanted[i];
             var found = false;
             for (var j = 0; j < versionsFound.length; j++) {
-                if (MongoRunner.areBinVersionsTheSame(version, versionsFound[j])) {
+                if (MongerRunner.areBinVersionsTheSame(version, versionsFound[j])) {
                     found = true;
                     break;
                 }
@@ -35,7 +35,7 @@ var Mongo, assert;
 
             assert(found,
                    "could not find version " + version + " (" +
-                       MongoRunner.getBinVersionFor(version) + ")" + " in " + versionsFound);
+                       MongerRunner.getBinVersionFor(version) + ")" + " in " + versionsFound);
         }
     };
 

@@ -7,10 +7,10 @@
     function runTest(bindIP, expectOk) {
         jsTest.log("".concat("Testing with bindIP=[", bindIP, "], expectOk=[", expectOk, "]"));
 
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
 
-        let pid = startMongoProgramNoConnect(
-            "mongerd", "--ipv6", "--dbpath", MongoRunner.dataDir, "--bind_ip", bindIP, "--port", 0);
+        let pid = startMongerProgramNoConnect(
+            "mongerd", "--ipv6", "--dbpath", MongerRunner.dataDir, "--bind_ip", bindIP, "--port", 0);
         jsTest.log("".concat("pid=[", pid, "]"));
 
         if (expectOk) {
@@ -18,7 +18,7 @@
 
             // We use assert.soonNoExcept() here because the mongerd may not be logging yet.
             assert.soonNoExcept(() => {
-                const logContents = rawMongoProgramOutput();
+                const logContents = rawMongerProgramOutput();
                 const found = logContents.match(/waiting for connections on port (\d+)/);
                 if (found !== null) {
                     print("Found message from mongerd with port it is listening on: " + found[0]);
@@ -32,17 +32,17 @@
 
             let conn;
             assert.soonNoExcept(() => {
-                conn = new Mongo(connStr);
+                conn = new Monger(connStr);
                 return true;
             });
             assert.commandWorked(conn.adminCommand({ping: 1}));
 
-            stopMongoProgramByPid(pid);
+            stopMongerProgramByPid(pid);
         } else {
             const ec = waitProgram(pid);
-            assert.eq(ec, MongoRunner.EXIT_NET_ERROR);
+            assert.eq(ec, MongerRunner.EXIT_NET_ERROR);
             assert.soonNoExcept(() => {
-                const logContents = rawMongoProgramOutput();
+                const logContents = rawMongerProgramOutput();
                 const found = logContents.match(
                     /Port 0 \(ephemeral port\) is not allowed when listening on multiple IP interfaces/);
                 return (found !== null);

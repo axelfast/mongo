@@ -27,7 +27,7 @@
     var passLimit = 2000;
     var failLimit = 4000;
 
-    // Test on MongoD
+    // Test on MongerD
     jsTestLog("Test no error with limit of " + passLimit + " on mongerd");
     assert.eq(passLimit, shardCol.find().sort({x: 1}).limit(passLimit).itcount());
 
@@ -36,7 +36,7 @@
         shardCol.find().sort({x: 1}).limit(failLimit).itcount();
     });
 
-    // Test on MongoS
+    // Test on MongerS
     jsTestLog("Test no error with limit of " + passLimit + " on mongers");
     assert.eq(passLimit, mongersCol.find().sort({x: 1}).limit(passLimit).itcount());
 

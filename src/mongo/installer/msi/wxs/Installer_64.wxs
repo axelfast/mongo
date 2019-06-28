@@ -4,23 +4,23 @@
   <Product Id="$(var.ProductId)" 
            Name="!(wix.ProductName)" 
            Language="1033" 
-           Version="$(var.MongoDBVersion)" 
-           Manufacturer="MongoDB Inc." 
+           Version="$(var.MongerDBVersion)" 
+           Manufacturer="MongerDB Inc." 
            UpgradeCode="$(var.UpgradeCode)">
 
     <Package InstallerVersion="405" Compressed="yes" Platform="x64"/>
 
-    <WixVariable Id="InstallFolder" Value="$(var.MongoDBMajorVersion)"/>
+    <WixVariable Id="InstallFolder" Value="$(var.MongerDBMajorVersion)"/>
 
     <?if $(var.Edition) = Enterprise ?>
-        <WixVariable Id="ProductName" Value="MongoDB $(var.MongoDBVersion) $(var.Flavor) Enterprise (64 bit)" />
-        <WixVariable Id="ProductMajorName" Value="MongoDB $(var.MongoDBMajorVersion) $(var.Flavor) Enterprise (64 bit)" />
+        <WixVariable Id="ProductName" Value="MongerDB $(var.MongerDBVersion) $(var.Flavor) Enterprise (64 bit)" />
+        <WixVariable Id="ProductMajorName" Value="MongerDB $(var.MongerDBMajorVersion) $(var.Flavor) Enterprise (64 bit)" />
     <?elseif $(var.Edition) = SSL ?>
-        <WixVariable Id="ProductName" Value="MongoDB $(var.MongoDBVersion) $(var.Flavor) SSL (64 bit)" />
-        <WixVariable Id="ProductMajorName" Value="MongoDB $(var.MongoDBMajorVersion) $(var.Flavor) SSL (64 bit)" />
+        <WixVariable Id="ProductName" Value="MongerDB $(var.MongerDBVersion) $(var.Flavor) SSL (64 bit)" />
+        <WixVariable Id="ProductMajorName" Value="MongerDB $(var.MongerDBMajorVersion) $(var.Flavor) SSL (64 bit)" />
     <?else?>
-        <WixVariable Id="ProductName" Value="MongoDB $(var.MongoDBVersion) $(var.Flavor) (64 bit)" />
-        <WixVariable Id="ProductMajorName" Value="MongoDB $(var.MongoDBMajorVersion) $(var.Flavor) (64 bit)" />
+        <WixVariable Id="ProductName" Value="MongerDB $(var.MongerDBVersion) $(var.Flavor) (64 bit)" />
+        <WixVariable Id="ProductMajorName" Value="MongerDB $(var.MongerDBMajorVersion) $(var.Flavor) (64 bit)" />
     <?endif?>
 
     <MajorUpgrade
@@ -28,7 +28,7 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
         <Directory Id="ProgramFiles64Folder">
-            <Directory Id="MongoDB" Name="MongoDB">
+            <Directory Id="MongerDB" Name="MongerDB">
                 <Directory Id="Server" Name="Server">
                     <Directory Id="INSTALLLOCATION" Name="!(wix.InstallFolder)">
                       <Directory Id="BIN" Name="bin" />
@@ -40,7 +40,7 @@
             </Directory>
         </Directory>
         <Directory Id="CommonAppDataFolder">
-            <Directory Id="MongoDBData" Name="MongoDB">
+            <Directory Id="MongerDBData" Name="MongerDB">
                 <Directory Id="ServerData" Name="Server">
                     <Directory Id="VersionData" Name="!(wix.InstallFolder)" />
                 </Directory>
@@ -50,17 +50,17 @@
 
     <Binary Id="CAIntro" SourceFile="$(var.CustomActionDll)"/>
 
-    <CustomAction Id="UpdateMongoYAML"
+    <CustomAction Id="UpdateMongerYAML"
         BinaryKey="CAIntro"
-        DllEntry="UpdateMongoYAML"
+        DllEntry="UpdateMongerYAML"
         Execute="deferred"
         Return="check"
         Impersonate="no"
         HideTarget="no" />
 
-    <CustomAction Id="UpdateMongoYAML.SetProperty" 
+    <CustomAction Id="UpdateMongerYAML.SetProperty" 
         Return="check"
-        Property="UpdateMongoYAML"
+        Property="UpdateMongerYAML"
         Value="BIN=[BIN];MONGO_DATA_PATH=[MONGO_DATA_PATH];MONGO_LOG_PATH=[MONGO_LOG_PATH]"/>
 
     <CustomAction Id="ValidateServiceLogon"
@@ -69,8 +69,8 @@
         Execute="immediate" />
 
     <InstallExecuteSequence>
-      <Custom Action="UpdateMongoYAML.SetProperty" Before="InstallFiles" />
-      <Custom Action="UpdateMongoYAML" After="InstallFiles">MONGO_SERVICE_INSTALL AND NOT REMOVE</Custom>
+      <Custom Action="UpdateMongerYAML.SetProperty" Before="InstallFiles" />
+      <Custom Action="UpdateMongerYAML" After="InstallFiles">MONGO_SERVICE_INSTALL AND NOT REMOVE</Custom>
     </InstallExecuteSequence>
   
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
@@ -79,25 +79,25 @@
     <WixVariable Id="WixUIInfoIco" Value="$(var.ProjectDir)Installer_Icon_32x32.ico" />
     <WixVariable Id="WixUIExclamationIco" Value="$(var.ProjectDir)Installer_Icon_32x32.ico" />
 
-    <Property Id="ARPPRODUCTICON" Value="MongoDBIcon" />
+    <Property Id="ARPPRODUCTICON" Value="MongerDBIcon" />
     <Property Id="ARPHELPLINK" Value="http://www.mongerdb.org/" />
     <Property Id="ARPURLINFOABOUT" Value="http://www.mongerdb.org/" />
 
-    <Icon Id="MongoDBIcon" SourceFile="$(var.ProjectDir)Installer_Icon_32x32.ico" />
-    <Binary Id="MongoDBIconBinary" SourceFile="$(var.ProjectDir)Installer_Icon_32x32.ico" />
+    <Icon Id="MongerDBIcon" SourceFile="$(var.ProjectDir)Installer_Icon_32x32.ico" />
+    <Binary Id="MongerDBIconBinary" SourceFile="$(var.ProjectDir)Installer_Icon_32x32.ico" />
 
-    <FeatureGroupRef Id="fg_MongoDBAll" />
+    <FeatureGroupRef Id="fg_MongerDBAll" />
 
-    <UIRef Id="MongoWixUI" />
+    <UIRef Id="MongerWixUI" />
     <UIRef Id="WixUI_ErrorProgressText" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
 
-    <!-- Settings for Install MongoDB as a service -->
+    <!-- Settings for Install MongerDB as a service -->
     <Property Id="MONGO_SERVICE_INSTALL" Value="0" Secure="yes" />
     <Property Id="MONGO_SERVICE_ACCOUNT_TYPE" Secure="yes" Value="ServiceLocalNetwork" />
-    <Property Id="MONGO_SERVICE_NAME" Secure="yes" Value="MongoDB" />
+    <Property Id="MONGO_SERVICE_NAME" Secure="yes" Value="MongerDB" />
     <Property Id="MONGO_SERVICE_ACCOUNT_DOMAIN" Value="." />
-    <Property Id="MONGO_SERVICE_ACCOUNT_NAME" Secure="yes" Value="MongoDB" />
+    <Property Id="MONGO_SERVICE_ACCOUNT_NAME" Secure="yes" Value="MongerDB" />
     <Property Id="MONGO_SERVICE_ACCOUNT_PASSWORD" Secure="yes" Hidden="yes"/>
 
     <Property Id="MONGO_DATA_PATH" Secure="yes" />
@@ -111,52 +111,52 @@
         The ServiceInstall element wants '.' for the domain for the local machine.
     -->
     <!-- Default the domain to grant to the user request -->
-    <CustomAction Id="MongoDB.SetGrantAccountDefault"
+    <CustomAction Id="MongerDB.SetGrantAccountDefault"
         Property="MONGO_SERVICE_ACCOUNT_DOMAIN_GRANT" Value="[MONGO_SERVICE_ACCOUNT_DOMAIN]" />
 
     <!-- Change the domain to blank if the user specified '.' i.e. local machine -->
-    <CustomAction Id="MongoDB.SetGrantAccountToBlank"
+    <CustomAction Id="MongerDB.SetGrantAccountToBlank"
         Property="MONGO_SERVICE_ACCOUNT_DOMAIN_GRANT" Value="" />
 
     <!-- Change the domain to blank if the user specified '.' i.e. local machine -->
-    <CustomAction Id="MongoDB.SetGrantAccountToNetworkAccount"
+    <CustomAction Id="MongerDB.SetGrantAccountToNetworkAccount"
         Property="MONGO_SERVICE_ACCOUNT_DOMAIN_GRANT" Value="NT AUTHORITY" />
 
     <!-- Default to the fully qualified domain\account for the service account -->
-    <CustomAction Id="MongoDB.SetServiceAccountDefault"
+    <CustomAction Id="MongerDB.SetServiceAccountDefault"
         Property="MONGO_SERVICE_FULL_ACCOUNT_NAME"
         Value="[MONGO_SERVICE_ACCOUNT_DOMAIN]\[MONGO_SERVICE_ACCOUNT_NAME]" />
 
     <!-- Default to .\account if the user left domain blank -->
-    <CustomAction Id="MongoDB.SetServiceAccountToDot"
+    <CustomAction Id="MongerDB.SetServiceAccountToDot"
         Property="MONGO_SERVICE_FULL_ACCOUNT_NAME" Value=".\[MONGO_SERVICE_ACCOUNT_NAME]" />
 
     <!-- If the user chose network service, then just set the user account to Network Service -->
-    <CustomAction Id="MongoDB.SetServiceNetworkAccount"
+    <CustomAction Id="MongerDB.SetServiceNetworkAccount"
         Property="MONGO_SERVICE_FULL_ACCOUNT_NAME" Value="NT AUTHORITY\NetworkService" />
-    <CustomAction Id="MongoDB.SetServiceNetworkAccount2"
+    <CustomAction Id="MongerDB.SetServiceNetworkAccount2"
         Property="MONGO_SERVICE_ACCOUNT_NAME" Value="NetworkService" />
 
     <InstallExecuteSequence>
-        <Custom Action="MongoDB.SetGrantAccountDefault" After="CostFinalize" />
-        <Custom Action="MongoDB.SetGrantAccountToBlank" After="CostFinalize">MONGO_SERVICE_ACCOUNT_DOMAIN = "."</Custom>
-        <Custom Action="MongoDB.SetGrantAccountToNetworkAccount" After="CostFinalize">MONGO_SERVICE_ACCOUNT_TYPE = "ServiceLocalNetwork"</Custom>
+        <Custom Action="MongerDB.SetGrantAccountDefault" After="CostFinalize" />
+        <Custom Action="MongerDB.SetGrantAccountToBlank" After="CostFinalize">MONGO_SERVICE_ACCOUNT_DOMAIN = "."</Custom>
+        <Custom Action="MongerDB.SetGrantAccountToNetworkAccount" After="CostFinalize">MONGO_SERVICE_ACCOUNT_TYPE = "ServiceLocalNetwork"</Custom>
 
-        <Custom Action="MongoDB.SetServiceAccountDefault" After="CostFinalize" />
-        <Custom Action="MongoDB.SetServiceAccountToDot" After="CostFinalize">MONGO_SERVICE_ACCOUNT_DOMAIN = ""</Custom>
-        <Custom Action="MongoDB.SetServiceNetworkAccount" After="CostFinalize">MONGO_SERVICE_ACCOUNT_TYPE = "ServiceLocalNetwork"</Custom>
-        <Custom Action="MongoDB.SetServiceNetworkAccount2" After="CostFinalize">MONGO_SERVICE_ACCOUNT_TYPE = "ServiceLocalNetwork"</Custom>
+        <Custom Action="MongerDB.SetServiceAccountDefault" After="CostFinalize" />
+        <Custom Action="MongerDB.SetServiceAccountToDot" After="CostFinalize">MONGO_SERVICE_ACCOUNT_DOMAIN = ""</Custom>
+        <Custom Action="MongerDB.SetServiceNetworkAccount" After="CostFinalize">MONGO_SERVICE_ACCOUNT_TYPE = "ServiceLocalNetwork"</Custom>
+        <Custom Action="MongerDB.SetServiceNetworkAccount2" After="CostFinalize">MONGO_SERVICE_ACCOUNT_TYPE = "ServiceLocalNetwork"</Custom>
     </InstallExecuteSequence>
 
     <Property Id="MONGO_MULTIPLE_SKU" >
-        <RegistrySearch Id="Mongo_Multiple_Sku"
+        <RegistrySearch Id="Monger_Multiple_Sku"
             Root="HKLM"
-            Key="Software\MongoDB\Server\$(var.MongoDBMajorVersion)"
+            Key="Software\MongerDB\Server\$(var.MongerDBMajorVersion)"
             Name="Edition"
             Type="raw" />
     </Property>
 
-    <Condition Message="You cannot install multiple editions for the same version of MongoDB. Already installed product '[MONGO_MULTIPLE_SKU]' conflicts with this product.">
+    <Condition Message="You cannot install multiple editions for the same version of MongerDB. Already installed product '[MONGO_MULTIPLE_SKU]' conflicts with this product.">
         Installed OR (NOT MONGO_MULTIPLE_SKU OR MONGO_MULTIPLE_SKU = "!(wix.ProductMajorName)")
     </Condition>
 

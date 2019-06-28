@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -115,7 +115,7 @@ void BSONElement::jsonStringStream(JsonStringFormat format,
             else
                 s << "{ \"$numberDecimal\" : \"";
             // Recognize again that this is not valid JSON according to RFC-4627.
-            // Also, treat -NaN and +NaN as the same thing for MongoDB.
+            // Also, treat -NaN and +NaN as the same thing for MongerDB.
             if (numberDecimal().isNaN()) {
                 s << "NaN";
             } else if (numberDecimal().isInfinite()) {

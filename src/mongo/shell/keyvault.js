@@ -1,7 +1,7 @@
 //  Class that allows the monger shell to talk to the mongerdb KeyVault.
 //  Loaded only into the enterprise module.
 
-Mongo.prototype.getKeyVault = function() {
+Monger.prototype.getKeyVault = function() {
     return new KeyVault(this);
 };
 
@@ -119,6 +119,6 @@ class ClientEncryption {
     }
 }
 
-Mongo.prototype.getClientEncryption = function() {
+Monger.prototype.getClientEncryption = function() {
     return new ClientEncryption(this);
 };

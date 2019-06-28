@@ -7,7 +7,7 @@ const test = () => {
     const ECDSA_CLIENT_CERT = 'jstests/libs/ecdsa-client.pem';
     const ECDSA_SERVER_CERT = 'jstests/libs/ecdsa-server.pem';
 
-    const CLIENT_USER = 'CN=client,OU=KernelUser,O=MongoDB,L=New York City,ST=New York,C=US';
+    const CLIENT_USER = 'CN=client,OU=KernelUser,O=MongerDB,L=New York City,ST=New York,C=US';
 
     print('Testing if platform supports usage of ECDSA certificates');
     const tlsOptions = {
@@ -20,11 +20,11 @@ const test = () => {
         tlsAllowConnectionsWithoutCertificates: "",
     };
 
-    let mongerd = MongoRunner.runMongod(tlsOptions);
+    let mongerd = MongerRunner.runMongerd(tlsOptions);
 
     // Verify we can connect
     assert.eq(0,
-              runMongoProgram('monger',
+              runMongerProgram('monger',
                               '--tls',
                               '--tlsCAFile',
                               ECDSA_CA_CERT,
@@ -49,7 +49,7 @@ const test = () => {
     // Verify we can authenticate via X509
     assert.eq(
         0,
-        runMongoProgram('monger',
+        runMongerProgram('monger',
                         '--tls',
                         '--tlsCertificateKeyFile',
                         ECDSA_CLIENT_CERT,
@@ -60,7 +60,7 @@ const test = () => {
                         '--eval',
                         '(' + command.toString().replace(/CLIENT_USER/g, CLIENT_USER) + ')();'),
         "ECDSA X509 authentication failed");
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 };
 
 const EXCLUDED_BUILDS = ['amazon', 'amzn64'];

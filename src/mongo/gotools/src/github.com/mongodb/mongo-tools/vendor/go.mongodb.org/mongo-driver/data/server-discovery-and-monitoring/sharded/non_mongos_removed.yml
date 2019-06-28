@@ -1,4 +1,4 @@
-description: "Non-Mongos server in sharded cluster"
+description: "Non-Mongers server in sharded cluster"
 
 uri: "mongerdb://a,b"
 
@@ -33,7 +33,7 @@ phases: [
 
                 "a:27017": {
 
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 }
             },

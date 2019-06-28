@@ -2,42 +2,42 @@
 
 // Defined in monger.cpp
 
-if (!Mongo.prototype) {
-    throw Error("Mongo.prototype not defined");
+if (!Monger.prototype) {
+    throw Error("Monger.prototype not defined");
 }
 
-if (!Mongo.prototype.find)
-    Mongo.prototype.find = function(ns, query, fields, limit, skip, batchSize, options) {
+if (!Monger.prototype.find)
+    Monger.prototype.find = function(ns, query, fields, limit, skip, batchSize, options) {
         throw Error("find not implemented");
     };
-if (!Mongo.prototype.insert)
-    Mongo.prototype.insert = function(ns, obj) {
+if (!Monger.prototype.insert)
+    Monger.prototype.insert = function(ns, obj) {
         throw Error("insert not implemented");
     };
-if (!Mongo.prototype.remove)
-    Mongo.prototype.remove = function(ns, pattern) {
+if (!Monger.prototype.remove)
+    Monger.prototype.remove = function(ns, pattern) {
         throw Error("remove not implemented");
     };
-if (!Mongo.prototype.update)
-    Mongo.prototype.update = function(ns, query, obj, upsert) {
+if (!Monger.prototype.update)
+    Monger.prototype.update = function(ns, query, obj, upsert) {
         throw Error("update not implemented");
     };
 
 if (typeof mongerInject == "function") {
-    mongerInject(Mongo.prototype);
+    mongerInject(Monger.prototype);
 }
 
-Mongo.prototype.setSlaveOk = function(value) {
+Monger.prototype.setSlaveOk = function(value) {
     if (value == undefined)
         value = true;
     this.slaveOk = value;
 };
 
-Mongo.prototype.getSlaveOk = function() {
+Monger.prototype.getSlaveOk = function() {
     return this.slaveOk || false;
 };
 
-Mongo.prototype.getDB = function(name) {
+Monger.prototype.getDB = function(name) {
     if ((jsTest.options().keyFile) &&
         ((typeof this.authenticated == 'undefined') || !this.authenticated)) {
         jsTest.authenticate(this);
@@ -51,7 +51,7 @@ Mongo.prototype.getDB = function(name) {
     return new DB(this, name);
 };
 
-Mongo.prototype._getDatabaseNamesFromPrivileges = function() {
+Monger.prototype._getDatabaseNamesFromPrivileges = function() {
     'use strict';
 
     const ret = this.adminCommand({connectionStatus: 1, showPrivileges: 1});
@@ -80,7 +80,7 @@ Mongo.prototype._getDatabaseNamesFromPrivileges = function() {
         .sort();
 };
 
-Mongo.prototype.getDBs = function(driverSession = this._getDefaultSession(),
+Monger.prototype.getDBs = function(driverSession = this._getDefaultSession(),
                                   filter = undefined,
                                   nameOnly = undefined,
                                   authorizedDatabases = undefined) {
@@ -146,14 +146,14 @@ Mongo.prototype.getDBs = function(driverSession = this._getDefaultSession(),
     }.call(this, driverSession, filter, nameOnly, authorizedDatabases);
 };
 
-Mongo.prototype.adminCommand = function(cmd) {
+Monger.prototype.adminCommand = function(cmd) {
     return this.getDB("admin").runCommand(cmd);
 };
 
 /**
  * Returns all log components and current verbosity values
  */
-Mongo.prototype.getLogComponents = function(driverSession = this._getDefaultSession()) {
+Monger.prototype.getLogComponents = function(driverSession = this._getDefaultSession()) {
     var cmdObj = {getParameter: 1, logComponentVerbosity: 1};
     if (driverSession._isExplicit || !jsTest.options().disableImplicitSessions) {
         cmdObj = driverSession._serverSession.injectSessionId(cmdObj);
@@ -169,7 +169,7 @@ Mongo.prototype.getLogComponents = function(driverSession = this._getDefaultSess
  * Accepts optional second argument "component",
  * string of form "storage.journaling"
  */
-Mongo.prototype.setLogLevel = function(
+Monger.prototype.setLogLevel = function(
     logLevel, component, driverSession = this._getDefaultSession()) {
     componentNames = [];
     if (typeof component === "string") {
@@ -198,13 +198,13 @@ Mongo.prototype.setLogLevel = function(
     return res;
 };
 
-Mongo.prototype.getDBNames = function() {
+Monger.prototype.getDBNames = function() {
     return this.getDBs().databases.map(function(z) {
         return z.name;
     });
 };
 
-Mongo.prototype.getCollection = function(ns) {
+Monger.prototype.getCollection = function(ns) {
     var idx = ns.indexOf(".");
     if (idx < 0)
         throw Error("need . in ns");
@@ -213,10 +213,10 @@ Mongo.prototype.getCollection = function(ns) {
     return this.getDB(db).getCollection(c);
 };
 
-Mongo.prototype.toString = function() {
+Monger.prototype.toString = function() {
     return "connection to " + this.host;
 };
-Mongo.prototype.tojson = Mongo.prototype.toString;
+Monger.prototype.tojson = Monger.prototype.toString;
 
 /**
  * Sets the read preference.
@@ -226,7 +226,7 @@ Mongo.prototype.tojson = Mongo.prototype.toString;
  * @param tagSet {Array.<Object>} optional. The list of tags to use, order matters.
  *     Note that this object only keeps a shallow copy of this array.
  */
-Mongo.prototype.setReadPref = function(mode, tagSet) {
+Monger.prototype.setReadPref = function(mode, tagSet) {
     if ((this._readPrefMode === "primary") && (typeof(tagSet) !== "undefined") &&
         (Object.keys(tagSet).length > 0)) {
         // we allow empty arrays/objects or no tagSet for compatibility reasons
@@ -236,21 +236,21 @@ Mongo.prototype.setReadPref = function(mode, tagSet) {
 };
 
 // Set readPref without validating. Exposed so we can test the server's readPref validation.
-Mongo.prototype._setReadPrefUnsafe = function(mode, tagSet) {
+Monger.prototype._setReadPrefUnsafe = function(mode, tagSet) {
     this._readPrefMode = mode;
     this._readPrefTagSet = tagSet;
 };
 
-Mongo.prototype.getReadPrefMode = function() {
+Monger.prototype.getReadPrefMode = function() {
     return this._readPrefMode;
 };
 
-Mongo.prototype.getReadPrefTagSet = function() {
+Monger.prototype.getReadPrefTagSet = function() {
     return this._readPrefTagSet;
 };
 
 // Returns a readPreference object of the type expected by mongers.
-Mongo.prototype.getReadPref = function() {
+Monger.prototype.getReadPref = function() {
     var obj = {}, mode, tagSet;
     if (typeof(mode = this.getReadPrefMode()) === "string") {
         obj.mode = mode;
@@ -271,7 +271,7 @@ Mongo.prototype.getReadPref = function() {
  *
  * @param level {string} read concern level to use. Pass null to disable read concern.
  */
-Mongo.prototype.setReadConcern = function(level) {
+Monger.prototype.setReadConcern = function(level) {
     if (!level) {
         this._readConcernLevel = undefined;
     } else if (level === "local" || level === "majority") {
@@ -284,12 +284,12 @@ Mongo.prototype.setReadConcern = function(level) {
 /**
  * Gets the read concern.
  */
-Mongo.prototype.getReadConcern = function() {
+Monger.prototype.getReadConcern = function() {
     return this._readConcernLevel;
 };
 
 connect = function(url, user, pass) {
-    if (url instanceof MongoURI) {
+    if (url instanceof MongerURI) {
         user = url.user;
         pass = url.password;
         url = url.uri;
@@ -339,10 +339,10 @@ connect = function(url, user, pass) {
     }
     chatty("connecting to: " + safeURL);
     try {
-        var m = new Mongo(url);
+        var m = new Monger(url);
     } catch (e) {
         if (url.indexOf(".mongerdb.net") != -1) {
-            print("\n\n*** It looks like this is a MongoDB Atlas cluster. Please ensure that your" +
+            print("\n\n*** It looks like this is a MongerDB Atlas cluster. Please ensure that your" +
                   " IP whitelist allows connections from your network.\n\n");
         }
 
@@ -361,14 +361,14 @@ connect = function(url, user, pass) {
     }
 
     // Implicit sessions should not be used when opening a connection. In particular, the buildInfo
-    // command is erroneously marked as requiring auth in MongoDB 3.6 and therefore fails if a
+    // command is erroneously marked as requiring auth in MongerDB 3.6 and therefore fails if a
     // logical session id is included in the request.
     const originalTestData = TestData;
     TestData = Object.merge(originalTestData, {disableImplicitSessions: true});
     try {
         // Check server version
         var serverVersion = db.version();
-        chatty("MongoDB server version: " + serverVersion);
+        chatty("MongerDB server version: " + serverVersion);
 
         var shellVersion = version();
         if (serverVersion.slice(0, 3) != shellVersion.slice(0, 3)) {
@@ -384,20 +384,20 @@ connect = function(url, user, pass) {
 /** deprecated, use writeMode below
  *
  */
-Mongo.prototype.useWriteCommands = function() {
+Monger.prototype.useWriteCommands = function() {
     return (this.writeMode() != "legacy");
 };
 
-Mongo.prototype.forceWriteMode = function(mode) {
+Monger.prototype.forceWriteMode = function(mode) {
     this._writeMode = mode;
 };
 
-Mongo.prototype.hasWriteCommands = function() {
+Monger.prototype.hasWriteCommands = function() {
     var hasWriteCommands = (this.getMinWireVersion() <= 2 && 2 <= this.getMaxWireVersion());
     return hasWriteCommands;
 };
 
-Mongo.prototype.hasExplainCommand = function() {
+Monger.prototype.hasExplainCommand = function() {
     var hasExplain = (this.getMinWireVersion() <= 3 && 3 <= this.getMaxWireVersion());
     return hasExplain;
 };
@@ -409,7 +409,7 @@ Mongo.prototype.hasExplainCommand = function() {
  * caches the result.
  */
 
-Mongo.prototype.writeMode = function() {
+Monger.prototype.writeMode = function() {
 
     if ('_writeMode' in this) {
         return this._writeMode;
@@ -434,7 +434,7 @@ Mongo.prototype.writeMode = function() {
  *
  * Currently, the C++ client will always use OP_QUERY find and OP_GET_MORE.
  */
-Mongo.prototype.useReadCommands = function() {
+Monger.prototype.useReadCommands = function() {
     return (this.readMode() === "commands");
 };
 
@@ -443,7 +443,7 @@ Mongo.prototype.useReadCommands = function() {
  * (use the find/getMore commands), "legacy" (use legacy OP_QUERY/OP_GET_MORE wire protocol reads),
  * or "compatibility" (auto-detect mode based on wire version).
  */
-Mongo.prototype.forceReadMode = function(mode) {
+Monger.prototype.forceReadMode = function(mode) {
     if (mode !== "commands" && mode !== "compatibility" && mode !== "legacy") {
         throw new Error("Mode must be one of {commands, compatibility, legacy}, but got: " + mode);
     }
@@ -455,7 +455,7 @@ Mongo.prototype.forceReadMode = function(mode) {
  * Get the readMode string (either "commands" for find/getMore commands, "legacy" for OP_QUERY find
  * and OP_GET_MORE, or "compatibility" for detecting based on wire version).
  */
-Mongo.prototype.readMode = function() {
+Monger.prototype.readMode = function() {
     // Get the readMode from the shell params if we don't have one yet.
     if (typeof _readMode === "function" && !this.hasOwnProperty("_readMode")) {
         this._readMode = _readMode();
@@ -490,7 +490,7 @@ Mongo.prototype.readMode = function() {
 // overridden at the collection level.
 //
 
-Mongo.prototype.setWriteConcern = function(wc) {
+Monger.prototype.setWriteConcern = function(wc) {
     if (wc instanceof WriteConcern) {
         this._writeConcern = wc;
     } else {
@@ -498,15 +498,15 @@ Mongo.prototype.setWriteConcern = function(wc) {
     }
 };
 
-Mongo.prototype.getWriteConcern = function() {
+Monger.prototype.getWriteConcern = function() {
     return this._writeConcern;
 };
 
-Mongo.prototype.unsetWriteConcern = function() {
+Monger.prototype.unsetWriteConcern = function() {
     delete this._writeConcern;
 };
 
-Mongo.prototype.advanceClusterTime = function(newTime) {
+Monger.prototype.advanceClusterTime = function(newTime) {
     if (!newTime.hasOwnProperty("clusterTime")) {
         throw new Error("missing clusterTime field in setClusterTime argument");
     }
@@ -521,15 +521,15 @@ Mongo.prototype.advanceClusterTime = function(newTime) {
     }
 };
 
-Mongo.prototype.resetClusterTime_forTesting = function() {
+Monger.prototype.resetClusterTime_forTesting = function() {
     delete this._clusterTime;
 };
 
-Mongo.prototype.getClusterTime = function() {
+Monger.prototype.getClusterTime = function() {
     return this._clusterTime;
 };
 
-Mongo.prototype.startSession = function startSession(options = {}) {
+Monger.prototype.startSession = function startSession(options = {}) {
     // Set retryWrites if not already set on options.
     if (!options.hasOwnProperty("retryWrites") && this.hasOwnProperty("_retryWrites")) {
         options.retryWrites = this._retryWrites;
@@ -546,8 +546,8 @@ Mongo.prototype.startSession = function startSession(options = {}) {
     return newDriverSession;
 };
 
-Mongo.prototype._getDefaultSession = function getDefaultSession() {
-    // We implicitly associate a Mongo connection object with a real session so all requests include
+Monger.prototype._getDefaultSession = function getDefaultSession() {
+    // We implicitly associate a Monger connection object with a real session so all requests include
     // a logical session id. These implicit sessions are intentionally not causally consistent. If
     // implicit sessions have been globally disabled, a dummy session is used instead of a real one.
     if (!this.hasOwnProperty("_defaultSession")) {
@@ -571,22 +571,22 @@ Mongo.prototype._getDefaultSession = function getDefaultSession() {
     return this._defaultSession;
 };
 
-Mongo.prototype._setDummyDefaultSession = function setDummyDefaultSession() {
+Monger.prototype._setDummyDefaultSession = function setDummyDefaultSession() {
     this._defaultSession = new _DummyDriverSession(this);
 };
 
-Mongo.prototype.isCausalConsistency = function isCausalConsistency() {
+Monger.prototype.isCausalConsistency = function isCausalConsistency() {
     if (!this.hasOwnProperty("_causalConsistency")) {
         this._causalConsistency = false;
     }
     return this._causalConsistency;
 };
 
-Mongo.prototype.setCausalConsistency = function setCausalConsistency(causalConsistency = true) {
+Monger.prototype.setCausalConsistency = function setCausalConsistency(causalConsistency = true) {
     this._causalConsistency = causalConsistency;
 };
 
-Mongo.prototype.waitForClusterTime = function waitForClusterTime(maxRetries = 10) {
+Monger.prototype.waitForClusterTime = function waitForClusterTime(maxRetries = 10) {
     let isFirstTime = true;
     let count = 0;
     while (count < maxRetries) {
@@ -612,7 +612,7 @@ Mongo.prototype.waitForClusterTime = function waitForClusterTime(maxRetries = 10
  * stream stage, and which apply to the aggregate overall. Returns two objects: the change
  * stream stage specification and the options for the aggregate command, respectively.
  */
-Mongo.prototype._extractChangeStreamOptions = function(options) {
+Monger.prototype._extractChangeStreamOptions = function(options) {
     options = options || {};
     assert(options instanceof Object, "'options' argument must be an object");
 
@@ -637,7 +637,7 @@ Mongo.prototype._extractChangeStreamOptions = function(options) {
     return [{$changeStream: changeStreamOptions}, options];
 };
 
-Mongo.prototype.watch = function(pipeline, options) {
+Monger.prototype.watch = function(pipeline, options) {
     pipeline = pipeline || [];
     assert(pipeline instanceof Array, "'pipeline' argument must be an array");
 

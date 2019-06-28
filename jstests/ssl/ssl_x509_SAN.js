@@ -11,7 +11,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     // Some test machines lack ipv6 so test for by starting a mongerd that needs to bind to an ipv6
     // address.
     var hasIpv6 = true;
-    const mongerdHasIpv6 = MongoRunner.runMongod({
+    const mongerdHasIpv6 = MongerRunner.runMongerd({
         sslMode: "requireSSL",
         sslPEMKeyFile: SERVER1_CERT,
         sslCAFile: CA_CERT,
@@ -22,7 +22,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
         jsTest.log("Unable to run all tests because ipv6 is not on machine, see BF-10990");
         hasIpv6 = false;
     } else {
-        MongoRunner.stopMongod(mongerdHasIpv6);
+        MongerRunner.stopMongerd(mongerdHasIpv6);
     }
 
     function authAndTest(cert_option) {
@@ -46,7 +46,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
                 args.push("--ipv6");
             }
 
-            const monger = runMongoProgram.apply(null, args);
+            const monger = runMongerProgram.apply(null, args);
 
             assert.eq(0, monger, "Connection succeeded");
         }
@@ -57,7 +57,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
             Object.extend(x509_options, {ipv6: ""});
         }
 
-        let mongerd = MongoRunner.runMongod(Object.merge(x509_options, cert_option));
+        let mongerd = MongerRunner.runMongerd(Object.merge(x509_options, cert_option));
 
         test_host("localhost", mongerd.port);
         test_host("127.0.0.1", mongerd.port);
@@ -65,7 +65,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
             test_host("::1", mongerd.port);
         }
 
-        MongoRunner.stopMongod(mongerd);
+        MongerRunner.stopMongerd(mongerd);
     }
 
     print("1. Test parsing different values in SAN DNS and IP fields. ");

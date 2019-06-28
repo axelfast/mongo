@@ -11,21 +11,21 @@
         mongers: 4,
     });
 
-    const freshMongos = st.s0.getDB(jsTestName());
-    const staleMongosSource = st.s1.getDB(jsTestName());
-    const staleMongosTarget = st.s2.getDB(jsTestName());
-    const staleMongosBoth = st.s3.getDB(jsTestName());
+    const freshMongers = st.s0.getDB(jsTestName());
+    const staleMongersSource = st.s1.getDB(jsTestName());
+    const staleMongersTarget = st.s2.getDB(jsTestName());
+    const staleMongersBoth = st.s3.getDB(jsTestName());
 
-    const sourceColl = freshMongos.getCollection("source");
-    const targetColl = freshMongos.getCollection("target");
+    const sourceColl = freshMongers.getCollection("source");
+    const targetColl = freshMongers.getCollection("target");
 
     // Enable sharding on the test DB and ensure its primary is shard 0.
     assert.commandWorked(
-        staleMongosSource.adminCommand({enableSharding: staleMongosSource.getName()}));
-    st.ensurePrimaryShard(staleMongosSource.getName(), st.rs0.getURL());
+        staleMongersSource.adminCommand({enableSharding: staleMongersSource.getName()}));
+    st.ensurePrimaryShard(staleMongersSource.getName(), st.rs0.getURL());
 
     // Shards the collection 'coll' through 'mongers'.
-    function shardCollWithMongos(mongers, coll) {
+    function shardCollWithMongers(mongers, coll) {
         coll.drop();
         // Shard the given collection on _id, split the collection into 2 chunks: [MinKey, 0) and
         // [0, MaxKey), then move the [0, MaxKey) chunk to shard 1.
@@ -36,29 +36,29 @@
             {moveChunk: coll.getFullName(), find: {_id: 1}, to: st.rs1.getURL()}));
     }
 
-    // Configures the two mongers, staleMongosSource and staleMongosTarget, to be stale on the source
+    // Configures the two mongers, staleMongersSource and staleMongersTarget, to be stale on the source
     // and target collections, respectively. For instance, if 'shardedSource' is true then
-    // staleMongosSource will believe that the source collection is unsharded.
-    function setupStaleMongos({shardedSource, shardedTarget}) {
+    // staleMongersSource will believe that the source collection is unsharded.
+    function setupStaleMongers({shardedSource, shardedTarget}) {
         // Initialize both mongers to believe the collections are unsharded.
         sourceColl.drop();
         targetColl.drop();
-        assert.commandWorked(staleMongosSource[sourceColl.getName()].insert(
+        assert.commandWorked(staleMongersSource[sourceColl.getName()].insert(
             {_id: "insert when unsharded (source)"}));
-        assert.commandWorked(staleMongosSource[targetColl.getName()].insert(
+        assert.commandWorked(staleMongersSource[targetColl.getName()].insert(
             {_id: "insert when unsharded (source)"}));
-        assert.commandWorked(staleMongosTarget[sourceColl.getName()].insert(
+        assert.commandWorked(staleMongersTarget[sourceColl.getName()].insert(
             {_id: "insert when unsharded (target)"}));
-        assert.commandWorked(staleMongosTarget[targetColl.getName()].insert(
+        assert.commandWorked(staleMongersTarget[targetColl.getName()].insert(
             {_id: "insert when unsharded (target)"}));
 
         if (shardedSource) {
-            // Shard the source collection through the staleMongosTarget mongers, keeping the
-            // staleMongosSource unaware.
-            shardCollWithMongos(staleMongosTarget, sourceColl);
+            // Shard the source collection through the staleMongersTarget mongers, keeping the
+            // staleMongersSource unaware.
+            shardCollWithMongers(staleMongersTarget, sourceColl);
         } else {
-            // Shard the collection through staleMongosSource.
-            shardCollWithMongos(staleMongosSource, sourceColl);
+            // Shard the collection through staleMongersSource.
+            shardCollWithMongers(staleMongersSource, sourceColl);
 
             // Then drop the collection, but do not recreate it yet as that will happen on the next
             // insert later in the test.
@@ -66,12 +66,12 @@
         }
 
         if (shardedTarget) {
-            // Shard the target collection through the staleMongosSource mongers, keeping the
-            // staleMongosTarget unaware.
-            shardCollWithMongos(staleMongosSource, targetColl);
+            // Shard the target collection through the staleMongersSource mongers, keeping the
+            // staleMongersTarget unaware.
+            shardCollWithMongers(staleMongersSource, targetColl);
         } else {
-            // Shard the collection through staleMongosTarget.
-            shardCollWithMongos(staleMongosTarget, targetColl);
+            // Shard the collection through staleMongersTarget.
+            shardCollWithMongers(staleMongersTarget, targetColl);
 
             // Then drop the collection, but do not recreate it yet as that will happen on the next
             // insert later in the test.
@@ -119,24 +119,24 @@
         // * Both the source and target collections are unsharded.
         // * Source collection is sharded and the target collection is unsharded.
         // * Source collection is unsharded and the target collection is sharded.
-        setupStaleMongos({shardedSource: false, shardedTarget: false});
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongosSource, staleMongosTarget]);
+        setupStaleMongers({shardedSource: false, shardedTarget: false});
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongersSource, staleMongersTarget]);
 
-        setupStaleMongos({shardedSource: true, shardedTarget: true});
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongosSource, staleMongosTarget]);
+        setupStaleMongers({shardedSource: true, shardedTarget: true});
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongersSource, staleMongersTarget]);
 
-        setupStaleMongos({shardedSource: true, shardedTarget: false});
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongosSource, staleMongosTarget]);
+        setupStaleMongers({shardedSource: true, shardedTarget: false});
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongersSource, staleMongersTarget]);
 
-        setupStaleMongos({shardedSource: false, shardedTarget: true});
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongosSource, staleMongosTarget]);
+        setupStaleMongers({shardedSource: false, shardedTarget: true});
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, [staleMongersSource, staleMongersTarget]);
 
         //
         // The remaining tests run against a mongers which is stale with respect to BOTH the source
         // and target collections.
         //
-        const sourceCollStale = staleMongosBoth.getCollection(sourceColl.getName());
-        const targetCollStale = staleMongosBoth.getCollection(targetColl.getName());
+        const sourceCollStale = staleMongersBoth.getCollection(sourceColl.getName());
+        const targetCollStale = staleMongersBoth.getCollection(targetColl.getName());
 
         //
         // 1. Both source and target collections are sharded.
@@ -149,11 +149,11 @@
         assert.commandWorked(sourceCollStale.insert({_id: 0}));
         assert.commandWorked(targetCollStale.insert({_id: 0}));
 
-        shardCollWithMongos(freshMongos, sourceColl);
-        shardCollWithMongos(freshMongos, targetColl);
+        shardCollWithMongers(freshMongers, sourceColl);
+        shardCollWithMongers(freshMongers, targetColl);
 
         // Test against the stale mongers, which believes both collections are unsharded.
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongosBoth);
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongersBoth);
 
         //
         // 2. Both source and target collections are unsharded.
@@ -163,7 +163,7 @@
 
         // The collections were both dropped through a different mongers, so the stale mongers still
         // believes that they're sharded.
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongosBoth);
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongersBoth);
 
         //
         // 3. Source collection is sharded and target collection is unsharded.
@@ -175,16 +175,16 @@
         assert.commandWorked(sourceCollStale.insert({_id: 0}));
 
         // Shard the source collection through the fresh mongers.
-        shardCollWithMongos(freshMongos, sourceColl);
+        shardCollWithMongers(freshMongers, sourceColl);
 
         // Shard the target through the stale mongers, but then drop and recreate it as unsharded
         // through a different mongers.
-        shardCollWithMongos(staleMongosBoth, targetColl);
+        shardCollWithMongers(staleMongersBoth, targetColl);
         targetColl.drop();
 
         // At this point, the stale mongers believes the source collection is unsharded and the
         // target collection is sharded when in fact the reverse is true.
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongosBoth);
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongersBoth);
 
         //
         // 4. Source collection is unsharded and target collection is sharded.
@@ -196,16 +196,16 @@
         // collection exists and is unsharded.
         assert.commandWorked(targetCollStale.insert({_id: 0}));
 
-        shardCollWithMongos(freshMongos, targetColl);
+        shardCollWithMongers(freshMongers, targetColl);
 
         // Shard the source through the stale mongers, but then drop and recreate it as unsharded
         // through a different mongers.
-        shardCollWithMongos(staleMongosBoth, sourceColl);
+        shardCollWithMongers(staleMongersBoth, sourceColl);
         sourceColl.drop();
 
         // At this point, the stale mongers believes the source collection is sharded and the target
         // collection is unsharded when in fact the reverse is true.
-        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongosBoth);
+        runMergeTest(whenMatchedMode, whenNotMatchedMode, staleMongersBoth);
     });
 
     // Runs a legacy $out against each mongers in 'mongersList'. This method will wrap 'mongersList'
@@ -229,19 +229,19 @@
     }
 
     // Legacy $out will fail if the target collection is sharded.
-    setupStaleMongos({shardedSource: false, shardedTarget: false});
-    runOutTest([staleMongosSource, staleMongosTarget]);
+    setupStaleMongers({shardedSource: false, shardedTarget: false});
+    runOutTest([staleMongersSource, staleMongersTarget]);
 
-    setupStaleMongos({shardedSource: true, shardedTarget: true});
-    assert.eq(assert.throws(() => runOutTest(staleMongosSource)).code, 28769);
-    assert.eq(assert.throws(() => runOutTest(staleMongosTarget)).code, 17017);
+    setupStaleMongers({shardedSource: true, shardedTarget: true});
+    assert.eq(assert.throws(() => runOutTest(staleMongersSource)).code, 28769);
+    assert.eq(assert.throws(() => runOutTest(staleMongersTarget)).code, 17017);
 
-    setupStaleMongos({shardedSource: true, shardedTarget: false});
-    runOutTest([staleMongosSource, staleMongosTarget]);
+    setupStaleMongers({shardedSource: true, shardedTarget: false});
+    runOutTest([staleMongersSource, staleMongersTarget]);
 
-    setupStaleMongos({shardedSource: false, shardedTarget: true});
-    assert.eq(assert.throws(() => runOutTest(staleMongosSource)).code, 28769);
-    assert.eq(assert.throws(() => runOutTest(staleMongosTarget)).code, 17017);
+    setupStaleMongers({shardedSource: false, shardedTarget: true});
+    assert.eq(assert.throws(() => runOutTest(staleMongersSource)).code, 28769);
+    assert.eq(assert.throws(() => runOutTest(staleMongersTarget)).code, 17017);
 
     st.stop();
 }());

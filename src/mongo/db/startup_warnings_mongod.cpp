@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -59,13 +59,13 @@ using std::ios_base;
 using std::string;
 
 // static
-StatusWith<std::string> StartupWarningsMongod::readTransparentHugePagesParameter(
+StatusWith<std::string> StartupWarningsMongerd::readTransparentHugePagesParameter(
     const std::string& parameter) {
     return readTransparentHugePagesParameter(parameter, kTransparentHugePagesDirectory);
 }
 
 // static
-StatusWith<std::string> StartupWarningsMongod::readTransparentHugePagesParameter(
+StatusWith<std::string> StartupWarningsMongerd::readTransparentHugePagesParameter(
     const std::string& parameter, const std::string& directory) {
     std::string opMode;
     try {
@@ -137,7 +137,7 @@ StatusWith<std::string> StartupWarningsMongod::readTransparentHugePagesParameter
     return StatusWith<std::string>(opMode);
 }
 
-void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
+void logMongerdStartupWarnings(const StorageGlobalParams& storageParams,
                               const ServerGlobalParams& serverParams,
                               ServiceContext* svcCtx) {
     logCommonStartupWarnings(serverParams);
@@ -146,7 +146,7 @@ void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
 
     if (sizeof(int*) == 4) {
         log() << startupWarningsLog;
-        log() << "** NOTE: This is a 32 bit MongoDB binary." << startupWarningsLog;
+        log() << "** NOTE: This is a 32 bit MongerDB binary." << startupWarningsLog;
         log() << "**       32 bit builds are limited to less than 2GB of data "
               << "(or less with --journal)." << startupWarningsLog;
         if (!storageParams.dur) {
@@ -160,7 +160,7 @@ void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
     if (!ProcessInfo::blockCheckSupported()) {
         log() << startupWarningsLog;
         log() << "** NOTE: your operating system version does not support the method that "
-              << "MongoDB" << startupWarningsLog;
+              << "MongerDB" << startupWarningsLog;
         log() << "**       uses to detect impending page faults." << startupWarningsLog;
         log() << "**       This may result in slower performance for certain use "
               << "cases" << startupWarningsLog;
@@ -257,7 +257,7 @@ void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
 
     // Transparent Hugepages checks
     StatusWith<std::string> transparentHugePagesEnabledResult =
-        StartupWarningsMongod::readTransparentHugePagesParameter("enabled");
+        StartupWarningsMongerd::readTransparentHugePagesParameter("enabled");
     bool shouldWarnAboutDefragAlways = false;
     if (transparentHugePagesEnabledResult.isOK()) {
         if (transparentHugePagesEnabledResult.getValue() == "always") {
@@ -278,7 +278,7 @@ void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
     }
 
     StatusWith<std::string> transparentHugePagesDefragResult =
-        StartupWarningsMongod::readTransparentHugePagesParameter("defrag");
+        StartupWarningsMongerd::readTransparentHugePagesParameter("defrag");
     if (transparentHugePagesDefragResult.isOK()) {
         if (shouldWarnAboutDefragAlways &&
             transparentHugePagesDefragResult.getValue() == "always") {

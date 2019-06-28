@@ -4,7 +4,7 @@
  * Returns true if the process is a mongers, and false otherwise.
  *
  */
-function isMongos(db) {
+function isMongers(db) {
     // Run isMaster directly on the database's session's client to bypass any session machinery.
     const res = assert.commandWorked(db.getSession().getClient().adminCommand('ismaster'));
     return 'isdbgrid' === res.msg;
@@ -14,16 +14,16 @@ function isMongos(db) {
  * Returns true if the process is a mongerd, and false otherwise.
  *
  */
-function isMongod(db) {
-    return !isMongos(db);
+function isMongerd(db) {
+    return !isMongers(db);
 }
 
 /**
  * Returns true if the process is a mongerd configsvr, and false otherwise.
  *
  */
-function isMongodConfigsvr(db) {
-    if (!isMongod(db)) {
+function isMongerdConfigsvr(db) {
+    if (!isMongerd(db)) {
         return false;
     }
     var res = db.adminCommand('getCmdLineOpts');
@@ -41,7 +41,7 @@ function getStorageEngineName(db) {
     var status = db.serverStatus();
     assert.commandWorked(status);
 
-    assert(isMongod(db), 'no storage engine is reported when connected to mongers');
+    assert(isMongerd(db), 'no storage engine is reported when connected to mongers');
     assert.neq(
         'undefined', typeof status.storageEngine, 'missing storage engine info in server status');
 
@@ -88,7 +88,7 @@ function supportsCommittedReads(db) {
     var status = db.serverStatus();
     assert.commandWorked(status);
 
-    assert(isMongod(db), 'no storage engine is reported when connected to mongers');
+    assert(isMongerd(db), 'no storage engine is reported when connected to mongers');
     assert.neq(
         'undefined', typeof status.storageEngine, 'missing storage engine info in server status');
 

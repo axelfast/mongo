@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -640,7 +640,7 @@ GenericCursor ClusterCursorManager::CursorEntry::cursorToGenericCursor(
 }
 
 std::vector<GenericCursor> ClusterCursorManager::getIdleCursors(
-    const OperationContext* opCtx, MongoProcessInterface::CurrentOpUserMode userMode) const {
+    const OperationContext* opCtx, MongerProcessInterface::CurrentOpUserMode userMode) const {
     std::vector<GenericCursor> cursors;
 
     stdx::lock_guard<stdx::mutex> lk(_mutex);
@@ -654,7 +654,7 @@ std::vector<GenericCursor> ClusterCursorManager::getIdleCursors(
             // If auth is enabled, and userMode is allUsers, check if the current user has
             // permission to see this cursor.
             if (ctxAuth->getAuthorizationManager().isAuthEnabled() &&
-                userMode == MongoProcessInterface::CurrentOpUserMode::kExcludeOthers &&
+                userMode == MongerProcessInterface::CurrentOpUserMode::kExcludeOthers &&
                 !ctxAuth->isCoauthorizedWith(entry.getAuthenticatedUsers())) {
                 continue;
             }

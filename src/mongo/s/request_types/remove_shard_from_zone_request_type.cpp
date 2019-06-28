@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,13 +41,13 @@ using std::string;
 
 namespace {
 
-const char kMongosRemoveShardFromZone[] = "removeShardFromZone";
+const char kMongersRemoveShardFromZone[] = "removeShardFromZone";
 const char kConfigsvrRemoveShardFromZone[] = "_configsvrRemoveShardFromZone";
 const char kZoneName[] = "zone";
 
 }  // unnamed namespace
 
-StatusWith<RemoveShardFromZoneRequest> RemoveShardFromZoneRequest::parseFromMongosCommand(
+StatusWith<RemoveShardFromZoneRequest> RemoveShardFromZoneRequest::parseFromMongersCommand(
     const BSONObj& cmdObj) {
     return _parseFromCommand(cmdObj, true);
 }
@@ -66,11 +66,11 @@ RemoveShardFromZoneRequest::RemoveShardFromZoneRequest(string shardName, string 
     : _shardName(std::move(shardName)), _zoneName(std::move(zoneName)) {}
 
 StatusWith<RemoveShardFromZoneRequest> RemoveShardFromZoneRequest::_parseFromCommand(
-    const BSONObj& cmdObj, bool forMongos) {
+    const BSONObj& cmdObj, bool forMongers) {
     string shardName;
     auto parseShardNameStatus = bsonExtractStringField(
         cmdObj,
-        (forMongos ? kMongosRemoveShardFromZone : kConfigsvrRemoveShardFromZone),
+        (forMongers ? kMongersRemoveShardFromZone : kConfigsvrRemoveShardFromZone),
         &shardName);
 
     if (!parseShardNameStatus.isOK()) {

@@ -42,9 +42,9 @@
             res.cursor.firstBatch.sort(nameSort));
     }
 
-    const mongerd = MongoRunner.runMongod({auth: ''});
+    const mongerd = MongerRunner.runMongerd({auth: ''});
     runTestOnConnection(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     const st = new ShardingTest({
         shards: 1,

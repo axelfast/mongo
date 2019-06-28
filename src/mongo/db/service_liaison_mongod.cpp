@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,7 +43,7 @@
 
 namespace monger {
 
-LogicalSessionIdSet ServiceLiaisonMongod::getActiveOpSessions() const {
+LogicalSessionIdSet ServiceLiaisonMongerd::getActiveOpSessions() const {
     LogicalSessionIdSet activeSessions;
 
     invariant(hasGlobalServiceContext());
@@ -68,13 +68,13 @@ LogicalSessionIdSet ServiceLiaisonMongod::getActiveOpSessions() const {
     return activeSessions;
 }
 
-LogicalSessionIdSet ServiceLiaisonMongod::getOpenCursorSessions(OperationContext* opCtx) const {
+LogicalSessionIdSet ServiceLiaisonMongerd::getOpenCursorSessions(OperationContext* opCtx) const {
     LogicalSessionIdSet cursorSessions;
     CursorManager::get(opCtx)->appendActiveSessions(&cursorSessions);
     return cursorSessions;
 }
 
-void ServiceLiaisonMongod::scheduleJob(PeriodicRunner::PeriodicJob job) {
+void ServiceLiaisonMongerd::scheduleJob(PeriodicRunner::PeriodicJob job) {
     invariant(hasGlobalServiceContext());
     auto jobAnchor = getGlobalServiceContext()->getPeriodicRunner()->makeJob(std::move(job));
     jobAnchor.start();
@@ -85,23 +85,23 @@ void ServiceLiaisonMongod::scheduleJob(PeriodicRunner::PeriodicJob job) {
     }
 }
 
-void ServiceLiaisonMongod::join() {
+void ServiceLiaisonMongerd::join() {
     auto jobs = [&] {
         stdx::lock_guard lk(_mutex);
         return std::exchange(_jobs, {});
     }();
 }
 
-Date_t ServiceLiaisonMongod::now() const {
+Date_t ServiceLiaisonMongerd::now() const {
     invariant(hasGlobalServiceContext());
     return getGlobalServiceContext()->getFastClockSource()->now();
 }
 
-ServiceContext* ServiceLiaisonMongod::_context() {
+ServiceContext* ServiceLiaisonMongerd::_context() {
     return getGlobalServiceContext();
 }
 
-std::pair<Status, int> ServiceLiaisonMongod::killCursorsWithMatchingSessions(
+std::pair<Status, int> ServiceLiaisonMongerd::killCursorsWithMatchingSessions(
     OperationContext* opCtx, const SessionKiller::Matcher& matcher) {
     return CursorManager::get(opCtx)->killCursorsWithMatchingSessions(opCtx, matcher);
 }

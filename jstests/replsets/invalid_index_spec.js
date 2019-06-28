@@ -21,7 +21,7 @@
     primaryDB.adminCommand(
         {configureFailPoint: "skipIndexCreateFieldNameValidation", mode: "alwaysOn"});
 
-    clearRawMongoProgramOutput();
+    clearRawMongerProgramOutput();
 
     // Create a V1 index with invalid spec field. Expected to replicate without error or server
     // abort.
@@ -43,7 +43,7 @@
 
     // fassert() calls std::abort(), which returns a different exit code for Windows vs. other
     // platforms.
-    const exitCode = MongoRunner.EXIT_ABRUPT;
+    const exitCode = MongerRunner.EXIT_ABRUPT;
     replTest.stop(secondary, undefined, {allowedExitCode: exitCode});
 
     // During the transition from the old code path in IndexBuilder to IndexBuildsCoordinator, we
@@ -53,10 +53,10 @@
     const msgIndexErrorType = "InvalidIndexSpecificationOption";
     const msgIndexError = "The field 'invalidOption2'";
 
-    assert((rawMongoProgramOutput().match(msgIndexBuilder) ||
-            rawMongoProgramOutput().match(msgIndexBuildsCoordinator)) &&
-               (rawMongoProgramOutput().match(msgIndexErrorType) &&
-                rawMongoProgramOutput().match(msgIndexError)),
+    assert((rawMongerProgramOutput().match(msgIndexBuilder) ||
+            rawMongerProgramOutput().match(msgIndexBuildsCoordinator)) &&
+               (rawMongerProgramOutput().match(msgIndexErrorType) &&
+                rawMongerProgramOutput().match(msgIndexError)),
            "Replication should have aborted on invalid index specification");
 
     replTest.stopSet();

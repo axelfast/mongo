@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -101,7 +101,7 @@ Value AccumulatorSum::getValue(bool toBeMerged) {
                 return Value(nonDecimalTotal.getLong());
             if (toBeMerged) {
                 // The value was too large for a NumberLong, so output a document with two values
-                // adding up to the desired total. Older MongoDB versions used to ignore signed
+                // adding up to the desired total. Older MongerDB versions used to ignore signed
                 // integer overflow and cause undefined behavior, that in practice resulted in
                 // values that would wrap around modulo 2**64. Now an older mongers with a newer
                 // mongerd will yield an error that $sum resulted in a non-numeric type, which is

@@ -28,7 +28,7 @@
     testDB[collName].drop({writeConcern: {w: "majority"}});
     assert.commandWorked(testDB.createCollection(collName, {writeConcern: {w: "majority"}}));
 
-    const session = db.getMongo().startSession({causalConsistency: false});
+    const session = db.getMonger().startSession({causalConsistency: false});
     const sessionDB = session.getDatabase(dbName);
     const sessionColl = sessionDB.getCollection(collName);
 

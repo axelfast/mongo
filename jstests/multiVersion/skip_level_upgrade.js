@@ -18,7 +18,7 @@
 
     load('jstests/libs/get_index_helpers.js');
 
-    const dbpath = MongoRunner.dataPath + 'skip_level_upgrade';
+    const dbpath = MongerRunner.dataPath + 'skip_level_upgrade';
     resetDbpath(dbpath);
 
     // We set noCleanData to true in order to preserve the data files within an iteration.
@@ -43,7 +43,7 @@
         let mongerdOptions = Object.extend({binVersion: version.binVersion}, defaultOptions);
 
         // Start up an old binary version mongerd.
-        let conn = MongoRunner.runMongod(mongerdOptions);
+        let conn = MongerRunner.runMongerd(mongerdOptions);
         let port = conn.port;
 
         assert.neq(null,
@@ -56,22 +56,22 @@
         assert.commandWorked(testDB.createCollection(version.testCollection));
         assert.writeOK(testDB[version.testCollection].insert({a: 1}));
         assert.commandWorked(testDB[version.testCollection].createIndex({a: 1}));
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
 
         // Restart the mongerd with the latest binary version on the old version's data files.
         // Should fail due to being a skip level upgrade.
         mongerdOptions = Object.extend({binVersion: 'latest'}, defaultOptions);
-        conn = MongoRunner.runMongod(mongerdOptions);
+        conn = MongerRunner.runMongerd(mongerdOptions);
         assert.eq(null, conn);
 
         // Restart the mongerd with the latest version with --repair. Should fail due to being a
         // skip level upgrade.
-        let returnCode = runMongoProgram("mongerd", "--port", port, "--repair", "--dbpath", dbpath);
+        let returnCode = runMongerProgram("mongerd", "--port", port, "--repair", "--dbpath", dbpath);
         assert.neq(returnCode, 0, "expected mongerd --repair to fail with a skip level upgrade");
 
         // Restart the mongerd in the originally specified version. Should succeed.
         mongerdOptions = Object.extend({binVersion: version.binVersion}, defaultOptions);
-        conn = MongoRunner.runMongod(mongerdOptions);
+        conn = MongerRunner.runMongerd(mongerdOptions);
 
         // Verify that the data and indices from previous iterations are still accessible.
         testDB = conn.getDB('test');
@@ -85,7 +85,7 @@
             `index from ${version.testCollection} should be available; options: ` +
                 tojson(mongerdOptions));
 
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
 
         resetDbpath(dbpath);
     }

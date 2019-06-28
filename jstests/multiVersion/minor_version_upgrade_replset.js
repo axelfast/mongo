@@ -20,13 +20,13 @@ rst.initiate();
 
 // Wait for a primary node...
 var primary = rst.getPrimary();
-var otherOpConn = new Mongo(rst.getURL());
+var otherOpConn = new Monger(rst.getURL());
 var insertNS = "test.foo";
 
 jsTest.log("Starting parallel operations during upgrade...");
 
 function findAndInsert(rsURL, coll) {
-    var coll = new Mongo(rsURL).getCollection(coll + "");
+    var coll = new Monger(rsURL).getCollection(coll + "");
     var count = 0;
 
     jsTest.log("Starting finds and inserts...");

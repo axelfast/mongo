@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -231,7 +231,7 @@ std::string CommandHelpers::parseNsFullyQualified(const BSONObj& cmdObj) {
 NamespaceString CommandHelpers::parseNsCollectionRequired(StringData dbname,
                                                           const BSONObj& cmdObj) {
     // Accepts both BSON String and Symbol for collection name per SERVER-16260
-    // TODO(kangas) remove Symbol support in MongoDB 3.0 after Ruby driver audit
+    // TODO(kangas) remove Symbol support in MongerDB 3.0 after Ruby driver audit
     BSONElement first = cmdObj.firstElement();
     const bool isUUID = (first.canonicalType() == canonicalizeBSONType(monger::BinData) &&
                          first.binDataType() == BinDataType::newUUID);

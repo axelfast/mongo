@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,7 +43,7 @@ namespace monger {
 
 /**
  * The WiredTigerSizeStorer class serves as a write buffer to durably store size information for
- * MongoDB collections. The size storer uses a separate WiredTiger table as key-value store, where
+ * MongerDB collections. The size storer uses a separate WiredTiger table as key-value store, where
  * the URI serves as key and the value is a BSON document with `numRecords` and `dataSize` fields.
  * This buffering is neccessary to allow concurrent updates of size information without causing
  * write conflicts. The dirty size information is periodically stored written back to the table,

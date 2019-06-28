@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -165,7 +165,7 @@ namespace SymbolArgument {
 // SERVER-16260
 // The Ruby driver expects server commands to accept the Symbol BSON type as a collection name.
 // This is a historical quirk that we shall support until corrected versions of the Ruby driver
-// can be distributed. Retain these tests until MongoDB 3.0
+// can be distributed. Retain these tests until MongerDB 3.0
 
 class Drop : Base {
 public:

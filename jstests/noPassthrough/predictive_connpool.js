@@ -36,7 +36,7 @@ load("jstests/libs/parallelTester.js");
         jsTestLog("Starting " + times + " connections");
         for (var i = 0; i < times; i++) {
             var thread = new Thread(function(connStr, readPref, dbName, shouldFail) {
-                var client = new Mongo(connStr);
+                var client = new Monger(connStr);
                 const ret = client.getDB(dbName).runCommand(
                     {find: "test", limit: 1, "$readPreference": {mode: readPref}});
 

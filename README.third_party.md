@@ -1,6 +1,6 @@
-# MongoDB Third Party Dependencies
+# MongerDB Third Party Dependencies
 
-MongoDB depends on third party libraries to implement some
+MongerDB depends on third party libraries to implement some
 functionality. This document describes which libraries are depended
 upon, and how. It is maintained by and for humans, and so while it is a
 best effort attempt to describe the server’s dependencies, it is subject
@@ -15,7 +15,7 @@ reflected in this list. A ticket is filed in Jira if a determination is
 made to upgrade a vendored library.
 
 Whenever a vendored library is included in released binary artifacts, is
-not authored by MongoDB, and has a license which requires reproduction,
+not authored by MongerDB, and has a license which requires reproduction,
 a notice will be included in
 `THIRD-PARTY-NOTICES`.
 
@@ -99,7 +99,7 @@ released binary artifacts.
 
 ## Libraries Imported by Tools
 
-The following Go libraries are vendored into the MongoDB tools. Their
+The following Go libraries are vendored into the MongerDB tools. Their
 license notices are included in the `THIRD-PARTY-NOTICES.gotools` file.
 
 | Name                                                                |
@@ -135,8 +135,8 @@ license notices are included in the `THIRD-PARTY-NOTICES.gotools` file.
 
 ## Dynamically Linked Libraries
 
-Sometimes MongoDB needs to load libraries provided and managed by the
-runtime environment. These libraries are not vendored into the MongoDB
+Sometimes MongerDB needs to load libraries provided and managed by the
+runtime environment. These libraries are not vendored into the MongerDB
 source directory, and are not compiled into release artifacts. Because
 they are provided by the runtime environment, the precise versions of
 these libraries cannot be known in advance. Further, these libraries may
@@ -164,12 +164,12 @@ of these libraries’ license in a file named
 1. <a id="note_vg" href="#ref_vg">^</a>
     The majority of Valgrind is licensed under the GPL, with the exception of a single
     header file which is licensed under a BSD license. This BSD licensed header is the only
-    file from Valgrind which is vendored and consumed by MongoDB.
+    file from Valgrind which is vendored and consumed by MongerDB.
 
 2. <a id="note_wt" href="#ref_wt">^</a>
-    WiredTiger is maintained by MongoDB in a separate repository. As a part of our
+    WiredTiger is maintained by MongerDB in a separate repository. As a part of our
     development process, we periodically ingest the latest snapshot of that repository.
 
 3. <a id="note_ssl" href="#ref_ssl">^</a>
-    OpenSSL is only shipped as a dependency of the MongoDB tools written in Go. The MongoDB
+    OpenSSL is only shipped as a dependency of the MongerDB tools written in Go. The MongerDB
     shell and server binaries use Windows’ cryptography APIs.

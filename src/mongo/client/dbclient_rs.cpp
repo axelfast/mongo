@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -132,7 +132,7 @@ DBClientReplicaSet::DBClientReplicaSet(const string& name,
                                        const vector<HostAndPort>& servers,
                                        StringData applicationName,
                                        double so_timeout,
-                                       MongoURI uri)
+                                       MongerURI uri)
     : _setName(name),
       _applicationName(applicationName.toString()),
       _so_timeout(so_timeout),
@@ -295,7 +295,7 @@ DBClientConnection* DBClientReplicaSet::checkMaster() {
 
     _masterHost = h;
 
-    MongoURI masterUri = _uri.cloneURIForServer(_masterHost);
+    MongerURI masterUri = _uri.cloneURIForServer(_masterHost);
 
     string errmsg;
     DBClientConnection* newConn = nullptr;
@@ -743,7 +743,7 @@ DBClientConnection* DBClientReplicaSet::selectNodeUsingTags(
     if (_authPooledSecondaryConn) {
         _authConnection(_lastSlaveOkConn.get());
     } else {
-        // Mongos pooled connections are authenticated through ShardingConnectionHook::onCreate()
+        // Mongers pooled connections are authenticated through ShardingConnectionHook::onCreate()
     }
 
     LOG(3) << "dbclient_rs selecting node " << _lastSlaveOkHost << endl;
@@ -1093,7 +1093,7 @@ void DBClientReplicaSet::resetSlaveOkConn() {
         if (_authPooledSecondaryConn) {
             logoutAll(_lastSlaveOkConn.get());
         } else {
-            // Mongos pooled connections are all authenticated with the same credentials;
+            // Mongers pooled connections are all authenticated with the same credentials;
             // so no need to logout.
         }
 

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -65,8 +65,8 @@ public:
      * Set whether the controller is enabled, and collects data.
      *
      * Returns ErrorCodes::FTDCPathNotSet if no log path has been specified for FTDC. This occurs
-     * in MongoS in some situations since MongoS is not required to have a storage directory like
-     * MongoD does.
+     * in MongerS in some situations since MongerS is not required to have a storage directory like
+     * MongerD does.
      */
     Status setEnabled(bool enabled);
 

@@ -3,7 +3,7 @@
 # mongerd - Startup script for mongerd
 
 # chkconfig: 35 85 15
-# description: Mongo is a scalable, document-oriented database.
+# description: Monger is a scalable, document-oriented database.
 # processname: mongerd
 # config: /etc/mongerd.conf
 

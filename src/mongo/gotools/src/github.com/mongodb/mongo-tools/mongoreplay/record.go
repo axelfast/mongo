@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -35,7 +35,7 @@ func (e ErrPacketsDropped) Error() string {
 
 type packetHandlerContext struct {
 	packetHandler *PacketHandler
-	mongerOpStream *MongoOpStream
+	mongerOpStream *MongerOpStream
 	pcapHandle    *pcap.Handle
 }
 
@@ -102,7 +102,7 @@ func getOpstream(cfg OpStreamSettings) (*packetHandlerContext, error) {
 	h.Verbose = userInfoLogger.isInVerbosity(DebugLow)
 
 	toolDebugLogger.Logvf(Info, "Created packet buffer size %d", cfg.PacketBufSize)
-	m := NewMongoOpStream(cfg.PacketBufSize)
+	m := NewMongerOpStream(cfg.PacketBufSize)
 	return &packetHandlerContext{h, m, pcapHandle}, nil
 }
 

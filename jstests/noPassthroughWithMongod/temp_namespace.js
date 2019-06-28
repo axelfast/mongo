@@ -5,7 +5,7 @@
 
 testname = 'temp_namespace_sw';
 
-var conn = MongoRunner.runMongod();
+var conn = MongerRunner.runMongerd();
 d = conn.getDB('test');
 assert.commandWorked(d.runCommand({
     applyOps:
@@ -34,9 +34,9 @@ function countCollectionNames(theDB, regex) {
 
 assert.eq(countCollectionNames(d, /temp\d$/), 2);
 assert.eq(countCollectionNames(d, /keep\d$/), 4);
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
-conn = MongoRunner.runMongod({
+conn = MongerRunner.runMongerd({
     restart: true,
     cleanData: false,
     dbpath: conn.dbpath,
@@ -44,4 +44,4 @@ conn = MongoRunner.runMongod({
 d = conn.getDB('test');
 assert.eq(countCollectionNames(d, /temp\d$/), 0);
 assert.eq(countCollectionNames(d, /keep\d$/), 4);
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);

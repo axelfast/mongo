@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -78,7 +78,7 @@ public:
 
     static const std::vector<HostAndPort> basicSeeds;
     static const std::set<HostAndPort> basicSeedsSet;
-    static const MongoURI basicUri;
+    static const MongerURI basicUri;
 
 protected:
     ReplicaSetChangeNotifier _notifier;

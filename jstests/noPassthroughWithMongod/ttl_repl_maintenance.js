@@ -9,7 +9,7 @@ var runner;
 var conn;
 
 var primeSystemReplset = function() {
-    conn = MongoRunner.runMongod();
+    conn = MongerRunner.runMongerd();
     var localDB = conn.getDB("local");
     localDB.system.replset.insert({x: 1});
 
@@ -19,8 +19,8 @@ var primeSystemReplset = function() {
 };
 
 var restartWithConfig = function() {
-    MongoRunner.stopMongod(conn);
-    conn = MongoRunner.runMongod({restart: true, cleanData: false, dbpath: conn.dbpath});
+    MongerRunner.stopMongerd(conn);
+    conn = MongerRunner.runMongerd({restart: true, cleanData: false, dbpath: conn.dbpath});
     testDB = conn.getDB("test");
     var n = 100;
     for (var i = 0; i < n; i++) {
@@ -37,15 +37,15 @@ var restartWithoutConfig = function() {
     var localDB = conn.getDB("local");
     assert.writeOK(localDB.system.replset.remove({}));
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
-    conn = MongoRunner.runMongod({restart: true, cleanData: false, dbpath: conn.dbpath});
+    conn = MongerRunner.runMongerd({restart: true, cleanData: false, dbpath: conn.dbpath});
 
     assert.soon(function() {
         return conn.getDB("test").foo.count() < 100;
     }, "never deleted", 75000);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 };
 
 print("Create a TTL collection and put doc in local.system.replset");

@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     const admin = conn.getDB('admin');
 
     admin.createUser({user: 'andy', pwd: 'a', roles: jsTest.adminUserRoles});
@@ -20,5 +20,5 @@
 
     // Invalid mechanisms shouldn't lead to authentication, but also shouldn't crash.
     assert(!admin.auth({mechanism: 'this-mechanism-is-fake', user: 'andy', pwd: 'a'}));
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -937,7 +937,7 @@ Status _syncRollback(OperationContext* opCtx,
 
     // Find the UUID of the transactions collection. An OperationContext is required because the
     // UUID is not known at compile time, so the SessionCatalog needs to load the collection.
-    how.transactionTableUUID = MongoDSessionCatalog::getTransactionTableUUID(opCtx);
+    how.transactionTableUUID = MongerDSessionCatalog::getTransactionTableUUID(opCtx);
 
     log() << "Finding the Common Point";
     try {
@@ -1569,7 +1569,7 @@ void rollback_internal::syncFixUp(OperationContext* opCtx,
 
     // If necessary, clear the memory of existing sessions.
     if (fixUpInfo.refetchTransactionDocs) {
-        MongoDSessionCatalog::invalidateAllSessions(opCtx);
+        MongerDSessionCatalog::invalidateAllSessions(opCtx);
     }
 
     if (auto validator = LogicalTimeValidator::get(opCtx)) {

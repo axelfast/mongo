@@ -5,7 +5,7 @@
 (function() {
     "strict";
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     const testDB = conn.getDB("test");
 
     const coll = testDB.write_conflict_wildcard;
@@ -35,5 +35,5 @@
 
     assert.commandWorked(
         testDB.adminCommand({configureFailPoint: 'WTWriteConflictExceptionForReads', mode: "off"}));
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

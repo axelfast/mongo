@@ -21,11 +21,11 @@
     }
 
     function testShutdownLogging(launcher, crashFn, matchFn, expectedExitCode) {
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
         var conn = launcher.start({});
 
         function checkOutput() {
-            var logContents = rawMongoProgramOutput();
+            var logContents = rawMongerProgramOutput();
             function printLog() {
                 // We can't just return a string because it will be well over the max
                 // line length.
@@ -51,7 +51,7 @@
         const SIGABRT = 6;
         testShutdownLogging(launcher, function(conn) {
             conn.getDB('admin').shutdownServer();
-        }, makeRegExMatchFn(/shutdown command received/), MongoRunner.EXIT_CLEAN);
+        }, makeRegExMatchFn(/shutdown command received/), MongerRunner.EXIT_CLEAN);
 
         testShutdownLogging(launcher,
                             makeShutdownByCrashFn('fault'),
@@ -74,21 +74,21 @@
         return;
     }
 
-    (function testMongod() {
+    (function testMongerd() {
         print("********************\nTesting exit logging in mongerd\n********************");
 
         runAllTests({
             start: function(opts) {
                 var actualOpts = {nojournal: ""};
                 Object.extend(actualOpts, opts);
-                return MongoRunner.runMongod(actualOpts);
+                return MongerRunner.runMongerd(actualOpts);
             },
 
-            stop: MongoRunner.stopMongod
+            stop: MongerRunner.stopMongerd
         });
     }());
 
-    (function testMongos() {
+    (function testMongers() {
         print("********************\nTesting exit logging in mongers\n********************");
 
         var st = new ShardingTest({shards: 1});
@@ -96,10 +96,10 @@
             start: function(opts) {
                 var actualOpts = {configdb: st._configDB};
                 Object.extend(actualOpts, opts);
-                return MongoRunner.runMongos(actualOpts);
+                return MongerRunner.runMongers(actualOpts);
             },
 
-            stop: MongoRunner.stopMongos
+            stop: MongerRunner.stopMongers
         };
 
         runAllTests(mongersLauncher);

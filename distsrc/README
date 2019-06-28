@@ -1,6 +1,6 @@
-MongoDB README
+MongerDB README
 
-Welcome to MongoDB!
+Welcome to MongerDB!
 
 COMPONENTS
 
@@ -19,7 +19,7 @@ UTILITIES
   bsondump          - Convert BSON files into human-readable formats.
   mongerreplay       - Traffic capture and replay tool.
   mongertop          - Track time spent reading and writing data.
-  install_compass   - Installs MongoDB Compass for your platform.
+  install_compass   - Installs MongerDB Compass for your platform.
 
 BUILDING
 
@@ -42,11 +42,11 @@ RUNNING
 
 INSTALLING COMPASS
 
-  You can install compass using the install_compass script packaged with MongoDB:
+  You can install compass using the install_compass script packaged with MongerDB:
 
     $ ./install_compass
 
-  This will download the appropriate MongoDB Compass package for your platform
+  This will download the appropriate MongerDB Compass package for your platform
   and install it.
 
 DRIVERS
@@ -76,11 +76,11 @@ MAIL LISTS
 
   https://groups.google.com/forum/#!forum/mongerdb-user
 
-    A forum for technical questions about using MongoDB.
+    A forum for technical questions about using MongerDB.
 
   https://groups.google.com/forum/#!forum/mongerdb-dev
 
-    A forum for technical questions about building and developing MongoDB.
+    A forum for technical questions about building and developing MongerDB.
 
 LEARN MONGODB
 
@@ -88,7 +88,7 @@ LEARN MONGODB
 
 LICENSE
 
-  MongoDB is free and open-source. Versions released prior to October 16,
+  MongerDB is free and open-source. Versions released prior to October 16,
   2018 are published under the AGPL. All versions released after October
   16, 2018, including patch fixes for prior versions, are published under
   the Server Side Public License (SSPL) v1. See individual files for

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -378,7 +378,7 @@ void invokeWithSessionCheckedOut(OperationContext* opCtx,
     // This constructor will check out the session. It handles the appropriate state management
     // for both multi-statement transactions and retryable writes. Currently, only requests with
     // a transaction number will check out the session.
-    MongoDOperationContextSession sessionTxnState(opCtx);
+    MongerDOperationContextSession sessionTxnState(opCtx);
     auto txnParticipant = TransactionParticipant::get(opCtx);
 
     if (!opCtx->getClient()->isInDirectClient()) {
@@ -409,7 +409,7 @@ void invokeWithSessionCheckedOut(OperationContext* opCtx,
 
     try {
         invocation->run(opCtx, replyBuilder);
-    } catch (const ExceptionFor<ErrorCodes::CommandOnShardedViewNotSupportedOnMongod>&) {
+    } catch (const ExceptionFor<ErrorCodes::CommandOnShardedViewNotSupportedOnMongerd>&) {
         // Exceptions are used to resolve views in a sharded cluster, so they should be handled
         // specially to avoid unnecessary aborts.
 

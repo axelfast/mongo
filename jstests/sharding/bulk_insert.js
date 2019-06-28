@@ -6,7 +6,7 @@
     var st = new ShardingTest({shards: 2, mongers: 2, other: {shardAsReplicaSet: false}});
 
     var mongers = st.s;
-    var staleMongos = st.s1;
+    var staleMongers = st.s1;
     var admin = mongers.getDB("admin");
 
     var collSh = mongers.getCollection(jsTestName() + ".collSharded");
@@ -239,7 +239,7 @@
 
     var inserts = [{ukey: 1}, {ukey: -1}];
 
-    var staleCollSh = staleMongos.getCollection(collSh + "");
+    var staleCollSh = staleMongers.getCollection(collSh + "");
     assert.eq(null, staleCollSh.findOne(), 'Collections should be empty');
 
     assert.commandWorked(admin.runCommand(
@@ -266,10 +266,10 @@
         ];
     })();
 
-    var staleMongosWithLegacyWrites = new Mongo(staleMongos.name);
-    staleMongosWithLegacyWrites.forceWriteMode('legacy');
+    var staleMongersWithLegacyWrites = new Monger(staleMongers.name);
+    staleMongersWithLegacyWrites.forceWriteMode('legacy');
 
-    staleCollSh = staleMongos.getCollection(collSh + "");
+    staleCollSh = staleMongers.getCollection(collSh + "");
     assert.eq(null, staleCollSh.findOne(), 'Collections should be empty');
 
     assert.commandWorked(admin.runCommand(

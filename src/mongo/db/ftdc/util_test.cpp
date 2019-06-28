@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -47,8 +47,8 @@ TEST(FTDCUtilTest, TestRoundTime) {
     checkTime(14, 13, 7);
 }
 
-// Validate the MongoS FTDC path is computed correctly from a log file path.
-TEST(FTDCUtilTest, TestMongoSPath) {
+// Validate the MongerS FTDC path is computed correctly from a log file path.
+TEST(FTDCUtilTest, TestMongerSPath) {
 
     std::vector<std::pair<std::string, std::string>> testCases = {
         {"/var/log/mongers.log", "/var/log/mongers.diagnostic.data"},
@@ -66,7 +66,7 @@ TEST(FTDCUtilTest, TestMongoSPath) {
     };
 
     for (const auto& p : testCases) {
-        ASSERT_EQUALS(FTDCUtil::getMongoSPath(p.first), p.second);
+        ASSERT_EQUALS(FTDCUtil::getMongerSPath(p.first), p.second);
     }
 }
 

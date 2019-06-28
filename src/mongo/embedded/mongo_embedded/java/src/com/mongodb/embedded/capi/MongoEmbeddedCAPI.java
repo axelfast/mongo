@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,61 +38,61 @@ import static java.lang.String.format;
 /**
  * The embedded mongerdb CAPI.
  */
-public final class MongoEmbeddedCAPI {
+public final class MongerEmbeddedCAPI {
     private static final String NATIVE_LIBRARY_NAME = "monger_embedded";
 
     /**
      * Initializes the embedded mongerdb library, required before any other call.
      *
-     * <p>Cannot be called multiple times without first calling {@link MongoEmbeddedLibrary#close()}.</p>
+     * <p>Cannot be called multiple times without first calling {@link MongerEmbeddedLibrary#close()}.</p>
      *
      * @param yamlConfig the yaml configuration for the embedded mongerdb capi library
-     * @return the initialized MongoEmbedded.
+     * @return the initialized MongerEmbedded.
      */
-    public static MongoEmbeddedLibrary create(final String yamlConfig) {
+    public static MongerEmbeddedLibrary create(final String yamlConfig) {
         return create(yamlConfig, LogLevel.LOGGER);
     }
 
     /**
      * Initializes the embedded mongerdb library, required before any other call.
      *
-     * <p>Cannot be called multiple times without first calling {@link MongoEmbeddedLibrary#close()}.</p>
+     * <p>Cannot be called multiple times without first calling {@link MongerEmbeddedLibrary#close()}.</p>
      *
      * @param yamlConfig the yaml configuration for the embedded mongerdb capi library
      * @param logLevel   the logging level
-     * @return the initialized MongoEmbedded.
+     * @return the initialized MongerEmbedded.
      */
-    public static MongoEmbeddedLibrary create(final String yamlConfig, final LogLevel logLevel) {
+    public static MongerEmbeddedLibrary create(final String yamlConfig, final LogLevel logLevel) {
         return create(yamlConfig, logLevel, null);
     }
 
     /**
      * Initializes the embedded mongerdb library, required before any other call.
      *
-     * <p>Cannot be called multiple times without first calling {@link MongoEmbeddedLibrary#close()}.</p>
+     * <p>Cannot be called multiple times without first calling {@link MongerEmbeddedLibrary#close()}.</p>
      *
      * @param yamlConfig the yaml configuration for the embedded mongerdb capi library
      * @param libraryPath the path to the embedded mongerdb capi library.
      * @param logLevel   the logging level
-     * @return the initialized MongoEmbedded.
+     * @return the initialized MongerEmbedded.
      */
-    public static  MongoEmbeddedLibrary create(final String yamlConfig, final LogLevel logLevel, final String libraryPath) {
+    public static  MongerEmbeddedLibrary create(final String yamlConfig, final LogLevel logLevel, final String libraryPath) {
         if (libraryPath != null) {
             NativeLibrary.addSearchPath(NATIVE_LIBRARY_NAME, libraryPath);
         }
         try {
             new CAPI();
         } catch (Throwable t) {
-            throw new MongoEmbeddedCAPIException(
-                    format("Unable to load the Mongo Embedded Library.%n"
-                         + "Please either: Set the libraryPath when calling MongoEmbeddedCAPI.create or %n"
+            throw new MongerEmbeddedCAPIException(
+                    format("Unable to load the Monger Embedded Library.%n"
+                         + "Please either: Set the libraryPath when calling MongerEmbeddedCAPI.create or %n"
                          + "Ensure the library is set on the jna.library.path or the java.library.path system property."
                     ), t
             );
         }
-        return new MongoEmbeddedLibraryImpl(yamlConfig != null ? yamlConfig : "", logLevel != null ? logLevel : LogLevel.LOGGER);
+        return new MongerEmbeddedLibraryImpl(yamlConfig != null ? yamlConfig : "", logLevel != null ? logLevel : LogLevel.LOGGER);
     }
 
-    private MongoEmbeddedCAPI() {
+    private MongerEmbeddedCAPI() {
     }
 }

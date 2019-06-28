@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -91,7 +91,7 @@ struct WiredTigerItem : public WT_ITEM {
 };
 
 /**
- * Returns a WT_EVENT_HANDLER with MongoDB's default handlers.
+ * Returns a WT_EVENT_HANDLER with MongerDB's default handlers.
  * The default handlers just log so it is recommended that you consider calling them even if
  * you are capturing the output.
  *

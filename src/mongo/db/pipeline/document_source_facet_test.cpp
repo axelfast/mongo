@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -199,7 +199,7 @@ TEST_F(DocumentSourceFacetTest, ShouldAcceptLegalSpecification) {
 
 TEST_F(DocumentSourceFacetTest, ShouldRejectConflictingHostTypeRequirementsWithinSinglePipeline) {
     auto ctx = getExpCtx();
-    ctx->inMongos = true;
+    ctx->inMongers = true;
 
     auto spec = fromjson(
         "{$facet: {badPipe: [{$_internalSplitPipeline: {mergeType: 'anyShard'}}, "
@@ -212,7 +212,7 @@ TEST_F(DocumentSourceFacetTest, ShouldRejectConflictingHostTypeRequirementsWithi
 
 TEST_F(DocumentSourceFacetTest, ShouldRejectConflictingHostTypeRequirementsAcrossPipelines) {
     auto ctx = getExpCtx();
-    ctx->inMongos = true;
+    ctx->inMongers = true;
 
     auto spec = fromjson(
         "{$facet: {shardPipe: [{$_internalSplitPipeline: {mergeType: 'anyShard'}}], mongersPipe: "
@@ -542,10 +542,10 @@ TEST_F(DocumentSourceFacetTest, ShouldOptimizeInnerPipelines) {
 }
 
 /**
- * An implementation of the MongoProcessInterface that is okay with changing the OperationContext,
+ * An implementation of the MongerProcessInterface that is okay with changing the OperationContext,
  * but has no other parts of the interface implemented.
  */
-class StubMongoProcessOkWithOpCtxChanges : public StubMongoProcessInterface {
+class StubMongerProcessOkWithOpCtxChanges : public StubMongerProcessInterface {
 public:
     void setOperationContext(OperationContext* opCtx) final {
         return;
@@ -554,9 +554,9 @@ public:
 
 TEST_F(DocumentSourceFacetTest, ShouldPropagateDetachingAndReattachingOfOpCtx) {
     auto ctx = getExpCtx();
-    // We're going to be changing the OperationContext, so we need to use a MongoProcessInterface
+    // We're going to be changing the OperationContext, so we need to use a MongerProcessInterface
     // that won't throw when we do so.
-    ctx->mongerProcessInterface = std::make_unique<StubMongoProcessOkWithOpCtxChanges>();
+    ctx->mongerProcessInterface = std::make_unique<StubMongerProcessOkWithOpCtxChanges>();
 
     auto firstDummy = DocumentSourcePassthrough::create();
     auto firstPipeline = unittest::assertGet(Pipeline::createFacetPipeline({firstDummy}, ctx));

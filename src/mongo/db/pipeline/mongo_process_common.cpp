@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,7 +45,7 @@
 
 namespace monger {
 
-std::vector<BSONObj> MongoProcessCommon::getCurrentOps(
+std::vector<BSONObj> MongerProcessCommon::getCurrentOps(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     CurrentOpConnectionsMode connMode,
     CurrentOpSessionsMode sessionMode,
@@ -113,7 +113,7 @@ std::vector<BSONObj> MongoProcessCommon::getCurrentOps(
     return ops;
 }
 
-std::vector<FieldPath> MongoProcessCommon::collectDocumentKeyFieldsActingAsRouter(
+std::vector<FieldPath> MongerProcessCommon::collectDocumentKeyFieldsActingAsRouter(
     OperationContext* opCtx, const NamespaceString& nss) const {
     if (auto chunkManager =
             uassertStatusOK(Grid::get(opCtx)->catalogCache()->getCollectionRoutingInfo(opCtx, nss))
@@ -125,7 +125,7 @@ std::vector<FieldPath> MongoProcessCommon::collectDocumentKeyFieldsActingAsRoute
     return {"_id"};
 }
 
-bool MongoProcessCommon::keyPatternNamesExactPaths(const BSONObj& keyPattern,
+bool MongerProcessCommon::keyPatternNamesExactPaths(const BSONObj& keyPattern,
                                                    const std::set<FieldPath>& uniqueKeyPaths) {
     size_t nFieldsMatched = 0;
     for (auto&& elem : keyPattern) {
@@ -140,7 +140,7 @@ bool MongoProcessCommon::keyPatternNamesExactPaths(const BSONObj& keyPattern,
     return nFieldsMatched == uniqueKeyPaths.size();
 }
 
-boost::optional<ChunkVersion> MongoProcessCommon::refreshAndGetCollectionVersion(
+boost::optional<ChunkVersion> MongerProcessCommon::refreshAndGetCollectionVersion(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, const NamespaceString& nss) const {
     const bool forceRefreshFromThisThread = false;
     auto routingInfo = uassertStatusOK(
@@ -153,7 +153,7 @@ boost::optional<ChunkVersion> MongoProcessCommon::refreshAndGetCollectionVersion
     return boost::none;
 }
 
-std::vector<FieldPath> MongoProcessCommon::_shardKeyToDocumentKeyFields(
+std::vector<FieldPath> MongerProcessCommon::_shardKeyToDocumentKeyFields(
     const std::vector<std::unique_ptr<FieldRef>>& keyPatternFields) const {
     std::vector<FieldPath> result;
     bool gotId = false;
@@ -167,7 +167,7 @@ std::vector<FieldPath> MongoProcessCommon::_shardKeyToDocumentKeyFields(
     return result;
 }
 
-std::set<FieldPath> MongoProcessCommon::_convertToFieldPaths(
+std::set<FieldPath> MongerProcessCommon::_convertToFieldPaths(
     const std::vector<std::string>& fields) const {
     std::set<FieldPath> fieldPaths;
 

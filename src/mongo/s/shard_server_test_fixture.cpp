@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -60,7 +60,7 @@ std::shared_ptr<RemoteCommandTargeterMock> ShardServerTestFixture::configTargete
 }
 
 void ShardServerTestFixture::setUp() {
-    ShardingMongodTestFixture::setUp();
+    ShardingMongerdTestFixture::setUp();
 
 
     replicationCoordinator()->alwaysAllowWrites(true);
@@ -76,7 +76,7 @@ void ShardServerTestFixture::setUp() {
                                 std::make_unique<ConfigServerCatalogCacheLoader>()));
 
     uassertStatusOK(
-        initializeGlobalShardingStateForMongodForTest(ConnectionString(kConfigHostAndPort)));
+        initializeGlobalShardingStateForMongerdForTest(ConnectionString(kConfigHostAndPort)));
 
     // Set the findHost() return value on the mock targeter so that later calls to the
     // config targeter's findHost() return the appropriate value.
@@ -86,7 +86,7 @@ void ShardServerTestFixture::setUp() {
 void ShardServerTestFixture::tearDown() {
     CatalogCacheLoader::clearForTests(getServiceContext());
 
-    ShardingMongodTestFixture::tearDown();
+    ShardingMongerdTestFixture::tearDown();
 }
 
 std::unique_ptr<DistLockCatalog> ShardServerTestFixture::makeDistLockCatalog() {

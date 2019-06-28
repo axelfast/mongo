@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -76,8 +76,8 @@ func TestValidOplogLimitChecking(t *testing.T) {
 
 	testtype.SkipUnlessTestType(t, testtype.UnitTestType)
 
-	Convey("With a MongoRestore instance with oplogLimit of 5:0", t, func() {
-		mr := &MongoRestore{
+	Convey("With a MongerRestore instance with oplogLimit of 5:0", t, func() {
+		mr := &MongerRestore{
 			oplogLimit: primitive.Timestamp{T: 5, I: 0},
 		}
 
@@ -106,8 +106,8 @@ func TestValidOplogLimitChecking(t *testing.T) {
 		})
 	})
 
-	Convey("With a MongoRestore instance with no oplogLimit", t, func() {
-		mr := &MongoRestore{}
+	Convey("With a MongerRestore instance with no oplogLimit", t, func() {
+		mr := &MongerRestore{}
 
 		Convey("an oplog entry with ts=1000:0 should be valid", func() {
 			So(mr.TimestampBeforeLimit(primitive.Timestamp{T: 1000, I: 0}), ShouldBeTrue)
@@ -137,7 +137,7 @@ func TestOplogRestore(t *testing.T) {
 		shouldPreserveUUID = true
 	}
 
-	Convey("With a test MongoRestore", t, func() {
+	Convey("With a test MongerRestore", t, func() {
 		args := []string{
 			DirectoryOption, "testdata/oplogdump",
 			OplogReplayOption,
@@ -174,7 +174,7 @@ func TestOplogRestoreTools2002(t *testing.T) {
 		t.Fatalf("No server available")
 	}
 
-	Convey("With a test MongoRestore", t, func() {
+	Convey("With a test MongerRestore", t, func() {
 		args := []string{
 			DirectoryOption, "testdata/tools-2002",
 			OplogReplayOption,

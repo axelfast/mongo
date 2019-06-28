@@ -90,7 +90,7 @@
         primary.adminCommand({configureFailPoint: "WTPrintPrepareConflictLog", mode: "alwaysOn"}));
 
     const joinReadThread = startParallelShell(() => {
-        db.getMongo().setSlaveOk(true);
+        db.getMonger().setSlaveOk(true);
         oldPrimaryDB = db.getSiblingDB(TestData.dbName);
 
         assert.commandFailedWithCode(oldPrimaryDB.runCommand({

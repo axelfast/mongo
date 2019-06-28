@@ -18,7 +18,7 @@ jsTest.log("Starting first set of mongerses in parallel...");
 
 var mongerses = [];
 for (var i = 0; i < 3; i++) {
-    var mongers = MongoRunner.runMongos(
+    var mongers = MongerRunner.runMongers(
         {binVersion: "latest", configdb: configRS.getURL(), waitForConnect: false});
     mongerses.push(mongers);
 }
@@ -28,14 +28,14 @@ for (var i = 0; i < 3; i++) {
 var mongersConn = null;
 assert.soon(function() {
     try {
-        mongersConn = new Mongo(mongerses[0].host);
+        mongersConn = new Monger(mongerses[0].host);
         return true;
     } catch (e) {
         print("Waiting for connect...");
         printjson(e);
         return false;
     }
-}, "Mongos " + mongerses[0].host + " did not start.", 5 * 60 * 1000);
+}, "Mongers " + mongerses[0].host + " did not start.", 5 * 60 * 1000);
 
 var version = mongersConn.getCollection("config.version").findOne();
 
@@ -46,16 +46,16 @@ var version = mongersConn.getCollection("config.version").findOne();
 jsTest.log("Starting second set of mongerses...");
 
 for (var i = 0; i < 3; i++) {
-    var mongers = MongoRunner.runMongos(
+    var mongers = MongerRunner.runMongers(
         {binVersion: "latest", configdb: configRS.getURL(), waitForConnect: false});
     mongerses.push(mongers);
 }
 
-var connectToMongos = function(host) {
+var connectToMongers = function(host) {
     // Eventually connect to a host
     assert.soon(function() {
         try {
-            mongersConn = new Mongo(host);
+            mongersConn = new Monger(host);
             return true;
         } catch (e) {
             print("Waiting for connect to " + host);
@@ -66,12 +66,12 @@ var connectToMongos = function(host) {
 };
 
 for (var i = 0; i < mongerses.length; i++) {
-    connectToMongos(mongerses[i].host);
+    connectToMongers(mongerses[i].host);
 }
 
 // Shut down our mongerses now that we've tested them
 for (var i = 0; i < mongerses.length; i++) {
-    MongoRunner.stopMongos(mongerses[i]);
+    MongerRunner.stopMongers(mongerses[i]);
 }
 
 //

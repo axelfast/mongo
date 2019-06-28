@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -66,7 +66,7 @@ TEST(TransportLayerASIO, HTTPRequestGetsHTTPError) {
     std::string httpReq = str::stream() << "GET /\r\n"
                                            "Host: "
                                         << server << "\r\n"
-                                                     "User-Agent: MongoDB Integration test\r\n"
+                                                     "User-Agent: MongerDB Integration test\r\n"
                                                      "Accept: */*";
     asio::write(socket, asio::buffer(httpReq.data(), httpReq.size()));
 

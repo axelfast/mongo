@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -140,7 +140,7 @@ func WithConnString(fn func(connstring.ConnString) connstring.ConnString) Option
 			connOpts = append(connOpts, connection.WithTLSConfig(func(*connection.TLSConfig) *connection.TLSConfig { return tlsConfig }))
 		}
 
-		if cs.Username != "" || cs.AuthMechanism == auth.MongoDBX509 || cs.AuthMechanism == auth.GSSAPI {
+		if cs.Username != "" || cs.AuthMechanism == auth.MongerDBX509 || cs.AuthMechanism == auth.GSSAPI {
 			cred := &auth.Cred{
 				Source:      "admin",
 				Username:    cs.Username,
@@ -153,7 +153,7 @@ func WithConnString(fn func(connstring.ConnString) connstring.ConnString) Option
 				cred.Source = cs.AuthSource
 			} else {
 				switch cs.AuthMechanism {
-				case auth.MongoDBX509:
+				case auth.MongerDBX509:
 					if cred.Username == "" {
 						cred.Username = x509Username
 					}

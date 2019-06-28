@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -286,10 +286,10 @@ StatusWith<stdx::unordered_set<NamespaceString>> ViewCatalog::_validatePipeline(
         new ExpressionContext(opCtx,
                               request,
                               CollatorInterface::cloneCollator(viewDef.defaultCollator()),
-                              // We can use a stub MongoProcessInterface because we are only parsing
+                              // We can use a stub MongerProcessInterface because we are only parsing
                               // the Pipeline for validation here. We won't do anything with the
                               // pipeline that will require a real implementation.
-                              std::make_shared<StubMongoProcessInterface>(),
+                              std::make_shared<StubMongerProcessInterface>(),
                               std::move(resolvedNamespaces),
                               boost::none);
 

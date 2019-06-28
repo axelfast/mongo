@@ -16,7 +16,7 @@ selector:
   - jstests/core/txns/downgrade_fcv_while_large_partial_txn_in_progress.js
   - jstests/core/txns/large_transactions_require_fcv42.js
 
-  # Mongos doesn't upconvert from local or majority level readConcern to snapshot.
+  # Mongers doesn't upconvert from local or majority level readConcern to snapshot.
   - jstests/core/txns/upconvert_read_concern.js
 
   # Implicitly creates a database through a collection rename, which does not work in a sharded
@@ -33,7 +33,7 @@ selector:
   - jstests/core/txns/kill_op_on_txn_expiry.js
 
   # Writes to the local database are not allowed through mongers.
-  # TODO SERVER-28756: Mongos CSRS write retry logic drops txnNumbers.
+  # TODO SERVER-28756: Mongers CSRS write retry logic drops txnNumbers.
   - jstests/core/txns/banned_txn_dbs.js
 
   # Uses hangAfterCollectionInserts failpoint not available on mongers.

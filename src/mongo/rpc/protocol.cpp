@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -125,7 +125,7 @@ StatusWith<ProtocolSetAndWireVersionInfo> parseProtocolSetFromIsMasterReply(
     auto minWireExtractStatus =
         bsonExtractIntegerField(isMasterReply, "minWireVersion", &minWireVersion);
 
-    // MongoDB 2.4 and earlier do not have maxWireVersion/minWireVersion in their 'isMaster' replies
+    // MongerDB 2.4 and earlier do not have maxWireVersion/minWireVersion in their 'isMaster' replies
     if ((maxWireExtractStatus == minWireExtractStatus) &&
         (maxWireExtractStatus == ErrorCodes::NoSuchKey)) {
         return {{supports::kOpQueryOnly, {0, 0}}};

@@ -19,7 +19,7 @@ var $config = (function() {
     var states = (function() {
 
         function init(db, collName) {
-            this.session = db.getMongo().startSession();
+            this.session = db.getMonger().startSession();
         }
 
         function runOpInTxn(

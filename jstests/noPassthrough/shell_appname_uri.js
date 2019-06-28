@@ -2,7 +2,7 @@
 (function() {
     "use strict";
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     const uri = "mongerdb://" + conn.host + "/test";
     const tests = [];
 
@@ -21,34 +21,34 @@
     }
 
     tests.push(function testDefaultAppName() {
-        const db = new Mongo(uri).getDB("test");
+        const db = new Monger(uri).getDB("test");
         assert.commandWorked(db.coll.insert({}));
-        assertProfileOnlyContainsAppName(db, "MongoDB Shell");
+        assertProfileOnlyContainsAppName(db, "MongerDB Shell");
     });
 
     tests.push(function testAppName() {
-        const db = new Mongo(uri + "?appName=TestAppName").getDB("test");
+        const db = new Monger(uri + "?appName=TestAppName").getDB("test");
         assert.commandWorked(db.coll.insert({}));
         assertProfileOnlyContainsAppName(db, "TestAppName");
     });
 
     tests.push(function testMultiWordAppName() {
-        const db = new Mongo(uri + "?appName=Test%20App%20Name").getDB("test");
+        const db = new Monger(uri + "?appName=Test%20App%20Name").getDB("test");
         assert.commandWorked(db.coll.insert({}));
         assertProfileOnlyContainsAppName(db, "Test App Name");
     });
 
     tests.push(function testLongAppName() {
-        // From MongoDB Handshake specification:
-        // The client.application.name cannot exceed 128 bytes. MongoDB will return an error if
+        // From MongerDB Handshake specification:
+        // The client.application.name cannot exceed 128 bytes. MongerDB will return an error if
         // these limits are not adhered to, which will result in handshake failure. Drivers MUST
         // validate these values and truncate driver provided values if necessary.
         const longAppName = "a".repeat(129);
-        assert.throws(() => new Mongo(uri + "?appName=" + longAppName));
+        assert.throws(() => new Monger(uri + "?appName=" + longAppName));
 
         // But a 128 character appname should connect without issue.
         const notTooLongAppName = "a".repeat(128);
-        const db = new Mongo(uri + "?appName=" + notTooLongAppName).getDB("test");
+        const db = new Monger(uri + "?appName=" + notTooLongAppName).getDB("test");
         assert.commandWorked(db.coll.insert({}));
         assertProfileOnlyContainsAppName(db, notTooLongAppName);
     });
@@ -56,11 +56,11 @@
     tests.push(function testLongAppNameWithMultiByteUTF8() {
         // Each epsilon character is two bytes in UTF-8.
         const longAppName = "\u0190".repeat(65);
-        assert.throws(() => new Mongo(uri + "?appName=" + longAppName));
+        assert.throws(() => new Monger(uri + "?appName=" + longAppName));
 
         // But a 128 character appname should connect without issue.
         const notTooLongAppName = "\u0190".repeat(64);
-        const db = new Mongo(uri + "?appName=" + notTooLongAppName).getDB("test");
+        const db = new Monger(uri + "?appName=" + notTooLongAppName).getDB("test");
         assert.commandWorked(db.coll.insert({}));
         assertProfileOnlyContainsAppName(db, notTooLongAppName);
     });
@@ -73,5 +73,5 @@
         test();
     });
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

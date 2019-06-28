@@ -171,7 +171,7 @@
     session.startTransaction();
     assert.commandWorked(sessionColl.insert({_id: "lock-timeout-1"}));
     function dropCmdFunc(primaryHost, dbName, collName) {
-        const primary = new Mongo(primaryHost);
+        const primary = new Monger(primaryHost);
         return primary.getDB(dbName).runCommand({drop: collName, writeConcern: {w: "majority"}});
     }
     const thread = new ScopedThread(dropCmdFunc, primary.host, dbName, collName);

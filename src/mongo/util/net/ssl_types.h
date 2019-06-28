@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,7 +42,7 @@ constexpr StringData kOID_CommonName = "2.5.4.3"_sd;
 
 /**
  * Represents a structed X509 certificate subject name.
- * For example: C=US,O=MongoDB,OU=KernelTeam,CN=server
+ * For example: C=US,O=MongerDB,OU=KernelTeam,CN=server
  * would be held as a four element vector of Entries.
  * The first entry of which yould be broken down something like:
  * {{"2.5.4.6", 19, "US"}}.

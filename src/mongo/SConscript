@@ -17,7 +17,7 @@ Import("wiredtiger")
 
 env = env.Clone()
 
-env.InjectMongoIncludePaths()
+env.InjectMongerIncludePaths()
 
 env.SConscript(
     dirs=[
@@ -178,7 +178,7 @@ if env.TargetOSIs('windows'):
 module_list = '{ %s }' % ', '.join([ '"{0}"'.format(x) for x in env['MONGO_MODULES'] ])
 
 # This generates a numeric representation of the version string so that
-# you can easily compare versions of MongoDB without having to parse
+# you can easily compare versions of MongerDB without having to parse
 # the version string.
 #
 # The rules for this are
@@ -600,7 +600,7 @@ if not has_option('noshell') and usemozjs:
     if env.TargetOSIs('windows'):
         shellEnv.Append(LIBS=["winmm.lib"])
 
-        generatedMongoManifest = shellEnv.Substfile(
+        generatedMongerManifest = shellEnv.Substfile(
                 'shell/shell.manifest.in',
                 SUBST_DICT=[
                     ('@monger_version_major@', version_parts[0]),
@@ -609,8 +609,8 @@ if not has_option('noshell') and usemozjs:
                     ('@monger_version_extra@', version_parts[3]),
                     ('@monger_version_extra_str@', version_extra),
                 ])
-        shellEnv.Alias('generated-sources', generatedMongoManifest)
-        shellEnv.Depends("shell/shell.res", generatedMongoManifest)
+        shellEnv.Alias('generated-sources', generatedMongerManifest)
+        shellEnv.Depends("shell/shell.res", generatedMongerManifest)
 
     monger_shell = shellEnv.Program(
         "monger",

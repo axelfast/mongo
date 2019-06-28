@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -599,7 +599,7 @@ TEST_F(AddShardTest, UnreachableHost) {
 }
 
 // Cannot add mongers as a shard.
-TEST_F(AddShardTest, AddMongosAsShard) {
+TEST_F(AddShardTest, AddMongersAsShard) {
     std::unique_ptr<RemoteCommandTargeterMock> targeter(
         std::make_unique<RemoteCommandTargeterMock>());
     HostAndPort shardTarget("StandaloneHost:12345");

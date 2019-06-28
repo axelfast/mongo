@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -81,7 +81,7 @@ BSONObj parseAuthMechanismProperties(const std::string& propStr) {
 
 }  // namespace
 
-boost::optional<BSONObj> MongoURI::_makeAuthObjFromOptions(
+boost::optional<BSONObj> MongerURI::_makeAuthObjFromOptions(
     int maxWireVersion, const std::vector<std::string>& saslMechsForAuth) const {
     // Usually, a username is required to authenticate.
     // However X509 based authentication may, and typically does,
@@ -105,7 +105,7 @@ boost::optional<BSONObj> MongoURI::_makeAuthObjFromOptions(
     it = _options.find("authMechanism");
     if (it != _options.end()) {
         bob.append(saslCommandMechanismFieldName, it->second);
-        if (it->second == auth::kMechanismMongoX509) {
+        if (it->second == auth::kMechanismMongerX509) {
             usernameRequired = false;
         }
     } else if (!saslMechsForAuth.empty()) {
@@ -119,7 +119,7 @@ boost::optional<BSONObj> MongoURI::_makeAuthObjFromOptions(
     } else if (maxWireVersion >= 3) {
         bob.append(saslCommandMechanismFieldName, auth::kMechanismScramSha1);
     } else {
-        bob.append(saslCommandMechanismFieldName, auth::kMechanismMongoCR);
+        bob.append(saslCommandMechanismFieldName, auth::kMechanismMongerCR);
     }
 
     if (usernameRequired && _user.empty()) {
@@ -169,7 +169,7 @@ boost::optional<BSONObj> MongoURI::_makeAuthObjFromOptions(
     return bob.obj();
 }
 
-DBClientBase* MongoURI::connect(StringData applicationName,
+DBClientBase* MongerURI::connect(StringData applicationName,
                                 std::string& errmsg,
                                 boost::optional<double> socketTimeoutSecs) const {
     OptionsMap::const_iterator it = _options.find("socketTimeoutMS");

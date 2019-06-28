@@ -15,13 +15,13 @@
             {aggregate: source.getName(), comment: comment, pipeline: pipeline, cursor: {}}));
         checkLog.containsWithCount(
             conn,
-            `command ${source.getFullName()} appName: "MongoDB Shell" ` +
+            `command ${source.getFullName()} appName: "MongerDB Shell" ` +
                 `command: aggregate { aggregate: "${source.getName()}", comment: "${comment}"`,
             1);
     }
 
     const mongerdOptions = {};
-    const conn = MongoRunner.runMongod(mongerdOptions);
+    const conn = MongerRunner.runMongerd(mongerdOptions);
     assert.neq(null, conn, `mongerd failed to start with options ${tojson(mongerdOptions)}`);
 
     const db = conn.getDB(`${jsTest.name()}_db`);
@@ -50,5 +50,5 @@
                           comment: `merge_${whenMatchedMode}_${whenNotMatchedMode}`
                       }));
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

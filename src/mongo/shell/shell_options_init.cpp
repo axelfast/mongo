@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,8 +38,8 @@
 #include "monger/util/quick_exit.h"
 
 namespace monger {
-MONGO_STARTUP_OPTIONS_VALIDATE(MongoShellOptions)(InitializerContext* context) {
-    if (!handlePreValidationMongoShellOptions(moe::startupOptionsParsed, context->args())) {
+MONGO_STARTUP_OPTIONS_VALIDATE(MongerShellOptions)(InitializerContext* context) {
+    if (!handlePreValidationMongerShellOptions(moe::startupOptionsParsed, context->args())) {
         quickExit(EXIT_SUCCESS);
     }
     Status ret = moe::startupOptionsParsed.validate();
@@ -50,8 +50,8 @@ MONGO_STARTUP_OPTIONS_VALIDATE(MongoShellOptions)(InitializerContext* context) {
     return Status::OK();
 }
 
-MONGO_STARTUP_OPTIONS_STORE(MongoShellOptions)(InitializerContext* context) {
-    Status ret = storeMongoShellOptions(moe::startupOptionsParsed, context->args());
+MONGO_STARTUP_OPTIONS_STORE(MongerShellOptions)(InitializerContext* context) {
+    Status ret = storeMongerShellOptions(moe::startupOptionsParsed, context->args());
     if (!ret.isOK()) {
         std::cerr << ret.toString() << std::endl;
         std::cerr << "try '" << context->args()[0] << " --help' for more information" << std::endl;

@@ -21,12 +21,12 @@
     const coll = db.shell_gossip_cluster_time;
 
     function testCommandGossipedWithClusterTime(func, expectedClusterTime) {
-        const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+        const mongerRunCommandOriginal = Monger.prototype.runCommand;
 
         const sentinel = {};
         let cmdObjSeen = sentinel;
 
-        Mongo.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
+        Monger.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
             cmdObjSeen = cmdObj;
             return mongerRunCommandOriginal.apply(this, arguments);
         };
@@ -34,11 +34,11 @@
         try {
             assert.doesNotThrow(func);
         } finally {
-            Mongo.prototype.runCommand = mongerRunCommandOriginal;
+            Monger.prototype.runCommand = mongerRunCommandOriginal;
         }
 
         if (cmdObjSeen === sentinel) {
-            throw new Error("Mongo.prototype.runCommand() was never called: " + func.toString());
+            throw new Error("Monger.prototype.runCommand() was never called: " + func.toString());
         }
 
         let cmdName = Object.keys(cmdObjSeen)[0];

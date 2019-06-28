@@ -14,7 +14,7 @@
     // Start monger with profiling disabled, create an empty database, and populate it with a
     // collection that has one document.
     //
-    let standalone = MongoRunner.runMongod({profile: "0"});
+    let standalone = MongerRunner.runMongerd({profile: "0"});
 
     let db = standalone.getDB("profile_interrupted_op");
     assert.commandWorked(db.dropDatabase());
@@ -27,8 +27,8 @@
     // profiling on a running database would create the 'system.profile' collection, which we don't
     // yet want created for this test.
     //
-    MongoRunner.stopMongod(standalone);
-    standalone = MongoRunner.runMongod(
+    MongerRunner.stopMongerd(standalone);
+    standalone = MongerRunner.runMongerd(
         {restart: true, cleanData: false, dbpath: standalone.dbpath, profile: "2"});
 
     //
@@ -71,5 +71,5 @@
     assert.commandWorked(res);
     assert.eq(res.cursor.firstBatch, [], res);
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 })();

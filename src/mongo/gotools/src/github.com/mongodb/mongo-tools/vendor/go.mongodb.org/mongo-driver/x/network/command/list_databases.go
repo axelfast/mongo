@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -19,7 +19,7 @@ import (
 
 // ListDatabases represents the listDatabases command.
 //
-// The listDatabases command lists the databases in a MongoDB deployment.
+// The listDatabases command lists the databases in a MongerDB deployment.
 type ListDatabases struct {
 	Clock   *session.ClusterClock
 	Filter  bsonx.Doc

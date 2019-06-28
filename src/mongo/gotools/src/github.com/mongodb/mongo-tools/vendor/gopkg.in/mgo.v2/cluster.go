@@ -1,4 +1,4 @@
-// mgo - MongoDB driver for Go
+// mgo - MongerDB driver for Go
 //
 // Copyright (c) 2010-2012 - Gustavo Niemeyer <gustavo@niemeyer.net>
 //
@@ -39,7 +39,7 @@ import (
 )
 
 // ---------------------------------------------------------------------------
-// Mongo cluster encapsulation.
+// Monger cluster encapsulation.
 //
 // A cluster enables the communication with one or more servers participating
 // in a monger cluster.  This works with individual servers, a replica set,
@@ -228,7 +228,7 @@ func (cluster *mongerCluster) syncServer(server *mongerServer) (info *mongerServ
 
 	info = &mongerServerInfo{
 		Master:         result.IsMaster,
-		Mongos:         result.Msg == "isdbgrid",
+		Mongers:         result.Msg == "isdbgrid",
 		Tags:           result.Tags,
 		SetName:        result.SetName,
 		MaxWireVersion: result.MaxWireVersion,
@@ -591,7 +591,7 @@ func (cluster *mongerCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout
 			if mastersLen > 0 && !(slaveOk && mode == Secondary) || slavesLen > 0 && slaveOk {
 				break
 			}
-			if mastersLen > 0 && mode == Secondary && cluster.masters.HasMongos() {
+			if mastersLen > 0 && mode == Secondary && cluster.masters.HasMongers() {
 				break
 			}
 			if started.IsZero() {

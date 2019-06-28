@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     var db = conn.getDB('db');
 
     assert.commandWorked(db.adminCommand({setParameter: 1, jsHeapLimitMB: 1}));
@@ -14,5 +14,5 @@
 
     var returnCode = runProgram("monger", "--jsHeapLimitMB=1", "--nodb", "--eval='exit();'");
     assert.eq(returnCode, 1);
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

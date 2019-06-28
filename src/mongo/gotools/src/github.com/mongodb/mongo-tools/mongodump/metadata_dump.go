@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -32,7 +32,7 @@ type IndexDocumentFromDB struct {
 
 // dumpMetadata gets the metadata for a collection and writes it
 // in readable JSON format.
-func (dump *MongoDump) dumpMetadata(intent *intents.Intent, buffer resettableOutputBuffer) (err error) {
+func (dump *MongerDump) dumpMetadata(intent *intents.Intent, buffer resettableOutputBuffer) (err error) {
 
 	meta := Metadata{
 		// We have to initialize Indexes to an empty slice, not nil, so that an empty

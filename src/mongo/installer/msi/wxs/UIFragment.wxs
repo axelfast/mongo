@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"  xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
     <Fragment>
-        <UI Id="MongoWixUI">
+        <UI Id="MongerWixUI">
             <!-- Base our MSI on the FeatureTree based Wix set, and add our custom dialog boxes -->
             <UIRef Id="WixUI_FeatureTree" />
 
-            <Publish Event="NewDialog" Value="MongoSetupTypeDlg" Dialog="LicenseAgreementDlg" Control="Next">LicenseAccepted = "1"</Publish>
-            <Publish Event="NewDialog" Value="MongoSetupTypeDlg" Dialog="CustomizeDlg" Control="Back">WixUI_InstallMode = "InstallCustom"</Publish>
+            <Publish Event="NewDialog" Value="MongerSetupTypeDlg" Dialog="LicenseAgreementDlg" Control="Next">LicenseAccepted = "1"</Publish>
+            <Publish Event="NewDialog" Value="MongerSetupTypeDlg" Dialog="CustomizeDlg" Control="Back">WixUI_InstallMode = "InstallCustom"</Publish>
             <Publish Event="NewDialog" Value="ServiceDlg" Dialog="CustomizeDlg" Control="Next"></Publish>
 	        <Publish Event="NewDialog" Value="CompassDlg" Dialog="VerifyReadyDlg" Control="Back"></Publish>
 
             <!-- A custom setup type dialog box with only Complete and Custom buttons -->
-            <Dialog Id="MongoSetupTypeDlg" X="50" Y="50" Width="370" Height="270" Title="[ProductName] Setup">
+            <Dialog Id="MongerSetupTypeDlg" X="50" Y="50" Width="370" Height="270" Title="[ProductName] Setup">
                 <Control Id="CompleteButton" Type="PushButton" X="40" Y="65" Width="80" Height="17" Text="C&amp;omplete" ToolTip="Complete Installation" TabSkip="no" Default="yes">
                     <Publish Property="WixUI_InstallMode" Value="InstallComplete">1</Publish>
                     <Publish Event="NewDialog" Value="ServiceDlg">1</Publish>
@@ -39,7 +39,7 @@
 
             <!-- A custom dialog box to warn the user about an invalid service logon. -->
             <Dialog Id="InvalidServiceAccount" Width="260" Height="85" Title="[ProductName] Error" NoMinimize="yes">
-                <Control Id="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" ToolTip="Information icon" FixedSize="yes" IconSize="32" Text="MongoDBIconBinary" />
+                <Control Id="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" ToolTip="Information icon" FixedSize="yes" IconSize="32" Text="MongerDBIconBinary" />
                 <Control Id="Return" Type="PushButton" X="100" Y="57" Width="56" Height="17" Default="yes" Cancel="yes" Text="&amp;Return">
                     <Publish Event="EndDialog" Value="Return">1</Publish>
                 </Control>
@@ -54,13 +54,13 @@
                     <Text>{\WixUI_Font_Title}Service Configuration</Text>
                 </Control>
                 <Control Id="textDescription" Type="Text" X="23" Y="23" Width="345" Height="10" TabSkip="yes" Transparent="yes">
-                    <Text>Specify optional settings to configure MongoDB as a service.</Text>
+                    <Text>Specify optional settings to configure MongerDB as a service.</Text>
                 </Control>
                 <Control Id="lineTopDivider" Type="Line" X="0" Y="44" Width="370" Height="2" />
                 <Control Id="lineBottomDivider" Type="Line" X="0" Y="234" Width="370" Height="2" />
                 <Control Id="Back" Type="PushButton" X="189" Y="244" Width="56" Height="17" TabSkip="no">
                     <Text>&lt; &amp;Back</Text>
-                    <Publish Event="NewDialog" Value="MongoSetupTypeDlg" Order="1">WixUI_InstallMode = "InstallTypical" OR WixUI_InstallMode = "InstallComplete"</Publish>
+                    <Publish Event="NewDialog" Value="MongerSetupTypeDlg" Order="1">WixUI_InstallMode = "InstallTypical" OR WixUI_InstallMode = "InstallComplete"</Publish>
                     <Publish Event="NewDialog" Value="CustomizeDlg" Order="2">WixUI_InstallMode = "InstallCustom"</Publish>
                 </Control>
                 <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" TabSkip="no">
@@ -76,7 +76,7 @@
                     <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
                 </Control>
                 <Control Id="CheckBox1" Type="CheckBox" X="8" Y="48" Width="132" Height="18"  Property="MONGO_SERVICE_INSTALL" CheckBoxValue="TRUE" TabSkip="no">
-                    <Text>Install MongoD as a Service</Text>
+                    <Text>Install MongerD as a Service</Text>
                 </Control>
                 <Control Id="RadioButtonGroup1" Type="RadioButtonGroup" Property="MONGO_SERVICE_ACCOUNT_TYPE" X="20" Y="62" Width="190" Height="44">
                     <RadioButtonGroup Property="MONGO_SERVICE_ACCOUNT_TYPE">
@@ -148,16 +148,16 @@
         </Dialog>
 
             <!-- A dialog box to choose to optionally install Compass -->
-            <Dialog Id="CompassDlg" X="50" Y="50" Width="370" Height="270" Title="MongoDB Compass">
+            <Dialog Id="CompassDlg" X="50" Y="50" Width="370" Height="270" Title="MongerDB Compass">
                 <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Text="WixUI_Bmp_Banner" TabSkip="no" Disabled="yes" />
                 <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" TabSkip="yes" Disabled="yes" />
                 <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" TabSkip="yes" Disabled="yes" />
-                <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Text="{\WixUI_Font_Title}Install MongoDB Compass" TabSkip="yes" Transparent="yes" NoPrefix="yes" />
-                <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Text="MongoDB Compass is the official graphical user interface for MongoDB." TabSkip="yes" Transparent="yes" NoPrefix="yes" />
+                <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Text="{\WixUI_Font_Title}Install MongerDB Compass" TabSkip="yes" Transparent="yes" NoPrefix="yes" />
+                <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Text="MongerDB Compass is the official graphical user interface for MongerDB." TabSkip="yes" Transparent="yes" NoPrefix="yes" />
                 <Control Id="LongDescription" Type="Text" X="25" Y="50"
-                         Width="280" Height="30" Text="By checking below this installer will automatically download and install the latest version of MongoDB Compass on this machine. You can learn more about MongoDB Compass here: https://www.mongerdb.com/products/compass" TabSkip="yes" NoPrefix="yes" />
+                         Width="280" Height="30" Text="By checking below this installer will automatically download and install the latest version of MongerDB Compass on this machine. You can learn more about MongerDB Compass here: https://www.mongerdb.com/products/compass" TabSkip="yes" NoPrefix="yes" />
 
-                <Control Id="InstallCompass" CheckBoxValue="1" Property="SHOULD_INSTALL_COMPASS" X="15" Y="243" Width="150" Height="17" Text="Install MongoDB Compass" Type="CheckBox" />
+                <Control Id="InstallCompass" CheckBoxValue="1" Property="SHOULD_INSTALL_COMPASS" X="15" Y="243" Width="150" Height="17" Text="Install MongerDB Compass" Type="CheckBox" />
 
                 <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back" TabSkip="no">
                     <Publish Event="NewDialog" Value="ServiceDlg">1</Publish>
@@ -170,7 +170,7 @@
                 </Control>
             </Dialog>
 
-            <ProgressText Action="InstallCompassScript">Installing MongoDB Compass... (this may take a few minutes)</ProgressText>
+            <ProgressText Action="InstallCompassScript">Installing MongerDB Compass... (this may take a few minutes)</ProgressText>
 
         </UI>
     </Fragment>

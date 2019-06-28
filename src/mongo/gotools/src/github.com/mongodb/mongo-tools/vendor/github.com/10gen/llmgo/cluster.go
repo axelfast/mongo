@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2015-present.
+// Copyright (C) MongerDB, Inc. 2015-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -22,7 +22,7 @@ import (
 )
 
 // ---------------------------------------------------------------------------
-// Mongo cluster encapsulation.
+// Monger cluster encapsulation.
 //
 // A cluster enables the communication with one or more servers participating
 // in a monger cluster.  This works with individual servers, a replica set,
@@ -99,7 +99,7 @@ func (cluster *mongerCluster) LiveServers() (servers []string) {
 	return servers
 }
 
-func (cluster *mongerCluster) removeServer(server *MongoServer) {
+func (cluster *mongerCluster) removeServer(server *MongerServer) {
 	cluster.Lock()
 	cluster.masters.Remove(server)
 	other := cluster.servers.Remove(server)
@@ -123,7 +123,7 @@ type isMasterResult struct {
 	MaxWireVersion int    `bson:"maxWireVersion"`
 }
 
-func (cluster *mongerCluster) isMaster(socket *MongoSocket, result *isMasterResult) error {
+func (cluster *mongerCluster) isMaster(socket *MongerSocket, result *isMasterResult) error {
 	// Monotonic let's it talk to a slave and still hold the socket.
 	session := newSession(Monotonic, cluster, 10*time.Second)
 	session.setSocket(socket)
@@ -138,7 +138,7 @@ type possibleTimeout interface {
 
 var syncSocketTimeout = 5 * time.Second
 
-func (cluster *mongerCluster) syncServer(server *MongoServer) (info *mongerServerInfo, hosts []string, err error) {
+func (cluster *mongerCluster) syncServer(server *MongerServer) (info *mongerServerInfo, hosts []string, err error) {
 	var syncTimeout time.Duration
 	if raceDetector {
 		// This variable is only ever touched by tests.
@@ -211,7 +211,7 @@ func (cluster *mongerCluster) syncServer(server *MongoServer) (info *mongerServe
 
 	info = &mongerServerInfo{
 		Master:         result.IsMaster,
-		Mongos:         result.Msg == "isdbgrid",
+		Mongers:         result.Msg == "isdbgrid",
 		Tags:           result.Tags,
 		SetName:        result.SetName,
 		MaxWireVersion: result.MaxWireVersion,
@@ -236,7 +236,7 @@ const (
 	partialSync  syncKind = false
 )
 
-func (cluster *mongerCluster) addServer(server *MongoServer, info *mongerServerInfo, syncKind syncKind) {
+func (cluster *mongerCluster) addServer(server *MongerServer, info *mongerServerInfo, syncKind syncKind) {
 	cluster.Lock()
 	current := cluster.servers.Search(server.ResolvedAddr)
 	if current == nil {
@@ -382,7 +382,7 @@ func (cluster *mongerCluster) syncServersLoop() {
 	debugf("SYNC Cluster %p is stopping its sync loop.", cluster)
 }
 
-func (cluster *mongerCluster) server(addr string, tcpaddr *net.TCPAddr) *MongoServer {
+func (cluster *mongerCluster) server(addr string, tcpaddr *net.TCPAddr) *MongerServer {
 	cluster.RLock()
 	server := cluster.servers.Search(tcpaddr.String())
 	cluster.RUnlock()
@@ -453,7 +453,7 @@ func resolveAddr(addr string) (*net.TCPAddr, error) {
 }
 
 type pendingAdd struct {
-	server *MongoServer
+	server *MongerServer
 	info   *mongerServerInfo
 }
 
@@ -561,7 +561,7 @@ func (cluster *mongerCluster) syncServersIteration(direct bool) {
 // AcquireSocket returns a socket to a server in the cluster.  If slaveOk is
 // true, it will attempt to return a socket to a slave server.  If it is
 // false, the socket will necessarily be to a master server.
-func (cluster *mongerCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout time.Duration, socketTimeout time.Duration, serverTags []bson.D, poolLimit int) (s *MongoSocket, err error) {
+func (cluster *mongerCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout time.Duration, socketTimeout time.Duration, serverTags []bson.D, poolLimit int) (s *MongerSocket, err error) {
 	var started time.Time
 	var syncCount uint
 	warnedLimit := false
@@ -589,7 +589,7 @@ func (cluster *mongerCluster) AcquireSocket(mode Mode, slaveOk bool, syncTimeout
 			cluster.serverSynced.Wait()
 		}
 
-		var server *MongoServer
+		var server *MongerServer
 		if slaveOk {
 			server = cluster.servers.BestFit(mode, serverTags)
 		} else {

@@ -14,7 +14,7 @@
     const dbName = "test";
     const collName = "user";
 
-    const staticMongod = MongoRunner.runMongod({});  // For startParallelOps.
+    const staticMongerd = MongerRunner.runMongerd({});  // For startParallelOps.
 
     const st = new ShardingTest({shards: {rs0: {nodes: 1}, rs1: {nodes: 1}}});
     st.adminCommand({enableSharding: 'test'});
@@ -49,7 +49,7 @@
     }));
 
     const joinMoveChunk = moveChunkParallel(
-        staticMongod, st.s.host, {_id: 1}, null, 'test.user', st.shard1.shardName);
+        staticMongerd, st.s.host, {_id: 1}, null, 'test.user', st.shard1.shardName);
 
     // Wait for catchup to verify that the migration has exited the clone phase.
     waitForMigrateStep(st.shard1, migrateStepNames.catchup);
@@ -67,5 +67,5 @@
     assert.eq(sessionColl.find({_id: 2}).count(), 1);
 
     st.stop();
-    MongoRunner.stopMongod(staticMongod);
+    MongerRunner.stopMongerd(staticMongerd);
 })();

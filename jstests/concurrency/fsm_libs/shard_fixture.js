@@ -32,14 +32,14 @@ var FSMShardingTest = class {
          }
          */
 
-        const conn = new Mongo(connStr);
+        const conn = new Monger(connStr);
 
         const topology = DiscoverTopology.findConnectedNodes(conn);
         assert.eq(topology.type, Topology.kShardedCluster, 'Topology must be a sharded cluster');
 
         this._mongerses = [];
         for (let connStr of topology.mongers.nodes) {
-            this._mongerses.push(new Mongo(connStr));
+            this._mongerses.push(new Monger(connStr));
         }
         for (let mongers of this._mongerses) {
             mongers.name = mongers.host;
@@ -61,10 +61,10 @@ var FSMShardingTest = class {
                 const shard_rst = new ReplSetTest(shardTopology.nodes[0]);
                 this._shard_rsts.push(shard_rst);
 
-                shard = new Mongo(shard_rst.getURL());
+                shard = new Monger(shard_rst.getURL());
                 shard.name = shard_rst.getURL();
             } else {
-                shard = new Mongo(shardTopology.mongerd);
+                shard = new Monger(shardTopology.mongerd);
                 shard.name = shard.host;
             }
             shard.shardName = shardName;

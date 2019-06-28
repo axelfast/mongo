@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -111,7 +111,7 @@ ShardingTestFixture::ShardingTestFixture() {
         auto hookList = std::make_unique<rpc::EgressMetadataHookList>();
         hookList->addHook(std::make_unique<rpc::LogicalTimeMetadataHook>(service));
         hookList->addHook(std::make_unique<rpc::CommittedOpTimeMetadataHook>(service));
-        hookList->addHook(std::make_unique<rpc::ShardingEgressMetadataHookForMongos>(service));
+        hookList->addHook(std::make_unique<rpc::ShardingEgressMetadataHookForMongers>(service));
         return hookList;
     };
 

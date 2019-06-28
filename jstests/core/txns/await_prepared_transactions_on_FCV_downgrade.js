@@ -15,7 +15,7 @@
     testDB[collName].drop({writeConcern: {w: "majority"}});
     assert.commandWorked(testDB.runCommand({create: collName, writeConcern: {w: "majority"}}));
 
-    const session = testDB.getMongo().startSession();
+    const session = testDB.getMonger().startSession();
     const sessionDB = session.getDatabase(dbName);
 
     try {

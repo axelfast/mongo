@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -44,10 +44,10 @@
 namespace monger {
 namespace rpc {
 
-void ShardingEgressMetadataHookForMongod::_saveGLEStats(const BSONObj& metadata,
+void ShardingEgressMetadataHookForMongerd::_saveGLEStats(const BSONObj& metadata,
                                                         StringData hostString) {}
 
-repl::OpTime ShardingEgressMetadataHookForMongod::_getConfigServerOpTime() {
+repl::OpTime ShardingEgressMetadataHookForMongerd::_getConfigServerOpTime() {
     if (serverGlobalParams.clusterRole == ClusterRole::ConfigServer) {
         return repl::ReplicationCoordinator::get(_serviceContext)
             ->getCurrentCommittedSnapshotOpTime();
@@ -57,7 +57,7 @@ repl::OpTime ShardingEgressMetadataHookForMongod::_getConfigServerOpTime() {
     return Grid::get(_serviceContext)->configOpTime();
 }
 
-Status ShardingEgressMetadataHookForMongod::_advanceConfigOpTimeFromShard(
+Status ShardingEgressMetadataHookForMongerd::_advanceConfigOpTimeFromShard(
     OperationContext* opCtx, const ShardId& shardId, const BSONObj& metadataObj) {
     if (serverGlobalParams.clusterRole == ClusterRole::ConfigServer) {
         return Status::OK();

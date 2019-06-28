@@ -31,7 +31,7 @@
     var monger =
         startParallelShell("db.getSiblingDB('admin').printSlaveReplicationInfo();", primary.port);
     monger();
-    assert(rawMongoProgramOutput().match("behind the primary"));
+    assert(rawMongerProgramOutput().match("behind the primary"));
 
     // get to a primaryless state
     for (i in replSet._slaves) {
@@ -43,7 +43,7 @@
     monger =
         startParallelShell("db.getSiblingDB('admin').printSlaveReplicationInfo();", primary.port);
     monger();
-    assert(rawMongoProgramOutput().match("behind the freshest"));
+    assert(rawMongerProgramOutput().match("behind the freshest"));
 
     replSet.stopSet();
 })();

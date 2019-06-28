@@ -343,12 +343,12 @@ let ContinuousStepdown;
              * specified by the stepdownOptions object.
              *
              * If waitForPrimary is true, blocks until each replica set has elected a primary.
-             * If waitForMongosRetarget is true, blocks until each mongers has an up to date view of
+             * If waitForMongersRetarget is true, blocks until each mongers has an up to date view of
              * the cluster.
              */
             this.stopContinuousFailover = function({
                 waitForPrimary: waitForPrimary = false,
-                waitForMongosRetarget: waitForMongosRetarget = false
+                waitForMongersRetarget: waitForMongersRetarget = false
             } = {}) {
                 if (stepdownOptions.configStepdown) {
                     this.configRS.stopContinuousFailover({waitForPrimary: waitForPrimary});
@@ -360,7 +360,7 @@ let ContinuousStepdown;
                     });
                 }
 
-                if (waitForMongosRetarget) {
+                if (waitForMongersRetarget) {
                     // Run validate on each collection in each database to ensure mongers can target
                     // the primary for each shard with data, including the config servers.
                     this._mongers.forEach(s => {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -52,14 +52,14 @@
 
 namespace monger {
 
-AuthzManagerExternalStateMongod::AuthzManagerExternalStateMongod() = default;
-AuthzManagerExternalStateMongod::~AuthzManagerExternalStateMongod() = default;
+AuthzManagerExternalStateMongerd::AuthzManagerExternalStateMongerd() = default;
+AuthzManagerExternalStateMongerd::~AuthzManagerExternalStateMongerd() = default;
 
 std::unique_ptr<AuthzSessionExternalState>
-AuthzManagerExternalStateMongod::makeAuthzSessionExternalState(AuthorizationManager* authzManager) {
-    return std::make_unique<AuthzSessionExternalStateMongod>(authzManager);
+AuthzManagerExternalStateMongerd::makeAuthzSessionExternalState(AuthorizationManager* authzManager) {
+    return std::make_unique<AuthzSessionExternalStateMongerd>(authzManager);
 }
-Status AuthzManagerExternalStateMongod::query(
+Status AuthzManagerExternalStateMongerd::query(
     OperationContext* opCtx,
     const NamespaceString& collectionName,
     const BSONObj& query,
@@ -74,7 +74,7 @@ Status AuthzManagerExternalStateMongod::query(
     }
 }
 
-Status AuthzManagerExternalStateMongod::findOne(OperationContext* opCtx,
+Status AuthzManagerExternalStateMongerd::findOne(OperationContext* opCtx,
                                                 const NamespaceString& collectionName,
                                                 const BSONObj& query,
                                                 BSONObj* result) {
@@ -92,7 +92,7 @@ Status AuthzManagerExternalStateMongod::findOne(OperationContext* opCtx,
 
 MONGO_REGISTER_SHIM(AuthzManagerExternalState::create)
 ()->std::unique_ptr<AuthzManagerExternalState> {
-    return std::make_unique<AuthzManagerExternalStateMongod>();
+    return std::make_unique<AuthzManagerExternalStateMongerd>();
 }
 
 }  // namespace monger

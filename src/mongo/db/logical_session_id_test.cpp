@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -300,7 +300,7 @@ TEST_F(LogicalSessionIdTest, InitializeOperationSessionInfo_SessionIdAndTransact
     ASSERT_EQ(100, *_opCtx->getTxnNumber());
 }
 
-TEST_F(LogicalSessionIdTest, InitializeOperationSessionInfo_IsReplSetMemberOrMongosFalse) {
+TEST_F(LogicalSessionIdTest, InitializeOperationSessionInfo_IsReplSetMemberOrMongersFalse) {
     addSimpleUser(UserName("simple", "test"));
     LogicalSessionFromClient lsid;
     lsid.setId(UUID::gen());

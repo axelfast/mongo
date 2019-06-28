@@ -22,7 +22,7 @@
     }
 
     // For startParallelOps to write its state
-    let staticMongod = MongoRunner.runMongod({});
+    let staticMongerd = MongerRunner.runMongerd({});
 
     let st = new ShardingTest({shards: {rs0: {nodes: 2}, rs1: {nodes: 2}, rs2: {nodes: 2}}});
 
@@ -258,7 +258,7 @@
             pauseMoveChunkAtStep(st.shard0, moveChunkStepNames.reachedSteadyState);
 
             let joinMoveChunk = moveChunkParallel(
-                staticMongod, st.s.host, {x: shardKeyValueOnShard0}, null, ns, st.shard1.shardName);
+                staticMongerd, st.s.host, {x: shardKeyValueOnShard0}, null, ns, st.shard1.shardName);
 
             waitForMoveChunkStep(st.shard0, moveChunkStepNames.reachedSteadyState);
 
@@ -318,7 +318,7 @@
             // here we move the chunk from shard 0 to shard 2, which won't be involved in the
             // transaction created by the shard key update.
             let joinMoveChunk = moveChunkParallel(
-                staticMongod, st.s.host, {x: shardKeyValueOnShard0}, null, ns, st.shard2.shardName);
+                staticMongerd, st.s.host, {x: shardKeyValueOnShard0}, null, ns, st.shard2.shardName);
 
             waitForMoveChunkStep(st.shard0, moveChunkStepNames.reachedSteadyState);
 
@@ -366,7 +366,7 @@
     //        pauseMoveChunkAtStep(st.shard0, moveChunkStepNames.reachedSteadyState);
 
     //        let joinMoveChunk = moveChunkParallel(
-    //            staticMongod, st.s.host, {x: shardKeyValueOnShard0}, null, ns,
+    //            staticMongerd, st.s.host, {x: shardKeyValueOnShard0}, null, ns,
     //            st.shard1.shardName);
 
     //        waitForMoveChunkStep(st.shard0, moveChunkStepNames.reachedSteadyState);
@@ -392,5 +392,5 @@
     //    });
 
     st.stop();
-    MongoRunner.stopMongod(staticMongod);
+    MongerRunner.stopMongerd(staticMongerd);
 })();

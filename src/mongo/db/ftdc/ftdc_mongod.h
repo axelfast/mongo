@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,11 +35,11 @@ namespace monger {
  * Start Full Time Data Capture
  * Starts 1 thread.
  */
-void startMongoDFTDC();
+void startMongerDFTDC();
 
 /**
  * Stop Full Time Data Capture
  */
-void stopMongoDFTDC();
+void stopMongerDFTDC();
 
 }  // namespace monger

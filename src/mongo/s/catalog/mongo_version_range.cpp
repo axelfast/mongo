@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,18 +38,18 @@ namespace monger {
 using std::string;
 using std::vector;
 
-BSONArray MongoVersionRange::toBSONArray(const vector<MongoVersionRange>& ranges) {
+BSONArray MongerVersionRange::toBSONArray(const vector<MongerVersionRange>& ranges) {
     BSONArrayBuilder barr;
 
-    for (vector<MongoVersionRange>::const_iterator it = ranges.begin(); it != ranges.end(); ++it) {
-        const MongoVersionRange& range = *it;
+    for (vector<MongerVersionRange>::const_iterator it = ranges.begin(); it != ranges.end(); ++it) {
+        const MongerVersionRange& range = *it;
         range.toBSONElement(&barr);
     }
 
     return barr.arr();
 }
 
-bool MongoVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) {
+bool MongerVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) {
     string dummy;
     if (!errMsg)
         errMsg = &dummy;
@@ -105,7 +105,7 @@ bool MongoVersionRange::parseBSONElement(const BSONElement& el, string* errMsg) 
     }
 }
 
-void MongoVersionRange::toBSONElement(BSONArrayBuilder* barr) const {
+void MongerVersionRange::toBSONElement(BSONArrayBuilder* barr) const {
     if (maxVersion == "") {
         barr->append(minVersion);
     } else {
@@ -118,7 +118,7 @@ void MongoVersionRange::toBSONElement(BSONArrayBuilder* barr) const {
     }
 }
 
-bool MongoVersionRange::isInRange(StringData version) const {
+bool MongerVersionRange::isInRange(StringData version) const {
     if (maxVersion == "") {
         // If a prefix of the version specified is excluded, the specified version is
         // excluded
@@ -140,7 +140,7 @@ bool MongoVersionRange::isInRange(StringData version) const {
     return false;
 }
 
-bool isInMongoVersionRanges(StringData version, const vector<MongoVersionRange>& ranges) {
+bool isInMongerVersionRanges(StringData version, const vector<MongerVersionRange>& ranges) {
     for (const auto& r : ranges) {
         if (r.isInRange(version))
             return true;

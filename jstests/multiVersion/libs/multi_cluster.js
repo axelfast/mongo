@@ -12,7 +12,7 @@
  * {
  *     upgradeShards: <bool>, // defaults to true
  *     upgradeConfigs: <bool>, // defaults to true
- *     upgradeMongos: <bool>, // defaults to true
+ *     upgradeMongers: <bool>, // defaults to true
  * }
  */
 ShardingTest.prototype.upgradeCluster = function(binVersion, options) {
@@ -21,8 +21,8 @@ ShardingTest.prototype.upgradeCluster = function(binVersion, options) {
         options.upgradeShards = true;
     if (options.upgradeConfigs == undefined)
         options.upgradeConfigs = true;
-    if (options.upgradeMongos == undefined)
-        options.upgradeMongos = true;
+    if (options.upgradeMongers == undefined)
+        options.upgradeMongers = true;
 
     var upgradedSingleShards = [];
 
@@ -36,8 +36,8 @@ ShardingTest.prototype.upgradeCluster = function(binVersion, options) {
             if (configSvr.host in upgradedSingleShards) {
                 configSvr = upgradedSingleShards[configSvr.host];
             } else {
-                MongoRunner.stopMongod(configSvr);
-                configSvr = MongoRunner.runMongod(
+                MongerRunner.stopMongerd(configSvr);
+                configSvr = MongerRunner.runMongerd(
                     {restart: configSvr, binVersion: binVersion, appendOptions: true});
             }
 
@@ -57,8 +57,8 @@ ShardingTest.prototype.upgradeCluster = function(binVersion, options) {
             } else {
                 // Upgrade shard
                 var shard = this._connections[i];
-                MongoRunner.stopMongod(shard);
-                shard = MongoRunner.runMongod(
+                MongerRunner.stopMongerd(shard);
+                shard = MongerRunner.runMongerd(
                     {restart: shard, binVersion: binVersion, appendOptions: true});
 
                 upgradedSingleShards[shard.host] = shard;
@@ -67,15 +67,15 @@ ShardingTest.prototype.upgradeCluster = function(binVersion, options) {
         }
     }
 
-    if (options.upgradeMongos) {
+    if (options.upgradeMongers) {
         // Upgrade all mongers hosts if specified
-        var numMongoses = this._mongers.length;
+        var numMongerses = this._mongers.length;
 
-        for (var i = 0; i < numMongoses; i++) {
+        for (var i = 0; i < numMongerses; i++) {
             var mongers = this._mongers[i];
-            MongoRunner.stopMongos(mongers);
+            MongerRunner.stopMongers(mongers);
 
-            mongers = MongoRunner.runMongos(
+            mongers = MongerRunner.runMongers(
                 {restart: mongers, binVersion: binVersion, appendOptions: true});
 
             this["s" + i] = this._mongers[i] = mongers;
@@ -88,15 +88,15 @@ ShardingTest.prototype.upgradeCluster = function(binVersion, options) {
     }
 };
 
-ShardingTest.prototype.restartMongoses = function() {
+ShardingTest.prototype.restartMongerses = function() {
 
-    var numMongoses = this._mongers.length;
+    var numMongerses = this._mongers.length;
 
-    for (var i = 0; i < numMongoses; i++) {
+    for (var i = 0; i < numMongerses; i++) {
         var mongers = this._mongers[i];
 
-        MongoRunner.stopMongos(mongers);
-        mongers = MongoRunner.runMongos({restart: mongers});
+        MongerRunner.stopMongers(mongers);
+        mongers = MongerRunner.runMongers({restart: mongers});
 
         this["s" + i] = this._mongers[i] = mongers;
         if (i == 0)
@@ -107,7 +107,7 @@ ShardingTest.prototype.restartMongoses = function() {
     this.admin = this.s.getDB("admin");
 };
 
-ShardingTest.prototype.getMongosAtVersion = function(binVersion) {
+ShardingTest.prototype.getMongersAtVersion = function(binVersion) {
     var mongerses = this._mongers;
     for (var i = 0; i < mongerses.length; i++) {
         try {

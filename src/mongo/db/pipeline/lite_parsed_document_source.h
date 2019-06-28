@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -90,7 +90,7 @@ public:
     /**
      * Returns a list of the privileges required for this stage.
      */
-    virtual PrivilegeVector requiredPrivileges(bool isMongos) const = 0;
+    virtual PrivilegeVector requiredPrivileges(bool isMongers) const = 0;
 
     /**
      * Returns true if this is a $collStats stage.
@@ -116,7 +116,7 @@ public:
     /**
      * Returns true if this stage may be forwarded from mongers unmodified.
      */
-    virtual bool allowedToPassthroughFromMongos() const {
+    virtual bool allowedToPassthroughFromMongers() const {
         return true;
     }
 
@@ -154,7 +154,7 @@ public:
         return stdx::unordered_set<NamespaceString>();
     }
 
-    PrivilegeVector requiredPrivileges(bool isMongos) const final {
+    PrivilegeVector requiredPrivileges(bool isMongers) const final {
         return {};
     }
 };
@@ -176,7 +176,7 @@ public:
         return {_foreignNssSet};
     }
 
-    PrivilegeVector requiredPrivileges(bool isMongos) const final {
+    PrivilegeVector requiredPrivileges(bool isMongers) const final {
         return _requiredPrivileges;
     }
 

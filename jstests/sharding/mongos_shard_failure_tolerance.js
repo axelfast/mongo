@@ -43,7 +43,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Inserting initial data...");
 
-    var mongersConnActive = new Mongo(st.s0.host);
+    var mongersConnActive = new Monger(st.s0.host);
     var mongersConnIdle = null;
     var mongersConnNew = null;
 
@@ -53,7 +53,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Stopping third shard...");
 
-    mongersConnIdle = new Mongo(st.s0.host);
+    mongersConnIdle = new Monger(st.s0.host);
 
     st.rs2.stopSet();
 
@@ -79,25 +79,25 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Testing new connections...");
 
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.writeOK(mongersConnNew.getCollection(collSharded.toString()).insert({_id: -4}));
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.writeOK(mongersConnNew.getCollection(collSharded.toString()).insert({_id: 4}));
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.writeOK(mongersConnNew.getCollection(collUnsharded.toString()).insert({_id: 4}));
 
     gc();  // Clean up new connections
 
     jsTest.log("Stopping second shard...");
 
-    mongersConnIdle = new Mongo(st.s0.host);
+    mongersConnIdle = new Monger(st.s0.host);
 
     st.rs1.stopSet();
     jsTest.log("Testing active connection...");
@@ -121,19 +121,19 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Testing new connections...");
 
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
 
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.writeOK(mongersConnNew.getCollection(collSharded.toString()).insert({_id: -7}));
 
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.writeError(mongersConnNew.getCollection(collSharded.toString()).insert({_id: 7}));
 
-    mongersConnNew = new Mongo(st.s0.host);
+    mongersConnNew = new Monger(st.s0.host);
     assert.writeOK(mongersConnNew.getCollection(collUnsharded.toString()).insert({_id: 7}));
 
     st.stop();

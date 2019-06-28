@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -50,7 +50,7 @@ const JSFunctionSpec URIInfo::methods[2] = {
     MONGO_ATTACH_JS_CONSTRAINED_METHOD(toString, URIInfo), JS_FS_END,
 };
 
-const char* const URIInfo::className = "MongoURI";
+const char* const URIInfo::className = "MongerURI";
 
 void URIInfo::Functions::toString::call(JSContext* cx, JS::CallArgs args) {
     ObjectWrapper o(cx, args.thisv());
@@ -58,7 +58,7 @@ void URIInfo::Functions::toString::call(JSContext* cx, JS::CallArgs args) {
 }
 
 void URIInfo::construct(JSContext* cx, JS::CallArgs args) {
-    uassert(ErrorCodes::BadValue, "MongoURI needs 1 argument", args.length() == 1);
+    uassert(ErrorCodes::BadValue, "MongerURI needs 1 argument", args.length() == 1);
 
     JS::HandleValue uriArg = args.get(0);
     if (!uriArg.isString())
@@ -66,7 +66,7 @@ void URIInfo::construct(JSContext* cx, JS::CallArgs args) {
 
     std::string uri = ValueWriter(cx, args.get(0)).toString();
 
-    auto sw = MongoURI::parse(uri);
+    auto sw = MongerURI::parse(uri);
     auto parsed = uassertStatusOK(sw);
 
     BSONArrayBuilder serversBuilder;

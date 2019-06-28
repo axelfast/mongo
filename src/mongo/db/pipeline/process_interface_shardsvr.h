@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,11 +36,11 @@
 namespace monger {
 
 /**
- * Specialized version of the MongoDInterface when this node is a shard server.
+ * Specialized version of the MongerDInterface when this node is a shard server.
  */
-class MongoInterfaceShardServer final : public MongoInterfaceStandalone {
+class MongerInterfaceShardServer final : public MongerInterfaceStandalone {
 public:
-    using MongoInterfaceStandalone::MongoInterfaceStandalone;
+    using MongerInterfaceStandalone::MongerInterfaceStandalone;
 
     void checkRoutingInfoEpochOrThrow(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                                       const NamespaceString& nss,

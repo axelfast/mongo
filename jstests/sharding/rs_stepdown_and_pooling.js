@@ -32,7 +32,7 @@
         // jstest ->(x10)-> mongers ->(x10)-> primary
         var conns = [];
         for (var i = 0; i < 50; i++) {
-            conns.push(new Mongo(mongers.host));
+            conns.push(new Monger(mongers.host));
             conns[i].getCollection(coll + "").findOne();
         }
 
@@ -83,7 +83,7 @@
 
         var numErrors = 0;
         for (var i = 0; i < conns.length; i++) {
-            var newConn = new Mongo(mongers.host);
+            var newConn = new Monger(mongers.host);
             try {
                 printjson(newConn.getCollection("foo.bar").findOne());
             } catch (e) {

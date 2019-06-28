@@ -72,13 +72,13 @@ class FreeMonWebServer {
             }
         }
 
-        this.pid = _startMongoProgram({args: args});
+        this.pid = _startMongerProgram({args: args});
 
         assert(checkProgram(this.pid));
 
         // Wait for the web server to start
         assert.soon(function() {
-            return rawMongoProgramOutput().search("Mock Web Server Listening") !== -1;
+            return rawMongerProgramOutput().search("Mock Web Server Listening") !== -1;
         });
 
         print("Mock HTTP Server sucessfully started.");
@@ -88,7 +88,7 @@ class FreeMonWebServer {
      *  Stop the Mock HTTP Server.
      */
     stop() {
-        stopMongoProgramByPid(this.pid);
+        stopMongerProgramByPid(this.pid);
     }
 
     /**

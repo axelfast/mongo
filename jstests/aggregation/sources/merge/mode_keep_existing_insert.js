@@ -7,7 +7,7 @@
     "use strict";
 
     load("jstests/aggregation/extras/utils.js");  // For assertArrayEq.
-    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongos.
+    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongers.
 
     const source = db[`${jsTest.name()}_source`];
     source.drop();
@@ -355,7 +355,7 @@
             }
         }];
 
-        if (!FixtureHelpers.isMongos(db)) {
+        if (!FixtureHelpers.isMongers(db)) {
             assert.doesNotThrow(() => source.aggregate(foreignPipeline));
             assertArrayEq({actual: foreignTarget.find().toArray(), expected: [{_id: 1, a: 1}]});
         } else {

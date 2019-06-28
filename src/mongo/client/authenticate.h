@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,15 +51,15 @@ namespace auth {
 using RunCommandHook = std::function<Future<BSONObj>(OpMsgRequest request)>;
 
 /* Hook for legacy MONGODB-CR support provided by shell client only */
-using AuthMongoCRHandler = std::function<Future<void>(RunCommandHook, const BSONObj&)>;
-extern AuthMongoCRHandler authMongoCR;
+using AuthMongerCRHandler = std::function<Future<void>(RunCommandHook, const BSONObj&)>;
+extern AuthMongerCRHandler authMongerCR;
 
 /**
  * Names for supported authentication mechanisms.
  */
 
-constexpr auto kMechanismMongoCR = "MONGODB-CR"_sd;
-constexpr auto kMechanismMongoX509 = "MONGODB-X509"_sd;
+constexpr auto kMechanismMongerCR = "MONGODB-CR"_sd;
+constexpr auto kMechanismMongerX509 = "MONGODB-X509"_sd;
 constexpr auto kMechanismSaslPlain = "PLAIN"_sd;
 constexpr auto kMechanismGSSAPI = "GSSAPI"_sd;
 constexpr auto kMechanismScramSha1 = "SCRAM-SHA-1"_sd;

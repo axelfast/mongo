@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -536,7 +536,7 @@ public:
      *
      * The cmdArgs parameter should NOT include {<commandName>: 1}.
      *
-     * TODO: remove after MongoDB 3.2 is released and replace all callers with
+     * TODO: remove after MongerDB 3.2 is released and replace all callers with
      * a call to plain runCommand
      */
     virtual bool runPseudoCommand(StringData db,
@@ -668,7 +668,7 @@ public:
 
     virtual bool isReplicaSetMember() const = 0;
 
-    virtual bool isMongos() const = 0;
+    virtual bool isMongers() const = 0;
 
     /**
      * Parses command replies and runs them through the metadata reader.

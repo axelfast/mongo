@@ -1,5 +1,5 @@
 /**
- * Tests whether various MongoDB commands automatically upgrade the index version of existing
+ * Tests whether various MongerDB commands automatically upgrade the index version of existing
  * indexes when they are rebuilt on a collection.
  */
 (function() {
@@ -7,7 +7,7 @@
 
     load("jstests/libs/get_index_helpers.js");
 
-    var conn = MongoRunner.runMongod({});
+    var conn = MongerRunner.runMongerd({});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     var testDB = conn.getDB("test");
@@ -122,5 +122,5 @@
         return coll;
     }, false);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

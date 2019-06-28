@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -378,7 +378,7 @@ ShardConnection::ShardConnection(OperationContext* opCtx,
     auto csString = _cs.toString();
 
     _conn = ClientConnections::threadInstance()->get(csString, _ns);
-    if (isMongos()) {
+    if (isMongers()) {
         // In mongers, we record this connection as having been used for useful work to provide
         // useful information in getLastError.
         ClusterLastErrorInfo::get(opCtx->getClient())->addShardHost(csString);

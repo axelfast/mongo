@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -13,8 +13,8 @@ import (
 	"github.com/10gen/llmgo"
 )
 
-// ErrNotMsg is returned if a provided buffer is too small to contain a Mongo message
-var ErrNotMsg = fmt.Errorf("buffer is too small to be a Mongo message")
+// ErrNotMsg is returned if a provided buffer is too small to contain a Monger message
+var ErrNotMsg = fmt.Errorf("buffer is too small to be a Monger message")
 
 // OpMetadata stores metadata for an Op
 type OpMetadata struct {
@@ -43,7 +43,7 @@ type OpMetadata struct {
 	Data interface{}
 }
 
-// Op is a Mongo operation
+// Op is a Monger operation
 type Op interface {
 	// OpCode returns the OpCode for a particular kind of op.
 	OpCode() OpCode
@@ -54,7 +54,7 @@ type Op interface {
 
 	// Execute performs the op on a given socket, yielding the reply when
 	// successful (and an error otherwise).
-	Execute(*mgo.MongoSocket) (Replyable, error)
+	Execute(*mgo.MongerSocket) (Replyable, error)
 
 	// Meta returns metadata about the operation, useful for analysis of traffic.
 	Meta() OpMetadata

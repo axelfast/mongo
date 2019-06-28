@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,24 +41,24 @@
 
 namespace monger {
 
-AuthzSessionExternalStateMongod::AuthzSessionExternalStateMongod(AuthorizationManager* authzManager)
+AuthzSessionExternalStateMongerd::AuthzSessionExternalStateMongerd(AuthorizationManager* authzManager)
     : AuthzSessionExternalStateServerCommon(authzManager) {}
-AuthzSessionExternalStateMongod::~AuthzSessionExternalStateMongod() {}
+AuthzSessionExternalStateMongerd::~AuthzSessionExternalStateMongerd() {}
 
-void AuthzSessionExternalStateMongod::startRequest(OperationContext* opCtx) {
+void AuthzSessionExternalStateMongerd::startRequest(OperationContext* opCtx) {
     // No locks should be held as this happens before any database accesses occur
     dassert(!opCtx->lockState()->isLocked());
 
     _checkShouldAllowLocalhost(opCtx);
 }
 
-bool AuthzSessionExternalStateMongod::shouldIgnoreAuthChecks() const {
+bool AuthzSessionExternalStateMongerd::shouldIgnoreAuthChecks() const {
     // TODO(spencer): get "isInDirectClient" from OperationContext
     return cc().isInDirectClient() ||
         AuthzSessionExternalStateServerCommon::shouldIgnoreAuthChecks();
 }
 
-bool AuthzSessionExternalStateMongod::serverIsArbiter() const {
+bool AuthzSessionExternalStateMongerd::serverIsArbiter() const {
     // Arbiters have access to extra privileges under localhost. See SERVER-5479.
     return (
         repl::ReplicationCoordinator::get(getGlobalServiceContext())->getReplicationMode() ==
@@ -68,7 +68,7 @@ bool AuthzSessionExternalStateMongod::serverIsArbiter() const {
 
 MONGO_REGISTER_SHIM(AuthzSessionExternalState::create)
 (AuthorizationManager* const authzManager)->std::unique_ptr<AuthzSessionExternalState> {
-    return std::make_unique<AuthzSessionExternalStateMongod>(authzManager);
+    return std::make_unique<AuthzSessionExternalStateMongerd>(authzManager);
 }
 
 }  // namespace monger

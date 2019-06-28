@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -103,7 +103,7 @@ public:
     ExpressionContext(OperationContext* opCtx,
                       const AggregationRequest& request,
                       std::unique_ptr<CollatorInterface> collator,
-                      std::shared_ptr<MongoProcessInterface> mongerProcessInterface,
+                      std::shared_ptr<MongerProcessInterface> mongerProcessInterface,
                       StringMap<ExpressionContext::ResolvedNamespace> resolvedNamespaces,
                       boost::optional<UUID> collUUID);
 
@@ -203,9 +203,9 @@ public:
     // The comment provided by the user, or the empty string if no comment was provided.
     std::string comment;
 
-    bool fromMongos = false;
+    bool fromMongers = false;
     bool needsMerge = false;
-    bool inMongos = false;
+    bool inMongers = false;
     bool allowDiskUse = false;
     bool bypassDocumentValidation = false;
     bool inMultiDocumentTransaction = false;
@@ -223,7 +223,7 @@ public:
     // implementations on mongerd and mongers, or that only make sense on one of the two.
     // Additionally, putting some of this functionality behind an interface prevents aggregation
     // libraries from having large numbers of dependencies. This pointer is always non-null.
-    std::shared_ptr<MongoProcessInterface> mongerProcessInterface;
+    std::shared_ptr<MongerProcessInterface> mongerProcessInterface;
 
     const TimeZoneDatabase* timeZoneDatabase;
 
@@ -250,7 +250,7 @@ protected:
     static const int kInterruptCheckPeriod = 128;
 
     ExpressionContext(NamespaceString nss,
-                      std::shared_ptr<MongoProcessInterface>,
+                      std::shared_ptr<MongerProcessInterface>,
                       const TimeZoneDatabase* tzDb);
 
     /**

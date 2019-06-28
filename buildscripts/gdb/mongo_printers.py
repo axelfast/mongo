@@ -1,4 +1,4 @@
-"""GDB Pretty-printers for MongoDB."""
+"""GDB Pretty-printers for MongerDB."""
 
 import re
 import struct
@@ -19,7 +19,7 @@ except ImportError as err:
 
 if sys.version_info[0] < 3:
     raise gdb.GdbError(
-        "MongoDB gdb extensions only support Python 3. Your GDB was compiled against Python 2")
+        "MongerDB gdb extensions only support Python 3. Your GDB was compiled against Python 2")
 
 
 def get_unique_ptr(obj):
@@ -497,30 +497,30 @@ def find_match_brackets(search, opening='<', closing='>'):
     return -1
 
 
-class MongoSubPrettyPrinter(gdb.printing.SubPrettyPrinter):
+class MongerSubPrettyPrinter(gdb.printing.SubPrettyPrinter):
     """Sub pretty printer managed by the pretty-printer collection."""
 
     def __init__(self, name, prefix, is_template, printer):
-        """Initialize MongoSubPrettyPrinter."""
-        super(MongoSubPrettyPrinter, self).__init__(name)
+        """Initialize MongerSubPrettyPrinter."""
+        super(MongerSubPrettyPrinter, self).__init__(name)
         self.prefix = prefix
         self.printer = printer
         self.is_template = is_template
 
 
-class MongoPrettyPrinterCollection(gdb.printing.PrettyPrinter):
-    """MongoDB-specific printer printer collection that ignores subtypes.
+class MongerPrettyPrinterCollection(gdb.printing.PrettyPrinter):
+    """MongerDB-specific printer printer collection that ignores subtypes.
 
     It will match 'HashTable<T> but not 'HashTable<T>::iterator' when asked for 'HashTable'.
     """
 
     def __init__(self):
-        """Initialize MongoPrettyPrinterCollection."""
-        super(MongoPrettyPrinterCollection, self).__init__("monger", [])
+        """Initialize MongerPrettyPrinterCollection."""
+        super(MongerPrettyPrinterCollection, self).__init__("monger", [])
 
     def add(self, name, prefix, is_template, printer):
         """Add a subprinter."""
-        self.subprinters.append(MongoSubPrettyPrinter(name, prefix, is_template, printer))
+        self.subprinters.append(MongerSubPrettyPrinter(name, prefix, is_template, printer))
 
     def __call__(self, val):
         """Return matched printer type."""
@@ -550,7 +550,7 @@ class MongoPrettyPrinterCollection(gdb.printing.PrettyPrinter):
 
 def build_pretty_printer():
     """Build a pretty printer."""
-    pp = MongoPrettyPrinterCollection()
+    pp = MongerPrettyPrinterCollection()
     pp.add('BSONObj', 'monger::BSONObj', False, BSONObjPrinter)
     pp.add('Decorable', 'monger::Decorable', True, DecorablePrinter)
     pp.add('Status', 'monger::Status', False, StatusPrinter)
@@ -576,4 +576,4 @@ def build_pretty_printer():
 # Register pretty-printers, replace existing monger printers
 gdb.printing.register_pretty_printer(gdb.current_objfile(), build_pretty_printer(), True)
 
-print("MongoDB GDB pretty-printers loaded")
+print("MongerDB GDB pretty-printers loaded")

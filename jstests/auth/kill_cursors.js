@@ -174,9 +174,9 @@
         tryKill(testB, [['user2', testA], ['user4', testB]], [['admin', admin]], true);
     }
 
-    const mongerd = MongoRunner.runMongod({auth: ""});
+    const mongerd = MongerRunner.runMongerd({auth: ""});
     runTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     const st = new ShardingTest({

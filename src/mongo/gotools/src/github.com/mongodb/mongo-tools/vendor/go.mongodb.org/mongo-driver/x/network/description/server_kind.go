@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -17,7 +17,7 @@ const (
 	RSSecondary ServerKind = 8 + RSMember
 	RSArbiter   ServerKind = 16 + RSMember
 	RSGhost     ServerKind = 32 + RSMember
-	Mongos      ServerKind = 256
+	Mongers      ServerKind = 256
 )
 
 // String implements the fmt.Stringer interface.
@@ -35,8 +35,8 @@ func (kind ServerKind) String() string {
 		return "RSArbiter"
 	case RSGhost:
 		return "RSGhost"
-	case Mongos:
-		return "Mongos"
+	case Mongers:
+		return "Mongers"
 	}
 
 	return "Unknown"

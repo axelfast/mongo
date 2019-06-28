@@ -47,7 +47,7 @@ type bulkError struct {
 // BulkResult holds the results for a bulk operation.
 type BulkResult struct {
 	Matched  int
-	Modified int // Available only for MongoDB 2.6+
+	Modified int // Available only for MongerDB 2.6+
 
 	// Be conservative while we understand exactly how to report these
 	// results in a useful and convenient way, and also how to emulate
@@ -227,7 +227,7 @@ func (b *Bulk) Upsert(pairs ...interface{}) {
 //
 // If an error is reported on an unordered bulk operation, the error value may
 // be an aggregation of all issues observed. As an exception to that, Insert
-// operations running on MongoDB versions prior to 2.6 will report the last
+// operations running on MongerDB versions prior to 2.6 will report the last
 // error only due to a limitation in the wire protocol.
 func (b *Bulk) Run() (*BulkResult, error) {
 	var result BulkResult

@@ -6,7 +6,7 @@
 
     load("jstests/libs/analyze_plan.js");
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd failed to start up");
 
     const testDb = conn.getDB("test");
@@ -172,5 +172,5 @@
     assert.commandWorked(testDb.runCommand({planCacheClear: coll.getName()}));
     assert.eq(0, coll.aggregate([{$planCacheStats: {}}]).itcount());
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

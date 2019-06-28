@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongerexport produces a JSON or CSV export of data stored in a MongoDB instance.
+// Package mongerexport produces a JSON or CSV export of data stored in a MongerDB instance.
 package mongerexport
 
 import (
@@ -48,9 +48,9 @@ const (
 	progressBarWaitTime = time.Second
 )
 
-// MongoExport is a container for the user-specified options and
+// MongerExport is a container for the user-specified options and
 // internal state used for running mongerexport.
-type MongoExport struct {
+type MongerExport struct {
 	// generic monger tool options
 	ToolOptions *options.ToolOptions
 
@@ -88,9 +88,9 @@ type ExportOutput interface {
 	Flush() error
 }
 
-// New constructs a new MongoExport instance from the provided options.
-func New(opts Options) (*MongoExport, error) {
-	exporter := &MongoExport{
+// New constructs a new MongerExport instance from the provided options.
+func New(opts Options) (*MongerExport, error) {
+	exporter := &MongerExport{
 		ToolOptions: opts.ToolOptions,
 		OutputOpts:  opts.OutputFormatOptions,
 		InputOpts:   opts.InputOptions,
@@ -111,7 +111,7 @@ func New(opts Options) (*MongoExport, error) {
 
 	log.Logvf(log.Always, "connected to: %v", opts.URI.ConnectionString)
 
-	isMongos, err := provider.IsMongos()
+	isMongers, err := provider.IsMongers()
 	if err != nil {
 		provider.Close()
 		return nil, util.SetupError{Err: err}
@@ -119,8 +119,8 @@ func New(opts Options) (*MongoExport, error) {
 
 	// warn if we are trying to export from a secondary in a sharded cluster
 	pref := opts.ToolOptions.ReadPreference
-	if isMongos && pref != nil && pref.Mode() != readpref.PrimaryMode {
-		log.Logvf(log.Always, db.WarningNonPrimaryMongosConnection)
+	if isMongers && pref != nil && pref.Mode() != readpref.PrimaryMode {
+		log.Logvf(log.Always, db.WarningNonPrimaryMongersConnection)
 	}
 
 	progressManager := progress.NewBarWriter(log.Writer(0), progressBarWaitTime, progressBarLength, false)
@@ -131,8 +131,8 @@ func New(opts Options) (*MongoExport, error) {
 	return exporter, nil
 }
 
-// Close cleans up all the resources for a MongoExport instance.
-func (exp *MongoExport) Close() {
+// Close cleans up all the resources for a MongerExport instance.
+func (exp *MongerExport) Close() {
 	exp.SessionProvider.Close()
 	if barWriter, ok := exp.ProgressManager.(*progress.BarWriter); ok {
 		barWriter.Stop()
@@ -141,7 +141,7 @@ func (exp *MongoExport) Close() {
 
 // validateSettings returns an error if any settings specified on the command line
 // were invalid, or nil if they are valid.
-func (exp *MongoExport) validateSettings() error {
+func (exp *MongerExport) validateSettings() error {
 	// Namespace must have a valid database if none is specified,
 	// use 'test'
 	if exp.ToolOptions.Namespace.DB == "" {
@@ -208,7 +208,7 @@ func (exp *MongoExport) validateSettings() error {
 
 // GetOutputWriter opens and returns an io.WriteCloser for the output
 // options or nil if none is set. The caller is responsible for closing it.
-func (exp *MongoExport) GetOutputWriter() (io.WriteCloser, error) {
+func (exp *MongerExport) GetOutputWriter() (io.WriteCloser, error) {
 	if exp.OutputOpts.OutputFile != "" {
 		// If the directory in which the output file is to be
 		// written does not exist, create it
@@ -256,7 +256,7 @@ func makeFieldSelector(fields string) bson.M {
 // If there is a query and no limit then it returns 0, because it's too expensive to count the query.
 // If the collection is a view then it returns 0, because it is too expensive to count the view.
 // Otherwise it returns the count minus the skip
-func (exp *MongoExport) getCount() (int64, error) {
+func (exp *MongerExport) getCount() (int64, error) {
 	session, err := exp.SessionProvider.GetSession()
 	if err != nil {
 		return 0, err
@@ -293,7 +293,7 @@ func (exp *MongoExport) getCount() (int64, error) {
 // getCursor returns a cursor that can be iterated over to get all the documents
 // to export, based on the options given to mongerexport. Also returns the
 // associated session, so that it can be closed once the cursor is used up.
-func (exp *MongoExport) getCursor() (*monger.Cursor, error) {
+func (exp *MongerExport) getCursor() (*monger.Cursor, error) {
 	findOpts := driverOpts.Find()
 
 	if exp.InputOpts != nil && exp.InputOpts.Sort != "" {
@@ -349,7 +349,7 @@ func (exp *MongoExport) getCursor() (*monger.Cursor, error) {
 
 // verifyCollectionExists checks if the collection exists. If it does, a copy of the collection info will be cached
 // on the receiver. If the collection does not exist and AssertExists was specified, a non-nil error is returned.
-func (exp *MongoExport) verifyCollectionExists() (bool, error) {
+func (exp *MongerExport) verifyCollectionExists() (bool, error) {
 	session, err := exp.SessionProvider.GetSession()
 	if err != nil {
 		return false, err
@@ -376,7 +376,7 @@ func (exp *MongoExport) verifyCollectionExists() (bool, error) {
 
 // Internal function that handles exporting to the given writer. Used primarily
 // for testing, because it bypasses writing to the file system.
-func (exp *MongoExport) exportInternal(out io.Writer) (int64, error) {
+func (exp *MongerExport) exportInternal(out io.Writer) (int64, error) {
 	// Check if the collection exists before starting export
 	exists, err := exp.verifyCollectionExists()
 	if err != nil || !exists {
@@ -447,7 +447,7 @@ func (exp *MongoExport) exportInternal(out io.Writer) (int64, error) {
 // Export executes the entire export operation. It returns an integer of the count
 // of documents successfully exported, and a non-nil error if something went wrong
 // during the export operation.
-func (exp *MongoExport) Export(out io.Writer) (int64, error) {
+func (exp *MongerExport) Export(out io.Writer) (int64, error) {
 	count, err := exp.exportInternal(out)
 	return count, err
 }
@@ -455,7 +455,7 @@ func (exp *MongoExport) Export(out io.Writer) (int64, error) {
 // getExportOutput returns an implementation of ExportOutput which can handle
 // transforming BSON documents into the appropriate output format and writing
 // them to an output stream.
-func (exp *MongoExport) getExportOutput(out io.Writer) (ExportOutput, error) {
+func (exp *MongerExport) getExportOutput(out io.Writer) (ExportOutput, error) {
 	if exp.OutputOpts.Type == CSV {
 		// TODO what if user specifies *both* --fields and --fieldFile?
 		var fields []string

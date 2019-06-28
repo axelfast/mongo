@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -88,8 +88,8 @@ protected:
 };
 
 /**
- * Class representing the context of a service, such as a MongoD database service or
- * a MongoS routing service.
+ * Class representing the context of a service, such as a MongerD database service or
+ * a MongerS routing service.
  *
  * A ServiceContext is the root of a hierarchy of contexts.  A ServiceContext owns
  * zero or more Clients, which in turn each own OperationContexts.

@@ -15,7 +15,7 @@ load("jstests/free_mon/libs/free_mon.js");
         verbose: 1,
     };
 
-    const conn = MongoRunner.runMongod(options);
+    const conn = MongerRunner.runMongerd(options);
     assert.neq(null, conn, 'mongerd was unable to start up');
 
     mock_web.waitRegisters(1);
@@ -29,7 +29,7 @@ load("jstests/free_mon/libs/free_mon.js");
 
     assert.eq(stats.registers, 1);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     mock_web.stop();
 })();

@@ -79,7 +79,7 @@ uploadArchives {
                 developers {
                     developer {
                         id 'mongerdb'
-                        name 'MongoDB Inc.'
+                        name 'MongerDB Inc.'
                         email 'build@mongerdb.com'
                     }
                 }

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,7 +46,7 @@ class OperationContext;
 
 /**
  * WatchdogDeathCallback is used by the watchdog component to terminate the process. It is expected
- * to bypass MongoDB's normal shutdown process. It should not make any syscalls other then to
+ * to bypass MongerDB's normal shutdown process. It should not make any syscalls other then to
  * exit/terminate the process.
  *
  * It is pluggable for testing purposes.

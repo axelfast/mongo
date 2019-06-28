@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -58,14 +58,14 @@
 #endif
 
 namespace monger {
-using MongoEmbeddedStatusImpl = StatusForAPI<monger_embedded_v1_error>;
+using MongerEmbeddedStatusImpl = StatusForAPI<monger_embedded_v1_error>;
 
 /**
  * C interfaces that use enterCXX() must provide a translateException() function that converts any
  * possible exception into a StatusForAPI<> object.
  */
-static MongoEmbeddedStatusImpl translateException(
-    stdx::type_identity<MongoEmbeddedStatusImpl>) try {
+static MongerEmbeddedStatusImpl translateException(
+    stdx::type_identity<MongerEmbeddedStatusImpl>) try {
     throw;
 } catch (const ExceptionFor<ErrorCodes::ReentrancyNotAllowed>& ex) {
     return {MONGO_EMBEDDED_V1_ERROR_REENTRANCY_NOT_ALLOWED, ex.code(), ex.what()};
@@ -92,7 +92,7 @@ static MongoEmbeddedStatusImpl translateException(
  * We use an out param instead of returning the StatusForAPI<> object so as to avoid a std::string
  * copy that may allocate memory.
  */
-static void translateExceptionFallback(MongoEmbeddedStatusImpl& status) noexcept {
+static void translateExceptionFallback(MongerEmbeddedStatusImpl& status) noexcept {
     status.error = MONGO_EMBEDDED_V1_ERROR_IN_REPORTING_ERROR;
     status.exception_code = -1;
     setErrorMessageNoAlloc(status.what);
@@ -100,7 +100,7 @@ static void translateExceptionFallback(MongoEmbeddedStatusImpl& status) noexcept
 }  // namespace monger
 
 struct monger_embedded_v1_status {
-    monger::MongoEmbeddedStatusImpl statusImpl;
+    monger::MongerEmbeddedStatusImpl statusImpl;
 };
 
 struct monger_embedded_v1_lib {
@@ -128,7 +128,7 @@ struct monger_embedded_v1_lib {
 
 namespace monger {
 namespace {
-MongoEmbeddedStatusImpl* getStatusImpl(monger_embedded_v1_status* status) {
+MongerEmbeddedStatusImpl* getStatusImpl(monger_embedded_v1_status* status) {
     return status ? &status->statusImpl : nullptr;
 }
 
@@ -162,7 +162,7 @@ struct monger_embedded_v1_instance {
         if (!this->serviceContext) {
             throw ::monger::MobileException{
                 MONGO_EMBEDDED_V1_ERROR_DB_INITIALIZATION_FAILED,
-                "The MongoDB Embedded Library Failed to initialize the Service Context"};
+                "The MongerDB Embedded Library Failed to initialize the Service Context"};
         }
 
         this->parentLib->databaseCount.addAndFetch(1);
@@ -217,7 +217,7 @@ monger_embedded_v1_lib* capi_lib_init(monger_embedded_v1_init_params const* para
     if (library) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_LIBRARY_ALREADY_INITIALIZED,
-            "Cannot initialize the MongoDB Embedded Library when it is already initialized."};
+            "Cannot initialize the MongerDB Embedded Library when it is already initialized."};
     }
 
     auto lib = std::make_unique<monger_embedded_v1_lib>();
@@ -259,18 +259,18 @@ void capi_lib_fini(monger_embedded_v1_lib* const lib) {
     if (!lib) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_INVALID_LIB_HANDLE,
-            "Cannot close a `NULL` pointer referencing a MongoDB Embedded Library Instance"};
+            "Cannot close a `NULL` pointer referencing a MongerDB Embedded Library Instance"};
     }
 
     if (!library) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_LIBRARY_NOT_INITIALIZED,
-            "Cannot close the MongoDB Embedded Library when it is not initialized"};
+            "Cannot close the MongerDB Embedded Library when it is not initialized"};
     }
 
     if (library.get() != lib) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_INVALID_LIB_HANDLE,
-                              "Invalid MongoDB Embedded Library handle."};
+                              "Invalid MongerDB Embedded Library handle."};
     }
 
     // This check is not possible to 100% guarantee.  It is a best effort.  The documentation of
@@ -279,7 +279,7 @@ void capi_lib_fini(monger_embedded_v1_lib* const lib) {
     if (lib->databaseCount.load() > 0) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_HAS_DB_HANDLES_OPEN,
-            "Cannot close the MongoDB Embedded Library when it has database handles still open."};
+            "Cannot close the MongerDB Embedded Library when it has database handles still open."};
     }
 
     library = nullptr;
@@ -289,19 +289,19 @@ monger_embedded_v1_instance* instance_new(monger_embedded_v1_lib* const lib,
                                          const char* const yaml_config) {
     if (!library) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_LIBRARY_NOT_INITIALIZED,
-                              "Cannot create a new database handle when the MongoDB Embedded "
+                              "Cannot create a new database handle when the MongerDB Embedded "
                               "Library is not yet initialized."};
     }
 
     if (library.get() != lib) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_INVALID_LIB_HANDLE,
-                              "Cannot create a new database handle when the MongoDB Embedded "
+                              "Cannot create a new database handle when the MongerDB Embedded "
                               "Library is not yet initialized."};
     }
 
     if (lib->onlyDB) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_DB_MAX_OPEN,
-                              "The maximum number of permitted database handles for the MongoDB "
+                              "The maximum number of permitted database handles for the MongerDB "
                               "Embedded Library have been opened."};
     }
 
@@ -313,26 +313,26 @@ monger_embedded_v1_instance* instance_new(monger_embedded_v1_lib* const lib,
 void instance_destroy(monger_embedded_v1_instance* const db) {
     if (!library) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_LIBRARY_NOT_INITIALIZED,
-                              "Cannot destroy a database handle when the MongoDB Embedded Library "
+                              "Cannot destroy a database handle when the MongerDB Embedded Library "
                               "is not yet initialized."};
     }
 
     if (!db) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_INVALID_DB_HANDLE,
-            "Cannot close a `NULL` pointer referencing a MongoDB Embedded Database"};
+            "Cannot close a `NULL` pointer referencing a MongerDB Embedded Database"};
     }
 
     if (db != library->onlyDB.get()) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_INVALID_DB_HANDLE,
-            "Cannot close the specified MongoDB Embedded Database, as it is not a valid instance."};
+            "Cannot close the specified MongerDB Embedded Database, as it is not a valid instance."};
     }
 
     if (db->clientCount.load() > 0) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_DB_CLIENTS_OPEN,
-            "Cannot close a MongoDB Embedded Database instance while it has open clients"};
+            "Cannot close a MongerDB Embedded Database instance while it has open clients"};
     }
 
     library->onlyDB = nullptr;
@@ -341,19 +341,19 @@ void instance_destroy(monger_embedded_v1_instance* const db) {
 monger_embedded_v1_client* client_new(monger_embedded_v1_instance* const db) {
     if (!library) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_LIBRARY_NOT_INITIALIZED,
-                              "Cannot create a new client handle when the MongoDB Embedded Library "
+                              "Cannot create a new client handle when the MongerDB Embedded Library "
                               "is not yet initialized."};
     }
 
     if (!db) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_INVALID_DB_HANDLE,
-                              "Cannot use a `NULL` pointer referencing a MongoDB Embedded Database "
+                              "Cannot use a `NULL` pointer referencing a MongerDB Embedded Database "
                               "when creating a new client"};
     }
 
     if (db != library->onlyDB.get()) {
         throw MobileException{MONGO_EMBEDDED_V1_ERROR_INVALID_DB_HANDLE,
-                              "The specified MongoDB Embedded Database instance cannot be used to "
+                              "The specified MongerDB Embedded Database instance cannot be used to "
                               "create a new client because it is invalid."};
     }
 
@@ -363,14 +363,14 @@ monger_embedded_v1_client* client_new(monger_embedded_v1_instance* const db) {
 void client_destroy(monger_embedded_v1_client* const client) {
     if (!library) {
         throw MobileException(MONGO_EMBEDDED_V1_ERROR_LIBRARY_NOT_INITIALIZED,
-                              "Cannot destroy a database handle when the MongoDB Embedded Library "
+                              "Cannot destroy a database handle when the MongerDB Embedded Library "
                               "is not yet initialized.");
     }
 
     if (!client) {
         throw MobileException{
             MONGO_EMBEDDED_V1_ERROR_INVALID_CLIENT_HANDLE,
-            "Cannot destroy a `NULL` pointer referencing a MongoDB Embedded Database Client"};
+            "Cannot destroy a `NULL` pointer referencing a MongerDB Embedded Database Client"};
     }
 
     delete client;

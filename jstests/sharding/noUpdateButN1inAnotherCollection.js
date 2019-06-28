@@ -49,7 +49,7 @@ var command = 'printjson(db.coll.update({ _id: 9 }, { $set: { a: "9" }}, true));
 
 // without this first query through monger, the second time doesn't "fail"
 debug("Try query first time");
-runMongoProgram("monger", "--quiet", "--port", "" + s._mongers[1].port, "--eval", command);
+runMongerProgram("monger", "--quiet", "--port", "" + s._mongers[1].port, "--eval", command);
 
 var res = mongersB.getDB("test").coll2.update({_id: 0}, {$set: {c: "333"}});
 assert.eq(0, res.nModified);

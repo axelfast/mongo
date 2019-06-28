@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    var mongerd = MongoRunner.runMongod({auth: ""});
+    var mongerd = MongerRunner.runMongerd({auth: ""});
     var db = mongerd.getDB("admin");
     db.createUser({user: "root", pwd: "root", roles: ["userAdminAnyDatabase"]});
     db.auth("root", "root");
@@ -18,7 +18,7 @@
     assert.eq(expectedOnlyRoot, readUserCache());
 
     /* This is broken because of SERVER-36384
-    var newConn = new Mongo(mongerd.name);
+    var newConn = new Monger(mongerd.name);
     assert.eq(newConn.getDB("admin").auth("readOnlyUser", "foobar"), 1);
 
     const expectedBothActive = [
@@ -42,6 +42,6 @@
         return friendlyEqual(expectedReadOnlyInactive, readUserCache());
     });
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
     awaitShell({checkExitSuccess: false});
 })();

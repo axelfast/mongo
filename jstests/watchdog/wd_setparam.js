@@ -30,9 +30,9 @@
     // Negative: set it the min value + 1 but fail since it was not enabled.
     assert.commandFailed(setparam(admin, {"watchdogPeriodSeconds": 61}));
 
-    // Now test MongoD with it enabled at startup
+    // Now test MongerD with it enabled at startup
     //
-    const conn = MongoRunner.runMongod({setParameter: "watchdogPeriodSeconds=60"});
+    const conn = MongerRunner.runMongerd({setParameter: "watchdogPeriodSeconds=60"});
     assert.neq(null, conn, 'mongerd was unable to start up');
 
     const admin2 = conn.getDB("admin");
@@ -55,6 +55,6 @@
     // Positive: enable it again
     assert.commandWorked(setparam(admin2, {"watchdogPeriodSeconds": 60}));
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
 })();

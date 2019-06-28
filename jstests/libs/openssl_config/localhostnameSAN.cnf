@@ -14,7 +14,7 @@ req_extensions = localhostnameSAN_extensions
 C = US
 ST = New York
 L = New York City
-O  = MongoDB
+O  = MongerDB
 OU = Kernel
 CN = santesthostname.com
 

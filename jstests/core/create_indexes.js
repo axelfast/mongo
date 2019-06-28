@@ -6,10 +6,10 @@
 (function() {
     'use strict';
 
-    var isMongos = ("isdbgrid" == db.runCommand("ismaster").msg);
+    var isMongers = ("isdbgrid" == db.runCommand("ismaster").msg);
 
     var extractResult = function(obj) {
-        if (!isMongos)
+        if (!isMongers)
             return obj;
 
         // Sample mongers format:
@@ -37,8 +37,8 @@
         return result;
     };
 
-    var checkImplicitCreate = function(createIndexResult, isMongos) {
-        let allowImplicit = !isMongos;
+    var checkImplicitCreate = function(createIndexResult, isMongers) {
+        let allowImplicit = !isMongers;
         assert.eq(allowImplicit, createIndexResult.createdCollectionAutomatically);
     };
 
@@ -50,7 +50,7 @@
     var res = assert.commandWorked(
         collDbNotExist.runCommand('createIndexes', {indexes: [{key: {x: 1}, name: 'x_1'}]}));
     res = extractResult(res);
-    checkImplicitCreate(res, isMongos);
+    checkImplicitCreate(res, isMongers);
     assert.eq(1, res.numIndexesBefore);
     assert.eq(2, res.numIndexesAfter);
     assert.isnull(res.note,
@@ -62,7 +62,7 @@
     var res = assert.commandWorked(
         t.runCommand('createIndexes', {indexes: [{key: {x: 1}, name: 'x_1'}]}));
     res = extractResult(res);
-    checkImplicitCreate(res, isMongos);
+    checkImplicitCreate(res, isMongers);
     assert.eq(1, res.numIndexesBefore);
     assert.eq(2, res.numIndexesAfter);
     assert.isnull(res.note,

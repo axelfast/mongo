@@ -6,7 +6,7 @@ from ... import core
 from ... import utils
 
 
-class MongosTestCase(interface.ProcessTestCase):
+class MongersTestCase(interface.ProcessTestCase):
     """A TestCase which runs a mongers binary with the given parameters."""
 
     REGISTERED_NAME = "mongers_test"

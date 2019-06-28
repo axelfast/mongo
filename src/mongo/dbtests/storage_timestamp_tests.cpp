@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -1594,7 +1594,7 @@ public:
         auto service = _opCtx->getServiceContext();
         auto sessionCatalog = SessionCatalog::get(service);
         sessionCatalog->reset_forTest();
-        MongoDSessionCatalog::onStepUp(_opCtx);
+        MongerDSessionCatalog::onStepUp(_opCtx);
 
         NamespaceString nss("unittests.PrimarySetsMultikeyInsideMultiDocumentTransaction");
         reset(nss);
@@ -1630,7 +1630,7 @@ public:
         _opCtx->setTxnNumber(1);
 
         // Check out the session.
-        MongoDOperationContextSession ocs(_opCtx);
+        MongerDOperationContextSession ocs(_opCtx);
 
         auto txnParticipant = TransactionParticipant::get(_opCtx);
         ASSERT(txnParticipant);
@@ -2795,7 +2795,7 @@ public:
         auto service = _opCtx->getServiceContext();
         auto sessionCatalog = SessionCatalog::get(service);
         sessionCatalog->reset_forTest();
-        MongoDSessionCatalog::onStepUp(_opCtx);
+        MongerDSessionCatalog::onStepUp(_opCtx);
 
         reset(nss);
         UUID ui = UUID::gen();
@@ -2881,7 +2881,7 @@ protected:
     Timestamp beforeTxnTs;
     Timestamp commitEntryTs;
 
-    boost::optional<MongoDOperationContextSession> ocs;
+    boost::optional<MongerDOperationContextSession> ocs;
 };
 
 class MultiDocumentTransaction : public MultiDocumentTransactionTest {

@@ -12,7 +12,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     const x509_options = {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT};
 
-    const conn = MongoRunner.runMongod(x509_options);
+    const conn = MongerRunner.runMongerd(x509_options);
     const test = conn.getDB("test");
     const collection = test.coll;
 
@@ -69,7 +69,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     const failTestCases = [null, undefined, MinKey(), MaxKey(), DBRef("test", "test", "test")];
 
-    const shell = Mongo(conn.host, clientSideFLEOptions);
+    const shell = Monger(conn.host, clientSideFLEOptions);
     const keyVault = shell.getKeyVault();
 
     // Testing for every combination of (kmsType, algorithm, javascriptVariable)
@@ -110,6 +110,6 @@ load('jstests/ssl/libs/ssl_helpers.js');
         }
     }
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
     mock_kms.stop();
 }());

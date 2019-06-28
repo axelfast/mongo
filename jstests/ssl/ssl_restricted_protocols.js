@@ -10,13 +10,13 @@
 
     function runTestWithoutSubset(subset) {
         const disabledProtocols = subset.join(",");
-        const conn = MongoRunner.runMongod({
+        const conn = MongerRunner.runMongerd({
             sslMode: 'allowSSL',
             sslPEMKeyFile: SERVER_CERT,
             sslDisabledProtocols: disabledProtocols
         });
 
-        const exitStatus = runMongoProgram('monger',
+        const exitStatus = runMongerProgram('monger',
                                            '--ssl',
                                            '--sslAllowInvalidHostnames',
                                            '--sslPEMKeyFile',
@@ -30,7 +30,7 @@
 
         assert.eq(0, exitStatus, "");
 
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     }
 
     runTestWithoutSubset(["TLS1_0"]);

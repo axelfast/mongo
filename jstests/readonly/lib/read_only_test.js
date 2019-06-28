@@ -22,12 +22,12 @@ var StandaloneFixture, ShardedFixture, runReadOnlyTest, zip2, cycleN;
     StandaloneFixture = function() {};
 
     StandaloneFixture.prototype.runLoadPhase = function runLoadPhase(test) {
-        this.mongerd = MongoRunner.runMongod({});
+        this.mongerd = MongerRunner.runMongerd({});
         this.dbpath = this.mongerd.dbpath;
 
         test.load(this.mongerd.getDB("test")[test.name]);
         assert.commandWorked(this.mongerd.getDB("local").dropDatabase());
-        MongoRunner.stopMongod(this.mongerd);
+        MongerRunner.stopMongerd(this.mongerd);
     };
 
     StandaloneFixture.prototype.runExecPhase = function runExecPhase(test) {
@@ -36,12 +36,12 @@ var StandaloneFixture, ShardedFixture, runReadOnlyTest, zip2, cycleN;
 
             var options = {queryableBackupMode: "", noCleanData: true, dbpath: this.dbpath};
 
-            this.mongerd = MongoRunner.runMongod(options);
+            this.mongerd = MongerRunner.runMongerd(options);
             assert.neq(this.mongerd, null);
 
             test.exec(this.mongerd.getDB("test")[test.name]);
 
-            MongoRunner.stopMongod(this.mongerd);
+            MongerRunner.stopMongerd(this.mongerd);
         } finally {
             makeDirectoryWritable(this.dbpath);
         }
@@ -101,14 +101,14 @@ var StandaloneFixture, ShardedFixture, runReadOnlyTest, zip2, cycleN;
                 };
 
                 assert.commandWorked(this.shardingTest["d" + i].getDB("local").dropDatabase());
-                this.shardingTest.restartMongod(i, opts, () => {
+                this.shardingTest.restartMongerd(i, opts, () => {
                     makeDirectoryReadOnly(this.paths[i]);
                 });
             }
 
             jsTest.log("restarting mongers...");
 
-            this.shardingTest.restartMongos(0);
+            this.shardingTest.restartMongers(0);
 
             test.exec(this.shardingTest.getDB("test")[test.name]);
 

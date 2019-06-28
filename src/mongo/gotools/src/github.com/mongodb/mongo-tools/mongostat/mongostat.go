@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -23,13 +23,13 @@ import (
 	"go.mongerdb.org/monger-driver/bson"
 )
 
-// MongoStat is a container for the user-specified options and
+// MongerStat is a container for the user-specified options and
 // internal cluster state used for running mongerstat.
-type MongoStat struct {
+type MongerStat struct {
 	// Generic monger tool options.
 	Options *options.ToolOptions
 
-	// Mongostat-specific output options.
+	// Mongerstat-specific output options.
 	StatOptions *StatOptions
 
 	// How long to sleep between printing the rows, and polling the server.
@@ -318,7 +318,7 @@ func (node *NodeMonitor) Poll(discover chan string, checkShards bool) (*status.S
 	}
 	node.alias = stat.Host
 	stat.Host = node.host
-	if discover != nil && stat != nil && status.IsMongos(stat) && checkShards {
+	if discover != nil && stat != nil && status.IsMongers(stat) && checkShards {
 		log.Logvf(log.DebugLow, "checking config database to discover shards")
 		shardCursor, err := session.Database("config").Collection("shards").Find(nil, bson.M{}, nil)
 		if err != nil {
@@ -370,7 +370,7 @@ func parseHostPort(fullHostName string) (string, string) {
 
 // AddNewNode adds a new host name to be monitored and spawns the necessary
 // goroutine to collect data from it.
-func (mstat *MongoStat) AddNewNode(fullhost string) error {
+func (mstat *MongerStat) AddNewNode(fullhost string) error {
 	mstat.nodesLock.Lock()
 	defer mstat.nodesLock.Unlock()
 
@@ -399,7 +399,7 @@ func (mstat *MongoStat) AddNewNode(fullhost string) error {
 
 // Run is the top-level function that starts the monitoring
 // and discovery goroutines
-func (mstat *MongoStat) Run() error {
+func (mstat *MongerStat) Run() error {
 	if mstat.Discovered != nil {
 		go func() {
 			for {

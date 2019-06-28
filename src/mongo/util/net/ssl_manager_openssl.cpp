@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -179,7 +179,7 @@ bool enableECDHE(SSL_CTX* const ctx) {
     SSL_CTX_set_ecdh_auto(ctx, true);
 #elif OPENSSL_VERSION_NUMBER < 0x10100000L || \
     (defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x2070000fL)
-    // SSL_CTRL_SET_ECDH_AUTO is defined to be 94 in OpenSSL 1.0.2. On RHEL 7, Mongo could be built
+    // SSL_CTRL_SET_ECDH_AUTO is defined to be 94 in OpenSSL 1.0.2. On RHEL 7, Monger could be built
     // against 1.0.1 but actually linked with 1.0.2 at runtime. The define may not be present, but
     // this call could actually enable auto ecdh. We also ensure the OpenSSL version is sufficiently
     // old to protect against future versions where SSL_CTX_set_ecdh_auto could be removed and 94
@@ -1543,7 +1543,7 @@ StatusWith<SSLPeerInfo> SSLManagerOpenSSL::parseAndValidatePeerCertificate(
         return swPeerCertificateRoles.getStatus();
     }
 
-    // If this is an SSL client context (on a MongoDB server or client)
+    // If this is an SSL client context (on a MongerDB server or client)
     // perform hostname validation of the remote server
     if (remoteHost.empty()) {
         return SSLPeerInfo(peerSubject, sniName, std::move(swPeerCertificateRoles.getValue()));

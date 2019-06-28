@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -177,9 +177,9 @@ public:
 
     /**
      * Returns whether the storage engine supports its own locking locking below the collection
-     * level. If the engine returns true, MongoDB will acquire intent locks down to the
+     * level. If the engine returns true, MongerDB will acquire intent locks down to the
      * collection level and will assume that the engine will ensure consistency at the level of
-     * documents. If false, MongoDB will lock the entire collection in Shared/Exclusive mode
+     * documents. If false, MongerDB will lock the entire collection in Shared/Exclusive mode
      * for read/write operations respectively.
      */
     virtual bool supportsDocLocking() const = 0;
@@ -245,7 +245,7 @@ public:
      * For Storage engines that implement beginBackup the _inBackupMode variable is provided
      * to avoid multiple instance enterting/leaving backup concurrently.
      *
-     * If this function returns an OK status, MongoDB can call endBackup to signal the storage
+     * If this function returns an OK status, MongerDB can call endBackup to signal the storage
      * engine that filesystem writes may continue. This function should return a non-OK status if
      * filesystem changes cannot be stopped to allow for online backup. If the function should be
      * retried, returns a non-OK status. This function may throw a WriteConflictException, which
@@ -302,7 +302,7 @@ public:
     /**
      * This method will be called before there is a clean shutdown.  Storage engines should
      * override this method if they have clean-up to do that is different from unclean shutdown.
-     * MongoDB will not call into the storage subsystem after calling this function.
+     * MongerDB will not call into the storage subsystem after calling this function.
      *
      * On error, the storage engine should assert and crash.
      * There is intentionally no uncleanShutdown().
@@ -446,7 +446,7 @@ public:
 
     /**
      * Sets a callback which returns the timestamp of the oldest oplog entry involved in an
-     * active MongoDB transaction. The storage engine calls this function to determine how much
+     * active MongerDB transaction. The storage engine calls this function to determine how much
      * oplog it must preserve.
      */
     virtual void setOldestActiveTransactionTimestampCallback(

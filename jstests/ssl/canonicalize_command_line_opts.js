@@ -33,7 +33,7 @@
         sslAllowInvalidHostnames: '',
     };
 
-    const mongerd = MongoRunner.runMongod(options);
+    const mongerd = MongerRunner.runMongerd(options);
     runTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

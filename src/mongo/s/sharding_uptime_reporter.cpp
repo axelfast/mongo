@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -63,13 +63,13 @@ void reportStatus(OperationContext* opCtx,
                   const std::string& instanceId,
                   const std::string& hostName,
                   const Timer& upTimeTimer) {
-    MongosType mType;
+    MongersType mType;
     mType.setName(instanceId);
     mType.setPing(jsTime());
     mType.setUptime(upTimeTimer.seconds());
     // balancer is never active in mongers. Here for backwards compatibility only.
     mType.setWaiting(true);
-    mType.setMongoVersion(VersionInfoInterface::instance().version().toString());
+    mType.setMongerVersion(VersionInfoInterface::instance().version().toString());
     mType.setAdvisoryHostFQDNs(
         getHostFQDNs(hostName, HostnameCanonicalizationMode::kForwardAndReverse));
 
@@ -77,8 +77,8 @@ void reportStatus(OperationContext* opCtx,
         Grid::get(opCtx)
             ->catalogClient()
             ->updateConfigDocument(opCtx,
-                                   MongosType::ConfigNS,
-                                   BSON(MongosType::name(instanceId)),
+                                   MongersType::ConfigNS,
+                                   BSON(MongersType::name(instanceId)),
                                    BSON("$set" << mType.toBSON()),
                                    true,
                                    ShardingCatalogClient::kMajorityWriteConcern)

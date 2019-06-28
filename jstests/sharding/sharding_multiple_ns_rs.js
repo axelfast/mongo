@@ -27,7 +27,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     s.splitAt("test.foo", {_id: 50});
 
-    var other = new Mongo(s.s0.name);
+    var other = new Monger(s.s0.name);
     var dbother = other.getDB("test");
 
     assert.eq(5, db.foo.findOne({_id: 5}).x);
@@ -40,8 +40,8 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     s.rs0.stopMaster(15);
 
     // Wait for mongers and the config server primary to recognize the new shard primary
-    awaitRSClientHosts(db.getMongo(), s.rs0.getPrimary(), {ismaster: true});
-    awaitRSClientHosts(db.getMongo(), s.configRS.getPrimary(), {ismaster: true});
+    awaitRSClientHosts(db.getMonger(), s.rs0.getPrimary(), {ismaster: true});
+    awaitRSClientHosts(db.getMonger(), s.configRS.getPrimary(), {ismaster: true});
 
     assert.eq(5, db.foo.findOne({_id: 5}).x);
     assert.eq(5, db.bar.findOne({_id: 5}).x);
@@ -49,7 +49,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     assert.commandWorked(s.s0.adminCommand({shardcollection: "test.bar", key: {_id: 1}}));
     s.splitAt("test.bar", {_id: 50});
 
-    var yetagain = new Mongo(s.s.name);
+    var yetagain = new Monger(s.s.name);
     assert.eq(5, yetagain.getDB("test").bar.findOne({_id: 5}).x);
     assert.eq(5, yetagain.getDB("test").foo.findOne({_id: 5}).x);
 

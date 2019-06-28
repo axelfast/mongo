@@ -89,7 +89,7 @@ def run(port):
 def main():
     """Main Method."""
 
-    parser = argparse.ArgumentParser(description='MongoDB Mock Config Expandsion REST Endpoint.')
+    parser = argparse.ArgumentParser(description='MongerDB Mock Config Expandsion REST Endpoint.')
 
     parser.add_argument('-p', '--port', type=int, default=8000, help="Port to listen on")
 

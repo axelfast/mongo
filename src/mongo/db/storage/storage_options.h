@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -91,7 +91,7 @@ struct StorageGlobalParams {
     bool directoryperdb;
 
     // --syncdelay
-    // Controls how much time can pass before MongoDB flushes data to the data files
+    // Controls how much time can pass before MongerDB flushes data to the data files
     // via an fsync operation.
     // Do not set this value on production systems.
     // In almost every situation, you should use the default setting.
@@ -99,14 +99,14 @@ struct StorageGlobalParams {
     AtomicDouble syncdelay;  // seconds between fsyncs
 
     // --queryableBackupMode
-    // Puts MongoD into "read-only" mode. MongoD will not write any data to the underlying
+    // Puts MongerD into "read-only" mode. MongerD will not write any data to the underlying
     // filesystem. Note that read operations may require writes. For example, a sort on a large
     // dataset may fail if it requires spilling to disk.
     bool readOnly;
 
     // --groupCollections
-    // Dictate to the storage engine that it should attempt to create new MongoDB collections from
-    // an existing underlying MongoDB database level resource if possible. This can improve
+    // Dictate to the storage engine that it should attempt to create new MongerDB collections from
+    // an existing underlying MongerDB database level resource if possible. This can improve
     // workloads that rely heavily on creating many collections within a database.
     bool groupCollections;
 

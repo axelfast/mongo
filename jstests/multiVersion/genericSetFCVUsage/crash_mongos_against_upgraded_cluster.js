@@ -20,25 +20,25 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     // Assert that a mongers using the 'last-stable' binary version will crash when connecting to a
     // cluster running on the 'latest' binary version with the 'latest' FCV.
-    let lastStableMongos =
-        MongoRunner.runMongos({configdb: st.configRS.getURL(), binVersion: lastStable});
+    let lastStableMongers =
+        MongerRunner.runMongers({configdb: st.configRS.getURL(), binVersion: lastStable});
 
-    assert(!lastStableMongos);
+    assert(!lastStableMongers);
 
     // Assert that a mongers using the 'last-stable' binary version will successfully connect to a
     // cluster running on the 'latest' binary version with the 'last-stable' FCV.
     assert.commandWorked(mongersAdminDB.runCommand({setFeatureCompatibilityVersion: lastStableFCV}));
-    lastStableMongos =
-        MongoRunner.runMongos({configdb: st.configRS.getURL(), binVersion: lastStable});
+    lastStableMongers =
+        MongerRunner.runMongers({configdb: st.configRS.getURL(), binVersion: lastStable});
     assert.neq(null,
-               lastStableMongos,
+               lastStableMongers,
                "mongers was unable to start up with binary version=" + lastStable +
                    " and connect to FCV=" + lastStableFCV + " cluster");
 
     // Ensure that the 'lastStable' binary mongers can perform reads and writes to the shards in the
     // cluster.
-    assert.writeOK(lastStableMongos.getDB("test").foo.insert({x: 1}));
-    let foundDoc = lastStableMongos.getDB("test").foo.findOne({x: 1});
+    assert.writeOK(lastStableMongers.getDB("test").foo.insert({x: 1}));
+    let foundDoc = lastStableMongers.getDB("test").foo.findOne({x: 1});
     assert.neq(null, foundDoc);
     assert.eq(1, foundDoc.x, tojson(foundDoc));
 
@@ -46,10 +46,10 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     // 'latestFCV'.
     assert.commandWorked(mongersAdminDB.runCommand({setFeatureCompatibilityVersion: latestFCV}));
     let error = assert.throws(function() {
-        lastStableMongos.getDB("test").foo.insert({x: 1});
+        lastStableMongers.getDB("test").foo.insert({x: 1});
     });
     assert(isNetworkError(error));
-    assert(!lastStableMongos.conn);
+    assert(!lastStableMongers.conn);
 
     st.stop();
 })();

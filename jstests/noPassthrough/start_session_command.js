@@ -11,7 +11,7 @@
     var result;
     const request = {startSession: 1};
 
-    conn = MongoRunner.runMongod({setParameter: {maxSessions: 2}});
+    conn = MongerRunner.runMongerd({setParameter: {maxSessions: 2}});
     admin = conn.getDB("admin");
 
     // ensure that the cache is empty
@@ -47,11 +47,11 @@
 
     assert.commandFailed(admin.runCommand(request),
                          "failed test that we can't run startSession when the cache is full");
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     //
 
-    conn = MongoRunner.runMongod({auth: "", nojournal: ""});
+    conn = MongerRunner.runMongerd({auth: "", nojournal: ""});
     admin = conn.getDB("admin");
     foo = conn.getDB("foo");
 
@@ -98,6 +98,6 @@
 
     //
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
 })();

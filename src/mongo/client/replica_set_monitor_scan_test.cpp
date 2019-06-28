@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -330,7 +330,7 @@ TEST_F(CoreScanTest, MasterNotInSeeds_PrimaryInIsMaster) {
 // Make sure we can use slaves we find even if we can't find a primary
 TEST_F(CoreScanTest, SlavesUsableEvenIfNoMaster) {
     auto connStr = ConnectionString::forReplicaSet(kSetName, {HostAndPort("a")});
-    auto state = makeState(MongoURI(connStr));
+    auto state = makeState(MongerURI(connStr));
     Refresher refresher(state);
 
     const ReadPreferenceSetting secondary(ReadPreference::SecondaryOnly, TagSet());

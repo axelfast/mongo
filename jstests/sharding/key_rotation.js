@@ -79,7 +79,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
             {configureFailPoint: "disableKeyGeneration", mode: "off"});
     }
 
-    st.restartMongos(0);
+    st.restartMongers(0);
 
     // Wait for config server primary to create new keys.
     assert.soonNoExcept(function() {

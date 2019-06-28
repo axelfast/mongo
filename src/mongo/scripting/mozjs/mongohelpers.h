@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,14 +35,14 @@ namespace monger {
 namespace mozjs {
 
 /**
- * The "MongoHelpers" Javascript object.
+ * The "MongerHelpers" Javascript object.
  *
- * The MongoHelpers object is a special hidden object to attach internal-use
+ * The MongerHelpers object is a special hidden object to attach internal-use
  * javascript code to the global object so that we can do things like access the
  * javascript parser through SpiderMonkey's reflection API, and parse function
  * bodies/expressions from the server code.
  */
-struct MongoHelpersInfo : public BaseInfo {
+struct MongerHelpersInfo : public BaseInfo {
     static void postInstall(JSContext* cx, JS::HandleObject global, JS::HandleObject proto);
     static const InstallType installType = InstallType::Private;
     static const char* const className;

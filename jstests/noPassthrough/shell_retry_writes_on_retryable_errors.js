@@ -20,7 +20,7 @@
     const dbName = "test";
     const collName = jsTest.name();
 
-    const rsConn = new Mongo(rst.getURL());
+    const rsConn = new Monger(rst.getURL());
     const db = rsConn.startSession({retryWrites: true}).getDatabase(dbName);
 
     // We configure the monger shell to log its retry attempts so there are more diagnostics
@@ -41,12 +41,12 @@
      * parameters, respectively.
      */
     function testCommandIsRetried(testFn, assertFn) {
-        const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+        const mongerRunCommandOriginal = Monger.prototype.runCommand;
         const cmdObjsSeen = [];
 
         let shouldCaptureCmdObjs = true;
 
-        Mongo.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
+        Monger.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
             if (shouldCaptureCmdObjs) {
                 cmdObjsSeen.push(cmdObj);
             }
@@ -63,11 +63,11 @@
                                         shouldCaptureCmdObjs = false;
                                     }));
         } finally {
-            Mongo.prototype.runCommand = mongerRunCommandOriginal;
+            Monger.prototype.runCommand = mongerRunCommandOriginal;
         }
 
         if (cmdObjsSeen.length === 0) {
-            throw new Error("Mongo.prototype.runCommand() was never called: " + testFn.toString());
+            throw new Error("Monger.prototype.runCommand() was never called: " + testFn.toString());
         }
 
         assertFn(cmdObjsSeen);

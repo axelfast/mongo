@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -54,7 +54,7 @@ namespace {
  */
 ThreadPool::Options makeDefaultThreadPoolOptions() {
     ThreadPool::Options options;
-    options.poolName = "IndexBuildsCoordinatorMongod";
+    options.poolName = "IndexBuildsCoordinatorMongerd";
     options.minThreads = 0;
     options.maxThreads = 10;
 
@@ -68,12 +68,12 @@ ThreadPool::Options makeDefaultThreadPoolOptions() {
 
 }  // namespace
 
-IndexBuildsCoordinatorMongod::IndexBuildsCoordinatorMongod()
+IndexBuildsCoordinatorMongerd::IndexBuildsCoordinatorMongerd()
     : _threadPool(makeDefaultThreadPoolOptions()) {
     _threadPool.startup();
 }
 
-void IndexBuildsCoordinatorMongod::shutdown() {
+void IndexBuildsCoordinatorMongerd::shutdown() {
     // Stop new scheduling.
     _threadPool.shutdown();
 
@@ -85,7 +85,7 @@ void IndexBuildsCoordinatorMongod::shutdown() {
 }
 
 StatusWith<SharedSemiFuture<ReplIndexBuildState::IndexCatalogStats>>
-IndexBuildsCoordinatorMongod::startIndexBuild(OperationContext* opCtx,
+IndexBuildsCoordinatorMongerd::startIndexBuild(OperationContext* opCtx,
                                               CollectionUUID collectionUUID,
                                               const std::vector<BSONObj>& specs,
                                               const UUID& buildUUID,
@@ -209,35 +209,35 @@ IndexBuildsCoordinatorMongod::startIndexBuild(OperationContext* opCtx,
     return replState->sharedPromise.getFuture();
 }
 
-Status IndexBuildsCoordinatorMongod::commitIndexBuild(OperationContext* opCtx,
+Status IndexBuildsCoordinatorMongerd::commitIndexBuild(OperationContext* opCtx,
                                                       const std::vector<BSONObj>& specs,
                                                       const UUID& buildUUID) {
     // TODO: not yet implemented.
     return Status::OK();
 }
 
-void IndexBuildsCoordinatorMongod::signalChangeToPrimaryMode() {
+void IndexBuildsCoordinatorMongerd::signalChangeToPrimaryMode() {
     stdx::unique_lock<stdx::mutex> lk(_mutex);
     _replMode = ReplState::Primary;
 }
 
-void IndexBuildsCoordinatorMongod::signalChangeToSecondaryMode() {
+void IndexBuildsCoordinatorMongerd::signalChangeToSecondaryMode() {
     stdx::unique_lock<stdx::mutex> lk(_mutex);
     _replMode = ReplState::Secondary;
 }
 
-void IndexBuildsCoordinatorMongod::signalChangeToInitialSyncMode() {
+void IndexBuildsCoordinatorMongerd::signalChangeToInitialSyncMode() {
     stdx::unique_lock<stdx::mutex> lk(_mutex);
     _replMode = ReplState::InitialSync;
 }
 
-Status IndexBuildsCoordinatorMongod::voteCommitIndexBuild(const UUID& buildUUID,
+Status IndexBuildsCoordinatorMongerd::voteCommitIndexBuild(const UUID& buildUUID,
                                                           const HostAndPort& hostAndPort) {
     // TODO: not yet implemented.
     return Status::OK();
 }
 
-Status IndexBuildsCoordinatorMongod::setCommitQuorum(OperationContext* opCtx,
+Status IndexBuildsCoordinatorMongerd::setCommitQuorum(OperationContext* opCtx,
                                                      const NamespaceString& nss,
                                                      const std::vector<StringData>& indexNames,
                                                      const CommitQuorumOptions& newCommitQuorum) {
@@ -303,28 +303,28 @@ Status IndexBuildsCoordinatorMongod::setCommitQuorum(OperationContext* opCtx,
     return Status::OK();
 }
 
-Status IndexBuildsCoordinatorMongod::_finishScanningPhase() {
+Status IndexBuildsCoordinatorMongerd::_finishScanningPhase() {
     // TODO: implement.
     return Status::OK();
 }
 
-Status IndexBuildsCoordinatorMongod::_finishVerificationPhase() {
+Status IndexBuildsCoordinatorMongerd::_finishVerificationPhase() {
     // TODO: implement.
     return Status::OK();
 }
 
-Status IndexBuildsCoordinatorMongod::_finishCommitPhase() {
+Status IndexBuildsCoordinatorMongerd::_finishCommitPhase() {
     // TODO: implement.
     return Status::OK();
 }
 
-StatusWith<bool> IndexBuildsCoordinatorMongod::_checkCommitQuorum(
+StatusWith<bool> IndexBuildsCoordinatorMongerd::_checkCommitQuorum(
     const BSONObj& commitQuorum, const std::vector<HostAndPort>& confirmedMembers) {
     // TODO: not yet implemented.
     return false;
 }
 
-void IndexBuildsCoordinatorMongod::_refreshReplStateFromPersisted(OperationContext* opCtx,
+void IndexBuildsCoordinatorMongerd::_refreshReplStateFromPersisted(OperationContext* opCtx,
                                                                   const UUID& buildUUID) {
     // TODO: not yet implemented.
 }

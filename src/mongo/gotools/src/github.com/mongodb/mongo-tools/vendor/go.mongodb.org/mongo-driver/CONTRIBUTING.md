@@ -1,6 +1,6 @@
-# Contributing to the MongoDB Go Driver
+# Contributing to the MongerDB Go Driver
 
-Thank you for your interest in contributing to the MongoDB Go driver.
+Thank you for your interest in contributing to the MongerDB Go driver.
 
 We are building this software together and strongly encourage contributions from the community that are within the guidelines set forth
 below.
@@ -23,7 +23,7 @@ Code should compile and tests should pass under all go versions which the driver
 supports a minimum version of go 1.7. Please ensure the following tools have been run on the code: gofmt, golint, errcheck,
 go test (with coverage and with the race detector), and go vet. For convenience, you can run 'make' to run all these tools.
 **By default, running the tests requires that you have a mongerd server running on localhost, listening on the default port.**
-At minimum, please test against the latest release version of the MongoDB server.
+At minimum, please test against the latest release version of the MongerDB server.
 
 If any tests do not pass, or relevant tests are not included, the patch will not be considered.
 

@@ -30,7 +30,7 @@ assert(testDB.adminCommand({serverStatus: 1}).ok);
 
 // Confirm that the rest of the shards did not crash
 mongers.getDB('config').shards.find().forEach(function(shardDoc) {
-    var shardConn = new Mongo(shardDoc.host);
+    var shardConn = new Monger(shardDoc.host);
     var adminDB = shardConn.getDB('admin');
     var cmdResult = adminDB.runCommand({serverStatus: 1});
 

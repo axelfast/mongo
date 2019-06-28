@@ -38,7 +38,7 @@
 
     admin.createUser({user: "admin2", pwd: "admin", roles: ["root"]});
 
-    let secondConn = new Mongo(mongerd.host);
+    let secondConn = new Monger(mongerd.host);
     let secondAdmin = secondConn.getDB("admin");
     secondAdmin.auth("admin2", "admin");
 
@@ -119,7 +119,7 @@
     // Start a mongerd with the user cache size set to zero, so we know that users who have
     // logged out always get fetched cleanly from disk.
     const mongerd =
-        MongoRunner.runMongod({auth: "", setParameter: "authorizationManagerCacheSize=0"});
+        MongerRunner.runMongerd({auth: "", setParameter: "authorizationManagerCacheSize=0"});
     let admin = mongerd.getDB("admin");
 
     admin.createUser({user: "admin", pwd: "admin", roles: ["root"]});
@@ -147,7 +147,7 @@
           tojson(admin.aggregate([{$listCachedAndActiveUsers: {}}]).toArray()));
 
     assert.eq(admin.auth("admin2", "admin"), 0);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();
 
 // This checks that clearing the pinned user list actually unpins a user.
@@ -157,7 +157,7 @@
     // Start a mongerd with the user cache size set to zero, so we know that users who have
     // logged out always get fetched cleanly from disk.
     const mongerd =
-        MongoRunner.runMongod({auth: "", setParameter: "authorizationManagerCacheSize=0"});
+        MongerRunner.runMongerd({auth: "", setParameter: "authorizationManagerCacheSize=0"});
     let admin = mongerd.getDB("admin");
 
     admin.createUser({user: "admin", pwd: "admin", roles: ["root"]});
@@ -194,5 +194,5 @@
         return !cacheContents.some((doc) => friendlyEqual(admin2Doc, sortDoc(doc)));
     });
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

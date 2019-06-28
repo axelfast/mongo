@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -8,7 +8,7 @@ package mongerstat
 
 var Usage = `<options> <polling interval in seconds>
 
-Monitor basic MongoDB server statistics.
+Monitor basic MongerDB server statistics.
 
 See http://docs.mongerdb.org/manual/reference/program/mongerstat/ for more information.`
 

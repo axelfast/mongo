@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,11 +28,11 @@
  *    it in the license file.
  */
 
-// This file has JavaScript functions that should be attached to the MongoHelpers object
+// This file has JavaScript functions that should be attached to the MongerHelpers object
 
-// The contents of exportToMongoHelpers will be copied into the MongoHelpers object and
+// The contents of exportToMongerHelpers will be copied into the MongerHelpers object and
 // this dictionary will be removed from the global scope.
-exportToMongoHelpers = {
+exportToMongerHelpers = {
     // This function accepts an expression or function body and returns a function definition
     'functionExpressionParser': function functionExpressionParser(fnSrc) {
 
@@ -104,5 +104,5 @@ exportToMongoHelpers = {
     }
 };
 
-// WARNING: Anything outside the exportToMongoHelpers dictionary will be available in the
+// WARNING: Anything outside the exportToMongerHelpers dictionary will be available in the
 // global scope and visible to users!

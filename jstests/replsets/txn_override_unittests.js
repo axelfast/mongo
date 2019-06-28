@@ -153,8 +153,8 @@
      * for the command, runs that after the command is run. The post-command function is run
      * regardless of whether the command response was overridden or not.
      */
-    const mongerRunCommandOriginal = Mongo.prototype.runCommand;
-    Mongo.prototype.runCommand = function(dbName, cmdObj, options) {
+    const mongerRunCommandOriginal = Monger.prototype.runCommand;
+    Monger.prototype.runCommand = function(dbName, cmdObj, options) {
         const cmdName = Object.keys(cmdObj)[0];
         if (runCommandOverrideBlacklistedCommands.includes(cmdName)) {
             return mongerRunCommandOriginal.apply(this, arguments);
@@ -192,7 +192,7 @@
 
     // We have a separate connection for the failpoint so that it does not break up the transaction
     // buffered in network_error_and_txn_override.js.
-    const failpointConn = new Mongo(conn.host);
+    const failpointConn = new Monger(conn.host);
 
     /**
      * Marks that the given command should fail with the given parameters using the failCommand
@@ -260,7 +260,7 @@
         print("=-=-=-= Aborting current transaction " + txnNum + " on " + tojsononeline(lsid));
 
         assert.commandWorked(mongerRunCommandOriginal.apply(
-            testDB.getMongo(),
+            testDB.getMonger(),
             ['admin', {abortTransaction: 1, autocommit: false, lsid: lsid, txnNumber: txnNum}, 0]));
     }
 
@@ -1817,7 +1817,7 @@
               attachPostCmdFunction("commitTransaction", function() {
                   abortCurrentTransaction();
                   assert.commandWorked(mongerRunCommandOriginal.apply(
-                      testDB.getMongo(), [dbName, {drop: collName2}, 0]));
+                      testDB.getMonger(), [dbName, {drop: collName2}, 0]));
               });
               failCommandWithWCENoRun("commitTransaction", ErrorCodes.NotMaster, "NotMaster");
               assert.commandWorked(coll1.insert({_id: 1, x: 2}));

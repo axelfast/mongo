@@ -2,5 +2,5 @@ LIBRARY "mongerca"
 
 EXPORTS
 
-UpdateMongoYAML
+UpdateMongerYAML
 ValidateServiceLogon

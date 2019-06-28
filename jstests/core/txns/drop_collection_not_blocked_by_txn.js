@@ -16,7 +16,7 @@
     assert.commandWorked(db.runCommand({insert: "a", documents: [{x: 1}]}));
     assert.commandWorked(db.runCommand({insert: "b", documents: [{x: 1}]}));
 
-    const session = db.getMongo().startSession();
+    const session = db.getMonger().startSession();
     const sessionDb = session.getDatabase("test");
 
     session.startTransaction();

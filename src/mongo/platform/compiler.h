@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -109,7 +109,7 @@
  *   for the library, which is conditionally defined to either MONGO_COMIPLER_API_EXPORT or
  *   MONGO_COMPILER_API_IMPORT based on whether the compiler is currently building the library
  *   or building an object that depends on the library, respectively.  For example,
- *   MONGO_FOO_API might be defined to MONGO_COMPILER_API_EXPORT when building the MongoDB
+ *   MONGO_FOO_API might be defined to MONGO_COMPILER_API_EXPORT when building the MongerDB
  *   libfoo shared library, and to MONGO_COMPILER_API_IMPORT when building an application that
  *   links against that shared library.
  *

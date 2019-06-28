@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -26,10 +26,10 @@ func init() {
 	RegisterAuthenticatorFactory("", newDefaultAuthenticator)
 	RegisterAuthenticatorFactory(SCRAMSHA1, newScramSHA1Authenticator)
 	RegisterAuthenticatorFactory(SCRAMSHA256, newScramSHA256Authenticator)
-	RegisterAuthenticatorFactory(MONGODBCR, newMongoDBCRAuthenticator)
+	RegisterAuthenticatorFactory(MONGODBCR, newMongerDBCRAuthenticator)
 	RegisterAuthenticatorFactory(PLAIN, newPlainAuthenticator)
 	RegisterAuthenticatorFactory(GSSAPI, newGSSAPIAuthenticator)
-	RegisterAuthenticatorFactory(MongoDBX509, newMongoDBX509Authenticator)
+	RegisterAuthenticatorFactory(MongerDBX509, newMongerDBX509Authenticator)
 }
 
 // CreateAuthenticator creates an authenticator.
@@ -120,7 +120,7 @@ func Handshaker(h connection.Handshaker, options *HandshakeOptions) connection.H
 			performAuth = func(serv description.Server) bool {
 				return serv.Kind == description.RSPrimary ||
 					serv.Kind == description.RSSecondary ||
-					serv.Kind == description.Mongos ||
+					serv.Kind == description.Mongers ||
 					serv.Kind == description.Standalone
 			}
 		}

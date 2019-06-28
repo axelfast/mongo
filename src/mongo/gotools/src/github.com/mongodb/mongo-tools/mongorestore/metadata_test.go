@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -33,7 +33,7 @@ func TestCollectionExists(t *testing.T) {
 		sessionProvider, _, err := testutil.GetBareSessionProvider()
 		So(err, ShouldBeNil)
 
-		restore := &MongoRestore{
+		restore := &MongerRestore{
 			SessionProvider: sessionProvider,
 		}
 
@@ -87,11 +87,11 @@ func TestCollectionExists(t *testing.T) {
 func TestGetDumpAuthVersion(t *testing.T) {
 
 	testtype.SkipUnlessTestType(t, testtype.UnitTestType)
-	restore := &MongoRestore{}
+	restore := &MongerRestore{}
 
 	Convey("With a test mongerrestore", t, func() {
 		Convey("and no --restoreDbUsersAndRoles", func() {
-			restore = &MongoRestore{
+			restore = &MongerRestore{
 				InputOptions: &InputOptions{},
 				ToolOptions:  &commonOpts.ToolOptions{},
 				NSOptions:    &NSOptions{},
@@ -133,7 +133,7 @@ func TestGetDumpAuthVersion(t *testing.T) {
 		})
 
 		Convey("using --restoreDbUsersAndRoles", func() {
-			restore = &MongoRestore{
+			restore = &MongerRestore{
 				InputOptions: &InputOptions{
 					RestoreDBUsersAndRoles: true,
 				},
@@ -205,7 +205,7 @@ func TestIndexGetsSimpleCollation(t *testing.T) {
 		t.Fatalf("Error reading data file: %v", err)
 	}
 
-	Convey("With a test MongoRestore", t, func() {
+	Convey("With a test MongerRestore", t, func() {
 		args := []string{
 			DropOption,
 			dumpDir.Path(),

@@ -5,7 +5,7 @@
 (function() {
     'use strict';
 
-    let standalone = MongoRunner.runMongod();
+    let standalone = MongerRunner.runMongerd();
     assert.neq(null, standalone, 'mongerd was unable to start up');
     let adminDB = standalone.getDB('admin');
 
@@ -15,5 +15,5 @@
             {renameCollection: 'admin.system.version', to: 'admin.dummy.collection'}),
         ErrorCodes.IllegalOperation);
     assert.writeErrorWithCode(adminDB.system.version.remove({}), 40670);
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 })();

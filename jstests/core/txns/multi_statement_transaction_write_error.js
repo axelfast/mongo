@@ -21,7 +21,7 @@
 
     // Assert that "cmd" fails with error "code" after "nExpected" operations, or fail with "msg"
     function runInTxn({cmd, msg, code, nExpected, expectedErrorIndex}) {
-        const session = db.getMongo().startSession();
+        const session = db.getMonger().startSession();
         session.startTransaction();
         try {
             var res = session.getDatabase(dbName).runCommand(cmd);
@@ -87,7 +87,7 @@
                 cmd = newCmd();
                 cmd[docsField] = [goodOp, badOp];
                 let expected = 1;
-                if (cmdName == 'delete' && db.getMongo().isMongos()) {
+                if (cmdName == 'delete' && db.getMonger().isMongers()) {
                     // The bad delete write will cause mongers to fail during targetting and not
                     // do any write at all.
                     expected = 0;
@@ -104,7 +104,7 @@
                 cmd = newCmd();
                 cmd[docsField] = [goodOp, goodOp, badOp];
                 expected = 2;
-                if (cmdName == 'delete' && db.getMongo().isMongos()) {
+                if (cmdName == 'delete' && db.getMonger().isMongers()) {
                     // The bad delete write will cause mongers to fail during targetting and not
                     // do any write at all.
                     expected = 0;
@@ -121,7 +121,7 @@
                 cmd = newCmd();
                 cmd[docsField] = [goodOp, goodOp, badOp, badOp];
                 expected = 2;
-                if (cmdName == 'delete' && db.getMongo().isMongos()) {
+                if (cmdName == 'delete' && db.getMonger().isMongers()) {
                     // The bad delete write will cause mongers to fail during targetting and not
                     // do any write at all.
                     expected = 0;

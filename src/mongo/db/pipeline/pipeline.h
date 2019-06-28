@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -207,7 +207,7 @@ public:
     /**
      * Returns 'true' if the pipeline must merge on mongerS.
      */
-    bool needsMongosMerger() const;
+    bool needsMongersMerger() const;
 
     /**
      * Returns 'true' if any stage in the pipeline must run on a shard.
@@ -218,13 +218,13 @@ public:
      * Returns true if the pipeline can run on mongerS, but is not obliged to; that is, it can run
      * either on mongerS or on a shard.
      */
-    bool canRunOnMongos() const;
+    bool canRunOnMongers() const;
 
     /**
      * Returns true if this pipeline must only run on mongerS. Can be called on unsplit or merge
      * pipelines, but not on the shards part of a split pipeline.
      */
-    bool requiredToRunOnMongos() const;
+    bool requiredToRunOnMongers() const;
 
     /**
      * Modifies the pipeline, optimizing it by combining and swapping stages.
@@ -398,7 +398,7 @@ private:
      * Returns Status::OK if the pipeline can run on mongerS, or an error with a message explaining
      * why it cannot.
      */
-    Status _pipelineCanRunOnMongoS() const;
+    Status _pipelineCanRunOnMongerS() const;
 
     SourceContainer _sources;
 

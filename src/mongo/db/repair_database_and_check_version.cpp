@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -185,7 +185,7 @@ Status buildMissingIdIndex(OperationContext* opCtx, Collection* collection) {
 
 /**
  * Checks that all collections in the given list of 'dbNames' have valid properties for this version
- * of MongoDB.
+ * of MongerDB.
  *
  * This validates that all collections have UUIDs and an _id index. If a collection is missing an
  * _id index, this function will build it.
@@ -209,13 +209,13 @@ Status ensureCollectionProperties(OperationContext* opCtx,
                 break;
             }
 
-            // We expect all collections to have UUIDs in MongoDB 4.2
+            // We expect all collections to have UUIDs in MongerDB 4.2
             if (!coll->uuid()) {
                 error() << "collection " << coll->ns() << " is missing a UUID";
                 return downgradeError;
             }
 
-            // All user-created replicated collections created since MongoDB 4.0 have _id indexes.
+            // All user-created replicated collections created since MongerDB 4.0 have _id indexes.
             auto requiresIndex = coll->requiresIdIndex() && coll->ns().isReplicated();
             auto catalogEntry = coll->getCatalogEntry();
             auto collOptions = DurableCatalog::get(opCtx)->getCollectionOptions(opCtx, coll->ns());

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -24,7 +24,7 @@ const (
 type NodeType string
 
 const (
-	Mongos     NodeType = "mongers"
+	Mongers     NodeType = "mongers"
 	Standalone          = "standalone"
 	ReplSet             = "replset"
 	Unknown             = "unknown"
@@ -136,7 +136,7 @@ func (sp *SessionProvider) GetNodeType() (NodeType, error) {
 	} else if masterDoc.Msg == "isdbgrid" {
 		// isdbgrid is always the msg value when calling isMaster on a mongers
 		// see http://docs.mongerdb.org/manual/core/sharded-cluster-query-router/
-		return Mongos, nil
+		return Mongers, nil
 	}
 	return Standalone, nil
 }
@@ -151,13 +151,13 @@ func (sp *SessionProvider) IsReplicaSet() (bool, error) {
 	return nodeType == ReplSet, nil
 }
 
-// IsMongos returns true if the connected server is a mongers.
-func (sp *SessionProvider) IsMongos() (bool, error) {
+// IsMongers returns true if the connected server is a mongers.
+func (sp *SessionProvider) IsMongers() (bool, error) {
 	nodeType, err := sp.GetNodeType()
 	if err != nil {
 		return false, err
 	}
-	return nodeType == Mongos, nil
+	return nodeType == Mongers, nil
 }
 
 //

@@ -14,7 +14,7 @@ selector:
   roots:
   - jstests/core/**/*.js
   exclude_files:
-  # Transactions are not supported on MongoDB standalone nodes.
+  # Transactions are not supported on MongerDB standalone nodes.
   - jstests/core/txns/**/*.js
   # Skip any tests that run with auth explicitly.
   - jstests/core/**/*[aA]uth*.js
@@ -37,7 +37,7 @@ executor:
           keyFile: *keyFile
           keyFileData: *keyFileData
           roleGraphInvalidationIsFatal: true
-      eval: jsTest.authenticate(db.getMongo())
+      eval: jsTest.authenticate(db.getMonger())
       <<: *authOptions
       readMode: commands
   hooks:
@@ -47,12 +47,12 @@ executor:
         TestData:
           <<: *TestData
           skipValidationOnNamespaceNotFound: false
-      eval: jsTest.authenticate(db.getMongo())
+      eval: jsTest.authenticate(db.getMonger())
       <<: *authOptions
   - class: CleanEveryN
     n: 20
   fixture:
-    class: MongoDFixture
+    class: MongerDFixture
     mongerd_options:
       auth: ''
       keyFile: *keyFile

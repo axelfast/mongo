@@ -8,7 +8,7 @@
     "use strict";
     load("jstests/libs/check_log.js");
 
-    const conn = MongoRunner.runMongod({});
+    const conn = MongerRunner.runMongerd({});
     const db = conn.getDB("test");
 
     assert.commandWorked(db.runCommand({insert: "a", documents: [{x: 1}]}));
@@ -29,5 +29,5 @@
         db.adminCommand({configureFailPoint: "hangDuringDropCollection", mode: "off"}));
 
     awaitDrop();
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

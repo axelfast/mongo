@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -234,7 +234,7 @@ void MessageCompressorManager::serverNegotiate(const BSONObj& input, BSONObjBuil
     // rather than doing a negotiation
     if (elem.eoo()) {
         // If we haven't negotiated any compressors yet, then don't append anything to the
-        // output - this makes this compatible with older versions of MongoDB that don't
+        // output - this makes this compatible with older versions of MongerDB that don't
         // support compression.
         if (_negotiated.size() > 0) {
             BSONArrayBuilder sub(output->subarrayStart("compression"));

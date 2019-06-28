@@ -55,7 +55,7 @@ var $config = extendWorkload($config, function($config, $super) {
         // as numDocsBefore.
         // Choose the mongers randomly to distribute load.
         var numDocsBefore = ChunkHelper.getNumDocs(
-            ChunkHelper.getRandomMongos(connCache.mongers), ns, chunk.min._id, chunk.max._id);
+            ChunkHelper.getRandomMongers(connCache.mongers), ns, chunk.min._id, chunk.max._id);
 
         // Save the number of chunks before the moveChunk operation. This will be used
         // to verify that the number of chunks after the moveChunk operation remains the same.
@@ -149,7 +149,7 @@ var $config = extendWorkload($config, function($config, $super) {
             var shardsForChunk =
                 ChunkHelper.getShardsForRange(mongers, ns, chunk.min._id, chunk.max._id);
             var msg =
-                msgBase + '\nMongos find().explain() results for chunk: ' + tojson(shardsForChunk);
+                msgBase + '\nMongers find().explain() results for chunk: ' + tojson(shardsForChunk);
             assertWhenOwnColl.eq(shardsForChunk.shards.length, 1, msg);
             if (moveChunkRes.ok) {
                 msg = 'moveChunk succeeded but chunk was not on new shard.\n' + msg;

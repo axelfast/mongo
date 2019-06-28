@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -73,7 +73,7 @@ func main() {
 	progressManager.Start()
 	defer progressManager.Stop()
 
-	dump := mongerdump.MongoDump{
+	dump := mongerdump.MongerDump{
 		ToolOptions:     opts,
 		OutputOptions:   outputOpts,
 		InputOptions:    inputOpts,

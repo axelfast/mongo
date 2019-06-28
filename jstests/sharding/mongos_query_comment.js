@@ -38,8 +38,8 @@
     //
     // Set legacy read mode for the mongers and shard connections.
     //
-    mongersDB.getMongo().forceReadMode("legacy");
-    shardDB.getMongo().forceReadMode("legacy");
+    mongersDB.getMonger().forceReadMode("legacy");
+    shardDB.getMonger().forceReadMode("legacy");
 
     // TEST CASE: A legacy string $comment meta-operator is propagated to the shards via mongers.
     assert.eq(mongersColl.find({$query: {a: 1}, $comment: "TEST"}).itcount(), 1);
@@ -63,8 +63,8 @@
     //
     // Revert to "commands" read mode for the find command test cases below.
     //
-    mongersDB.getMongo().forceReadMode("commands");
-    shardDB.getMongo().forceReadMode("commands");
+    mongersDB.getMonger().forceReadMode("commands");
+    shardDB.getMonger().forceReadMode("commands");
 
     // TEST CASE: Verify that string find.comment and non-string find.filter.$comment propagate.
     assert.eq(mongersColl.find({a: 1, $comment: {b: "TEST"}}).comment("TEST").itcount(), 1);

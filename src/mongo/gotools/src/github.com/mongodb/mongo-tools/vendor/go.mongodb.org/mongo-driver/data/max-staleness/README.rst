@@ -36,7 +36,7 @@ YAML files contain the following setup for each test:
 
 - ``read_preference``: a read preference document
 
-For each test, create a MongoClient.
+For each test, create a MongerClient.
 Configure it with the heartbeatFrequencyMS specified by the test,
 or accept the driver's default heartbeatFrequencyMS if the test omits this field.
 

@@ -101,7 +101,7 @@
 
     // This test will fail in a sharded cluster when the 2 initial documents live on different
     // shards.
-    if (!FixtureHelpers.isMongos(db)) {
+    if (!FixtureHelpers.isMongers(db)) {
         testUpdate({
             query: {_id: {$in: [1, 2]}},
             initialDocumentList: [{_id: 1, x: 1}, {_id: 2, x: 2}],

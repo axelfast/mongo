@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -48,19 +48,19 @@ class ServiceContext;
  * services, attaches them to the same service context to which it itself is attached and puts the
  * ShardingState in the initialized state.
  */
-class ShardingInitializationMongoD {
-    ShardingInitializationMongoD(const ShardingInitializationMongoD&) = delete;
-    ShardingInitializationMongoD& operator=(const ShardingInitializationMongoD&) = delete;
+class ShardingInitializationMongerD {
+    ShardingInitializationMongerD(const ShardingInitializationMongerD&) = delete;
+    ShardingInitializationMongerD& operator=(const ShardingInitializationMongerD&) = delete;
 
 public:
     using ShardingEnvironmentInitFunc = std::function<void(
         OperationContext* opCtx, const ShardIdentity& shardIdentity, StringData distLockProcessId)>;
 
-    ShardingInitializationMongoD();
-    ~ShardingInitializationMongoD();
+    ShardingInitializationMongerD();
+    ~ShardingInitializationMongerD();
 
-    static ShardingInitializationMongoD* get(OperationContext* opCtx);
-    static ShardingInitializationMongoD* get(ServiceContext* service);
+    static ShardingInitializationMongerD* get(OperationContext* opCtx);
+    static ShardingInitializationMongerD* get(ServiceContext* service);
 
     void initializeShardingEnvironmentOnShardServer(OperationContext* opCtx,
                                                     const ShardIdentity& shardIdentity,
@@ -128,7 +128,7 @@ private:
  *
  * NOTE: This does not initialize ShardingState, which should only be done for shard servers.
  */
-void initializeGlobalShardingStateForMongoD(OperationContext* opCtx,
+void initializeGlobalShardingStateForMongerD(OperationContext* opCtx,
                                             const ConnectionString& configCS,
                                             StringData distLockProcessId);
 

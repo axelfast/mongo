@@ -9,6 +9,6 @@ load("jstests/watchdog/lib/wd_test_common.js");
 
     const logpath = control.getMountPath();
 
-    testFuseAndMongoD(control, {logpath: logpath + "/foo.log"});
+    testFuseAndMongerD(control, {logpath: logpath + "/foo.log"});
 
 })();

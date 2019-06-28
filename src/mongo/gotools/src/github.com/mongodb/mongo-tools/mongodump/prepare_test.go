@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -19,7 +19,7 @@ func TestSkipCollection(t *testing.T) {
 
 	Convey("With a mongerdump that excludes collections 'test' and 'fake'"+
 		" and excludes prefixes 'pre-' and 'no'", t, func() {
-		md := &MongoDump{
+		md := &MongerDump{
 			OutputOptions: &OutputOptions{
 				ExcludedCollections:        []string{"test", "fake"},
 				ExcludedCollectionPrefixes: []string{"pre-", "no"},

@@ -45,13 +45,13 @@ var CSRSUpgradeCoordinator = function() {
     /**
      * Returns a copy of the options used for starting a mongers in the coordinator's cluster.
      */
-    this.getMongosConfig = function() {
+    this.getMongersConfig = function() {
         var sconfig = Object.extend({}, st.s0.fullOptions, /* deep */ true);
         delete sconfig.port;
         return sconfig;
     };
 
-    this.getMongos = function(n) {
+    this.getMongers = function(n) {
         return st._mongers[n];
     };
 
@@ -98,8 +98,8 @@ var CSRSUpgradeCoordinator = function() {
         csrs0Opts.restart = true;  // Don't clean the data files from the old c0.
         csrs0Opts.replSet = csrsName;
         csrs0Opts.configsvrMode = "sccc";
-        MongoRunner.stopMongod(st.c0);
-        csrs.push(MongoRunner.runMongod(csrs0Opts));
+        MongerRunner.stopMongerd(st.c0);
+        csrs.push(MongerRunner.runMongerd(csrs0Opts));
         _waitUntilMaster(csrs[0]);
     };
 
@@ -110,7 +110,7 @@ var CSRSUpgradeCoordinator = function() {
     this.startNewCSRSNodes = function() {
         jsTest.log("Starting new CSRS nodes");
         for (var i = 1; i < numCsrsMembers; ++i) {
-            csrs.push(MongoRunner.runMongod(
+            csrs.push(MongerRunner.runMongerd(
                 {replSet: csrsName, configsvr: "", storageEngine: "wiredTiger"}));
             csrsConfig.members.push({_id: i, host: csrs[i].name, votes: 0, priority: 0});
         }
@@ -133,7 +133,7 @@ var CSRSUpgradeCoordinator = function() {
         // servers
         // online.
         jsTest.log("Shutting down third SCCC config server node");
-        MongoRunner.stopMongod(st.c2);
+        MongerRunner.stopMongerd(st.c2);
     };
 
     /**
@@ -159,8 +159,8 @@ var CSRSUpgradeCoordinator = function() {
         jsTest.log("Restarting " + csrs[0].name + " in csrs mode");
         delete csrs0Opts.configsvrMode;
         assert.commandWorked(csrs[0].adminCommand({replSetStepDown: 60}));
-        MongoRunner.stopMongod(csrs[0]);
-        csrs[0] = MongoRunner.runMongod(csrs0Opts);
+        MongerRunner.stopMongerd(csrs[0]);
+        csrs[0] = MongerRunner.runMongerd(csrs0Opts);
         var csrsStatus;
         assert.soon(
             function() {
@@ -202,7 +202,7 @@ var CSRSUpgradeCoordinator = function() {
             });
 
         jsTest.log("Shutting down final SCCC config server now that upgrade is complete");
-        MongoRunner.stopMongod(st.c1);
+        MongerRunner.stopMongerd(st.c1);
     };
 
 };

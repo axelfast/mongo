@@ -8,7 +8,7 @@
 
     load('jstests/libs/get_index_helpers.js');
 
-    const dbpath = MongoRunner.dataPath + 'empty_string_index_value';
+    const dbpath = MongerRunner.dataPath + 'empty_string_index_value';
     resetDbpath(dbpath);
 
     const oldVersion = '4.0';
@@ -18,7 +18,7 @@
     const mongerdOptions = {dbpath: dbpath, noCleanData: true, binVersion: oldVersion};
 
     // Start up an old binary version mongerd.
-    let conn = MongoRunner.runMongod(mongerdOptions);
+    let conn = MongerRunner.runMongerd(mongerdOptions);
 
     assert.neq(null, conn, `mongerd was unable able to start with version ${oldVersion}`);
 
@@ -28,11 +28,11 @@
     assert.commandWorked(testDB.createCollection('testColl'));
     assert.commandWorked(testDB.testColl.insert({a: 1}));
     assert.commandWorked(testDB.testColl.createIndex({a: ""}));
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Restart the mongerd with the latest binary version and the 4.0 version data files.
     mongerdOptions.binVersion = newVersion;
-    conn = MongoRunner.runMongod(mongerdOptions);
+    conn = MongerRunner.runMongerd(mongerdOptions);
     assert.neq(null, conn);
 
     // Confirm that mongerd startup does not fail due to the index specification
@@ -51,6 +51,6 @@
     assert.commandFailedWithCode(testDB.testColl.createIndex({x: ""}),
                                  ErrorCodes.CannotCreateIndex);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
 })();

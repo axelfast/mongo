@@ -1,4 +1,4 @@
-// mgo - MongoDB driver for Go
+// mgo - MongerDB driver for Go
 //
 // Copyright (c) 2010-2012 - Gustavo Niemeyer <gustavo@niemeyer.net>
 //
@@ -37,7 +37,7 @@ import (
 )
 
 // ---------------------------------------------------------------------------
-// Mongo server encapsulation.
+// Monger server encapsulation.
 
 type mongerServer struct {
 	sync.RWMutex
@@ -69,7 +69,7 @@ func (dial dialer) isSet() bool {
 
 type mongerServerInfo struct {
 	Master         bool
-	Mongos         bool
+	Mongers         bool
 	Tags           bson.D
 	MaxWireVersion int
 	SetName        string
@@ -414,9 +414,9 @@ func (servers *mongerServers) Empty() bool {
 	return len(servers.slice) == 0
 }
 
-func (servers *mongerServers) HasMongos() bool {
+func (servers *mongerServers) HasMongers() bool {
 	for _, s := range servers.slice {
-		if s.Info().Mongos {
+		if s.Info().Mongers {
 			return true
 		}
 	}
@@ -431,7 +431,7 @@ func (servers *mongerServers) BestFit(mode Mode, serverTags []bson.D) *mongerSer
 		if best == nil {
 			best = next
 			best.RLock()
-			if serverTags != nil && !next.info.Mongos && !best.hasTags(serverTags) {
+			if serverTags != nil && !next.info.Mongers && !best.hasTags(serverTags) {
 				best.RUnlock()
 				best = nil
 			}
@@ -440,9 +440,9 @@ func (servers *mongerServers) BestFit(mode Mode, serverTags []bson.D) *mongerSer
 		next.RLock()
 		swap := false
 		switch {
-		case serverTags != nil && !next.info.Mongos && !next.hasTags(serverTags):
+		case serverTags != nil && !next.info.Mongers && !next.hasTags(serverTags):
 			// Must have requested tags.
-		case mode == Secondary && next.info.Master && !next.info.Mongos:
+		case mode == Secondary && next.info.Master && !next.info.Mongers:
 			// Must be a secondary or mongers.
 		case next.info.Master != best.info.Master && mode != Nearest:
 			// Prefer slaves, unless the mode is PrimaryPreferred.

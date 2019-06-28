@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -98,7 +98,7 @@ BSONObj getOplogTruncateAfterPointDocument(OperationContext* opCtx,
         });
 }
 
-class ReplicationConsistencyMarkersTest : public ServiceContextMongoDTest {
+class ReplicationConsistencyMarkersTest : public ServiceContextMongerDTest {
 protected:
     OperationContext* getOperationContext() {
         return _opCtx.get();
@@ -110,7 +110,7 @@ protected:
 
 private:
     void setUp() override {
-        ServiceContextMongoDTest::setUp();
+        ServiceContextMongerDTest::setUp();
         _createOpCtx();
         auto replCoord = std::make_unique<ReplicationCoordinatorMock>(getServiceContext());
         ReplicationCoordinator::set(getServiceContext(), std::move(replCoord));
@@ -120,7 +120,7 @@ private:
     void tearDown() override {
         _opCtx.reset(nullptr);
         _storageInterface.reset();
-        ServiceContextMongoDTest::tearDown();
+        ServiceContextMongerDTest::tearDown();
     }
 
     void _createOpCtx() {

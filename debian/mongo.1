@@ -2,7 +2,7 @@
 .
 .TH "MONGO" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-monger \- MongoDB Shell
+monger \- MongerDB Shell
 .
 .nr rst2man-indent-level 0
 .
@@ -48,10 +48,10 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .SH DESCRIPTION
 .sp
 \fI\%monger\fP is an interactive JavaScript shell interface to
-MongoDB, which provides a powerful interface for systems
+MongerDB, which provides a powerful interface for systems
 administrators as well as a way for developers to test queries and
 operations directly with the database. \fI\%monger\fP also provides
-a fully functional JavaScript environment for use with a MongoDB. This
+a fully functional JavaScript environment for use with a MongerDB. This
 document addresses the basic invocation of the \fI\%monger\fP shell
 and an overview of its usage.
 .sp
@@ -103,7 +103,7 @@ instance is listening. If \fI\%\-\-port\fP is not specified,
 .B \-\-host <hostname>
 Specifies the name of the host machine where the
 \fBmongerd\fP or \fBmongers\fP is running. If this is not specified,
-\fBmonger\fP attempts to connect to a MongoDB process running on
+\fBmonger\fP attempts to connect to a MongerDB process running on
 the localhost.
 .sp
 To connect to a replica set, specify the \fBreplica set name\fP and a seed list of set members. Use the
@@ -158,14 +158,14 @@ As a result many options of the shell environment are not available.
 .INDENT 0.0
 .TP
 .B \-\-username <username>, \-u <username>
-Specifies a username with which to authenticate to a MongoDB database
+Specifies a username with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-password\fP and
 \fB\-\-authenticationDatabase\fP options.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password <password>, \-p <password>
-Specifies a password with which to authenticate to a MongoDB database
+Specifies a password with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fI\%\-\-username\fP
 and \fI\%\-\-authenticationDatabase\fP options. To force \fBmonger\fP to
 prompt for a password, enter the \fI\%\-\-password\fP option as the
@@ -246,8 +246,8 @@ between \fI\%monger\fP shell and \fBmongerd\fP are not compressed.
 \fIRemoved in version 3.0.\fP
 .sp
 Enables IPv6 support and allows \fBmonger\fP to connect to the
-MongoDB instance using an IPv6 network. Prior to MongoDB 3.0, you
-had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongoDB 3.0 and later, IPv6
+MongerDB instance using an IPv6 network. Prior to MongerDB 3.0, you
+had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongerDB 3.0 and later, IPv6
 is always enabled.
 .UNINDENT
 .INDENT 0.0
@@ -267,7 +267,7 @@ monger admin
 .UNINDENT
 .sp
 The above command will connect the \fBmonger\fP shell to the
-admin database of the MongoDB deployment running on the local machine. You may specify a remote
+admin database of the MongerDB deployment running on the local machine. You may specify a remote
 database instance, with the resolvable hostname or IP address. Separate
 the database name from the hostname using a \fB/\fP character. See the
 following examples:
@@ -340,7 +340,7 @@ hello
 .sp
 The default behavior (when \fI\%monger\fP starts \fIwithout\fP the
 \fB\-\-disableJavaScriptProtection\fP flag) is to convert embedded
-JavaScript functions to the non\-executable MongoDB shell type
+JavaScript functions to the non\-executable MongerDB shell type
 \fBCode\fP\&. The following example demonstrates the default behavior
 within the shell:
 .INDENT 7.0
@@ -414,10 +414,10 @@ specified in the connection string.
 Specifies the authentication mechanism the \fBmonger\fP instance uses to
 authenticate to the \fBmongerd\fP or \fBmongers\fP\&.
 .sp
-Changed in version 4.0: MongoDB removes support for the deprecated MongoDB
+Changed in version 4.0: MongerDB removes support for the deprecated MongerDB
 Challenge\-Response (\fBMONGODB\-CR\fP) authentication mechanism.
 .sp
-MongoDB adds support for SCRAM mechanism using the SHA\-256 hash
+MongerDB adds support for SCRAM mechanism using the SHA\-256 hash
 function (\fBSCRAM\-SHA\-256\fP).
 
 .TS
@@ -453,14 +453,14 @@ _
 T{
 MONGODB\-X509
 T}	T{
-MongoDB TLS/SSL certificate authentication.
+MongerDB TLS/SSL certificate authentication.
 T}
 _
 T{
 GSSAPI (Kerberos)
 T}	T{
 External authentication using Kerberos. This mechanism is
-available only in \fI\%MongoDB Enterprise\fP\&.
+available only in \fI\%MongerDB Enterprise\fP\&.
 T}
 _
 T{
@@ -469,7 +469,7 @@ T}	T{
 External authentication using LDAP. You can also use \fBPLAIN\fP
 for authenticating in\-database users. \fBPLAIN\fP transmits
 passwords in plain text. This mechanism is available only in
-\fI\%MongoDB Enterprise\fP\&.
+\fI\%MongerDB Enterprise\fP\&.
 T}
 _
 .TE
@@ -483,7 +483,7 @@ New in version 2.6.
 Specify the hostname of a service using GSSAPI/Kerberos\&. \fIOnly\fP required if the hostname of a machine does
 not match the hostname resolved by DNS.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -494,7 +494,7 @@ New in version 2.6.
 Specify the name of the service using GSSAPI/Kerberos\&. Only required if the service does not use the
 default name of \fBmongerdb\fP\&.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .SS TLS/SSL Options
 .INDENT 0.0
@@ -509,13 +509,13 @@ TLS/SSL support enabled.
 Starting in version 3.2.6, if \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP is
 not specified, the system\-wide CA certificate store will be used
 when connecting to an TLS/SSL\-enabled server. In previous versions
-of MongoDB, the \fI\%monger\fP shell exited with an error that
+of MongerDB, the \fI\%monger\fP shell exited with an error that
 it could not validate the certificate.
 .sp
 If using x.509 authentication, \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP
 must be specified.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -531,7 +531,7 @@ to a \fBmongerd\fP or \fBmongers\fP that has
 \fBCAFile\fP enabled \fIwithout\fP
 \fBallowConnectionsWithoutCertificates\fP\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -547,7 +547,7 @@ If the private key in the PEM file is encrypted and you do not
 specify the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmonger\fP will prompt for a
 passphrase. See ssl\-certificate\-password\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -561,13 +561,13 @@ from the Certificate Authority. Specify the file name of the
 Starting in version 3.2.6, if \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP is
 not specified, the system\-wide CA certificate store will be used
 when connecting to an TLS/SSL\-enabled server. In previous versions
-of MongoDB, the \fI\%monger\fP shell exited with an error that
+of MongerDB, the \fI\%monger\fP shell exited with an error that
 it could not validate the certificate.
 .sp
 If using x.509 authentication, \fB\-\-sslCAFile\fP or \fBssl.CAFile\fP
 must be specified.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -578,7 +578,7 @@ Specifies the \fB\&.pem\fP file that contains the Certificate Revocation
 List. Specify the file name of the \fB\&.pem\fP file using relative or
 absolute paths.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -596,7 +596,7 @@ the \fI\%\-\-sslFIPSMode\fP option.
 .INDENT 7.0
 .INDENT 3.5
 FIPS\-compatible TLS/SSL is
-available only in \fI\%MongoDB Enterprise\fP\&. See
+available only in \fI\%MongerDB Enterprise\fP\&. See
 /tutorial/configure\-fips for more information.
 .UNINDENT
 .UNINDENT
@@ -610,7 +610,7 @@ the use of invalid certificates to connect.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Starting in MongoDB 4.0, if you specify
+Starting in MongerDB 4.0, if you specify
 \fB\-\-sslAllowInvalidCertificates\fP or \fBssl.allowInvalidCertificates:
 true\fP when using x.509 authentication, an invalid certificate is
 only sufficient to establish a TLS/SSL connection but is
@@ -640,9 +640,9 @@ well as to foreign processes posing as valid
 .UNINDENT
 .sp
 When using the \fBallowInvalidCertificates\fP setting,
-MongoDB logs as a warning the use of the invalid certificate.
+MongerDB logs as a warning the use of the invalid certificate.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -653,10 +653,10 @@ New in version 3.0.
 
 .sp
 Disables the validation of the hostnames in TLS/SSL certificates. Allows
-\fBmonger\fP to connect to MongoDB instances even if the hostname in their
+\fBmonger\fP to connect to MongerDB instances even if the hostname in their
 certificates do not match the specified hostname.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -678,7 +678,7 @@ The specified disabled protocols overrides any default disabled
 protocols.
 .UNINDENT
 .sp
-Starting in version 4.0, MongoDB disables the use of TLS 1.0 if TLS
+Starting in version 4.0, MongerDB disables the use of TLS 1.0 if TLS
 1.1+ is available on the system. To enable the
 disabled TLS 1.0, specify \fBnone\fP to \fI\%\-\-sslDisabledProtocols\fP\&.  See 4.0\-disable\-tls\&.
 .sp
@@ -743,7 +743,7 @@ running the shell. The \fI\%\-\-norc\fP option for \fI\%monger\fP
 suppresses only the user’s \fB\&.mongerrc.js\fP file.
 .sp
 On Windows, the global \fBmongerrc.js </etc/mongerrc.js>\fP exists
-in the \fB%ProgramData%\eMongoDB\fP directory.
+in the \fB%ProgramData%\eMongerDB\fP directory.
 .TP
 .B \fB/tmp/monger_edit\fP\fI<time_t>\fP\fB\&.js\fP
 Created by \fI\%monger\fP when editing a file. If the file exists,
@@ -1058,7 +1058,7 @@ T}
 _
 .TE
 .IP [1] 5
-MongoDB accommodates multiple keybinding.
+MongerDB accommodates multiple keybinding.
 Since 2.0, \fI\%monger\fP includes support for basic emacs
 keybindings.
 .SH USE
@@ -1152,7 +1152,7 @@ the additional JavaScript required to generate this output.
 .UNINDENT
 .UNINDENT
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

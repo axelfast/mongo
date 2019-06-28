@@ -135,14 +135,14 @@ var runTest = function(useHostName) {
         secHosts.push("localhost:" + rs.getPort(sec));
     });
 
-    var monger = new Mongo(host);
+    var monger = new Monger(host);
 
     assertCannotRunCommands(monger, true);
 
     // Test localhost access on secondaries
     var mongerSecs = [];
     secHosts.forEach(function(h) {
-        mongerSecs.push(new Mongo(h));
+        mongerSecs.push(new Monger(h));
     });
 
     mongerSecs.forEach(function(m) {
@@ -167,7 +167,7 @@ var runTest = function(useHostName) {
     print("reconnecting with a new client.");
     print("===============================");
 
-    monger = new Mongo(host);
+    monger = new Monger(host);
 
     assertCannotRunCommands(monger, true);
 
@@ -177,7 +177,7 @@ var runTest = function(useHostName) {
 
     // Test localhost access on secondaries on new connection
     secHosts.forEach(function(h) {
-        var m = new Mongo(h);
+        var m = new Monger(h);
         assertCannotRunCommands(m, false);
         authenticate(m);
     });
@@ -199,14 +199,14 @@ var runNonlocalTest = function(ipAddr) {
         secHosts.push(ipAddr + ":" + rs.getPort(sec));
     });
 
-    var monger = new Mongo(host);
+    var monger = new Monger(host);
 
     assertCannotRunCommands(monger, true);
 
     // Test localhost access on secondaries
     var mongerSecs = [];
     secHosts.forEach(function(h) {
-        mongerSecs.push(new Mongo(h));
+        mongerSecs.push(new Monger(h));
     });
 
     mongerSecs.forEach(function(m) {

@@ -36,7 +36,7 @@ var $config = extendWorkload($config, function($config, $super) {
         // range are found after the splitChunk.
         // Choose the mongers randomly to distribute load.
         var numDocsBefore = ChunkHelper.getNumDocs(
-            ChunkHelper.getRandomMongos(connCache.mongers), ns, chunk.min._id, chunk.max._id);
+            ChunkHelper.getRandomMongers(connCache.mongers), ns, chunk.min._id, chunk.max._id);
 
         // Save the number of chunks before the splitChunk operation. This will be used
         // to verify that the number of chunks after a successful splitChunk increases
@@ -105,7 +105,7 @@ var $config = extendWorkload($config, function($config, $super) {
             // before.
             var numDocsAfter = ChunkHelper.getNumDocs(mongers, ns, chunk.min._id, chunk.max._id);
 
-            msg = 'Mongos does not see same number of documents after splitChunk.\n' + msgBase;
+            msg = 'Mongers does not see same number of documents after splitChunk.\n' + msgBase;
             assertWhenOwnColl.eq(numDocsAfter, numDocsBefore, msgBase);
 
             // Regardless of if the splitChunk operation succeeded or failed,
@@ -113,14 +113,14 @@ var $config = extendWorkload($config, function($config, $super) {
             // range only on the shard the original chunk was on.
             var shardsForChunk =
                 ChunkHelper.getShardsForRange(mongers, ns, chunk.min._id, chunk.max._id);
-            msg = 'Mongos does not see exactly 1 shard for chunk after splitChunk.\n' + msgBase +
+            msg = 'Mongers does not see exactly 1 shard for chunk after splitChunk.\n' + msgBase +
                 '\n' +
-                'Mongos find().explain() results for chunk: ' + tojson(shardsForChunk);
+                'Mongers find().explain() results for chunk: ' + tojson(shardsForChunk);
             assertWhenOwnColl.eq(shardsForChunk.shards.length, 1, msg);
 
-            msg = 'Mongos sees different shard for chunk than chunk does after splitChunk.\n' +
+            msg = 'Mongers sees different shard for chunk than chunk does after splitChunk.\n' +
                 msgBase + '\n' +
-                'Mongos find().explain() results for chunk: ' + tojson(shardsForChunk);
+                'Mongers find().explain() results for chunk: ' + tojson(shardsForChunk);
             assertWhenOwnColl.eq(shardsForChunk.shards[0], chunk.shard, msg);
 
             // If the splitChunk operation succeeded, verify that the mongers sees two chunks between

@@ -73,10 +73,10 @@ var OverrideHelpers = (function() {
     }
 
     function overrideRunCommand(overrideFunc) {
-        const mongerRunCommandOriginal = Mongo.prototype.runCommand;
-        const mongerRunCommandWithMetadataOriginal = Mongo.prototype.runCommandWithMetadata;
+        const mongerRunCommandOriginal = Monger.prototype.runCommand;
+        const mongerRunCommandWithMetadataOriginal = Monger.prototype.runCommandWithMetadata;
 
-        Mongo.prototype.runCommand = function(dbName, commandObj, options) {
+        Monger.prototype.runCommand = function(dbName, commandObj, options) {
             const commandName = Object.keys(commandObj)[0];
             return overrideFunc(this,
                                 dbName,
@@ -86,7 +86,7 @@ var OverrideHelpers = (function() {
                                 (commandObj) => [dbName, commandObj, options]);
         };
 
-        Mongo.prototype.runCommandWithMetadata = function(dbName, metadata, commandArgs) {
+        Monger.prototype.runCommandWithMetadata = function(dbName, metadata, commandArgs) {
             const commandName = Object.keys(commandArgs)[0];
             return overrideFunc(this,
                                 dbName,

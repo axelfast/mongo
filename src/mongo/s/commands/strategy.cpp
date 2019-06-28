@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -608,7 +608,7 @@ void runCommand(OperationContext* opCtx,
         LastError::get(opCtx->getClient()).setLastError(e.code(), e.reason());
         // hasWriteConcernError is set to false because:
         // 1. TransientTransaction error label handling for commitTransaction command in mongers is
-        //    delegated to the shards. Mongos simply propagates the shard's response up to the
+        //    delegated to the shards. Mongers simply propagates the shard's response up to the
         //    client.
         // 2. For other commands in a transaction, they shouldn't get a writeConcern error so
         //    this setting doesn't apply.
@@ -705,7 +705,7 @@ DbResponse Strategy::queryOp(OperationContext* opCtx, const NamespaceString& nss
     try {
         cursorId = ClusterFind::runQuery(
             opCtx, *canonicalQuery, ReadPreferenceSetting::get(opCtx), &batch);
-    } catch (const ExceptionFor<ErrorCodes::CommandOnShardedViewNotSupportedOnMongod>&) {
+    } catch (const ExceptionFor<ErrorCodes::CommandOnShardedViewNotSupportedOnMongerd>&) {
         uasserted(40247, "OP_QUERY not supported on views");
     }
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2019-present MongoDB, Inc.
+# Copyright (C) 2019-present MongerDB, Inc.
 
 global:
     cpp_namespace: "monger"

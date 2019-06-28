@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,18 +41,18 @@
 namespace monger {
 namespace mozjs {
 
-const char* const MongoStatusInfo::className = "MongoStatus";
-const char* const MongoStatusInfo::inheritFrom = "Error";
+const char* const MongerStatusInfo::className = "MongerStatus";
+const char* const MongerStatusInfo::inheritFrom = "Error";
 
-Status MongoStatusInfo::toStatus(JSContext* cx, JS::HandleObject object) {
+Status MongerStatusInfo::toStatus(JSContext* cx, JS::HandleObject object) {
     return *static_cast<Status*>(JS_GetPrivate(object));
 }
 
-Status MongoStatusInfo::toStatus(JSContext* cx, JS::HandleValue value) {
+Status MongerStatusInfo::toStatus(JSContext* cx, JS::HandleValue value) {
     return *static_cast<Status*>(JS_GetPrivate(value.toObjectOrNull()));
 }
 
-void MongoStatusInfo::fromStatus(JSContext* cx, Status status, JS::MutableHandleValue value) {
+void MongerStatusInfo::fromStatus(JSContext* cx, Status status, JS::MutableHandleValue value) {
     invariant(status != Status::OK());
     auto scope = getScope(cx);
 
@@ -65,17 +65,17 @@ void MongoStatusInfo::fromStatus(JSContext* cx, Status status, JS::MutableHandle
     scope->getProto<ErrorInfo>().newInstance(args, &error);
 
     JS::RootedObject thisv(cx);
-    scope->getProto<MongoStatusInfo>().newObjectWithProto(&thisv, error);
+    scope->getProto<MongerStatusInfo>().newObjectWithProto(&thisv, error);
     ObjectWrapper thisvObj(cx, thisv);
     thisvObj.defineProperty(InternedString::code,
                             JSPROP_ENUMERATE,
-                            smUtils::wrapConstrainedMethod<Functions::code, false, MongoStatusInfo>,
+                            smUtils::wrapConstrainedMethod<Functions::code, false, MongerStatusInfo>,
                             nullptr);
 
     thisvObj.defineProperty(
         InternedString::reason,
         JSPROP_ENUMERATE,
-        smUtils::wrapConstrainedMethod<Functions::reason, false, MongoStatusInfo>,
+        smUtils::wrapConstrainedMethod<Functions::reason, false, MongerStatusInfo>,
         nullptr);
 
     // We intentionally omit JSPROP_ENUMERATE to match how Error.prototype.stack is a non-enumerable
@@ -83,7 +83,7 @@ void MongoStatusInfo::fromStatus(JSContext* cx, Status status, JS::MutableHandle
     thisvObj.defineProperty(
         InternedString::stack,
         0,
-        smUtils::wrapConstrainedMethod<Functions::stack, false, MongoStatusInfo>,
+        smUtils::wrapConstrainedMethod<Functions::stack, false, MongerStatusInfo>,
         nullptr);
 
     JS_SetPrivate(thisv, scope->trackedNew<Status>(std::move(status)));
@@ -91,22 +91,22 @@ void MongoStatusInfo::fromStatus(JSContext* cx, Status status, JS::MutableHandle
     value.setObjectOrNull(thisv);
 }
 
-void MongoStatusInfo::finalize(js::FreeOp* fop, JSObject* obj) {
+void MongerStatusInfo::finalize(js::FreeOp* fop, JSObject* obj) {
     auto status = static_cast<Status*>(JS_GetPrivate(obj));
 
     if (status)
         getScope(fop)->trackedDelete(status);
 }
 
-void MongoStatusInfo::Functions::code::call(JSContext* cx, JS::CallArgs args) {
+void MongerStatusInfo::Functions::code::call(JSContext* cx, JS::CallArgs args) {
     args.rval().setInt32(toStatus(cx, args.thisv()).code());
 }
 
-void MongoStatusInfo::Functions::reason::call(JSContext* cx, JS::CallArgs args) {
+void MongerStatusInfo::Functions::reason::call(JSContext* cx, JS::CallArgs args) {
     ValueReader(cx, args.rval()).fromStringData(toStatus(cx, args.thisv()).reason());
 }
 
-void MongoStatusInfo::Functions::stack::call(JSContext* cx, JS::CallArgs args) {
+void MongerStatusInfo::Functions::stack::call(JSContext* cx, JS::CallArgs args) {
     JS::RootedObject thisv(cx, args.thisv().toObjectOrNull());
     JS::RootedObject parent(cx);
 
@@ -142,12 +142,12 @@ void MongoStatusInfo::Functions::stack::call(JSContext* cx, JS::CallArgs args) {
     }
 }
 
-void MongoStatusInfo::postInstall(JSContext* cx, JS::HandleObject global, JS::HandleObject proto) {
+void MongerStatusInfo::postInstall(JSContext* cx, JS::HandleObject global, JS::HandleObject proto) {
     auto scope = getScope(cx);
 
     JS_SetPrivate(
         proto,
-        scope->trackedNew<Status>(Status(ErrorCodes::UnknownError, "Mongo Status Prototype")));
+        scope->trackedNew<Status>(Status(ErrorCodes::UnknownError, "Monger Status Prototype")));
 }
 
 }  // namespace mozjs

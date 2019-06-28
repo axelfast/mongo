@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -357,7 +357,7 @@ func (c *Client) ApplyCommand(desc description.Server) {
 	if c.state == Starting {
 		c.state = InProgress
 		// If this is in a transaction and the server is a mongers, pin it
-		if desc.Kind == description.Mongos {
+		if desc.Kind == description.Mongers {
 			c.PinnedServer = &desc
 		}
 	} else if c.state == Committed || c.state == Aborted {

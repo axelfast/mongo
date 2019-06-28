@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -66,7 +66,7 @@ inline std::string uriEncode(StringData str, StringData passthrough = ""_sd) {
 StatusWith<std::string> uriDecode(StringData str);
 
 /**
- * MongoURI handles parsing of URIs for mongerdb, and falls back to old-style
+ * MongerURI handles parsing of URIs for mongerdb, and falls back to old-style
  * ConnectionString parsing. It's used primarily by the shell.
  * It parses URIs with the following formats:
  *
@@ -100,7 +100,7 @@ StatusWith<std::string> uriDecode(StringData str);
  *      if ( ! cs.isValid() ) throw "bad connection string: " + errmsg;
  *      DBClientBase * conn = cs.connect( errmsg );
  */
-class MongoURI {
+class MongerURI {
 public:
     class CaseInsensitiveString {
     public:
@@ -133,12 +133,12 @@ public:
     // whichever map type is used provides that guarantee.
     using OptionsMap = std::map<CaseInsensitiveString, std::string>;
 
-    static StatusWith<MongoURI> parse(const std::string& url);
+    static StatusWith<MongerURI> parse(const std::string& url);
 
     /*
      * Returns true if str starts with one of the uri schemes (e.g. mongerdb:// or mongerdb+srv://)
      */
-    static bool isMongoURI(StringData str);
+    static bool isMongerURI(StringData str);
 
     /*
      * Returns a copy of the input url as a string with the password and connection options
@@ -238,7 +238,7 @@ public:
     // server (say a member of a replica-set), you can pass in its HostAndPort information to
     // get a new URI with the same info, except type() will be MASTER and getServers() will
     // be the single host you pass in.
-    MongoURI cloneURIForServer(HostAndPort hostAndPort) const {
+    MongerURI cloneURIForServer(HostAndPort hostAndPort) const {
         auto out = *this;
         out._connectString = ConnectionString(std::move(hostAndPort));
         return out;
@@ -248,16 +248,16 @@ public:
         return _connectString.type();
     }
 
-    explicit MongoURI(const ConnectionString& connectString) : _connectString(connectString) {}
+    explicit MongerURI(const ConnectionString& connectString) : _connectString(connectString) {}
 
-    MongoURI() = default;
+    MongerURI() = default;
 
-    friend std::ostream& operator<<(std::ostream&, const MongoURI&);
+    friend std::ostream& operator<<(std::ostream&, const MongerURI&);
 
-    friend StringBuilder& operator<<(StringBuilder&, const MongoURI&);
+    friend StringBuilder& operator<<(StringBuilder&, const MongerURI&);
 
 private:
-    MongoURI(ConnectionString connectString,
+    MongerURI(ConnectionString connectString,
              const std::string& user,
              const std::string& password,
              const std::string& database,
@@ -275,7 +275,7 @@ private:
     boost::optional<BSONObj> _makeAuthObjFromOptions(
         int maxWireVersion, const std::vector<std::string>& saslMechsForAuth) const;
 
-    static MongoURI parseImpl(const std::string& url);
+    static MongerURI parseImpl(const std::string& url);
 
     ConnectionString _connectString;
     std::string _user;
@@ -286,11 +286,11 @@ private:
     OptionsMap _options;
 };
 
-inline std::ostream& operator<<(std::ostream& ss, const MongoURI& uri) {
+inline std::ostream& operator<<(std::ostream& ss, const MongerURI& uri) {
     return ss << uri._connectString;
 }
 
-inline StringBuilder& operator<<(StringBuilder& sb, const MongoURI& uri) {
+inline StringBuilder& operator<<(StringBuilder& sb, const MongerURI& uri) {
     return sb << uri._connectString;
 }
 }  // namespace monger

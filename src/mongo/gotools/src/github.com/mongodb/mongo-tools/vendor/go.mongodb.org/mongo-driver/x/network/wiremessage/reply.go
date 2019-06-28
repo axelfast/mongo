@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -15,7 +15,7 @@ import (
 	"go.mongerdb.org/monger-driver/x/bsonx"
 )
 
-// Reply represents the OP_REPLY message of the MongoDB wire protocol.
+// Reply represents the OP_REPLY message of the MongerDB wire protocol.
 type Reply struct {
 	MsgHeader      Header
 	ResponseFlags  ReplyFlag

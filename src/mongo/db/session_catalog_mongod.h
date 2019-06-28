@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,7 +35,7 @@ namespace monger {
 
 class SessionsCollection;
 
-class MongoDSessionCatalog {
+class MongerDSessionCatalog {
 public:
     /**
      * Invoked when the node enters the primary state. Ensures that the transactions collection is
@@ -82,10 +82,10 @@ public:
  * it for later access by the command. The session is installed at construction time and is removed
  * at destruction.
  */
-class MongoDOperationContextSession {
+class MongerDOperationContextSession {
 public:
-    MongoDOperationContextSession(OperationContext* opCtx);
-    ~MongoDOperationContextSession();
+    MongerDOperationContextSession(OperationContext* opCtx);
+    ~MongerDOperationContextSession();
 
     /**
      * This method takes an operation context with a checked-out session and allows it to be
@@ -106,16 +106,16 @@ private:
 };
 
 /**
- * Similar to MongoDOperationContextSession, but marks the TransactionParticipant as valid without
+ * Similar to MongerDOperationContextSession, but marks the TransactionParticipant as valid without
  * refreshing from disk and starts a new transaction unconditionally.
  *
  * NOTE: Only used by the replication oplog application logic on secondaries in order to replay
  * prepared transactions.
  */
-class MongoDOperationContextSessionWithoutRefresh {
+class MongerDOperationContextSessionWithoutRefresh {
 public:
-    MongoDOperationContextSessionWithoutRefresh(OperationContext* opCtx);
-    ~MongoDOperationContextSessionWithoutRefresh();
+    MongerDOperationContextSessionWithoutRefresh(OperationContext* opCtx);
+    ~MongerDOperationContextSessionWithoutRefresh();
 
 private:
     OperationContextSession _operationContextSession;

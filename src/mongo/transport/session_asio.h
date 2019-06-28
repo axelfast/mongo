@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -653,11 +653,11 @@ private:
     }
 
     // Called from read() to send an HTTP response back to a client that's trying to use HTTP
-    // over a native MongoDB port. This returns a Future<Message> to match its only caller, but it
+    // over a native MongerDB port. This returns a Future<Message> to match its only caller, but it
     // always contains an error, so it could really return Future<Anything>
     Future<Message> sendHTTPResponse(const BatonHandle& baton = nullptr) {
         constexpr auto userMsg =
-            "It looks like you are trying to access MongoDB over HTTP"
+            "It looks like you are trying to access MongerDB over HTTP"
             " on the native driver port.\r\n"_sd;
 
         static const std::string httpResp = str::stream() << "HTTP/1.0 200 OK\r\n"
@@ -673,14 +673,14 @@ private:
                     return Status(
                         ErrorCodes::ProtocolError,
                         str::stream()
-                            << "Client sent an HTTP request over a native MongoDB connection, "
+                            << "Client sent an HTTP request over a native MongerDB connection, "
                                "but there was an error sending a response: "
                             << status.toString());
                 })
             .then([] {
                 return StatusWith<Message>(
                     ErrorCodes::ProtocolError,
-                    "Client sent an HTTP request over a native MongoDB connection");
+                    "Client sent an HTTP request over a native MongerDB connection");
             });
     }
 

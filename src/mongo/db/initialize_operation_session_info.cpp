@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,7 +42,7 @@ OperationSessionInfoFromClient initializeOperationSessionInfo(OperationContext* 
                                                               const BSONObj& requestBody,
                                                               bool requiresAuth,
                                                               bool attachToOpCtx,
-                                                              bool isReplSetMemberOrMongos,
+                                                              bool isReplSetMemberOrMongers,
                                                               bool supportsDocLocking) {
     auto osi = OperationSessionInfoFromClient::parse("OperationSessionInfo"_sd, requestBody);
 
@@ -109,7 +109,7 @@ OperationSessionInfoFromClient initializeOperationSessionInfo(OperationContext* 
 
         uassert(ErrorCodes::IllegalOperation,
                 "Transaction numbers are only allowed on a replica set member or mongers",
-                isReplSetMemberOrMongos);
+                isReplSetMemberOrMongers);
         uassert(ErrorCodes::IllegalOperation,
                 "Transaction numbers are only allowed on storage engines that support "
                 "document-level locking",

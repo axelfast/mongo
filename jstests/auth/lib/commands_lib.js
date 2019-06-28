@@ -6040,7 +6040,7 @@ var authCommandsLib = {
      * Returns true if conn is a connection to mongers,
      * and false otherwise.
      */
-    isMongos: function(conn) {
+    isMongers: function(conn) {
         var res = conn.getDB("admin").runCommand({isdbgrid: 1});
         return (res.ok == 1 && res.isdbgrid == 1);
     },
@@ -6057,18 +6057,18 @@ var authCommandsLib = {
      *  An array of strings. Each string in the array reports
      *  a particular test error.
      */
-    runOneTest: function(conn, t, impls, isMongos) {
+    runOneTest: function(conn, t, impls, isMongers) {
         jsTest.log("Running test: " + t.testname);
 
         if (t.skipTest && t.skipTest(conn)) {
             return [];
         }
         // some tests shouldn't run in a sharded environment
-        if (t.skipSharded && isMongos) {
+        if (t.skipSharded && isMongers) {
             return [];
         }
         // others shouldn't run in a standalone environment
-        if (t.skipUnlessSharded && !isMongos) {
+        if (t.skipUnlessSharded && !isMongers) {
             return [];
         }
         // some tests require replica sets to be enabled.
@@ -6121,9 +6121,9 @@ var authCommandsLib = {
 
         var failures = [];
 
-        const isMongos = this.isMongos(conn);
+        const isMongers = this.isMongers(conn);
         for (var i = 0; i < this.tests.length; i++) {
-            res = this.runOneTest(conn, this.tests[i], impls, isMongos);
+            res = this.runOneTest(conn, this.tests[i], impls, isMongers);
             failures = failures.concat(res);
         }
 

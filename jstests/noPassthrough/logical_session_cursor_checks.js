@@ -64,11 +64,11 @@
     }
 
     function Standalone() {
-        this.standalone = MongoRunner.runMongod({auth: "", nojournal: ""});
+        this.standalone = MongerRunner.runMongerd({auth: "", nojournal: ""});
     }
 
     Standalone.prototype.stop = function() {
-        MongoRunner.stopMongod(this.standalone);
+        MongerRunner.stopMongerd(this.standalone);
     };
 
     Standalone.prototype.getConn = function() {

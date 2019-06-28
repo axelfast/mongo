@@ -1,7 +1,7 @@
 #Requires -Version 3.0
 <#
 .SYNOPSIS
-    Download and install latest version of MongoDB Compass.
+    Download and install latest version of MongerDB Compass.
 
 .DESCRIPTION
     A longer description.

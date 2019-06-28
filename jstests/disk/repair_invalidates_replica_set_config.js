@@ -36,7 +36,7 @@
     //
 
     // Shut down the secondary.
-    MongoRunner.stopMongod(secondary);
+    MongerRunner.stopMongerd(secondary);
 
     // Ensure the secondary can be repaired successfully.
     assertRepairSucceeds(secondaryDbpath, secondaryPort);
@@ -67,7 +67,7 @@
     let secondaryCollUri = getUriForColl(secondaryDB[collName]);
     let secondaryCollFile = secondaryDbpath + "/" + secondaryCollUri + ".wt";
     // Shut down the secondary. Delete the collection's data file.
-    MongoRunner.stopMongod(secondary);
+    MongerRunner.stopMongerd(secondary);
     jsTestLog("Deleting secondary collection file: " + secondaryCollFile);
     removeFile(secondaryCollFile);
 
@@ -99,7 +99,7 @@
     // and re-sync on the existing data directory immediately.
 
     // Shut down the secondary. Delete the catalog file.
-    MongoRunner.stopMongod(secondary);
+    MongerRunner.stopMongerd(secondary);
     let mdbCatalogFile = secondaryDbpath + "/_mdb_catalog.wt";
     jsTestLog("Deleting secondary catalog file: " + mdbCatalogFile);
     removeFile(mdbCatalogFile);

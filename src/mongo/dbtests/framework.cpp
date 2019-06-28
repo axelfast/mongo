@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -106,7 +106,7 @@ int runDbTests(int argc, char** argv) {
                                   std::make_unique<IndexAccessMethodFactoryImpl>());
     Collection::Factory::set(globalServiceContext, std::make_unique<CollectionImpl::FactoryImpl>());
     IndexBuildsCoordinator::set(globalServiceContext,
-                                std::make_unique<IndexBuildsCoordinatorMongod>());
+                                std::make_unique<IndexBuildsCoordinatorMongerd>());
     auto registry = std::make_unique<OpObserverRegistry>();
     globalServiceContext->setOpObserver(std::move(registry));
 

@@ -1,12 +1,12 @@
-"""Utility functions for SCons to discover and configure MongoDB modules.
+"""Utility functions for SCons to discover and configure MongerDB modules.
 
-A MongoDB module is an organized collection of source code and build rules that can be provided at
-compile-time to alter or extend the behavior of MongoDB.  The files comprising a single MongoDB
+A MongerDB module is an organized collection of source code and build rules that can be provided at
+compile-time to alter or extend the behavior of MongerDB.  The files comprising a single MongerDB
 module are arranged in a directory hierarchy, rooted in a directory whose name is by convention the
 module name, and containing in that root directory at least two files: a build.py file and a
 SConscript file.
 
-MongoDB modules are discovered by a call to the discover_modules() function, whose sole parameter is
+MongerDB modules are discovered by a call to the discover_modules() function, whose sole parameter is
 the directory which is the immediate parent of all module directories.  The exact directory is
 chosen by the SConstruct file, which is the direct consumer of this python module.  The only rule is
 that it must be a subdirectory of the src/ directory, to correctly work with the SCons variant
@@ -15,13 +15,13 @@ directory system that separates build products for source.
 Once discovered, modules are configured by the configure_modules() function, and the build system
 integrates their SConscript files into the rest of the build.
 
-MongoDB module build.py files implement a single function, configure(conf, env), which they may use
+MongerDB module build.py files implement a single function, configure(conf, env), which they may use
 to configure the supplied "env" object.  The configure functions may add extra LIBDEPS to mongerd,
 mongers and the monger shell (TODO: other monger tools and the C++ client), and through those libraries
 alter those programs' behavior.
 
-MongoDB module SConscript files can describe libraries, programs and unit tests, just as other
-MongoDB SConscript files do.
+MongerDB module SConscript files can describe libraries, programs and unit tests, just as other
+MongerDB SConscript files do.
 """
 
 __all__ = ('discover_modules', 'discover_module_directories', 'configure_modules',
@@ -33,7 +33,7 @@ import os
 
 
 def discover_modules(module_root, allowed_modules):
-    """Scan module_root for subdirectories that look like MongoDB modules.
+    """Scan module_root for subdirectories that look like MongerDB modules.
 
     Return a list of imported build.py module objects.
     """
@@ -73,7 +73,7 @@ def discover_modules(module_root, allowed_modules):
 
 
 def discover_module_directories(module_root, allowed_modules):
-    """Scan module_root for subdirectories that look like MongoDB modules.
+    """Scan module_root for subdirectories that look like MongerDB modules.
 
     Return a list of directory names.
     """
@@ -108,7 +108,7 @@ def configure_modules(modules, conf):
 
     The modules were created by discover_modules.
 
-    The configure() function should prepare the Mongo build system for building the module.
+    The configure() function should prepare the Monger build system for building the module.
     """
     env = conf.env
     env['MONGO_MODULES'] = []
@@ -148,7 +148,7 @@ def __get_src_relative_path(path):
 
 
 def __get_module_path(module_frame_depth):
-    """Return the path to the MongoDB module whose build.py is executing "module_frame_depth" frames.
+    """Return the path to the MongerDB module whose build.py is executing "module_frame_depth" frames.
 
     This is above this function, relative to the "src" directory.
     """
@@ -157,25 +157,25 @@ def __get_module_path(module_frame_depth):
 
 
 def __get_module_src_path(module_frame_depth):
-    """Return the path relative to the SConstruct file of the MongoDB module's source tree.
+    """Return the path relative to the SConstruct file of the MongerDB module's source tree.
 
     module_frame_depth is the number of frames above the current one in which one can find a
-    function from the MongoDB module's build.py function.
+    function from the MongerDB module's build.py function.
     """
     return os.path.join('src', __get_module_path(module_frame_depth + 1))
 
 
 def __get_module_build_path(module_frame_depth):
-    """Return the path relative to the SConstruct file of the MongoDB module's build tree.
+    """Return the path relative to the SConstruct file of the MongerDB module's build tree.
 
     module_frame_depth is the number of frames above the current one in which one can find a
-    function from the MongoDB module's build.py function.
+    function from the MongerDB module's build.py function.
     """
     return os.path.join('$BUILD_DIR', __get_module_path(module_frame_depth + 1))
 
 
 def get_current_module_src_path():
-    """Return the path relative to the SConstruct file of the current MongoDB module's source tree.
+    """Return the path relative to the SConstruct file of the current MongerDB module's source tree.
 
     May only meaningfully be called from within build.py
     """
@@ -183,7 +183,7 @@ def get_current_module_src_path():
 
 
 def get_current_module_build_path():
-    """Return the path relative to the SConstruct file of the current MongoDB module's build tree.
+    """Return the path relative to the SConstruct file of the current MongerDB module's build tree.
 
     May only meaningfully be called from within build.py
     """
@@ -194,7 +194,7 @@ def get_current_module_build_path():
 def get_current_module_libdep_name(libdep_rel_path):
     """Return a $BUILD_DIR relative path to a "libdep_rel_path".
 
-    The "libdep_rel_path" is relative to the MongoDB module's build.py file.
+    The "libdep_rel_path" is relative to the MongerDB module's build.py file.
 
     May only meaningfully be called from within build.py
     """

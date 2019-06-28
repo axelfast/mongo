@@ -59,7 +59,7 @@
     replTest.stopSet();
 
     // A standalone mongerd does not return an operationTime.
-    var standalone = MongoRunner.runMongod();
+    var standalone = MongerRunner.runMongerd();
 
     testDB = standalone.getDB("test");
     res = assert.commandWorked(testDB.runCommand({insert: "foo", documents: [{x: 5}]}));
@@ -67,5 +67,5 @@
            "Expected response from a standalone mongerd to not contain an operationTime, " +
                "received: " + tojson(res));
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 })();

@@ -13,11 +13,11 @@
 
     const baseName = 'reindex_crash_rebuilds_id_index';
     const collName = baseName;
-    const dbpath = MongoRunner.dataPath + baseName + '/';
+    const dbpath = MongerRunner.dataPath + baseName + '/';
     resetDbpath(dbpath);
 
     const mongerdOptions = {dbpath: dbpath, noCleanData: true};
-    let conn = MongoRunner.runMongod(mongerdOptions);
+    let conn = MongerRunner.runMongerd(mongerdOptions);
 
     let testDB = conn.getDB('test');
     let testColl = testDB.getCollection(collName);
@@ -35,10 +35,10 @@
     assert.throws(() => testColl.runCommand({reIndex: collName}));
 
     // The server should have crashed from the failpoint.
-    MongoRunner.stopMongod(conn, null, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
+    MongerRunner.stopMongerd(conn, null, {allowedExitCode: MongerRunner.EXIT_ABRUPT});
 
     // The server should start up successfully after rebuilding the _id index.
-    conn = MongoRunner.runMongod(mongerdOptions);
+    conn = MongerRunner.runMongerd(mongerdOptions);
     testDB = conn.getDB('test');
     testColl = testDB.getCollection(collName);
     assert(testColl.exists());
@@ -48,5 +48,5 @@
     assert.neq(null, spec, "_id index not found");
     assert.eq("_id_", spec.name, tojson(spec));
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

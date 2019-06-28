@@ -8,7 +8,7 @@
     // implicit sessions.
     TestData.disableImplicitSessions = true;
 
-    const mongerd = MongoRunner.runMongod({auth: ""});
+    const mongerd = MongerRunner.runMongerd({auth: ""});
 
     const refresh = {refreshLogicalSessionCacheNow: 1};
     const startSession = {startSession: 1};
@@ -43,5 +43,5 @@
                   .next()
                   .count);
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

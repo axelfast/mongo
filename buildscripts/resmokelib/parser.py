@@ -113,7 +113,7 @@ def _make_parser():  # pylint: disable=too-many-statements
     parser.add_option(
         "-j", "--jobs", type="int", dest="jobs", metavar="JOBS",
         help=("The number of Job instances to use. Each instance will receive its"
-              " own MongoDB deployment to dispatch tests to."))
+              " own MongerDB deployment to dispatch tests to."))
 
     parser.add_option("-l", "--listSuites", action="store_true", dest="list_suites",
                       help="Lists the names of the suites available to execute.")
@@ -158,14 +158,14 @@ def _make_parser():  # pylint: disable=too-many-statements
     parser.add_option(
         "--shellConnString", dest="shell_conn_string", metavar="CONN_STRING",
         help="Overrides the default fixture and connects with a mongerdb:// connection"
-        " string to an existing MongoDB cluster instead. This is useful for"
-        " connecting to a MongoDB deployment started outside of resmoke.py including"
+        " string to an existing MongerDB cluster instead. This is useful for"
+        " connecting to a MongerDB deployment started outside of resmoke.py including"
         " one running in a debugger.")
 
     parser.add_option(
         "--shellPort", dest="shell_port", metavar="PORT",
         help="Convenience form of --shellConnString for connecting to an"
-        " existing MongoDB cluster with the URL mongerdb://localhost:[PORT]."
+        " existing MongerDB cluster with the URL mongerdb://localhost:[PORT]."
         " This is useful for connecting to a server running in a debugger.")
 
     parser.add_option("--repeat", "--repeatSuites", type="int", dest="repeat_suites", metavar="N",
@@ -649,9 +649,9 @@ def _update_config_vars(values):  # pylint: disable=too-many-statements
         conn_string = "mongerdb://localhost:" + port
 
     if conn_string is not None:
-        # The --shellConnString command line option must be a MongoDB connection URI, which means it
+        # The --shellConnString command line option must be a MongerDB connection URI, which means it
         # must specify the mongerdb:// or mongerdb+srv:// URI scheme. pymonger.uri_parser.parse_uri()
-        # raises an exception if the connection string specified isn't considered a valid MongoDB
+        # raises an exception if the connection string specified isn't considered a valid MongerDB
         # connection URI.
         pymonger.uri_parser.parse_uri(conn_string)
         _config.SHELL_CONN_STRING = conn_string

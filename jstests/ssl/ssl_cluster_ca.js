@@ -54,11 +54,11 @@
         Object.assign({}, valid_options, {tlsCertificateKeyFile: valid_options.tlsClusterFile});
     testRS(wrong_key_file, false);
 
-    const mongerd = MongoRunner.runMongod(valid_options);
+    const mongerd = MongerRunner.runMongerd(valid_options);
     assert(mongerd, "Failed starting standalone mongerd with alternate CA");
 
     function testConnect(cert, succeed) {
-        const monger = runMongoProgram("monger",
+        const monger = runMongerProgram("monger",
                                       "--host",
                                       "localhost",
                                       "--port",
@@ -71,12 +71,12 @@
                                       "--eval",
                                       ";");
 
-        // runMongoProgram returns 0 on success
+        // runMongerProgram returns 0 on success
         assert.eq(monger === 0, succeed);
     }
 
     testConnect('jstests/libs/client.pem', true);
     testConnect('jstests/libs/trusted-client.pem', false);
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 }());

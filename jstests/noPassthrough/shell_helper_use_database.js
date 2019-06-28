@@ -9,7 +9,7 @@ var db;
 (function() {
     "use strict";
 
-    const conn = MongoRunner.runMongod({});
+    const conn = MongerRunner.runMongerd({});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     db = conn.getDB("db1");
@@ -35,5 +35,5 @@ var db;
     assert(session === db.getSession(), "session wasn't inherited as part of switching databases");
 
     session.endSession();
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

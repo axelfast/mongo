@@ -23,7 +23,7 @@
     assert.commandWorked(cappedTestColl.insert(testDocument));
 
     jsTest.log("Setting up a transaction in which to execute transaction ops.");
-    const session = db.getMongo().startSession();
+    const session = db.getMonger().startSession();
     const sessionDB = session.getDatabase(dbName);
     const sessionCappedColl = sessionDB.getCollection(cappedCollName);
 

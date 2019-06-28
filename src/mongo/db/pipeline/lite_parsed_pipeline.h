@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -76,11 +76,11 @@ public:
     /**
      * Returns a list of the priviliges required for this pipeline.
      */
-    PrivilegeVector requiredPrivileges(bool isMongos) const {
+    PrivilegeVector requiredPrivileges(bool isMongers) const {
         PrivilegeVector requiredPrivileges;
         for (auto&& spec : _stageSpecs) {
             Privilege::addPrivilegesToPrivilegeVector(&requiredPrivileges,
-                                                      spec->requiredPrivileges(isMongos));
+                                                      spec->requiredPrivileges(isMongers));
         }
 
         return requiredPrivileges;
@@ -105,9 +105,9 @@ public:
     /**
      * Returns false if the pipeline has any stages which cannot be passed through to the shards.
      */
-    bool allowedToPassthroughFromMongos() const {
+    bool allowedToPassthroughFromMongers() const {
         return std::all_of(_stageSpecs.cbegin(), _stageSpecs.cend(), [](const auto& spec) {
-            return spec->allowedToPassthroughFromMongos();
+            return spec->allowedToPassthroughFromMongers();
         });
     }
 

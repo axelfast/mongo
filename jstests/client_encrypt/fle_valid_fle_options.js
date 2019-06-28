@@ -14,7 +14,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     const x509_options =
         {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT, vvvvv: ""};
 
-    const conn = MongoRunner.runMongod(x509_options);
+    const conn = MongerRunner.runMongerd(x509_options);
     const unencryptedDatabase = conn.getDB("test");
     const collection = unencryptedDatabase.keystore;
 
@@ -38,7 +38,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     ];
 
     clientSideFLEOptionsFail.forEach(element => {
-        assert.throws(Mongo, [conn.host, element]);
+        assert.throws(Monger, [conn.host, element]);
     });
 
     const clientSideFLEOptionsPass = [
@@ -53,10 +53,10 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     clientSideFLEOptionsPass.forEach(element => {
         assert.doesNotThrow(() => {
-            Mongo(conn.host, element);
+            Monger(conn.host, element);
         });
     });
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
     mock_kms.stop();
 }());

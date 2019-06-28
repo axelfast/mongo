@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -73,7 +73,7 @@ using write_ops::UpdateOpEntry;
 
 namespace {
 
-class MongoDResourceYielder : public ResourceYielder {
+class MongerDResourceYielder : public ResourceYielder {
 public:
     void yield(OperationContext* opCtx) override {
         // We're about to block. Check back in the session so that it's available to other
@@ -83,7 +83,7 @@ public:
 
         Session* const session = OperationContextSession::get(opCtx);
         if (session) {
-            MongoDOperationContextSession::checkIn(opCtx);
+            MongerDOperationContextSession::checkIn(opCtx);
         }
         _yielded = (session != nullptr);
     }
@@ -95,7 +95,7 @@ public:
             // unblocking this thread of execution. However, we must wait until the child operation
             // on this shard finishes so we can get the session back. This may limit the throughput
             // of the operation, but it's correct.
-            MongoDOperationContextSession::checkOut(opCtx,
+            MongerDOperationContextSession::checkOut(opCtx,
                                                     // Assumes this is only called from the
                                                     // 'aggregate' or 'getMore' commands.  The code
                                                     // which relies on this parameter does not
@@ -137,31 +137,31 @@ bool supportsUniqueKey(const boost::intrusive_ptr<ExpressionContext>& expCtx,
 
 }  // namespace
 
-MongoInterfaceStandalone::MongoInterfaceStandalone(OperationContext* opCtx) : _client(opCtx) {}
+MongerInterfaceStandalone::MongerInterfaceStandalone(OperationContext* opCtx) : _client(opCtx) {}
 
-void MongoInterfaceStandalone::setOperationContext(OperationContext* opCtx) {
+void MongerInterfaceStandalone::setOperationContext(OperationContext* opCtx) {
     _client.setOpCtx(opCtx);
 }
 
-DBClientBase* MongoInterfaceStandalone::directClient() {
+DBClientBase* MongerInterfaceStandalone::directClient() {
     return &_client;
 }
 
 std::unique_ptr<TransactionHistoryIteratorBase>
-MongoInterfaceStandalone::createTransactionHistoryIterator(repl::OpTime time) const {
+MongerInterfaceStandalone::createTransactionHistoryIterator(repl::OpTime time) const {
     bool permitYield = true;
     return std::unique_ptr<TransactionHistoryIteratorBase>(
         new TransactionHistoryIterator(time, permitYield));
 }
 
-bool MongoInterfaceStandalone::isSharded(OperationContext* opCtx, const NamespaceString& nss) {
+bool MongerInterfaceStandalone::isSharded(OperationContext* opCtx, const NamespaceString& nss) {
     Lock::DBLock dbLock(opCtx, nss.db(), MODE_IS);
     Lock::CollectionLock collLock(opCtx, nss, MODE_IS);
     const auto metadata = CollectionShardingState::get(opCtx, nss)->getCurrentMetadata();
     return metadata->isSharded();
 }
 
-Insert MongoInterfaceStandalone::buildInsertOp(const NamespaceString& nss,
+Insert MongerInterfaceStandalone::buildInsertOp(const NamespaceString& nss,
                                                std::vector<BSONObj>&& objs,
                                                bool bypassDocValidation) {
     Insert insertOp(nss);
@@ -175,7 +175,7 @@ Insert MongoInterfaceStandalone::buildInsertOp(const NamespaceString& nss,
     return insertOp;
 }
 
-Update MongoInterfaceStandalone::buildUpdateOp(
+Update MongerInterfaceStandalone::buildUpdateOp(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
     BatchedObjects&& batch,
@@ -208,7 +208,7 @@ Update MongoInterfaceStandalone::buildUpdateOp(
     return updateOp;
 }
 
-Status MongoInterfaceStandalone::insert(const boost::intrusive_ptr<ExpressionContext>& expCtx,
+Status MongerInterfaceStandalone::insert(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                                         const NamespaceString& ns,
                                         std::vector<BSONObj>&& objs,
                                         const WriteConcernOptions& wc,
@@ -225,7 +225,7 @@ Status MongoInterfaceStandalone::insert(const boost::intrusive_ptr<ExpressionCon
     return Status::OK();
 }
 
-StatusWith<MongoProcessInterface::UpdateResult> MongoInterfaceStandalone::update(
+StatusWith<MongerProcessInterface::UpdateResult> MongerInterfaceStandalone::update(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& ns,
     BatchedObjects&& batch,
@@ -249,7 +249,7 @@ StatusWith<MongoProcessInterface::UpdateResult> MongoInterfaceStandalone::update
     return updateResult;
 }
 
-CollectionIndexUsageMap MongoInterfaceStandalone::getIndexStats(OperationContext* opCtx,
+CollectionIndexUsageMap MongerInterfaceStandalone::getIndexStats(OperationContext* opCtx,
                                                                 const NamespaceString& ns) {
     AutoGetCollectionForReadCommand autoColl(opCtx, ns);
 
@@ -262,27 +262,27 @@ CollectionIndexUsageMap MongoInterfaceStandalone::getIndexStats(OperationContext
     return collection->infoCache()->getIndexUsageStats();
 }
 
-void MongoInterfaceStandalone::appendLatencyStats(OperationContext* opCtx,
+void MongerInterfaceStandalone::appendLatencyStats(OperationContext* opCtx,
                                                   const NamespaceString& nss,
                                                   bool includeHistograms,
                                                   BSONObjBuilder* builder) const {
     Top::get(opCtx->getServiceContext()).appendLatencyStats(nss, includeHistograms, builder);
 }
 
-Status MongoInterfaceStandalone::appendStorageStats(OperationContext* opCtx,
+Status MongerInterfaceStandalone::appendStorageStats(OperationContext* opCtx,
                                                     const NamespaceString& nss,
                                                     const BSONObj& param,
                                                     BSONObjBuilder* builder) const {
     return appendCollectionStorageStats(opCtx, nss, param, builder);
 }
 
-Status MongoInterfaceStandalone::appendRecordCount(OperationContext* opCtx,
+Status MongerInterfaceStandalone::appendRecordCount(OperationContext* opCtx,
                                                    const NamespaceString& nss,
                                                    BSONObjBuilder* builder) const {
     return appendCollectionRecordCount(opCtx, nss, builder);
 }
 
-BSONObj MongoInterfaceStandalone::getCollectionOptions(const NamespaceString& nss) {
+BSONObj MongerInterfaceStandalone::getCollectionOptions(const NamespaceString& nss) {
     const auto infos = _client.getCollectionInfos(nss.db().toString(), BSON("name" << nss.coll()));
     if (infos.empty()) {
         return BSONObj();
@@ -294,7 +294,7 @@ BSONObj MongoInterfaceStandalone::getCollectionOptions(const NamespaceString& ns
     return infoObj.getObjectField("options").getOwned();
 }
 
-void MongoInterfaceStandalone::renameIfOptionsAndIndexesHaveNotChanged(
+void MongerInterfaceStandalone::renameIfOptionsAndIndexesHaveNotChanged(
     OperationContext* opCtx,
     const BSONObj& renameCommandObj,
     const NamespaceString& targetNs,
@@ -327,7 +327,7 @@ void MongoInterfaceStandalone::renameIfOptionsAndIndexesHaveNotChanged(
             _client.runCommand("admin", renameCommandObj, info));
 }
 
-std::unique_ptr<Pipeline, PipelineDeleter> MongoInterfaceStandalone::makePipeline(
+std::unique_ptr<Pipeline, PipelineDeleter> MongerInterfaceStandalone::makePipeline(
     const std::vector<BSONObj>& rawPipeline,
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const MakePipelineOptions opts) {
@@ -344,13 +344,13 @@ std::unique_ptr<Pipeline, PipelineDeleter> MongoInterfaceStandalone::makePipelin
     return pipeline;
 }
 
-unique_ptr<Pipeline, PipelineDeleter> MongoInterfaceStandalone::attachCursorSourceToPipeline(
+unique_ptr<Pipeline, PipelineDeleter> MongerInterfaceStandalone::attachCursorSourceToPipeline(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* ownedPipeline) {
     return attachCursorSourceToPipelineForLocalRead(expCtx, ownedPipeline);
 }
 
 unique_ptr<Pipeline, PipelineDeleter>
-MongoInterfaceStandalone::attachCursorSourceToPipelineForLocalRead(
+MongerInterfaceStandalone::attachCursorSourceToPipelineForLocalRead(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* ownedPipeline) {
     std::unique_ptr<Pipeline, PipelineDeleter> pipeline(ownedPipeline,
                                                         PipelineDeleter(expCtx->opCtx));
@@ -378,7 +378,7 @@ MongoInterfaceStandalone::attachCursorSourceToPipelineForLocalRead(
     return pipeline;
 }
 
-std::string MongoInterfaceStandalone::getShardName(OperationContext* opCtx) const {
+std::string MongerInterfaceStandalone::getShardName(OperationContext* opCtx) const {
     if (ShardingState::get(opCtx)->enabled()) {
         return ShardingState::get(opCtx)->shardId().toString();
     }
@@ -387,23 +387,23 @@ std::string MongoInterfaceStandalone::getShardName(OperationContext* opCtx) cons
 }
 
 std::pair<std::vector<FieldPath>, bool>
-MongoInterfaceStandalone::collectDocumentKeyFieldsForHostedCollection(OperationContext* opCtx,
+MongerInterfaceStandalone::collectDocumentKeyFieldsForHostedCollection(OperationContext* opCtx,
                                                                       const NamespaceString& nss,
                                                                       UUID uuid) const {
     return {{"_id"}, false};  // Nothing is sharded.
 }
 
-std::vector<FieldPath> MongoInterfaceStandalone::collectDocumentKeyFieldsActingAsRouter(
+std::vector<FieldPath> MongerInterfaceStandalone::collectDocumentKeyFieldsActingAsRouter(
     OperationContext* opCtx, const NamespaceString& nss) const {
     return {"_id"};  // Nothing is sharded.
 }
 
-std::vector<GenericCursor> MongoInterfaceStandalone::getIdleCursors(
+std::vector<GenericCursor> MongerInterfaceStandalone::getIdleCursors(
     const intrusive_ptr<ExpressionContext>& expCtx, CurrentOpUserMode userMode) const {
     return CursorManager::get(expCtx->opCtx)->getIdleCursors(expCtx->opCtx, userMode);
 }
 
-boost::optional<Document> MongoInterfaceStandalone::lookupSingleDocument(
+boost::optional<Document> MongerInterfaceStandalone::lookupSingleDocument(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
     UUID collectionUUID,
@@ -457,7 +457,7 @@ boost::optional<Document> MongoInterfaceStandalone::lookupSingleDocument(
     return lookedUpDocument;
 }
 
-BackupCursorState MongoInterfaceStandalone::openBackupCursor(OperationContext* opCtx) {
+BackupCursorState MongerInterfaceStandalone::openBackupCursor(OperationContext* opCtx) {
     auto backupCursorHooks = BackupCursorHooks::get(opCtx->getServiceContext());
     if (backupCursorHooks->enabled()) {
         return backupCursorHooks->openBackupCursor(opCtx);
@@ -466,7 +466,7 @@ BackupCursorState MongoInterfaceStandalone::openBackupCursor(OperationContext* o
     }
 }
 
-void MongoInterfaceStandalone::closeBackupCursor(OperationContext* opCtx, const UUID& backupId) {
+void MongerInterfaceStandalone::closeBackupCursor(OperationContext* opCtx, const UUID& backupId) {
     auto backupCursorHooks = BackupCursorHooks::get(opCtx->getServiceContext());
     if (backupCursorHooks->enabled()) {
         backupCursorHooks->closeBackupCursor(opCtx, backupId);
@@ -475,7 +475,7 @@ void MongoInterfaceStandalone::closeBackupCursor(OperationContext* opCtx, const 
     }
 }
 
-BackupCursorExtendState MongoInterfaceStandalone::extendBackupCursor(OperationContext* opCtx,
+BackupCursorExtendState MongerInterfaceStandalone::extendBackupCursor(OperationContext* opCtx,
                                                                      const UUID& backupId,
                                                                      const Timestamp& extendTo) {
     auto backupCursorHooks = BackupCursorHooks::get(opCtx->getServiceContext());
@@ -486,7 +486,7 @@ BackupCursorExtendState MongoInterfaceStandalone::extendBackupCursor(OperationCo
     }
 }
 
-std::vector<BSONObj> MongoInterfaceStandalone::getMatchingPlanCacheEntryStats(
+std::vector<BSONObj> MongerInterfaceStandalone::getMatchingPlanCacheEntryStats(
     OperationContext* opCtx, const NamespaceString& nss, const MatchExpression* matchExp) const {
     const auto serializer = [](const PlanCacheEntry& entry) {
         BSONObjBuilder out;
@@ -511,7 +511,7 @@ std::vector<BSONObj> MongoInterfaceStandalone::getMatchingPlanCacheEntryStats(
     return planCache->getMatchingStats(serializer, predicate);
 }
 
-bool MongoInterfaceStandalone::fieldsHaveSupportingUniqueIndex(
+bool MongerInterfaceStandalone::fieldsHaveSupportingUniqueIndex(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
     const std::set<FieldPath>& fieldPaths) const {
@@ -538,7 +538,7 @@ bool MongoInterfaceStandalone::fieldsHaveSupportingUniqueIndex(
     return false;
 }
 
-BSONObj MongoInterfaceStandalone::_reportCurrentOpForClient(
+BSONObj MongerInterfaceStandalone::_reportCurrentOpForClient(
     OperationContext* opCtx, Client* client, CurrentOpTruncateMode truncateOps) const {
     BSONObjBuilder builder;
 
@@ -565,7 +565,7 @@ BSONObj MongoInterfaceStandalone::_reportCurrentOpForClient(
     return builder.obj();
 }
 
-void MongoInterfaceStandalone::_reportCurrentOpsForIdleSessions(OperationContext* opCtx,
+void MongerInterfaceStandalone::_reportCurrentOpsForIdleSessions(OperationContext* opCtx,
                                                                 CurrentOpUserMode userMode,
                                                                 std::vector<BSONObj>* ops) const {
     auto sessionCatalog = SessionCatalog::get(opCtx);
@@ -591,7 +591,7 @@ void MongoInterfaceStandalone::_reportCurrentOpsForIdleSessions(OperationContext
         });
 }
 
-std::unique_ptr<CollatorInterface> MongoInterfaceStandalone::_getCollectionDefaultCollator(
+std::unique_ptr<CollatorInterface> MongerInterfaceStandalone::_getCollectionDefaultCollator(
     OperationContext* opCtx, StringData dbName, UUID collectionUUID) {
     auto it = _collatorCache.find(collectionUUID);
     if (it == _collatorCache.end()) {
@@ -615,33 +615,33 @@ std::unique_ptr<CollatorInterface> MongoInterfaceStandalone::_getCollectionDefau
     return collator ? collator->clone() : nullptr;
 }
 
-std::unique_ptr<ResourceYielder> MongoInterfaceStandalone::getResourceYielder() const {
-    return std::make_unique<MongoDResourceYielder>();
+std::unique_ptr<ResourceYielder> MongerInterfaceStandalone::getResourceYielder() const {
+    return std::make_unique<MongerDResourceYielder>();
 }
 
 
 std::pair<std::set<FieldPath>, boost::optional<ChunkVersion>>
-MongoInterfaceStandalone::ensureFieldsUniqueOrResolveDocumentKey(
+MongerInterfaceStandalone::ensureFieldsUniqueOrResolveDocumentKey(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     boost::optional<std::vector<std::string>> fields,
     boost::optional<ChunkVersion> targetCollectionVersion,
     const NamespaceString& outputNs) const {
     if (targetCollectionVersion) {
-        uassert(51123, "Unexpected target chunk version specified", expCtx->fromMongos);
+        uassert(51123, "Unexpected target chunk version specified", expCtx->fromMongers);
         // If mongers has sent us a target shard version, we need to be sure we are prepared to
         // act as a router which is at least as recent as that mongers.
         checkRoutingInfoEpochOrThrow(expCtx, outputNs, *targetCollectionVersion);
     }
 
     if (!fields) {
-        uassert(51124, "Expected fields to be provided from mongers", !expCtx->fromMongos);
+        uassert(51124, "Expected fields to be provided from mongers", !expCtx->fromMongers);
         return {std::set<FieldPath>{"_id"}, targetCollectionVersion};
     }
 
     // Make sure the 'fields' array has a supporting index. Skip this check if the command is sent
     // from mongers since the 'fields' check would've happened already.
     auto fieldPaths = _convertToFieldPaths(*fields);
-    if (!expCtx->fromMongos) {
+    if (!expCtx->fromMongers) {
         uassert(51183,
                 "Cannot find index to verify that join fields will be unique",
                 fieldsHaveSupportingUniqueIndex(expCtx, outputNs, fieldPaths));

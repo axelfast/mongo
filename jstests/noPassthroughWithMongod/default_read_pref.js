@@ -4,7 +4,7 @@
 
     "use strict";
 
-    var monger = db.getMongo();
+    var monger = db.getMonger();
     try {
         var commandsRan = [];
         db._monger = {
@@ -30,8 +30,8 @@
             isReplicaSetMember: function() {
                 return monger.isReplicaSetMember();
             },
-            isMongos: function() {
-                return monger.isMongos();
+            isMongers: function() {
+                return monger.isMongers();
             },
             isCausalConsistency: function() {
                 return false;

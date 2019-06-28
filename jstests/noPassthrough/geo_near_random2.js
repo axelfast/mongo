@@ -4,7 +4,7 @@ var db;
     "use strict";
     load("jstests/libs/geo_near_random.js");
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd failed to start.");
     db = conn.getDB("test");
 
@@ -26,5 +26,5 @@ var db;
     test.testPt(test.mkPt(0.8), opts);
     test.testPt(test.mkPt(0.8), opts);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

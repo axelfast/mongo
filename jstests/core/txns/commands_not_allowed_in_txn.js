@@ -15,10 +15,10 @@
     let txnNumber = 0;
 
     const sessionOptions = {causalConsistency: false};
-    const session = db.getMongo().startSession(sessionOptions);
+    const session = db.getMonger().startSession(sessionOptions);
     const sessionDb = session.getDatabase(dbName);
 
-    const isMongos = assert.commandWorked(db.runCommand("ismaster")).msg === "isdbgrid";
+    const isMongers = assert.commandWorked(db.runCommand("ismaster")).msg === "isdbgrid";
 
     assert.commandWorked(
         testDB.createCollection(testColl.getName(), {writeConcern: {w: "majority"}}));
@@ -61,8 +61,8 @@
         // Check that the command fails with expected error message.
         assert(res.errmsg.match(errmsgRegExp), res);
 
-        // Mongos has special handling for commitTransaction to support commit recovery.
-        if (!isMongos) {
+        // Mongers has special handling for commitTransaction to support commit recovery.
+        if (!isMongers) {
             assert.commandFailedWithCode(sessionDb.adminCommand({
                 commitTransaction: 1,
                 txnNumber: NumberLong(txnNumber),
@@ -126,7 +126,7 @@
     ];
 
     // There is no applyOps command on mongers.
-    if (!isMongos) {
+    if (!isMongers) {
         commands.push(
             {applyOps: [{op: "u", ns: testColl.getFullName(), o2: {_id: 0}, o: {$set: {a: 5}}}]});
     }
@@ -138,7 +138,7 @@
     //
 
     // There is no doTxn command on mongers.
-    if (!isMongos) {
+    if (!isMongers) {
         assert.commandWorked(sessionDb.runCommand({
             find: collName,
             readConcern: {level: "snapshot"},
@@ -179,8 +179,8 @@
     }),
                                  ErrorCodes.OperationNotSupportedInTransaction);
 
-    // Mongos has special handling for commitTransaction to support commit recovery.
-    if (!isMongos) {
+    // Mongers has special handling for commitTransaction to support commit recovery.
+    if (!isMongers) {
         // The failed find should abort the transaction so a commit should fail.
         assert.commandFailedWithCode(sessionDb.adminCommand({
             commitTransaction: 1,

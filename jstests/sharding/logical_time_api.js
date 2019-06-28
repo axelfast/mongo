@@ -88,7 +88,7 @@
     replTest.stopSet();
 
     // A standalone mongerd does not return logicalTime.
-    var standalone = MongoRunner.runMongod();
+    var standalone = MongerRunner.runMongerd();
 
     testDB = standalone.getDB("test");
     res = assert.commandWorked(testDB.runCommand("insert", {insert: "foo", documents: [{x: 5}]}));
@@ -96,5 +96,5 @@
            "Expected command body from a standalone mongerd to not contain logicalTime, " +
                "received: " + tojson(res));
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 })();

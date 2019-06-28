@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,7 +36,7 @@
 
 namespace monger {
 
-/** Represents a Mongo query expression.  Typically one uses the QUERY(...) macro to construct a
+/** Represents a Monger query expression.  Typically one uses the QUERY(...) macro to construct a
  * Query object.
     Examples:
        QUERY( "age" << 33 << "school" << "UCLA" ).sort("name")
@@ -99,10 +99,10 @@ public:
      */
     Query& explain();
 
-    /** Queries to the Mongo database support a $where parameter option which contains
+    /** Queries to the Monger database support a $where parameter option which contains
         a javascript function that is evaluated to see whether objects being queried match
         its criteria.  Use this helper to append such a function to a query object.
-        Your query may also contain other traditional Mongo query terms.
+        Your query may also contain other traditional Monger query terms.
 
         @param jscode The javascript function to evaluate against each potential object
                match.  The function must return true for matched objects.  Use the this

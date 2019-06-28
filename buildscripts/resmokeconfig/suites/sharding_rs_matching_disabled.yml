@@ -13,5 +13,5 @@ executor:
         TestData:
           setParameters:
             ShardingTaskExecutorPoolReplicaSetMatching: "disabled"
-          setParametersMongos:
+          setParametersMongers:
             ShardingTaskExecutorPoolReplicaSetMatching: "disabled"

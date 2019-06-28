@@ -1,14 +1,14 @@
-MongoDB Tools
+MongerDB Tools
 ===================================
 
  - **bsondump** - _display BSON files in a human-readable format_
  - **mongerimport** - _Convert data from JSON, TSV or CSV and insert them into a collection_
  - **mongerexport** - _Write an existing collection to CSV or JSON format_
- - **mongerdump/mongerrestore** - _Dump MongoDB backups to disk in .BSON format, or restore them to a live database_
- - **mongerstat** - _Monitor live MongoDB servers, replica sets, or sharded clusters_
+ - **mongerdump/mongerrestore** - _Dump MongerDB backups to disk in .BSON format, or restore them to a live database_
+ - **mongerstat** - _Monitor live MongerDB servers, replica sets, or sharded clusters_
  - **mongerfiles** - _Read, write, delete, or update files in [GridFS](http://docs.mongerdb.org/manual/core/gridfs/)_
  - **mongertop** - _Monitor read/write activity on a monger server_
- - **mongerreplay** - _Capture, observe, and replay traffic for MongoDB_
+ - **mongerreplay** - _Capture, observe, and replay traffic for MongerDB_
 
 
 Report any bugs, improvements, or new feature requests at https://jira.mongerdb.org/browse/TOOLS
@@ -42,5 +42,5 @@ See our [Contributor's Guide](CONTRIBUTING.md).
 
 Documentation
 ---------------
-See the MongoDB packages [documentation](http://docs.mongerdb.org/master/reference/program/).
+See the MongerDB packages [documentation](http://docs.mongerdb.org/master/reference/program/).
 

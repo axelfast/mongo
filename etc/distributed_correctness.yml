@@ -114,7 +114,7 @@ functions:
           cd ./clusters/${cluster}
           cp mongerdb_setup.${setup}.${storageEngine}.yml mongerdb_setup.yml
           ../../bin/mongerdb_setup.py --config
-          echo "${cluster} MongoDB Cluster STARTED."
+          echo "${cluster} MongerDB Cluster STARTED."
 
   "run test":
     - command: shell.exec

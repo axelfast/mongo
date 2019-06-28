@@ -9,7 +9,7 @@
     "use strict";
 
     load("jstests/aggregation/extras/utils.js");  // For assertErrorCode.
-    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongos.
+    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongers.
 
     const coll = db.source;
     coll.drop();

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -54,11 +54,11 @@ class ReplSettings;
  * components (including a NetworkInterface/TaskExecutor subsystem backed by the NetworkTestEnv),
  * but allows subclasses to replace any component with its real implementation, a mock, or nullptr.
  */
-class ShardingMongodTestFixture : public ServiceContextMongoDTest,
+class ShardingMongerdTestFixture : public ServiceContextMongerDTest,
                                   public ShardingTestFixtureCommon {
 public:
-    ShardingMongodTestFixture();
-    ~ShardingMongodTestFixture();
+    ShardingMongerdTestFixture();
+    ~ShardingMongerdTestFixture();
 
     /**
      * Initializes sharding components according to the cluster role in
@@ -68,7 +68,7 @@ public:
      * It is illegal to call this if serverGlobalParams.clusterRole is not ClusterRole::ShardServer
      * or ClusterRole::ConfigServer.
      */
-    Status initializeGlobalShardingStateForMongodForTest(const ConnectionString& configConnStr);
+    Status initializeGlobalShardingStateForMongerdForTest(const ConnectionString& configConnStr);
 
     // Syntactic sugar for getting sharding components off the Grid, if they have been initialized.
 

@@ -5,7 +5,7 @@
     "use strict";
 
     const options = {setParameter: "maxLogSizeKB=9"};
-    const conn = MongoRunner.runMongod(options);
+    const conn = MongerRunner.runMongerd(options);
 
     var db = conn.getDB('db');
     var res = db.adminCommand({getParameter: 1, maxLogSizeKB: 1});
@@ -50,5 +50,5 @@
 
         assert(found, tojson(log));
     }
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

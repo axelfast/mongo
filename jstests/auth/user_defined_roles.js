@@ -17,7 +17,7 @@ function runTest(conn) {
         {user: 'userAdmin', pwd: 'pwd', roles: ['userAdminAnyDatabase']});
     conn.getDB('admin').logout();
 
-    var userAdminConn = new Mongo(conn.host);
+    var userAdminConn = new Monger(conn.host);
     var adminUserAdmin = userAdminConn.getDB('admin');
     adminUserAdmin.auth('userAdmin', 'pwd');
     adminUserAdmin.createRole({role: 'adminRole', privileges: [], roles: []});
@@ -141,9 +141,9 @@ function runTest(conn) {
 }
 
 jsTest.log('Test standalone');
-var conn = MongoRunner.runMongod({auth: ''});
+var conn = MongerRunner.runMongerd({auth: ''});
 runTest(conn);
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
 jsTest.log('Test sharding');
 // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.

@@ -6,10 +6,10 @@
     var runTest = function(optionValue, expected) {
         jsTest.log("Testing with --networkMessageCompressors=\"" + optionValue + "\" expecting: " +
                    expected);
-        var monger = MongoRunner.runMongod({networkMessageCompressors: optionValue});
+        var monger = MongerRunner.runMongerd({networkMessageCompressors: optionValue});
         assert.commandWorked(monger.adminCommand({isMaster: 1}));
-        clearRawMongoProgramOutput();
-        assert.eq(runMongoProgram("monger",
+        clearRawMongerProgramOutput();
+        assert.eq(runMongerProgram("monger",
                                   "--eval",
                                   "tostrictjson(db.isMaster());",
                                   "--port",
@@ -17,7 +17,7 @@
                                   "--networkMessageCompressors=snappy"),
                   0);
 
-        var output = rawMongoProgramOutput()
+        var output = rawMongerProgramOutput()
                          .split("\n")
                          .map(function(str) {
                              str = str.replace(/^sh[0-9]+\| /, "");
@@ -32,10 +32,10 @@
         output = JSON.parse(output);
 
         assert.eq(output.compression, expected);
-        MongoRunner.stopMongod(monger);
+        MongerRunner.stopMongerd(monger);
     };
 
-    assert.isnull(MongoRunner.runMongod({networkMessageCompressors: "snappy,disabled"}));
+    assert.isnull(MongerRunner.runMongerd({networkMessageCompressors: "snappy,disabled"}));
 
     runTest("snappy", ["snappy"]);
     runTest("disabled", undefined);

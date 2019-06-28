@@ -17,7 +17,7 @@ selector:
   - jstests/multiVersion/upgrade_downgrade_cluster.js
 
   # TODO SERVER-41230 SERVER-41545: The following tests are expected to fail until the wire version
-  # and feature compatibility version are bumped for MongoDB 4.4.
+  # and feature compatibility version are bumped for MongerDB 4.4.
   - jstests/multiVersion/add_invalid_shard.js
   - jstests/multiVersion/genericSetFCVUsage/crash_mongers_against_upgraded_cluster.js
   - jstests/multiVersion/genericSetFCVUsage/feature_compatibility_version_lagging_secondary.js

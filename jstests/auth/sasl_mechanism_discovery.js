@@ -59,12 +59,12 @@
     }
 
     // Test standalone.
-    var m = MongoRunner.runMongod({
+    var m = MongerRunner.runMongerd({
         keyFile: 'jstests/libs/key1',
         setParameter: "authenticationMechanisms=SCRAM-SHA-1,SCRAM-SHA-256,PLAIN"
     });
     runTest(m);
-    MongoRunner.stopMongod(m);
+    MongerRunner.stopMongerd(m);
 
     // Test mongers.
     var st = new ShardingTest({

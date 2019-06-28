@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -98,7 +98,7 @@ public:
     using CallbackFn = unique_function<void(const CallbackArgs&)>;
 
     /**
-     * Type of a callback from a request to run a command on a remote MongoDB node.
+     * Type of a callback from a request to run a command on a remote MongerDB node.
      *
      * The StatusWith<const BSONObj> will have ErrorCodes::CallbackCanceled if the callback was
      * canceled.  Otherwise, its status will represent any failure to execute the command.

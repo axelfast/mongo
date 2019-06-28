@@ -12,10 +12,10 @@
     const dbName = baseName;
     const collName = "test";
 
-    const dbpath = MongoRunner.dataPath + baseName + "/";
+    const dbpath = MongerRunner.dataPath + baseName + "/";
     resetDbpath(dbpath);
 
-    let mongerd = MongoRunner.runMongod({dbpath: dbpath});
+    let mongerd = MongerRunner.runMongerd({dbpath: dbpath});
     const port = mongerd.port;
 
     let testColl = mongerd.getDB(dbName)[collName];
@@ -25,7 +25,7 @@
     let collUri = getUriForColl(testColl);
     let collFile = dbpath + "/" + collUri + ".wt";
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     jsTestLog("Deleting collection file: " + collFile);
     removeFile(collFile);

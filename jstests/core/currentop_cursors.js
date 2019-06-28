@@ -9,7 +9,7 @@
     "use strict";
     const coll = db.jstests_currentop_cursors;
     // Will skip lsid tests if not in commands read mode.
-    const commandReadMode = db.getMongo().readMode() == "commands";
+    const commandReadMode = db.getMonger().readMode() == "commands";
 
     load("jstests/libs/fixture_helpers.js");  // for FixtureHelpers
 
@@ -69,7 +69,7 @@
         assertFunc: function(cursorId, result) {
             assert.eq(result.length, 1, result);
             // Plan summary does not exist on mongers, so skip this test on mongers.
-            if (!FixtureHelpers.isMongos(db)) {
+            if (!FixtureHelpers.isMongers(db)) {
                 assert.eq(result[0].planSummary, "COLLSCAN", result);
             } else {
                 assert(!result[0].hasOwnProperty("planSummary"), result);
@@ -79,7 +79,7 @@
                 assert(result[0].lsid.hasOwnProperty('id'), result);
                 assert(result[0].lsid.hasOwnProperty('uid'), result);
             }
-            const uri = new MongoURI(db.getMongo().host);
+            const uri = new MongerURI(db.getMonger().host);
             assert(uri.servers.some((server) => {
                 return result[0].host == getHostName() + ":" + server.port;
             }));
@@ -219,8 +219,8 @@
         }
     });
 
-    // planSummary does not exist on Mongos, so skip this test.
-    if (!FixtureHelpers.isMongos(db)) {
+    // planSummary does not exist on Mongers, so skip this test.
+    if (!FixtureHelpers.isMongers(db)) {
         runTest({
             findFunc: function() {
                 assert.commandWorked(coll.createIndex({"val": 1}));
@@ -242,7 +242,7 @@
     }
     // Test lsid.id value is correct if in commandReadMode.
     if (commandReadMode) {
-        const session = db.getMongo().startSession();
+        const session = db.getMonger().startSession();
         runTest({
             findFunc: function() {
                 const sessionDB = session.getDatabase("test");

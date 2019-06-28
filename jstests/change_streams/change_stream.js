@@ -10,7 +10,7 @@
     load("jstests/libs/change_stream_util.js");        // For ChangeStreamTest and
                                                        // assert[Valid|Invalid]ChangeStreamNss.
 
-    const isMongos = FixtureHelpers.isMongos(db);
+    const isMongers = FixtureHelpers.isMongers(db);
 
     // Drop and recreate the collections to be used in this set of tests.
     assertDropAndRecreateCollection(db, "t1");
@@ -32,7 +32,7 @@
     assertInvalidChangeStreamNss("admin", "testColl");
     assertInvalidChangeStreamNss("config", "testColl");
     // Not allowed to access 'local' database through mongers.
-    if (!isMongos) {
+    if (!isMongers) {
         assertInvalidChangeStreamNss("local", "testColl");
     }
 
@@ -211,15 +211,15 @@
     cst.assertNoChange(dne1cursor);
     cst.assertNoChange(dne2cursor);
 
-    if (!isMongos) {
+    if (!isMongers) {
         jsTestLog("Ensuring attempt to read with legacy operations fails.");
-        db.getMongo().forceReadMode('legacy');
+        db.getMonger().forceReadMode('legacy');
         const legacyCursor =
             db.tailable2.aggregate([{$changeStream: {}}], {cursor: {batchSize: 0}});
         assert.throws(function() {
             legacyCursor.next();
         }, [], "Legacy getMore expected to fail on changeStream cursor.");
-        db.getMongo().forceReadMode('commands');
+        db.getMonger().forceReadMode('commands');
     }
 
     jsTestLog("Testing resumability");

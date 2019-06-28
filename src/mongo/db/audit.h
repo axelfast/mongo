@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -29,7 +29,7 @@
 
 /**
  * This module describes free functions for logging various operations of interest to a
- * party interested in generating logs of user activity in a MongoDB server instance.
+ * party interested in generating logs of user activity in a MongerDB server instance.
  */
 
 #pragma once

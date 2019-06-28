@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Produce a report of all assertions in the MongoDB server codebase.
+"""Produce a report of all assertions in the MongerDB server codebase.
 
 Parses .cpp files for assertions and verifies assertion codes are distinct.
 Optionally replaces zero codes in source code with new distinct values.
@@ -40,7 +40,7 @@ list_files = False  # pylint: disable=invalid-name
 
 
 def parse_source_files(callback):
-    """Walk MongoDB sourcefiles and invoke a callback for each AssertLocation found."""
+    """Walk MongerDB sourcefiles and invoke a callback for each AssertLocation found."""
 
     quick = [r"assert", r"Exception", r"ErrorCodes::Error"]
 

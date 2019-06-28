@@ -21,16 +21,16 @@
     assert.eq(mongersCfg.parsed.processManagement.timeZoneInfo, tzGoodInfo);
 
     // Test that a bad timezone file causes mongerS startup to fail.
-    let conn = MongoRunner.runMongos({configdb: st.configRS.getURL(), timeZoneInfo: tzBadInfo});
+    let conn = MongerRunner.runMongers({configdb: st.configRS.getURL(), timeZoneInfo: tzBadInfo});
     assert.eq(conn, null, "expected launching mongers with bad timezone rules to fail");
-    assert.neq(-1, rawMongoProgramOutput().indexOf("Fatal assertion 40475"));
+    assert.neq(-1, rawMongerProgramOutput().indexOf("Fatal assertion 40475"));
 
     // Test that a non-existent timezone directory causes mongerS startup to fail.
-    conn = MongoRunner.runMongos({configdb: st.configRS.getURL(), timeZoneInfo: tzNoInfo});
+    conn = MongerRunner.runMongers({configdb: st.configRS.getURL(), timeZoneInfo: tzNoInfo});
     assert.eq(conn, null, "expected launching mongers with bad timezone rules to fail");
     // Look for either old or new error message
-    assert(rawMongoProgramOutput().indexOf("Failed to create service context") != -1 ||
-           rawMongoProgramOutput().indexOf("Failed global initialization") != -1);
+    assert(rawMongerProgramOutput().indexOf("Failed to create service context") != -1 ||
+           rawMongerProgramOutput().indexOf("Failed global initialization") != -1);
 
     // Enable sharding on the test DB and ensure its primary is st.shard0.shardName.
     assert.commandWorked(mongersDB.adminCommand({enableSharding: mongersDB.getName()}));

@@ -5,7 +5,7 @@
 
     // Create a shard and add a database; if the database is not duplicated the mongerd should accept
     // it as shard
-    var conn1 = MongoRunner.runMongod({'shardsvr': ""});
+    var conn1 = MongerRunner.runMongerd({'shardsvr': ""});
     var db1 = conn1.getDB("testDB");
 
     var numObjs = 3;
@@ -26,7 +26,7 @@
     assert.eq(1024, newShardDoc.maxSize);
 
     // a mongerd with an existing database name should not be allowed to become a shard
-    var conn2 = MongoRunner.runMongod({'shardsvr': ""});
+    var conn2 = MongerRunner.runMongerd({'shardsvr': ""});
 
     var db2 = conn2.getDB("otherDB");
     assert.writeOK(db2.foo.save({a: 1}));
@@ -72,8 +72,8 @@
     assert.eq(
         numObjs, sdb1.foo.count(), "wrong count after splitting collection that existed before");
 
-    MongoRunner.stopMongod(conn1);
-    MongoRunner.stopMongod(conn2);
+    MongerRunner.stopMongerd(conn1);
+    MongerRunner.stopMongerd(conn2);
 
     s.stop();
 

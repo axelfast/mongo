@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongertop provides a method to track the amount of time a MongoDB instance spends reading and writing data.
+// Package mongertop provides a method to track the amount of time a MongerDB instance spends reading and writing data.
 package mongertop
 
 import (
@@ -18,13 +18,13 @@ import (
 	"go.mongerdb.org/monger-driver/x/bsonx"
 )
 
-// MongoTop is a container for the user-specified options and
+// MongerTop is a container for the user-specified options and
 // internal state used for running mongertop.
-type MongoTop struct {
+type MongerTop struct {
 	// Generic monger tool options
 	Options *options.ToolOptions
 
-	// Mongotop-specific output options
+	// Mongertop-specific output options
 	OutputOptions *Output
 
 	// for connecting to the db
@@ -37,14 +37,14 @@ type MongoTop struct {
 	previousTop          *Top
 }
 
-func (mt *MongoTop) runDiff() (outDiff FormattableDiff, err error) {
+func (mt *MongerTop) runDiff() (outDiff FormattableDiff, err error) {
 	if mt.OutputOptions.Locks {
 		return mt.runServerStatusDiff()
 	}
 	return mt.runTopDiff()
 }
 
-func (mt *MongoTop) runTopDiff() (outDiff FormattableDiff, err error) {
+func (mt *MongerTop) runTopDiff() (outDiff FormattableDiff, err error) {
 	commandName := "top"
 	dest := &bsonx.Doc{}
 	err = mt.SessionProvider.RunString(commandName, dest, "admin")
@@ -76,7 +76,7 @@ func (mt *MongoTop) runTopDiff() (outDiff FormattableDiff, err error) {
 	return outDiff, nil
 }
 
-func (mt *MongoTop) runServerStatusDiff() (outDiff FormattableDiff, err error) {
+func (mt *MongerTop) runServerStatusDiff() (outDiff FormattableDiff, err error) {
 	var currentServerStatus ServerStatus
 	commandName := "serverStatus"
 	var dest interface{} = &currentServerStatus
@@ -102,7 +102,7 @@ func (mt *MongoTop) runServerStatusDiff() (outDiff FormattableDiff, err error) {
 }
 
 // Run executes the mongertop program.
-func (mt *MongoTop) Run() error {
+func (mt *MongerTop) Run() error {
 	hasData := false
 	numPrinted := 0
 

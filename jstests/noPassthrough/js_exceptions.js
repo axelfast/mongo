@@ -83,15 +83,15 @@
     tests.forEach(function(t) {
         let code = tojson(recurser);
         [1, 2, 10].forEach(function(depth) {
-            clearRawMongoProgramOutput();
+            clearRawMongerProgramOutput();
             assert.throws(startParallelShell(
                 code + ";\nrecurser(0," + depth + "," + tojson(t.callback) + ");", false, true));
-            let output = rawMongoProgramOutput();
+            let output = rawMongerProgramOutput();
             let lines = output.split(/\s*\n/);
             let matchShellExp = false;
             while (lines.length > 0 & matchShellExp !== true) {
                 let line = lines.shift();
-                if (line.match(/MongoDB shell version/)) {
+                if (line.match(/MongerDB shell version/)) {
                     matchShellExp = true;
                 }
             }

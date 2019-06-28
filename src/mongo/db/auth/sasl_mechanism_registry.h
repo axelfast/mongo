@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -147,7 +147,7 @@ public:
     /**
      * Standard method in mongerdb for determining if "authenticatedUser" may act as "requestedUser."
      *
-     * The standard rule in MongoDB is simple.  The authenticated user name must be the same as the
+     * The standard rule in MongerDB is simple.  The authenticated user name must be the same as the
      * requested user name.
      */
     virtual bool isAuthorizedToActAs(StringData requestedUser, StringData authenticatedUser) {

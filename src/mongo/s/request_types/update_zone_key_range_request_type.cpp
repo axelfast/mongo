@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,13 +41,13 @@ using std::string;
 
 namespace {
 
-const char kMongosUpdateZoneKeyRange[] = "updateZoneKeyRange";
+const char kMongersUpdateZoneKeyRange[] = "updateZoneKeyRange";
 const char kConfigsvrUpdateZoneKeyRange[] = "_configsvrUpdateZoneKeyRange";
 const char kZoneName[] = "zone";
 
 }  // unnamed namespace
 
-StatusWith<UpdateZoneKeyRangeRequest> UpdateZoneKeyRangeRequest::parseFromMongosCommand(
+StatusWith<UpdateZoneKeyRangeRequest> UpdateZoneKeyRangeRequest::parseFromMongersCommand(
     const BSONObj& cmdObj) {
     return _parseFromCommand(cmdObj, true);
 }
@@ -69,10 +69,10 @@ void UpdateZoneKeyRangeRequest::appendAsConfigCommand(BSONObjBuilder* cmdBuilder
 }
 
 StatusWith<UpdateZoneKeyRangeRequest> UpdateZoneKeyRangeRequest::_parseFromCommand(
-    const BSONObj& cmdObj, bool forMongos) {
+    const BSONObj& cmdObj, bool forMongers) {
     string rawNS;
     auto parseNamespaceStatus = bsonExtractStringField(
-        cmdObj, (forMongos ? kMongosUpdateZoneKeyRange : kConfigsvrUpdateZoneKeyRange), &rawNS);
+        cmdObj, (forMongers ? kMongersUpdateZoneKeyRange : kConfigsvrUpdateZoneKeyRange), &rawNS);
 
     if (!parseNamespaceStatus.isOK()) {
         return parseNamespaceStatus;

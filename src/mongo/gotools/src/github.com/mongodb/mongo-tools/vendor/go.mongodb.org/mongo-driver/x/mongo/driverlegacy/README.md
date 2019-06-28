@@ -1,7 +1,7 @@
-MongoDB Go Driver Low-Level Driver Library
+MongerDB Go Driver Low-Level Driver Library
 ==========================================
 The packages within this library allow users to build applications using a low-level driver
-interface. Knowledge of the internals of a MongoDB driver are assumed, so this library contains
+interface. Knowledge of the internals of a MongerDB driver are assumed, so this library contains
 advanced features. The aim of this library is to provide an easy to use, high performance
 implementation of a low-level driver.
 

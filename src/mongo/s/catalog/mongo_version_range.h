@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,7 +38,7 @@
 namespace monger {
 
 /**
- * The MongoVersionRange represents a min/max of MongoDB versions, useful for
+ * The MongerVersionRange represents a min/max of MongerDB versions, useful for
  * excluding/including particular versions.
  *
  * The ranges may be single-version, in which case maxVersion == "", where only exact prefix
@@ -46,8 +46,8 @@ namespace monger {
  * and include any version with a prefix of the min and max version as well as all versions
  * between the two.
  */
-struct MongoVersionRange {
-    static BSONArray toBSONArray(const std::vector<MongoVersionRange>& ranges);
+struct MongerVersionRange {
+    static BSONArray toBSONArray(const std::vector<MongerVersionRange>& ranges);
 
     bool parseBSONElement(const BSONElement& el, std::string* errMsg);
 
@@ -59,5 +59,5 @@ struct MongoVersionRange {
     std::string maxVersion;
 };
 
-bool isInMongoVersionRanges(StringData version, const std::vector<MongoVersionRange>& ranges);
+bool isInMongerVersionRanges(StringData version, const std::vector<MongerVersionRange>& ranges);
 }

@@ -21,7 +21,7 @@
 
     jsTestLog("Start transaction");
 
-    const session = db.getMongo().startSession();
+    const session = db.getMonger().startSession();
     const sessionDb = session.getDatabase('test');
     const sessionColl = sessionDb[collName];
     session.startTransaction_forTesting();

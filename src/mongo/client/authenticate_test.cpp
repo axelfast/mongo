@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -107,7 +107,7 @@ public:
         _requests.emplace(OpMsgRequest::fromDBAndBody(dbname, cmd));
     }
 
-    BSONObj loadMongoCRConversation() {
+    BSONObj loadMongerCRConversation() {
         // 1. Client sends 'getnonce' command
         pushRequest("admin", BSON("getnonce" << 1));
 
@@ -174,20 +174,20 @@ public:
     std::queue<BSONObj> _responses;
 };
 
-TEST_F(AuthClientTest, MongoCR) {
+TEST_F(AuthClientTest, MongerCR) {
     // This test excludes the MONGODB-CR support found in monger/shell/mongerdbcr.cpp
     // so it should fail to auth.
     // jstests exist to ensure MONGODB-CR continues to work from the client.
-    auto params = loadMongoCRConversation();
+    auto params = loadMongerCRConversation();
     ASSERT_THROWS(
         auth::authenticateClient(std::move(params), HostAndPort(), "", _runCommandCallback).get(),
         DBException);
 }
 
-TEST_F(AuthClientTest, asyncMongoCR) {
+TEST_F(AuthClientTest, asyncMongerCR) {
     // As with the sync version above, we expect authentication to fail
     // since this test was built without MONGODB-CR support.
-    auto params = loadMongoCRConversation();
+    auto params = loadMongerCRConversation();
     ASSERT_NOT_OK(
         auth::authenticateClient(std::move(params), HostAndPort(), "", _runCommandCallback)
             .getNoThrow());

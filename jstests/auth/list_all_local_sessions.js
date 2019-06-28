@@ -45,9 +45,9 @@
         assert.eq(0, bsonWoCompare({x: cacheid}, {x: myid}));
     }
 
-    const mongerd = MongoRunner.runMongod({auth: ""});
+    const mongerd = MongerRunner.runMongerd({auth: ""});
     runListAllLocalSessionsTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.
     const st = new ShardingTest({

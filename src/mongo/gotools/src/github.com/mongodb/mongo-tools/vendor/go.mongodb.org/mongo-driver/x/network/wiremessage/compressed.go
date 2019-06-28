@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -11,7 +11,7 @@ import (
 	"fmt"
 )
 
-// Compressed represents the OP_COMPRESSED message of the MongoDB wire protocol.
+// Compressed represents the OP_COMPRESSED message of the MongerDB wire protocol.
 type Compressed struct {
 	MsgHeader         Header
 	OriginalOpCode    OpCode

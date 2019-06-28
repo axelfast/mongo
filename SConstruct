@@ -823,12 +823,12 @@ def validate_monger_version(key, val, env):
         Exit(1)
 
 env_vars.Add('MONGO_VERSION',
-    help='Sets the version string for MongoDB',
+    help='Sets the version string for MongerDB',
     default=version_data['version'],
     validator=validate_monger_version)
 
 env_vars.Add('MONGO_GIT_HASH',
-    help='Sets the githash to store in the MongoDB version information',
+    help='Sets the githash to store in the MongerDB version information',
     default=version_data['githash'])
 
 env_vars.Add('MSVC_USE_SCRIPT',
@@ -1431,7 +1431,7 @@ if link_model.startswith("dynamic"):
 
     if env.TargetOSIs('darwin'):
         if link_model.startswith('dynamic'):
-            print(("WARNING: Building MongoDB server with dynamic linking " +
+            print(("WARNING: Building MongerDB server with dynamic linking " +
                   "on macOS is not supported. Static linking is recommended."))
 
         if link_model == "dynamic-strict":
@@ -2020,7 +2020,7 @@ def doConfigure(myenv):
         #endif
 
         #if _MSC_VER < 1916
-        #error %s or newer is required to build MongoDB
+        #error %s or newer is required to build MongerDB
         #endif
 
         int main(int argc, char* argv[]) {
@@ -2036,7 +2036,7 @@ def doConfigure(myenv):
         #endif
 
         #if (__GNUC__ < 8) || (__GNUC__ == 8 && __GNUC_MINOR__ < 2)
-        #error %s or newer is required to build MongoDB
+        #error %s or newer is required to build MongerDB
         #endif
 
         int main(int argc, char* argv[]) {
@@ -2053,10 +2053,10 @@ def doConfigure(myenv):
 
         #if defined(__apple_build_version__)
         #if __apple_build_version__ < 10001044
-        #error %s or newer is required to build MongoDB
+        #error %s or newer is required to build MongerDB
         #endif
         #elif (__clang_major__ < 7) || (__clang_major__ == 7 && __clang_minor__ < 0)
-        #error %s or newer is required to build MongoDB
+        #error %s or newer is required to build MongerDB
         #endif
 
         int main(int argc, char* argv[]) {
@@ -2403,7 +2403,7 @@ def doConfigure(myenv):
         iOS  : scons CCFLAGS="-miphoneos-version-min=10.3" LINKFLAGS="-miphoneos-version-min=10.3" ...
         tvOS : scons CCFLAGS="-mtvos-version-min=10.3" LINKFLAGS="-tvos-version-min=10.3" ...
 
-        Note that MongoDB requires macOS 10.10, iOS 10.2, or tvOS 10.2 or later.
+        Note that MongerDB requires macOS 10.10, iOS 10.2, or tvOS 10.2 or later.
         """
         myenv.ConfError(textwrap.dedent(message))
 
@@ -2467,7 +2467,7 @@ def doConfigure(myenv):
     })
 
     if get_option('cxx-std') == "17" and not conf.CheckCxx17():
-        myenv.ConfError('C++17 support is required to build MongoDB')
+        myenv.ConfError('C++17 support is required to build MongerDB')
 
     conf.Finish()
 
@@ -2525,7 +2525,7 @@ def doConfigure(myenv):
 
         suppress_invalid = has_option("disable-minimum-compiler-version-enforcement")
         if not conf.CheckModernLibStdCxx() and not suppress_invalid:
-            myenv.ConfError("When using libstdc++, MongoDB requires libstdc++ from GCC 5.3.0 or newer")
+            myenv.ConfError("When using libstdc++, MongerDB requires libstdc++ from GCC 5.3.0 or newer")
 
         conf.Finish()
 
@@ -2564,7 +2564,7 @@ def doConfigure(myenv):
         })
 
         if not conf.CheckWindowsSDKVersion():
-            myenv.ConfError('Windows SDK Version 8.1 or higher is required to build MongoDB')
+            myenv.ConfError('Windows SDK Version 8.1 or higher is required to build MongerDB')
 
         conf.Finish()
 
@@ -3465,7 +3465,7 @@ def doConfigure(myenv):
             conf.env.SetConfigHeaderDefine("MONGO_CONFIG_MAX_EXTENDED_ALIGNMENT", size)
             break
 
-    def CheckMongoCMinVersion(context):
+    def CheckMongerCMinVersion(context):
         compile_test_body = textwrap.dedent("""
         #include <mongerc/mongerc.h>
 
@@ -3479,10 +3479,10 @@ def doConfigure(myenv):
         context.Result(result)
         return result
 
-    conf.AddTest('CheckMongoCMinVersion', CheckMongoCMinVersion)
+    conf.AddTest('CheckMongerCMinVersion', CheckMongerCMinVersion)
 
     if env.TargetOSIs('darwin'):
-        def CheckMongoCFramework(context):
+        def CheckMongerCFramework(context):
             context.Message("Checking for mongerc_get_major_version() in darwin framework mongerc...")
             test_body = """
             #include <mongerc/mongerc.h>
@@ -3501,7 +3501,7 @@ def doConfigure(myenv):
             context.env['FRAMEWORKS'] = lastFRAMEWORKS
             return result
 
-        conf.AddTest('CheckMongoCFramework', CheckMongoCFramework)
+        conf.AddTest('CheckMongerCFramework', CheckMongerCFramework)
 
     mongerc_mode = get_option('use-system-monger-c')
     conf.env['MONGO_HAVE_LIBMONGOC'] = False
@@ -3513,11 +3513,11 @@ def doConfigure(myenv):
                 "mongerc_get_major_version();",
                 autoadd=False ):
             conf.env['MONGO_HAVE_LIBMONGOC'] = "library"
-        if not conf.env['MONGO_HAVE_LIBMONGOC'] and env.TargetOSIs('darwin') and conf.CheckMongoCFramework():
+        if not conf.env['MONGO_HAVE_LIBMONGOC'] and env.TargetOSIs('darwin') and conf.CheckMongerCFramework():
             conf.env['MONGO_HAVE_LIBMONGOC'] = "framework"
         if not conf.env['MONGO_HAVE_LIBMONGOC'] and mongerc_mode == 'on':
             myenv.ConfError("Failed to find the required C driver headers")
-        if conf.env['MONGO_HAVE_LIBMONGOC'] and not conf.CheckMongoCMinVersion():
+        if conf.env['MONGO_HAVE_LIBMONGOC'] and not conf.CheckMongerCMinVersion():
             myenv.ConfError("Version of mongerc is too old. Version 1.13+ required")
 
     # ask each module to configure itself and the build environment.
@@ -3802,9 +3802,9 @@ Export("ssl_provider")
 Export("free_monitoring")
 Export("http_client")
 
-def injectMongoIncludePaths(thisEnv):
+def injectMongerIncludePaths(thisEnv):
     thisEnv.AppendUnique(CPPPATH=['$BUILD_DIR'])
-env.AddMethod(injectMongoIncludePaths, 'InjectMongoIncludePaths')
+env.AddMethod(injectMongerIncludePaths, 'InjectMongerIncludePaths')
 
 def injectModule(env, module, **kwargs):
     injector = env['MODULE_INJECTORS'].get(module)

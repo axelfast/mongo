@@ -2,7 +2,7 @@
 .
 .TH "MONGOIMPORT" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongerimport \- MongoDB LDAP Configuration Testing Utility
+mongerimport \- MongerDB LDAP Configuration Testing Utility
 .
 .nr rst2man-indent-level 0
 .
@@ -40,12 +40,12 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 \fI\%Options\fP
 .UNINDENT
 .sp
-New in version 3.4: MongoDB Enterprise
+New in version 3.4: MongerDB Enterprise
 
 .SH SYNOPSIS
 .sp
-Starting in version 3.4, MongoDB Enterprise provides
-\fI\%mongerldap\fP for testing MongoDB’s LDAP configuration
+Starting in version 3.4, MongerDB Enterprise provides
+\fI\%mongerldap\fP for testing MongerDB’s LDAP configuration
 options against a running LDAP server or set
 of servers.
 .sp
@@ -55,7 +55,7 @@ path.
 .sp
 To test the LDAP configuration options, you must specify a \fI\%\-\-user\fP
 and \fB\-\-password\fP\&. \fI\%mongerldap\fP simulates authentication to a
-MongoDB server running with the provided configuration options and credentials.
+MongerDB server running with the provided configuration options and credentials.
 .sp
 \fI\%mongerldap\fP returns a report that includes the success or failure of
 any step in the LDAP authentication or authorization procedure. Error messages
@@ -70,7 +70,7 @@ You can use this information when configuring LDAP authorization roles for user 
 \fI\%mongerldap\fP to ensure your configuration allows privileged users to
 gain the necessary roles to perform their expected tasks. Similarly, use
 \fI\%mongerldap\fP to ensure your configuration disallows non\-privileged
-users from gaining roles for accessing the MongoDB server, or performing
+users from gaining roles for accessing the MongerDB server, or performing
 unauthorized actions.
 .sp
 When configuring options related to LDAP authentication, use \fI\%mongerldap\fP to ensure that the authentication
@@ -147,8 +147,8 @@ Checking that an LDAP server has been specified...
 Connecting to LDAP server...
 [OK] Connected to LDAP server
 
-Parsing MongoDB to LDAP DN mappings..
-[OK] MongoDB to LDAP DN mappings appear to be valid
+Parsing MongerDB to LDAP DN mappings..
+[OK] MongerDB to LDAP DN mappings appear to be valid
 
 Attempting to authenticate against the LDAP server...
 [OK] Successful authentication performed
@@ -201,7 +201,7 @@ authentication. Not required for LDAP authorization.
 .INDENT 0.0
 .TP
 .B \-\-ldapServers <host1>:<port>,<host2>:<port>,...,<hostN>:<port>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The LDAP server against which the \fBmongerldap\fP executes LDAP operations
@@ -212,7 +212,7 @@ server in a comma\-delimited list.
 .sp
 If your LDAP infrastrucure partitions the LDAP directory over multiple LDAP
 servers, specify \fIone\fP LDAP server any of its replicated instances to
-\fI\%\-\-ldapServers\fP\&. MongoDB supports following LDAP referrals as defined in \fI\%RFC 4511
+\fI\%\-\-ldapServers\fP\&. MongerDB supports following LDAP referrals as defined in \fI\%RFC 4511
 4.1.10\fP\&. Do not use \fI\%\-\-ldapServers\fP
 for listing every LDAP server in your infrastucture.
 .sp
@@ -224,7 +224,7 @@ If unset, \fBmongerldap\fP cannot use LDAP authentication or authorization\&.
 .INDENT 0.0
 .TP
 .B \-\-ldapQueryUser <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The identity with which \fBmongerldap\fP binds as, when connecting to or
@@ -250,7 +250,7 @@ This setting can be configured on a running \fBmongerldap\fP using
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Windows MongoDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
+Windows MongerDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
 instead of \fI\%\-\-ldapQueryUser\fP and \fI\%\-\-ldapQueryPassword\fP\&. You cannot specify
 both \fI\%\-\-ldapQueryUser\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the same time.
 .UNINDENT
@@ -259,7 +259,7 @@ both \fI\%\-\-ldapQueryUser\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the sam
 .INDENT 0.0
 .TP
 .B \-\-ldapQueryPassword <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 .sp
 The password used to bind to an LDAP server when using
 \fI\%\-\-ldapQueryUser\fP\&. You must use \fI\%\-\-ldapQueryPassword\fP with
@@ -274,7 +274,7 @@ This setting can be configured on a running \fBmongerldap\fP using
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Windows MongoDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
+Windows MongerDB deployments can use \fI\%\-\-ldapBindWithOSDefaults\fP
 instead of \fI\%\-\-ldapQueryPassword\fP and \fI\%\-\-ldapQueryPassword\fP\&. You cannot specify
 both \fI\%\-\-ldapQueryPassword\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the same time.
 .UNINDENT
@@ -285,7 +285,7 @@ both \fI\%\-\-ldapQueryPassword\fP and \fI\%\-\-ldapBindWithOSDefaults\fP at the
 .B \-\-ldapBindWithOSDefaults <bool>
 \fIDefault\fP: False
 .sp
-New in version 3.4: Available in MongoDB Enterprise for the Windows platform only.
+New in version 3.4: Available in MongerDB Enterprise for the Windows platform only.
 
 .sp
 Allows \fBmongerldap\fP to authenticate, or bind, using your Windows login
@@ -309,7 +309,7 @@ Use \fI\%\-\-ldapBindWithOSDefaults\fP to replace \fI\%\-\-ldapQueryUser\fP and
 .B \-\-ldapBindMethod <string>
 \fIDefault\fP: simple
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The method \fBmongerldap\fP uses to authenticate to an LDAP server.
@@ -333,7 +333,7 @@ using \fBDIGEST\-MD5\fP mechanism.
 .B \-\-ldapBindSASLMechanisms <string>
 \fIDefault\fP: DIGEST\-MD5
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 A comma\-separated list of SASL mechanisms \fBmongerldap\fP can
@@ -387,8 +387,8 @@ Defer to the documentation for your LDAP or Active Directory
 service for identifying the SASL mechanisms compatible with the
 service.
 .sp
-MongoDB is not a source of SASL mechanism libraries, nor
-is the MongoDB documentation a definitive source for
+MongerDB is not a source of SASL mechanism libraries, nor
+is the MongerDB documentation a definitive source for
 installing or configuring any given SASL mechanism. For
 documentation and support, defer to the SASL mechanism
 library vendor or owner.
@@ -408,7 +408,7 @@ For Windows, please see the \fI\%Windows SASL documentation\fP\&.
 .B \-\-ldapTransportSecurity <string>
 \fIDefault\fP: tls
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 By default, \fBmongerldap\fP creates a TLS/SSL secured connection to the LDAP
@@ -416,7 +416,7 @@ server.
 .sp
 For Linux deployments, you must configure the appropriate TLS Options in
 \fB/etc/openldap/ldap.conf\fP file. Your operating system’s package manager
-creates this file as part of the MongoDB Enterprise installation, via the
+creates this file as part of the MongerDB Enterprise installation, via the
 \fBlibldap\fP dependency. See the documentation for \fBTLS Options\fP in the
 \fI\%ldap.conf OpenLDAP documentation\fP
 for more complete instructions.
@@ -443,16 +443,16 @@ credentials between \fBmongerldap\fP and the LDAP server.
 .B \-\-ldapTimeoutMS <long>
 \fIDefault\fP: 10000
 .sp
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 The amount of time in milliseconds \fBmongerldap\fP should wait for an LDAP server
 to respond to a request.
 .sp
 Increasing the value of \fI\%\-\-ldapTimeoutMS\fP may prevent connection failure between the
-MongoDB server and the LDAP server, if the source of the failure is a
+MongerDB server and the LDAP server, if the source of the failure is a
 connection timeout. Decreasing the value of \fI\%\-\-ldapTimeoutMS\fP reduces the time
-MongoDB waits for a response from the LDAP server.
+MongerDB waits for a response from the LDAP server.
 .sp
 This setting can be configured on a running \fBmongerldap\fP using
 \fBsetParameter\fP\&.
@@ -460,7 +460,7 @@ This setting can be configured on a running \fBmongerldap\fP using
 .INDENT 0.0
 .TP
 .B \-\-ldapUserToDNMapping <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 Maps the username provided to \fBmongerldap\fP for authentication to a LDAP
@@ -469,11 +469,11 @@ username into an LDAP DN in the following scenarios:
 .INDENT 7.0
 .IP \(bu 2
 Performing LDAP authentication with simple LDAP binding, where users
-authenticate to MongoDB with usernames that are not full LDAP DNs.
+authenticate to MongerDB with usernames that are not full LDAP DNs.
 .IP \(bu 2
 Using an \fBLDAP authorization query template\fP that requires a DN.
 .IP \(bu 2
-Transforming the usernames of clients authenticating to Mongo DB using
+Transforming the usernames of clients authenticating to Monger DB using
 different authentication mechanisms (e.g. x.509, kerberos) to a full LDAP
 DN for authorization.
 .UNINDENT
@@ -629,7 +629,7 @@ This setting can be configured on a running \fBmongerldap\fP using the
 .INDENT 3.5
 An explanation of \fI\%RFC4515\fP,
 \fI\%RFC4516\fP or LDAP queries is out
-of scope for the MongoDB Documentation. Please review the RFC directly or
+of scope for the MongerDB Documentation. Please review the RFC directly or
 use your preferred LDAP resource.
 .UNINDENT
 .UNINDENT
@@ -637,7 +637,7 @@ use your preferred LDAP resource.
 .INDENT 0.0
 .TP
 .B \-\-ldapAuthzQueryTemplate <string>
-New in version 3.4: Available in MongoDB Enterprise only.
+New in version 3.4: Available in MongerDB Enterprise only.
 
 .sp
 A relative LDAP query URL formatted conforming to \fI\%RFC4515\fP and \fI\%RFC4516\fP that \fBmongerldap\fP executes to obtain
@@ -705,13 +705,13 @@ This setting can be configured on a running \fBmongerldap\fP using the
 .INDENT 3.5
 An explanation of \fI\%RFC4515\fP,
 \fI\%RFC4516\fP or LDAP queries is out
-of scope for the MongoDB Documentation. Please review the RFC directly or
+of scope for the MongerDB Documentation. Please review the RFC directly or
 use your preferred LDAP resource.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

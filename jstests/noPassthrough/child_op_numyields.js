@@ -5,8 +5,8 @@
 (function() {
     "use strict";
 
-    // Start a single mongerD using MongoRunner.
-    const conn = MongoRunner.runMongod({});
+    // Start a single mongerD using MongerRunner.
+    const conn = MongerRunner.runMongerd({});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     // Create the test DB and collection.
@@ -46,7 +46,7 @@
             }
             bulkRemove.execute();
         }`,
-                                              testDB.getMongo().port);
+                                              testDB.getMonger().port);
 
         let childOpId = null;
         let childYields = 0;
@@ -116,5 +116,5 @@
     assert.commandWorked(testDB.test.insert(docsToTest));
     runYieldTest(docsToTest);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

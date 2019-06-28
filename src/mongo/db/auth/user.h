@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,7 +46,7 @@
 namespace monger {
 
 /**
- * Represents a MongoDB user.  Stores information about the user necessary for access control
+ * Represents a MongerDB user.  Stores information about the user necessary for access control
  * checks and authentications, such as what privileges this user has, as well as what roles
  * the user belongs to.
  *

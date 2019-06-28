@@ -6,7 +6,7 @@
     // of data logged for each op.
     TestData.skipGossipingClusterTime = true;
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd was unable to start up");
     const testDB = conn.getDB("test");
     const coll = testDB.do_not_drop_coll_after_succesful_out;
@@ -24,5 +24,5 @@
         assert.eq(line.indexOf("drop test.tmp.agg_out"), -1, line);
     }
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Packager module.
 
-This program makes Debian and RPM repositories for MongoDB, by
+This program makes Debian and RPM repositories for MongerDB, by
 downloading our tarballs of statically linked executables and
 insinuating them into Linux packages.  It must be run on a
 Debianoid, since Debian provides tools to make RPMs, but RPM-based
@@ -40,7 +40,7 @@ import sys
 import tempfile
 import time
 
-# The MongoDB names for the architectures we support.
+# The MongerDB names for the architectures we support.
 ARCH_CHOICES = ["x86_64", "arm64", "s390x"]
 
 # Made up names for the flavors of distribution we package for.
@@ -366,7 +366,7 @@ def get_args(distros, arch_choices):
         for arch in arch_choices:
             distro_choices.extend(distro.build_os(arch))
 
-    parser = argparse.ArgumentParser(description='Build MongoDB Packages')
+    parser = argparse.ArgumentParser(description='Build MongerDB Packages')
     parser.add_argument("-s", "--server-version", help="Server version to build (e.g. 2.7.8-rc0)",
                         required=True)
     parser.add_argument("-m", "--metadata-gitspec",
@@ -628,7 +628,7 @@ Suite: %s
 Codename: %s/mongerdb-org
 Architectures: amd64 arm64 s390x
 Components: %s
-Description: MongoDB packages
+Description: MongerDB packages
 """ % (distro.repo_os_version(build_os), distro.repo_os_version(build_os), distro.repo_component())
     if os.path.exists(repo + "../../Release"):
         os.unlink(repo + "../../Release")

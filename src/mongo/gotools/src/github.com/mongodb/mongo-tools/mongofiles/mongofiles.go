@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongerfiles provides an interface to GridFS collections in a MongoDB instance.
+// Package mongerfiles provides an interface to GridFS collections in a MongerDB instance.
 package mongerfiles
 
 import (
@@ -38,9 +38,9 @@ const (
 	DeleteID = "delete_id"
 )
 
-// MongoFiles is a container for the user-specified options and
+// MongerFiles is a container for the user-specified options and
 // internal state used for running mongerfiles.
-type MongoFiles struct {
+type MongerFiles struct {
 	// generic monger tool options
 	ToolOptions *options.ToolOptions
 
@@ -68,14 +68,14 @@ type MongoFiles struct {
 
 // New constructs a new mongerfiles instance from the provided options. Will fail if cannot connect to server or if the
 // provided options are invalid.
-func New(opts Options) (*MongoFiles, error) {
+func New(opts Options) (*MongerFiles, error) {
 	// create a session provider to connect to the db
 	provider, err := db.NewSessionProvider(*opts.ToolOptions)
 	if err != nil {
 		return nil, util.SetupError{Err: fmt.Errorf("error connecting to host: %v", err)}
 	}
 
-	mf := &MongoFiles{
+	mf := &MongerFiles{
 		ToolOptions:     opts.ToolOptions,
 		StorageOptions:  opts.StorageOptions,
 		SessionProvider: provider,
@@ -90,12 +90,12 @@ func New(opts Options) (*MongoFiles, error) {
 }
 
 // Close disconnects from the server and cleans up internal mongerfiles state.
-func (mf *MongoFiles) Close() {
+func (mf *MongerFiles) Close() {
 	mf.SessionProvider.Close()
 }
 
 // ValidateCommand ensures the arguments supplied are valid.
-func (mf *MongoFiles) ValidateCommand(args []string) error {
+func (mf *MongerFiles) ValidateCommand(args []string) error {
 	// make sure a command is specified and that we don't have
 	// too many arguments
 	if len(args) == 0 {
@@ -152,7 +152,7 @@ func (mf *MongoFiles) ValidateCommand(args []string) error {
 }
 
 // Query GridFS for files and display the results.
-func (mf *MongoFiles) findAndDisplay(query bson.M) (string, error) {
+func (mf *MongerFiles) findAndDisplay(query bson.M) (string, error) {
 	gridFiles, err := mf.findGFSFiles(query)
 	if err != nil {
 		return "", fmt.Errorf("error retrieving list of GridFS files: %v", err)
@@ -169,7 +169,7 @@ func (mf *MongoFiles) findAndDisplay(query bson.M) (string, error) {
 // Return the local filename, as specified by the --local flag. Defaults to
 // the GridFile's name if not present. If GridFile is nil, uses the filename
 // given on the command line.
-func (mf *MongoFiles) getLocalFileName(gridFile *gfsFile) string {
+func (mf *MongerFiles) getLocalFileName(gridFile *gfsFile) string {
 	localFileName := mf.StorageOptions.LocalFileName
 	if localFileName == "" {
 		if gridFile != nil {
@@ -182,7 +182,7 @@ func (mf *MongoFiles) getLocalFileName(gridFile *gfsFile) string {
 }
 
 // handleGet contains the logic for the 'get' and 'get_id' commands
-func (mf *MongoFiles) handleGet() (err error) {
+func (mf *MongerFiles) handleGet() (err error) {
 	file, err := mf.getTargetGFSFile()
 	if err != nil {
 		return err
@@ -196,7 +196,7 @@ func (mf *MongoFiles) handleGet() (err error) {
 }
 
 // Gets all GridFS files that match the given query.
-func (mf *MongoFiles) findGFSFiles(query bson.M) (files []*gfsFile, err error) {
+func (mf *MongerFiles) findGFSFiles(query bson.M) (files []*gfsFile, err error) {
 	cursor, err := mf.bucket.Find(query)
 	if err != nil {
 		return nil, err
@@ -217,7 +217,7 @@ func (mf *MongoFiles) findGFSFiles(query bson.M) (files []*gfsFile, err error) {
 }
 
 // Gets the GridFS file the options specify. Use this for the get family of commands.
-func (mf *MongoFiles) getTargetGFSFile() (*gfsFile, error) {
+func (mf *MongerFiles) getTargetGFSFile() (*gfsFile, error) {
 	var gridFiles []*gfsFile
 	var err error
 
@@ -254,7 +254,7 @@ func (mf *MongoFiles) getTargetGFSFile() (*gfsFile, error) {
 }
 
 // Delete all files with the given filename.
-func (mf *MongoFiles) deleteAll(filename string) error {
+func (mf *MongerFiles) deleteAll(filename string) error {
 	gridFiles, err := mf.findGFSFiles(bson.M{"filename": filename})
 	if err != nil {
 		return err
@@ -271,7 +271,7 @@ func (mf *MongoFiles) deleteAll(filename string) error {
 }
 
 // handleDeleteID contains the logic for the 'delete_id' command
-func (mf *MongoFiles) handleDeleteID() error {
+func (mf *MongerFiles) handleDeleteID() error {
 	file, err := mf.getTargetGFSFile()
 	if err != nil {
 		return err
@@ -286,7 +286,7 @@ func (mf *MongoFiles) handleDeleteID() error {
 }
 
 // parse and convert input extended JSON _id. Generates a new ObjectID if no _id provided.
-func (mf *MongoFiles) parseOrCreateID() (interface{}, error) {
+func (mf *MongerFiles) parseOrCreateID() (interface{}, error) {
 	if mf.Id == "" {
 		return primitive.NewObjectID(), nil
 	}
@@ -306,7 +306,7 @@ func (mf *MongoFiles) parseOrCreateID() (interface{}, error) {
 }
 
 // writeGFSFileToLocal writes a file from gridFS to stdout or the filesystem.
-func (mf *MongoFiles) writeGFSFileToLocal(gridFile *gfsFile) (err error) {
+func (mf *MongerFiles) writeGFSFileToLocal(gridFile *gfsFile) (err error) {
 	localFileName := mf.getLocalFileName(gridFile)
 	var localFile io.WriteCloser
 	if localFileName == "-" {
@@ -336,7 +336,7 @@ func (mf *MongoFiles) writeGFSFileToLocal(gridFile *gfsFile) (err error) {
 }
 
 // Write the given GridFS file to the database. Will fail if file already exists and --replace flag turned off.
-func (mf *MongoFiles) put(id interface{}, name string) (bytesWritten int64, err error) {
+func (mf *MongerFiles) put(id interface{}, name string) (bytesWritten int64, err error) {
 	gridFile, err := newGfsFile(id, name, mf)
 	if err != nil {
 		return 0, err
@@ -384,7 +384,7 @@ func (mf *MongoFiles) put(id interface{}, name string) (bytesWritten int64, err 
 }
 
 // handlePut contains the logic for the 'put' and 'put_id' commands
-func (mf *MongoFiles) handlePut() error {
+func (mf *MongerFiles) handlePut() error {
 	id, err := mf.parseOrCreateID()
 	if err != nil {
 		return err
@@ -403,7 +403,7 @@ func (mf *MongoFiles) handlePut() error {
 
 // Run the mongerfiles utility. If displayHost is true, the connected host/port is
 // displayed.
-func (mf *MongoFiles) Run(displayHost bool) (output string, finalErr error) {
+func (mf *MongerFiles) Run(displayHost bool) (output string, finalErr error) {
 	var err error
 
 	// check type of node we're connected to, and fall back to w=1 if standalone (for <= 2.4)

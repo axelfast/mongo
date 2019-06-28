@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -153,7 +153,7 @@ public:
      * return cursors owned by the caller. If auth is off, this argument does not matter.
      */
     std::vector<GenericCursor> getIdleCursors(
-        OperationContext* opCtx, MongoProcessInterface::CurrentOpUserMode userMode) const;
+        OperationContext* opCtx, MongerProcessInterface::CurrentOpUserMode userMode) const;
 
     /*
      * Returns a list of all open cursors for the given session.

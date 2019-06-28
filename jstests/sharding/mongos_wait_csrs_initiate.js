@@ -6,10 +6,10 @@ var configRS = new ReplSetTest({name: "configRS", nodes: 1, useHostName: true});
 configRS.startSet({configsvr: '', journal: "", storageEngine: 'wiredTiger'});
 var replConfig = configRS.getReplSetConfig();
 replConfig.configsvr = true;
-var mongers = MongoRunner.runMongos({configdb: configRS.getURL(), waitForConnect: false});
+var mongers = MongerRunner.runMongers({configdb: configRS.getURL(), waitForConnect: false});
 
 assert.throws(function() {
-    new Mongo(mongers.host);
+    new Monger(mongers.host);
 });
 
 jsTestLog("Initiating CSRS");
@@ -25,7 +25,7 @@ var e;
 assert.soon(
     function() {
         try {
-            mongers2 = new Mongo(mongers.host);
+            mongers2 = new Monger(mongers.host);
             return true;
         } catch (ex) {
             e = ex;
@@ -40,4 +40,4 @@ assert.soon(
 jsTestLog("got mongers");
 assert.commandWorked(mongers2.getDB('admin').runCommand('serverStatus'));
 configRS.stopSet();
-MongoRunner.stopMongos(mongers);
+MongerRunner.stopMongers(mongers);

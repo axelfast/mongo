@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    const conn = MongoRunner.runMongod({nojournal: ""});
+    const conn = MongerRunner.runMongerd({nojournal: ""});
     assert.neq(null, conn, "mongerd was unable to start up");
     db = conn.getDB("concurrency");
     db.dropDatabase();
@@ -57,5 +57,5 @@
 
     updater();  // wait()
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

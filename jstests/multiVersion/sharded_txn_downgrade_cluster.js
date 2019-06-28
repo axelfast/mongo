@@ -57,17 +57,17 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     // Downgrade the mongers servers first.
     jsTestLog("Downgrading mongers servers.");
     st.upgradeCluster("last-stable",
-                      {upgradeConfigs: false, upgradeMongos: true, upgradeShards: false});
+                      {upgradeConfigs: false, upgradeMongers: true, upgradeShards: false});
 
     // Then downgrade the shard servers.
     jsTestLog("Downgrading shard servers.");
     st.upgradeCluster("last-stable",
-                      {upgradeConfigs: false, upgradeMongos: false, upgradeShards: true});
+                      {upgradeConfigs: false, upgradeMongers: false, upgradeShards: true});
 
     // Then downgrade the config servers.
     jsTestLog("Downgrading config servers.");
     st.upgradeCluster("last-stable",
-                      {upgradeConfigs: true, upgradeMongos: false, upgradeShards: false});
+                      {upgradeConfigs: true, upgradeMongers: false, upgradeShards: false});
     checkFCV(st.configRS.getPrimary().getDB("admin"), lastStableFCV);
 
     testDB = st.s.getDB(dbName);

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,10 +46,10 @@ extern const JSFile mongerhelpers;
 
 namespace mozjs {
 
-const char* const MongoHelpersInfo::className = "MongoHelpers";
+const char* const MongerHelpersInfo::className = "MongerHelpers";
 
 namespace {
-const char kExportsObjectName[] = "exportToMongoHelpers";
+const char kExportsObjectName[] = "exportToMongerHelpers";
 const char kReflectName[] = "Reflect";
 }  // namespace
 
@@ -58,18 +58,18 @@ std::string parseJSFunctionOrExpression(JSContext* cx, const StringData input) {
     JS::RootedValue jsStrIn(cx);
 
     ValueReader(cx, &jsStrIn).fromStringData(input);
-    ObjectWrapper helpersWrapper(cx, getScope(cx)->getProto<MongoHelpersInfo>().getProto());
+    ObjectWrapper helpersWrapper(cx, getScope(cx)->getProto<MongerHelpersInfo>().getProto());
 
     helpersWrapper.callMethod("functionExpressionParser", JS::HandleValueArray(jsStrIn), &jsStrOut);
 
     return ValueWriter(cx, jsStrOut).toString();
 }
 
-void MongoHelpersInfo::postInstall(JSContext* cx, JS::HandleObject global, JS::HandleObject proto) {
+void MongerHelpersInfo::postInstall(JSContext* cx, JS::HandleObject global, JS::HandleObject proto) {
     ObjectWrapper protoWrapper(cx, proto);
     ObjectWrapper globalWrapper(cx, global);
 
-    // Initialize the reflection API and move it under the MongoHelpers object
+    // Initialize the reflection API and move it under the MongerHelpers object
     uassert(ErrorCodes::JSInterpreterFailure,
             "Error initializing javascript reflection API",
             JS_InitReflectParse(cx, global));

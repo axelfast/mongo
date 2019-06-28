@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -97,7 +97,7 @@ ResumeStatus compareAgainstClientResumeToken(const intrusive_ptr<ExpressionConte
     if (tokenDataFromResumedStream.uuid != tokenDataFromClient.uuid) {
         // If we are running on a replica set deployment, we don't ever expect to see identical time
         // stamps and txnOpIndex but differing UUIDs, and we reject the resume attempt at once.
-        if (!expCtx->inMongos && !expCtx->needsMerge) {
+        if (!expCtx->inMongers && !expCtx->needsMerge) {
             return ResumeStatus::kSurpassedToken;
         }
         // Otherwise, return a ResumeStatus based on the sort-order of the client and stream UUIDs.
@@ -124,7 +124,7 @@ ResumeStatus compareAgainstClientResumeToken(const intrusive_ptr<ExpressionConte
         : ResumeStatus::kCheckNextDoc;
 
     // If we're not running in a sharded context, we don't need to proceed any further.
-    if (!expCtx->needsMerge && !expCtx->inMongos) {
+    if (!expCtx->needsMerge && !expCtx->inMongers) {
         return defaultResumeStatus;
     }
 

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,7 +45,7 @@ namespace transport {
 
 /**
  * This TransportLayerManager is a TransportLayer implementation that holds other
- * TransportLayers. Mongod and Mongos can treat this like the "only" TransportLayer
+ * TransportLayers. Mongerd and Mongers can treat this like the "only" TransportLayer
  * and not be concerned with which other TransportLayer implementations it holds
  * underneath.
  */

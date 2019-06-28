@@ -2,7 +2,7 @@
 // for target collection of $lookup and $graphLookup.
 // @tags: [assumes_unsharded_collection]
 
-// In MongoDB 3.4, $graphLookup was introduced. In this file, we test the behavior of graphLookup
+// In MongerDB 3.4, $graphLookup was introduced. In this file, we test the behavior of graphLookup
 // when the 'connectToField' is a nested array, or when the 'connectFromField' is a nested array.
 
 (function() {

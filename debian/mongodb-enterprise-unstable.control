@@ -10,14 +10,14 @@ Package: mongerdb-enterprise-unstable
 Conflicts: monger-10gen, monger-10gen-enterprise, monger-10gen-enterprise-server, monger-10gen-server, monger-10gen-unstable, monger-10gen-unstable-enterprise, monger-10gen-unstable-enterprise-mongers, monger-10gen-unstable-enterprise-server, monger-10gen-unstable-enterprise-shell, monger-10gen-unstable-enterprise-tools, monger-10gen-unstable-mongers, monger-10gen-unstable-server, monger-10gen-unstable-shell, monger-10gen-unstable-tools, monger18-10gen, monger18-10gen-server, monger20-10gen, monger20-10gen-server, mongerdb, mongerdb-server, mongerdb-dev, mongerdb-clients, mongerdb-10gen, mongerdb-10gen-enterprise, mongerdb-10gen-unstable, mongerdb-10gen-unstable-enterprise, mongerdb-10gen-unstable-enterprise-mongers, mongerdb-10gen-unstable-enterprise-server, mongerdb-10gen-unstable-enterprise-shell, mongerdb-10gen-unstable-enterprise-tools, mongerdb-10gen-unstable-mongers, mongerdb-10gen-unstable-server, mongerdb-10gen-unstable-shell, mongerdb-10gen-unstable-tools, mongerdb-enterprise, mongerdb-enterprise-mongers, mongerdb-enterprise-server, mongerdb-enterprise-shell, mongerdb-enterprise-tools, mongerdb-org-unstable, mongerdb-org-unstable-mongers, mongerdb-org-unstable-shell, mongerdb-org-unstable-tools, mongerdb-org-unstable-server, mongerdb-nightly, mongerdb-org, mongerdb-org-mongers, mongerdb-org-server, mongerdb-org-shell, mongerdb-org-tools, mongerdb-stable, mongerdb18-10gen, mongerdb20-10gen
 Architecture: any
 Depends: mongerdb-enterprise-unstable-shell, mongerdb-enterprise-unstable-server, mongerdb-enterprise-unstable-mongers, mongerdb-enterprise-unstable-tools
-Description: MongoDB open source document-oriented database system (enterprise metapackage)
- MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+Description: MongerDB open source document-oriented database system (enterprise metapackage)
+ MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
  .
- MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+ MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
  .
- MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+ MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
  .
- MongoDB features:
+ MongerDB features:
  * JSON Data Model with Dynamic Schemas
  * Auto-Sharding for Horizontal Scalability
  * Built-In Replication for High Availability
@@ -32,14 +32,14 @@ Package: mongerdb-enterprise-unstable-shell
 Conflicts: monger-10gen, monger-10gen-enterprise, monger-10gen-enterprise-server, monger-10gen-server, monger-10gen-unstable, monger-10gen-unstable-enterprise, monger-10gen-unstable-enterprise-mongers, monger-10gen-unstable-enterprise-server, monger-10gen-unstable-enterprise-shell, monger-10gen-unstable-enterprise-tools, monger-10gen-unstable-mongers, monger-10gen-unstable-server, monger-10gen-unstable-shell, monger-10gen-unstable-tools, monger18-10gen, monger18-10gen-server, monger20-10gen, monger20-10gen-server, mongerdb, mongerdb-server, mongerdb-dev, mongerdb-clients, mongerdb-10gen, mongerdb-10gen-enterprise, mongerdb-10gen-unstable, mongerdb-10gen-unstable-enterprise, mongerdb-10gen-unstable-enterprise-mongers, mongerdb-10gen-unstable-enterprise-server, mongerdb-10gen-unstable-enterprise-shell, mongerdb-10gen-unstable-enterprise-tools, mongerdb-10gen-unstable-mongers, mongerdb-10gen-unstable-server, mongerdb-10gen-unstable-shell, mongerdb-10gen-unstable-tools, mongerdb-enterprise, mongerdb-enterprise-mongers, mongerdb-enterprise-server, mongerdb-enterprise-shell, mongerdb-enterprise-tools, mongerdb-org-unstable, mongerdb-org-unstable-mongers, mongerdb-org-unstable-shell, mongerdb-org-unstable-tools, mongerdb-org-unstable-server, mongerdb-nightly, mongerdb-org, mongerdb-org-mongers, mongerdb-org-server, mongerdb-org-shell, mongerdb-org-tools, mongerdb-stable, mongerdb18-10gen, mongerdb20-10gen
 Architecture: any
 Depends: ${shlibs:Depends}
-Description: MongoDB shell client (enterprise)
- MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+Description: MongerDB shell client (enterprise)
+ MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
  .
- MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+ MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
  .
- MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+ MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
  .
- MongoDB features:
+ MongerDB features:
  * JSON Data Model with Dynamic Schemas
  * Auto-Sharding for Horizontal Scalability
  * Built-In Replication for High Availability
@@ -54,14 +54,14 @@ Package: mongerdb-enterprise-unstable-server
 Conflicts: monger-10gen, monger-10gen-enterprise, monger-10gen-enterprise-server, monger-10gen-server, monger-10gen-unstable, monger-10gen-unstable-enterprise, monger-10gen-unstable-enterprise-mongers, monger-10gen-unstable-enterprise-server, monger-10gen-unstable-enterprise-shell, monger-10gen-unstable-enterprise-tools, monger-10gen-unstable-mongers, monger-10gen-unstable-server, monger-10gen-unstable-shell, monger-10gen-unstable-tools, monger18-10gen, monger18-10gen-server, monger20-10gen, monger20-10gen-server, mongerdb, mongerdb-server, mongerdb-dev, mongerdb-clients, mongerdb-10gen, mongerdb-10gen-enterprise, mongerdb-10gen-unstable, mongerdb-10gen-unstable-enterprise, mongerdb-10gen-unstable-enterprise-mongers, mongerdb-10gen-unstable-enterprise-server, mongerdb-10gen-unstable-enterprise-shell, mongerdb-10gen-unstable-enterprise-tools, mongerdb-10gen-unstable-mongers, mongerdb-10gen-unstable-server, mongerdb-10gen-unstable-shell, mongerdb-10gen-unstable-tools, mongerdb-enterprise, mongerdb-enterprise-mongers, mongerdb-enterprise-server, mongerdb-enterprise-shell, mongerdb-enterprise-tools, mongerdb-org-unstable, mongerdb-org-unstable-mongers, mongerdb-org-unstable-shell, mongerdb-org-unstable-tools, mongerdb-org-unstable-server, mongerdb-nightly, mongerdb-org, mongerdb-org-mongers, mongerdb-org-server, mongerdb-org-shell, mongerdb-org-tools, mongerdb-stable, mongerdb18-10gen, mongerdb20-10gen
 Architecture: any
 Depends: ${shlibs:Depends}, snmp, adduser, tzdata
-Description: MongoDB database server (enterprise)
- MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+Description: MongerDB database server (enterprise)
+ MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
  .
- MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+ MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
  .
- MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+ MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
  .
- MongoDB features:
+ MongerDB features:
  * JSON Data Model with Dynamic Schemas
  * Auto-Sharding for Horizontal Scalability
  * Built-In Replication for High Availability
@@ -70,20 +70,20 @@ Description: MongoDB database server (enterprise)
  * Text Search
  * Aggregation Framework & Native MapReduce
  .
- This package contains the MongoDB server software, default configuration files, and init.d scripts.
+ This package contains the MongerDB server software, default configuration files, and init.d scripts.
 
 Package: mongerdb-enterprise-unstable-mongers
 Conflicts: monger-10gen, monger-10gen-enterprise, monger-10gen-enterprise-server, monger-10gen-server, monger-10gen-unstable, monger-10gen-unstable-enterprise, monger-10gen-unstable-enterprise-mongers, monger-10gen-unstable-enterprise-server, monger-10gen-unstable-enterprise-shell, monger-10gen-unstable-enterprise-tools, monger-10gen-unstable-mongers, monger-10gen-unstable-server, monger-10gen-unstable-shell, monger-10gen-unstable-tools, monger18-10gen, monger18-10gen-server, monger20-10gen, monger20-10gen-server, mongerdb, mongerdb-server, mongerdb-dev, mongerdb-clients, mongerdb-10gen, mongerdb-10gen-enterprise, mongerdb-10gen-unstable, mongerdb-10gen-unstable-enterprise, mongerdb-10gen-unstable-enterprise-mongers, mongerdb-10gen-unstable-enterprise-server, mongerdb-10gen-unstable-enterprise-shell, mongerdb-10gen-unstable-enterprise-tools, mongerdb-10gen-unstable-mongers, mongerdb-10gen-unstable-server, mongerdb-10gen-unstable-shell, mongerdb-10gen-unstable-tools, mongerdb-enterprise, mongerdb-enterprise-mongers, mongerdb-enterprise-server, mongerdb-enterprise-shell, mongerdb-enterprise-tools, mongerdb-org-unstable, mongerdb-org-unstable-mongers, mongerdb-org-unstable-shell, mongerdb-org-unstable-tools, mongerdb-org-unstable-server, mongerdb-nightly, mongerdb-org, mongerdb-org-mongers, mongerdb-org-server, mongerdb-org-shell, mongerdb-org-tools, mongerdb-stable, mongerdb18-10gen, mongerdb20-10gen
 Architecture: any
 Depends: ${shlibs:Depends}, tzdata
-Description: MongoDB sharded cluster query router (enterprise)
- MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+Description: MongerDB sharded cluster query router (enterprise)
+ MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
  .
- MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+ MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
  .
- MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+ MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
  .
- MongoDB features:
+ MongerDB features:
  * JSON Data Model with Dynamic Schemas
  * Auto-Sharding for Horizontal Scalability
  * Built-In Replication for High Availability
@@ -92,20 +92,20 @@ Description: MongoDB sharded cluster query router (enterprise)
  * Text Search
  * Aggregation Framework & Native MapReduce
  .
- This package contains mongers, the MongoDB sharded cluster query router.
+ This package contains mongers, the MongerDB sharded cluster query router.
 
 Package: mongerdb-enterprise-unstable-tools
 Conflicts: monger-10gen, monger-10gen-enterprise, monger-10gen-enterprise-server, monger-10gen-server, monger-10gen-unstable, monger-10gen-unstable-enterprise, monger-10gen-unstable-enterprise-mongers, monger-10gen-unstable-enterprise-server, monger-10gen-unstable-enterprise-shell, monger-10gen-unstable-enterprise-tools, monger-10gen-unstable-mongers, monger-10gen-unstable-server, monger-10gen-unstable-shell, monger-10gen-unstable-tools, monger18-10gen, monger18-10gen-server, monger20-10gen, monger20-10gen-server, mongerdb, mongerdb-server, mongerdb-dev, mongerdb-clients, mongerdb-10gen, mongerdb-10gen-enterprise, mongerdb-10gen-unstable, mongerdb-10gen-unstable-enterprise, mongerdb-10gen-unstable-enterprise-mongers, mongerdb-10gen-unstable-enterprise-server, mongerdb-10gen-unstable-enterprise-shell, mongerdb-10gen-unstable-enterprise-tools, mongerdb-10gen-unstable-mongers, mongerdb-10gen-unstable-server, mongerdb-10gen-unstable-shell, mongerdb-10gen-unstable-tools, mongerdb-enterprise, mongerdb-enterprise-mongers, mongerdb-enterprise-server, mongerdb-enterprise-shell, mongerdb-enterprise-tools, mongerdb-org-unstable, mongerdb-org-unstable-mongers, mongerdb-org-unstable-shell, mongerdb-org-unstable-tools, mongerdb-org-unstable-server, mongerdb-nightly, mongerdb-org, mongerdb-org-mongers, mongerdb-org-server, mongerdb-org-shell, mongerdb-org-tools, mongerdb-stable, mongerdb18-10gen, mongerdb20-10gen
 Architecture: any
 Depends: ${shlibs:Depends}
-Description: MongoDB tools (enterprise)
- MongoDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongoDB provides high performance for both reads and writes. MongoDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
+Description: MongerDB tools (enterprise)
+ MongerDB is built for scalability, performance and high availability, scaling from single server deployments to large, complex multi-site architectures. By leveraging in-memory computing, MongerDB provides high performance for both reads and writes. MongerDB’s native replication and automated failover enable enterprise-grade reliability and operational flexibility.
  .
- MongoDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
+ MongerDB is an open-source database used by companies of all sizes, across all industries and for a wide variety of applications. It is an agile database that allows schemas to change quickly as applications evolve, while still providing the functionality developers expect from traditional databases, such as secondary indexes, a full query language and strict consistency.
  .
- MongoDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
+ MongerDB has a rich client ecosystem including hadoop integration, officially supported drivers for 10 programming languages and environments, as well as 40 drivers supported by the user community.
  .
- MongoDB features:
+ MongerDB features:
  * JSON Data Model with Dynamic Schemas
  * Auto-Sharding for Horizontal Scalability
  * Built-In Replication for High Availability
@@ -114,4 +114,4 @@ Description: MongoDB tools (enterprise)
  * Text Search
  * Aggregation Framework & Native MapReduce
  .
- This package contains standard utilities for interacting with MongoDB.
+ This package contains standard utilities for interacting with MongerDB.

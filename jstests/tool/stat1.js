@@ -2,13 +2,13 @@
 // test mongerstat with authentication SERVER-3875
 baseName = "tool_stat1";
 
-var m = MongoRunner.runMongod({auth: "", bind_ip: "127.0.0.1"});
+var m = MongerRunner.runMongerd({auth: "", bind_ip: "127.0.0.1"});
 db = m.getDB("admin");
 
 db.createUser({user: "eliot", pwd: "eliot", roles: jsTest.adminUserRoles});
 assert(db.auth("eliot", "eliot"), "auth failed");
 
-var exitCode = MongoRunner.runMongoTool("mongerstat", {
+var exitCode = MongerRunner.runMongerTool("mongerstat", {
     host: "127.0.0.1:" + m.port,
     username: "eliot",
     password: "eliot",
@@ -17,7 +17,7 @@ var exitCode = MongoRunner.runMongoTool("mongerstat", {
 });
 assert.eq(exitCode, 0, "mongerstat should exit successfully with eliot:eliot");
 
-exitCode = MongoRunner.runMongoTool("mongerstat", {
+exitCode = MongerRunner.runMongerTool("mongerstat", {
     host: "127.0.0.1:" + m.port,
     username: "eliot",
     password: "wrong",
@@ -25,4 +25,4 @@ exitCode = MongoRunner.runMongoTool("mongerstat", {
     authenticationDatabase: "admin",
 });
 assert.neq(exitCode, 0, "mongerstat should exit with -1 with eliot:wrong");
-MongoRunner.stopMongod(m);
+MongerRunner.stopMongerd(m);

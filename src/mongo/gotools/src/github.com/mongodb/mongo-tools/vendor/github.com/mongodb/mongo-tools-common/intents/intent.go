@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -60,7 +60,7 @@ type Intent struct {
 	// Collection options
 	Options bson.M
 
-	// UUID (for MongoDB 3.6+) as a big-endian hex string
+	// UUID (for MongerDB 3.6+) as a big-endian hex string
 	UUID string
 
 	// File/collection size, for some prioritizer implementations.

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -28,7 +28,7 @@ var ErrHeaderInvalidLength error = Error{Type: ErrHeader, Message: "invalid head
 // is not set to the correct OpCode.
 var ErrHeaderIncorrectOpCode error = Error{Type: ErrHeader, Message: "invalid header because OpCode is improperly set"}
 
-// Header represents the header of a MongoDB wire protocol message.
+// Header represents the header of a MongerDB wire protocol message.
 type Header struct {
 	MessageLength int32
 	RequestID     int32

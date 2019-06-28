@@ -9,7 +9,7 @@
 
     load('./jstests/libs/chunk_manipulation_util.js');
 
-    var staticMongod = MongoRunner.runMongod({});  // For startParallelOps.
+    var staticMongerd = MongerRunner.runMongerd({});  // For startParallelOps.
 
     let st = new ShardingTest({shards: 3, other: {shardOptions: {verbose: 1}}});
 
@@ -41,7 +41,7 @@
     let destPrimary = st.rs2.getPrimary();
     pauseMigrateAtStep(destPrimary, migrateStepNames.cloned);
     var joinMoveChunk = moveChunkParallel(
-        staticMongod, st.s0.host, {x: -100}, null, 'test.user', st.shard2.shardName);
+        staticMongerd, st.s0.host, {x: -100}, null, 'test.user', st.shard2.shardName);
     waitForMigrateStep(destPrimary, migrateStepNames.cloned);
 
     assert.commandWorked(st.s.getDB('test').runCommand({
@@ -80,6 +80,6 @@
     commitTxn();
 
     st.stop();
-    MongoRunner.stopMongod(staticMongod);
+    MongerRunner.stopMongerd(staticMongerd);
 
 })();

@@ -1,8 +1,8 @@
 /**
  * Test the backup/restore process:
  * - 3 node replica set
- * - Mongo CRUD client
- * - Mongo FSM client
+ * - Monger CRUD client
+ * - Monger FSM client
  * - fsyncLock Secondary
  * - cp DB files
  * - fsyncUnlock Secondary

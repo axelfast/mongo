@@ -18,7 +18,7 @@ load("jstests/watchdog/lib/wd_test_common.js");
 
     const journalFusePath = control.getMountPath();
 
-    const dbPath = MongoRunner.toRealDir("$dataDir/mongerd-journal");
+    const dbPath = MongerRunner.toRealDir("$dataDir/mongerd-journal");
 
     const journalLinkPath = dbPath + "/journal";
 
@@ -29,5 +29,5 @@ load("jstests/watchdog/lib/wd_test_common.js");
     assert.eq(ret, 0);
 
     // Set noCleanData so that the dbPath is not cleaned because we want to use the journal symlink.
-    testFuseAndMongoD(control, {dbpath: dbPath, noCleanData: true});
+    testFuseAndMongerD(control, {dbpath: dbPath, noCleanData: true});
 })();

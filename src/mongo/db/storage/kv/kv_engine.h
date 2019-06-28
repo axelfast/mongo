@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -121,7 +121,7 @@ public:
                                                                   StringData ident) = 0;
 
     /**
-     * Create a RecordStore that MongoDB considers eligible to share space in an underlying table
+     * Create a RecordStore that MongerDB considers eligible to share space in an underlying table
      * with other RecordStores. 'prefix' is guaranteed to be 'KVPrefix::kNotPrefixed' when
      * 'groupCollections' is not enabled.
      *
@@ -146,7 +146,7 @@ public:
                                              const IndexDescriptor* desc) = 0;
 
     /**
-     * Create a SortedDataInterface that MongoDB considers eligible to share space in an
+     * Create a SortedDataInterface that MongerDB considers eligible to share space in an
      * underlying table with other SortedDataInterfaces. 'prefix' is guaranteed to be
      * 'KVPrefix::kNotPrefixed' when 'groupCollections' is not enabled.
      *
@@ -283,7 +283,7 @@ public:
     /**
      * This method will be called before there is a clean shutdown.  Storage engines should
      * override this method if they have clean-up to do that is different from unclean shutdown.
-     * MongoDB will not call into the storage subsystem after calling this function.
+     * MongerDB will not call into the storage subsystem after calling this function.
      *
      * There is intentionally no uncleanShutdown().
      */

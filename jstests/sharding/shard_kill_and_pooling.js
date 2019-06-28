@@ -30,7 +30,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         // jstest ->(x10)-> mongers ->(x10)-> primary
         var conns = [];
         for (var i = 0; i < 50; i++) {
-            conns.push(new Mongo(mongers.host));
+            conns.push(new Monger(mongers.host));
             assert.neq(null, conns[i].getCollection(coll + "").findOne());
         }
 
@@ -51,7 +51,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         // Flush writes to disk, since sometimes we're killing uncleanly
         assert(mongers.getDB("admin").runCommand({fsync: 1}).ok);
 
-        var exitCode = killWith === 9 ? MongoRunner.EXIT_SIGKILL : MongoRunner.EXIT_CLEAN;
+        var exitCode = killWith === 9 ? MongerRunner.EXIT_SIGKILL : MongerRunner.EXIT_CLEAN;
 
         st.rs0.stopSet(killWith, true, {allowedExitCode: exitCode});
 
@@ -67,7 +67,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
         var numErrors = 0;
         for (var i = 0; i < conns.length; i++) {
-            var newConn = new Mongo(mongers.host);
+            var newConn = new Monger(mongers.host);
             try {
                 assert.neq(null, newConn.getCollection("foo.bar").findOne());
             } catch (e) {

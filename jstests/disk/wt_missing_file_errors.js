@@ -1,5 +1,5 @@
 /**
- * Tests that MongoDB gives errors when certain data files are missing.
+ * Tests that MongerDB gives errors when certain data files are missing.
  *
  * @tags: [requires_wiredtiger]
  */
@@ -10,7 +10,7 @@
 
     const baseName = "wt_missing_file_errors";
     const collName = "test";
-    const dbpath = MongoRunner.dataPath + baseName + "/";
+    const dbpath = MongerRunner.dataPath + baseName + "/";
 
     /**
      * Test 1. Delete a collection's .wt file.
@@ -20,7 +20,7 @@
         dbpath, baseName, collName, (mongerd, testColl) => {
             const testCollUri = getUriForColl(testColl);
             const testCollFile = dbpath + testCollUri + ".wt";
-            MongoRunner.stopMongod(mongerd);
+            MongerRunner.stopMongerd(mongerd);
             jsTestLog("deleting collection file: " + testCollFile);
             removeFile(testCollFile);
         }, "Fatal Assertion 50882");
@@ -31,7 +31,7 @@
 
     assertErrorOnStartupWhenFilesAreCorruptOrMissing(
         dbpath, baseName, collName, (mongerd, testColl) => {
-            MongoRunner.stopMongod(mongerd);
+            MongerRunner.stopMongerd(mongerd);
             let mdbCatalogFile = dbpath + "_mdb_catalog.wt";
             jsTestLog("deleting catalog file: " + mdbCatalogFile);
             removeFile(mdbCatalogFile);
@@ -43,7 +43,7 @@
 
     assertErrorOnStartupWhenFilesAreCorruptOrMissing(
         dbpath, baseName, collName, (mongerd, testColl) => {
-            MongoRunner.stopMongod(mongerd);
+            MongerRunner.stopMongerd(mongerd);
             let WiredTigerWTFile = dbpath + "WiredTiger.wt";
             jsTestLog("deleting WiredTiger.wt");
             removeFile(WiredTigerWTFile);
@@ -61,7 +61,7 @@
             const indexName = "a_1";
             assert.commandWorked(testColl.createIndex({a: 1}, {name: indexName}));
             const indexUri = getUriForIndex(testColl, indexName);
-            MongoRunner.stopMongod(mongerd);
+            MongerRunner.stopMongerd(mongerd);
             const indexFile = dbpath + indexUri + ".wt";
             jsTestLog("deleting index file: " + indexFile);
             removeFile(indexFile);

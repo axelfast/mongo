@@ -31,7 +31,7 @@
 
         jsTest.log("Set up the session.");
         const sessionOptions = {causalConsistency: false};
-        const session = db.getMongo().startSession(sessionOptions);
+        const session = db.getMonger().startSession(sessionOptions);
         const sessionDb = session.getDatabase(testDBName);
 
         let txnNumber = 0;

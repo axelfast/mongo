@@ -45,7 +45,7 @@ organizationalUnitName		= Organizational Unit Name (eg, section)
 organizationalUnitName_default	= Kernel
 
 0.organizationName		= Organization Name (eg, company)
-0.organizationName_default	= MongoDB
+0.organizationName_default	= MongerDB
 
 localityName			= Locality Name (eg, city)
 localityName_default            = New York City

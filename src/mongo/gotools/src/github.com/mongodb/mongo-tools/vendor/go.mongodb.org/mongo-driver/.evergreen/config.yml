@@ -1,5 +1,5 @@
 ########################################
-# Evergreen Template for MongoDB Drivers
+# Evergreen Template for MongerDB Drivers
 ########################################
 
 # When a task that used to pass starts to fail
@@ -645,7 +645,7 @@ tasks:
 
 axes:
   - id: version
-    display_name: MongoDB Version
+    display_name: MongerDB Version
     values:
       - id: "4.0"
         display_name: "4.0"
@@ -676,7 +676,7 @@ axes:
         variables:
            VERSION: "latest"
 
-  # OSes that support versions of MongoDB >= 2.6 with SSL.
+  # OSes that support versions of MongerDB >= 2.6 with SSL.
   - id: os-ssl-legacy
     display_name: OS
     values:

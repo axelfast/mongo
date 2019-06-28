@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -104,7 +104,7 @@ Date_t roundTime(Date_t now, Milliseconds period) {
     return Date_t::fromMillisSinceEpoch(next_time);
 }
 
-boost::filesystem::path getMongoSPath(const boost::filesystem::path& logFile) {
+boost::filesystem::path getMongerSPath(const boost::filesystem::path& logFile) {
     auto base = logFile;
 
     // Keep stripping file extensions until we are only left with the file name

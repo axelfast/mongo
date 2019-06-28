@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -31,7 +31,7 @@ Possible commands include:
 
 See http://docs.mongerdb.org/manual/reference/program/mongerfiles/ for more information.`
 
-// ParseOptions reads command line arguments and converts them into options used to configure a MongoFiles instance
+// ParseOptions reads command line arguments and converts them into options used to configure a MongerFiles instance
 func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, error) {
 	// initialize command-line opts
 	opts := options.New("mongerfiles", versionStr, gitCommit, Usage, options.EnabledOptions{Auth: true, Connection: true, Namespace: false, URI: true})
@@ -58,7 +58,7 @@ func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, erro
 	opts.Namespace.DB = storageOpts.DB
 
 	// set WriteConcern
-	wc, err := db.NewMongoWriteConcern(storageOpts.WriteConcern, opts.URI.ParsedConnString())
+	wc, err := db.NewMongerWriteConcern(storageOpts.WriteConcern, opts.URI.ParsedConnString())
 	if err != nil {
 		return Options{}, fmt.Errorf("error parsing --writeConcern: %v", err)
 	}

@@ -61,19 +61,19 @@
         jsTest.log("Starting a parallel shell to run first index build request...");
         joinFirstIndexBuild = startParallelShell(
             funWithArgs(runSuccessfulIndexBuild, dbName, collName, indexSpecB, 1),
-            db.getMongo().port);
+            db.getMonger().port);
 
         jsTest.log("Waiting for first index build to get started...");
-        checkLog.contains(db.getMongo(),
+        checkLog.contains(db.getMonger(),
                           "Hanging index build due to failpoint 'hangAfterSettingUpIndexBuild'");
 
         jsTest.log("Starting a parallel shell to run second index build request...");
         joinSecondIndexBuild = startParallelShell(
             funWithArgs(runSuccessfulIndexBuild, dbName, collName, indexSpecB, 2),
-            db.getMongo().port);
+            db.getMonger().port);
 
         jsTest.log("Waiting for second index build request to wait behind the first...");
-        checkLog.contains(db.getMongo(),
+        checkLog.contains(db.getMonger(),
                           "but found that at least one of the indexes is already being built");
     } finally {
         assert.commandWorked(
@@ -108,19 +108,19 @@
     try {
         jsTest.log("Starting a parallel shell to run third index build request...");
         joinFailedIndexBuild = startParallelShell(
-            funWithArgs(runFailedIndexBuild, dbName, collName, indexSpecC, 3), db.getMongo().port);
+            funWithArgs(runFailedIndexBuild, dbName, collName, indexSpecC, 3), db.getMonger().port);
 
         jsTest.log("Waiting for third index build to get started...");
-        checkLog.contains(db.getMongo(),
+        checkLog.contains(db.getMonger(),
                           "Hanging index build due to failpoint 'hangAndThenFailIndexBuild'");
 
         jsTest.log("Starting a parallel shell to run fourth index build request...");
         joinSuccessfulIndexBuild = startParallelShell(
             funWithArgs(runSuccessfulIndexBuild, dbName, collName, indexSpecC, 4),
-            db.getMongo().port);
+            db.getMonger().port);
 
         jsTest.log("Waiting for fourth index build request to wait behind the third...");
-        checkLog.contains(db.getMongo(),
+        checkLog.contains(db.getMonger(),
                           "but found that at least one of the indexes is already being built");
     } finally {
         assert.commandWorked(

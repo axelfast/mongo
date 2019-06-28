@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -63,9 +63,9 @@ public:
     class Refresher;
 
     /**
-     * Initializes local state from a MongoURI.
+     * Initializes local state from a MongerURI.
      */
-    ReplicaSetMonitor(const MongoURI& uri);
+    ReplicaSetMonitor(const MongerURI& uri);
 
     /**
      * Schedules the initial refresh task into task executor.
@@ -149,7 +149,7 @@ public:
      * Returns the URI that was used to construct this monitor.
      * It IS NOT updated to reflect the current members of the set.
      */
-    const MongoURI& getOriginalUri() const;
+    const MongerURI& getOriginalUri() const;
 
     /**
      * Is server part of this set? Uses only cached information.
@@ -178,7 +178,7 @@ public:
     static std::shared_ptr<ReplicaSetMonitor> createIfNeeded(const std::string& name,
                                                              const std::set<HostAndPort>& servers);
 
-    static std::shared_ptr<ReplicaSetMonitor> createIfNeeded(const MongoURI& uri);
+    static std::shared_ptr<ReplicaSetMonitor> createIfNeeded(const MongerURI& uri);
 
     /**
      * gets a cached Monitor per name. If the monitor is not found and createFromSeed is false,

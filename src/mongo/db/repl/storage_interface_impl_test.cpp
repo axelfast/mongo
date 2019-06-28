@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -182,7 +182,7 @@ std::vector<InsertStatement> transformInserts(std::vector<TimestampedBSONObj> do
     return inserts;
 }
 
-class StorageInterfaceImplTest : public ServiceContextMongoDTest {
+class StorageInterfaceImplTest : public ServiceContextMongerDTest {
 protected:
     OperationContext* getOperationContext() {
         return _opCtx.get();
@@ -198,7 +198,7 @@ protected:
 
 private:
     void setUp() override {
-        ServiceContextMongoDTest::setUp();
+        ServiceContextMongerDTest::setUp();
         _createOpCtx();
         auto service = getServiceContext();
         auto replCoord = std::make_unique<ReplicationCoordinatorMock>(service);
@@ -210,7 +210,7 @@ private:
         _ddv.reset(nullptr);
         _uwb.reset(nullptr);
         _opCtx.reset(nullptr);
-        ServiceContextMongoDTest::tearDown();
+        ServiceContextMongerDTest::tearDown();
     }
 
     void _createOpCtx() {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -172,7 +172,7 @@ Document DocumentSourceChangeStreamTransform::applyTransformation(const Document
     // since a mongers may forward a change stream in an invalid position (e.g. in a nested $lookup
     // or $facet pipeline). In this case, mongerd is responsible for parsing the pipeline and
     // throwing an error without ever executing the change stream.
-    if (pExpCtx->fromMongos) {
+    if (pExpCtx->fromMongers) {
         invariant(pExpCtx->needsMerge);
     }
 
@@ -354,7 +354,7 @@ Value DocumentSourceChangeStreamTransform::serialize(
     Document changeStreamOptions(_changeStreamSpec);
     // If we're on a mongers and no other start time is specified, we want to start at the current
     // cluster time on the mongers.  This ensures all shards use the same start time.
-    if (pExpCtx->inMongos &&
+    if (pExpCtx->inMongers &&
         changeStreamOptions[DocumentSourceChangeStreamSpec::kResumeAfterFieldName].missing() &&
         changeStreamOptions[DocumentSourceChangeStreamSpec::kStartAtOperationTimeFieldName]
             .missing() &&
@@ -395,7 +395,7 @@ DocumentSource::GetNextResult DocumentSourceChangeStreamTransform::getNext() {
     uassert(50988,
             "Illegal attempt to execute an internal change stream stage on mongers. A $changeStream "
             "stage must be the first stage in a pipeline",
-            !pExpCtx->inMongos);
+            !pExpCtx->inMongers);
 
     while (1) {
         // If we're unwinding an 'applyOps' from a transaction, check if there are any documents we
@@ -447,7 +447,7 @@ DocumentSource::GetNextResult DocumentSourceChangeStreamTransform::getNext() {
 
 DocumentSourceChangeStreamTransform::TransactionOpIterator::TransactionOpIterator(
     OperationContext* opCtx,
-    std::shared_ptr<MongoProcessInterface> mongerProcessInterface,
+    std::shared_ptr<MongerProcessInterface> mongerProcessInterface,
     const Document& input,
     const pcrecpp::RE& nsRegex)
     : _mongerProcessInterface(mongerProcessInterface), _nsRegex(nsRegex) {

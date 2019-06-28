@@ -1,4 +1,4 @@
-// Make sure MongoD starts with TLS 1.0 disabled (except w/ old OpenSSL).
+// Make sure MongerD starts with TLS 1.0 disabled (except w/ old OpenSSL).
 
 (function() {
     'use strict';
@@ -46,8 +46,8 @@
         if (serverDP !== null) {
             serverOpts.sslDisabledProtocols = serverDP;
         }
-        clearRawMongoProgramOutput();
-        const mongerd = MongoRunner.runMongod(serverOpts);
+        clearRawMongerProgramOutput();
+        const mongerd = MongerRunner.runMongerd(serverOpts);
         if (!mongerd) {
             assert(!shouldSucceed);
             return;
@@ -57,7 +57,7 @@
         if (clientDP !== null) {
             clientOpts = ['--sslDisabledProtocols', clientDP];
         }
-        const didSucceed = (0 == runMongoProgram('monger',
+        const didSucceed = (0 == runMongerProgram('monger',
                                                  '--ssl',
                                                  '--port',
                                                  mongerd.port,
@@ -69,14 +69,14 @@
                                                  '--eval',
                                                  ';'));
 
-        MongoRunner.stopMongod(mongerd);
+        MongerRunner.stopMongerd(mongerd);
 
         // Exit code based success/failure.
         assert.eq(
             didSucceed, shouldSucceed, "Running with " + tojson(serverDP) + "/" + tojson(clientDP));
 
         assert.eq(expectLogMessage,
-                  rawMongoProgramOutput().search('Automatically disabling TLS 1.0') >= 0,
+                  rawMongerProgramOutput().search('Automatically disabling TLS 1.0') >= 0,
                   "TLS 1.0 was/wasn't automatically disabled");
     }
 

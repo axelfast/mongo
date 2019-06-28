@@ -11,7 +11,7 @@ Version
 -------
 
 Specifications have no version scheme.
-They are not tied to a MongoDB server version,
+They are not tied to a MongerDB server version,
 and it is our intention that each specification moves from "draft" to "final"
 with no further versions; it is superseded by a future spec, not revised.
 

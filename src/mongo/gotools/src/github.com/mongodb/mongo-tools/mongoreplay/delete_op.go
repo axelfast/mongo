@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -98,7 +98,7 @@ func (op *DeleteOp) FromReader(r io.Reader) error {
 
 // Execute performs the DeleteOp on a given session, yielding the reply when
 // successful (and an error otherwise).
-func (op *DeleteOp) Execute(socket *mgo.MongoSocket) (Replyable, error) {
+func (op *DeleteOp) Execute(socket *mgo.MongerSocket) (Replyable, error) {
 	if err := mgo.ExecOpWithoutReply(socket, &op.DeleteOp); err != nil {
 		return nil, err
 	}

@@ -30,7 +30,7 @@
         print("FOUND: " + tojsononeline(parts));
     }
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd was unable to start up");
 
     const testDB = conn.getDB("log_getmore");
@@ -51,7 +51,7 @@
     //
     // Command tests.
     //
-    testDB.getMongo().forceReadMode("commands");
+    testDB.getMonger().forceReadMode("commands");
 
     // TEST: Verify the log format of the find command.
     let cursor = coll.find({a: {$gt: 0}}).sort({a: 1}).skip(1).limit(10).hint({a: 1}).batchSize(5);
@@ -60,7 +60,7 @@
     let cursorid = getLatestProfilerEntry(testDB).cursorid;
 
     let logLine =
-        'command log_getmore.test appName: "MongoDB Shell" command: find { find: "test", filter:' +
+        'command log_getmore.test appName: "MongerDB Shell" command: find { find: "test", filter:' +
         ' { a: { $gt: 0.0 } }, skip: 1.0, batchSize: 5.0, limit: 10.0, singleBatch: false, sort:' +
         ' { a: 1.0 }, hint: { a: 1.0 }';
 
@@ -85,7 +85,7 @@
     }
 
     logLine = [
-        'command log_getmore.test appName: "MongoDB Shell" command: getMore { getMore: ' +
+        'command log_getmore.test appName: "MongerDB Shell" command: getMore { getMore: ' +
             cursorIdToString(cursorid) + ', collection: "test", batchSize: 5.0',
         'originatingCommand: { find: "test", ' +
             'filter: { a: { $gt: 0.0 } }, skip: 1.0, batchSize: 5.0, limit: 10.0, singleBatch: ' +
@@ -101,7 +101,7 @@
     assert.eq(cursor.itcount(), 10);
 
     logLine = [
-        'command log_getmore.test appName: "MongoDB Shell" command: getMore { getMore: ' +
+        'command log_getmore.test appName: "MongerDB Shell" command: getMore { getMore: ' +
             cursorIdToString(cursorid) + ', collection: "test"',
         'originatingCommand: { aggregate: "test", pipeline: ' +
             '[ { $match: { a: { $gt: 0.0 } } } ], cursor: { batchSize: 0.0 }, hint: { a: 1.0 }'
@@ -112,7 +112,7 @@
     //
     // Legacy tests.
     //
-    testDB.getMongo().forceReadMode("legacy");
+    testDB.getMonger().forceReadMode("legacy");
 
     // TEST: Verify the log format of a legacy find. This should be upconverted to resemble a find
     // command.
@@ -122,7 +122,7 @@
     cursorid = getLatestProfilerEntry(testDB).cursorid;
 
     logLine =
-        'query log_getmore.test appName: "MongoDB Shell" command: { find: "test", filter: { a: ' +
+        'query log_getmore.test appName: "MongerDB Shell" command: { find: "test", filter: { a: ' +
         '{ $gt: 0.0 } }, skip: 1, ntoreturn: 5, sort: { a: 1.0 }, hint: { a: 1.0 }';
 
     assertLogLineContains(conn, logLine);
@@ -133,7 +133,7 @@
     coll.find({query: "foo"}).itcount();
 
     logLine =
-        'query log_getmore.test appName: "MongoDB Shell" command: { find: "test", filter: { query:' +
+        'query log_getmore.test appName: "MongerDB Shell" command: { find: "test", filter: { query:' +
         ' "foo" } }';
 
     assertLogLineContains(conn, logLine);
@@ -144,7 +144,7 @@
 
     assert.eq(cursor.itcount(), 8);  // Iterate the cursor established above to trigger getMore.
 
-    logLine = 'getmore log_getmore.test appName: "MongoDB Shell" command: { getMore: ' +
+    logLine = 'getmore log_getmore.test appName: "MongerDB Shell" command: { getMore: ' +
         cursorIdToString(cursorid) +
         ', collection: "test", batchSize: 5 } originatingCommand: { find: "test", filter: { a: {' +
         ' $gt: 0.0 } }, skip: 1, ntoreturn: 5, sort: { a: 1.0 }, hint: { a: 1.0 }';
@@ -160,12 +160,12 @@
     assert.eq(cursor.itcount(), 10);
 
     logLine = [
-        'getmore log_getmore.test appName: "MongoDB Shell" command: { getMore: ' +
+        'getmore log_getmore.test appName: "MongerDB Shell" command: { getMore: ' +
             cursorIdToString(cursorid) + ', collection: "test", batchSize: 0',
         'originatingCommand: { aggregate: "test", pipeline:' +
             ' [ { $match: { a: { $gt: 0.0 } } } ], cursor: { batchSize: 0.0 }, hint: { a: 1.0 }'
     ];
 
     assertLogLineContains(conn, logLine);
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

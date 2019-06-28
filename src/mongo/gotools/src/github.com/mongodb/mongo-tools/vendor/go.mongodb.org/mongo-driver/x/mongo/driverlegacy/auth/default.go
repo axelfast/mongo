@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -36,7 +36,7 @@ func (a *DefaultAuthenticator) Auth(ctx context.Context, desc description.Server
 	case SCRAMSHA1:
 		actual, err = newScramSHA1Authenticator(a.Cred)
 	default:
-		actual, err = newMongoDBCRAuthenticator(a.Cred)
+		actual, err = newMongerDBCRAuthenticator(a.Cred)
 	}
 
 	if err != nil {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,13 +37,13 @@ namespace monger {
 /**
  * The implementation of AuthzSessionExternalState functionality for mongerd.
  */
-class AuthzSessionExternalStateMongod : public AuthzSessionExternalStateServerCommon {
-    AuthzSessionExternalStateMongod(const AuthzSessionExternalStateMongod&) = delete;
-    AuthzSessionExternalStateMongod& operator=(const AuthzSessionExternalStateMongod&) = delete;
+class AuthzSessionExternalStateMongerd : public AuthzSessionExternalStateServerCommon {
+    AuthzSessionExternalStateMongerd(const AuthzSessionExternalStateMongerd&) = delete;
+    AuthzSessionExternalStateMongerd& operator=(const AuthzSessionExternalStateMongerd&) = delete;
 
 public:
-    AuthzSessionExternalStateMongod(AuthorizationManager* authzManager);
-    virtual ~AuthzSessionExternalStateMongod();
+    AuthzSessionExternalStateMongerd(AuthorizationManager* authzManager);
+    virtual ~AuthzSessionExternalStateMongerd();
 
     virtual bool shouldIgnoreAuthChecks() const;
 

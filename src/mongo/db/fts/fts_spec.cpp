@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -104,7 +104,7 @@ FTSSpec::FTSSpec(const BSONObj& indexInfo) {
     auto swl = FTSLanguage::make(indexLanguage, _textIndexVersion);
 
     // This can fail if the user originally created the text index under an instance of
-    // MongoDB that supports different languages then the current instance
+    // MongerDB that supports different languages then the current instance
     // TODO: consder propagating the index ns to here to improve the error message
     uassert(28682,
             str::stream() << "Unrecognized language " << indexLanguage

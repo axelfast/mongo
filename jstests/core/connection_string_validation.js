@@ -6,9 +6,9 @@
 
 port = "27017";
 
-if (db.getMongo().host.indexOf(":") >= 0) {
-    var idx = db.getMongo().host.indexOf(":");
-    port = db.getMongo().host.substring(idx + 1);
+if (db.getMonger().host.indexOf(":") >= 0) {
+    var idx = db.getMonger().host.indexOf(":");
+    port = db.getMonger().host.substring(idx + 1);
 }
 
 var goodStrings = [
@@ -55,7 +55,7 @@ function testGoodAsURI(i, uri) {
     var gotException = false;
     var exception;
     try {
-        var m_uri = MongoURI(uri);
+        var m_uri = MongerURI(uri);
         var connectDB = connect(uri);
         connectDB = null;
     } catch (e) {

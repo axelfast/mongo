@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,14 +39,14 @@ import static java.lang.String.format;
 
 import java.util.Locale;
 
-class MongoEmbeddedLibraryImpl implements MongoEmbeddedLibrary {
+class MongerEmbeddedLibraryImpl implements MongerEmbeddedLibrary {
     private static final Logger LOGGER = Loggers.getLogger();
     private static final LogCallback LOG_CALLBACK = new LogCallback();
 
     private final CAPI.monger_embedded_v1_status status;
     private final CAPI.monger_embedded_v1_lib lib;
 
-    MongoEmbeddedLibraryImpl(final String yamlConfig, final LogLevel logLevel) {
+    MongerEmbeddedLibraryImpl(final String yamlConfig, final LogLevel logLevel) {
         status = CAPIHelper.createStatusPointer();
         CAPI.monger_embedded_v1_init_params.ByReference initParams = new CAPI.monger_embedded_v1_init_params.ByReference();
         initParams.yaml_config = new CAPI.cstring(yamlConfig != null ? yamlConfig : "");
@@ -62,8 +62,8 @@ class MongoEmbeddedLibraryImpl implements MongoEmbeddedLibrary {
     }
 
     @Override
-    public MongoEmbeddedInstance createInstance(final String yamlConfig) {
-        return new MongoEmbeddedInstanceImpl(lib, yamlConfig);
+    public MongerEmbeddedInstance createInstance(final String yamlConfig) {
+        return new MongerEmbeddedInstanceImpl(lib, yamlConfig);
     }
 
     @Override

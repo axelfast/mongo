@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,17 +36,17 @@
 namespace monger {
 namespace {
 
-MONGO_GENERAL_STARTUP_OPTIONS_REGISTER(MongoeBenchOptions)(InitializerContext* context) {
-    return addMongoeBenchOptions(&moe::startupOptions);
+MONGO_GENERAL_STARTUP_OPTIONS_REGISTER(MongereBenchOptions)(InitializerContext* context) {
+    return addMongereBenchOptions(&moe::startupOptions);
 }
 
 GlobalInitializerRegisterer mongereBenchOptionsStore(
-    "MongoeBenchOptions_Store",
+    "MongereBenchOptions_Store",
     [](InitializerContext* context) {
-        if (!handlePreValidationMongoeBenchOptions(moe::startupOptionsParsed)) {
+        if (!handlePreValidationMongereBenchOptions(moe::startupOptionsParsed)) {
             quickExit(EXIT_SUCCESS);
         }
-        return storeMongoeBenchOptions(moe::startupOptionsParsed, context->args());
+        return storeMongereBenchOptions(moe::startupOptionsParsed, context->args());
     },
     DeinitializerFunction(nullptr),
     {"BeginStartupOptionStorage", "EmbeddedOptions_Store"},

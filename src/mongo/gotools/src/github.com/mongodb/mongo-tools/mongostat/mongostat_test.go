@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -102,11 +102,11 @@ func TestStatLine(t *testing.T) {
 	})
 }
 
-func TestIsMongos(t *testing.T) {
+func TestIsMongers(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.UnitTestType)
 
 	runCheck := func(process string) bool {
-		return status.IsMongos(&status.ServerStatus{
+		return status.IsMongers(&status.ServerStatus{
 			Process: process,
 		})
 	}

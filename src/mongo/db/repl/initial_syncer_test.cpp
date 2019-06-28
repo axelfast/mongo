@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -4541,7 +4541,7 @@ TEST_F(InitialSyncerTest, InitialSyncerDoesNotCallUpgradeNonReplicatedUniqueInde
     // when reconstructPreparedTransactions uses DBDirectClient to call into ServiceEntryPoint.
     FailPointEnableBlock skipReconstructPreparedTransactions("skipReconstructPreparedTransactions");
 
-    // In MongoDB 4.2, upgradeNonReplicatedUniqueIndexes will only be called if fCV is 4.2.
+    // In MongerDB 4.2, upgradeNonReplicatedUniqueIndexes will only be called if fCV is 4.2.
     doSuccessfulInitialSyncWithOneBatch(false);
 
     LockGuard lock(_storageInterfaceWorkDoneMutex);

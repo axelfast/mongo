@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -33,7 +33,7 @@ func init() {
 	})
 }
 
-func getRestoreWithArgs(additionalArgs ...string) (*MongoRestore, error) {
+func getRestoreWithArgs(additionalArgs ...string) (*MongerRestore, error) {
 	opts, err := ParseOptions(append(testutil.GetBareArgs(), additionalArgs...), "", "")
 	if err != nil {
 		return nil, fmt.Errorf("error parsing args: %v", err)
@@ -47,14 +47,14 @@ func getRestoreWithArgs(additionalArgs ...string) (*MongoRestore, error) {
 	return restore, nil
 }
 
-func TestMongorestore(t *testing.T) {
+func TestMongerrestore(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 	_, err := testutil.GetBareSession()
 	if err != nil {
 		t.Fatalf("No server available")
 	}
 
-	Convey("With a test MongoRestore", t, func() {
+	Convey("With a test MongerRestore", t, func() {
 		args := []string{
 			NumParallelCollectionsOption, "1",
 			NumInsertionWorkersOption, "1",
@@ -99,7 +99,7 @@ func TestMongorestore(t *testing.T) {
 	})
 }
 
-func TestMongorestoreCantPreserveUUID(t *testing.T) {
+func TestMongerrestoreCantPreserveUUID(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 	session, err := testutil.GetBareSession()
 	if err != nil {
@@ -127,7 +127,7 @@ func TestMongorestoreCantPreserveUUID(t *testing.T) {
 	})
 }
 
-func TestMongorestorePreserveUUID(t *testing.T) {
+func TestMongerrestorePreserveUUID(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 	session, err := testutil.GetBareSession()
 	if err != nil {
@@ -141,7 +141,7 @@ func TestMongorestorePreserveUUID(t *testing.T) {
 	// From mongerrestore/testdata/oplogdump/db1/c1.metadata.json
 	originalUUID := "699f503df64b4aa8a484a8052046fa3a"
 
-	Convey("With a test MongoRestore", t, func() {
+	Convey("With a test MongerRestore", t, func() {
 		c1 := session.Database("db1").Collection("c1")
 		c1.Drop(nil)
 
@@ -219,7 +219,7 @@ func TestMongorestorePreserveUUID(t *testing.T) {
 	})
 }
 
-// generateTestData creates the files used in TestMongorestoreMIOSOE
+// generateTestData creates the files used in TestMongerrestoreMIOSOE
 func generateTestData() error {
 	// If file exists already, don't both regenerating it.
 	if _, err := os.Stat(mioSoeFile); err == nil {
@@ -273,7 +273,7 @@ func generateTestData() error {
 }
 
 // test --maintainInsertionOrder and --stopOnError behavior
-func TestMongorestoreMIOSOE(t *testing.T) {
+func TestMongerrestoreMIOSOE(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 
 	if err := generateTestData(); err != nil {

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2019-present.
+// Copyright (C) MongerDB, Inc. 2019-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -26,7 +26,7 @@ type gfsFile struct {
 	ChunkSize  int             `bson:"chunkSize"`
 
 	// Storage required for reading and writing GridFS files
-	mf *MongoFiles
+	mf *MongerFiles
 }
 
 // Struct representing the metadata associated with a GridFS files collection document.
@@ -34,17 +34,17 @@ type gfsFileMetadata struct {
 	ContentType string `bson:"contentType,omitempty"`
 }
 
-func newGfsFile(ID interface{}, name string, mf *MongoFiles) (*gfsFile, error) {
+func newGfsFile(ID interface{}, name string, mf *MongerFiles) (*gfsFile, error) {
 	if ID == nil || mf == nil {
-		return nil, fmt.Errorf("invalid gfsFile arguments, one of ID (%v) or MongoFiles (%v) nil", ID, mf)
+		return nil, fmt.Errorf("invalid gfsFile arguments, one of ID (%v) or MongerFiles (%v) nil", ID, mf)
 	}
 
 	return &gfsFile{Name: name, ID: ID, mf: mf}, nil
 }
 
-func newGfsFileFromCursor(cursor *monger.Cursor, mf *MongoFiles) (*gfsFile, error) {
+func newGfsFileFromCursor(cursor *monger.Cursor, mf *MongerFiles) (*gfsFile, error) {
 	if mf == nil {
-		return nil, fmt.Errorf("invalid gfsFile argument, MongoFiles nil")
+		return nil, fmt.Errorf("invalid gfsFile argument, MongerFiles nil")
 	}
 
 	var out gfsFile

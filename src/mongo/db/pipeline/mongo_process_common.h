@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,12 +37,12 @@
 namespace monger {
 
 /**
- * MongoProcessCommon provides base implementations of any MongoProcessInterface methods whose code
+ * MongerProcessCommon provides base implementations of any MongerProcessInterface methods whose code
  * is largely identical on mongerD and mongerS.
  */
-class MongoProcessCommon : public MongoProcessInterface {
+class MongerProcessCommon : public MongerProcessInterface {
 public:
-    virtual ~MongoProcessCommon() = default;
+    virtual ~MongerProcessCommon() = default;
 
     /**
      * Returns true if the field names of 'keyPattern' are exactly those in 'uniqueKeyPaths', and
@@ -77,7 +77,7 @@ protected:
     /**
      * Returns a BSONObj representing a report of the operation which is currently being
      * executed by the supplied client. This method is called by the getCurrentOps method of
-     * MongoProcessCommon to delegate to the mongerS- or mongerD- specific implementation.
+     * MongerProcessCommon to delegate to the mongerS- or mongerD- specific implementation.
      */
     virtual BSONObj _reportCurrentOpForClient(OperationContext* opCtx,
                                               Client* client,

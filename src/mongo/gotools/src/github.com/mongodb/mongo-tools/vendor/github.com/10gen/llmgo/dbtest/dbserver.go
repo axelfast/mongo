@@ -13,7 +13,7 @@ import (
 	"gopkg.in/tomb.v2"
 )
 
-// DBServer controls a MongoDB server process to be used within test suites.
+// DBServer controls a MongerDB server process to be used within test suites.
 //
 // The test server is started when Session is called the first time and should
 // remain running for the duration of all tests, with the Wipe method being
@@ -161,7 +161,7 @@ func (dbs *DBServer) checkSessions() {
 
 // Wipe drops all created databases and their data.
 //
-// The MongoDB server remains running if it was prevoiusly running,
+// The MongerDB server remains running if it was prevoiusly running,
 // or stopped if it was previously stopped.
 //
 // All database sessions must be closed before or while the Wipe method

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,18 +39,18 @@ namespace monger {
 /**
  * Test fixture class for tests that use the "ephemeralForTest" storage engine.
  */
-class ServiceContextMongoDTest : public ServiceContextTest {
+class ServiceContextMongerDTest : public ServiceContextTest {
 protected:
     enum class RepairAction { kNoRepair, kRepair };
 
-    ServiceContextMongoDTest();
+    ServiceContextMongerDTest();
 
     /**
-     * Build a ServiceContextMongoDTest, using the named storage engine.
+     * Build a ServiceContextMongerDTest, using the named storage engine.
      */
-    explicit ServiceContextMongoDTest(std::string engine);
-    ServiceContextMongoDTest(std::string engine, RepairAction repair);
-    virtual ~ServiceContextMongoDTest();
+    explicit ServiceContextMongerDTest(std::string engine);
+    ServiceContextMongerDTest(std::string engine, RepairAction repair);
+    virtual ~ServiceContextMongerDTest();
 
 private:
     struct {

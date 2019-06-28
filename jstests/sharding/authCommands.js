@@ -47,7 +47,7 @@
     testDB.createUser({user: rwUser, pwd: password, roles: jsTest.basicUserRoles});
     testDB.createUser({user: roUser, pwd: password, roles: jsTest.readOnlyUserRoles});
 
-    var authenticatedConn = new Mongo(mongers.host);
+    var authenticatedConn = new Monger(mongers.host);
     authenticatedConn.getDB('admin').auth(rwUser, password);
 
     // Add user to shards to prevent localhost connections from having automatic full access

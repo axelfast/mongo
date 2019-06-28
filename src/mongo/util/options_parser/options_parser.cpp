@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -546,7 +546,7 @@ std::string runYAMLRestExpansion(StringData url, Seconds timeout) {
 
     auto client = HttpClient::create();
     uassert(
-        ErrorCodes::OperationFailed, "No HTTP Client available in this build of MongoDB", client);
+        ErrorCodes::OperationFailed, "No HTTP Client available in this build of MongerDB", client);
 
     // Expect https:// URLs unless we can be sure we're talking to localhost.
     if (!url.startsWith("https://")) {

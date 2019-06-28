@@ -154,7 +154,7 @@ load("jstests/libs/fixture_helpers.js");
     // Test on collection with no indexes.  The local database is not accessible via mongers.
     //
 
-    if (!FixtureHelpers.isMongos(db)) {
+    if (!FixtureHelpers.isMongers(db)) {
         let localColl = db.getSiblingDB("local").getCollection("list_indexes1");
         localColl.drop();
         assert.commandWorked(

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -57,7 +57,7 @@ struct URITestCase {
     ConnectionString::ConnectionType type;
     std::string setname;
     size_t numservers;
-    MongoURI::OptionsMap options;
+    MongerURI::OptionsMap options;
     std::string database;
     ConnectSSLMode sslMode;
 };
@@ -73,12 +73,12 @@ struct InvalidURITestCase {
 
 void compareOptions(size_t lineNumber,
                     StringData uri,
-                    const MongoURI::OptionsMap& connection,
-                    const MongoURI::OptionsMap& expected) {
-    std::vector<std::pair<MongoURI::CaseInsensitiveString, std::string>> options(begin(connection),
+                    const MongerURI::OptionsMap& connection,
+                    const MongerURI::OptionsMap& expected) {
+    std::vector<std::pair<MongerURI::CaseInsensitiveString, std::string>> options(begin(connection),
                                                                                  end(connection));
     std::sort(begin(options), end(options));
-    std::vector<std::pair<MongoURI::CaseInsensitiveString, std::string>> expectedOptions(
+    std::vector<std::pair<MongerURI::CaseInsensitiveString, std::string>> expectedOptions(
         begin(expected), end(expected));
     std::sort(begin(expectedOptions), end(expectedOptions));
 
@@ -596,7 +596,7 @@ std::string returnStringFromElementOrNull(BSONElement element) {
 void testValidURIFormat(URITestCase testCase) {
     unittest::log() << "Testing URI: " << testCase.URI << '\n';
     std::string errMsg;
-    const auto cs_status = MongoURI::parse(testCase.URI);
+    const auto cs_status = MongerURI::parse(testCase.URI);
     ASSERT_OK(cs_status);
     auto result = cs_status.getValue();
     ASSERT_EQ(testCase.uname, result.getUser());
@@ -608,7 +608,7 @@ void testValidURIFormat(URITestCase testCase) {
     ASSERT_EQ(testCase.database, result.getDatabase());
 }
 
-TEST(MongoURI, GoodTrickyURIs) {
+TEST(MongerURI, GoodTrickyURIs) {
     const size_t numCases = sizeof(validCases) / sizeof(validCases[0]);
 
     for (size_t i = 0; i != numCases; ++i) {
@@ -617,13 +617,13 @@ TEST(MongoURI, GoodTrickyURIs) {
     }
 }
 
-TEST(MongoURI, InvalidURIs) {
+TEST(MongerURI, InvalidURIs) {
     const size_t numCases = sizeof(invalidCases) / sizeof(invalidCases[0]);
 
     for (size_t i = 0; i != numCases; ++i) {
         const InvalidURITestCase testCase = invalidCases[i];
         unittest::log() << "Testing URI: " << testCase.URI << '\n';
-        auto cs_status = MongoURI::parse(testCase.URI);
+        auto cs_status = MongerURI::parse(testCase.URI);
         ASSERT_NOT_OK(cs_status);
         if (testCase.code) {
             ASSERT_EQUALS(*testCase.code, cs_status.getStatus());
@@ -634,7 +634,7 @@ TEST(MongoURI, InvalidURIs) {
 TEST_F(ServiceContextTest, ValidButBadURIsFailToConnect) {
     // "invalid" is a TLD that cannot exit on the public internet (see rfc2606). It should always
     // parse as a valid URI, but connecting should always fail.
-    auto sw_uri = MongoURI::parse("mongerdb://user:pass@hostname.invalid:12345");
+    auto sw_uri = MongerURI::parse("mongerdb://user:pass@hostname.invalid:12345");
     ASSERT_OK(sw_uri.getStatus());
     auto uri = sw_uri.getValue();
     ASSERT_TRUE(uri.isValid());
@@ -644,8 +644,8 @@ TEST_F(ServiceContextTest, ValidButBadURIsFailToConnect) {
     ASSERT_EQ(dbclient, static_cast<decltype(dbclient)>(nullptr));
 }
 
-TEST(MongoURI, CloneURIForServer) {
-    auto sw_uri = MongoURI::parse(
+TEST(MongerURI, CloneURIForServer) {
+    auto sw_uri = MongerURI::parse(
         "mongerdb://localhost:27017,localhost:27018,localhost:27019/admin?replicaSet=rs1&ssl=true");
     ASSERT_OK(sw_uri.getStatus());
 
@@ -667,12 +667,12 @@ TEST(MongoURI, CloneURIForServer) {
 }
 
 /**
- * These tests come from the Mongo Uri Specifications for the drivers found at:
+ * These tests come from the Monger Uri Specifications for the drivers found at:
  * https://github.com/mongerdb/specifications/tree/master/source/connection-string/tests
  * They have been altered as the Drivers specification is somewhat different from the shell
  * implementation.
  */
-TEST(MongoURI, specTests) {
+TEST(MongerURI, specTests) {
     const std::string files[] = {
         "monger-uri-valid-auth.json",
         "monger-uri-options.json",
@@ -705,7 +705,7 @@ TEST(MongoURI, specTests) {
                 // This uri string is invalid --> parse the uri and ensure it fails
                 const InvalidURITestCase testCase = InvalidURITestCase{uri};
                 unittest::log() << "Testing URI: " << testCase.URI << '\n';
-                auto cs_status = MongoURI::parse(testCase.URI);
+                auto cs_status = MongerURI::parse(testCase.URI);
                 ASSERT_NOT_OK(cs_status);
             } else {
                 // This uri is valid -- > parse the remaining necessary fields
@@ -735,7 +735,7 @@ TEST(MongoURI, specTests) {
                 std::string setName;
                 const auto optionsElement = test.getField("options");
                 ASSERT_FALSE(optionsElement.eoo());
-                MongoURI::OptionsMap options;
+                MongerURI::OptionsMap options;
                 if (optionsElement.type() != jstNULL) {
                     ASSERT_EQ(optionsElement.type(), Object);
                     const auto optionsObj = optionsElement.Obj();
@@ -767,7 +767,7 @@ TEST(MongoURI, specTests) {
     }
 }
 
-TEST(MongoURI, srvRecordTest) {
+TEST(MongerURI, srvRecordTest) {
     enum Expectation : bool { success = true, failure = false };
     const struct {
         int lineNumber;
@@ -776,7 +776,7 @@ TEST(MongoURI, srvRecordTest) {
         std::string password;
         std::string database;
         std::vector<HostAndPort> hosts;
-        std::map<MongoURI::CaseInsensitiveString, std::string> options;
+        std::map<MongerURI::CaseInsensitiveString, std::string> options;
         Expectation expectation;
     } tests[] = {
         // Test some non-SRV URIs to make sure that they do not perform expansions
@@ -986,7 +986,7 @@ TEST(MongoURI, srvRecordTest) {
     };
 
     for (const auto& test : tests) {
-        auto rs = MongoURI::parse(test.uri);
+        auto rs = MongerURI::parse(test.uri);
         if (test.expectation == failure) {
             ASSERT_FALSE(rs.getStatus().isOK()) << "Failing URI: " << test.uri
                                                 << " data on line: " << test.lineNumber;
@@ -1023,7 +1023,7 @@ TEST(MongoURI, srvRecordTest) {
  * Checks that redacting various secret info from URIs produces actually redacted URIs.
  * Also checks that SRV URI's don't turn into non-SRV URIs after redaction.
  */
-TEST(MongoURI, Redact) {
+TEST(MongerURI, Redact) {
     constexpr auto goodWithDBName = "mongerdb://admin@localhost/admin"_sd;
     constexpr auto goodWithoutDBName = "mongerdb://admin@localhost"_sd;
     constexpr auto goodWithOnlyDBAndHost = "mongerdb://localhost/admin"_sd;
@@ -1040,13 +1040,13 @@ TEST(MongoURI, Redact) {
     };
 
     for (const auto& testCase : testCases) {
-        ASSERT_TRUE(MongoURI::isMongoURI(testCase.first));
-        ASSERT_EQ(MongoURI::redact(testCase.first), testCase.second);
+        ASSERT_TRUE(MongerURI::isMongerURI(testCase.first));
+        ASSERT_EQ(MongerURI::redact(testCase.first), testCase.second);
     }
 
     const auto toRedactSRV = "mongerdb+srv://admin:password@localhost/admin?secret=foo"_sd;
     const auto redactedSRV = "mongerdb+srv://admin@localhost/admin"_sd;
-    ASSERT_EQ(MongoURI::redact(toRedactSRV), redactedSRV);
+    ASSERT_EQ(MongerURI::redact(toRedactSRV), redactedSRV);
 }
 
 }  // namespace

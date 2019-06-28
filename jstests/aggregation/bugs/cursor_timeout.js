@@ -29,7 +29,7 @@
             clientCursorMonitorFrequencySecs: cursorMonitorFrequencySecs,
         }
     };
-    const conn = MongoRunner.runMongod(options);
+    const conn = MongerRunner.runMongerd(options);
     assert.neq(null, conn, 'mongerd was unable to start up with options: ' + tojson(options));
 
     const testDB = conn.getDB('test');
@@ -126,5 +126,5 @@
         },
     ]);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

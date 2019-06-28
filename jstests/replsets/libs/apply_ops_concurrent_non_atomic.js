@@ -94,7 +94,7 @@ var ApplyOpsConcurrentNonAtomicTest = function(options) {
     function insertFunction(options) {
         'use strict';
 
-        const coll = db.getMongo().getCollection(options.ns);
+        const coll = db.getMonger().getCollection(options.ns);
         const numOps = options.numOps;
         const id = options.id;
 

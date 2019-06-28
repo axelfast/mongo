@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -63,7 +63,7 @@ FTDCController* getGlobalFTDCController() {
 }
 
 /**
- * Expose diagnosticDataCollectionDirectoryPath set parameter to specify the MongoD and MongoS FTDC
+ * Expose diagnosticDataCollectionDirectoryPath set parameter to specify the MongerD and MongerS FTDC
  * path.
  */
 synchronized_value<boost::filesystem::path> ftdcDirectoryPathParameter;
@@ -197,7 +197,7 @@ void startFTDC(boost::filesystem::path& path,
                RegisterCollectorsFunction registerCollectors) {
     FTDCConfig config;
     config.period = Milliseconds(ftdcStartupParams.periodMillis.load());
-    // Only enable FTDC if our caller says to enable FTDC, MongoS may not have a valid path to write
+    // Only enable FTDC if our caller says to enable FTDC, MongerS may not have a valid path to write
     // files to so update the diagnosticDataCollectionEnabled set parameter to reflect that.
     ftdcStartupParams.enabled.store(startupMode == FTDCStartMode::kStart &&
                                     ftdcStartupParams.enabled.load());
@@ -224,7 +224,7 @@ void startFTDC(boost::filesystem::path& path,
     // hurt ftdc compression efficiency, because its output varies depending on the list of active
     // migrations.
     // "timing" is filtered out because it triggers frequent schema changes.
-    // TODO: do we need to enable "sharding" on MongoS?
+    // TODO: do we need to enable "sharding" on MongerS?
     controller->addPeriodicCollector(std::make_unique<FTDCSimpleInternalCommandCollector>(
         "serverStatus",
         "serverStatus",

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -22,21 +22,21 @@ import (
 
 // MONGODBCR is the mechanism name for MONGODB-CR.
 //
-// The MONGODB-CR authentication mechanism is deprecated in MongoDB 4.0.
+// The MONGODB-CR authentication mechanism is deprecated in MongerDB 4.0.
 const MONGODBCR = "MONGODB-CR"
 
-func newMongoDBCRAuthenticator(cred *Cred) (Authenticator, error) {
-	return &MongoDBCRAuthenticator{
+func newMongerDBCRAuthenticator(cred *Cred) (Authenticator, error) {
+	return &MongerDBCRAuthenticator{
 		DB:       cred.Source,
 		Username: cred.Username,
 		Password: cred.Password,
 	}, nil
 }
 
-// MongoDBCRAuthenticator uses the MONGODB-CR algorithm to authenticate a connection.
+// MongerDBCRAuthenticator uses the MONGODB-CR algorithm to authenticate a connection.
 //
-// The MONGODB-CR authentication mechanism is deprecated in MongoDB 4.0.
-type MongoDBCRAuthenticator struct {
+// The MONGODB-CR authentication mechanism is deprecated in MongerDB 4.0.
+type MongerDBCRAuthenticator struct {
 	DB       string
 	Username string
 	Password string
@@ -44,8 +44,8 @@ type MongoDBCRAuthenticator struct {
 
 // Auth authenticates the connection.
 //
-// The MONGODB-CR authentication mechanism is deprecated in MongoDB 4.0.
-func (a *MongoDBCRAuthenticator) Auth(ctx context.Context, desc description.Server, rw wiremessage.ReadWriter) error {
+// The MONGODB-CR authentication mechanism is deprecated in MongerDB 4.0.
+func (a *MongerDBCRAuthenticator) Auth(ctx context.Context, desc description.Server, rw wiremessage.ReadWriter) error {
 
 	db := a.DB
 	if db == "" {
@@ -85,7 +85,7 @@ func (a *MongoDBCRAuthenticator) Auth(ctx context.Context, desc description.Serv
 	return nil
 }
 
-func (a *MongoDBCRAuthenticator) createKey(nonce string) string {
+func (a *MongerDBCRAuthenticator) createKey(nonce string) string {
 	h := md5.New()
 
 	_, _ = io.WriteString(h, nonce)

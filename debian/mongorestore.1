@@ -2,7 +2,7 @@
 .
 .TH "MONGORESTORE" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongerrestore \- MongoDB Data Restoration Tool
+mongerrestore \- MongerDB Data Restoration Tool
 .
 .nr rst2man-indent-level 0
 .
@@ -79,7 +79,7 @@ same value \fB_id\fP field as the to\-be\-restored documents,
 \fBNOTE:\fP
 .INDENT 0.0
 .INDENT 3.5
-Starting in MongoDB 2.6, creating indexes will error if an
+Starting in MongerDB 2.6, creating indexes will error if an
 index key in an existing document exceeds the limit\&. See
 2.6\-index\-key\-length\-incompatibility for more information and
 solution.
@@ -102,7 +102,7 @@ data stores.
 \fI\%mongerrestore\fP does not restore the \fBsystem.profile\fP collection data.
 .SH REQUIRED ACCESS
 .sp
-To restore data to a MongoDB deployment that has access control enabled, the \fBrestore\fP role provides
+To restore data to a MongerDB deployment that has access control enabled, the \fBrestore\fP role provides
 access to restore any database if the backup data does not include
 \fBsystem.profile\fP collection data.
 .sp
@@ -115,9 +115,9 @@ documents. As such, the user requires additional privileges to perform
 actions on the \fBsystem.profile\fP
 collection for a database.
 .sp
-As of MongoDB 3.2.11, you can run \fI\%mongerrestore\fP with
+As of MongerDB 3.2.11, you can run \fI\%mongerrestore\fP with
 \fI\%\-\-oplogReplay\fP if you have the
-\fBrestore\fP role. To replay the oplog on versions of MongoDB
+\fBrestore\fP role. To replay the oplog on versions of MongerDB
 3.2.10 and earlier, you must create a
 user\-defined role that has
 \fBanyAction\fP on resource\-anyresource and grant only
@@ -227,7 +227,7 @@ URI connection string)
 \fIDefault\fP: localhost:27017
 .sp
 Specifies a resolvable hostname for the \fBmongerd\fP to which to
-connect. By default, the \fBmongerrestore\fP attempts to connect to a MongoDB
+connect. By default, the \fBmongerrestore\fP attempts to connect to a MongerDB
 instance running on the localhost on port number \fB27017\fP\&.
 .sp
 To connect to a replica set, specify the
@@ -244,7 +244,7 @@ the following:
 .UNINDENT
 .UNINDENT
 .sp
-You can always connect directly to a single MongoDB instance by
+You can always connect directly to a single MongerDB instance by
 specifying the host and port number directly.
 .sp
 Changed in version 3.0.0: If you use IPv6 and use the \fB<address>:<port>\fP format, you must
@@ -257,7 +257,7 @@ brackets (e.g. \fB[<address>]\fP).
 .B \-\-port <port>
 \fIDefault\fP: 27017
 .sp
-Specifies the TCP port on which the MongoDB instance listens for
+Specifies the TCP port on which the MongerDB instance listens for
 client connections.
 .UNINDENT
 .INDENT 0.0
@@ -269,7 +269,7 @@ New in version 2.6.
 Enables connection to a \fBmongerd\fP or \fBmongers\fP that has
 TLS/SSL support enabled.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -306,7 +306,7 @@ intrusion is a possibility.
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -325,7 +325,7 @@ to a \fBmongerd\fP or \fBmongers\fP that has
 \fBCAFile\fP enabled \fIwithout\fP
 \fBallowConnectionsWithoutCertificates\fP\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -344,7 +344,7 @@ If the private key in the PEM file is encrypted and you do not specify
 the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmongerrestore\fP will prompt for a passphrase. See
 ssl\-certificate\-password\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -358,7 +358,7 @@ Specifies the \fB\&.pem\fP file that contains the Certificate Revocation
 List. Specify the file name of the \fB\&.pem\fP file using relative or
 absolute paths.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -370,10 +370,10 @@ New in version 2.6.
 .sp
 Bypasses the validation checks for server certificates and allows
 the use of invalid certificates. When using the
-\fBallowInvalidCertificates\fP setting, MongoDB logs as a
+\fBallowInvalidCertificates\fP setting, MongerDB logs as a
 warning the use of the invalid certificate.
 .sp
-Starting in MongoDB 4.0, if you specify
+Starting in MongerDB 4.0, if you specify
 \fB\-\-sslAllowInvalidCertificates\fP or \fBssl.allowInvalidCertificates:
 true\fP when using x.509 authentication, an invalid certificate is
 only sufficient to establish a TLS/SSL connection but is
@@ -400,7 +400,7 @@ well as to foreign processes posing as valid
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -411,10 +411,10 @@ New in version 3.0.
 
 .sp
 Disables the validation of the hostnames in TLS/SSL certificates. Allows
-\fBmongerrestore\fP to connect to MongoDB instances even if the hostname in their
+\fBmongerrestore\fP to connect to MongerDB instances even if the hostname in their
 certificates do not match the specified hostname.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -432,7 +432,7 @@ the \fI\%\-\-sslFIPSMode\fP option.
 .INDENT 7.0
 .INDENT 3.5
 FIPS\-compatible TLS/SSL is
-available only in \fI\%MongoDB Enterprise\fP\&. See
+available only in \fI\%MongerDB Enterprise\fP\&. See
 /tutorial/configure\-fips for more information.
 .UNINDENT
 .UNINDENT
@@ -440,14 +440,14 @@ available only in \fI\%MongoDB Enterprise\fP\&. See
 .INDENT 0.0
 .TP
 .B \-\-username <username>, \-u <username>
-Specifies a username with which to authenticate to a MongoDB database
+Specifies a username with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-password\fP and
 \fB\-\-authenticationDatabase\fP options.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password <password>, \-p <password>
-Specifies a password with which to authenticate to a MongoDB database
+Specifies a password with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-username\fP and
 \fB\-\-authenticationDatabase\fP options.
 .sp
@@ -475,10 +475,10 @@ See user\-authentication\-database\&.
 Specifies the authentication mechanism the \fBmongerrestore\fP instance uses to
 authenticate to the \fBmongerd\fP or \fBmongers\fP\&.
 .sp
-Changed in version 4.0: MongoDB removes support for the deprecated MongoDB
+Changed in version 4.0: MongerDB removes support for the deprecated MongerDB
 Challenge\-Response (\fBMONGODB\-CR\fP) authentication mechanism.
 .sp
-MongoDB adds support for SCRAM mechanism using the SHA\-256 hash
+MongerDB adds support for SCRAM mechanism using the SHA\-256 hash
 function (\fBSCRAM\-SHA\-256\fP).
 
 .TS
@@ -514,14 +514,14 @@ _
 T{
 MONGODB\-X509
 T}	T{
-MongoDB TLS/SSL certificate authentication.
+MongerDB TLS/SSL certificate authentication.
 T}
 _
 T{
 GSSAPI (Kerberos)
 T}	T{
 External authentication using Kerberos. This mechanism is
-available only in \fI\%MongoDB Enterprise\fP\&.
+available only in \fI\%MongerDB Enterprise\fP\&.
 T}
 _
 T{
@@ -530,7 +530,7 @@ T}	T{
 External authentication using LDAP. You can also use \fBPLAIN\fP
 for authenticating in\-database users. \fBPLAIN\fP transmits
 passwords in plain text. This mechanism is available only in
-\fI\%MongoDB Enterprise\fP\&.
+\fI\%MongerDB Enterprise\fP\&.
 T}
 _
 .TE
@@ -544,7 +544,7 @@ New in version 2.6.
 Specify the name of the service using GSSAPI/Kerberos\&. Only required if the service does not use the
 default name of \fBmongerdb\fP\&.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -555,7 +555,7 @@ New in version 2.6.
 Specify the hostname of a service using GSSAPI/Kerberos\&. \fIOnly\fP required if the hostname of a machine does
 not match the hostname resolved by DNS.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -565,7 +565,7 @@ If the database does not exist, \fBmongerrestore\fP creates the
 database. If you do not specify a \fB<db>\fP, \fBmongerrestore\fP
 creates new databases that correspond to the databases where data
 originated and data may be overwritten. Use this option to restore data
-into a MongoDB instance that already has data.
+into a MongerDB instance that already has data.
 .sp
 \fI\%\-\-db\fP does \fInot\fP control which BSON files
 \fBmongerrestore\fP restores. You must use the
@@ -578,7 +578,7 @@ limit that restored data.
 Specifies a single collection for \fBmongerrestore\fP to restore. If
 you do not specify \fI\%\-\-collection\fP, \fBmongerrestore\fP takes
 the collection name from the input filename. If the input file has an
-extension, MongoDB omits the extension of the file from the collection
+extension, MongerDB omits the extension of the file from the collection
 name.
 .UNINDENT
 .INDENT 0.0
@@ -1043,7 +1043,7 @@ mongerrestore \-\-nsInclude \(aqtransactions.*\(aq \-\-nsExclude \(aqtransaction
 New in version 3.4.
 
 .sp
-MongoDB 3.4 added the \fI\%\-\-nsFrom\fP and
+MongerDB 3.4 added the \fI\%\-\-nsFrom\fP and
 \fI\%\-\-nsTo\fP options, which enable you to
 change the namespace of a collection that you are restoring.
 \fI\%\-\-nsFrom\fP and \fI\%\-\-nsTo\fP support using asterisks as wild cards \fIand\fP
@@ -1095,7 +1095,7 @@ In the following example, \fI\%mongerrestore\fP restores a
 database dump located at \fB/opt/backup/mongerdump\-2011\-10\-24\fP, to a
 database running on port \fB37017\fP on the host
 \fBmongerdb1.example.net\fP\&. The \fI\%mongerrestore\fP command
-authenticates to the MongoDB instance using the username \fBuser\fP and
+authenticates to the MongerDB instance using the username \fBuser\fP and
 the password \fBpass\fP, as follows:
 .INDENT 0.0
 .INDENT 3.5
@@ -1193,7 +1193,7 @@ mongerrestore \-\-gzip \-\-archive=test.20150715.gz \-\-db test
 .UNINDENT
 .UNINDENT
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

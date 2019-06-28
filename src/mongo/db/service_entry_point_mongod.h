@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,9 +36,9 @@ namespace monger {
 /**
  * The entry point into mongerd. Just a wrapper around assembleResponse.
  */
-class ServiceEntryPointMongod final : public ServiceEntryPointImpl {
-    ServiceEntryPointMongod(const ServiceEntryPointMongod&) = delete;
-    ServiceEntryPointMongod& operator=(const ServiceEntryPointMongod&) = delete;
+class ServiceEntryPointMongerd final : public ServiceEntryPointImpl {
+    ServiceEntryPointMongerd(const ServiceEntryPointMongerd&) = delete;
+    ServiceEntryPointMongerd& operator=(const ServiceEntryPointMongerd&) = delete;
 
 public:
     using ServiceEntryPointImpl::ServiceEntryPointImpl;

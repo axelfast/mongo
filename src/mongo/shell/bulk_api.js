@@ -767,14 +767,14 @@ var _bulk_api_module = (function() {
             },
 
             collation: function(collationSpec) {
-                if (!collection.getMongo().hasWriteCommands()) {
+                if (!collection.getMonger().hasWriteCommands()) {
                     throw new Error(
                         "cannot use collation if server does not support write commands");
                 }
 
-                if (collection.getMongo().writeMode() !== "commands") {
+                if (collection.getMonger().writeMode() !== "commands") {
                     throw new Error("write mode must be 'commands' in order to use collation, " +
-                                    "but found write mode: " + collection.getMongo().writeMode());
+                                    "but found write mode: " + collection.getMonger().writeMode());
                 }
 
                 currentOp.collation = collationSpec;
@@ -782,14 +782,14 @@ var _bulk_api_module = (function() {
             },
 
             arrayFilters: function(filters) {
-                if (!collection.getMongo().hasWriteCommands()) {
+                if (!collection.getMonger().hasWriteCommands()) {
                     throw new Error(
                         "cannot use arrayFilters if server does not support write commands");
                 }
 
-                if (collection.getMongo().writeMode() !== "commands") {
+                if (collection.getMonger().writeMode() !== "commands") {
                     throw new Error("write mode must be 'commands' in order to use arrayFilters, " +
-                                    "but found write mode: " + collection.getMongo().writeMode());
+                                    "but found write mode: " + collection.getMonger().writeMode());
                 }
 
                 currentOp.arrayFilters = filters;
@@ -898,8 +898,8 @@ var _bulk_api_module = (function() {
             {
                 const kWireVersionSupportingRetryableWrites = 6;
                 const serverSupportsRetryableWrites =
-                    coll.getMongo().getMinWireVersion() <= kWireVersionSupportingRetryableWrites &&
-                    kWireVersionSupportingRetryableWrites <= coll.getMongo().getMaxWireVersion();
+                    coll.getMonger().getMinWireVersion() <= kWireVersionSupportingRetryableWrites &&
+                    kWireVersionSupportingRetryableWrites <= coll.getMonger().getMaxWireVersion();
 
                 const session = collection.getDB().getSession();
                 if (serverSupportsRetryableWrites && session.getOptions().shouldRetryWrites() &&
@@ -942,10 +942,10 @@ var _bulk_api_module = (function() {
                     _legacyOp.operation = addIdIfNeeded(_legacyOp.operation);
                 }
 
-                collection.getMongo().insert(
+                collection.getMonger().insert(
                     collection.getFullName(), _legacyOp.operation, ordered);
             } else if (_legacyOp.batchType == UPDATE) {
-                collection.getMongo().update(collection.getFullName(),
+                collection.getMonger().update(collection.getFullName(),
                                              _legacyOp.operation.q,
                                              _legacyOp.operation.u,
                                              _legacyOp.operation.upsert,
@@ -953,7 +953,7 @@ var _bulk_api_module = (function() {
             } else if (_legacyOp.batchType == REMOVE) {
                 var single = Boolean(_legacyOp.operation.limit);
 
-                collection.getMongo().remove(
+                collection.getMonger().remove(
                     collection.getFullName(), _legacyOp.operation.q, single);
             }
         };
@@ -1162,13 +1162,13 @@ var _bulk_api_module = (function() {
             // Total number of batches to execute
             var totalNumberToExecute = batches.length;
 
-            var useWriteCommands = collection.getMongo().useWriteCommands();
+            var useWriteCommands = collection.getMonger().useWriteCommands();
 
             // Execute all the batches
             for (var i = 0; i < batches.length; i++) {
                 // Execute the batch
-                if (collection.getMongo().hasWriteCommands() &&
-                    collection.getMongo().writeMode() == "commands") {
+                if (collection.getMonger().hasWriteCommands() &&
+                    collection.getMonger().writeMode() == "commands") {
                     executeBatch(batches[i]);
                 } else {
                     executeBatchWithLegacyOps(batches[i]);

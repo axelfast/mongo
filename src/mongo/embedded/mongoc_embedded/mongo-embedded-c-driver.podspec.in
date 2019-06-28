@@ -2,16 +2,16 @@ Pod::Spec.new do |s|
 
   s.name         = "monger-embedded-c-driver"
   s.version      = "@VERSION@"
-  s.summary      = "MongoDB C Driver"
+  s.summary      = "MongerDB C Driver"
 
   s.description  = <<-DESC
     monger-c-driver is a project that includes two libraries:
-    libmongerc, a client library written in C for MongoDB.
+    libmongerc, a client library written in C for MongerDB.
     libbson, a library providing useful routines related to building, parsing, and iterating BSON documents.
                    DESC
 
   s.homepage     = "https://www.mongerdb.com"
-  s.author       = { "MongoDB, Inc" => "cocoapods@mongerdb.com" }
+  s.author       = { "MongerDB, Inc" => "cocoapods@mongerdb.com" }
 
   s.license      = { :type => "Apache License, Version 2.0", :file => "iPhoneOS/Frameworks/mongerc.framework/COPYING" }
 

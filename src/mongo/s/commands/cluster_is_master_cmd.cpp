@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -97,7 +97,7 @@ public:
 
             swParseClientMetadata.getValue().get().logClientMetadata(opCtx->getClient());
 
-            swParseClientMetadata.getValue().get().setMongoSMetadata(
+            swParseClientMetadata.getValue().get().setMongerSMetadata(
                 getHostNameCachedAndPort(),
                 opCtx->getClient()->clientAddress(true),
                 VersionInfoInterface::instance().version());
@@ -115,7 +115,7 @@ public:
         result.append("logicalSessionTimeoutMinutes", localLogicalSessionTimeoutMinutes);
         result.appendNumber("connectionId", opCtx->getClient()->getConnectionId());
 
-        // Mongos tries to keep exactly the same version range of the server for which
+        // Mongers tries to keep exactly the same version range of the server for which
         // it is compiled.
         result.append("maxWireVersion", WireSpec::instance().incomingExternalClient.maxWireVersion);
         result.append("minWireVersion", WireSpec::instance().incomingExternalClient.minWireVersion);

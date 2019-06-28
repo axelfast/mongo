@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -235,7 +235,7 @@ TEST(FTDCPerfCollector, TestBadCollectorInput) {
     }
 }
 
-// Test all the different counter types we use in the MongoDB code
+// Test all the different counter types we use in the MongerDB code
 TEST(FTDCPerfCollector, TestCounterTypes) {
 
     PerfCounterCollection collection;
@@ -334,7 +334,7 @@ TEST(FTDCPerfCollector, TestMultipleNestedCounterGroups) {
     }
 }
 
-// Test Counters we use in MongoDB
+// Test Counters we use in MongerDB
 TEST(FTDCPerfCollector, TestLocalCounters) {
 
     PerfCounterCollection collection;

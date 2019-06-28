@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,7 +39,7 @@
 namespace monger {
 /**
  * A JSONPointer (RFC 6901) is a string representation for referring to an element within a JSON
- * instance. In the MongoDB context, it specifically is used to point to a particular BSON element
+ * instance. In the MongerDB context, it specifically is used to point to a particular BSON element
  * within a BSON object. This class implements JSON pointer parsing and resolution.
  *
  * It does not implement the behavior that the pointer "" returns the whole document.

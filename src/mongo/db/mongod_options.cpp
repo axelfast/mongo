@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -78,14 +78,14 @@ std::string storageDBPathDescription() {
     return sb.str();
 }
 
-Status addMongodOptions(moe::OptionSection* options) try {
+Status addMongerdOptions(moe::OptionSection* options) try {
     uassertStatusOK(addGeneralServerOptions(options));
     uassertStatusOK(addNonGeneralServerOptions(options));
-    uassertStatusOK(addMongodGeneralOptions(options));
-    uassertStatusOK(addMongodReplicationOptions(options));
-    uassertStatusOK(addMongodShardingOptions(options));
-    uassertStatusOK(addMongodStorageOptions(options));
-    uassertStatusOK(addMongodLegacyOptions(options));
+    uassertStatusOK(addMongerdGeneralOptions(options));
+    uassertStatusOK(addMongerdReplicationOptions(options));
+    uassertStatusOK(addMongerdShardingOptions(options));
+    uassertStatusOK(addMongerdStorageOptions(options));
+    uassertStatusOK(addMongerdLegacyOptions(options));
     uassertStatusOK(addKeyfileServerOption(options));
     uassertStatusOK(addClusterAuthModeServerOption(options));
 
@@ -94,7 +94,7 @@ Status addMongodOptions(moe::OptionSection* options) try {
     return ex.toStatus();
 }
 
-void printMongodHelp(const moe::OptionSection& options) {
+void printMongerdHelp(const moe::OptionSection& options) {
     std::cout << options.helpString() << std::endl;
 };
 
@@ -112,10 +112,10 @@ void sysRuntimeInfo() {
 }
 }  // namespace
 
-bool handlePreValidationMongodOptions(const moe::Environment& params,
+bool handlePreValidationMongerdOptions(const moe::Environment& params,
                                       const std::vector<std::string>& args) {
     if (params.count("help") && params["help"].as<bool>() == true) {
-        printMongodHelp(moe::startupOptions);
+        printMongerdHelp(moe::startupOptions);
         return false;
     }
     if (params.count("version") && params["version"].as<bool>() == true) {
@@ -139,7 +139,7 @@ bool handlePreValidationMongodOptions(const moe::Environment& params,
     return true;
 }
 
-Status validateMongodOptions(const moe::Environment& params) {
+Status validateMongerdOptions(const moe::Environment& params) {
     Status ret = validateServerOptions(params);
     if (!ret.isOK()) {
         return ret;
@@ -187,7 +187,7 @@ Status validateMongodOptions(const moe::Environment& params) {
     return Status::OK();
 }
 
-Status canonicalizeMongodOptions(moe::Environment* params) {
+Status canonicalizeMongerdOptions(moe::Environment* params) {
 
     Status ret = canonicalizeServerOptions(params);
     if (!ret.isOK()) {
@@ -353,7 +353,7 @@ Status canonicalizeMongodOptions(moe::Environment* params) {
     return Status::OK();
 }
 
-Status storeMongodOptions(const moe::Environment& params) {
+Status storeMongerdOptions(const moe::Environment& params) {
     Status ret = storeServerOptions(params);
     if (!ret.isOK()) {
         return ret;

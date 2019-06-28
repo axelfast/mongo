@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -60,14 +60,14 @@ constexpr auto kName = "name"_sd;
 constexpr auto kType = "type"_sd;
 constexpr auto kVersion = "version"_sd;
 
-constexpr auto kMongoS = "mongers"_sd;
+constexpr auto kMongerS = "mongers"_sd;
 constexpr auto kHost = "host"_sd;
 constexpr auto kClient = "client"_sd;
 
-constexpr uint32_t kMaxMongoSMetadataDocumentByteLength = 512U;
-// Due to MongoS appending more information to the client metadata document, we use a higher limit
-// for MongoD to try to ensure that the appended information does not cause a failure.
-constexpr uint32_t kMaxMongoDMetadataDocumentByteLength = 1024U;
+constexpr uint32_t kMaxMongerSMetadataDocumentByteLength = 512U;
+// Due to MongerS appending more information to the client metadata document, we use a higher limit
+// for MongerD to try to ensure that the appended information does not cause a failure.
+constexpr uint32_t kMaxMongerDMetadataDocumentByteLength = 1024U;
 constexpr uint32_t kMaxApplicationNameByteLength = 128U;
 
 }  // namespace
@@ -91,9 +91,9 @@ StatusWith<boost::optional<ClientMetadata>> ClientMetadata::parse(const BSONElem
 }
 
 Status ClientMetadata::parseClientMetadataDocument(const BSONObj& doc) {
-    uint32_t maxLength = kMaxMongoDMetadataDocumentByteLength;
-    if (isMongos()) {
-        maxLength = kMaxMongoSMetadataDocumentByteLength;
+    uint32_t maxLength = kMaxMongerDMetadataDocumentByteLength;
+    if (isMongers()) {
+        maxLength = kMaxMongerSMetadataDocumentByteLength;
     }
 
     if (static_cast<uint32_t>(doc.objsize()) > maxLength) {
@@ -294,14 +294,14 @@ Status ClientMetadata::validateOperatingSystemDocument(const BSONObj& doc) {
     return Status::OK();
 }
 
-void ClientMetadata::setMongoSMetadata(StringData hostAndPort,
+void ClientMetadata::setMongerSMetadata(StringData hostAndPort,
                                        StringData mongersClient,
                                        StringData version) {
     BSONObjBuilder builder;
     builder.appendElements(_document);
 
     {
-        auto sub = BSONObjBuilder(builder.subobjStart(kMongoS));
+        auto sub = BSONObjBuilder(builder.subobjStart(kMongerS));
         sub.append(kHost, hostAndPort);
         sub.append(kClient, mongersClient);
         sub.append(kVersion, version);

@@ -30,7 +30,7 @@
     let hangMillis = 200;
     let padding = hangMillis / 10;
 
-    let conn = MongoRunner.runMongod({});
+    let conn = MongerRunner.runMongerd({});
     assert.neq(null, conn, "mongerd was unable to start up");
     let testDB = conn.getDB("test");
     let testColl = testDB.lock_acquisition_time;
@@ -151,5 +151,5 @@
     conn.forceWriteMode("compatibility");
     conn.forceReadMode("legacy");
     runTests();
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

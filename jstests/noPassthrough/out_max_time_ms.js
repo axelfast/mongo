@@ -3,7 +3,7 @@
  * @tags: [requires_sharding, requires_replication]
  */
 (function() {
-    load("jstests/libs/fixture_helpers.js");  // For isMongos().
+    load("jstests/libs/fixture_helpers.js");  // For isMongers().
     load("jstests/libs/profiler.js");         // For profilerHasSingleMatchingEntryOrThrow.
 
     const kDBName = "test";
@@ -119,10 +119,10 @@
 
     // Run on a standalone.
     (function() {
-        const conn = MongoRunner.runMongod({});
+        const conn = MongerRunner.runMongerd({});
         assert.neq(null, conn, 'mongerd was unable to start up');
         insertDocs(conn.getDB(kDBName)[kSourceCollName]);
         runUnshardedTest(conn);
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     })();
 })();

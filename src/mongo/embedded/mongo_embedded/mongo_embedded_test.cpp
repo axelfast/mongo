@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -92,9 +92,9 @@ struct ClientDestructor {
     }
 };
 
-using MongoDBCAPIClientPtr = std::unique_ptr<monger_embedded_v1_client, ClientDestructor>;
+using MongerDBCAPIClientPtr = std::unique_ptr<monger_embedded_v1_client, ClientDestructor>;
 
-class MongodbCAPITest : public monger::unittest::Test {
+class MongerdbCAPITest : public monger::unittest::Test {
 protected:
     void setUp() {
         status = monger_embedded_v1_status_create();
@@ -150,8 +150,8 @@ protected:
         return db;
     }
 
-    MongoDBCAPIClientPtr createClient() const {
-        MongoDBCAPIClientPtr client(monger_embedded_v1_client_create(db, status));
+    MongerDBCAPIClientPtr createClient() const {
+        MongerDBCAPIClientPtr client(monger_embedded_v1_client_create(db, status));
         ASSERT(client.get() != nullptr) << monger_embedded_v1_status_get_explanation(status);
         return client;
     }
@@ -163,7 +163,7 @@ protected:
         return msg;
     }
 
-    monger::BSONObj performRpc(MongoDBCAPIClientPtr& client, monger::OpMsgRequest request) {
+    monger::BSONObj performRpc(MongerDBCAPIClientPtr& client, monger::OpMsgRequest request) {
         auto inputMessage = request.serialize();
 
         // declare the output size and pointer
@@ -193,23 +193,23 @@ protected:
     monger_embedded_v1_status* status;
 };
 
-TEST_F(MongodbCAPITest, CreateAndDestroyDB) {
+TEST_F(MongerdbCAPITest, CreateAndDestroyDB) {
     // Test the setUp() and tearDown() test fixtures
 }
 
-TEST_F(MongodbCAPITest, CreateAndDestroyDBAndClient) {
+TEST_F(MongerdbCAPITest, CreateAndDestroyDBAndClient) {
     auto client = createClient();
 }
 
 // This test is to make sure that destroying the db will fail if there's remaining clients left.
-TEST_F(MongodbCAPITest, DoNotDestroyClient) {
+TEST_F(MongerdbCAPITest, DoNotDestroyClient) {
     auto client = createClient();
     ASSERT(monger_embedded_v1_instance_destroy(getDB(), nullptr) != MONGO_EMBEDDED_V1_SUCCESS);
 }
 
-TEST_F(MongodbCAPITest, CreateMultipleClients) {
+TEST_F(MongerdbCAPITest, CreateMultipleClients) {
     const int numClients = 10;
-    std::set<MongoDBCAPIClientPtr> clients;
+    std::set<MongerDBCAPIClientPtr> clients;
     for (int i = 0; i < numClients; i++) {
         clients.insert(createClient());
     }
@@ -219,7 +219,7 @@ TEST_F(MongodbCAPITest, CreateMultipleClients) {
     ASSERT_EQUALS(static_cast<int>(clients.size()), numClients);
 }
 
-TEST_F(MongodbCAPITest, IsMaster) {
+TEST_F(MongerdbCAPITest, IsMaster) {
     // create the client object
     auto client = createClient();
 
@@ -230,7 +230,7 @@ TEST_F(MongodbCAPITest, IsMaster) {
     ASSERT(output.getBoolField("ismaster"));
 }
 
-TEST_F(MongodbCAPITest, CreateIndex) {
+TEST_F(MongerdbCAPITest, CreateIndex) {
     // create the client object
     auto client = createClient();
 
@@ -257,7 +257,7 @@ TEST_F(MongodbCAPITest, CreateIndex) {
         << output;
 }
 
-TEST_F(MongodbCAPITest, CreateBackgroundIndex) {
+TEST_F(MongerdbCAPITest, CreateBackgroundIndex) {
     // create the client object
     auto client = createClient();
 
@@ -283,7 +283,7 @@ TEST_F(MongodbCAPITest, CreateBackgroundIndex) {
     ASSERT(output.getField("ok").numberDouble() != 1.0) << output;
 }
 
-TEST_F(MongodbCAPITest, CreateTTLIndex) {
+TEST_F(MongerdbCAPITest, CreateTTLIndex) {
     // create the client object
     auto client = createClient();
 
@@ -309,7 +309,7 @@ TEST_F(MongodbCAPITest, CreateTTLIndex) {
     ASSERT(output.getField("ok").numberDouble() != 1.0) << output;
 }
 
-TEST_F(MongodbCAPITest, TrimMemory) {
+TEST_F(MongerdbCAPITest, TrimMemory) {
     // create the client object
     auto client = createClient();
 
@@ -319,7 +319,7 @@ TEST_F(MongodbCAPITest, TrimMemory) {
     performRpc(client, inputOpMsg);
 }
 
-TEST_F(MongodbCAPITest, BatteryLevel) {
+TEST_F(MongerdbCAPITest, BatteryLevel) {
     // create the client object
     auto client = createClient();
 
@@ -330,11 +330,11 @@ TEST_F(MongodbCAPITest, BatteryLevel) {
 }
 
 
-TEST_F(MongodbCAPITest, InsertDocument) {
+TEST_F(MongerdbCAPITest, InsertDocument) {
     auto client = createClient();
 
     monger::BSONObj insertObj = monger::fromjson(
-        "{insert: 'collection_name', documents: [{firstName: 'Mongo', lastName: 'DB', age: 10}]}");
+        "{insert: 'collection_name', documents: [{firstName: 'Monger', lastName: 'DB', age: 10}]}");
     auto insertOpMsg = monger::OpMsgRequest::fromDBAndBody("db_name", insertObj);
     auto outputBSON = performRpc(client, insertOpMsg);
     ASSERT(outputBSON.hasField("n"));
@@ -343,7 +343,7 @@ TEST_F(MongodbCAPITest, InsertDocument) {
     ASSERT(outputBSON.getField("ok").numberDouble() == 1.0);
 }
 
-TEST_F(MongodbCAPITest, InsertMultipleDocuments) {
+TEST_F(MongerdbCAPITest, InsertMultipleDocuments) {
     auto client = createClient();
 
     monger::BSONObj insertObj = monger::fromjson(
@@ -358,7 +358,7 @@ TEST_F(MongodbCAPITest, InsertMultipleDocuments) {
     ASSERT(outputBSON.getField("ok").numberDouble() == 1.0);
 }
 
-TEST_F(MongodbCAPITest, KillOp) {
+TEST_F(MongerdbCAPITest, KillOp) {
     auto client = createClient();
 
     monger::stdx::thread killOpThread([this]() {
@@ -407,7 +407,7 @@ TEST_F(MongodbCAPITest, KillOp) {
     killOpThread.join();
 }
 
-TEST_F(MongodbCAPITest, ReadDB) {
+TEST_F(MongerdbCAPITest, ReadDB) {
     auto client = createClient();
 
     monger::BSONObj findObj = monger::fromjson("{find: 'collection_name', limit: 2}");
@@ -433,11 +433,11 @@ TEST_F(MongodbCAPITest, ReadDB) {
     ASSERT(index == 2);
 }
 
-TEST_F(MongodbCAPITest, InsertAndRead) {
+TEST_F(MongerdbCAPITest, InsertAndRead) {
     auto client = createClient();
 
     monger::BSONObj insertObj = monger::fromjson(
-        "{insert: 'collection_name', documents: [{firstName: 'Mongo', lastName: 'DB', age: 10}]}");
+        "{insert: 'collection_name', documents: [{firstName: 'Monger', lastName: 'DB', age: 10}]}");
     auto insertOpMsg = monger::OpMsgRequest::fromDBAndBody("db_name", insertObj);
     auto outputBSON1 = performRpc(client, insertOpMsg);
     ASSERT(outputBSON1.valid(monger::BSONVersion::kLatest));
@@ -467,12 +467,12 @@ TEST_F(MongodbCAPITest, InsertAndRead) {
     ASSERT(index == 1);
 }
 
-TEST_F(MongodbCAPITest, InsertAndReadDifferentClients) {
+TEST_F(MongerdbCAPITest, InsertAndReadDifferentClients) {
     auto client1 = createClient();
     auto client2 = createClient();
 
     monger::BSONObj insertObj = monger::fromjson(
-        "{insert: 'collection_name', documents: [{firstName: 'Mongo', lastName: 'DB', age: 10}]}");
+        "{insert: 'collection_name', documents: [{firstName: 'Monger', lastName: 'DB', age: 10}]}");
     auto insertOpMsg = monger::OpMsgRequest::fromDBAndBody("db_name", insertObj);
     auto outputBSON1 = performRpc(client1, insertOpMsg);
     ASSERT(outputBSON1.valid(monger::BSONVersion::kLatest));
@@ -502,7 +502,7 @@ TEST_F(MongodbCAPITest, InsertAndReadDifferentClients) {
     ASSERT(index == 1);
 }
 
-TEST_F(MongodbCAPITest, InsertAndDelete) {
+TEST_F(MongerdbCAPITest, InsertAndDelete) {
     auto client = createClient();
     monger::BSONObj insertObj = monger::fromjson(
         "{insert: 'collection_name', documents: [{firstName: 'toDelete', lastName: 'notImportant', "
@@ -530,7 +530,7 @@ TEST_F(MongodbCAPITest, InsertAndDelete) {
 }
 
 
-TEST_F(MongodbCAPITest, InsertAndUpdate) {
+TEST_F(MongerdbCAPITest, InsertAndUpdate) {
     auto client = createClient();
 
     monger::BSONObj insertObj = monger::fromjson(
@@ -558,7 +558,7 @@ TEST_F(MongodbCAPITest, InsertAndUpdate) {
     ASSERT(outputBSON2.getIntField("nModified") == 1);
 }
 
-TEST_F(MongodbCAPITest, RunListCommands) {
+TEST_F(MongerdbCAPITest, RunListCommands) {
     auto client = createClient();
 
     std::vector<std::string> whitelist = {
@@ -668,7 +668,7 @@ TEST_F(MongodbCAPITest, RunListCommands) {
 
 // This test is temporary to make sure that only one database can be created
 // This restriction may be relaxed at a later time
-TEST_F(MongodbCAPITest, CreateMultipleDBs) {
+TEST_F(MongerdbCAPITest, CreateMultipleDBs) {
     auto status = makeStatusPtr();
     ASSERT(status.get());
     monger_embedded_v1_instance* db2 = monger_embedded_v1_instance_create(lib, nullptr, status.get());
@@ -686,7 +686,7 @@ int main(const int argc, const char* const* const argv) {
     moe::Environment environment;
     moe::OptionSection options;
 
-    auto ret = monger::embedded::addMongoEmbeddedTestOptions(&options);
+    auto ret = monger::embedded::addMongerEmbeddedTestOptions(&options);
     if (!ret.isOK()) {
         std::cerr << ret << std::endl;
         return EXIT_FAILURE;

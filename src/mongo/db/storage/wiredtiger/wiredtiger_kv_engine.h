@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -326,7 +326,7 @@ public:
     /**
      * Returns the minimum possible Timestamp value in the oplog that replication may need for
      * recovery in the event of a rollback. This value depends on the timestamp passed to
-     * `setStableTimestamp` and on the set of active MongoDB transactions. Returns an error if it
+     * `setStableTimestamp` and on the set of active MongerDB transactions. Returns an error if it
      * times out querying the active transctions.
      */
     StatusWith<Timestamp> getOplogNeededForRollback() const;

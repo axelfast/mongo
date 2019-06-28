@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -760,7 +760,7 @@ void ShapeProjection::projectInto(PointWithCRS* point, CRS crs) {
         // Prohibit projection to STRICT_SPHERE CRS
         invariant(SPHERE == crs);
 
-        // Note that it's (lat, lng) for S2 but (lng, lat) for MongoDB.
+        // Note that it's (lat, lng) for S2 but (lng, lat) for MongerDB.
         S2LatLng latLng = S2LatLng::FromDegrees(point->oldPoint.y, point->oldPoint.x).Normalized();
         dassert(latLng.is_valid());
         point->point = latLng.ToPoint();

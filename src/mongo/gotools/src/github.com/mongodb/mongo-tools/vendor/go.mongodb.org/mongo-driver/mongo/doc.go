@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -6,7 +6,7 @@
 
 // NOTE: This documentation should be kept in line with the Example* test functions.
 
-// Package monger provides a MongoDB Driver API for Go.
+// Package monger provides a MongerDB Driver API for Go.
 //
 // Basic usage of the driver starts with creating a Client from a connection
 // string. To do so, call the NewClient and Connect functions:
@@ -18,7 +18,7 @@
 // 		err = client.Connect(ctx)
 // 		if err != nil { return err }
 //
-// This will create a new client and start monitoring the MongoDB server on localhost.
+// This will create a new client and start monitoring the MongerDB server on localhost.
 // The Database and Collection types can be used to access the database:
 //
 //    collection := client.Database("baz").Collection("qux")
@@ -68,7 +68,7 @@
 // will return ErrNilDocument if nil is passed in for an interface{}.
 //
 // Additional examples can be found under the examples directory in the driver's repository and
-// on the MongoDB website.
+// on the MongerDB website.
 //
 // Potential DNS Issues
 //

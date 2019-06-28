@@ -15,7 +15,7 @@ load("jstests/free_mon/libs/free_mon.js");
         verbose: 1,
     };
 
-    const conn = MongoRunner.runMongod(options);
+    const conn = MongerRunner.runMongerd(options);
     assert.neq(null, conn, 'mongerd was unable to start up');
 
     assert.commandWorked(conn.adminCommand({setFreeMonitoring: 1, action: "disable"}));
@@ -29,7 +29,7 @@ load("jstests/free_mon/libs/free_mon.js");
 
     assert.eq(FreeMonGetServerStatus(conn).state, "disabled");
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     mock_web.stop();
 })();

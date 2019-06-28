@@ -1,11 +1,11 @@
 // dumpauth.js
 // test mongerdump with authentication
 
-var m = MongoRunner.runMongod({auth: "", bind_ip: "127.0.0.1"});
+var m = MongerRunner.runMongerd({auth: "", bind_ip: "127.0.0.1"});
 var dbName = "admin";
 var colName = "testcol";
 var profileName = "system.profile";
-var dumpDir = MongoRunner.dataPath + "jstests_tool_dumprestore_dump_system_profile/";
+var dumpDir = MongerRunner.dataPath + "jstests_tool_dumprestore_dump_system_profile/";
 db = m.getDB(dbName);
 
 db.createUser({user: "testuser", pwd: "testuser", roles: jsTest.adminUserRoles});
@@ -30,7 +30,7 @@ assert.eq(t.count(), 100, "testcol should have documents");
 db.createUser({user: "backup", pwd: "password", roles: ["backup"]});
 
 // Backup the database with the backup user
-var exitCode = MongoRunner.runMongoTool("mongerdump", {
+var exitCode = MongerRunner.runMongerTool("mongerdump", {
     db: dbName,
     out: dumpDir,
     authenticationDatabase: "admin",
@@ -42,6 +42,6 @@ assert.eq(exitCode, 0, "mongerdump should succeed with authentication");
 
 // Assert that a BSON document for admin.system.profile has been produced
 exitCode =
-    MongoRunner.runMongoTool("bsondump", {}, dumpDir + "/" + dbName + "/" + profileName + ".bson");
+    MongerRunner.runMongerTool("bsondump", {}, dumpDir + "/" + dbName + "/" + profileName + ".bson");
 assert.eq(exitCode, 0, "bsondump should succeed parsing the profile data");
-MongoRunner.stopMongod(m);
+MongerRunner.stopMongerd(m);

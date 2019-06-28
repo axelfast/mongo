@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -18,7 +18,7 @@ import (
 // database that requires authentication when the driver has proper
 // authentication credentials
 func TestCommandsAgainstAuthedDBWhenAuthed(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	if !authTestServerMode {
 		t.Skipf("Skipping auth test with non-auth DB")
 	}
@@ -92,7 +92,7 @@ func TestCommandsAgainstAuthedDBWhenAuthed(t *testing.T) {
 // authentication. It generates a series of inserts and ensures that the docs
 // they are attempting to insert are not later found in the database
 func TestCommandsAgainstAuthedDBWhenNotAuthed(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	if !authTestServerMode {
 		t.Skipf("Skipping auth test with non-auth DB")
 	}

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -170,7 +170,7 @@ OpMsgRequest upconvertRequest(StringData db, BSONObj cmdObj, int queryFlags) {
 
         cmdObj = cmdObj.firstElement().Obj().shareOwnershipWith(cmdObj);
     } else if (auto queryOptions = cmdObj["$queryOptions"]) {
-        // Mongos rewrites commands with $readPreference to put it in a field nested inside of
+        // Mongers rewrites commands with $readPreference to put it in a field nested inside of
         // $queryOptions. Its command implementations often forward commands in that format to
         // shards. This function is responsible for rewriting it to a format that the shards
         // understand.

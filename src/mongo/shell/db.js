@@ -13,7 +13,7 @@ var DB;
         };
     }
 
-    DB.prototype.getMongo = function() {
+    DB.prototype.getMonger = function() {
         assert(this._monger, "why no monger!");
         return this._monger;
     };
@@ -439,8 +439,8 @@ var DB;
     };
 
     /**
-      Clone database on another server to here. This functionality was removed as of MongoDB 4.2.
-      The shell helper is kept to maintain compatibility with previous versions of MongoDB.
+      Clone database on another server to here. This functionality was removed as of MongerDB 4.2.
+      The shell helper is kept to maintain compatibility with previous versions of MongerDB.
       <p>
       Generally, you should dropDatabase() first as otherwise the cloned information will MERGE
       into whatever data is already present in this database.  (That is however a valid way to use
@@ -456,15 +456,15 @@ var DB;
      */
     DB.prototype.cloneDatabase = function(from) {
         print(
-            "WARNING: db.cloneDatabase will only function with MongoDB 4.0 and below. See http://dochub.mongerdb.org/core/4.2-copydb-clone");
+            "WARNING: db.cloneDatabase will only function with MongerDB 4.0 and below. See http://dochub.mongerdb.org/core/4.2-copydb-clone");
         assert(isString(from) && from.length);
         return this._dbCommand({clone: from});
     };
 
     /**
       Copy database from one server or name to another server or name. This functionality was
-      removed as of MongoDB 4.2. The shell helper is kept to maintain compatibility with previous
-      versions of MongoDB.
+      removed as of MongerDB 4.2. The shell helper is kept to maintain compatibility with previous
+      versions of MongerDB.
 
       Generally, you should dropDatabase() first as otherwise the copied information will MERGE
       into whatever data is already present in this database (and you will get duplicate objects
@@ -486,7 +486,7 @@ var DB;
     DB.prototype.copyDatabase = function(
         fromdb, todb, fromhost, username, password, mechanism, slaveOk) {
         print(
-            "WARNING: db.copyDatabase will only function with MongoDB 4.0 and below. See http://dochub.mongerdb.org/core/4.2-copydb-clone");
+            "WARNING: db.copyDatabase will only function with MongerDB 4.0 and below. See http://dochub.mongerdb.org/core/4.2-copydb-clone");
         assert(isString(fromdb) && fromdb.length);
         assert(isString(todb) && todb.length);
         fromhost = fromhost || "";
@@ -513,8 +513,8 @@ var DB;
 
         // Use the copyDatabase native helper for SCRAM-SHA-1/256
         if (mechanism != "MONGODB-CR") {
-            // TODO SERVER-30886: Add session support for Mongo.prototype.copyDatabaseWithSCRAM().
-            return this.getMongo().copyDatabaseWithSCRAM(
+            // TODO SERVER-30886: Add session support for Monger.prototype.copyDatabaseWithSCRAM().
+            return this.getMonger().copyDatabaseWithSCRAM(
                 fromdb, todb, fromhost, username, password, slaveOk);
         }
 
@@ -539,10 +539,10 @@ var DB;
         print(
             "\tdb.aggregate([pipeline], {options}) - performs a collectionless aggregation on this database; returns a cursor");
         print("\tdb.auth(username, password)");
-        print("\tdb.cloneDatabase(fromhost) - will only function with MongoDB 4.0 and below");
+        print("\tdb.cloneDatabase(fromhost) - will only function with MongerDB 4.0 and below");
         print("\tdb.commandHelp(name) returns the help for the command");
         print(
-            "\tdb.copyDatabase(fromdb, todb, fromhost) - will only function with MongoDB 4.0 and below");
+            "\tdb.copyDatabase(fromdb, todb, fromhost) - will only function with MongerDB 4.0 and below");
         print("\tdb.createCollection(name, {size: ..., capped: ..., max: ...})");
         print("\tdb.createUser(userDocument)");
         print("\tdb.createView(name, viewOn, [{$operator: {...}}, ...], {viewOptions})");
@@ -560,8 +560,8 @@ var DB;
         print("\tdb.getLastError() - just returns the err msg string");
         print("\tdb.getLastErrorObj() - return full status object");
         print("\tdb.getLogComponents()");
-        print("\tdb.getMongo() get the server connection object");
-        print("\tdb.getMongo().setSlaveOk() allow queries on a replication slave server");
+        print("\tdb.getMonger() get the server connection object");
+        print("\tdb.getMonger().setSlaveOk() allow queries on a replication slave server");
         print("\tdb.getName()");
         print("\tdb.getProfilingLevel() - deprecated");
         print("\tdb.getProfilingStatus() - returns if profiling is on and slow threshold");
@@ -1340,7 +1340,7 @@ var DB;
 
         if (res.errmsg == "no such cmd: createUser") {
             throw Error("'createUser' command not found.  This is most likely because you are " +
-                        "talking to an old (pre v2.6) MongoDB server");
+                        "talking to an old (pre v2.6) MongerDB server");
         }
 
         if (res.errmsg == "timeout") {
@@ -1361,7 +1361,7 @@ var DB;
 
     /**
      * Used for updating users in systems with V1 style user information
-     * (ie MongoDB v2.4 and prior)
+     * (ie MongerDB v2.4 and prior)
      */
     DB.prototype._updateUserV1 = function(name, updateObject, writeConcern) {
         var setObj = {};
@@ -1407,7 +1407,7 @@ var DB;
 
     DB.prototype.logout = function() {
         // Logging out doesn't require a session since it manipulates connection state.
-        return this.getMongo().logout(this.getName());
+        return this.getMonger().logout(this.getName());
     };
 
     // For backwards compatibility
@@ -1440,7 +1440,7 @@ var DB;
 
     /**
      * Used for removing users in systems with V1 style user information
-     * (ie MongoDB v2.4 and prior)
+     * (ie MongerDB v2.4 and prior)
      */
     DB.prototype._removeUserV1 = function(username, writeConcern) {
         this.getCollection("system.users").remove({user: username});
@@ -1532,7 +1532,7 @@ var DB;
         }
 
         if (params.db !== undefined) {
-            throw Error("Do not override db field on db.auth(). Use getMongo().auth(), instead.");
+            throw Error("Do not override db field on db.auth(). Use getMonger().auth(), instead.");
         }
 
         if (params.mechanism == "GSSAPI" && params.serviceName == null &&
@@ -1542,10 +1542,10 @@ var DB;
 
         // Logging in doesn't require a session since it manipulates connection state.
         params.db = this.getName();
-        var good = this.getMongo().auth(params);
+        var good = this.getMonger().auth(params);
         if (good) {
             // auth enabled, and should try to use isMaster and replSetGetStatus to build prompt
-            this.getMongo().authStatus = {
+            this.getMonger().authStatus = {
                 authRequired: true,
                 isMaster: true,
                 replSetGetStatus: true
@@ -1781,11 +1781,11 @@ var DB;
     };
 
     DB.prototype.getLogComponents = function() {
-        return this.getMongo().getLogComponents(this.getSession());
+        return this.getMonger().getLogComponents(this.getSession());
     };
 
     DB.prototype.setLogLevel = function(logLevel, component) {
-        return this.getMongo().setLogLevel(logLevel, component, this.getSession());
+        return this.getMonger().setLogLevel(logLevel, component, this.getSession());
     };
 
     DB.prototype.watch = function(pipeline, options) {
@@ -1793,7 +1793,7 @@ var DB;
         assert(pipeline instanceof Array, "'pipeline' argument must be an array");
 
         let changeStreamStage;
-        [changeStreamStage, aggOptions] = this.getMongo()._extractChangeStreamOptions(options);
+        [changeStreamStage, aggOptions] = this.getMonger()._extractChangeStreamOptions(options);
         pipeline.unshift(changeStreamStage);
         return this._runAggregate({aggregate: 1, pipeline: pipeline}, aggOptions);
     };
@@ -1848,7 +1848,7 @@ var DB;
     (function(hasOwnProperty) {
         DB.prototype.getSession = function() {
             if (!hasOwnProperty.call(this, "_session")) {
-                this._session = this.getMongo()._getDefaultSession();
+                this._session = this.getMonger()._getDefaultSession();
             }
             return this._session;
         };

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -362,7 +362,7 @@ bool QueryPlannerIXSelect::_compatible(const BSONElement& keyPatternElt,
     // pattern element.
     //
     // e.g. long ago we could have created an index {a: "2dsphere"} and it would
-    // be treated as a btree index by an ancient version of MongoDB.  To try to run
+    // be treated as a btree index by an ancient version of MongerDB.  To try to run
     // 2dsphere queries over it would be folly.
     string indexedFieldType;
     if (String != keyPatternElt.type() || (INDEX_BTREE == index.type)) {

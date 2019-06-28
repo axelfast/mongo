@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -20,11 +20,11 @@ import (
 type verifyFunc func(*testing.T, *mgo.Session, *BufferedStatRecorder, *preprocessCursorManager)
 
 func TestOpCommandFromPcapFileLiveDB(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	if err := teardownDB(); err != nil {
 		t.Error(err)
 	}
-	if isMongosTestServer {
+	if isMongersTestServer {
 		t.Skipf("Skipping OpCommand test when running against mongers")
 	}
 
@@ -59,7 +59,7 @@ func TestOpCommandFromPcapFileLiveDB(t *testing.T) {
 }
 
 func TestWireCompression(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	pcapFname := "compressed.pcap"
 	var verifier = func(t *testing.T, session *mgo.Session, statRecorder *BufferedStatRecorder, cursorMap *preprocessCursorManager) {
 		opsSeen := len(statRecorder.Buffer)
@@ -78,7 +78,7 @@ func TestWireCompression(t *testing.T) {
 }
 
 func TestSingleChannelGetMoreLiveDB(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	pcapFname := "getmore_single_channel.pcap"
 	var verifier = func(t *testing.T, session *mgo.Session, statRecorder *BufferedStatRecorder, cursorMap *preprocessCursorManager) {
 		getMoresSeen := 0
@@ -105,7 +105,7 @@ func TestSingleChannelGetMoreLiveDB(t *testing.T) {
 }
 
 func TestMultiChannelGetMoreLiveDB(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 
 	pcapFname := "getmore_multi_channel.pcap"
 	var verifier = func(t *testing.T, session *mgo.Session, statRecorder *BufferedStatRecorder, cursorMap *preprocessCursorManager) {
@@ -139,7 +139,7 @@ func TestMultiChannelGetMoreLiveDB(t *testing.T) {
 }
 
 func TestRecordEOF(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	pcapFile := "testPcap/workload_with_EOF.pcap"
 
 	if _, err := os.Stat(pcapFile); err != nil {
@@ -201,7 +201,7 @@ func playbackFileFromPcap(pcapFname, playbackFname string) error {
 }
 
 func pcapTestHelper(t *testing.T, pcapFname string, preprocess bool, verifier verifyFunc) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	pcapFile := "mongerreplay/testPcap/" + pcapFname
 	if _, err := os.Stat(pcapFile); err != nil {
 		t.Skipf("pcap file %v not present, skipping test", pcapFile)

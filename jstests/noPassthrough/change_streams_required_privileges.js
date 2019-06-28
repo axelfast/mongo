@@ -333,7 +333,7 @@
             const db = userWithPrivileges.db;
             assert(db.auth(userWithPrivileges.name, password));
 
-            assert.doesNotThrow(() => db.getMongo().watch());
+            assert.doesNotThrow(() => db.getMonger().watch());
 
             db.logout();
         }

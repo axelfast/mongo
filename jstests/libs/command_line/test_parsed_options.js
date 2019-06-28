@@ -37,32 +37,32 @@ function mergeOptions(obj1, obj2) {
 //
 // Example:
 //
-// testGetCmdLineOptsMongod({ port : 10000 }, { "parsed" : { "net" : { "port" : 10000 } } });
+// testGetCmdLineOptsMongerd({ port : 10000 }, { "parsed" : { "net" : { "port" : 10000 } } });
 //
-var getCmdLineOptsBaseMongod;
-function testGetCmdLineOptsMongod(mongerRunnerConfig, expectedResult) {
+var getCmdLineOptsBaseMongerd;
+function testGetCmdLineOptsMongerd(mongerRunnerConfig, expectedResult) {
     // Get the options object returned by "getCmdLineOpts" when we spawn a mongerd using our test
     // framework without passing any additional options.  We need this because the framework adds
     // options of its own, and we only want to compare against the options we care about.
     function getBaseOptsObject() {
         // Start mongerd with no options
-        var baseMongod = MongoRunner.runMongod();
+        var baseMongerd = MongerRunner.runMongerd();
 
         // Get base command line opts.  Needed because the framework adds its own options
-        var getCmdLineOptsBaseMongod = baseMongod.adminCommand("getCmdLineOpts");
+        var getCmdLineOptsBaseMongerd = baseMongerd.adminCommand("getCmdLineOpts");
 
         // Stop the mongerd we used to get the options
-        MongoRunner.stopMongod(baseMongod);
+        MongerRunner.stopMongerd(baseMongerd);
 
-        return getCmdLineOptsBaseMongod;
+        return getCmdLineOptsBaseMongerd;
     }
 
-    if (typeof getCmdLineOptsBaseMongod === "undefined") {
-        getCmdLineOptsBaseMongod = getBaseOptsObject();
+    if (typeof getCmdLineOptsBaseMongerd === "undefined") {
+        getCmdLineOptsBaseMongerd = getBaseOptsObject();
     }
 
     // Get base command line opts.  Needed because the framework adds its own options
-    var getCmdLineOptsExpected = getCmdLineOptsBaseMongod;
+    var getCmdLineOptsExpected = getCmdLineOptsBaseMongerd;
 
     // Delete port and dbPath if we are not explicitly setting them, since they will change on
     // multiple runs of the test framework and cause false failures.
@@ -81,7 +81,7 @@ function testGetCmdLineOptsMongod(mongerRunnerConfig, expectedResult) {
     expectedResult = mergeOptions(getCmdLineOptsExpected, expectedResult);
 
     // Start mongerd with options
-    var mongerd = MongoRunner.runMongod(mongerRunnerConfig);
+    var mongerd = MongerRunner.runMongerd(mongerRunnerConfig);
 
     // Create and authenticate high-privilege user in case mongerd is running with authorization.
     // Try/catch is necessary in case this is being run on an uninitiated replset, by a test
@@ -114,7 +114,7 @@ function testGetCmdLineOptsMongod(mongerRunnerConfig, expectedResult) {
 
     // Cleanup
     mongerd.getDB("admin").logout();
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 }
 
 // Test that the parsed result of setting certain command line options has the correct format in
@@ -128,28 +128,28 @@ function testGetCmdLineOptsMongod(mongerRunnerConfig, expectedResult) {
 //
 // Example:
 //
-// testGetCmdLineOptsMongos({ port : 10000 }, { "parsed" : { "net" : { "port" : 10000 } } });
+// testGetCmdLineOptsMongers({ port : 10000 }, { "parsed" : { "net" : { "port" : 10000 } } });
 //
-var getCmdLineOptsBaseMongos;
-function testGetCmdLineOptsMongos(mongerRunnerConfig, expectedResult) {
+var getCmdLineOptsBaseMongers;
+function testGetCmdLineOptsMongers(mongerRunnerConfig, expectedResult) {
     "use strict";
 
     // Get the options object returned by "getCmdLineOpts" when we spawn a mongers using our test
     // framework without passing any additional options.  We need this because the framework adds
     // options of its own, and we only want to compare against the options we care about.
-    function getCmdLineOptsFromMongos(mongersOptions) {
+    function getCmdLineOptsFromMongers(mongersOptions) {
         // Start mongerd with no options
-        var baseMongod = MongoRunner.runMongod(
+        var baseMongerd = MongerRunner.runMongerd(
             {configsvr: "", journal: "", replSet: "csrs", storageEngine: "wiredTiger"});
-        assert.commandWorked(baseMongod.adminCommand({
+        assert.commandWorked(baseMongerd.adminCommand({
             replSetInitiate:
-                {_id: "csrs", configsvr: true, members: [{_id: 0, host: baseMongod.host}]}
+                {_id: "csrs", configsvr: true, members: [{_id: 0, host: baseMongerd.host}]}
         }));
-        var configdbStr = "csrs/" + baseMongod.host;
+        var configdbStr = "csrs/" + baseMongerd.host;
         var ismasterResult;
         assert.soon(
             function() {
-                ismasterResult = baseMongod.adminCommand("ismaster");
+                ismasterResult = baseMongerd.adminCommand("ismaster");
                 return ismasterResult.ismaster;
             },
             function() {
@@ -157,27 +157,27 @@ function testGetCmdLineOptsMongos(mongerRunnerConfig, expectedResult) {
             });
 
         var options = Object.merge(mongersOptions, {configdb: configdbStr});
-        var baseMongos = MongoRunner.runMongos(options);
+        var baseMongers = MongerRunner.runMongers(options);
 
         // Get base command line opts.  Needed because the framework adds its own options
-        var getCmdLineOptsResult = baseMongos.adminCommand("getCmdLineOpts");
+        var getCmdLineOptsResult = baseMongers.adminCommand("getCmdLineOpts");
 
         // Remove the configdb option
         delete getCmdLineOptsResult.parsed.sharding.configDB;
 
         // Stop the mongerd and mongers we used to get the options
-        MongoRunner.stopMongos(baseMongos);
-        MongoRunner.stopMongod(baseMongod);
+        MongerRunner.stopMongers(baseMongers);
+        MongerRunner.stopMongerd(baseMongerd);
 
         return getCmdLineOptsResult;
     }
 
-    if (typeof getCmdLineOptsBaseMongos === "undefined") {
-        getCmdLineOptsBaseMongos = getCmdLineOptsFromMongos({});
+    if (typeof getCmdLineOptsBaseMongers === "undefined") {
+        getCmdLineOptsBaseMongers = getCmdLineOptsFromMongers({});
     }
 
     // Get base command line opts.  Needed because the framework adds its own options
-    var getCmdLineOptsExpected = getCmdLineOptsBaseMongos;
+    var getCmdLineOptsExpected = getCmdLineOptsBaseMongers;
 
     // Delete port if we are not explicitly setting it, since it will change on multiple runs of the
     // test framework and cause false failures.
@@ -191,7 +191,7 @@ function testGetCmdLineOptsMongos(mongerRunnerConfig, expectedResult) {
     expectedResult = mergeOptions(getCmdLineOptsExpected, expectedResult);
 
     // Get the parsed options
-    var getCmdLineOptsResult = getCmdLineOptsFromMongos(mongerRunnerConfig);
+    var getCmdLineOptsResult = getCmdLineOptsFromMongers(mongerRunnerConfig);
 
     // Delete port if we are not explicitly setting it, since it will change on multiple runs of the
     // test framework and cause false failures.

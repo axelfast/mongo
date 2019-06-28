@@ -5,10 +5,10 @@
 (function() {
     "use strict";
 
-    load("jstests/libs/fixture_helpers.js");  // For isMongos.
+    load("jstests/libs/fixture_helpers.js");  // For isMongers.
 
     assert.neq(typeof db, 'undefined', 'No `db` object, is the shell connected to a mongerd?');
-    assert(FixtureHelpers.isMongos(db), "not connected to mongers");
+    assert(FixtureHelpers.isMongers(db), "not connected to mongers");
 
     let balSettingResult = assert.commandWorked(db.adminCommand({balancerStatus: 1}));
     if (balSettingResult.mode !== 'off') {

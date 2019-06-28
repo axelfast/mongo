@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -129,20 +129,20 @@ TEST_F(ClusterAggregateTest, SnapshotReadConcernWithAfterClusterTime) {
     testSnapshotReadConcernWithAfterClusterTime(kAggregateCmdTargeted, kAggregateCmdScatterGather);
 }
 
-TEST_F(ClusterAggregateTest, ShouldFailWhenFromMongosIsTrue) {
-    const BSONObj inputBson = fromjson("{pipeline: [], cursor: {}, fromMongos: true}");
+TEST_F(ClusterAggregateTest, ShouldFailWhenFromMongersIsTrue) {
+    const BSONObj inputBson = fromjson("{pipeline: [], cursor: {}, fromMongers: true}");
     ASSERT_THROWS_CODE(testRunAggregateEarlyExit(inputBson), AssertionException, 51089);
 }
 
-TEST_F(ClusterAggregateTest, ShouldFailWhenNeedsMergeIstrueAndFromMongosIsFalse) {
+TEST_F(ClusterAggregateTest, ShouldFailWhenNeedsMergeIstrueAndFromMongersIsFalse) {
     const BSONObj inputBson =
-        fromjson("{pipeline: [], cursor: {}, needsMerge: true, fromMongos: false}");
+        fromjson("{pipeline: [], cursor: {}, needsMerge: true, fromMongers: false}");
     ASSERT_THROWS_CODE(testRunAggregateEarlyExit(inputBson), AssertionException, 51089);
 }
 
-TEST_F(ClusterAggregateTest, ShouldFailWhenNeedsMergeIstrueAndFromMongosIsTrue) {
+TEST_F(ClusterAggregateTest, ShouldFailWhenNeedsMergeIstrueAndFromMongersIsTrue) {
     const BSONObj inputBson =
-        fromjson("{pipeline: [], cursor: {}, needsMerge: true, fromMongos: true}");
+        fromjson("{pipeline: [], cursor: {}, needsMerge: true, fromMongers: true}");
     ASSERT_THROWS_CODE(testRunAggregateEarlyExit(inputBson), AssertionException, 51089);
 }
 

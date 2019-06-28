@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,8 +42,8 @@ class StatusWith;
 namespace rpc {
 
 /**
- * This class compromises the reply metadata fields that concern sharding. MongoD attaches
- * this information to a command reply, which MongoS uses to process getLastError.
+ * This class compromises the reply metadata fields that concern sharding. MongerD attaches
+ * this information to a command reply, which MongerS uses to process getLastError.
  * TODO(spencer): Rename this to ShardingResponseMetadata.
  */
 class ShardingMetadata {

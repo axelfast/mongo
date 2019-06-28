@@ -10,7 +10,7 @@ var Topology = {
 };
 
 var DiscoverTopology = (function() {
-    const kDefaultConnectFn = (host) => new Mongo(host);
+    const kDefaultConnectFn = (host) => new Monger(host);
 
     function getDataMemberConnectionStrings(conn) {
         const res = conn.adminCommand({isMaster: 1});
@@ -30,7 +30,7 @@ var DiscoverTopology = (function() {
         };
     }
 
-    function findConnectedNodesViaMongos(conn, options) {
+    function findConnectedNodesViaMongers(conn, options) {
         function getConfigServerConnectionString() {
             const shardMap = conn.adminCommand({getShardMap: 1});
 
@@ -65,7 +65,7 @@ var DiscoverTopology = (function() {
 
         // Discover mongers URIs from the connection string. If a mongers is not passed in explicitly,
         // it will not be discovered.
-        const mongersUris = new MongoURI("mongerdb://" + conn.host);
+        const mongersUris = new MongerURI("mongerdb://" + conn.host);
 
         const mongers = {
             type: Topology.kRouter,
@@ -83,7 +83,7 @@ var DiscoverTopology = (function() {
     /**
      * Returns an object describing the topology of the mongerd processes reachable from 'conn'.
      * The "connectFn" property can be optionally specified to support custom retry logic when
-     * making connection attempts without overriding the Mongo constructor itself.
+     * making connection attempts without overriding the Monger constructor itself.
      *
      * For a stand-alone mongerd, an object of the form
      *   {type: Topology.kStandalone, mongerd: <conn-string>}
@@ -117,13 +117,13 @@ var DiscoverTopology = (function() {
      * shard or a replica set shard.
      */
     function findConnectedNodes(conn, options = {connectFn: kDefaultConnectFn}) {
-        const isMongod = conn.adminCommand({isMaster: 1}).msg !== 'isdbgrid';
+        const isMongerd = conn.adminCommand({isMaster: 1}).msg !== 'isdbgrid';
 
-        if (isMongod) {
+        if (isMongerd) {
             return getDataMemberConnectionStrings(conn);
         }
 
-        return findConnectedNodesViaMongos(conn, options);
+        return findConnectedNodesViaMongers(conn, options);
     }
 
     function addNonConfigNodesToList(topology, hostList) {

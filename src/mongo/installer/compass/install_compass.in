@@ -56,7 +56,7 @@ def download_pkg(link, pkg_format=''):
         subprocess.check_call(['curl', '--fail', '-L', '-o', filename, link],
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as error:
-        print 'Unable to download MongoDB Compass, please check your internet' \
+        print 'Unable to download MongerDB Compass, please check your internet' \
             ' connection. If the issue persists go to' \
             ' https://www.mongerdb.com/download-center?jmp=hero#compass' \
             ' to download the compass installer for your platform.'
@@ -96,15 +96,15 @@ def install_mac(dmg):
         # We don't really care about what errors come up here. Just log the failure
         # and use the finally to make sure we always unmount the dmg.
         except IOError:
-            print 'Unknown error copying MongoDB Compass to /Applications/'
+            print 'Unknown error copying MongerDB Compass to /Applications/'
         finally:
             subprocess.check_call(['hdiutil', 'detach', tmp], stdout=fnull, stderr=fnull)
 
-        if path.isdir('/Applications/MongoDB Compass.app'):
-            subprocess.check_call(['open', '/Applications/MongoDB Compass.app'])
+        if path.isdir('/Applications/MongerDB Compass.app'):
+            subprocess.check_call(['open', '/Applications/MongerDB Compass.app'])
             return
-        if path.isdir('/Applications/MongoDB Compass Community.app'):
-            subprocess.check_call(['open', '/Applications/MongoDB Compass Community.app'])
+        if path.isdir('/Applications/MongerDB Compass Community.app'):
+            subprocess.check_call(['open', '/Applications/MongerDB Compass Community.app'])
             return
 
 
@@ -177,7 +177,7 @@ def download_and_install_compass():
         sys.exit(1)
 
     if platform.machine() != 'x86_64':
-        print 'Sorry, MongoDB Compass is only supported on 64 bit platforms.' \
+        print 'Sorry, MongerDB Compass is only supported on 64 bit platforms.' \
             ' If you believe you\'re seeing this message in error please open a' \
             ' ticket on the SERVER project at https://jira.mongerdb.org/'
 

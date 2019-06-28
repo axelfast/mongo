@@ -2,11 +2,11 @@
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
     <assemblyIdentity 
         type="win32" 
-        name="MongoDB.Shard.Server"
+        name="MongerDB.Shard.Server"
         version="@monger_version_major@.@monger_version_minor@.@monger_version_patch@.0"
         processorArchitecture="IA64"
     />
-    <description>MongoDB Shard Server</description>
+    <description>MongerDB Shard Server</description>
     <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
         <security>
             <requestedPrivileges>

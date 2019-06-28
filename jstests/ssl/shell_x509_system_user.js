@@ -37,20 +37,20 @@
 
     const subShellCommands = function() {
         TestData = {
-            authUser: 'C=US,ST=New York,L=New York City,O=MongoDB,OU=Kernel,CN=server',
+            authUser: 'C=US,ST=New York,L=New York City,O=MongerDB,OU=Kernel,CN=server',
             authenticationDatabase: '$external',
             keyFile: 'dummyKeyFile',
             clusterAuthMode: 'x509',
 
         };
         // Explicitly check asCluster can succeed.
-        authutil.asCluster(db.getMongo(), 'dummyKeyFile', function() {
+        authutil.asCluster(db.getMonger(), 'dummyKeyFile', function() {
             // No need to do anything here. We just need to check we don't error out in the
             // previous auth step.
         });
 
         // Indirectly check that ReplSetTest can successfully call asCluster.
-        const rst = new ReplSetTest(db.getMongo().host);
+        const rst = new ReplSetTest(db.getMonger().host);
 
         // Directly check that the use case for our auth perf tests can succeed.
         load("jstests/hooks/run_check_repl_dbhash.js");
@@ -69,7 +69,7 @@
         `(${subShellCommands.toString()})();`
     ];
 
-    const retVal = _runMongoProgram(...subShellArgs);
+    const retVal = _runMongerProgram(...subShellArgs);
     assert.eq(retVal, 0, 'monger shell did not succeed with exit code 0');
 
     rst.stopSet();

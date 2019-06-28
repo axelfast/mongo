@@ -17,7 +17,7 @@
     // implicit session of the cursor establishing command.
     TestData.disableImplicitSessions = true;
 
-    load("jstests/libs/fixture_helpers.js");     // For "isMongos".
+    load("jstests/libs/fixture_helpers.js");     // For "isMongers".
     load("jstests/libs/pin_getmore_cursor.js");  // For "withPinnedCursor".
     const st = new ShardingTest({shards: 2});
 

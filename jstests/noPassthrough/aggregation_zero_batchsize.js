@@ -6,7 +6,7 @@
     "use strict";
 
     const mongerdOptions = {};
-    const conn = MongoRunner.runMongod(mongerdOptions);
+    const conn = MongerRunner.runMongerd(mongerdOptions);
     assert.neq(null, conn, "mongerd failed to start with options " + tojson(mongerdOptions));
 
     const testDB = conn.getDB("test");
@@ -84,5 +84,5 @@
     assert.throws(() => cursor.itcount(), [], "expected getMore to fail");
     assertNumOpenCursors(0);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

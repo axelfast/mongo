@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -50,7 +50,7 @@ TEST(AddShardRequest, ParseInternalFieldsInvalidConnectionString) {
     {
         BSONObj obj = BSON(AddShardRequest::mongersAddShard << ",,,");
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(obj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(obj);
         ASSERT_NOT_OK(swAddShardRequest.getStatus());
         ASSERT_EQUALS(ErrorCodes::FailedToParse, swAddShardRequest.getStatus());
     }
@@ -70,7 +70,7 @@ TEST(AddShardRequest, ParseInternalFieldsMissingMaxSize) {
             BSON(AddShardRequest::mongersAddShard << kConnString << AddShardRequest::shardName
                                                  << kShardName);
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(obj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(obj);
         ASSERT_OK(swAddShardRequest.getStatus());
 
         auto req = swAddShardRequest.getValue();
@@ -103,7 +103,7 @@ TEST(AddShardRequest, ParseInternalFieldsMissingName) {
             BSON(AddShardRequest::mongersAddShard << kConnString << AddShardRequest::maxSizeMB
                                                  << kMaxSizeMB);
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(obj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(obj);
         ASSERT_OK(swAddShardRequest.getStatus());
 
         auto req = swAddShardRequest.getValue();
@@ -137,7 +137,7 @@ TEST(AddShardRequest, ParseInternalFieldsAllFieldsPresent) {
                                                  << AddShardRequest::maxSizeMB
                                                  << kMaxSizeMB);
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(obj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(obj);
         ASSERT_OK(swAddShardRequest.getStatus());
 
         auto req = swAddShardRequest.getValue();
@@ -175,7 +175,7 @@ TEST(AddShardRequest, ToCommandForConfig) {
                                         << AddShardRequest::maxSizeMB
                                         << kMaxSizeMB);
 
-    auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(mongersCmdObj);
+    auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(mongersCmdObj);
     ASSERT_OK(swAddShardRequest.getStatus());
     auto req = swAddShardRequest.getValue();
 
@@ -189,7 +189,7 @@ TEST(AddShardRequest, ToCommandForConfigMissingName) {
     BSONObj mongersCmdObj = BSON(
         AddShardRequest::mongersAddShard << kConnString << AddShardRequest::maxSizeMB << kMaxSizeMB);
 
-    auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(mongersCmdObj);
+    auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(mongersCmdObj);
     ASSERT_OK(swAddShardRequest.getStatus());
     auto req = swAddShardRequest.getValue();
 
@@ -203,7 +203,7 @@ TEST(AddShardRequest, ToCommandForConfigMissingMaxSize) {
     BSONObj mongersCmdObj = BSON(
         AddShardRequest::mongersAddShard << kConnString << AddShardRequest::shardName << kShardName);
 
-    auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(mongersCmdObj);
+    auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(mongersCmdObj);
     ASSERT_OK(swAddShardRequest.getStatus());
     auto req = swAddShardRequest.getValue();
 
@@ -220,7 +220,7 @@ TEST(AddShardRequest, ValidateLocalHostAllowed) {
     {
         BSONObj mongersCmdObj = BSON(AddShardRequest::mongersAddShard << kConnString);
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(mongersCmdObj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(mongersCmdObj);
         ASSERT_OK(swAddShardRequest.getStatus());
         auto req = swAddShardRequest.getValue();
 
@@ -232,7 +232,7 @@ TEST(AddShardRequest, ValidateLocalHostAllowed) {
     {
         BSONObj mongersCmdObj = BSON(AddShardRequest::mongersAddShard << kConnStringNonLocalHost);
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(mongersCmdObj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(mongersCmdObj);
         ASSERT_OK(swAddShardRequest.getStatus());
         auto req = swAddShardRequest.getValue();
 
@@ -247,7 +247,7 @@ TEST(AddShardRequest, ValidateLocalHostNotAllowed) {
     {
         BSONObj mongersCmdObj = BSON(AddShardRequest::mongersAddShard << kConnString);
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(mongersCmdObj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(mongersCmdObj);
         ASSERT_OK(swAddShardRequest.getStatus());
         auto req = swAddShardRequest.getValue();
 
@@ -260,7 +260,7 @@ TEST(AddShardRequest, ValidateLocalHostNotAllowed) {
     {
         BSONObj mongersCmdObj = BSON(AddShardRequest::mongersAddShard << kConnStringNonLocalHost);
 
-        auto swAddShardRequest = AddShardRequest::parseFromMongosCommand(mongersCmdObj);
+        auto swAddShardRequest = AddShardRequest::parseFromMongersCommand(mongersCmdObj);
         ASSERT_OK(swAddShardRequest.getStatus());
         auto req = swAddShardRequest.getValue();
 

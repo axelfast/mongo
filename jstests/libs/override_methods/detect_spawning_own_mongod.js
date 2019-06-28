@@ -5,16 +5,16 @@
 (function() {
     'use strict';
 
-    MongoRunner.runMongod = function() {
+    MongerRunner.runMongerd = function() {
         throw new Error(
-            "Detected MongoRunner.runMongod() call in js test from passthrough suite. " +
+            "Detected MongerRunner.runMongerd() call in js test from passthrough suite. " +
             "Consider moving the test to one of the jstests/noPassthrough/, " +
             "jstests/replsets/, or jstests/sharding/ directories.");
     };
 
-    MongoRunner.runMongos = function() {
+    MongerRunner.runMongers = function() {
         throw new Error(
-            "Detected MongoRunner.runMongos() call in js test from passthrough suite. " +
+            "Detected MongerRunner.runMongers() call in js test from passthrough suite. " +
             "Consider moving the test to one of the jstests/noPassthrough/, " +
             "jstests/replsets/, or jstests/sharding/ directories.");
     };

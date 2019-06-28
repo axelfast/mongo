@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -88,9 +88,9 @@ enum UpgradeHistory {
      * Also:
      * + Version document in config.version now of the form:
      *   { minVersion : X, currentVersion : Y, clusterId : OID(...) }
-     * + Mongos pings include a "mongerVersion" field indicating the mongers version
-     * + Mongos pings include a "configVersion" field indicating the current config version
-     * + Mongos explicitly ignores any collection with a "primary" field
+     * + Mongers pings include a "mongerVersion" field indicating the mongers version
+     * + Mongers pings include a "configVersion" field indicating the current config version
+     * + Mongers explicitly ignores any collection with a "primary" field
      */
     UpgradeHistory_MandatoryEpochVersion = 4,
 

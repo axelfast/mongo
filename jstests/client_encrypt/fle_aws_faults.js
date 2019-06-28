@@ -12,7 +12,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     const randomAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA_512-Random";
 
-    const conn = MongoRunner.runMongod(x509_options);
+    const conn = MongerRunner.runMongerd(x509_options);
     const test = conn.getDB("test");
     const collection = test.coll;
 
@@ -33,8 +33,8 @@ load('jstests/ssl/libs/ssl_helpers.js');
             schemaMap: {}
         };
 
-        const shell = Mongo(conn.host, clientSideFLEOptions);
-        const cleanCacheShell = Mongo(conn.host, clientSideFLEOptions);
+        const shell = Monger(conn.host, clientSideFLEOptions);
+        const cleanCacheShell = Monger(conn.host, clientSideFLEOptions);
 
         collection.drop();
 
@@ -138,5 +138,5 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     testBadDecryptError();
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

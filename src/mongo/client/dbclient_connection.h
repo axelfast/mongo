@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -66,7 +66,7 @@ class DBClientCursorBatchIterator;
 
 /**
  *  A basic connection to the database.
- *  This is the main entry point for talking to a simple Mongo setup
+ *  This is the main entry point for talking to a simple Monger setup
  *
  *  In general, this type is only allowed to be used from one thread at a time. As a special
  *  exception, it is legal to call shutdownAndDisallowReconnect() from any thread as a way to
@@ -92,7 +92,7 @@ public:
      */
     DBClientConnection(bool _autoReconnect = false,
                        double so_timeout = 0,
-                       MongoURI uri = {},
+                       MongerURI uri = {},
                        const HandshakeValidationHook& hook = HandshakeValidationHook());
 
     virtual ~DBClientConnection() {
@@ -100,7 +100,7 @@ public:
     }
 
     /**
-     * Connect to a Mongo database server.
+     * Connect to a Monger database server.
      *
      * If autoReconnect is true, you can try to use the DBClientConnection even when
      * false was returned -- it will try to connect again.
@@ -131,7 +131,7 @@ public:
      */
     Status connectSocketOnly(const HostAndPort& server);
 
-    /** Connect to a Mongo database server.  Exception throwing version.
+    /** Connect to a Monger database server.  Exception throwing version.
         Throws a AssertionException if cannot connect.
 
        If autoReconnect is true, you can try to use the DBClientConnection even when
@@ -275,8 +275,8 @@ public:
         return _isReplicaSetMember;
     }
 
-    bool isMongos() const override {
-        return _isMongos;
+    bool isMongers() const override {
+        return _isMongers;
     }
 
     Status authenticateInternalUser() override;
@@ -285,7 +285,7 @@ protected:
     int _minWireVersion{0};
     int _maxWireVersion{0};
     bool _isReplicaSetMember = false;
-    bool _isMongos = false;
+    bool _isMongers = false;
 
     void _auth(const BSONObj& params) override;
 
@@ -335,7 +335,7 @@ private:
 
     MessageCompressorManager _compressorManager;
 
-    MongoURI _uri;
+    MongerURI _uri;
 };
 
 BSONElement getErrField(const BSONObj& result);

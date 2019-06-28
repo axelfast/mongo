@@ -28,24 +28,24 @@
     replTest.awaitReplication();
 
     jsTestLog("mongerdump from primary");
-    var data = MongoRunner.dataDir + "/dumprestore3-other1/";
+    var data = MongerRunner.dataDir + "/dumprestore3-other1/";
     resetDbpath(data);
-    var ret = MongoRunner.runMongoTool("mongerdump", {
+    var ret = MongerRunner.runMongerTool("mongerdump", {
         host: primary.host,
         out: data,
     });
     assert.eq(ret, 0, "mongerdump should exit w/ 0 on primary");
 
     jsTestLog("try mongerrestore to secondary");
-    ret = MongoRunner.runMongoTool("mongerrestore", {
+    ret = MongerRunner.runMongerTool("mongerrestore", {
         host: secondary.host,
         dir: data,
     });
     assert.neq(ret, 0, "mongerrestore should exit w/ 1 on secondary");
 
     jsTestLog("mongerexport from primary");
-    dataFile = MongoRunner.dataDir + "/dumprestore3-other2.json";
-    ret = MongoRunner.runMongoTool("mongerexport", {
+    dataFile = MongerRunner.dataDir + "/dumprestore3-other2.json";
+    ret = MongerRunner.runMongerTool("mongerexport", {
         host: primary.host,
         out: dataFile,
         db: "foo",
@@ -54,7 +54,7 @@
     assert.eq(ret, 0, "mongerexport should exit w/ 0 on primary");
 
     jsTestLog("mongerimport from secondary");
-    ret = MongoRunner.runMongoTool("mongerimport", {
+    ret = MongerRunner.runMongerTool("mongerimport", {
         host: secondary.host,
         file: dataFile,
     });

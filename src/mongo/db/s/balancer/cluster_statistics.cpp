@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,13 +45,13 @@ ClusterStatistics::ShardStatistics::ShardStatistics(ShardId inShardId,
                                                     uint64_t inCurrSizeMB,
                                                     bool inIsDraining,
                                                     std::set<std::string> inShardTags,
-                                                    std::string inMongoVersion)
+                                                    std::string inMongerVersion)
     : shardId(std::move(inShardId)),
       maxSizeMB(inMaxSizeMB),
       currSizeMB(inCurrSizeMB),
       isDraining(inIsDraining),
       shardTags(std::move(inShardTags)),
-      mongerVersion(std::move(inMongoVersion)) {}
+      mongerVersion(std::move(inMongerVersion)) {}
 
 bool ClusterStatistics::ShardStatistics::isSizeMaxed() const {
     if (!maxSizeMB || !currSizeMB) {

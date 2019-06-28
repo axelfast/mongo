@@ -25,15 +25,15 @@ let corruptFile = function(file) {
 
 /**
  * Starts a mongerd on the provided data path without clearing data. Accepts 'options' as parameters
- * to runMongod.
+ * to runMongerd.
  */
-let startMongodOnExistingPath = function(dbpath, options) {
+let startMongerdOnExistingPath = function(dbpath, options) {
     let args = {dbpath: dbpath, noCleanData: true};
     for (let attr in options) {
         if (options.hasOwnProperty(attr))
             args[attr] = options[attr];
     }
-    return MongoRunner.runMongod(args);
+    return MongerRunner.runMongerd(args);
 };
 
 let assertQueryUsesIndex = function(coll, query, indexName) {
@@ -46,7 +46,7 @@ let assertQueryUsesIndex = function(coll, query, indexName) {
 };
 
 /**
- * Assert that running MongoDB with --repair on the provided dbpath exits cleanly.
+ * Assert that running MongerDB with --repair on the provided dbpath exits cleanly.
  */
 let assertRepairSucceeds = function(dbpath, port, opts) {
     let args = ["mongerd", "--repair", "--port", port, "--dbpath", dbpath, "--bind_ip_all"];
@@ -59,7 +59,7 @@ let assertRepairSucceeds = function(dbpath, port, opts) {
         }
     }
     jsTestLog("Repairing the node");
-    assert.eq(0, runMongoProgram.apply(this, args));
+    assert.eq(0, runMongerProgram.apply(this, args));
 };
 
 let assertRepairFailsWithFailpoint = function(dbpath, port, failpoint) {
@@ -67,57 +67,57 @@ let assertRepairFailsWithFailpoint = function(dbpath, port, failpoint) {
     jsTestLog("The node should fail to complete repair with --setParameter " + param);
 
     assert.eq(
-        MongoRunner.EXIT_ABRUPT,
-        runMongoProgram(
+        MongerRunner.EXIT_ABRUPT,
+        runMongerProgram(
             "mongerd", "--repair", "--port", port, "--dbpath", dbpath, "--setParameter", param));
 };
 
 /**
- * Assert that starting MongoDB with --replSet on an existing data path exits with a specific
+ * Assert that starting MongerDB with --replSet on an existing data path exits with a specific
  * error.
  */
 let assertErrorOnStartupWhenStartingAsReplSet = function(dbpath, port, rsName) {
     jsTestLog("The repaired node should fail to start up with the --replSet option");
 
-    clearRawMongoProgramOutput();
-    let node = MongoRunner.runMongod(
+    clearRawMongerProgramOutput();
+    let node = MongerRunner.runMongerd(
         {dbpath: dbpath, port: port, replSet: rsName, noCleanData: true, waitForConnect: false});
     assert.soon(function() {
-        return rawMongoProgramOutput().indexOf("Fatal Assertion 50923") >= 0;
+        return rawMongerProgramOutput().indexOf("Fatal Assertion 50923") >= 0;
     });
-    MongoRunner.stopMongod(node, null, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
+    MongerRunner.stopMongerd(node, null, {allowedExitCode: MongerRunner.EXIT_ABRUPT});
 };
 
 /**
- * Assert that starting MongoDB as a standalone on an existing data path exits with a specific
+ * Assert that starting MongerDB as a standalone on an existing data path exits with a specific
  * error because the previous repair failed.
  */
 let assertErrorOnStartupAfterIncompleteRepair = function(dbpath, port) {
     jsTestLog("The node should fail to start up because a previous repair did not complete");
 
-    clearRawMongoProgramOutput();
-    let node = MongoRunner.runMongod(
+    clearRawMongerProgramOutput();
+    let node = MongerRunner.runMongerd(
         {dbpath: dbpath, port: port, noCleanData: true, waitForConnect: false});
     assert.soon(function() {
-        return rawMongoProgramOutput().indexOf("Fatal Assertion 50922") >= 0;
+        return rawMongerProgramOutput().indexOf("Fatal Assertion 50922") >= 0;
     });
-    MongoRunner.stopMongod(node, null, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
+    MongerRunner.stopMongerd(node, null, {allowedExitCode: MongerRunner.EXIT_ABRUPT});
 };
 
 /**
- * Assert that starting MongoDB as a standalone on an existing data path succeeds. Uses a provided
+ * Assert that starting MongerDB as a standalone on an existing data path succeeds. Uses a provided
  * testFunc to run any caller-provided checks on the started node.
  */
 let assertStartAndStopStandaloneOnExistingDbpath = function(dbpath, port, testFunc) {
     jsTestLog("The repaired node should start up and serve reads as a standalone");
-    let node = MongoRunner.runMongod({dbpath: dbpath, port: port, noCleanData: true});
+    let node = MongerRunner.runMongerd({dbpath: dbpath, port: port, noCleanData: true});
     assert(node);
     testFunc(node);
-    MongoRunner.stopMongod(node);
+    MongerRunner.stopMongerd(node);
 };
 
 /**
- * Assert that starting MongoDB with --replSet succeeds. Uses a provided testFunc to run any
+ * Assert that starting MongerDB with --replSet succeeds. Uses a provided testFunc to run any
  * caller-provided checks on the started node.
  *
  * Returns the started node.
@@ -156,20 +156,20 @@ let assertStartInReplSet = function(replSet, originalNode, cleanData, expectResy
  */
 let assertErrorOnStartupWhenFilesAreCorruptOrMissing = function(
     dbpath, dbName, collName, deleteOrCorruptFunc, errmsg) {
-    // Start a MongoDB instance, create the collection file.
-    const mongerd = MongoRunner.runMongod({dbpath: dbpath, cleanData: true});
+    // Start a MongerDB instance, create the collection file.
+    const mongerd = MongerRunner.runMongerd({dbpath: dbpath, cleanData: true});
     const testColl = mongerd.getDB(dbName)[collName];
     const doc = {a: 1};
     assert.commandWorked(testColl.insert(doc));
 
-    // Stop MongoDB and corrupt/delete certain files.
+    // Stop MongerDB and corrupt/delete certain files.
     deleteOrCorruptFunc(mongerd, testColl);
 
-    // Restart the MongoDB instance and get an expected error message.
-    clearRawMongoProgramOutput();
-    assert.eq(MongoRunner.EXIT_ABRUPT,
-              runMongoProgram("mongerd", "--port", mongerd.port, "--dbpath", dbpath));
-    assert.gte(rawMongoProgramOutput().indexOf(errmsg), 0);
+    // Restart the MongerDB instance and get an expected error message.
+    clearRawMongerProgramOutput();
+    assert.eq(MongerRunner.EXIT_ABRUPT,
+              runMongerProgram("mongerd", "--port", mongerd.port, "--dbpath", dbpath));
+    assert.gte(rawMongerProgramOutput().indexOf(errmsg), 0);
 };
 
 /**
@@ -177,24 +177,24 @@ let assertErrorOnStartupWhenFilesAreCorruptOrMissing = function(
  */
 let assertErrorOnRequestWhenFilesAreCorruptOrMissing = function(
     dbpath, dbName, collName, deleteOrCorruptFunc, requestFunc, errmsg) {
-    // Start a MongoDB instance, create the collection file.
-    mongerd = MongoRunner.runMongod({dbpath: dbpath, cleanData: true});
+    // Start a MongerDB instance, create the collection file.
+    mongerd = MongerRunner.runMongerd({dbpath: dbpath, cleanData: true});
     testColl = mongerd.getDB(dbName)[collName];
     const doc = {a: 1};
     assert.commandWorked(testColl.insert(doc));
 
-    // Stop MongoDB and corrupt/delete certain files.
+    // Stop MongerDB and corrupt/delete certain files.
     deleteOrCorruptFunc(mongerd, testColl);
 
-    // Restart the MongoDB instance.
-    clearRawMongoProgramOutput();
-    mongerd = MongoRunner.runMongod({dbpath: dbpath, port: mongerd.port, noCleanData: true});
+    // Restart the MongerDB instance.
+    clearRawMongerProgramOutput();
+    mongerd = MongerRunner.runMongerd({dbpath: dbpath, port: mongerd.port, noCleanData: true});
 
     // This request crashes the server.
     testColl = mongerd.getDB(dbName)[collName];
     requestFunc(testColl);
 
     // Get an expected error message.
-    assert.gte(rawMongoProgramOutput().indexOf(errmsg), 0);
-    MongoRunner.stopMongod(mongerd, 9, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
+    assert.gte(rawMongerProgramOutput().indexOf(errmsg), 0);
+    MongerRunner.stopMongerd(mongerd, 9, {allowedExitCode: MongerRunner.EXIT_ABRUPT});
 };

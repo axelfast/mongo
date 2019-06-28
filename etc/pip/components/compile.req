@@ -1,4 +1,4 @@
-# Mongo compile
+# Monger compile
 Cheetah3 # src/monger/base/generate_error_codes.py
 psutil
 regex

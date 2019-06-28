@@ -89,12 +89,12 @@
                   "expected afterClusterTime read to return the committed document");
 
         // Test the afterClusterTime API with causal consistency enabled on the monger connection.
-        testDB.getMongo().setCausalConsistency(true);
+        testDB.getMonger().setCausalConsistency(true);
 
         // With causal consistency enabled, the shell sets read concern to level "majority" if it is
         // not specified.
         assertAfterClusterTimeReadSucceeds(testDB, {afterClusterTime: Timestamp(1, 1)});
-        testDB.getMongo().setCausalConsistency(false);
+        testDB.getMonger().setCausalConsistency(false);
     };
 
     testReadOwnWrite("local");

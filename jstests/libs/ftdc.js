@@ -43,8 +43,8 @@ function verifyGetDiagnosticData(adminDb) {
  * Validate all the common FTDC parameters are set correctly and can be manipulated.
  */
 function verifyCommonFTDCParameters(adminDb, isEnabled) {
-    // Are we running against MongoS?
-    var isMongos = ("isdbgrid" == adminDb.runCommand("ismaster").msg);
+    // Are we running against MongerS?
+    var isMongers = ("isdbgrid" == adminDb.runCommand("ismaster").msg);
 
     // Check the defaults are correct
     //
@@ -69,8 +69,8 @@ function verifyCommonFTDCParameters(adminDb, isEnabled) {
         return ret;
     }
 
-    if (!isMongos) {
-        // The MongoS specific behavior for diagnosticDataCollectionEnabled is tested in
+    if (!isMongers) {
+        // The MongerS specific behavior for diagnosticDataCollectionEnabled is tested in
         // ftdc_setdirectory.js.
         assert.commandWorked(setparam({"diagnosticDataCollectionEnabled": 1}));
     }

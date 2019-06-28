@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -47,10 +47,10 @@ namespace repl {
  * Test fixture for both 3.4 and 3.6 rollback unit tests.
  * The fixture makes available to tests:
  * - an "ephemeralForTest" storage engine for checking results of the rollback algorithm at the
- *   storage layer. The storage engine is initialized as part of the ServiceContextForMongoD test
+ *   storage layer. The storage engine is initialized as part of the ServiceContextForMongerD test
  *   fixture.
  */
-class RollbackTest : public ServiceContextMongoDTest {
+class RollbackTest : public ServiceContextMongerDTest {
 public:
     RollbackTest() = default;
 

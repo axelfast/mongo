@@ -10,7 +10,7 @@ Version
 -------
 
 Files in the "specifications" repository have no version scheme. They are not
-tied to a MongoDB server version, and it is our intention that each
+tied to a MongerDB server version, and it is our intention that each
 specification moves from "draft" to "final" with no further versions; it is
 superseded by a future spec, not revised.
 

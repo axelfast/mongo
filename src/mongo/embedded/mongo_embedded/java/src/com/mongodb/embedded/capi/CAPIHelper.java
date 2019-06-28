@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -44,11 +44,11 @@ final class CAPIHelper {
         }
     }
 
-    static MongoEmbeddedCAPIException createError(final String methodName, final Throwable t) {
-        if (t instanceof MongoEmbeddedCAPIException) {
-            return (MongoEmbeddedCAPIException) t;
+    static MongerEmbeddedCAPIException createError(final String methodName, final Throwable t) {
+        if (t instanceof MongerEmbeddedCAPIException) {
+            return (MongerEmbeddedCAPIException) t;
         }
-        return new MongoEmbeddedCAPIException(format("Error from embedded server when calling '%s': %s", methodName, t.getMessage()), t);
+        return new MongerEmbeddedCAPIException(format("Error from embedded server when calling '%s': %s", methodName, t.getMessage()), t);
     }
 
     static void createErrorFromStatus(final CAPI.monger_embedded_v1_status statusPointer) {
@@ -57,7 +57,7 @@ final class CAPIHelper {
 
     static void createErrorFromStatus(final CAPI.monger_embedded_v1_status statusPointer,
                                        final int errorCode) {
-        throw new MongoEmbeddedCAPIException(errorCode,
+        throw new MongerEmbeddedCAPIException(errorCode,
                 CAPI.monger_embedded_v1_status_get_code(statusPointer),
                 CAPI.monger_embedded_v1_status_get_explanation(statusPointer).toString(),
                 null);

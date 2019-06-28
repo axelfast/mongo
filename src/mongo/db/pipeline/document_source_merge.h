@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,7 +39,7 @@ namespace monger {
  * this class must be initialized (via a constructor) with a 'MergeDescriptor', which defines a
  * a particular merge strategy for a pair of 'whenMatched' and 'whenNotMatched' merge  modes.
  */
-class DocumentSourceMerge final : public DocumentSourceWriter<MongoProcessInterface::BatchObject> {
+class DocumentSourceMerge final : public DocumentSourceWriter<MongerProcessInterface::BatchObject> {
 public:
     static constexpr StringData kStageName = "$merge"_sd;
 
@@ -76,7 +76,7 @@ public:
         static std::unique_ptr<LiteParsed> parse(const AggregationRequest& request,
                                                  const BSONElement& spec);
 
-        bool allowedToPassthroughFromMongos() const final {
+        bool allowedToPassthroughFromMongers() const final {
             return false;
         }
     };

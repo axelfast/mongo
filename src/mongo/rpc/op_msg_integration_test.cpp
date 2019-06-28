@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -294,7 +294,7 @@ void exhaustTest(bool enableChecksum) {
     uassert(ErrorCodes::SocketException, errMsg, conn);
 
     // Only test exhaust against a single server.
-    if (conn->isReplicaSetMember() || conn->isMongos()) {
+    if (conn->isReplicaSetMember() || conn->isMongers()) {
         return;
     }
 
@@ -392,7 +392,7 @@ TEST(OpMsg, ExhaustWithDBClientCursorBehavesCorrectly) {
     uassert(ErrorCodes::SocketException, errMsg, conn);
 
     // Only test exhaust against a single server.
-    if (conn->isReplicaSetMember() || conn->isMongos()) {
+    if (conn->isReplicaSetMember() || conn->isMongers()) {
         return;
     }
 

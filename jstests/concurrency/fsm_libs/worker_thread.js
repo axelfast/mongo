@@ -46,9 +46,9 @@ var workerThread = (function() {
 
             let monger;
             if (TestData.pinningSecondary) {
-                monger = new SpecificSecondaryReaderMongo(connectionString, args.secondaryHost);
+                monger = new SpecificSecondaryReaderMonger(connectionString, args.secondaryHost);
             } else {
-                monger = new Mongo(connectionString);
+                monger = new Monger(connectionString);
             }
 
             // Retry operations that fail due to in-progress background operations. Load this early

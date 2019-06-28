@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,12 +42,12 @@ namespace monger {
 namespace {
 using DocumentSourceInternalSplitPipelineTest = AggregationContextFixture;
 
-TEST_F(DocumentSourceInternalSplitPipelineTest, NotAllowedInLookupIfMustRunOnMongos) {
+TEST_F(DocumentSourceInternalSplitPipelineTest, NotAllowedInLookupIfMustRunOnMongers) {
     auto expCtx = getExpCtx();
     auto split = DocumentSourceInternalSplitPipeline::create(
-        expCtx, StageConstraints::HostTypeRequirement::kMongoS);
+        expCtx, StageConstraints::HostTypeRequirement::kMongerS);
     ASSERT_FALSE(split->constraints().isAllowedInLookupPipeline());
-    ASSERT(split->constraints().hostRequirement == StageConstraints::HostTypeRequirement::kMongoS);
+    ASSERT(split->constraints().hostRequirement == StageConstraints::HostTypeRequirement::kMongerS);
 }
 
 }  // namespace

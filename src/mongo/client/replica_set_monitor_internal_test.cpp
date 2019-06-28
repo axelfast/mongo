@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,8 +39,8 @@ namespace {
 // -- SetState Construction --
 using InitialStateTest = ReplicaSetMonitorTest;
 
-TEST_F(InitialStateTest, InitialStateMongoURI) {
-    auto uri = MongoURI::parse("mongerdb://a,b,c/?replicaSet=name");
+TEST_F(InitialStateTest, InitialStateMongerURI) {
+    auto uri = MongerURI::parse("mongerdb://a,b,c/?replicaSet=name");
     ASSERT_OK(uri.getStatus());
     auto state = makeState(uri.getValue());
     ASSERT_EQUALS(state->name, "name");
@@ -62,7 +62,7 @@ class NodeTest : public ReplicaSetMonitorTest {
 public:
     bool isCompatible(const Node& node, ReadPreference pref, const TagSet& tagSet) {
         auto connStr = ConnectionString::forReplicaSet(kSetName, {node.host});
-        auto set = makeState(MongoURI(connStr));
+        auto set = makeState(MongerURI(connStr));
         set->nodes.push_back(node);
 
         ReadPreferenceSetting criteria(pref, tagSet);
@@ -160,7 +160,7 @@ TEST_F(NodeTest, NonExistingFieldTag) {
     Node node((HostAndPort()));
     node.tags = SampleTags;
     ASSERT(!node.matches(BSON("noSQL"
-                              << "Mongo")));
+                              << "Monger")));
 }
 
 TEST_F(NodeTest, UnorederedMatching) {

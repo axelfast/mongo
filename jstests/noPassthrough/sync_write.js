@@ -8,26 +8,26 @@
     'use strict';
 
     //  The following test verifies that writeConcern: {j: true} ensures that data is durable.
-    var dbpath = MongoRunner.dataPath + 'sync_write';
+    var dbpath = MongerRunner.dataPath + 'sync_write';
     resetDbpath(dbpath);
 
     var mongerdArgs = {dbpath: dbpath, noCleanData: true, journal: ''};
 
     // Start a mongerd.
-    var conn = MongoRunner.runMongod(mongerdArgs);
+    var conn = MongerRunner.runMongerd(mongerdArgs);
     assert.neq(null, conn, 'mongerd was unable to start up');
 
     // Now connect to the mongerd, do a journaled write and abruptly stop the server.
     var testDB = conn.getDB('test');
     assert.writeOK(testDB.synced.insert({synced: true}, {writeConcern: {j: true}}));
-    MongoRunner.stopMongod(conn, 9, {allowedExitCode: MongoRunner.EXIT_SIGKILL});
+    MongerRunner.stopMongerd(conn, 9, {allowedExitCode: MongerRunner.EXIT_SIGKILL});
 
     // Restart the mongerd.
-    conn = MongoRunner.runMongod(mongerdArgs);
+    conn = MongerRunner.runMongerd(mongerdArgs);
     assert.neq(null, conn, 'mongerd was unable to restart after receiving a SIGKILL');
 
     // Check that our journaled write still is present.
     testDB = conn.getDB('test');
     assert.eq(1, testDB.synced.count({synced: true}), 'synced write was not found');
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

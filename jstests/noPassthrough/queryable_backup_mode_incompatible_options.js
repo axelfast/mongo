@@ -12,19 +12,19 @@
     "use strict";
 
     var name = "queryable_backup_mode_repl_set";
-    var dbdir = MongoRunner.dataPath + name + "/";
+    var dbdir = MongerRunner.dataPath + name + "/";
 
     resetDbpath(dbdir);
 
     // Insert dummy document to ensure startup failure isn't due to lack of storage metadata file.
-    var conn = MongoRunner.runMongod({dbpath: dbdir, noCleanData: true});
+    var conn = MongerRunner.runMongerd({dbpath: dbdir, noCleanData: true});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     var coll = conn.getCollection('test.foo');
     coll.insertOne({a: 1});
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
-    conn = MongoRunner.runMongod(
+    conn = MongerRunner.runMongerd(
         {dbpath: dbdir, noCleanData: true, queryableBackupMode: '', replSet: 'bar'});
 
     assert.eq(
@@ -32,7 +32,7 @@
         conn,
         "mongerd should fail to start when both --queryableBackupMode and --replSet are provided");
 
-    conn = MongoRunner.runMongod(
+    conn = MongerRunner.runMongerd(
         {dbpath: dbdir, noCleanData: true, queryableBackupMode: '', configsvr: ''});
 
     assert.eq(
@@ -40,7 +40,7 @@
         conn,
         "mongerd should fail to start when both --queryableBackupMode and --configsvr are provided");
 
-    conn = MongoRunner.runMongod(
+    conn = MongerRunner.runMongerd(
         {dbpath: dbdir, noCleanData: true, queryableBackupMode: '', upgrade: ''});
 
     assert.eq(
@@ -48,7 +48,7 @@
         conn,
         "mongerd should fail to start when both --queryableBackupMode and --upgrade are provided");
 
-    conn = MongoRunner.runMongod(
+    conn = MongerRunner.runMongerd(
         {dbpath: dbdir, noCleanData: true, queryableBackupMode: '', repair: ''});
 
     assert.eq(
@@ -56,7 +56,7 @@
         conn,
         "mongerd should fail to start when both --queryableBackupMode and --repair are provided");
 
-    conn = MongoRunner.runMongod(
+    conn = MongerRunner.runMongerd(
         {dbpath: dbdir, noCleanData: true, queryableBackupMode: '', profile: 1});
 
     assert.eq(

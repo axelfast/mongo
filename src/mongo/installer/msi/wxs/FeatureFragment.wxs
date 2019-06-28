@@ -2,11 +2,11 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
     <?if $(var.Edition) = Enterprise ?>
-      <WixVariable Id="MiscToolsDesc" Value="Miscellaneous MongoDB tools (bsondump, mongerdecrypt, mongerfiles, mongerldap)" />
+      <WixVariable Id="MiscToolsDesc" Value="Miscellaneous MongerDB tools (bsondump, mongerdecrypt, mongerfiles, mongerldap)" />
     <?else?>
-      <WixVariable Id="MiscToolsDesc" Value="Miscellaneous MongoDB tools (bsondump, mongerfiles)" />
+      <WixVariable Id="MiscToolsDesc" Value="Miscellaneous MongerDB tools (bsondump, mongerfiles)" />
     <?endif?>
-    <FeatureGroup Id="fg_MongoDBAll">
+    <FeatureGroup Id="fg_MongerDBAll">
       <Feature Id="ProductFeature"
                Title="!(wix.ProductName)"
                Description="!(wix.ProductName)"
@@ -18,12 +18,12 @@
         <ComponentGroupRef Id="cg_License" />
         <Feature Id="Server"
                  Title ="Server"
-                 Description="The MongoDB server (mongerd)"
+                 Description="The MongerDB server (mongerd)"
                  Level ="1">
         </Feature>
         <Feature Id="ServerNoService"
                  Title ="ServerNoService"
-                 Description="The MongoDB server (mongerd)"
+                 Description="The MongerDB server (mongerd)"
                  Display="hidden"
                  Level ="32767">
              <ComponentRef Id="c_mongerd"/>
@@ -36,7 +36,7 @@
         </Feature>
         <Feature Id="ServerService"
                  Title ="ServerService"
-                 Description="The MongoDB server (mongerd)"
+                 Description="The MongerDB server (mongerd)"
                  Display="hidden"
                  Level ="32767">
              <ComponentRef Id="c_mongerdWithService"/>
@@ -52,7 +52,7 @@
         </Feature>
         <Feature Id="Client"
                  Title ="Client"
-                 Description="The MongoDB client/shell (monger)"
+                 Description="The MongerDB client/shell (monger)"
                  Level ="1">
           <ComponentRef Id="c_monger"/>
           <?if $(var.Edition) = Enterprise ?>
@@ -61,7 +61,7 @@
         </Feature>
         <Feature Id="MonitoringTools"
                  Title ="Monitoring Tools"
-                 Description="MongoDB monitoring tools (mongerstat, mongertop)"
+                 Description="MongerDB monitoring tools (mongerstat, mongertop)"
                  Level ="1">
           <ComponentRef Id="c_mongerstat"/>
           <ComponentRef Id="c_mongertop"/>
@@ -71,7 +71,7 @@
         </Feature>
         <Feature Id="ImportExportTools"
                  Title ="Import/Export Tools"
-                 Description="MongoDB import/export tools (mongerdump/mongerrestore and mongerexport/mongerimport)"
+                 Description="MongerDB import/export tools (mongerdump/mongerrestore and mongerexport/mongerimport)"
                  Level ="1">
           <ComponentRef Id="c_mongerdump"/>
           <ComponentRef Id="c_mongerrestore"/>
@@ -83,7 +83,7 @@
         </Feature>
         <Feature Id="Router"
                  Title ="Router"
-                 Description="The MongoDB Router (mongers)"
+                 Description="The MongerDB Router (mongers)"
                  Level ="1">
           <ComponentRef Id="c_mongers"/>
           <ComponentRef Id="c_mongersPdb"/>
@@ -104,9 +104,9 @@
           <?endif ?>
         </Feature>
         <?if $(var.Edition) = Enterprise ?>
-        <Feature Id="MongoCryptD"
-                Title ="MongoCryptD"
-                Description="MongoDB Field Level Encryption Daemon"
+        <Feature Id="MongerCryptD"
+                Title ="MongerCryptD"
+                Description="MongerDB Field Level Encryption Daemon"
                 Level ="1">
           <ComponentRef Id="c_mongercryptd"/>
           <ComponentRef Id="c_mongercryptdPdb"/>

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,15 +46,15 @@ class ServiceContext;
  * The IndexBuildsCoordinator is instantiated on the ServiceContext as a decoration, and is
  * accessible via the ServiceContext.
  */
-class IndexBuildsCoordinatorMongod : public IndexBuildsCoordinator {
-    IndexBuildsCoordinatorMongod(const IndexBuildsCoordinatorMongod&) = delete;
-    IndexBuildsCoordinatorMongod& operator=(const IndexBuildsCoordinatorMongod&) = delete;
+class IndexBuildsCoordinatorMongerd : public IndexBuildsCoordinator {
+    IndexBuildsCoordinatorMongerd(const IndexBuildsCoordinatorMongerd&) = delete;
+    IndexBuildsCoordinatorMongerd& operator=(const IndexBuildsCoordinatorMongerd&) = delete;
 
 public:
     /**
      * Sets up the thread pool.
      */
-    IndexBuildsCoordinatorMongod();
+    IndexBuildsCoordinatorMongerd();
 
     /**
      * Shuts down the thread pool, signals interrupt to all index builds, then waits for all of the

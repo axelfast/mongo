@@ -1,5 +1,5 @@
 /**
- * Loading this file overrides functions on Mongo.prototype so that operations which return a
+ * Loading this file overrides functions on Monger.prototype so that operations which return a
  * "DatabaseDropPending" error response are automatically retried until they succeed.
  */
 (function() {
@@ -7,8 +7,8 @@
 
     const defaultTimeout = 10 * 60 * 1000;
 
-    const mongerRunCommandOriginal = Mongo.prototype.runCommand;
-    const mongerRunCommandWithMetadataOriginal = Mongo.prototype.runCommandWithMetadata;
+    const mongerRunCommandOriginal = Monger.prototype.runCommand;
+    const mongerRunCommandWithMetadataOriginal = Monger.prototype.runCommandWithMetadata;
 
     function awaitLatestOperationMajorityConfirmed(primary) {
         // Get the latest optime from the primary.
@@ -38,8 +38,8 @@
         // We create a copy of 'commandObj' to avoid mutating the parameter the caller specified.
         // Instead, we use the makeFuncArgs() function to build the array of arguments to 'func' by
         // giving it the 'commandObj' that should be used. This is done to work around the
-        // difference in the order of parameters for the Mongo.prototype.runCommand() and
-        // Mongo.prototype.runCommandWithMetadata() functions.
+        // difference in the order of parameters for the Monger.prototype.runCommand() and
+        // Monger.prototype.runCommandWithMetadata() functions.
         commandObj = Object.assign({}, commandObj);
         const commandName = Object.keys(commandObj)[0];
         let resPrevious;
@@ -162,7 +162,7 @@
         return res;
     }
 
-    Mongo.prototype.runCommand = function(dbName, commandObj, options) {
+    Monger.prototype.runCommand = function(dbName, commandObj, options) {
         return runCommandWithRetries(this,
                                      dbName,
                                      commandObj,
@@ -170,7 +170,7 @@
                                      (commandObj) => [dbName, commandObj, options]);
     };
 
-    Mongo.prototype.runCommandWithMetadata = function(dbName, metadata, commandArgs) {
+    Monger.prototype.runCommandWithMetadata = function(dbName, metadata, commandArgs) {
         return runCommandWithRetries(this,
                                      dbName,
                                      commandArgs,

@@ -18,7 +18,7 @@
     assert.commandWorked(mydb.foo.createIndex({x: 1}));
     assert.commandWorked(mydb.createCollection("bar", wcMajority));
 
-    var session = db.getMongo().startSession();
+    var session = db.getMonger().startSession();
     var sessionDb = session.getDatabase(dbName);
 
     session.startTransaction();

@@ -17,7 +17,7 @@
     from.drop();
 
     if (FixtureHelpers.isSharded(from)) {
-        setParameterOnAllHosts(DiscoverTopology.findNonConfigNodes(db.getMongo()),
+        setParameterOnAllHosts(DiscoverTopology.findNonConfigNodes(db.getMonger()),
                                "internalQueryAllowShardedLookup",
                                true);
     }

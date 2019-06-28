@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -44,7 +44,7 @@
 namespace monger {
 
 class DBClientBase;
-class MongoURI;
+class MongerURI;
 
 /**
  * ConnectionString handles parsing different ways to connect to monger and determining method
@@ -124,7 +124,7 @@ public:
     std::unique_ptr<DBClientBase> connect(StringData applicationName,
                                           std::string& errmsg,
                                           double socketTimeout = 0,
-                                          const MongoURI* uri = nullptr) const;
+                                          const MongerURI* uri = nullptr) const;
 
     static StatusWith<ConnectionString> parse(const std::string& url);
 

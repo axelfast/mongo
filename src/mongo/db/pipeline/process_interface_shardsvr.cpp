@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -79,7 +79,7 @@ void attachWriteConcern(BatchedCommandRequest* request, const WriteConcernOption
 
 }  // namespace
 
-void MongoInterfaceShardServer::checkRoutingInfoEpochOrThrow(
+void MongerInterfaceShardServer::checkRoutingInfoEpochOrThrow(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
     ChunkVersion targetCollectionVersion) const {
@@ -88,7 +88,7 @@ void MongoInterfaceShardServer::checkRoutingInfoEpochOrThrow(
 }
 
 std::pair<std::vector<FieldPath>, bool>
-MongoInterfaceShardServer::collectDocumentKeyFieldsForHostedCollection(OperationContext* opCtx,
+MongerInterfaceShardServer::collectDocumentKeyFieldsForHostedCollection(OperationContext* opCtx,
                                                                        const NamespaceString& nss,
                                                                        UUID uuid) const {
     invariant(serverGlobalParams.clusterRole == ClusterRole::ShardServer);
@@ -112,7 +112,7 @@ MongoInterfaceShardServer::collectDocumentKeyFieldsForHostedCollection(Operation
     return {_shardKeyToDocumentKeyFields(metadata->getKeyPatternFields()), true};
 }
 
-Status MongoInterfaceShardServer::insert(const boost::intrusive_ptr<ExpressionContext>& expCtx,
+Status MongerInterfaceShardServer::insert(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                                          const NamespaceString& ns,
                                          std::vector<BSONObj>&& objs,
                                          const WriteConcernOptions& wc,
@@ -131,7 +131,7 @@ Status MongoInterfaceShardServer::insert(const boost::intrusive_ptr<ExpressionCo
     return response.toStatus();
 }
 
-StatusWith<MongoProcessInterface::UpdateResult> MongoInterfaceShardServer::update(
+StatusWith<MongerProcessInterface::UpdateResult> MongerInterfaceShardServer::update(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& ns,
     BatchedObjects&& batch,
@@ -155,7 +155,7 @@ StatusWith<MongoProcessInterface::UpdateResult> MongoInterfaceShardServer::updat
     return {{response.getN(), response.getNModified()}};
 }
 
-unique_ptr<Pipeline, PipelineDeleter> MongoInterfaceShardServer::attachCursorSourceToPipeline(
+unique_ptr<Pipeline, PipelineDeleter> MongerInterfaceShardServer::attachCursorSourceToPipeline(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* ownedPipeline) {
     std::unique_ptr<Pipeline, PipelineDeleter> pipeline(ownedPipeline,
                                                         PipelineDeleter(expCtx->opCtx));
@@ -204,7 +204,7 @@ unique_ptr<Pipeline, PipelineDeleter> MongoInterfaceShardServer::attachCursorSou
     return attachCursorSourceToPipelineForLocalRead(expCtx, pipeline.release());
 }
 
-std::unique_ptr<ShardFilterer> MongoInterfaceShardServer::getShardFilterer(
+std::unique_ptr<ShardFilterer> MongerInterfaceShardServer::getShardFilterer(
     const boost::intrusive_ptr<ExpressionContext>& expCtx) const {
     auto shardingMetadata =
         CollectionShardingState::get(expCtx->opCtx, expCtx->ns)->getOrphansFilter(expCtx->opCtx);

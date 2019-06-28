@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,7 +46,7 @@ namespace {
  * Using a mocked Collection object ensures that we are pulling in a minimal set of library
  * dependencies.
  * For integration tests, it may be necessary to make this test fixture inherit from
- * ServiceContextMongoDTest.
+ * ServiceContextMongerDTest.
  */
 class MultiIndexBlockTest : public ServiceContextTest {
 private:

@@ -100,9 +100,9 @@ function setupReplicaSet(testName, rollbackNodeVersion, syncSourceVersion) {
             syncSource: ${syncSourceVersion}}.`);
 
     let sortedVersions =
-        [rollbackNodeVersion, syncSourceVersion].sort(MongoRunner.compareBinVersions);
-    let lowerVersion = MongoRunner.getBinVersionFor(sortedVersions[0]);
-    let higherVersion = MongoRunner.getBinVersionFor(sortedVersions[1]);
+        [rollbackNodeVersion, syncSourceVersion].sort(MongerRunner.compareBinVersions);
+    let lowerVersion = MongerRunner.getBinVersionFor(sortedVersions[0]);
+    let higherVersion = MongerRunner.getBinVersionFor(sortedVersions[1]);
 
     jsTestLog(`[${testName}] Starting up first two nodes with version: ${higherVersion}`);
     var initialNodes = {n1: {binVersion: higherVersion}, n2: {binVersion: higherVersion}};

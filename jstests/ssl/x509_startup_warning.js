@@ -3,18 +3,18 @@
 (function() {
     'use strict';
 
-    function runTest(checkMongos, opts, expectWarningCertifcates, expectWarningHostnames) {
-        clearRawMongoProgramOutput();
+    function runTest(checkMongers, opts, expectWarningCertifcates, expectWarningHostnames) {
+        clearRawMongerProgramOutput();
         let monger;
 
-        if (checkMongos) {
-            monger = MongoRunner.runMongos(Object.assign({
+        if (checkMongers) {
+            monger = MongerRunner.runMongers(Object.assign({
                 configdb: "fakeRS/localhost:27017",
                 waitForConnect: false,
             },
                                                         opts));
         } else {
-            monger = MongoRunner.runMongod(Object.assign({
+            monger = MongerRunner.runMongerd(Object.assign({
                 auth: '',
                 sslMode: 'preferSSL',
                 sslPEMKeyFile: 'jstests/libs/server.pem',
@@ -25,7 +25,7 @@
         }
 
         assert.soon(function() {
-            const output = rawMongoProgramOutput();
+            const output = rawMongerProgramOutput();
             return (expectWarningCertifcates ==
                         output.includes('WARNING: While invalid X509 certificates may be used') &&
                     expectWarningHostnames ==
@@ -33,22 +33,22 @@
                             'WARNING: This server will not perform X.509 hostname validation'));
         });
 
-        stopMongoProgramByPid(monger.pid);
+        stopMongerProgramByPid(monger.pid);
     }
 
-    function runTests(checkMongos) {
+    function runTests(checkMongers) {
         // Don't expect a warning for certificates and hostnames when we're not using both options
         // together.
-        runTest(checkMongos, {}, false, false);
+        runTest(checkMongers, {}, false, false);
 
         // Do expect a warning for certificates when we're combining options.
-        runTest(checkMongos, {sslAllowInvalidCertificates: ''}, true, false);
+        runTest(checkMongers, {sslAllowInvalidCertificates: ''}, true, false);
 
         // Do expect a warning for hostnames.
-        runTest(checkMongos, {sslAllowInvalidHostnames: ''}, false, true);
+        runTest(checkMongers, {sslAllowInvalidHostnames: ''}, false, true);
 
         // Do expect a warning for certificates and hostnames.
-        runTest(checkMongos,
+        runTest(checkMongers,
                 {sslAllowInvalidCertificates: '', sslAllowInvalidHostnames: ''},
                 true,
                 true);

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,16 +43,16 @@ class GeometryContainer;
 
 // An enum describing the version of an S2 index.
 enum S2IndexVersion {
-    // The first version of the S2 index, introduced in MongoDB 2.4.0.  Compatible with MongoDB
+    // The first version of the S2 index, introduced in MongerDB 2.4.0.  Compatible with MongerDB
     // 2.4.0 and later.  Supports the following GeoJSON objects: Point, LineString, Polygon.
     S2_INDEX_VERSION_1 = 1,
 
-    // The second version of the S2 index, introduced in MongoDB 2.6.0.  Compatible with
-    // MongoDB 2.6.0 and later.  Introduced support for the following GeoJSON objects:
+    // The second version of the S2 index, introduced in MongerDB 2.6.0.  Compatible with
+    // MongerDB 2.6.0 and later.  Introduced support for the following GeoJSON objects:
     // MultiPoint, MultiLineString, MultiPolygon, GeometryCollection.
     S2_INDEX_VERSION_2 = 2,
 
-    // The third version of the S2 index, introduced in MongoDB 3.2.0. Introduced
+    // The third version of the S2 index, introduced in MongerDB 3.2.0. Introduced
     // performance improvements and changed the key type from string to numeric
     S2_INDEX_VERSION_3 = 3
 };

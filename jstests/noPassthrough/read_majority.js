@@ -44,7 +44,7 @@ load("jstests/libs/analyze_plan.js");
             null, "replSetInitiate", {doNotWaitForStableRecoveryTimestamp: true});
 
         const session =
-            replTest.getPrimary().getDB("test").getMongo().startSession({causalConsistency: false});
+            replTest.getPrimary().getDB("test").getMonger().startSession({causalConsistency: false});
         const db = session.getDatabase("test");
         const t = db.coll;
 
@@ -79,7 +79,7 @@ load("jstests/libs/analyze_plan.js");
 
         // Ensure killOp will work on an op that is waiting for snapshots to be created
         var blockedReader = startParallelShell(
-            "const session = db.getMongo().startSession({causalConsistency: false}); " +
+            "const session = db.getMonger().startSession({causalConsistency: false}); " +
                 "const sessionDB = session.getDatabase(db.getName()); " +
                 "sessionDB.coll.runCommand('find', {batchSize: 2, readConcern: {level: \"" + level +
                 "\"}});",
@@ -214,12 +214,12 @@ load("jstests/libs/analyze_plan.js");
         replTest.stopSet();
     }
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd was unable to start up");
     const db = conn.getDB("test");
     const supportsCommittedReads =
         assert.commandWorked(db.serverStatus()).storageEngine.supportsCommittedReads;
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     if (supportsCommittedReads) {
         testReadConcernLevel("majority");

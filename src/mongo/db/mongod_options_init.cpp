@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,15 +37,15 @@
 #include "monger/util/quick_exit.h"
 
 namespace monger {
-MONGO_GENERAL_STARTUP_OPTIONS_REGISTER(MongodOptions)(InitializerContext* context) {
-    return addMongodOptions(&moe::startupOptions);
+MONGO_GENERAL_STARTUP_OPTIONS_REGISTER(MongerdOptions)(InitializerContext* context) {
+    return addMongerdOptions(&moe::startupOptions);
 }
 
-MONGO_INITIALIZER_GENERAL(MongodOptions,
+MONGO_INITIALIZER_GENERAL(MongerdOptions,
                           ("BeginStartupOptionValidation", "AllFailPointsRegistered"),
                           ("EndStartupOptionValidation"))
 (InitializerContext* context) {
-    if (!handlePreValidationMongodOptions(moe::startupOptionsParsed, context->args())) {
+    if (!handlePreValidationMongerdOptions(moe::startupOptionsParsed, context->args())) {
         quickExit(EXIT_SUCCESS);
     }
     // Run validation, but tell the Environment that we don't want it to be set as "valid",
@@ -54,11 +54,11 @@ MONGO_INITIALIZER_GENERAL(MongodOptions,
     if (!ret.isOK()) {
         return ret;
     }
-    ret = validateMongodOptions(moe::startupOptionsParsed);
+    ret = validateMongerdOptions(moe::startupOptionsParsed);
     if (!ret.isOK()) {
         return ret;
     }
-    ret = canonicalizeMongodOptions(&moe::startupOptionsParsed);
+    ret = canonicalizeMongerdOptions(&moe::startupOptionsParsed);
     if (!ret.isOK()) {
         return ret;
     }
@@ -73,7 +73,7 @@ MONGO_INITIALIZER_GENERAL(CoreOptions_Store,
                           ("BeginStartupOptionStorage"),
                           ("EndStartupOptionStorage"))
 (InitializerContext* context) {
-    Status ret = storeMongodOptions(moe::startupOptionsParsed);
+    Status ret = storeMongerdOptions(moe::startupOptionsParsed);
     if (!ret.isOK()) {
         std::cerr << ret.toString() << std::endl;
         std::cerr << "try '" << context->args()[0] << " --help' for more information" << std::endl;

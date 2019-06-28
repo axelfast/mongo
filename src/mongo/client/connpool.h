@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -323,7 +323,7 @@ public:
      */
     DBClientBase* get(const std::string& host, double socketTimeout = 0);
     DBClientBase* get(const ConnectionString& host, double socketTimeout = 0);
-    DBClientBase* get(const MongoURI& uri, double socketTimeout = 0);
+    DBClientBase* get(const MongerURI& uri, double socketTimeout = 0);
 
     /**
      * Gets the number of connections available in the pool.
@@ -455,7 +455,7 @@ public:
         */
     explicit ScopedDbConnection(const std::string& host, double socketTimeout = 0);
     explicit ScopedDbConnection(const ConnectionString& host, double socketTimeout = 0);
-    explicit ScopedDbConnection(const MongoURI& host, double socketTimeout = 0);
+    explicit ScopedDbConnection(const MongerURI& host, double socketTimeout = 0);
 
     ScopedDbConnection() : _host(""), _conn(nullptr), _socketTimeoutSecs(0) {}
 

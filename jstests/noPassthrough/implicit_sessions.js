@@ -9,12 +9,12 @@
      * its logical session id.
      */
     function inspectCommandForSessionId(func, {shouldIncludeId, expectedId, differentFromId}) {
-        const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+        const mongerRunCommandOriginal = Monger.prototype.runCommand;
 
         const sentinel = {};
         let cmdObjSeen = sentinel;
 
-        Mongo.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
+        Monger.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
             cmdObjSeen = cmdObj;
             return mongerRunCommandOriginal.apply(this, arguments);
         };
@@ -22,11 +22,11 @@
         try {
             assert.doesNotThrow(func);
         } finally {
-            Mongo.prototype.runCommand = mongerRunCommandOriginal;
+            Monger.prototype.runCommand = mongerRunCommandOriginal;
         }
 
         if (cmdObjSeen === sentinel) {
-            throw new Error("Mongo.prototype.runCommand() was never called: " + func.toString());
+            throw new Error("Monger.prototype.runCommand() was never called: " + func.toString());
         }
 
         // If the command is in a wrapped form, then we look for the actual command object inside
@@ -64,7 +64,7 @@
 
     // Tests regular behavior of implicit sessions.
     function runTest() {
-        const conn = MongoRunner.runMongod();
+        const conn = MongerRunner.runMongerd();
 
         // Commands run on a database without an explicit session should use an implicit one.
         const testDB = conn.getDB("test");
@@ -111,7 +111,7 @@
         }, {shouldIncludeId: true, expectedId: implicitId});
 
         // A new database from a new connection should use a different implicit session.
-        const newCollNewConn = new Mongo(conn.host).getDB("test").getCollection("foo");
+        const newCollNewConn = new Monger(conn.host).getDB("test").getCollection("foo");
         inspectCommandForSessionId(function() {
             assert.writeOK(newCollNewConn.insert({x: 1}));
         }, {shouldIncludeId: true, differentFromId: implicitId});
@@ -149,12 +149,12 @@
         }, {shouldIncludeId: true, expectedId: implicitId});
 
         session.endSession();
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     }
 
     // Tests behavior when the test flag to disable implicit sessions is changed.
     function runTestTransitionToDisabled() {
-        const conn = MongoRunner.runMongod();
+        const conn = MongerRunner.runMongerd();
 
         // Existing implicit sessions should be erased when the disable flag is set.
         const coll = conn.getDB("test").getCollection("foo");
@@ -182,7 +182,7 @@
             assert.writeOK(newColl.insert({x: 1}));
         }, {shouldIncludeId: true, expectedId: implicitId});
 
-        const newCollNewConn = new Mongo(conn.host).getDB("test").getCollection("foo");
+        const newCollNewConn = new Monger(conn.host).getDB("test").getCollection("foo");
         inspectCommandForSessionId(function() {
             assert.writeOK(newCollNewConn.insert({x: 1}));
         }, {shouldIncludeId: true, differentFromId: implicitId});
@@ -201,12 +201,12 @@
         }, {shouldIncludeId: true, expectedId: explicitId});
 
         session.endSession();
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     }
 
     // Tests behavior of implicit sessions when they are disabled via a test flag.
     function runTestDisabled() {
-        const conn = MongoRunner.runMongod();
+        const conn = MongerRunner.runMongerd();
 
         // Commands run without an explicit session should not use an implicit one.
         const coll = conn.getDB("test").getCollection("foo");
@@ -232,7 +232,7 @@
         awaitShell();
 
         session.endSession();
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     }
 
     runTest();

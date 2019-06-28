@@ -9,7 +9,7 @@
 (function() {
     'use strict';
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     const db = conn.getDB('test');
 
     assert.commandWorked(db.runCommand({insert: 'a', documents: [{x: 1}]}));
@@ -32,5 +32,5 @@
     assert.commandWorked(db.runCommand({delete: 'aaabb', deletes: [{q: {x: 2}, limit: 1}]}));
 
     renameSystemViews();
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

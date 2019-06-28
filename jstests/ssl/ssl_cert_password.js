@@ -8,23 +8,23 @@
 load('jstests/ssl/libs/ssl_helpers.js');
 requireSSLProvider('openssl', function() {
     var baseName = "jstests_ssl_ssl_cert_password";
-    var dbpath = MongoRunner.dataPath + baseName;
-    var external_scratch_dir = MongoRunner.dataPath + baseName + "/external/";
+    var dbpath = MongerRunner.dataPath + baseName;
+    var external_scratch_dir = MongerRunner.dataPath + baseName + "/external/";
     resetDbpath(dbpath);
     mkdir(external_scratch_dir);
 
     // Password is correct
-    var md = MongoRunner.runMongod({
+    var md = MongerRunner.runMongerd({
         dbpath: dbpath,
         sslMode: "requireSSL",
         sslPEMKeyFile: "jstests/libs/password_protected.pem",
         sslPEMKeyPassword: "qwerty"
     });
-    // MongoRunner.runMongod connects a Mongo shell, so if we get here, the test is successful.
+    // MongerRunner.runMongerd connects a Monger shell, so if we get here, the test is successful.
 
     // Password incorrect; error logged is:
     //  error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt
-    var exit_code = runMongoProgram("monger",
+    var exit_code = runMongerProgram("monger",
                                     "--port",
                                     md.port,
                                     "--ssl",
@@ -45,7 +45,7 @@ requireSSLProvider('openssl', function() {
     c.save({a: 22});
     assert.eq(1, c.count(), "failed to insert document into dumprestore_ssl.foo collection");
 
-    exit_code = MongoRunner.runMongoTool("mongerdump", {
+    exit_code = MongerRunner.runMongerTool("mongerdump", {
         out: external_scratch_dir,
         port: md.port,
         ssl: "",
@@ -59,7 +59,7 @@ requireSSLProvider('openssl', function() {
     c.drop();
     assert.eq(0, c.count(), "dumprestore_ssl.foo collection is not empty after drop");
 
-    exit_code = MongoRunner.runMongoTool("mongerrestore", {
+    exit_code = MongerRunner.runMongerTool("mongerrestore", {
         dir: external_scratch_dir,
         port: md.port,
         ssl: "",
@@ -87,7 +87,7 @@ requireSSLProvider('openssl', function() {
 
     var exportimport_file = "data.json";
 
-    exit_code = MongoRunner.runMongoTool("mongerexport", {
+    exit_code = MongerRunner.runMongerTool("mongerexport", {
         out: external_scratch_dir + exportimport_file,
         db: exportimport_ssl_dbname,
         collection: "foo",
@@ -103,7 +103,7 @@ requireSSLProvider('openssl', function() {
     c.drop();
     assert.eq(0, c.count(), "afterdrop", "-d", exportimport_ssl_dbname, "-c", "foo");
 
-    exit_code = MongoRunner.runMongoTool("mongerimport", {
+    exit_code = MongerRunner.runMongerTool("mongerimport", {
         file: external_scratch_dir + exportimport_file,
         db: exportimport_ssl_dbname,
         collection: "foo",
@@ -130,7 +130,7 @@ requireSSLProvider('openssl', function() {
     source_filename = 'jstests/ssl/ssl_cert_password.js';
     filename = 'ssl_cert_password.js';
 
-    exit_code = MongoRunner.runMongoTool("mongerfiles",
+    exit_code = MongerRunner.runMongerTool("mongerfiles",
                                          {
                                            db: mongerfiles_ssl_dbname,
                                            port: md.port,
@@ -153,7 +153,7 @@ requireSSLProvider('openssl', function() {
     assert(md5_computed);
     assert.eq(md5, md5_computed, "md5 computed incorrectly by server");
 
-    exit_code = MongoRunner.runMongoTool("mongerfiles",
+    exit_code = MongerRunner.runMongerTool("mongerfiles",
                                          {
                                            db: mongerfiles_ssl_dbname,
                                            local: external_scratch_dir + filename,
@@ -173,9 +173,9 @@ requireSSLProvider('openssl', function() {
 
     if (!_isWindows()) {
         // Stop the server
-        var exitCode = MongoRunner.stopMongod(md);
+        var exitCode = MongerRunner.stopMongerd(md);
         assert(exitCode == 0);
     } else {
-        MongoRunner.stopMongod(md);
+        MongerRunner.stopMongerd(md);
     }
 });

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2015-present.
+// Copyright (C) MongerDB, Inc. 2015-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -27,7 +27,7 @@ var (
 	typeObjectId       = reflect.TypeOf(ObjectId(""))
 	typeDBPointer      = reflect.TypeOf(DBPointer{"", ObjectId("")})
 	typeSymbol         = reflect.TypeOf(Symbol(""))
-	typeMongoTimestamp = reflect.TypeOf(MongoTimestamp(0))
+	typeMongerTimestamp = reflect.TypeOf(MongerTimestamp(0))
 	typeOrderKey       = reflect.TypeOf(MinKey)
 	typeDocElem        = reflect.TypeOf(DocElem{})
 	typeRawDocElem     = reflect.TypeOf(RawDocElem{})
@@ -297,7 +297,7 @@ func (e *encoder) addElem(name string, v reflect.Value, minSize bool) {
 
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		switch v.Type() {
-		case typeMongoTimestamp:
+		case typeMongerTimestamp:
 			e.addElemName('\x11', name)
 			e.addInt64(v.Int())
 
@@ -411,7 +411,7 @@ func (e *encoder) addElem(name string, v reflect.Value, minSize bool) {
 			}
 
 		case time.Time:
-			// MongoDB handles timestamps as milliseconds.
+			// MongerDB handles timestamps as milliseconds.
 			e.addElemName('\x09', name)
 			e.addInt64(s.Unix()*1000 + int64(s.Nanosecond()/1e6))
 

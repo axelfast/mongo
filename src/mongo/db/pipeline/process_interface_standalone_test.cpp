@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,9 +36,9 @@
 namespace monger {
 namespace {
 
-class MongoProcessInterfaceForTest : public MongoInterfaceStandalone {
+class MongerProcessInterfaceForTest : public MongerInterfaceStandalone {
 public:
-    using MongoInterfaceStandalone::MongoInterfaceStandalone;
+    using MongerInterfaceStandalone::MongerInterfaceStandalone;
 
     bool fieldsHaveSupportingUniqueIndex(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                                          const NamespaceString& nss,
@@ -59,7 +59,7 @@ public:
 class ProcessInterfaceStandaloneTest : public AggregationContextFixture {
 public:
     auto makeProcessInterface() {
-        return std::make_unique<MongoProcessInterfaceForTest>(getExpCtx()->opCtx);
+        return std::make_unique<MongerProcessInterfaceForTest>(getExpCtx()->opCtx);
     }
 };
 
@@ -79,20 +79,20 @@ TEST_F(ProcessInterfaceStandaloneTest, FailsToEnsureFieldsUniqueIfFieldsHaveDupl
 }
 
 TEST_F(ProcessInterfaceStandaloneTest,
-       FailsToEnsureFieldsUniqueIfTargetCollectionVersionIsSpecifiedOnMongos) {
+       FailsToEnsureFieldsUniqueIfTargetCollectionVersionIsSpecifiedOnMongers) {
     auto expCtx = getExpCtx();
     auto targetCollectionVersion = boost::make_optional(ChunkVersion(0, 0, OID::gen()));
     auto processInterface = makeProcessInterface();
 
     // Test that 'targetCollectionVersion' is not accepted if not from mongers.
-    expCtx->fromMongos = false;
+    expCtx->fromMongers = false;
     ASSERT_THROWS_CODE(processInterface->ensureFieldsUniqueOrResolveDocumentKey(
                            expCtx, {{"_id"}}, targetCollectionVersion, expCtx->ns),
                        AssertionException,
                        51123);
 
     // Test that 'targetCollectionVersion' is accepted if from mongers.
-    expCtx->fromMongos = true;
+    expCtx->fromMongers = true;
     auto[joinKey, chunkVersion] = processInterface->ensureFieldsUniqueOrResolveDocumentKey(
         expCtx, {{"_id"}}, targetCollectionVersion, expCtx->ns);
     ASSERT_EQ(joinKey.size(), 1UL);
@@ -101,12 +101,12 @@ TEST_F(ProcessInterfaceStandaloneTest,
     ASSERT_EQ(*chunkVersion, *targetCollectionVersion);
 }
 
-TEST_F(ProcessInterfaceStandaloneTest, FailsToEnsureFieldsUniqueIfJoinFieldsAreNotSentFromMongos) {
+TEST_F(ProcessInterfaceStandaloneTest, FailsToEnsureFieldsUniqueIfJoinFieldsAreNotSentFromMongers) {
     auto expCtx = getExpCtx();
     auto targetCollectionVersion = boost::make_optional(ChunkVersion(0, 0, OID::gen()));
     auto processInterface = makeProcessInterface();
 
-    expCtx->fromMongos = true;
+    expCtx->fromMongers = true;
     ASSERT_THROWS_CODE(processInterface->ensureFieldsUniqueOrResolveDocumentKey(
                            expCtx, boost::none, targetCollectionVersion, expCtx->ns),
                        AssertionException,
@@ -119,7 +119,7 @@ TEST_F(ProcessInterfaceStandaloneTest,
     auto targetCollectionVersion = boost::none;
     auto processInterface = makeProcessInterface();
 
-    expCtx->fromMongos = false;
+    expCtx->fromMongers = false;
     processInterface->hasSupportingIndexForFields = false;
     ASSERT_THROWS_CODE(processInterface->ensureFieldsUniqueOrResolveDocumentKey(
                            expCtx, {{"x"}}, targetCollectionVersion, expCtx->ns),

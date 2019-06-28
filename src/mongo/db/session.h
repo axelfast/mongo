@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,7 +37,7 @@
 namespace monger {
 
 /**
- * A decorable container for state associated with an active session running on a MongoD or MongoS
+ * A decorable container for state associated with an active session running on a MongerD or MongerS
  * server. Refer to SessionCatalog for more information on the semantics of sessions.
  */
 class Session : public Decorable<Session> {

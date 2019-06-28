@@ -59,9 +59,9 @@
         }
     };
 
-    const m = MongoRunner.runMongod();
+    const m = MongerRunner.runMongerd();
     runTest(m, m);
-    MongoRunner.stopMongod(m);
+    MongerRunner.stopMongerd(m);
 
     const st = new ShardingTest({
         shards: 1,

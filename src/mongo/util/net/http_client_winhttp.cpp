@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -198,7 +198,7 @@ private:
             accessType = WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY;
         }
 
-        session = WinHttpOpen(L"MongoDB HTTP Client/Windows",
+        session = WinHttpOpen(L"MongerDB HTTP Client/Windows",
                               accessType,
                               WINHTTP_NO_PROXY_NAME,
                               WINHTTP_NO_PROXY_BYPASS,

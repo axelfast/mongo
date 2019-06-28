@@ -61,9 +61,9 @@
     }
 
     {
-        var mongerd = MongoRunner.runMongod({nojournal: ""});
+        var mongerd = MongerRunner.runMongerd({nojournal: ""});
         runTest(mongerd);
-        MongoRunner.stopMongod(mongerd);
+        MongerRunner.stopMongerd(mongerd);
     }
 
     {

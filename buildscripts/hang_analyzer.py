@@ -337,7 +337,7 @@ class GDBDumper(object):
         mongerdb_javascript_stack = "mongerdb-javascript-stack"
         mongerd_dump_sessions = "mongerd-dump-sessions"
 
-        # The following MongoDB python extensions do not run on Solaris.
+        # The following MongerDB python extensions do not run on Solaris.
         if sys.platform.startswith("sunos"):
             source_monger_lock = ""
             # SERVER-28234 - GDB frame information not available on Solaris for a templatized
@@ -534,7 +534,7 @@ def signal_event_object(logger, pid):
     """Signal the Windows event object."""
 
     # Use unique event_name created.
-    event_name = "Global\\Mongo_Python_" + str(pid)
+    event_name = "Global\\Monger_Python_" + str(pid)
 
     try:
         desired_access = win32event.EVENT_MODIFY_STATE

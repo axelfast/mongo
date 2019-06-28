@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,14 +37,14 @@
 namespace monger {
 
 /**
- * A stub MongoProcessInterface that provides default implementations of all methods, which can then
+ * A stub MongerProcessInterface that provides default implementations of all methods, which can then
  * be individually overridden for testing. This class may also be used in scenarios where a
- * placeholder MongoProcessInterface is required by an interface but will not be called. To
+ * placeholder MongerProcessInterface is required by an interface but will not be called. To
  * guarantee the latter, method implementations in this class are marked MONGO_UNREACHABLE.
  */
-class StubMongoProcessInterface : public MongoProcessInterface {
+class StubMongerProcessInterface : public MongerProcessInterface {
 public:
-    virtual ~StubMongoProcessInterface() = default;
+    virtual ~StubMongerProcessInterface() = default;
 
     void setOperationContext(OperationContext* opCtx) override {
         MONGO_UNREACHABLE;

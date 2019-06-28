@@ -63,7 +63,7 @@ def register(logger, suites, start_time):
     # platforms, we use a signal handler since it supports POSIX signals.
     if _IS_WINDOWS:
         # Create unique event_name.
-        event_name = "Global\\Mongo_Python_" + str(os.getpid())
+        event_name = "Global\\Monger_Python_" + str(os.getpid())
 
         try:
             security_attributes = None

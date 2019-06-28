@@ -2,11 +2,11 @@
 
 var testBaseName = "jstests_tool_dumprestore_excludecollections";
 
-var dumpDir = MongoRunner.dataPath + testBaseName + "_dump_external/";
+var dumpDir = MongerRunner.dataPath + testBaseName + "_dump_external/";
 
-var mongerdSource = MongoRunner.runMongod();
+var mongerdSource = MongerRunner.runMongerd();
 var sourceDB = mongerdSource.getDB(testBaseName);
-var mongerdDest = MongoRunner.runMongod();
+var mongerdDest = MongerRunner.runMongerd();
 var destDB = mongerdDest.getDB(testBaseName);
 
 jsTest.log("Inserting documents into source mongerd");
@@ -18,12 +18,12 @@ sourceDB.foo2.insert({f: 2});
 
 jsTest.log("Testing incompabible option combinations");
 resetDbpath(dumpDir);
-ret = MongoRunner.runMongoTool("mongerdump",
+ret = MongerRunner.runMongerTool("mongerdump",
                                {out: dumpDir, excludeCollection: "test", host: mongerdSource.host});
 assert.neq(ret, 0, "mongerdump started successfully with --excludeCollection but no --db option");
 
 resetDbpath(dumpDir);
-ret = MongoRunner.runMongoTool("mongerdump", {
+ret = MongerRunner.runMongerTool("mongerdump", {
     out: dumpDir,
     db: testBaseName,
     collection: "foo",
@@ -33,7 +33,7 @@ ret = MongoRunner.runMongoTool("mongerdump", {
 assert.neq(ret, 0, "mongerdump started successfully with --excludeCollection and --collection");
 
 resetDbpath(dumpDir);
-ret = MongoRunner.runMongoTool(
+ret = MongerRunner.runMongerTool(
     "mongerdump", {out: dumpDir, excludeCollectionsWithPrefix: "test", host: mongerdSource.host});
 assert.neq(
     ret,
@@ -41,7 +41,7 @@ assert.neq(
     "mongerdump started successfully with --excludeCollectionsWithPrefix but " + "no --db option");
 
 resetDbpath(dumpDir);
-ret = MongoRunner.runMongoTool("mongerdump", {
+ret = MongerRunner.runMongerTool("mongerdump", {
     out: dumpDir,
     db: testBaseName,
     collection: "foo",
@@ -55,11 +55,11 @@ assert.neq(
 
 jsTest.log("Testing proper behavior of collection exclusion");
 resetDbpath(dumpDir);
-ret = MongoRunner.runMongoTool(
+ret = MongerRunner.runMongerTool(
     "mongerdump",
     {out: dumpDir, db: testBaseName, excludeCollection: "test", host: mongerdSource.host});
 
-ret = MongoRunner.runMongoTool("mongerrestore", {dir: dumpDir, host: mongerdDest.host});
+ret = MongerRunner.runMongerTool("mongerrestore", {dir: dumpDir, host: mongerdDest.host});
 assert.eq(ret, 0, "failed to run mongerdump on expected successful call");
 assert.eq(destDB.test.count(), 0, "Found documents in collection that we excluded");
 assert.eq(destDB.test2.count(), 1, "Did not find document in collection that we did not exclude");
@@ -73,14 +73,14 @@ assert.eq(destDB.foo2.findOne().f, 2, "Wrong value in document");
 destDB.dropDatabase();
 
 resetDbpath(dumpDir);
-ret = MongoRunner.runMongoTool("mongerdump", {
+ret = MongerRunner.runMongerTool("mongerdump", {
     out: dumpDir,
     db: testBaseName,
     excludeCollectionsWithPrefix: "test",
     host: mongerdSource.host
 });
 
-ret = MongoRunner.runMongoTool("mongerrestore", {dir: dumpDir, host: mongerdDest.host});
+ret = MongerRunner.runMongerTool("mongerrestore", {dir: dumpDir, host: mongerdDest.host});
 assert.eq(ret, 0, "failed to run mongerdump on expected successful call");
 assert.eq(destDB.test.count(), 0, "Found documents in collection that we excluded");
 assert.eq(destDB.test2.count(), 0, "Found documents in collection that we excluded");
@@ -92,7 +92,7 @@ assert.eq(destDB.foo2.findOne().f, 2, "Wrong value in document");
 destDB.dropDatabase();
 
 resetDbpath(dumpDir);
-ret = MongoRunner.runMongoTool("mongerdump", {
+ret = MongerRunner.runMongerTool("mongerdump", {
     out: dumpDir,
     db: testBaseName,
     excludeCollection: "foo",
@@ -100,7 +100,7 @@ ret = MongoRunner.runMongoTool("mongerdump", {
     host: mongerdSource.host
 });
 
-ret = MongoRunner.runMongoTool("mongerrestore", {dir: dumpDir, host: mongerdDest.host});
+ret = MongerRunner.runMongerTool("mongerrestore", {dir: dumpDir, host: mongerdDest.host});
 assert.eq(ret, 0, "failed to run mongerdump on expected successful call");
 assert.eq(destDB.test.count(), 0, "Found documents in collection that we excluded");
 assert.eq(destDB.test2.count(), 0, "Found documents in collection that we excluded");
@@ -111,10 +111,10 @@ assert.eq(destDB.foo2.findOne().f, 2, "Wrong value in document");
 destDB.dropDatabase();
 
 // The --excludeCollection and --excludeCollectionsWithPrefix options can be specified multiple
-// times, but that is not tested here because right now MongoRunners can only be configured using
+// times, but that is not tested here because right now MongerRunners can only be configured using
 // javascript objects which do not allow duplicate keys.  See SERVER-14220.
 
-MongoRunner.stopMongod(mongerdDest);
-MongoRunner.stopMongod(mongerdSource);
+MongerRunner.stopMongerd(mongerdDest);
+MongerRunner.stopMongerd(mongerdSource);
 
 print(testBaseName + " success!");

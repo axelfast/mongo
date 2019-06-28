@@ -87,7 +87,7 @@
     assert.soon(
         function() {
             try {
-                var newConn = new Mongo(priConn.host);
+                var newConn = new Monger(priConn.host);
                 return false;
             } catch (x) {
                 return true;
@@ -110,7 +110,7 @@
         "secondary");
     try {
         // Join() with the crashed mongerd and ignore its bad exit status.
-        MongoRunner.stopMongod(priConn);
+        MongerRunner.stopMongerd(priConn);
     } catch (e) {
         // expected
     }

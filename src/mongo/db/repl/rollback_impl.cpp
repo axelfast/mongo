@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -488,7 +488,7 @@ Status RollbackImpl::_runRollbackCriticalSection(
     // We invalidate sessions before we recover so that we avoid invalidating sessions that had
     // just recovered prepared transactions.
     if (!_observerInfo.rollbackSessionIds.empty()) {
-        MongoDSessionCatalog::invalidateAllSessions(opCtx);
+        MongerDSessionCatalog::invalidateAllSessions(opCtx);
     }
 
     // Recover to the stable timestamp.

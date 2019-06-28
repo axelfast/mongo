@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,7 +42,7 @@ namespace monger {
 class BSONObjBuilder;
 class ConnectionString;
 class ReplicaSetMonitor;
-class MongoURI;
+class MongerURI;
 
 /**
  * Manages the lifetime of a set of replica set monitors.
@@ -61,7 +61,7 @@ public:
      */
     std::shared_ptr<ReplicaSetMonitor> getMonitor(StringData setName);
     std::shared_ptr<ReplicaSetMonitor> getOrCreateMonitor(const ConnectionString& connStr);
-    std::shared_ptr<ReplicaSetMonitor> getOrCreateMonitor(const MongoURI& uri);
+    std::shared_ptr<ReplicaSetMonitor> getOrCreateMonitor(const MongerURI& uri);
 
     /**
      * Retrieves the names of all sets tracked by this manager.

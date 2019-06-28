@@ -6,7 +6,7 @@
 
 /**
  * This file was copied out of the firefox 38.0.1esr source tree from
- * js/src/vm/PosixNSPR.cpp and modified to use the MongoDB threading
+ * js/src/vm/PosixNSPR.cpp and modified to use the MongerDB threading
  * primitives.
  *
  * The point of this file is to shim the posix emulation of nspr that Mozilla

@@ -416,7 +416,7 @@ function RollbackTest(name = "RollbackTest", replSet) {
         if (allowedExitCode !== undefined) {
             Object.assign(opts, {allowedExitCode: allowedExitCode});
         } else if (signal === SIGKILL) {
-            Object.assign(opts, {allowedExitCode: MongoRunner.EXIT_SIGKILL});
+            Object.assign(opts, {allowedExitCode: MongerRunner.EXIT_SIGKILL});
         }
 
         log(`Stopping node ${hostName} with signal ${signal}`);

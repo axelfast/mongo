@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -345,7 +345,7 @@ list<intrusive_ptr<DocumentSource>> buildPipeline(const intrusive_ptr<Expression
     bool showMigrationEvents = spec.getShowMigrationEvents();
     uassert(31123,
             "Change streams from mongers may not show migration events.",
-            !(expCtx->inMongos && showMigrationEvents));
+            !(expCtx->inMongers && showMigrationEvents));
 
     auto resumeAfter = spec.getResumeAfter();
     auto startAfter = spec.getStartAfter();
@@ -402,10 +402,10 @@ list<intrusive_ptr<DocumentSource>> buildPipeline(const intrusive_ptr<Expression
     auto replCoord = repl::ReplicationCoordinator::get(expCtx->opCtx);
     uassert(40573,
             "The $changeStream stage is only supported on replica sets",
-            expCtx->inMongos || (replCoord &&
+            expCtx->inMongers || (replCoord &&
                                  replCoord->getReplicationMode() ==
                                      repl::ReplicationCoordinator::Mode::modeReplSet));
-    if (!startFrom && !expCtx->inMongos) {
+    if (!startFrom && !expCtx->inMongers) {
         startFrom = replCoord->getMyLastAppliedOpTime().getTimestamp();
     }
 

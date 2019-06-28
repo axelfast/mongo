@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -52,7 +52,7 @@ public:
     // Field names and types in the version collection type.
     static const BSONField<int> minCompatibleVersion;
     static const BSONField<int> currentVersion;
-    static const BSONField<BSONArray> excludingMongoVersions;
+    static const BSONField<BSONArray> excludingMongerVersions;
     static const BSONField<OID> clusterId;
     static const BSONField<OID> upgradeId;
     static const BSONField<BSONObj> upgradeState;
@@ -107,16 +107,16 @@ public:
     }
     void setClusterId(const OID& clusterId);
 
-    const std::vector<MongoVersionRange> getExcludingMongoVersions() const {
-        if (!isExcludingMongoVersionsSet()) {
-            return std::vector<MongoVersionRange>();
+    const std::vector<MongerVersionRange> getExcludingMongerVersions() const {
+        if (!isExcludingMongerVersionsSet()) {
+            return std::vector<MongerVersionRange>();
         }
-        return _excludingMongoVersions.get();
+        return _excludingMongerVersions.get();
     }
-    bool isExcludingMongoVersionsSet() const {
-        return _excludingMongoVersions.is_initialized();
+    bool isExcludingMongerVersionsSet() const {
+        return _excludingMongerVersions.is_initialized();
     }
-    void setExcludingMongoVersions(const std::vector<MongoVersionRange>& excludingMongoVersions);
+    void setExcludingMongerVersions(const std::vector<MongerVersionRange>& excludingMongerVersions);
 
     const OID& getUpgradeId() const {
         return _upgradeId.get();
@@ -144,7 +144,7 @@ private:
     // (S) clusterId -- required if current version > UpgradeHistory::UpgradeHistory_NoEpochVersion
     boost::optional<OID> _clusterId;
     // (O) range of disallowed versions to upgrade to
-    boost::optional<std::vector<MongoVersionRange>> _excludingMongoVersions;
+    boost::optional<std::vector<MongerVersionRange>> _excludingMongerVersions;
     // (O) upgrade id of current or last upgrade
     boost::optional<OID> _upgradeId;
     // (O)  upgrade state of current or last upgrade

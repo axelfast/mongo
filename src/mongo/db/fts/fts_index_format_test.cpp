@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -197,8 +197,8 @@ TEST(FTSIndexFormat, LongWordTextIndexVersion2) {
     // "aaa...aaasat"
     string longWordSat = longPrefix + "sat";
     // "aaa...aaamongerdbfts"
-    string longWordMongoDBFts = longPrefix + "mongerdbfts";
-    string text = str::stream() << longWordCat << " " << longWordSat << " " << longWordMongoDBFts;
+    string longWordMongerDBFts = longPrefix + "mongerdbfts";
+    string text = str::stream() << longWordCat << " " << longWordSat << " " << longWordMongerDBFts;
     FTSIndexFormat::getKeys(spec, BSON("data" << text), &keys);
 
     // Hard-coded expected computed keys for future-proofing.

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -95,7 +95,7 @@ func (op *InsertOp) FromReader(r io.Reader) error {
 
 // Execute performs the InsertOp on a given socket, yielding the reply when
 // successful (and an error otherwise).
-func (op *InsertOp) Execute(socket *mgo.MongoSocket) (Replyable, error) {
+func (op *InsertOp) Execute(socket *mgo.MongerSocket) (Replyable, error) {
 	if err := mgo.ExecOpWithoutReply(socket, &op.InsertOp); err != nil {
 		return nil, err
 	}

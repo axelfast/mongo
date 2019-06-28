@@ -17,8 +17,8 @@
     config.settings = {"electionTimeoutMillis": 12 * 60 * 60 * 1000};
     rst.initiate(config);
 
-    // Get the connection to the replica set using MongoDB URI.
-    const conn = new Mongo(rst.getURL());
+    // Get the connection to the replica set using MongerDB URI.
+    const conn = new Monger(rst.getURL());
     const testDB = conn.getDB(dbName);
     const testColl = testDB[collName];
 
@@ -30,7 +30,7 @@
     let stmtId = 0;
 
     const sessionOptions = {causalConsistency: false};
-    let session = testDB.getMongo().startSession(sessionOptions);
+    let session = testDB.getMonger().startSession(sessionOptions);
     let sessionDb = session.getDatabase(dbName);
 
     jsTest.log("commitTransaction command is retryable before failover");
@@ -69,7 +69,7 @@
     // Wait until the other node becomes primary.
     assert.eq(oldSecondary, rst.getPrimary());
     // Reconnect the connection to the new primary.
-    sessionDb.getMongo()._markNodeAsFailed(
+    sessionDb.getMonger()._markNodeAsFailed(
         oldPrimary.host, ErrorCodes.NotMaster, "Notice that primary is not master");
     reconnect(sessionDb);
 

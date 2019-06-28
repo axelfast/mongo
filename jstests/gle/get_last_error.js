@@ -80,7 +80,7 @@ replTest.stopSet();
 // Need to start a single server manually to keep this test in the jstests/replsets test suite
 var baseName = "SERVER-9005";
 
-var mongerd = MongoRunner.runMongod({});
+var mongerd = MongerRunner.runMongerd({});
 var sdb = mongerd.getDB("test");
 
 sdb.foo.drop();
@@ -103,4 +103,4 @@ printjson(gle);
 assert.eq(gle.ok, 0);
 assert(gle.badGLE);
 
-MongoRunner.stopMongod(mongerd);
+MongerRunner.stopMongerd(mongerd);

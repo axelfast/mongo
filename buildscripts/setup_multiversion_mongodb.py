@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install multiple versions of MongoDB on a machine."""
+"""Install multiple versions of MongerDB on a machine."""
 
 import contextlib
 import errno

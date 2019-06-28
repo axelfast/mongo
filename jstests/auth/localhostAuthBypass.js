@@ -4,7 +4,7 @@
 // mongerd whether it is hosted with "localhost" or a hostname.
 
 var baseName = "auth_server-6591";
-var dbpath = MongoRunner.dataPath + baseName;
+var dbpath = MongerRunner.dataPath + baseName;
 var username = "foo";
 var password = "bar";
 
@@ -117,16 +117,16 @@ var authenticate = function(monger) {
 
 var shutdown = function(conn) {
     print("============ shutting down.");
-    MongoRunner.stopMongod(conn, /*signal*/ false, {auth: {user: username, pwd: password}});
+    MongerRunner.stopMongerd(conn, /*signal*/ false, {auth: {user: username, pwd: password}});
 };
 
 var runTest = function(useHostName, useSession) {
     print("==========================");
     print("starting mongerd: useHostName=" + useHostName);
     print("==========================");
-    var conn = MongoRunner.runMongod({auth: "", dbpath: dbpath, useHostName: useHostName});
+    var conn = MongerRunner.runMongerd({auth: "", dbpath: dbpath, useHostName: useHostName});
 
-    var monger = new Mongo("localhost:" + conn.port);
+    var monger = new Monger("localhost:" + conn.port);
 
     assertCannotRunCommands(monger);
 
@@ -145,7 +145,7 @@ var runTest = function(useHostName, useSession) {
     assertCanRunCommands(monger);
 
     print("============ reconnecting with new client.");
-    monger = new Mongo("localhost:" + conn.port);
+    monger = new Monger("localhost:" + conn.port);
 
     assertCannotRunCommands(monger);
 
@@ -160,9 +160,9 @@ var runNonlocalTest = function(host) {
     print("==========================");
     print("starting mongerd: non-local host access " + host);
     print("==========================");
-    var conn = MongoRunner.runMongod({auth: "", dbpath: dbpath});
+    var conn = MongerRunner.runMongerd({auth: "", dbpath: dbpath});
 
-    var monger = new Mongo(host + ":" + conn.port);
+    var monger = new Monger(host + ":" + conn.port);
 
     assertCannotRunCommands(monger);
     assert.throws(function() {
@@ -181,16 +181,16 @@ var runNonlocalTest = function(host) {
 // Start the server without auth. Create a role. Restart the server with auth. The exception is
 // now enabled.
 var runRoleTest = function() {
-    var conn = MongoRunner.runMongod({dbpath: dbpath});
-    var monger = new Mongo("localhost:" + conn.port);
+    var conn = MongerRunner.runMongerd({dbpath: dbpath});
+    var monger = new Monger("localhost:" + conn.port);
     assertCanRunCommands(monger);
     createRole(monger);
     assertCanRunCommands(monger);
-    MongoRunner.stopMongod(conn);
-    conn = MongoRunner.runMongod({auth: '', dbpath: dbpath, restart: true, cleanData: false});
-    monger = new Mongo("localhost:" + conn.port);
+    MongerRunner.stopMongerd(conn);
+    conn = MongerRunner.runMongerd({auth: '', dbpath: dbpath, restart: true, cleanData: false});
+    monger = new Monger("localhost:" + conn.port);
     assertCannotRunCommands(monger);
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 };
 
 runTest(false, false);

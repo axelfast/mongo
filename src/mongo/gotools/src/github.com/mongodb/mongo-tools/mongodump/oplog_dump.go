@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -18,7 +18,7 @@ import (
 
 // determineOplogCollectionName uses a command to infer
 // the name of the oplog collection in the connected db
-func (dump *MongoDump) determineOplogCollectionName() error {
+func (dump *MongerDump) determineOplogCollectionName() error {
 	masterDoc := bson.M{}
 	err := dump.SessionProvider.RunString("isMaster", &masterDoc, "admin")
 	if err != nil {
@@ -43,7 +43,7 @@ func (dump *MongoDump) determineOplogCollectionName() error {
 }
 
 // getOplogCurrentTime returns the most recent oplog entry
-func (dump *MongoDump) getCurrentOplogTime() (primitive.Timestamp, error) {
+func (dump *MongerDump) getCurrentOplogTime() (primitive.Timestamp, error) {
 	mostRecentOplogEntry := db.Oplog{}
 	var tempBSON bson.Raw
 
@@ -62,7 +62,7 @@ func (dump *MongoDump) getCurrentOplogTime() (primitive.Timestamp, error) {
 // since mongerdump started. It does this by checking the oldest oplog entry
 // still in the database and making sure it happened at or before the timestamp
 // captured at the start of the dump.
-func (dump *MongoDump) checkOplogTimestampExists(ts primitive.Timestamp) (bool, error) {
+func (dump *MongerDump) checkOplogTimestampExists(ts primitive.Timestamp) (bool, error) {
 	oldestOplogEntry := db.Oplog{}
 	var tempBSON bson.Raw
 
@@ -101,7 +101,7 @@ func oplogDocumentValidator(in []byte) error {
 
 // DumpOplogBetweenTimestamps takes two timestamps and writer and dumps all oplog
 // entries between the given timestamp to the writer. Returns any errors that occur.
-func (dump *MongoDump) DumpOplogBetweenTimestamps(start, end primitive.Timestamp) error {
+func (dump *MongerDump) DumpOplogBetweenTimestamps(start, end primitive.Timestamp) error {
 	session, err := dump.SessionProvider.GetSession()
 	if err != nil {
 		return err

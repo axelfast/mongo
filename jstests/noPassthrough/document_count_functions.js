@@ -5,7 +5,7 @@
 (function() {
     "use strict";
 
-    const standalone = MongoRunner.runMongod();
+    const standalone = MongerRunner.runMongerd();
     const dbName = "test";
     const db = standalone.getDB(dbName);
     const collName = "document_count_functions";
@@ -55,6 +55,6 @@
     assert.commandWorked(
         db.adminCommand({configureFailPoint: 'maxTimeAlwaysTimeOut', mode: 'off'}));
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 
 })();

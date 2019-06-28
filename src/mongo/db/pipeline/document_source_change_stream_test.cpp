@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -86,7 +86,7 @@ public:
         : AggregationContextFixture(nsString) {}
 };
 
-struct MockMongoInterface final : public StubMongoProcessInterface {
+struct MockMongerInterface final : public StubMongerProcessInterface {
 
     // This mock iterator simulates a traversal of transaction history in the oplog by returning
     // mock oplog entries from a list.
@@ -109,7 +109,7 @@ struct MockMongoInterface final : public StubMongoProcessInterface {
         std::vector<repl::OplogEntry>::const_iterator mockEntriesIt;
     };
 
-    MockMongoInterface(std::vector<FieldPath> fields,
+    MockMongerInterface(std::vector<FieldPath> fields,
                        std::vector<repl::OplogEntry> transactionEntries = {})
         : _fields(std::move(fields)), _transactionEntries(std::move(transactionEntries)) {}
 
@@ -175,7 +175,7 @@ public:
         auto closeCursor = stages.back();
 
         getExpCtx()->mongerProcessInterface =
-            std::make_unique<MockMongoInterface>(docKeyFields, transactionEntries);
+            std::make_unique<MockMongerInterface>(docKeyFields, transactionEntries);
 
         auto next = closeCursor->getNext();
         // Match stage should pass the doc down if expectedDoc is given.
@@ -202,7 +202,7 @@ public:
             DSChangeStream::createFromBson(spec.firstElement(), getExpCtx());
         vector<intrusive_ptr<DocumentSource>> stages(std::begin(result), std::end(result));
         getExpCtx()->mongerProcessInterface =
-            std::make_unique<MockMongoInterface>(std::vector<FieldPath>{});
+            std::make_unique<MockMongerInterface>(std::vector<FieldPath>{});
 
         // This match stage is a DocumentSourceOplogMatch, which we explicitly disallow from
         // executing as a safety mechanism, since it needs to use the collection-default collation,
@@ -506,9 +506,9 @@ TEST_F(ChangeStreamStageTestNoSetup, FailsWithNoReplicationCoordinator) {
                        40573);
 }
 
-TEST_F(ChangeStreamStageTest, ShowMigrationsFailsOnMongos) {
+TEST_F(ChangeStreamStageTest, ShowMigrationsFailsOnMongers) {
     auto expCtx = getExpCtx();
-    expCtx->inMongos = true;
+    expCtx->inMongers = true;
     auto spec = fromjson("{$changeStream: {showMigrationEvents: true}}");
 
     ASSERT_THROWS_CODE(
@@ -1018,7 +1018,7 @@ TEST_F(ChangeStreamStageTest, CommitCommandReturnsOperationsFromPreparedTransact
 
     // Create an oplog entry representing the commit for the prepared transaction. The commit has a
     // 'prevWriteOpTimeInTransaction' value that matches the 'preparedApplyOps' entry, which the
-    // MockMongoInterface will pretend is in the oplog.
+    // MockMongerInterface will pretend is in the oplog.
     OperationSessionInfo sessionInfo;
     sessionInfo.setTxnNumber(1);
     sessionInfo.setSessionId(makeLogicalSessionIdForTest());
@@ -1115,7 +1115,7 @@ TEST_F(ChangeStreamStageTest, TransactionWithMultipleOplogEntries) {
     invariant(dynamic_cast<DocumentSourceChangeStreamTransform*>(transform) != nullptr);
 
     // Populate the MockTransactionHistoryEditor in reverse chronological order.
-    getExpCtx()->mongerProcessInterface = std::make_unique<MockMongoInterface>(
+    getExpCtx()->mongerProcessInterface = std::make_unique<MockMongerInterface>(
         std::vector<FieldPath>{},
         std::vector<repl::OplogEntry>{transactionEntry2, transactionEntry1});
 
@@ -1244,7 +1244,7 @@ TEST_F(ChangeStreamStageTest, PreparedTransactionWithMultipleOplogEntries) {
     invariant(dynamic_cast<DocumentSourceChangeStreamTransform*>(transform) != nullptr);
 
     // Populate the MockTransactionHistoryEditor in reverse chronological order.
-    getExpCtx()->mongerProcessInterface = std::make_unique<MockMongoInterface>(
+    getExpCtx()->mongerProcessInterface = std::make_unique<MockMongerInterface>(
         std::vector<FieldPath>{},
         std::vector<repl::OplogEntry>{commitEntry, transactionEntry2, transactionEntry1});
 
@@ -1691,7 +1691,7 @@ TEST_F(ChangeStreamStageTest, UsesResumeTokenAsSortKeyIfNeedsMergeIsFalse) {
     auto stages = makeStages(insert.toBSON(), kDefaultSpec);
 
     getExpCtx()->mongerProcessInterface =
-        std::make_unique<MockMongoInterface>(std::vector<FieldPath>{{"x"}, {"_id"}});
+        std::make_unique<MockMongerInterface>(std::vector<FieldPath>{{"x"}, {"_id"}});
 
     getExpCtx()->needsMerge = false;
 

@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,11 +32,11 @@ package com.mongerdb.embedded.capi;
 
 import com.mongerdb.embedded.capi.internal.CAPI;
 
-class MongoEmbeddedInstanceImpl implements MongoEmbeddedInstance {
+class MongerEmbeddedInstanceImpl implements MongerEmbeddedInstance {
     private final CAPI.monger_embedded_v1_status status;
     private final CAPI.monger_embedded_v1_instance instance;
 
-    MongoEmbeddedInstanceImpl(final CAPI.monger_embedded_v1_lib libraryPointer, final String yamlConfig) {
+    MongerEmbeddedInstanceImpl(final CAPI.monger_embedded_v1_lib libraryPointer, final String yamlConfig) {
         status = CAPIHelper.createStatusPointer();
 
         try {
@@ -52,8 +52,8 @@ class MongoEmbeddedInstanceImpl implements MongoEmbeddedInstance {
     }
 
     @Override
-    public MongoEmbeddedClient createClient() {
-        return new MongoEmbeddedClientImpl(instance);
+    public MongerEmbeddedClient createClient() {
+        return new MongerEmbeddedClientImpl(instance);
     }
 
     @Override

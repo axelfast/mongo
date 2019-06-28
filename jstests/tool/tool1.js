@@ -1,8 +1,8 @@
 // monger tool tests, very basic to start with
 
 baseName = "jstests_tool_tool1";
-dbPath = MongoRunner.dataPath + baseName + "/";
-externalPath = MongoRunner.dataPath + baseName + "_external/";
+dbPath = MongerRunner.dataPath + baseName + "/";
+externalPath = MongerRunner.dataPath + baseName + "_external/";
 externalBaseName = "export.json";
 externalFile = externalPath + externalBaseName;
 
@@ -17,12 +17,12 @@ function fileSize() {
 
 resetDbpath(externalPath);
 
-var m = MongoRunner.runMongod({dbpath: dbPath, bind_ip: "127.0.0.1"});
+var m = MongerRunner.runMongerd({dbpath: dbPath, bind_ip: "127.0.0.1"});
 c = m.getDB(baseName).getCollection(baseName);
 c.save({a: 1});
 assert(c.findOne());
 
-var exitCode = MongoRunner.runMongoTool("mongerdump", {
+var exitCode = MongerRunner.runMongerTool("mongerdump", {
     host: "127.0.0.1:" + m.port,
     out: externalPath,
 });
@@ -30,7 +30,7 @@ assert.eq(0, exitCode, "mongerdump failed to dump data from mongerd");
 
 c.drop();
 
-exitCode = MongoRunner.runMongoTool("mongerrestore", {
+exitCode = MongerRunner.runMongerTool("mongerrestore", {
     host: "127.0.0.1:" + m.port,
     dir: externalPath,
 });
@@ -44,7 +44,7 @@ resetDbpath(externalPath);
 
 assert.eq(-1, fileSize(), "mongerexport prep invalid");
 
-exitCode = MongoRunner.runMongoTool("mongerexport", {
+exitCode = MongerRunner.runMongerTool("mongerexport", {
     host: "127.0.0.1:" + m.port,
     db: baseName,
     collection: baseName,
@@ -57,7 +57,7 @@ assert.lt(10, fileSize(), "file size changed");
 
 c.drop();
 
-exitCode = MongoRunner.runMongoTool("mongerimport", {
+exitCode = MongerRunner.runMongerTool("mongerimport", {
     host: "127.0.0.1:" + m.port,
     db: baseName,
     collection: baseName,
@@ -68,4 +68,4 @@ assert.eq(
 
 assert.soon("c.findOne()", "monger import json A");
 assert(c.findOne() && 1 == c.findOne().a, "monger import json B");
-MongoRunner.stopMongod(m);
+MongerRunner.stopMongerd(m);

@@ -14,7 +14,7 @@
     const primary = rst.getPrimary();
     const primaryAdmin = primary.getDB("admin");
     // We need a separate connection to avoid interference with the ReplSetTestMechanism.
-    const primaryDataConn = new Mongo(primary.host);
+    const primaryDataConn = new Monger(primary.host);
     const primaryDb = primaryDataConn.getDB("test");
     const collname = "last_error_reported_after_stepdown";
     const coll = primaryDb[collname];
@@ -39,7 +39,7 @@
             primaryAdmin.adminCommand({setParameter: 1, logComponentVerbosity: {command: 1}}));
         operation();
         // Wait for the operation to complete.
-        checkLog.contains(primary, logMsg + ' appName: "MongoDB Shell"');
+        checkLog.contains(primary, logMsg + ' appName: "MongerDB Shell"');
         assert.commandWorked(
             primaryAdmin.adminCommand({setParameter: 1, logComponentVerbosity: {command: 0}}));
         assert.commandWorked(primaryAdmin.adminCommand({replSetStepDown: 60, force: true}));

@@ -12,7 +12,7 @@
 
     // We restrict testing pipeline-style update to commands as they are not supported for OP_UPDATE
     // which cannot differentiate an update object from an array.
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         //
         // Pipeline-style update respects collection default collation.
         //

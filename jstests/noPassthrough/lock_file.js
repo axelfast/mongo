@@ -3,7 +3,7 @@
 
 (function() {
     // Ensures that mongerd.lock exists and returns size of file.
-    function getMongodLockFileSize(dir) {
+    function getMongerdLockFileSize(dir) {
         var files = listFiles(dir);
         for (var i in files) {
             var file = files[i];
@@ -15,17 +15,17 @@
     }
 
     var baseName = "jstests_lock_file";
-    var dbpath = MongoRunner.dataPath + baseName + '/';
+    var dbpath = MongerRunner.dataPath + baseName + '/';
 
     // Test framework will append --storageEngine command line option.
-    var mongerd = MongoRunner.runMongod({dbpath: dbpath});
+    var mongerd = MongerRunner.runMongerd({dbpath: dbpath});
     assert.neq(0,
-               getMongodLockFileSize(dbpath),
+               getMongerdLockFileSize(dbpath),
                'mongerd.lock should not be empty while server is running');
 
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     // mongerd.lock must be empty after shutting server down.
     assert.eq(
-        0, getMongodLockFileSize(dbpath), 'mongerd.lock not truncated after shutting server down');
+        0, getMongerdLockFileSize(dbpath), 'mongerd.lock not truncated after shutting server down');
 }());

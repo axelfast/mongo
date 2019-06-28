@@ -8,7 +8,7 @@
     'use strict';
     load('jstests/libs/feature_compatibility_version.js');
 
-    var standalone = MongoRunner.runMongod();
+    var standalone = MongerRunner.runMongerd();
     var db = standalone.getDB("test");
 
     var coll = db.getCollection("apply_ops_mode1");
@@ -89,5 +89,5 @@
         applyOps: [collModOp],
     }));
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 })();

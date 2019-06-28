@@ -42,26 +42,26 @@ class _SingleJSTestCase(interface.ProcessTestCase):
         global_vars = self.shell_options.get("global_vars", {}).copy()
         data_dir = self._get_data_dir(global_vars)
 
-        # Set MongoRunner.dataPath if overridden at command line or not specified in YAML.
-        if config.DBPATH_PREFIX is not None or "MongoRunner.dataPath" not in global_vars:
+        # Set MongerRunner.dataPath if overridden at command line or not specified in YAML.
+        if config.DBPATH_PREFIX is not None or "MongerRunner.dataPath" not in global_vars:
             # dataPath property is the dataDir property with a trailing slash.
             data_path = os.path.join(data_dir, "")
         else:
-            data_path = global_vars["MongoRunner.dataPath"]
+            data_path = global_vars["MongerRunner.dataPath"]
 
-        global_vars["MongoRunner.dataDir"] = data_dir
-        global_vars["MongoRunner.dataPath"] = data_path
+        global_vars["MongerRunner.dataDir"] = data_dir
+        global_vars["MongerRunner.dataPath"] = data_path
 
         # Don't set the path to the mongerd and mongers executables when the user didn't specify them
         # via the command line. The functions in the monger shell for spawning processes have their
         # own logic for determining the default path to use.
         if config.MONGOD_EXECUTABLE is not None:
-            global_vars["MongoRunner.mongerdPath"] = config.MONGOD_EXECUTABLE
+            global_vars["MongerRunner.mongerdPath"] = config.MONGOD_EXECUTABLE
         if config.MONGOS_EXECUTABLE is not None:
-            global_vars["MongoRunner.mongersPath"] = config.MONGOS_EXECUTABLE
+            global_vars["MongerRunner.mongersPath"] = config.MONGOS_EXECUTABLE
         # We provide an absolute path for monger shell to ensure that programs starting their own
         # monger shell will use the same as specified from resmoke.py.
-        global_vars["MongoRunner.mongerShellPath"] = os.path.abspath(
+        global_vars["MongerRunner.mongerShellPath"] = os.path.abspath(
             utils.default_if_none(self.shell_executable, config.DEFAULT_MONGO_EXECUTABLE))
 
         test_data = global_vars.get("TestData", {}).copy()
@@ -99,10 +99,10 @@ class _SingleJSTestCase(interface.ProcessTestCase):
         self.shell_options["process_kwargs"] = process_kwargs
 
     def _get_data_dir(self, global_vars):
-        """Return the value that monger shell should set for the MongoRunner.dataDir property."""
+        """Return the value that monger shell should set for the MongerRunner.dataDir property."""
         # Command line options override the YAML configuration.
         data_dir_prefix = utils.default_if_none(config.DBPATH_PREFIX,
-                                                global_vars.get("MongoRunner.dataDir"))
+                                                global_vars.get("MongerRunner.dataDir"))
         data_dir_prefix = utils.default_if_none(data_dir_prefix, config.DEFAULT_DBPATH_PREFIX)
         return os.path.join(data_dir_prefix, "job%d" % self.fixture.job_num,
                             config.MONGO_RUNNER_SUBDIR)

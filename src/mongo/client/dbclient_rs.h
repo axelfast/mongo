@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -66,7 +66,7 @@ public:
                        const std::vector<HostAndPort>& servers,
                        StringData applicationName,
                        double so_timeout = 0,
-                       MongoURI uri = {});
+                       MongerURI uri = {});
 
     /**
      * Returns false if no member of the set were reachable. This object
@@ -232,7 +232,7 @@ public:
         return true;
     }
 
-    bool isMongos() const override {
+    bool isMongers() const override {
         return false;
     }
 
@@ -337,7 +337,7 @@ private:
     bool _internalAuthRequested = false;
     std::map<std::string, BSONObj> _auths;  // dbName -> auth parameters
 
-    MongoURI _uri;
+    MongerURI _uri;
 
 protected:
     /**

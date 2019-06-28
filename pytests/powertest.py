@@ -7,13 +7,13 @@ Client & server side powercycle test script.
 
 This script can be run against any host which is reachable via ssh.
 Note - the remote hosts should be running bash shell (this script may fail otherwise).
-There are no assumptions on the server what is the current deployment of MongoDB.
+There are no assumptions on the server what is the current deployment of MongerDB.
 For Windows the assumption is that Cygwin is installed.
 The server needs these utilities:
     - python 3.7 or higher
     - sshd
     - rsync
-This script will either download a MongoDB tarball or use an existing setup.
+This script will either download a MongerDB tarball or use an existing setup.
 """
 
 import atexit
@@ -179,7 +179,7 @@ def register_signal_handler(handler):
 
     if _IS_WINDOWS:
         # Create unique event_name.
-        event_name = "Global\\Mongo_Python_{:d}".format(os.getpid())
+        event_name = "Global\\Monger_Python_{:d}".format(os.getpid())
         LOGGER.debug("Registering event %s", event_name)
 
         try:
@@ -561,7 +561,7 @@ def set_windows_bootstatuspolicy():
 
 
 def install_mongerd(bin_dir=None, tarball_url="latest", root_dir=None):
-    """Set up 'root_dir'/bin to contain MongoDB binaries.
+    """Set up 'root_dir'/bin to contain MongerDB binaries.
 
     If 'bin_dir' is specified, then symlink it to 'root_dir'/bin.
     Otherwise, download 'tarball_url' and symlink it's bin to 'root_dir'/bin.
@@ -992,12 +992,12 @@ class PosixService(object):
         return self.pids
 
 
-class MongodControl(object):  # pylint: disable=too-many-instance-attributes
+class MongerdControl(object):  # pylint: disable=too-many-instance-attributes
     """Control mongerd process."""
 
     def __init__(  # pylint: disable=too-many-arguments
             self, bin_dir, db_path, log_path, port, options=None):
-        """Initialize MongodControl."""
+        """Initialize MongerdControl."""
         self.process_name = "mongerd{}".format(executable_extension())
 
         self.bin_dir = bin_dir
@@ -1174,7 +1174,7 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
     if options.repl_set:
         options.mongerd_options = "{} --replSet {}".format(options.mongerd_options, options.repl_set)
 
-    # For MongodControl, the file references should be fully specified.
+    # For MongerdControl, the file references should be fully specified.
     if options.mongerdb_bin_dir:
         bin_dir = abs_path(options.mongerdb_bin_dir)
     else:
@@ -1182,7 +1182,7 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
     db_path = abs_path(options.db_path)
     log_path = abs_path(options.log_path)
 
-    mongerd = MongodControl(bin_dir=bin_dir, db_path=db_path, log_path=log_path, port=options.port,
+    mongerd = MongerdControl(bin_dir=bin_dir, db_path=db_path, log_path=log_path, port=options.port,
                            options=options.mongerd_options)
 
     monger_client_opts = get_monger_client_args(host=host, port=options.port, options=options)
@@ -1249,7 +1249,7 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
                 LOGGER.error("Failed to start mongerd on port %d: %s", options.port, output)
                 return ret
             LOGGER.info("Started mongerd running on port %d pid %s", options.port, mongerd.get_pids())
-            monger = pymonger.MongoClient(**monger_client_opts)
+            monger = pymonger.MongerClient(**monger_client_opts)
             LOGGER.info("Server buildinfo: %s", monger.admin.command("buildinfo"))
             LOGGER.info("Server serverStatus: %s", monger.admin.command("serverStatus"))
             if options.repl_set:
@@ -1261,7 +1261,7 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
             ret = wait_for_mongerd_shutdown(mongerd)
 
         elif operation == "shutdown_mongerd":
-            monger = pymonger.MongoClient(**monger_client_opts)
+            monger = pymonger.MongerClient(**monger_client_opts)
             try:
                 monger.admin.command("shutdown", force=True)
             except pymonger.errors.AutoReconnect:
@@ -1279,26 +1279,26 @@ def remote_handler(options, operations):  # pylint: disable=too-many-branches,to
                 os.rename(rsync_dir, new_rsync_dir)
 
         elif operation == "seed_docs":
-            monger = pymonger.MongoClient(**monger_client_opts)
+            monger = pymonger.MongerClient(**monger_client_opts)
             ret = monger_seed_docs(monger, options.db_name, options.collection_name,
                                   options.seed_doc_num)
 
         elif operation == "validate_collections":
-            monger = pymonger.MongoClient(**monger_client_opts)
+            monger = pymonger.MongerClient(**monger_client_opts)
             ret = monger_validate_collections(monger)
 
         elif operation == "insert_canary":
-            monger = pymonger.MongoClient(**monger_client_opts)
+            monger = pymonger.MongerClient(**monger_client_opts)
             ret = monger_insert_canary(monger, options.db_name, options.collection_name,
                                       options.canary_doc)
 
         elif operation == "validate_canary":
-            monger = pymonger.MongoClient(**monger_client_opts)
+            monger = pymonger.MongerClient(**monger_client_opts)
             ret = monger_validate_canary(monger, options.db_name, options.collection_name,
                                         options.canary_doc)
 
         elif operation == "set_fcv":
-            monger = pymonger.MongoClient(**monger_client_opts)
+            monger = pymonger.MongerClient(**monger_client_opts)
             try:
                 ret = monger.admin.command("setFeatureCompatibilityVersion", options.fcv_version)
                 ret = 0 if ret["ok"] == 1 else 1
@@ -1493,7 +1493,7 @@ def wait_for_mongerd_shutdown(mongerd_control, timeout=120):
 
 def get_monger_client_args(host=None, port=None, options=None, server_selection_timeout_ms=600000,
                           socket_timeout_ms=600000):
-    """Return keyword arg dict used in PyMongo client."""
+    """Return keyword arg dict used in PyMonger client."""
     # Set the default serverSelectionTimeoutMS & socketTimeoutMS to 10 minutes.
     monger_args = {
         "serverSelectionTimeoutMS": server_selection_timeout_ms,
@@ -1718,7 +1718,7 @@ def main():  # pylint: disable=too-many-branches,too-many-locals,too-many-statem
     parser = optparse.OptionParser(usage="""
 %prog [options]
 
-MongoDB Powercycle test
+MongerDB Powercycle test
 
 Examples:
 
@@ -1743,7 +1743,7 @@ Examples:
 
     test_options = optparse.OptionGroup(parser, "Test Options")
     crash_options = optparse.OptionGroup(parser, "Crash Options")
-    mongerdb_options = optparse.OptionGroup(parser, "MongoDB Options")
+    mongerdb_options = optparse.OptionGroup(parser, "MongerDB Options")
     mongerd_options = optparse.OptionGroup(parser, "mongerd Options")
     client_options = optparse.OptionGroup(parser, "Client Options")
     program_options = optparse.OptionGroup(parser, "Program Options")
@@ -1876,7 +1876,7 @@ Examples:
                              help="The crash host's ssh connection options, i.e., '-i ident.pem'",
                              default=None)
 
-    # MongoDB options
+    # MongerDB options
     mongerdb_options.add_option(
         "--downloadUrl", dest="tarball_url",
         help="URL of tarball to test, if unspecifed latest tarball will be"
@@ -2319,7 +2319,7 @@ Examples:
 
     LOGGER.info("%s %s", __file__, client_args)
 
-    # Remote install of MongoDB.
+    # Remote install of MongerDB.
     ret, output = call_remote_operation(local_ops, options.remote_python, script_name, client_args,
                                         "--remoteOperation install_mongerd")
     LOGGER.info("****install_mongerd: %d %s****", ret, output)
@@ -2404,7 +2404,7 @@ Examples:
 
         # Optionally validate canary document locally.
         if validate_canary_local:
-            monger = pymonger.MongoClient(**get_monger_client_args(
+            monger = pymonger.MongerClient(**get_monger_client_args(
                 host=mongerd_host, port=secret_port, server_selection_timeout_ms=one_hour_ms,
                 socket_timeout_ms=one_hour_ms))
             ret = monger_validate_canary(monger, options.db_name, options.collection_name, canary_doc)
@@ -2495,7 +2495,7 @@ Examples:
         if options.canary:
             canary_doc = {"x": time.time()}
             orig_canary_doc = copy.deepcopy(canary_doc)
-            monger = pymonger.MongoClient(**get_monger_client_args(
+            monger = pymonger.MongerClient(**get_monger_client_args(
                 host=mongerd_host, port=standard_port, server_selection_timeout_ms=one_hour_ms,
                 socket_timeout_ms=one_hour_ms))
             crash_canary["function"] = monger_insert_canary

@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -16,7 +16,7 @@ import (
 )
 
 var supportedWireVersions = description.NewVersionRange(2, 6)
-var minSupportedMongoDBVersion = "2.6"
+var minSupportedMongerDBVersion = "2.6"
 
 type fsm struct {
 	description.Topology
@@ -69,11 +69,11 @@ func (f *fsm) apply(s description.Server) (description.Topology, error) {
 		if s.WireVersion.Max < supportedWireVersions.Min {
 			return description.Topology{}, fmt.Errorf(
 				"server at %s reports wire version %d, but this version of the Go driver requires "+
-					"at least %d (MongoDB %s)",
+					"at least %d (MongerDB %s)",
 				s.Addr.String(),
 				s.WireVersion.Max,
 				supportedWireVersions.Min,
-				minSupportedMongoDBVersion,
+				minSupportedMongerDBVersion,
 			)
 		}
 
@@ -106,7 +106,7 @@ func (f *fsm) apply(s description.Server) (description.Topology, error) {
 
 func (f *fsm) applyToReplicaSetNoPrimary(s description.Server) {
 	switch s.Kind {
-	case description.Standalone, description.Mongos:
+	case description.Standalone, description.Mongers:
 		f.removeServerByAddr(s.Addr)
 	case description.RSPrimary:
 		f.updateRSFromPrimary(s)
@@ -119,7 +119,7 @@ func (f *fsm) applyToReplicaSetNoPrimary(s description.Server) {
 
 func (f *fsm) applyToReplicaSetWithPrimary(s description.Server) {
 	switch s.Kind {
-	case description.Standalone, description.Mongos:
+	case description.Standalone, description.Mongers:
 		f.removeServerByAddr(s.Addr)
 		f.checkIfHasPrimary()
 	case description.RSPrimary:
@@ -134,7 +134,7 @@ func (f *fsm) applyToReplicaSetWithPrimary(s description.Server) {
 
 func (f *fsm) applyToSharded(s description.Server) {
 	switch s.Kind {
-	case description.Mongos, description.Unknown:
+	case description.Mongers, description.Unknown:
 		f.replaceServer(s)
 	case description.Standalone, description.RSPrimary, description.RSSecondary, description.RSArbiter, description.RSMember, description.RSGhost:
 		f.removeServerByAddr(s.Addr)
@@ -145,7 +145,7 @@ func (f *fsm) applyToSingle(s description.Server) {
 	switch s.Kind {
 	case description.Unknown:
 		f.replaceServer(s)
-	case description.Standalone, description.Mongos:
+	case description.Standalone, description.Mongers:
 		if f.SetName != "" {
 			f.removeServerByAddr(s.Addr)
 			return
@@ -164,7 +164,7 @@ func (f *fsm) applyToSingle(s description.Server) {
 
 func (f *fsm) applyToUnknown(s description.Server) {
 	switch s.Kind {
-	case description.Mongos:
+	case description.Mongers:
 		f.setKind(description.Sharded)
 		f.replaceServer(s)
 	case description.RSPrimary:

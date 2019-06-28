@@ -1,4 +1,4 @@
-"""GDB commands for MongoDB."""
+"""GDB commands for MongerDB."""
 
 import os
 import re
@@ -23,7 +23,7 @@ except Exception as e:
 
 if sys.version_info[0] < 3:
     raise gdb.GdbError(
-        "MongoDB gdb extensions only support Python 3. Your GDB was compiled against Python 2")
+        "MongerDB gdb extensions only support Python 3. Your GDB was compiled against Python 2")
 
 
 def get_process_name():
@@ -162,7 +162,7 @@ def get_field_names(value):
 ###################################################################################################
 
 
-class RegisterMongoCommand(object):
+class RegisterMongerCommand(object):
     """Class to register monger commands with GDB."""
 
     _MONGO_COMMANDS = {}  # type: ignore
@@ -186,7 +186,7 @@ class DumpGlobalServiceContext(gdb.Command):
 
     def __init__(self):
         """Initialize DumpGlobalServiceContext."""
-        RegisterMongoCommand.register(self, "mongerdb-service-context", gdb.COMMAND_DATA)
+        RegisterMongerCommand.register(self, "mongerdb-service-context", gdb.COMMAND_DATA)
 
     def invoke(self, arg, _from_tty):  # pylint: disable=no-self-use,unused-argument
         """Invoke GDB command to print the Global Service Context."""
@@ -197,7 +197,7 @@ class DumpGlobalServiceContext(gdb.Command):
 DumpGlobalServiceContext()
 
 
-class GetMongoDecoration(gdb.Command):
+class GetMongerDecoration(gdb.Command):
     """
     Search for a decoration on an object by typename and print it e.g.
 
@@ -207,11 +207,11 @@ class GetMongoDecoration(gdb.Command):
     """
 
     def __init__(self):
-        """Initialize GetMongoDecoration."""
-        RegisterMongoCommand.register(self, "monger-decoration", gdb.COMMAND_DATA)
+        """Initialize GetMongerDecoration."""
+        RegisterMongerCommand.register(self, "monger-decoration", gdb.COMMAND_DATA)
 
     def invoke(self, args, _from_tty):  # pylint: disable=unused-argument,no-self-use
-        """Invoke GetMongoDecoration."""
+        """Invoke GetMongerDecoration."""
         argarr = args.split(" ")
         if len(argarr) < 2:
             raise ValueError("Must provide both an object and type_name argument.")
@@ -229,10 +229,10 @@ class GetMongoDecoration(gdb.Command):
 
 
 # Register command
-GetMongoDecoration()
+GetMongerDecoration()
 
 
-class DumpMongoDSessionCatalog(gdb.Command):
+class DumpMongerDSessionCatalog(gdb.Command):
     """Print out the mongerd SessionCatalog, which maintains a table of all Sessions.
 
     Prints out interesting information from TransactionParticipants too, which are decorations on
@@ -245,11 +245,11 @@ class DumpMongoDSessionCatalog(gdb.Command):
     """
 
     def __init__(self):
-        """Initialize DumpMongoDSessionCatalog."""
-        RegisterMongoCommand.register(self, "mongerd-dump-sessions", gdb.COMMAND_DATA)
+        """Initialize DumpMongerDSessionCatalog."""
+        RegisterMongerCommand.register(self, "mongerd-dump-sessions", gdb.COMMAND_DATA)
 
     def invoke(self, args, _from_tty):  # pylint: disable=unused-argument,no-self-use,too-many-locals,too-many-branches,too-many-statements
-        """Invoke DumpMongoDSessionCatalog."""
+        """Invoke DumpMongerDSessionCatalog."""
         # See if a particular session id was specified.
         argarr = args.split(" ")
         lsid_to_find = None
@@ -346,19 +346,19 @@ class DumpMongoDSessionCatalog(gdb.Command):
 
 
 # Register command
-DumpMongoDSessionCatalog()
+DumpMongerDSessionCatalog()
 
 
-class MongoDBDumpLocks(gdb.Command):
+class MongerDBDumpLocks(gdb.Command):
     """Dump locks in mongerd process."""
 
     def __init__(self):
-        """Initialize MongoDBDumpLocks."""
-        RegisterMongoCommand.register(self, "mongerdb-dump-locks", gdb.COMMAND_DATA)
+        """Initialize MongerDBDumpLocks."""
+        RegisterMongerCommand.register(self, "mongerdb-dump-locks", gdb.COMMAND_DATA)
 
     def invoke(self, arg, _from_tty):  # pylint: disable=unused-argument
-        """Invoke MongoDBDumpLocks."""
-        print("Running Hang Analyzer Supplement - MongoDBDumpLocks")
+        """Invoke MongerDBDumpLocks."""
+        print("Running Hang Analyzer Supplement - MongerDBDumpLocks")
 
         main_binary_name = get_process_name()
         if main_binary_name == 'mongerd':
@@ -380,7 +380,7 @@ class MongoDBDumpLocks(gdb.Command):
 
 
 # Register command
-MongoDBDumpLocks()
+MongerDBDumpLocks()
 
 
 class BtIfActive(gdb.Command):
@@ -388,7 +388,7 @@ class BtIfActive(gdb.Command):
 
     def __init__(self):
         """Initialize BtIfActive."""
-        RegisterMongoCommand.register(self, "mongerdb-bt-if-active", gdb.COMMAND_DATA)
+        RegisterMongerCommand.register(self, "mongerdb-bt-if-active", gdb.COMMAND_DATA)
 
     def invoke(self, arg, _from_tty):  # pylint: disable=no-self-use,unused-argument
         """Invoke GDB to print stack trace."""
@@ -407,14 +407,14 @@ class BtIfActive(gdb.Command):
 BtIfActive()
 
 
-class MongoDBUniqueStack(gdb.Command):
+class MongerDBUniqueStack(gdb.Command):
     """Print unique stack traces of all threads in current process."""
 
     _HEADER_FORMAT = "Thread {gdb_thread_num}: {name} (Thread {pthread} (LWP {lwpid})):"
 
     def __init__(self):
-        """Initialize MongoDBUniqueStack."""
-        RegisterMongoCommand.register(self, "mongerdb-uniqstack", gdb.COMMAND_DATA)
+        """Initialize MongerDBUniqueStack."""
+        RegisterMongerCommand.register(self, "mongerdb-uniqstack", gdb.COMMAND_DATA)
 
     def invoke(self, arg, _from_tty):
         """Invoke GDB to dump stacks."""
@@ -493,15 +493,15 @@ class MongoDBUniqueStack(gdb.Command):
 
 
 # Register command
-MongoDBUniqueStack()
+MongerDBUniqueStack()
 
 
-class MongoDBJavaScriptStack(gdb.Command):
-    """Print the JavaScript stack from a MongoDB process."""
+class MongerDBJavaScriptStack(gdb.Command):
+    """Print the JavaScript stack from a MongerDB process."""
 
     def __init__(self):
-        """Initialize MongoDBJavaScriptStack."""
-        RegisterMongoCommand.register(self, "mongerdb-javascript-stack", gdb.COMMAND_STATUS)
+        """Initialize MongerDBJavaScriptStack."""
+        RegisterMongerCommand.register(self, "mongerdb-javascript-stack", gdb.COMMAND_STATUS)
 
     def invoke(self, arg, _from_tty):  # pylint: disable=unused-argument
         """Invoke GDB to dump JS stacks."""
@@ -541,22 +541,22 @@ class MongoDBJavaScriptStack(gdb.Command):
 
 
 # Register command
-MongoDBJavaScriptStack()
+MongerDBJavaScriptStack()
 
 
-class MongoDBHelp(gdb.Command):
+class MongerDBHelp(gdb.Command):
     """Dump list of mongerdb commands."""
 
     def __init__(self):
-        """Initialize MongoDBHelp."""
+        """Initialize MongerDBHelp."""
         gdb.Command.__init__(self, "mongerdb-help", gdb.COMMAND_SUPPORT)
 
     def invoke(self, arg, _from_tty):  # pylint: disable=no-self-use,unused-argument
         """Register the monger print commands."""
-        RegisterMongoCommand.print_commands()
+        RegisterMongerCommand.print_commands()
 
 
 # Register command
-MongoDBHelp()
+MongerDBHelp()
 
-print("MongoDB GDB commands loaded, run 'mongerdb-help' for list of commands")
+print("MongerDB GDB commands loaded, run 'mongerdb-help' for list of commands")

@@ -20,7 +20,7 @@
 (function() {
     'use strict';
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     const db = conn.getDB('test');
     const coll = db.books;
     const blockedMillis = 2000;
@@ -55,7 +55,7 @@
 
     sleep(blockedMillis);
 
-    clearRawMongoProgramOutput();
+    clearRawMongerProgramOutput();
     // Unlock the database. Sub-operation createCollection can proceed
     // and so do all the following sub-operations.
     db.fsyncUnlock();
@@ -64,9 +64,9 @@
     assert.eq(db['favorite'].count(), 1);
 
     // Stopping the mongerd also waits until all of its logs have been read by the monger shell.
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
-    let mongerdLogs = rawMongoProgramOutput();
+    let mongerdLogs = rawMongerProgramOutput();
     let lines = mongerdLogs.split('\n');
     const lockWaitTimeRegex = /timeAcquiringMicros: { [wW]: ([0-9]+)/;
     let match;

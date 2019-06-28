@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -18,7 +18,7 @@ import (
 	"go.mongerdb.org/monger-driver/x/network/wiremessage"
 )
 
-// Handshake represents a generic MongoDB Handshake. It calls isMaster and
+// Handshake represents a generic MongerDB Handshake. It calls isMaster and
 // buildInfo.
 //
 // The isMaster and buildInfo commands are used to build a server description.

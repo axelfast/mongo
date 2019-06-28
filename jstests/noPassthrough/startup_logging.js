@@ -13,11 +13,11 @@
     }
 
     function testStartupLogging(launcher, matchFn, expectedExitCode) {
-        assert(matchFn(rawMongoProgramOutput()));
+        assert(matchFn(rawMongerProgramOutput()));
     }
 
     function validateWaitingMessage(launcher) {
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
         var conn = launcher.start({});
         launcher.stop(conn, undefined, {});
         testStartupLogging(launcher, makeRegExMatchFn(/waiting for connections on port/));
@@ -27,9 +27,9 @@
 
     validateWaitingMessage({
         start: function(opts) {
-            return MongoRunner.runMongod(opts);
+            return MongerRunner.runMongerd(opts);
         },
-        stop: MongoRunner.stopMongod
+        stop: MongerRunner.stopMongerd
     });
 
 }());

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -57,14 +57,14 @@ public:
 };
 
 /**
- * A MongoProcessInterface used for testing which returns artificial currentOp entries.
+ * A MongerProcessInterface used for testing which returns artificial currentOp entries.
  */
-class MockMongoInterface final : public StubMongoProcessInterface {
+class MockMongerInterface final : public StubMongerProcessInterface {
 public:
-    MockMongoInterface(std::vector<BSONObj> ops, bool hasShardName = true)
+    MockMongerInterface(std::vector<BSONObj> ops, bool hasShardName = true)
         : _ops(std::move(ops)), _hasShardName(hasShardName) {}
 
-    MockMongoInterface(bool hasShardName = true) : _hasShardName(hasShardName) {}
+    MockMongerInterface(bool hasShardName = true) : _hasShardName(hasShardName) {}
 
     std::vector<BSONObj> getCurrentOps(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                                        CurrentOpConnectionsMode connMode,
@@ -202,7 +202,7 @@ TEST_F(DocumentSourceCurrentOpTest, ShouldNotSerializeOmittedOptionalArguments) 
 }
 
 TEST_F(DocumentSourceCurrentOpTest, ShouldReturnEOFImmediatelyIfNoCurrentOps) {
-    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongoInterface>();
+    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongerInterface>();
 
     const auto currentOp = DocumentSourceCurrentOp::create(getExpCtx());
 
@@ -211,10 +211,10 @@ TEST_F(DocumentSourceCurrentOpTest, ShouldReturnEOFImmediatelyIfNoCurrentOps) {
 
 TEST_F(DocumentSourceCurrentOpTest,
        ShouldAddShardNameModifyOpIDAndClientFieldNameInShardedContext) {
-    getExpCtx()->fromMongos = true;
+    getExpCtx()->fromMongers = true;
 
     std::vector<BSONObj> ops{fromjson("{ client: '192.168.1.10:50844', opid: 430 }")};
-    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongoInterface>(ops);
+    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongerInterface>(ops);
 
     const auto currentOp = DocumentSourceCurrentOp::create(getExpCtx());
 
@@ -228,10 +228,10 @@ TEST_F(DocumentSourceCurrentOpTest,
 
 TEST_F(DocumentSourceCurrentOpTest,
        ShouldReturnOpIDAndClientFieldNameUnmodifiedWhenNotInShardedContext) {
-    getExpCtx()->fromMongos = false;
+    getExpCtx()->fromMongers = false;
 
     std::vector<BSONObj> ops{fromjson("{ client: '192.168.1.10:50844', opid: 430 }")};
-    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongoInterface>(ops);
+    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongerInterface>(ops);
 
     const auto currentOp = DocumentSourceCurrentOp::create(getExpCtx());
 
@@ -242,9 +242,9 @@ TEST_F(DocumentSourceCurrentOpTest,
 }
 
 TEST_F(DocumentSourceCurrentOpTest, ShouldFailIfNoShardNameAvailableForShardedRequest) {
-    getExpCtx()->fromMongos = true;
+    getExpCtx()->fromMongers = true;
 
-    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongoInterface>(false);
+    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongerInterface>(false);
 
     const auto currentOp = DocumentSourceCurrentOp::create(getExpCtx());
 
@@ -252,10 +252,10 @@ TEST_F(DocumentSourceCurrentOpTest, ShouldFailIfNoShardNameAvailableForShardedRe
 }
 
 TEST_F(DocumentSourceCurrentOpTest, ShouldFailIfOpIDIsNonNumericWhenModifyingInShardedContext) {
-    getExpCtx()->fromMongos = true;
+    getExpCtx()->fromMongers = true;
 
     std::vector<BSONObj> ops{fromjson("{ client: '192.168.1.10:50844', opid: 'string' }")};
-    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongoInterface>(ops);
+    getExpCtx()->mongerProcessInterface = std::make_shared<MockMongerInterface>(ops);
 
     const auto currentOp = DocumentSourceCurrentOp::create(getExpCtx());
 

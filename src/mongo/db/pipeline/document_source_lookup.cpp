@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -181,7 +181,7 @@ StageConstraints DocumentSourceLookUp::constraints(Pipeline::SplitState) const {
     // If executing on mongers and the foreign collection is sharded, then this stage can run on
     // mongers or any shard.
     HostTypeRequirement hostRequirement =
-        (pExpCtx->inMongos && pExpCtx->mongerProcessInterface->isSharded(pExpCtx->opCtx, _fromNs))
+        (pExpCtx->inMongers && pExpCtx->mongerProcessInterface->isSharded(pExpCtx->opCtx, _fromNs))
         ? HostTypeRequirement::kNone
         : HostTypeRequirement::kPrimaryShard;
 
@@ -293,7 +293,7 @@ std::unique_ptr<Pipeline, PipelineDeleter> DocumentSourceLookUp::buildPipeline(
 
     // Tailor the pipeline construction for our needs. We want a non-optimized pipeline without a
     // cursor source.
-    MongoProcessInterface::MakePipelineOptions pipelineOpts;
+    MongerProcessInterface::MakePipelineOptions pipelineOpts;
     pipelineOpts.optimize = false;
     pipelineOpts.attachCursorSource = false;
 

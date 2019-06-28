@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -227,19 +227,19 @@ public:
     // status if it is unable to parse the pipeline.
     virtual StatusWith<PrivilegeVector> getPrivilegesForAggregate(const NamespaceString& ns,
                                                                   const BSONObj& cmdObj,
-                                                                  bool isMongos) = 0;
+                                                                  bool isMongers) = 0;
 
     // Checks if this connection has the privileges necessary to create 'ns' with the options
     // supplied in 'cmdObj' either directly on mongerD or via mongerS.
     virtual Status checkAuthForCreate(const NamespaceString& ns,
                                       const BSONObj& cmdObj,
-                                      bool isMongos) = 0;
+                                      bool isMongers) = 0;
 
     // Checks if this connection has the privileges necessary to modify 'ns' with the options
     // supplied in 'cmdObj' either directly on mongerD or via mongerS.
     virtual Status checkAuthForCollMod(const NamespaceString& ns,
                                        const BSONObj& cmdObj,
-                                       bool isMongos) = 0;
+                                       bool isMongers) = 0;
 
     // Checks if this connection has the privileges necessary to grant the given privilege
     // to a role.

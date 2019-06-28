@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -29,7 +29,7 @@ const (
 type authVersionPair struct {
 	// Dump is the auth version of the users/roles collection files in the target dump directory
 	Dump int
-	// Server is the auth version of the connected MongoDB server
+	// Server is the auth version of the connected MongerDB server
 	Server int
 }
 
@@ -49,7 +49,7 @@ type IndexDocument struct {
 
 // MetadataFromJSON takes a slice of JSON bytes and unmarshals them into usable
 // collection options and indexes for restoring collections.
-func (restore *MongoRestore) MetadataFromJSON(jsonBytes []byte) (*Metadata, error) {
+func (restore *MongerRestore) MetadataFromJSON(jsonBytes []byte) (*Metadata, error) {
 	if len(jsonBytes) == 0 {
 		// skip metadata parsing if the file is empty
 		return nil, nil
@@ -66,8 +66,8 @@ func (restore *MongoRestore) MetadataFromJSON(jsonBytes []byte) (*Metadata, erro
 }
 
 // LoadIndexesFromBSON reads indexes from the index BSON files and
-// caches them in the MongoRestore object.
-func (restore *MongoRestore) LoadIndexesFromBSON() error {
+// caches them in the MongerRestore object.
+func (restore *MongerRestore) LoadIndexesFromBSON() error {
 
 	dbCollectionIndexes := make(map[string]collectionIndexes)
 
@@ -106,7 +106,7 @@ func stripDBFromNS(ns string) string {
 }
 
 // CollectionExists returns true if the given intent's collection exists.
-func (restore *MongoRestore) CollectionExists(intent *intents.Intent) (bool, error) {
+func (restore *MongerRestore) CollectionExists(intent *intents.Intent) (bool, error) {
 	restore.knownCollectionsMutex.Lock()
 	defer restore.knownCollectionsMutex.Unlock()
 
@@ -146,7 +146,7 @@ func (restore *MongoRestore) CollectionExists(intent *intents.Intent) (bool, err
 // CreateIndexes takes in an intent and an array of index documents and
 // attempts to create them using the createIndexes command. If that command
 // fails, we fall back to individual index creation.
-func (restore *MongoRestore) CreateIndexes(intent *intents.Intent, indexes []IndexDocument, hasNonSimpleCollation bool) error {
+func (restore *MongerRestore) CreateIndexes(intent *intents.Intent, indexes []IndexDocument, hasNonSimpleCollation bool) error {
 	// first, sanitize the indexes
 	for _, index := range indexes {
 		// update the namespace of the index before inserting
@@ -205,7 +205,7 @@ func (restore *MongoRestore) CreateIndexes(intent *intents.Intent, indexes []Ind
 
 // LegacyInsertIndex takes in an intent and an index document and attempts to
 // create the index on the "system.indexes" collection.
-func (restore *MongoRestore) LegacyInsertIndex(intent *intents.Intent, index IndexDocument) error {
+func (restore *MongerRestore) LegacyInsertIndex(intent *intents.Intent, index IndexDocument) error {
 	session, err := restore.SessionProvider.GetSession()
 	if err != nil {
 		return fmt.Errorf("error establishing connection: %v", err)
@@ -222,7 +222,7 @@ func (restore *MongoRestore) LegacyInsertIndex(intent *intents.Intent, index Ind
 
 // CreateCollection creates the collection specified in the intent with the
 // given options.
-func (restore *MongoRestore) CreateCollection(intent *intents.Intent, options bson.D, uuid string) error {
+func (restore *MongerRestore) CreateCollection(intent *intents.Intent, options bson.D, uuid string) error {
 	session, err := restore.SessionProvider.GetSession()
 	if err != nil {
 		return fmt.Errorf("error establishing connection: %v", err)
@@ -238,7 +238,7 @@ func (restore *MongoRestore) CreateCollection(intent *intents.Intent, options bs
 
 }
 
-func (restore *MongoRestore) createCollectionWithCommand(session *monger.Client, intent *intents.Intent, options bson.D) error {
+func (restore *MongerRestore) createCollectionWithCommand(session *monger.Client, intent *intents.Intent, options bson.D) error {
 	command := createCollectionCommand(intent, options)
 
 	// If there is no error, the result doesnt matter
@@ -256,7 +256,7 @@ func (restore *MongoRestore) createCollectionWithCommand(session *monger.Client,
 
 }
 
-func (restore *MongoRestore) createCollectionWithApplyOps(session *monger.Client, intent *intents.Intent, options bson.D, uuidHex string) error {
+func (restore *MongerRestore) createCollectionWithApplyOps(session *monger.Client, intent *intents.Intent, options bson.D, uuidHex string) error {
 	command := createCollectionCommand(intent, options)
 	uuid, err := hex.DecodeString(uuidHex)
 	if err != nil {
@@ -312,7 +312,7 @@ func createCollectionCommand(intent *intents.Intent, options bson.D) bson.D {
 //    writeConcern: {w: "majority"}
 // }
 //
-func (restore *MongoRestore) RestoreUsersOrRoles(users, roles *intents.Intent) error {
+func (restore *MongerRestore) RestoreUsersOrRoles(users, roles *intents.Intent) error {
 
 	type loopArg struct {
 		intent             *intents.Intent
@@ -351,7 +351,7 @@ func (restore *MongoRestore) RestoreUsersOrRoles(users, roles *intents.Intent) e
 	for _, arg := range args {
 
 		if arg.intent.Size == 0 {
-			// MongoDB complains if we try and remove a non-existent collection, so we should
+			// MongerDB complains if we try and remove a non-existent collection, so we should
 			// just skip auth collections with empty .bson files to avoid gnarly logic later on.
 			log.Logvf(log.Always, "%v file '%v' is empty; skipping %v restoration", arg.intentType, arg.intent.Location, arg.intentType)
 		}
@@ -453,7 +453,7 @@ func (restore *MongoRestore) RestoreUsersOrRoles(users, roles *intents.Intent) e
 // to determine the authentication version of the files in the dump. If that collection is not
 // present in the dump, we try to infer the authentication version based on its absence.
 // Returns the authentication version number and any errors that occur.
-func (restore *MongoRestore) GetDumpAuthVersion() (int, error) {
+func (restore *MongerRestore) GetDumpAuthVersion() (int, error) {
 	// first handle the case where we have no auth version
 	intent := restore.manager.AuthVersion()
 	if intent == nil {
@@ -463,7 +463,7 @@ func (restore *MongoRestore) GetDumpAuthVersion() (int, error) {
 			// so we can assume up to version 3.
 			log.Logvf(log.Always, "no system.version bson file found in '%v' database dump", restore.NSOptions.DB)
 			log.Logv(log.Always, "warning: assuming users and roles collections are of auth version 3")
-			log.Logv(log.Always, "if users are from an earlier version of MongoDB, they may not restore properly")
+			log.Logv(log.Always, "if users are from an earlier version of MongerDB, they may not restore properly")
 			return 3, nil
 		}
 		log.Logv(log.Info, "no system.version bson file found in dump")
@@ -510,7 +510,7 @@ func (restore *MongoRestore) GetDumpAuthVersion() (int, error) {
 // ValidateAuthVersions compares the authentication version of the dump files and the
 // authentication version of the target server, and returns an error if the versions
 // are incompatible.
-func (restore *MongoRestore) ValidateAuthVersions() error {
+func (restore *MongerRestore) ValidateAuthVersions() error {
 	if restore.authVersions.Dump == 2 || restore.authVersions.Dump == 4 {
 		return fmt.Errorf(
 			"cannot restore users and roles from a dump file with auth version %v; "+
@@ -558,7 +558,7 @@ func (restore *MongoRestore) ValidateAuthVersions() error {
 
 // ShouldRestoreUsersAndRoles returns true if mongerrestore should go through
 // through the process of restoring collections pertaining to authentication.
-func (restore *MongoRestore) ShouldRestoreUsersAndRoles() bool {
+func (restore *MongerRestore) ShouldRestoreUsersAndRoles() bool {
 	if restore.SkipUsersAndRoles {
 		return false
 	}
@@ -577,7 +577,7 @@ func (restore *MongoRestore) ShouldRestoreUsersAndRoles() bool {
 }
 
 // DropCollection drops the intent's collection.
-func (restore *MongoRestore) DropCollection(intent *intents.Intent) error {
+func (restore *MongerRestore) DropCollection(intent *intents.Intent) error {
 	session, err := restore.SessionProvider.GetSession()
 	if err != nil {
 		return fmt.Errorf("error establishing connection: %v", err)

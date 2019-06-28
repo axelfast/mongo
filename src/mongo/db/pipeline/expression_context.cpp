@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,13 +45,13 @@ ExpressionContext::ResolvedNamespace::ResolvedNamespace(NamespaceString ns,
 ExpressionContext::ExpressionContext(OperationContext* opCtx,
                                      const AggregationRequest& request,
                                      std::unique_ptr<CollatorInterface> collator,
-                                     std::shared_ptr<MongoProcessInterface> processInterface,
+                                     std::shared_ptr<MongerProcessInterface> processInterface,
                                      StringMap<ResolvedNamespace> resolvedNamespaces,
                                      boost::optional<UUID> collUUID)
     : ExpressionContext(opCtx, collator.get()) {
     explain = request.getExplain();
     comment = request.getComment();
-    fromMongos = request.isFromMongos();
+    fromMongers = request.isFromMongers();
     needsMerge = request.needsMerge();
     allowDiskUse = request.shouldAllowDiskUse();
     bypassDocumentValidation = request.shouldBypassDocumentValidation();
@@ -72,7 +72,7 @@ ExpressionContext::ExpressionContext(OperationContext* opCtx,
                                      const CollatorInterface* collator,
                                      const boost::optional<RuntimeConstants>& runtimeConstants)
     : opCtx(opCtx),
-      mongerProcessInterface(std::make_shared<StubMongoProcessInterface>()),
+      mongerProcessInterface(std::make_shared<StubMongerProcessInterface>()),
       timeZoneDatabase(opCtx && opCtx->getServiceContext()
                            ? TimeZoneDatabase::get(opCtx->getServiceContext())
                            : nullptr),
@@ -86,7 +86,7 @@ ExpressionContext::ExpressionContext(OperationContext* opCtx,
 }
 
 ExpressionContext::ExpressionContext(NamespaceString nss,
-                                     std::shared_ptr<MongoProcessInterface> processInterface,
+                                     std::shared_ptr<MongerProcessInterface> processInterface,
                                      const TimeZoneDatabase* tzDb)
     : ns(std::move(nss)),
       mongerProcessInterface(std::move(processInterface)),
@@ -154,8 +154,8 @@ intrusive_ptr<ExpressionContext> ExpressionContext::copyWith(
     expCtx->explain = explain;
     expCtx->comment = comment;
     expCtx->needsMerge = needsMerge;
-    expCtx->fromMongos = fromMongos;
-    expCtx->inMongos = inMongos;
+    expCtx->fromMongers = fromMongers;
+    expCtx->inMongers = inMongers;
     expCtx->allowDiskUse = allowDiskUse;
     expCtx->bypassDocumentValidation = bypassDocumentValidation;
     expCtx->maxFeatureCompatibilityVersion = maxFeatureCompatibilityVersion;

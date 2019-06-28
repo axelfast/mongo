@@ -4,7 +4,7 @@
     "use strict";
 
     load("jstests/aggregation/extras/utils.js");  // For assertErrorCode.
-    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongos.
+    load("jstests/libs/fixture_helpers.js");      // For FixtureHelpers.isMongers.
 
     const coll = db.merge_replace_insert;
     const outColl = db.merge_replace_insert_out;
@@ -200,7 +200,7 @@
     assert.commandWorked(coll.insert({_id: 0}));
     foreignDb.dropDatabase();
 
-    if (!FixtureHelpers.isMongos(db)) {
+    if (!FixtureHelpers.isMongers(db)) {
         // Test that $merge implicitly creates a new database when the output collection's database
         // doesn't exist.
         coll.aggregate(pipelineDifferentOutputDb);

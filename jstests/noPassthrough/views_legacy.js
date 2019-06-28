@@ -5,7 +5,7 @@
 (function() {
     "use strict";
 
-    let conn = MongoRunner.runMongod({});
+    let conn = MongerRunner.runMongerd({});
 
     let viewsDB = conn.getDB("views_legacy");
     assert.commandWorked(viewsDB.dropDatabase());
@@ -80,5 +80,5 @@
     cursor = new DBCommandCursor(viewsDB, cmdRes, 2);
     assert.eq(0, cursor.itcount());
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

@@ -13,7 +13,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     const x509_options = {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT};
 
-    const conn = MongoRunner.runMongod(x509_options);
+    const conn = MongerRunner.runMongerd(x509_options);
     const test = conn.getDB("test");
     const collection = test.coll;
 
@@ -32,7 +32,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     };
 
     const conn_str = "mongerdb://" + conn.host + "/?ssl=true";
-    const shell = Mongo(conn_str, clientSideFLEOptions);
+    const shell = Monger(conn_str, clientSideFLEOptions);
     const keyVault = shell.getKeyVault();
 
     var key = keyVault.createKey("aws", "arn:aws:kms:us-east-1:fake:fake:fake", ['mongerKey']);
@@ -70,6 +70,6 @@ load('jstests/ssl/libs/ssl_helpers.js');
 
     assert.eq(3, keyVault.getKeys().itcount());
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
     mock_kms.stop();
 }());

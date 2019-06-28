@@ -4,12 +4,12 @@
 (function() {
     'use strict';
     var db_name = "ελληνικά";
-    var path = MongoRunner.dataPath + "Росси́я";
+    var path = MongerRunner.dataPath + "Росси́я";
 
     mkdir(path);
 
-    // Test MongoD
-    let testMongoD = function() {
+    // Test MongerD
+    let testMongerD = function() {
         let options = {
             dbpath: path,
             useLogFiles: true,
@@ -21,17 +21,17 @@
             options["directoryperdb"] = "";
         }
 
-        let conn = MongoRunner.runMongod(options);
+        let conn = MongerRunner.runMongerd(options);
         assert.neq(null, conn, 'mongerd was unable to start up');
 
         let coll = conn.getCollection(db_name + ".foo");
         assert.writeOK(coll.insert({_id: 1}));
 
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     };
 
-    testMongoD();
+    testMongerD();
 
     // Start a second time to test things like log rotation.
-    testMongoD();
+    testMongerD();
 })();

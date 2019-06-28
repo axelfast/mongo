@@ -15,7 +15,7 @@
     var testDB = db.getSiblingDB("profile_insert");
     assert.commandWorked(testDB.dropDatabase());
     var coll = testDB.getCollection("test");
-    var isWriteCommand = (db.getMongo().writeMode() === "commands");
+    var isWriteCommand = (db.getMonger().writeMode() === "commands");
 
     testDB.setProfilingLevel(2);
 
@@ -37,7 +37,7 @@
     if (isWriteCommand) {
         assert.eq(profileObj.command.ordered, true, tojson(profileObj));
         assert.eq(profileObj.protocol,
-                  getProfilerProtocolStringForCommand(testDB.getMongo()),
+                  getProfilerProtocolStringForCommand(testDB.getMonger()),
                   tojson(profileObj));
         assert(profileObj.hasOwnProperty("responseLength"), tojson(profileObj));
     }
@@ -47,7 +47,7 @@
     assert(profileObj.hasOwnProperty("millis"), tojson(profileObj));
     assert(profileObj.hasOwnProperty("ts"), tojson(profileObj));
     assert(profileObj.hasOwnProperty("client"), tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Test multi-insert.
@@ -68,12 +68,12 @@
     if (isWriteCommand) {
         assert.eq(profileObj.ninserted, 2, tojson(profileObj));
         assert.eq(profileObj.keysInserted, 2, tojson(profileObj));
-        assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+        assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
     } else {
         // Documents were inserted one at a time.
         assert.eq(profileObj.ninserted, 1, tojson(profileObj));
         assert.eq(profileObj.keysInserted, 1, tojson(profileObj));
-        assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+        assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
     }
 
     //
@@ -90,6 +90,6 @@
         assert.eq(profileObj.command.ordered, false, tojson(profileObj));
         assert.eq(profileObj.command.writeConcern.w, 1, tojson(profileObj));
         assert.eq(profileObj.command.writeConcern.wtimeout, wtimeout, tojson(profileObj));
-        assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+        assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
     }
 })();

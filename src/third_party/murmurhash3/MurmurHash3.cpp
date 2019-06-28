@@ -56,7 +56,7 @@ inline uint64_t rotl64 ( uint64_t x, int8_t r )
 // Block read - if your platform needs to do endian-swapping or can only
 // handle aligned reads, do the conversion here
 //
-// NOTE, MongoDB code: JC -
+// NOTE, MongerDB code: JC -
 // ConstDataView handles the byte swapping and avoids unaligned reads.  Note
 // that we need reversed versions because we actually want little endian
 // encoded blocks out of getblock, and our input data is in the native format.

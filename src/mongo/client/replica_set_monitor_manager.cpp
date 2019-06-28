@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -118,13 +118,13 @@ shared_ptr<ReplicaSetMonitor> ReplicaSetMonitorManager::getOrCreateMonitor(
 
     log() << "Starting new replica set monitor for " << connStr.toString();
 
-    auto newMonitor = std::make_shared<ReplicaSetMonitor>(MongoURI(connStr));
+    auto newMonitor = std::make_shared<ReplicaSetMonitor>(MongerURI(connStr));
     _monitors[setName] = newMonitor;
     newMonitor->init();
     return newMonitor;
 }
 
-shared_ptr<ReplicaSetMonitor> ReplicaSetMonitorManager::getOrCreateMonitor(const MongoURI& uri) {
+shared_ptr<ReplicaSetMonitor> ReplicaSetMonitorManager::getOrCreateMonitor(const MongerURI& uri) {
     invariant(uri.type() == ConnectionString::SET);
 
     stdx::lock_guard<stdx::mutex> lk(_mutex);

@@ -8,7 +8,7 @@ load('jstests/libs/ftdc.js');
 
 (function() {
     'use strict';
-    const testPath = MongoRunner.toRealPath('ftdc_dir');
+    const testPath = MongerRunner.toRealPath('ftdc_dir');
     const st = new ShardingTest({
         shards: 2,
         mongers: {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -103,7 +103,7 @@ void OpObserverMock::onPreparedTransactionCommit(
 /**
  * Test fixture for doTxn().
  */
-class DoTxnTest : public ServiceContextMongoDTest {
+class DoTxnTest : public ServiceContextMongerDTest {
 private:
     void setUp() override;
     void tearDown() override;
@@ -137,12 +137,12 @@ protected:
     OpObserverMock* _opObserver = nullptr;
     std::unique_ptr<StorageInterface> _storage;
     ServiceContext::UniqueOperationContext _opCtx;
-    boost::optional<MongoDOperationContextSession> _ocs;
+    boost::optional<MongerDOperationContextSession> _ocs;
 };
 
 void DoTxnTest::setUp() {
     // Set up mongerd.
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
 
     const auto service = getServiceContext();
     _opCtx = cc().makeOperationContext();
@@ -157,7 +157,7 @@ void DoTxnTest::setUp() {
     ASSERT_OK(replCoord->setFollowerMode(MemberState::RS_PRIMARY));
 
     // Set up session catalog
-    MongoDSessionCatalog::onStepUp(_opCtx.get());
+    MongerDSessionCatalog::onStepUp(_opCtx.get());
 
     // Need the OpObserverImpl in the registry in order for doTxn to work.
     OpObserverRegistry* opObserverRegistry =
@@ -198,7 +198,7 @@ void DoTxnTest::tearDown() {
     logger::globalLogDomain()->setMinimumLoggedSeverity(logger::LogComponent::kReplication,
                                                         logger::LogSeverity::Debug(0));
 
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 /**

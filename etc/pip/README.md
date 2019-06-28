@@ -1,19 +1,19 @@
 ## On requirements (`*-requirements.txt`) files
 
-MongoDB requires multiple pypa projects installed to build and test. To that end, we provide our own
+MongerDB requires multiple pypa projects installed to build and test. To that end, we provide our own
 `*-requirements.txt` files for specific domains of use. Inside each requirements file, there are
 only include statements for component files. These files are the bare requirements for specific
 components of our python environment. This separation allows us to avoid repetition and conflict in
 our requirements across components.
 
 For most developers, if you pip-install `dev-requirements.txt`, you have the python requirements to
-lint, build, and test MongoDB.
+lint, build, and test MongerDB.
 
 ## How to modify a pypa project requirement in a component
 
 The most common edit of our requirements is likely a change to the constraints on a pypa project
 that we already use. For example, say that we currently require `pymonger >= 3.0, < 3.6.0` in the
-component `core`. You would like to use PyMongo 3.7, so you instead modify the line in
+component `core`. You would like to use PyMonger 3.7, so you instead modify the line in
 `etc/pip/components/core.req` to read `pymonger >= 3.0, != 3.6.0`.
 
 ## How to add a new component (`*.req`) file

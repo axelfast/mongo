@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,8 +38,8 @@
 namespace monger {
 namespace {
 
-const char kSecondaryThrottleMongos[] = "_secondaryThrottle";
-const char kSecondaryThrottleMongod[] = "secondaryThrottle";
+const char kSecondaryThrottleMongers[] = "_secondaryThrottle";
+const char kSecondaryThrottleMongerd[] = "secondaryThrottle";
 const char kWriteConcern[] = "writeConcern";
 
 }  // namespace
@@ -73,9 +73,9 @@ StatusWith<MigrationSecondaryThrottleOptions> MigrationSecondaryThrottleOptions:
         bool isSecondaryThrottle;
 
         Status status =
-            bsonExtractBooleanField(obj, kSecondaryThrottleMongod, &isSecondaryThrottle);
+            bsonExtractBooleanField(obj, kSecondaryThrottleMongerd, &isSecondaryThrottle);
         if (status == ErrorCodes::NoSuchKey) {
-            status = bsonExtractBooleanField(obj, kSecondaryThrottleMongos, &isSecondaryThrottle);
+            status = bsonExtractBooleanField(obj, kSecondaryThrottleMongers, &isSecondaryThrottle);
         }
 
         if (status == ErrorCodes::NoSuchKey) {
@@ -122,7 +122,7 @@ MigrationSecondaryThrottleOptions::createFromBalancerConfig(const BSONObj& obj) 
     {
         bool isSecondaryThrottle;
         Status status =
-            bsonExtractBooleanField(obj, kSecondaryThrottleMongos, &isSecondaryThrottle);
+            bsonExtractBooleanField(obj, kSecondaryThrottleMongers, &isSecondaryThrottle);
         if (status.isOK()) {
             return MigrationSecondaryThrottleOptions::create(isSecondaryThrottle ? kOn : kOff);
         } else if (status == ErrorCodes::NoSuchKey) {
@@ -134,7 +134,7 @@ MigrationSecondaryThrottleOptions::createFromBalancerConfig(const BSONObj& obj) 
 
     // Try to load it as a BSON document
     BSONElement elem;
-    Status status = bsonExtractTypedField(obj, kSecondaryThrottleMongos, BSONType::Object, &elem);
+    Status status = bsonExtractTypedField(obj, kSecondaryThrottleMongers, BSONType::Object, &elem);
     if (!status.isOK())
         return status;
 
@@ -162,7 +162,7 @@ void MigrationSecondaryThrottleOptions::append(BSONObjBuilder* builder) const {
         return;
     }
 
-    builder->appendBool(kSecondaryThrottleMongod, _secondaryThrottle == kOn);
+    builder->appendBool(kSecondaryThrottleMongerd, _secondaryThrottle == kOn);
 
     if (_secondaryThrottle == kOn && _writeConcernBSON) {
         builder->append(kWriteConcern, *_writeConcernBSON);

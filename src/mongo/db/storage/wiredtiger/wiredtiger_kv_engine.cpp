@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -117,7 +117,7 @@ bool WiredTigerFileVersion::shouldDowngrade(bool readOnly,
     }
 
     if (!serverGlobalParams.featureCompatibility.isVersionInitialized()) {
-        // If the FCV document hasn't been read, trust the WT compatibility. MongoD will
+        // If the FCV document hasn't been read, trust the WT compatibility. MongerD will
         // downgrade to the same compatibility it discovered on startup.
         return _startupVersion == StartupVersion::IS_40 ||
             _startupVersion == StartupVersion::IS_36 || _startupVersion == StartupVersion::IS_34;

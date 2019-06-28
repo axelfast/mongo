@@ -17,7 +17,7 @@ load('./jstests/multiVersion/libs/verify_versions.js');
     // Check our latest versions
     var versionsToCheck = ["last-stable", "latest"];
     var versionsToCheckConfig = ["latest"];
-    var versionsToCheckMongos = ["last-stable"];
+    var versionsToCheckMongers = ["last-stable"];
 
     jsTest.log("Testing mixed versions...");
 
@@ -26,7 +26,7 @@ load('./jstests/multiVersion/libs/verify_versions.js');
         shards: 2,
         mongers: 2,
         other: {
-            mongersOptions: {binVersion: versionsToCheckMongos},
+            mongersOptions: {binVersion: versionsToCheckMongers},
             configOptions: {binVersion: versionsToCheckConfig},
             shardOptions: {binVersion: versionsToCheck},
             enableBalancer: true,
@@ -49,7 +49,7 @@ load('./jstests/multiVersion/libs/verify_versions.js');
     for (var j = 0; j < mongerses.length; j++)
         versionsFound.push(mongerses[j].getBinVersion());
 
-    assert.allBinVersions(versionsToCheckMongos, versionsFound);
+    assert.allBinVersions(versionsToCheckMongers, versionsFound);
 
     versionsFound = [];
     for (var j = 0; j < configs.length; j++)

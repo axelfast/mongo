@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -251,7 +251,7 @@ ProcessOplogResult processSessionOplog(const BSONObj& oplogBSON,
     auto opCtx = uniqueOpCtx.get();
     opCtx->setLogicalSessionId(result.sessionId);
     opCtx->setTxnNumber(result.txnNum);
-    MongoDOperationContextSession ocs(opCtx);
+    MongerDOperationContextSession ocs(opCtx);
     auto txnParticipant = TransactionParticipant::get(opCtx);
 
     try {

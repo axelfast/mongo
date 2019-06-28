@@ -6,9 +6,9 @@
   <a href="https://docs.mongerdb.com/ecosystem/drivers/go/"><img src="etc/assets/docs-mongerdb-green.svg"></a>
 </p>
 
-# MongoDB Go Driver
+# MongerDB Go Driver
 
-The MongoDB supported driver for Go.
+The MongerDB supported driver for Go.
 
 -------------------------
 - [Requirements](#requirements)
@@ -23,12 +23,12 @@ The MongoDB supported driver for Go.
 ## Requirements
 
 - Go 1.10 or higher. We aim to support the latest supported versions of go.
-- MongoDB 2.6 and higher.
+- MongerDB 2.6 and higher.
 
 -------------------------
 ## Installation
 
-The recommended way to get started using the MongoDB Go driver is by using `dep` to install the dependency in your project.
+The recommended way to get started using the MongerDB Go driver is by using `dep` to install the dependency in your project.
 
 ```bash
 dep ensure -add "go.mongerdb.org/monger-driver/monger@~1.0.0"
@@ -45,7 +45,7 @@ import "go.mongerdb.org/monger-driver/monger"
 client, err := monger.NewClient(options.Client().ApplyURI("mongerdb://localhost:27017"))
 ```
 
-And connect it to your running MongoDB server:
+And connect it to your running MongerDB server:
 
 ```go
 ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
@@ -59,7 +59,7 @@ ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 client, err := monger.Connect(ctx, options.Client().ApplyURI("mongerdb://localhost:27017"))
 ```
 
-Calling `Connect` does not block for server discovery. If you wish to know if a MongoDB server has been found and connected to,
+Calling `Connect` does not block for server discovery. If you wish to know if a MongerDB server has been found and connected to,
 use the `Ping` method:
 
 ```go
@@ -114,7 +114,7 @@ if err != nil {
 // Do something with result...
 ```
 
-Additional examples and documentation can be found under the examples directory and [on the MongoDB Documentation website](https://docs.mongerdb.com/ecosystem/drivers/go/).
+Additional examples and documentation can be found under the examples directory and [on the MongerDB Documentation website](https://docs.mongerdb.com/ecosystem/drivers/go/).
 
 -------------------------
 ## Bugs / Feature Reporting
@@ -124,7 +124,7 @@ New Features and bugs can be reported on jira: https://jira.mongerdb.org/browse/
 -------------------------
 ## Testing / Development
 
-The driver tests can be run against several database configurations. The most simple configuration is a standalone mongerd with no auth, no ssl, and no compression. To run these basic driver tests, make sure a standalone MongoDB server instance is running at localhost:27017. To run the tests, you can run `make` (on Windows, run `nmake`) with the following:
+The driver tests can be run against several database configurations. The most simple configuration is a standalone mongerd with no auth, no ssl, and no compression. To run these basic driver tests, make sure a standalone MongerDB server instance is running at localhost:27017. To run the tests, you can run `make` (on Windows, run `nmake`) with the following:
 
 ```
 TOPOLOGY=server make
@@ -148,7 +148,7 @@ MONGODB_URI="mongerdb://localhost:27017/" TOPOLOGY=sharder_cluster make
 
 ### Testing Auth and SSL
 
-To test authentication and SSL, first set up a MongoDB cluster with auth and SSL configured. Testing authentication requires a user with the `root` role on the `admin` database. The Go Driver repository comes with example certificates in the `data/certificates` directory. These certs can be used for testing. Here is an example command that would run a mongerd with SSL correctly configured for tests:
+To test authentication and SSL, first set up a MongerDB cluster with auth and SSL configured. Testing authentication requires a user with the `root` role on the `admin` database. The Go Driver repository comes with example certificates in the `data/certificates` directory. These certs can be used for testing. Here is an example command that would run a mongerd with SSL correctly configured for tests:
 
 ```
 mongerd \
@@ -171,7 +171,7 @@ Notes:
 
 ### Testing Compression
 
-The MongoDB Go Driver supports wire protocol compression using Snappy or zLib. To run tests with wire protocol compression, set `MONGO_GO_DRIVER_COMPRESSOR` to `snappy` or `zlib`.  For example:
+The MongerDB Go Driver supports wire protocol compression using Snappy or zLib. To run tests with wire protocol compression, set `MONGO_GO_DRIVER_COMPRESSOR` to `snappy` or `zlib`.  For example:
 
 ```
 MONGO_GO_DRIVER_COMPRESSOR=snappy make
@@ -182,7 +182,7 @@ Ensure the [`--networkMessageCompressors` flag](https://docs.mongerdb.com/manual
 -------------------------
 ## Feedback
 
-The MongoDB Go Driver is not feature complete, so any help is appreciated. Check out the [project page](https://jira.mongerdb.org/browse/GODRIVER)
+The MongerDB Go Driver is not feature complete, so any help is appreciated. Check out the [project page](https://jira.mongerdb.org/browse/GODRIVER)
 for tickets that need completing. See our [contribution guidelines](CONTRIBUTING.md) for details.
 
 -------------------------
@@ -193,9 +193,9 @@ Commits to master are run automatically on [evergreen](https://evergreen.mongerd
 -------------------------
 ## Thanks and Acknowledgement 
 
-<a href="https://github.com/ashleymcnamara">@ashleymcnamara</a> - Mongo Gopher Artwork
+<a href="https://github.com/ashleymcnamara">@ashleymcnamara</a> - Monger Gopher Artwork
 
 -------------------------
 ## License
 
-The MongoDB Go Driver is licensed under the [Apache License](LICENSE).
+The MongerDB Go Driver is licensed under the [Apache License](LICENSE).

@@ -3,7 +3,7 @@
 (function() {
     "use strict";
     // Launch mongerd with shorter TTL monitor sleep interval.
-    var runner = MongoRunner.runMongod({setParameter: "ttlMonitorSleepSecs=1"});
+    var runner = MongerRunner.runMongerd({setParameter: "ttlMonitorSleepSecs=1"});
     var coll = runner.getDB("test").ttl_partial_index;
     coll.drop();
 
@@ -27,5 +27,5 @@
               "Wrong number of documents in partial index, after TTL monitor run");
     assert.eq(
         1, coll.find().itcount(), "Wrong number of documents in collection, after TTL monitor run");
-    MongoRunner.stopMongod(runner);
+    MongerRunner.stopMongerd(runner);
 })();

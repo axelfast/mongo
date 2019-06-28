@@ -28,7 +28,7 @@
 //
 //     http://bsonspec.org
 //
-// It was created as part of the mgo MongoDB driver for Go, but is standalone
+// It was created as part of the mgo MongerDB driver for Go, but is standalone
 // and may be used on its own without the driver.
 package bson
 
@@ -126,7 +126,7 @@ func (m *M) UnmarshalBSON(data []byte) error {
 //
 //     bson.D{{"a", 1}, {"b", true}}
 //
-// In some situations, such as when creating indexes for MongoDB, the order in
+// In some situations, such as when creating indexes for MongerDB, the order in
 // which the elements are defined is important.  If the order is not important,
 // using a map is generally more comfortable. See bson.M and bson.RawD.
 type D []DocElem
@@ -193,7 +193,7 @@ type RawDocElem struct {
 }
 
 // ObjectId is a unique ID identifying a BSON value. It must be exactly 12 bytes
-// long. MongoDB objects by default have such a property set in their "_id"
+// long. MongerDB objects by default have such a property set in their "_id"
 // property.
 //
 // http://www.mongerdb.org/display/DOCS/Object+IDs
@@ -410,7 +410,7 @@ func (id ObjectId) Counter() int32 {
 // distinct symbol type.
 type Symbol string
 
-// Now returns the current time with millisecond precision. MongoDB stores
+// Now returns the current time with millisecond precision. MongerDB stores
 // timestamps with the same precision, so a Time returned from this method
 // will not change after a roundtrip to the database. That's the only reason
 // why this function exists. Using the time.Now function also works fine
@@ -419,18 +419,18 @@ func Now() time.Time {
 	return time.Unix(0, time.Now().UnixNano()/1e6*1e6)
 }
 
-// MongoTimestamp is a special internal type used by MongoDB that for some
+// MongerTimestamp is a special internal type used by MongerDB that for some
 // strange reason has its own datatype defined in BSON.
-type MongoTimestamp int64
+type MongerTimestamp int64
 
 type orderKey int64
 
 // MaxKey is a special value that compares higher than all other possible BSON
-// values in a MongoDB database.
+// values in a MongerDB database.
 var MaxKey = orderKey(1<<63 - 1)
 
 // MinKey is a special value that compares lower than all other possible BSON
-// values in a MongoDB database.
+// values in a MongerDB database.
 var MinKey = orderKey(-1 << 63)
 
 type undefined struct{}

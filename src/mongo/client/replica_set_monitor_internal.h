@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -147,7 +147,7 @@ public:
         Promise<std::vector<HostAndPort>> promise;
     };
 
-    SetState(const MongoURI& uri, ReplicaSetChangeNotifier*, executor::TaskExecutor*);
+    SetState(const MongerURI& uri, ReplicaSetChangeNotifier*, executor::TaskExecutor*);
 
     bool isUsable() const;
 
@@ -211,7 +211,7 @@ public:
      */
     void checkInvariants() const;
 
-    const MongoURI setUri;  // URI passed to ctor -- THIS IS NOT UPDATED BY SCANS
+    const MongerURI setUri;  // URI passed to ctor -- THIS IS NOT UPDATED BY SCANS
     const std::string name;
 
     ReplicaSetChangeNotifier* const notifier;

@@ -1,4 +1,4 @@
-description: "Mongos disconnect"
+description: "Mongers disconnect"
 
 uri: "mongerdb://a,b"
 
@@ -32,13 +32,13 @@ phases: [
 
                 "a:27017": {
 
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 },
 
                 "b:27017": {
 
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 }
             },
@@ -64,7 +64,7 @@ phases: [
 
                 "b:27017": {
 
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 }
             },
@@ -92,13 +92,13 @@ phases: [
 
                 "a:27017": {
 
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 },
 
                 "b:27017": {
 
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 }
             },

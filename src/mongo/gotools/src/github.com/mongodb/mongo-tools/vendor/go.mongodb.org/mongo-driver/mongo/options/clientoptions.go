@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -277,7 +277,7 @@ func (c *ClientOptions) ApplyURI(uri string) *ClientOptions {
 	return c
 }
 
-// SetAppName specifies the client application name. This value is used by MongoDB when it logs
+// SetAppName specifies the client application name. This value is used by MongerDB when it logs
 // connection information and profile information, such as slow queries.
 func (c *ClientOptions) SetAppName(s string) *ClientOptions {
 	c.AppName = &s

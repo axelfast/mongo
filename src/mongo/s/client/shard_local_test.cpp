@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -47,7 +47,7 @@
 namespace monger {
 namespace {
 
-class ShardLocalTest : public ServiceContextMongoDTest {
+class ShardLocalTest : public ServiceContextMongerDTest {
 protected:
     ServiceContext::UniqueOperationContext _opCtx;
     std::unique_ptr<ShardLocal> _shardLocal;
@@ -81,7 +81,7 @@ private:
 };
 
 void ShardLocalTest::setUp() {
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
     _opCtx = getGlobalServiceContext()->makeOperationContext(&cc());
     serverGlobalParams.clusterRole = ClusterRole::ConfigServer;
     _shardLocal = std::make_unique<ShardLocal>(ShardRegistry::kConfigServerShardId);
@@ -96,7 +96,7 @@ void ShardLocalTest::setUp() {
 
 void ShardLocalTest::tearDown() {
     _opCtx.reset();
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
     repl::ReplicationCoordinator::set(getGlobalServiceContext(), nullptr);
 }
 

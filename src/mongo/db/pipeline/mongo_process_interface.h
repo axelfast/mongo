@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -68,7 +68,7 @@ class TransactionHistoryIteratorBase;
  * interface. This allows all DocumentSources to be parsed on either mongers or mongerd, but only
  * executable where it makes sense.
  */
-class MongoProcessInterface {
+class MongerProcessInterface {
 public:
     /**
      * Storage for a batch of BSON Objects to be updated in the write namespace. For each element
@@ -88,16 +88,16 @@ public:
     enum class CurrentOpConnectionsMode { kIncludeIdle, kExcludeIdle };
     enum class CurrentOpUserMode { kIncludeAll, kExcludeOthers };
     enum class CurrentOpTruncateMode { kNoTruncation, kTruncateOps };
-    enum class CurrentOpLocalOpsMode { kLocalMongosOps, kRemoteShardOps };
+    enum class CurrentOpLocalOpsMode { kLocalMongersOps, kRemoteShardOps };
     enum class CurrentOpSessionsMode { kIncludeIdle, kExcludeIdle };
     enum class CurrentOpCursorMode { kIncludeCursors, kExcludeCursors };
 
     /**
-     * Factory function to create MongoProcessInterface of the right type. The implementation will
+     * Factory function to create MongerProcessInterface of the right type. The implementation will
      * be installed by a lib higher up in the link graph depending on the application type.
      */
     static MONGO_DECLARE_SHIM(
-        (OperationContext * opCtx)->std::shared_ptr<MongoProcessInterface>) create;
+        (OperationContext * opCtx)->std::shared_ptr<MongerProcessInterface>) create;
 
     struct MakePipelineOptions {
         MakePipelineOptions(){};
@@ -116,7 +116,7 @@ public:
         int64_t nModified{0};
     };
 
-    virtual ~MongoProcessInterface(){};
+    virtual ~MongerProcessInterface(){};
 
     /**
      * Sets the OperationContext of the DBDirectClient returned by directClient(). This method must

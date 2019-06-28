@@ -2,7 +2,7 @@
 .
 .TH "MONGODB-PARAMETERS" "5" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongerdb-parameters \- MongoDB setParameter Options
+mongerdb-parameters \- MongerDB setParameter Options
 .
 .nr rst2man-indent-level 0
 .
@@ -63,7 +63,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .UNINDENT
 .SH SYNOPSIS
 .sp
-MongoDB provides a number of configuration options that you can set
+MongerDB provides a number of configuration options that you can set
 using:
 .INDENT 0.0
 .IP \(bu 2
@@ -158,14 +158,14 @@ _
 T{
 MONGODB\-X509
 T}	T{
-MongoDB TLS/SSL certificate authentication.
+MongerDB TLS/SSL certificate authentication.
 T}
 _
 T{
 GSSAPI (Kerberos)
 T}	T{
 External authentication using Kerberos. This mechanism is
-available only in \fI\%MongoDB Enterprise\fP\&.
+available only in \fI\%MongerDB Enterprise\fP\&.
 T}
 _
 T{
@@ -174,7 +174,7 @@ T}	T{
 External authentication using LDAP. You can also use \fBPLAIN\fP
 for authenticating in\-database users. \fBPLAIN\fP transmits
 passwords in plain text. This mechanism is available only in
-\fI\%MongoDB Enterprise\fP\&.
+\fI\%MongerDB Enterprise\fP\&.
 T}
 _
 .TE
@@ -208,7 +208,7 @@ Set the \fBclusterAuthMode\fP to either \fBsendX509\fP or
 membership authentication
 to minimize downtime.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .INDENT 7.0
@@ -257,17 +257,17 @@ start\-up, and cannot change this setting with the
 .INDENT 0.0
 .TP
 .B ldapUserCacheInvalidationInterval
-For use with MongoDB servers using security\-ldap\-external\&.
+For use with MongerDB servers using security\-ldap\-external\&.
 .sp
-The interval (in seconds) MongoDB waits
-between external user cache flushes. After MongoDB flushes the external
-user cache, the next operation an LDAP\-authorized user, MongoDB
+The interval (in seconds) MongerDB waits
+between external user cache flushes. After MongerDB flushes the external
+user cache, the next operation an LDAP\-authorized user, MongerDB
 reacquires authorization data from the LDAP server.
 .sp
 Increasing the value specified increases the amount of time
-MongoDB and the LDAP server can be out of sync, but reduces the load on
+MongerDB and the LDAP server can be out of sync, but reduces the load on
 the LDAP server. Conversely, decreasing the value specified
-decreases the time MongoDB and the LDAP server can be out of sync while
+decreases the time MongerDB and the LDAP server can be out of sync while
 increasing the load on the LDAP server.
 .sp
 Defaults to 30 seconds.
@@ -303,7 +303,7 @@ mongerd \-\-setParameter opensslCipherConfig=HIGH:!EXPORT:!aNULL@STRENGTH \-\-ss
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Available only in MongoDB Enterprise (except MongoDB Enterprise for Windows).
+Available only in MongerDB Enterprise (except MongerDB Enterprise for Windows).
 .UNINDENT
 .UNINDENT
 .sp
@@ -317,7 +317,7 @@ instance to use for proxy authentication.
 .B saslHostName
 Available for both \fBmongerd\fP and \fBmongers\fP\&.
 .sp
-\fI\%saslHostName\fP overrides MongoDB’s default hostname
+\fI\%saslHostName\fP overrides MongerDB’s default hostname
 detection for the purpose of configuring SASL and Kerberos
 authentication.
 .sp
@@ -333,7 +333,7 @@ database command.
 .INDENT 7.0
 .INDENT 3.5
 \fI\%saslHostName\fP supports Kerberos authentication and is
-only included in MongoDB Enterprise. For Linux systems, see
+only included in MongerDB Enterprise. For Linux systems, see
 /tutorial/control\-access\-to\-mongerdb\-with\-kerberos\-authentication
 for more information.
 .UNINDENT
@@ -349,11 +349,11 @@ service name component of the Kerberos
 principal name, on a per\-instance basis. If unspecified, the
 default value is \fBmongerdb\fP\&.
 .sp
-MongoDB only permits setting \fI\%saslServiceName\fP at
+MongerDB only permits setting \fI\%saslServiceName\fP at
 startup. The \fBsetParameter\fP command can not change
 this setting.
 .sp
-\fI\%saslServiceName\fP is only available in MongoDB
+\fI\%saslServiceName\fP is only available in MongerDB
 Enterprise.
 .sp
 \fBIMPORTANT:\fP
@@ -375,7 +375,7 @@ Available for both \fBmongerd\fP and \fBmongers\fP\&.
 .sp
 Changes the number of hashing iterations used for all new
 \fBSCRAM\-SHA\-1\fP passwords. More iterations increase the amount of
-time required for clients to authenticate to MongoDB, but makes
+time required for clients to authenticate to MongerDB, but makes
 passwords less susceptible to brute\-force attempts. The default
 value is ideal for most common use cases and requirements.
 .sp
@@ -435,7 +435,7 @@ Available for both \fBmongerd\fP and \fBmongers\fP\&.
 .sp
 Changes the number of hashing iterations used for all new
 \fBSCRAM\-SHA\-256\fP passwords. More iterations increase the amount of
-time required for clients to authenticate to MongoDB, but makes
+time required for clients to authenticate to MongerDB, but makes
 passwords less susceptible to brute\-force attempts. The default
 value is ideal for most common use cases and requirements.
 .sp
@@ -494,7 +494,7 @@ Available for both \fBmongerd\fP and \fBmongers\fP\&.
 Set the \fBnet.ssl.mode\fP to either \fBpreferSSL\fP or
 \fBrequireSSL\fP\&. Useful during rolling upgrade to TLS/SSL to minimize downtime.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .INDENT 7.0
@@ -542,7 +542,7 @@ New in version 3.4.
 .INDENT 3.5
 .IP "Enterprise Feature"
 .sp
-Available in MongoDB Enterprise only.
+Available in MongerDB Enterprise only.
 .UNINDENT
 .UNINDENT
 .sp
@@ -552,7 +552,7 @@ authentication attempt has failed. This parameter may be in the range
 .sp
 Setting this parameter makes brute\-force login attacks on a database
 more time\-consuming. However, clients waiting for a response from the
-MongoDB server still consume server resources, and this may adversely
+MongerDB server still consume server resources, and this may adversely
 impact benign login attempts if the server is denying access to many
 other clients simultaneously.
 .UNINDENT
@@ -784,7 +784,7 @@ New in version 3.0.2.
 Available for both \fBmongerd\fP and \fBmongers\fP\&.
 .sp
 Sets the expiration threshold in milliseconds for idle cursors
-before MongoDB removes them; i.e. MongoDB removes cursors that have
+before MongerDB removes them; i.e. MongerDB removes cursors that have
 been idle for the specified \fI\%cursorTimeoutMillis\fP\&.
 .sp
 For example, the following sets the \fI\%cursorTimeoutMillis\fP
@@ -821,11 +821,11 @@ New in version 2.6.
 .sp
 Available for \fBmongerd\fP only.
 .sp
-In MongoDB 2.6, if you attempt to insert or update a document so
+In MongerDB 2.6, if you attempt to insert or update a document so
 that the value of an indexed field is longer than the
 \fBIndex Key Length Limit\fP, the operation
 will fail and return an error to the client. In previous versions
-of MongoDB, these operations would successfully insert or modify a
+of MongerDB, these operations would successfully insert or modify a
 document but the index or indexes would not include references to
 the document.
 .sp
@@ -867,7 +867,7 @@ mongerd \-\-setParameter failIndexKeyTooLong=false
 .INDENT 0.0
 .TP
 .B newCollectionsUsePowerOf2Sizes
-Deprecated since version 3.0.0: MongoDB deprecates the
+Deprecated since version 3.0.0: MongerDB deprecates the
 \fI\%newCollectionsUsePowerOf2Sizes\fP parameter such that
 you cannot set the \fI\%newCollectionsUsePowerOf2Sizes\fP to
 \fBfalse\fP and \fI\%newCollectionsUsePowerOf2Sizes\fP set to
@@ -888,7 +888,7 @@ Available for the MMAPv1 storage engine only.
 .B notablescan
 Available for \fBmongerd\fP only.
 .sp
-Specify whether \fBall\fP queries must use indexes. If \fB1\fP, MongoDB
+Specify whether \fBall\fP queries must use indexes. If \fB1\fP, MongerDB
 will not execute queries that require a collection scan and will return an
 error.
 .sp
@@ -963,7 +963,7 @@ Changed in version 4.0: The JavaScript engine’s JIT compiler is now disabled b
 .sp
 Available for \fBmongerd\fP only.
 .sp
-The MongoDB JavaScript engine uses SpiderMonkey, which implements
+The MongerDB JavaScript engine uses SpiderMonkey, which implements
 Just\-in\-Time (JIT) compilation for improved performance when running scripts.
 .sp
 To enable the JIT, set \fI\%disableJavaScriptJIT\fP to \fBfalse\fP, as in
@@ -1048,7 +1048,7 @@ Available for \fBmongerd\fP only.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Available only in MongoDB Enterprise. Not available on macOS.
+Available only in MongerDB Enterprise. Not available on macOS.
 .UNINDENT
 .UNINDENT
 .sp
@@ -1165,12 +1165,12 @@ Available for both \fBmongerd\fP and \fBmongers\fP\&.
 .sp
 Sets the verbosity levels of various components for log messages\&. The verbosity level determines the
 amount of Informational and Debug
-messages MongoDB outputs.
+messages MongerDB outputs.
 .sp
 The verbosity level can range from \fB0\fP to \fB5\fP:
 .INDENT 7.0
 .IP \(bu 2
-\fB0\fP is the MongoDB’s default log verbosity level, to include
+\fB0\fP is the MongerDB’s default log verbosity level, to include
 Informational messages.
 .IP \(bu 2
 \fB1\fP to \fB5\fP increases the verbosity level to include
@@ -1425,8 +1425,8 @@ db.adminCommand( { setParameter: 1, traceExceptions: true } )
 .UNINDENT
 .SS Diagnostic Parameters
 .sp
-To facilitate analysis of the MongoDB server behavior by MongoDB
-engineers, MongoDB logs server statistics to diagnostic files at
+To facilitate analysis of the MongerDB server behavior by MongerDB
+engineers, MongerDB logs server statistics to diagnostic files at
 periodic intervals.
 .sp
 For \fBmongerd\fP, the diagnostic data files are stored in the
@@ -1452,9 +1452,9 @@ The following parameters support diagnostic data capture (FTDC):
 .INDENT 0.0
 .INDENT 3.5
 The default values for the diagnostic data capture interval and the
-maximum sizes are chosen to provide useful data to MongoDB engineers
+maximum sizes are chosen to provide useful data to MongerDB engineers
 with minimal impact on performance and storage size. Typically, these
-values will only need modifications as requested by MongoDB engineers
+values will only need modifications as requested by MongerDB engineers
 for specific diagnostic purposes.
 .UNINDENT
 .UNINDENT
@@ -1574,7 +1574,7 @@ Changed in version 3.6: Available for both \fBmongerd\fP and \fBmongers\fP\&.
 .sp
 Specifies the maximum size, in megabytes, of each diagnostic
 file\&. If the file exceeds the maximum
-file size, MongoDB creates a new file.
+file size, MongerDB creates a new file.
 .sp
 For example, the following sets the maximum size of each diagnostic
 file to \fB20\fP megabytes:
@@ -1991,11 +1991,11 @@ Available for \fBmongerd\fP only.
 New in version 4.0.
 
 .sp
-Flag that determines whether MongoDB creates rollback files that contains documents affected during a
+Flag that determines whether MongerDB creates rollback files that contains documents affected during a
 rollback.
 .sp
 By default, \fI\%createRollbackDataFiles\fP is \fBtrue\fP and
-MongoDB creates the rollback files.
+MongerDB creates the rollback files.
 .sp
 The following example sets \fI\%createRollbackDataFiles\fP
 to false so that the rollback files are not created:
@@ -2059,7 +2059,7 @@ recovery information.
 .INDENT 0.0
 .TP
 .B replMonitorMaxFailedChecks
-\fIAvailable in MongoDB 3.2 only\fP
+\fIAvailable in MongerDB 3.2 only\fP
 .sp
 Type: integer
 .sp
@@ -2076,18 +2076,18 @@ denotes the monitored replica set as unavailable. If the monitored
 replica set is the config server replica set:
 .INDENT 7.0
 .IP \(bu 2
-For MongoDB 3.2.0\-3.2.9, the monitoring \fBmongerd\fP or
+For MongerDB 3.2.0\-3.2.9, the monitoring \fBmongerd\fP or
 \fBmongers\fP instance will become unusable and needs to be
 restarted. See the troubleshooting guide for more details.
 .IP \(bu 2
-For MongoDB 3.2.10 and later 3.2\-series, see also
+For MongerDB 3.2.10 and later 3.2\-series, see also
 \fI\%timeOutMonitoringReplicaSets\fP\&.
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B timeOutMonitoringReplicaSets
-\fIAvailable in MongoDB 3.2.10 and later 3.2\-series only\fP
+\fIAvailable in MongerDB 3.2.10 and later 3.2\-series only\fP
 .sp
 Type: integer
 .sp
@@ -2353,7 +2353,7 @@ If the number of cores is greater than 64, the number of Task
 Executor connection pools is 64.
 .UNINDENT
 .sp
-Starting in MongoDB 4.0, the default value of
+Starting in MongerDB 4.0, the default value of
 \fI\%taskExecutorPoolSize\fP is \fB1\fP\&. For the previous
 behavior, set \fI\%taskExecutorPoolSize\fP to 0 and, on Linux,
 set \fI\%AsyncRequestsSenderUseBaton\fP to \fBfalse\fP\&.
@@ -2396,7 +2396,7 @@ Available for \fBmongerd\fP only.
 Minimum delay before a migrated chunk is deleted from the source
 shard.
 .sp
-Before deleting the chunk during chunk migration, MongoDB waits for
+Before deleting the chunk during chunk migration, MongerDB waits for
 \fI\%orphanCleanupDelaySecs\fP or for in\-progress queries involving
 the chunk to complete on the shard primary, whichever is longer.
 .sp
@@ -2513,11 +2513,11 @@ New in version 3.6.
 \fIDefault\fP: \fBfalse\fP
 .sp
 If \fI\%honorSystemUmask\fP is set to \fBtrue\fP, new files
-created by MongoDB have permissions in accordance with the
+created by MongerDB have permissions in accordance with the
 user’s \fBumask\fP settings.
 .sp
 If \fI\%honorSystemUmask\fP is set to \fBfalse\fP, new files
-created by MongoDB have permissions set to \fB600\fP, which gives
+created by MongerDB have permissions set to \fB600\fP, which gives
 read and write permissions only to the owner. New directories have
 permissions set to \fB700\fP\&.
 .sp
@@ -2619,8 +2619,8 @@ using the command line or configuration file option.
 .INDENT 7.0
 .INDENT 3.5
 Avoid modifying the \fI\%wiredTigerEngineRuntimeConfig\fP
-unless under the direction from MongoDB engineers as this setting has
-major implication across both WiredTiger and MongoDB.
+unless under the direction from MongerDB engineers as this setting has
+major implication across both WiredTiger and MongerDB.
 .UNINDENT
 .UNINDENT
 .sp
@@ -2654,7 +2654,7 @@ New in version 2.6.5.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-Available only in \fI\%MongoDB Enterprise\fP\&.
+Available only in \fI\%MongerDB Enterprise\fP\&.
 .UNINDENT
 .UNINDENT
 .sp
@@ -2733,7 +2733,7 @@ mongerd \-\-setParameter "transactionLifetimeLimitSeconds=30"
 .UNINDENT
 .UNINDENT
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

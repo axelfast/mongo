@@ -1,10 +1,10 @@
 
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,9 +31,9 @@
 package com.mongerdb.embedded.capi;
 
 /**
- * The embedded Mongo library
+ * The embedded Monger library
  */
-public interface MongoEmbeddedLibrary {
+public interface MongerEmbeddedLibrary {
 
     /**
      * Create a new instance
@@ -41,7 +41,7 @@ public interface MongoEmbeddedLibrary {
      * @param yamlConfig the yaml configuration for the instance
      * @return the monger embedded instance
      */
-    MongoEmbeddedInstance createInstance(String yamlConfig);
+    MongerEmbeddedInstance createInstance(String yamlConfig);
 
     /**
      * Closes the embedded mongerdb, all databases must be closed before calling this.

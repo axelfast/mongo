@@ -4,7 +4,7 @@
  *
  * Using the collection block compressor option will result in all new collections made during
  * that process lifetime to use that compression setting. WiredTiger perfectly supports different
- * tables using different block compressors. This test will start up MongoDB once for each block
+ * tables using different block compressors. This test will start up MongerDB once for each block
  * compressor setting and a create a new collection. Then after all collections are created, check
  * creation string passed to WT via the collStats command.
  *
@@ -25,14 +25,14 @@
     for (let compressor of compressors) {
         jsTestLog({"Starting with compressor": compressor});
         if (firstIteration) {
-            monger = MongoRunner.runMongod({
+            monger = MongerRunner.runMongerd({
                 wiredTigerCollectionBlockCompressor: compressor,
                 wiredTigerJournalCompressor: compressor
             });
             firstIteration = false;
         } else {
-            MongoRunner.stopMongod(monger);
-            monger = MongoRunner.runMongod({
+            MongerRunner.stopMongerd(monger);
+            monger = MongerRunner.runMongerd({
                 restart: true,
                 dbpath: monger.dbpath,
                 cleanData: false,
@@ -48,5 +48,5 @@
         assert(stats['wiredTiger']['creationString'].search('block_compressor=' + compressor) > -1);
     }
 
-    MongoRunner.stopMongod(monger);
+    MongerRunner.stopMongerd(monger);
 }());

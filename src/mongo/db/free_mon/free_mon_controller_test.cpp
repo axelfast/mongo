@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -376,7 +376,7 @@ private:
     CountdownLatchResult<BSONArray> _countdownMetrics;
 };
 
-class FreeMonControllerTest : public ServiceContextMongoDTest {
+class FreeMonControllerTest : public ServiceContextMongerDTest {
 
 protected:
     void setUp() override;
@@ -397,7 +397,7 @@ protected:
 };
 
 void FreeMonControllerTest::setUp() {
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
     auto service = getServiceContext();
 
     repl::ReplicationCoordinator::set(service,
@@ -437,7 +437,7 @@ void FreeMonControllerTest::setUp() {
 
 void FreeMonControllerTest::tearDown() {
     _opCtx = {};
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 repl::ReplicationCoordinatorMock* FreeMonControllerTest::_getReplCoord() const {

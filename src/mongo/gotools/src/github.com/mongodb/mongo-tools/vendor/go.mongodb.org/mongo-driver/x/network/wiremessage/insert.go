@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -8,7 +8,7 @@ package wiremessage
 
 import "go.mongerdb.org/monger-driver/bson"
 
-// Insert represents the OP_INSERT message of the MongoDB wire protocol.
+// Insert represents the OP_INSERT message of the MongerDB wire protocol.
 type Insert struct {
 	MsgHeader          Header
 	Flags              InsertFlag

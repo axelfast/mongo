@@ -41,9 +41,9 @@
     }
 
     // Test standalone.
-    const m = MongoRunner.runMongod({auth: ""});
+    const m = MongerRunner.runMongerd({auth: ""});
     runTest(m);
-    MongoRunner.stopMongod(m);
+    MongerRunner.stopMongerd(m);
 
     // Test sharded.
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.

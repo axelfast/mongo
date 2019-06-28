@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -16,7 +16,7 @@ import (
 )
 
 func TestRepeatGeneration(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	recOp := &RecordedOp{
 		Seen: &PreciseTime{time.Now()},
 	}
@@ -70,7 +70,7 @@ func TestRepeatGeneration(t *testing.T) {
 }
 
 func TestPlayOpEOF(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	ops := []RecordedOp{{
 		Seen: &PreciseTime{time.Now()},
 	}, {

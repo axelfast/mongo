@@ -9,7 +9,7 @@
 
     var st = new ShardingTest({shards: 1, mongers: MONGOS_COUNT, config: 1});
 
-    var standalone = MongoRunner.runMongod();
+    var standalone = MongerRunner.runMongerd();
 
     var mongers = st.s0;
     var admin = mongers.getDB("admin");
@@ -247,7 +247,7 @@
 
     assert(mongers.getDB("test").dropDatabase());
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 
     st.stop();
 })();

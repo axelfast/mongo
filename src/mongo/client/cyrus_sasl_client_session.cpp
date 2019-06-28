@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -159,7 +159,7 @@ MONGO_INITIALIZER_WITH_PREREQUISITES(CyrusSaslClientContext,
  * Callback registered on the sasl_conn_t underlying a CyrusSaslClientSession to allow the Cyrus
  * SASL library to query for the authentication id and other simple string configuration parameters.
  *
- * Note that in Mongo, the authentication and authorization ids (authid and authzid) are always
+ * Note that in Monger, the authentication and authorization ids (authid and authzid) are always
  * the same.  These correspond to SASL_CB_AUTHNAME and SASL_CB_USER.
  */
 int saslClientGetSimple(void* context, int id, const char** result, unsigned* resultLen) throw() {

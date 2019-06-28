@@ -158,9 +158,9 @@
         assert.eq([{"name": "foo", "type": "collection"}], resWithFilter.cursor.firstBatch);
     }
 
-    const mongerd = MongoRunner.runMongod({auth: ''});
+    const mongerd = MongerRunner.runMongerd({auth: ''});
     runTestOnConnection(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     const st = new ShardingTest({
         shards: 1,
@@ -171,9 +171,9 @@
     runTestOnConnection(st.s0);
     st.stop();
 
-    const mongerdNoAuth = MongoRunner.runMongod();
+    const mongerdNoAuth = MongerRunner.runMongerd();
     runNoAuthTestOnConnection(mongerdNoAuth);
-    MongoRunner.stopMongod(mongerdNoAuth);
+    MongerRunner.stopMongerd(mongerdNoAuth);
 
     const stNoAuth =
         new ShardingTest({shards: 1, mongers: 1, config: 1, other: {shardAsReplicaSet: false}});

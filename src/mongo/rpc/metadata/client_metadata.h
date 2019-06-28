@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -77,10 +77,10 @@ constexpr auto kMetadataDocumentName = "client"_sd;
  * For this classes' purposes, the client metadata document is the sub-document in "client". It is
  * allowed to contain additional fields that are not listed in the example above. These additional
  * fields are ignore by this class. The "os" document "type" field is required (defaults to
- * "unknown" in Mongo Drivers). The "driver", and "os" documents while required, are for
+ * "unknown" in Monger Drivers). The "driver", and "os" documents while required, are for
  * informational purposes only. The content is logged to disk but otherwise ignored.
  *
- * See Driver Specification: "MongoDB Handshake" for more information.
+ * See Driver Specification: "MongerDB Handshake" for more information.
  */
 class ClientMetadata {
     ClientMetadata(const ClientMetadata&) = delete;
@@ -157,9 +157,9 @@ public:
     /**
      * Modify the existing client metadata document to include a mongers section.
      *
-     * hostAndPort is "host:port" of the running MongoS.
+     * hostAndPort is "host:port" of the running MongerS.
      * monogsClient is "host:port" of the connected driver.
-     * version is the version string of MongoS.
+     * version is the version string of MongerS.
      *
      * "mongers" : {
      *     "host" : "string",
@@ -167,7 +167,7 @@ public:
      *     "version" : "string"
      * }
      */
-    void setMongoSMetadata(StringData hostAndPort, StringData mongersClient, StringData version);
+    void setMongerSMetadata(StringData hostAndPort, StringData mongersClient, StringData version);
 
     /**
      * Get the Application Name for the client metadata document.

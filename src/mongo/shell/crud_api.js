@@ -221,7 +221,7 @@ DBCollection.prototype.bulkWrite = function(operations, options) {
 };
 
 /**
-* Inserts a single document into MongoDB.
+* Inserts a single document into MongerDB.
 *
 * @method
 * @param {object} doc Document to insert.
@@ -276,7 +276,7 @@ DBCollection.prototype.insertOne = function(document, options) {
 };
 
 /**
-* Inserts an array of documents into MongoDB.
+* Inserts an array of documents into MongerDB.
 *
 * @method
 * @param {object[]} docs Documents to insert.
@@ -327,7 +327,7 @@ DBCollection.prototype.insertMany = function(documents, options) {
 };
 
 /**
-* Delete a document on MongoDB
+* Delete a document on MongerDB
 *
 * @method
 * @param {object} filter The filter used to select the document to remove
@@ -384,7 +384,7 @@ DBCollection.prototype.deleteOne = function(filter, options) {
 };
 
 /**
-* Delete multiple documents on MongoDB
+* Delete multiple documents on MongerDB
 *
 * @method
 * @param {object} filter The Filter used to select the documents to remove
@@ -441,7 +441,7 @@ DBCollection.prototype.deleteMany = function(filter, options) {
 };
 
 /**
-* Replace a document on MongoDB
+* Replace a document on MongerDB
 *
 * @method
 * @param {object} filter The Filter used to select the document to update
@@ -521,7 +521,7 @@ DBCollection.prototype.replaceOne = function(filter, replacement, options) {
 };
 
 /**
-* Update a single document on MongoDB
+* Update a single document on MongerDB
 *
 * @method
 * @param {object} filter The Filter used to select the document to update
@@ -607,7 +607,7 @@ DBCollection.prototype.updateOne = function(filter, update, options) {
 };
 
 /**
-* Update multiple documents on MongoDB
+* Update multiple documents on MongerDB
 *
 * @method
 * @param {object} filter The Filter used to select the document to update

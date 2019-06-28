@@ -18,7 +18,7 @@
 
     function doInsertWithSession(host, lsid, txnNumber) {
         try {
-            const conn = new Mongo(host);
+            const conn = new Monger(host);
             const db = conn.getDB("test");
             assert.commandWorked(db.runCommand({
                 insert: "mycoll",

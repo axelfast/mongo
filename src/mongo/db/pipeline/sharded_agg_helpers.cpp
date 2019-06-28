@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -97,7 +97,7 @@ BSONObj genericTransformForShards(MutableDocument&& cmdForShards,
         cmdForShards[AggregationRequest::kRuntimeConstants] = Value(constants.get().toBSON());
     }
 
-    cmdForShards[AggregationRequest::kFromMongosName] = Value(true);
+    cmdForShards[AggregationRequest::kFromMongersName] = Value(true);
     // If this is a request for an aggregation explain, then we must wrap the aggregate inside an
     // explain command.
     if (auto explainVerbosity = request.getExplain()) {
@@ -224,7 +224,7 @@ DispatchShardPipelineResults dispatchShardPipeline(
     const bool needsPrimaryShardMerge =
         (pipeline->needsPrimaryShardMerger() || internalQueryAlwaysMergeOnPrimaryShard.load());
 
-    const bool needsMongosMerge = pipeline->needsMongosMerger();
+    const bool needsMongersMerge = pipeline->needsMongersMerger();
 
     const auto shardQuery = pipeline->getInitialQuery();
 
@@ -250,7 +250,7 @@ DispatchShardPipelineResults dispatchShardPipeline(
     // - There is a stage that needs to be run on the primary shard and the single target shard
     //   is not the primary.
     // - The pipeline contains one or more stages which must always merge on mongerS.
-    const bool needsSplit = (shardIds.size() > 1u || needsMongosMerge ||
+    const bool needsSplit = (shardIds.size() > 1u || needsMongersMerge ||
                              (needsPrimaryShardMerge && executionNsRoutingInfo &&
                               *(shardIds.begin()) != executionNsRoutingInfo->db().primaryId()));
 
@@ -260,7 +260,7 @@ DispatchShardPipelineResults dispatchShardPipeline(
     if (needsSplit) {
         LOG(5) << "Splitting pipeline: "
                << "targeting = " << shardIds.size()
-               << " shards, needsMongosMerge = " << needsMongosMerge
+               << " shards, needsMongersMerge = " << needsMongersMerge
                << ", needsPrimaryShardMerge = " << needsPrimaryShardMerge;
         splitPipeline = cluster_aggregation_planner::splitPipeline(std::move(pipeline));
 

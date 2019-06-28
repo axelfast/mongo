@@ -27,39 +27,39 @@
     // Setting a failpoint via --setParameter fails if enableTestCommands is not on.
     jsTest.setOption('enableTestCommands', false);
     assertStartupFails(
-        MongoRunner.runMongod({setParameter: "failpoint.dummy=" + tojson(validFailpointPayload)}));
-    assertStartupFails(MongoRunner.runMongos({
+        MongerRunner.runMongerd({setParameter: "failpoint.dummy=" + tojson(validFailpointPayload)}));
+    assertStartupFails(MongerRunner.runMongers({
         setParameter: "failpoint.dummy=" + tojson(validFailpointPayload),
         configdb: configRS.getURL()
     }));
     jsTest.setOption('enableTestCommands', true);
 
     // Passing an invalid failpoint payload fails.
-    assertStartupFails(MongoRunner.runMongod(
+    assertStartupFails(MongerRunner.runMongerd(
         {setParameter: "failpoint.dummy=" + tojson(invalidFailpointPayload)}));
-    assertStartupFails(MongoRunner.runMongos({
+    assertStartupFails(MongerRunner.runMongers({
         setParameter: "failpoint.dummy=" + tojson(invalidFailpointPayload),
         configdb: configRS.getURL()
     }));
 
     // Valid startup configurations succeed.
     var mongerd =
-        MongoRunner.runMongod({setParameter: "failpoint.dummy=" + tojson(validFailpointPayload)});
+        MongerRunner.runMongerd({setParameter: "failpoint.dummy=" + tojson(validFailpointPayload)});
     assertStartupSucceeds(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
-    var mongers = MongoRunner.runMongos({
+    var mongers = MongerRunner.runMongers({
         setParameter: "failpoint.dummy=" + tojson(validFailpointPayload),
         configdb: configRS.getURL()
     });
     assertStartupSucceeds(mongers);
-    MongoRunner.stopMongos(mongers);
+    MongerRunner.stopMongers(mongers);
 
-    mongerd = MongoRunner.runMongod(
+    mongerd = MongerRunner.runMongerd(
         {setParameter: "failpoint.dummy=" + tojson(validFailpointPayloadWithData)});
     assertStartupSucceeds(mongerd);
 
-    mongers = MongoRunner.runMongos({
+    mongers = MongerRunner.runMongers({
         setParameter: "failpoint.dummy=" + tojson(validFailpointPayloadWithData),
         configdb: configRS.getURL()
     });
@@ -102,8 +102,8 @@
     assert.eq(1, res["failpoint.dummy"].mode);  // the 'mode' is an enum internally; 'alwaysOn' is 1
     assert.eq(newData, res["failpoint.dummy"].data);
 
-    MongoRunner.stopMongod(mongerd);
-    MongoRunner.stopMongos(mongers);
+    MongerRunner.stopMongerd(mongerd);
+    MongerRunner.stopMongers(mongers);
 
     // Failpoint server parameters do not show up in the output of getParameter when not running
     // with enableTestCommands=1.
@@ -111,10 +111,10 @@
     jsTest.setOption('enableTestCommands', false);
     TestData.roleGraphInvalidationIsFatal = false;
 
-    mongerd = MongoRunner.runMongod();
+    mongerd = MongerRunner.runMongerd();
     assertStartupSucceeds(mongerd);
 
-    mongers = MongoRunner.runMongos({configdb: configRS.getURL()});
+    mongers = MongerRunner.runMongers({configdb: configRS.getURL()});
     assertStartupSucceeds(mongers);
 
     // Doing getParameter for a specific failpoint fails.
@@ -134,7 +134,7 @@
         assert(!parameter.includes("failpoint."));
     }
 
-    MongoRunner.stopMongod(mongerd);
-    MongoRunner.stopMongos(mongers);
+    MongerRunner.stopMongerd(mongerd);
+    MongerRunner.stopMongers(mongers);
     configRS.stopSet();
 })();

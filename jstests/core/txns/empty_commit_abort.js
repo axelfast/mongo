@@ -17,7 +17,7 @@
     const doc = {_id: 1, a: 1, b: 1};
     assert.commandWorked(testColl.insert(doc));
 
-    const session = db.getMongo().startSession();
+    const session = db.getMonger().startSession();
     const sessionDB = session.getDatabase(dbName);
     const sessionColl = sessionDB.getCollection(collName);
 

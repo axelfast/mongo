@@ -79,7 +79,7 @@
     assert.eq(change.operationType, "insert", tojson(change));
     assert.eq(change.documentKey._id, 1);
 
-    // Test that renaming a collection generates a 'rename' entry for the 'from' collection. MongoDB
+    // Test that renaming a collection generates a 'rename' entry for the 'from' collection. MongerDB
     // does not allow renaming of sharded collections, so only perform this test if the collection
     // is not sharded.
     if (!FixtureHelpers.isSharded(coll)) {
@@ -124,7 +124,7 @@
         // not run this in the mongers passthrough suites since we cannot guarantee the primary shard
         // of the target database, and renameCollection requires the source and destination to be on
         // the same shard.
-        if (!FixtureHelpers.isMongos(testDB)) {
+        if (!FixtureHelpers.isMongers(testDB)) {
             const otherDB = testDB.getSiblingDB(testDB.getName() + "_rename_target");
             // Create target collection to ensure the database exists.
             const collOtherDB = assertCreateCollection(otherDB, "test");

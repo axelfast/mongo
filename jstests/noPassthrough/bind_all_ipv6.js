@@ -3,8 +3,8 @@
 (function() {
     'use strict';
 
-    const monger = MongoRunner.runMongod({ipv6: "", bind_ip_all: ""});
+    const monger = MongerRunner.runMongerd({ipv6: "", bind_ip_all: ""});
     assert(monger !== null, "Database is not running");
     assert.commandWorked(monger.getDB("test").isMaster(), "isMaster failed");
-    MongoRunner.stopMongod(monger);
+    MongerRunner.stopMongerd(monger);
 }());

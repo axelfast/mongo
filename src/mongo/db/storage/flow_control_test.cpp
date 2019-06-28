@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,10 +42,10 @@
 
 namespace monger {
 
-class FlowControlTest : public ServiceContextMongoDTest {
+class FlowControlTest : public ServiceContextMongerDTest {
 public:
     void setUp() {
-        ServiceContextMongoDTest::setUp();
+        ServiceContextMongerDTest::setUp();
         auto replCoord = std::make_unique<repl::ReplicationCoordinatorMock>(getServiceContext());
         auto replCoordPtr = replCoord.get();
         repl::ReplicationCoordinator::set(getServiceContext(), std::move(replCoord));

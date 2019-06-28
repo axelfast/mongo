@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -523,7 +523,7 @@ void OpObserverImpl::onInserts(OperationContext* opCtx,
         }
     } else if (nss == NamespaceString::kSessionTransactionsTableNamespace && !lastOpTime.isNull()) {
         for (auto it = first; it != last; it++) {
-            MongoDSessionCatalog::observeDirectWriteToConfigTransactions(opCtx, it->doc);
+            MongerDSessionCatalog::observeDirectWriteToConfigTransactions(opCtx, it->doc);
         }
     }
 }
@@ -587,7 +587,7 @@ void OpObserverImpl::onUpdate(OperationContext* opCtx, const OplogUpdateEntryArg
         FeatureCompatibilityVersion::onInsertOrUpdate(opCtx, args.updateArgs.updatedDoc);
     } else if (args.nss == NamespaceString::kSessionTransactionsTableNamespace &&
                !opTime.writeOpTime.isNull()) {
-        MongoDSessionCatalog::observeDirectWriteToConfigTransactions(opCtx,
+        MongerDSessionCatalog::observeDirectWriteToConfigTransactions(opCtx,
                                                                      args.updateArgs.updatedDoc);
     }
 }
@@ -648,7 +648,7 @@ void OpObserverImpl::onDelete(OperationContext* opCtx,
             uasserted(40670, "removing FeatureCompatibilityVersion document is not allowed");
     } else if (nss == NamespaceString::kSessionTransactionsTableNamespace &&
                !opTime.writeOpTime.isNull()) {
-        MongoDSessionCatalog::observeDirectWriteToConfigTransactions(opCtx, documentKey);
+        MongerDSessionCatalog::observeDirectWriteToConfigTransactions(opCtx, documentKey);
     }
 }
 
@@ -773,7 +773,7 @@ void OpObserverImpl::onDropDatabase(OperationContext* opCtx, const std::string& 
         50714, "dropping the admin database is not allowed.", dbName != NamespaceString::kAdminDb);
 
     if (dbName == NamespaceString::kSessionTransactionsTableNamespace.db()) {
-        MongoDSessionCatalog::invalidateAllSessions(opCtx);
+        MongerDSessionCatalog::invalidateAllSessions(opCtx);
     }
 }
 
@@ -809,7 +809,7 @@ repl::OpTime OpObserverImpl::onDropCollection(OperationContext* opCtx,
     if (collectionName.coll() == DurableViewCatalog::viewsCollectionName()) {
         DurableViewCatalog::onExternalChange(opCtx, collectionName);
     } else if (collectionName == NamespaceString::kSessionTransactionsTableNamespace) {
-        MongoDSessionCatalog::invalidateAllSessions(opCtx);
+        MongerDSessionCatalog::invalidateAllSessions(opCtx);
     }
 
     return {};

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -111,14 +111,14 @@ bool supportsUniqueKey(const boost::intrusive_ptr<ExpressionContext>& expCtx,
     auto isIdIndex = index[IndexDescriptor::kIndexNameFieldName].String() == "_id_";
     return (isIdIndex || index.getBoolField(IndexDescriptor::kUniqueFieldName)) &&
         !index.hasField(IndexDescriptor::kPartialFilterExprFieldName) &&
-        MongoProcessCommon::keyPatternNamesExactPaths(
+        MongerProcessCommon::keyPatternNamesExactPaths(
                index.getObjectField(IndexDescriptor::kKeyPatternFieldName), uniqueKeyPaths) &&
         CollatorInterface::collatorsMatch(collation.get(), expCtx->getCollator());
 }
 
 }  // namespace
 
-std::unique_ptr<Pipeline, PipelineDeleter> MongoSInterface::makePipeline(
+std::unique_ptr<Pipeline, PipelineDeleter> MongerSInterface::makePipeline(
     const std::vector<BSONObj>& rawPipeline,
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const MakePipelineOptions pipelineOptions) {
@@ -137,12 +137,12 @@ std::unique_ptr<Pipeline, PipelineDeleter> MongoSInterface::makePipeline(
     return pipeline;
 }
 
-std::unique_ptr<Pipeline, PipelineDeleter> MongoSInterface::attachCursorSourceToPipeline(
+std::unique_ptr<Pipeline, PipelineDeleter> MongerSInterface::attachCursorSourceToPipeline(
     const boost::intrusive_ptr<ExpressionContext>& expCtx, Pipeline* ownedPipeline) {
     return sharded_agg_helpers::targetShardsAndAddMergeCursors(expCtx, ownedPipeline);
 }
 
-boost::optional<Document> MongoSInterface::lookupSingleDocument(
+boost::optional<Document> MongerSInterface::lookupSingleDocument(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
     UUID collectionUUID,
@@ -241,7 +241,7 @@ boost::optional<Document> MongoSInterface::lookupSingleDocument(
     return (!batch.empty() ? Document(batch.front()) : boost::optional<Document>{});
 }
 
-BSONObj MongoSInterface::_reportCurrentOpForClient(OperationContext* opCtx,
+BSONObj MongerSInterface::_reportCurrentOpForClient(OperationContext* opCtx,
                                                    Client* client,
                                                    CurrentOpTruncateMode truncateOps) const {
     BSONObjBuilder builder;
@@ -252,7 +252,7 @@ BSONObj MongoSInterface::_reportCurrentOpForClient(OperationContext* opCtx,
     return builder.obj();
 }
 
-std::vector<GenericCursor> MongoSInterface::getIdleCursors(
+std::vector<GenericCursor> MongerSInterface::getIdleCursors(
     const intrusive_ptr<ExpressionContext>& expCtx, CurrentOpUserMode userMode) const {
     invariant(hasGlobalServiceContext());
     auto cursorManager = Grid::get(expCtx->opCtx->getServiceContext())->getCursorManager();
@@ -260,12 +260,12 @@ std::vector<GenericCursor> MongoSInterface::getIdleCursors(
     return cursorManager->getIdleCursors(expCtx->opCtx, userMode);
 }
 
-bool MongoSInterface::isSharded(OperationContext* opCtx, const NamespaceString& nss) {
+bool MongerSInterface::isSharded(OperationContext* opCtx, const NamespaceString& nss) {
     auto routingInfo = Grid::get(opCtx)->catalogCache()->getCollectionRoutingInfo(opCtx, nss);
     return routingInfo.isOK() && routingInfo.getValue().cm();
 }
 
-bool MongoSInterface::fieldsHaveSupportingUniqueIndex(
+bool MongerSInterface::fieldsHaveSupportingUniqueIndex(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
     const std::set<FieldPath>& fieldPaths) const {
@@ -294,12 +294,12 @@ bool MongoSInterface::fieldsHaveSupportingUniqueIndex(
 }
 
 std::pair<std::set<FieldPath>, boost::optional<ChunkVersion>>
-MongoSInterface::ensureFieldsUniqueOrResolveDocumentKey(
+MongerSInterface::ensureFieldsUniqueOrResolveDocumentKey(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     boost::optional<std::vector<std::string>> fields,
     boost::optional<ChunkVersion> targetCollectionVersion,
     const NamespaceString& outputNs) const {
-    invariant(expCtx->inMongos);
+    invariant(expCtx->inMongers);
     uassert(
         51179, "Received unexpected 'targetCollectionVersion' on mongers", !targetCollectionVersion);
 

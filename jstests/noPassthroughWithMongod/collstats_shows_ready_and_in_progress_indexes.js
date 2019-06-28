@@ -31,7 +31,7 @@
                     {key: {b: 1}, name: 'b_1', background: true}
                 ]
             });
-        }, db.getMongo().port);
+        }, db.getMonger().port);
 
         jsTest.log("Waiting until the index build begins.");
         // Note that we cannot use checkLog here to wait for the failpoint logging because this test

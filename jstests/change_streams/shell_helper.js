@@ -1,6 +1,6 @@
 // Test change streams related shell helpers and options passed to them. Note that, while we only
 // call the DBCollection.watch helper in this file, it will be redirected to the DB.watch or
-// Mongo.watch equivalents in the whole_db and whole_cluster passthroughs.
+// Monger.watch equivalents in the whole_db and whole_cluster passthroughs.
 //
 // This test expects each change stream result to have an operationTime based on the clusterTime in
 // the oplog entry. When operations get bundled into a transaction, their operationTime is instead
@@ -23,12 +23,12 @@
     }
 
     function testCommandIsCalled(testFunc, checkFunc) {
-        const mongerRunCommandOriginal = Mongo.prototype.runCommand;
+        const mongerRunCommandOriginal = Monger.prototype.runCommand;
 
         const sentinel = {};
         let cmdObjSeen = sentinel;
 
-        Mongo.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
+        Monger.prototype.runCommand = function runCommandSpy(dbName, cmdObj, options) {
             cmdObjSeen = cmdObj;
             return mongerRunCommandOriginal.apply(this, arguments);
         };
@@ -36,11 +36,11 @@
         try {
             assert.doesNotThrow(testFunc);
         } finally {
-            Mongo.prototype.runCommand = mongerRunCommandOriginal;
+            Monger.prototype.runCommand = mongerRunCommandOriginal;
         }
 
         if (cmdObjSeen === sentinel) {
-            throw new Error("Mongo.prototype.runCommand() was never called: " +
+            throw new Error("Monger.prototype.runCommand() was never called: " +
                             testFunc.toString());
         }
 
@@ -122,8 +122,8 @@
     jsTestLog("Testing watch() with batchSize");
     // Only test mongerd because mongers uses batch size 0 for aggregate commands internally to
     // establish cursors quickly. GetMore on mongers doesn't respect batch size due to SERVER-31992.
-    const isMongos = FixtureHelpers.isMongos(db);
-    if (!isMongos) {
+    const isMongers = FixtureHelpers.isMongers(db);
+    if (!isMongers) {
         // Increase a field by 5 times and verify the batch size is respected.
         for (let i = 0; i < 5; i++) {
             assert.writeOK(coll.update({_id: 1}, {$inc: {x: 1}}));

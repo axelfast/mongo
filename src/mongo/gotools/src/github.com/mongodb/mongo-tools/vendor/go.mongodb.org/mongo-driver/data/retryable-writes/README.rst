@@ -15,8 +15,8 @@ that drivers can use to prove their conformance to the Retryable Writes spec.
 Several prose tests, which are not easily expressed in YAML, are also presented
 in this file. Those tests will need to be manually implemented by each driver.
 
-Tests will require a MongoClient created with options defined in the tests.
-Integration tests will require a running MongoDB cluster with server versions
+Tests will require a MongerClient created with options defined in the tests.
+Integration tests will require a running MongerDB cluster with server versions
 3.6.0 or later. The ``{setFeatureCompatibilityVersion: 3.6}`` admin command
 will also need to have been executed to enable support for retryable writes on
 the cluster.
@@ -138,7 +138,7 @@ Each YAML file has the following keys:
 
   - ``description``: The name of the test.
 
-  - ``clientOptions``: Parameters to pass to MongoClient().
+  - ``clientOptions``: Parameters to pass to MongerClient().
 
   - ``failPoint``: The ``configureFailPoint`` command document to run to
     configure a fail point on the primary server. Drivers must ensure that
@@ -224,7 +224,7 @@ command) until the fail point is later deactivated.
 .. _d4eb562: https://github.com/mongerdb/monger/commit/d4eb562ac63717904f24de4a22e395070687bc62
 .. _SERVER-31355: https://jira.mongerdb.org/browse/SERVER-31355
 
-The following test requires three MongoClient instances and will generally
+The following test requires three MongerClient instances and will generally
 require two execution contexts (async drivers may get by with a single thread).
 
 - The client under test will connect to the replica set and be used to execute

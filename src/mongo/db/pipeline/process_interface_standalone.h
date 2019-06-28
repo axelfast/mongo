@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,13 +45,13 @@ using write_ops::Update;
  * Class to provide access to mongerd-specific implementations of methods required by some
  * document sources.
  */
-class MongoInterfaceStandalone : public MongoProcessCommon {
+class MongerInterfaceStandalone : public MongerProcessCommon {
 public:
-    // static std::shared_ptr<MongoProcessInterface> create(OperationContext* opCtx);
+    // static std::shared_ptr<MongerProcessInterface> create(OperationContext* opCtx);
 
-    MongoInterfaceStandalone(OperationContext* opCtx);
+    MongerInterfaceStandalone(OperationContext* opCtx);
 
-    virtual ~MongoInterfaceStandalone() = default;
+    virtual ~MongerInterfaceStandalone() = default;
 
     void setOperationContext(OperationContext* opCtx) final;
     DBClientBase* directClient() final;

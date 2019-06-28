@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -198,7 +198,7 @@ func (op *CommandOp) Preprocess() {
 
 // Execute performs the CommandOp on a given session, yielding the reply when
 // successful (and an error otherwise).
-func (op *CommandOp) Execute(socket *mgo.MongoSocket) (Replyable, error) {
+func (op *CommandOp) Execute(socket *mgo.MongerSocket) (Replyable, error) {
 	before := time.Now()
 	metadata, commandReply, replyData, resultReply, err := mgo.ExecOpWithReply(socket, &op.CommandOp)
 	after := time.Now()

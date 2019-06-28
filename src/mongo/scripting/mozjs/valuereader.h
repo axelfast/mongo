@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,7 +38,7 @@ namespace monger {
 namespace mozjs {
 
 /**
- * Reads into a JS Value from some Mongo C++ primitive
+ * Reads into a JS Value from some Monger C++ primitive
  */
 class ValueReader {
 public:

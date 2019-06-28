@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -40,9 +40,9 @@ namespace {
 /**
  * A std::error_category for the codes in the named ErrorCodes space.
  */
-class MongoErrorCategoryImpl final : public std::error_category {
+class MongerErrorCategoryImpl final : public std::error_category {
 public:
-    MongoErrorCategoryImpl() = default;
+    MongerErrorCategoryImpl() = default;
 
     const char* name() const noexcept override {
         return "monger";
@@ -73,7 +73,7 @@ public:
 
 const std::error_category& mongerErrorCategory() {
     // TODO: Remove this static, and make a constexpr instance when we move to C++14.
-    static const MongoErrorCategoryImpl instance{};
+    static const MongerErrorCategoryImpl instance{};
     return instance;
 }
 

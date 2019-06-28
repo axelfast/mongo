@@ -27,7 +27,7 @@ function setParameter(conn, field, value) {
 
 function setParameterOnAllHosts(hostList, field, value) {
     for (let host of hostList) {
-        const conn = new Mongo(host);
+        const conn = new Monger(host);
         assert.commandWorked(setParameter(conn, field, value));
     }
 }
@@ -55,7 +55,7 @@ function testNumericServerParameter(parameterName,
                                     upperOutOfBounds) {
     jsTest.log("Checking that '" + parameterName + "' defaults to '" + defaultValue +
                "' on startup");
-    let conn1 = MongoRunner.runMongod({});
+    let conn1 = MongerRunner.runMongerd({});
     assert(conn1);
     assert.eq(getParameter(conn1, parameterName), defaultValue);
 
@@ -82,22 +82,22 @@ function testNumericServerParameter(parameterName,
         }
     }
 
-    MongoRunner.stopMongod(conn1);
+    MongerRunner.stopMongerd(conn1);
 
     if (isStartupParameter) {
         jsTest.log("Checking that '" + parameterName + "' can be set to '" + nonDefaultValidValue +
                    "' on startup");
         let conn2 =
-            MongoRunner.runMongod({setParameter: parameterName + "=" + nonDefaultValidValue});
+            MongerRunner.runMongerd({setParameter: parameterName + "=" + nonDefaultValidValue});
         assert(conn2);
         assert.eq(getParameter(conn2, parameterName), nonDefaultValidValue);
-        MongoRunner.stopMongod(conn2);
+        MongerRunner.stopMongerd(conn2);
 
         if (hasLowerBound) {
             jsTest.log("Checking that '" + parameterName + "' cannot be set below bounds to '" +
                        lowerOutOfBounds + "' on startup");
             let conn3 =
-                MongoRunner.runMongod({setParameter: parameterName + "=" + lowerOutOfBounds});
+                MongerRunner.runMongerd({setParameter: parameterName + "=" + lowerOutOfBounds});
             assert.eq(null,
                       conn3,
                       "expected mongerd to fail to startup with an invalid '" + parameterName + "'" +
@@ -108,7 +108,7 @@ function testNumericServerParameter(parameterName,
             jsTest.log("Checking that '" + parameterName + "' cannot be set above bounds to '" +
                        upperOutOfBounds + "' on startup");
             let conn4 =
-                MongoRunner.runMongod({setParameter: parameterName + "=" + upperOutOfBounds});
+                MongerRunner.runMongerd({setParameter: parameterName + "=" + upperOutOfBounds});
             assert.eq(null,
                       conn4,
                       "expected mongerd to fail to startup with an invalid '" + parameterName + "'" +

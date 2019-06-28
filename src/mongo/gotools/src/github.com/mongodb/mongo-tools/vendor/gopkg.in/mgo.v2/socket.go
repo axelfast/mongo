@@ -1,4 +1,4 @@
-// mgo - MongoDB driver for Go
+// mgo - MongerDB driver for Go
 //
 // Copyright (c) 2010-2012 - Gustavo Niemeyer <gustavo@niemeyer.net>
 //
@@ -95,7 +95,7 @@ type queryWrapper struct {
 }
 
 func (op *queryOp) finalQuery(socket *mongerSocket) interface{} {
-	if op.flags&flagSlaveOk != 0 && socket.ServerInfo().Mongos {
+	if op.flags&flagSlaveOk != 0 && socket.ServerInfo().Mongers {
 		var modeName string
 		switch op.mode {
 		case Strong:

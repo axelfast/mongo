@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -906,7 +906,7 @@ SortedFileWriter<Key, Value>::SortedFileWriter(const SortOptions& opts,
 
     // This should be checked by consumers, but if we get here don't allow writes.
     uassert(
-        16946, "Attempting to use external sort from mongers. This is not allowed.", !isMongos());
+        16946, "Attempting to use external sort from mongers. This is not allowed.", !isMongers());
 
     uassert(17148,
             "Attempting to use external sort without setting SortOptions::tempDir",
@@ -1033,7 +1033,7 @@ Sorter<Key, Value>* Sorter<Key, Value>::make(const SortOptions& opts,
     // This should be checked by consumers, but if it isn't try to fail early.
     uassert(16947,
             "Attempting to use external sort from mongers. This is not allowed.",
-            !(isMongos() && opts.extSortAllowed));
+            !(isMongers() && opts.extSortAllowed));
 
     uassert(17149,
             "Attempting to use external sort without setting SortOptions::tempDir",

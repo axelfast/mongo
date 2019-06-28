@@ -1,6 +1,6 @@
 (function() {
     "use strict";
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd failed to start.");
     let mydb = conn.getDB("test_ns1");
 
@@ -47,5 +47,5 @@
     }
     print("yay");
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

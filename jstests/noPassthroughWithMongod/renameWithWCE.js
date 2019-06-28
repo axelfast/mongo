@@ -5,9 +5,9 @@
 // @tags: [requires_profiling]
 (function() {
     // Set up namespaces a and b.
-    var admin = db.getMongo().getDB("admin");
-    var db_a = db.getMongo().getDB("db_a");
-    var db_b = db.getMongo().getDB("db_b");
+    var admin = db.getMonger().getDB("admin");
+    var db_a = db.getMonger().getDB("db_a");
+    var db_b = db.getMonger().getDB("db_b");
 
     var a = db_a.rename7;
     var b = db_b.rename7;

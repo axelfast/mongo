@@ -1,5 +1,5 @@
 // Check if this build supports the authenticationMechanisms startup parameter.
-var conn = MongoRunner.runMongod({
+var conn = MongerRunner.runMongerd({
     auth: "",
     sslMode: "requireSSL",
     sslPEMKeyFile: "jstests/libs/server.pem",
@@ -13,15 +13,15 @@ if (cmdOut.ok) {
 }
 conn.getDB('admin').dropAllUsers();
 conn.getDB('admin').logout();
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
 const SERVER_CERT = "jstests/libs/server.pem";
 const CA_CERT = "jstests/libs/ca.pem";
 
-const SERVER_USER = "C=US,ST=New York,L=New York City,O=MongoDB,OU=Kernel,CN=server";
-const INTERNAL_USER = "C=US,ST=New York,L=New York City,O=MongoDB,OU=Kernel,CN=internal";
-const CLIENT_USER = "CN=client,OU=KernelUser,O=MongoDB,L=New York City,ST=New York,C=US";
-const INVALID_CLIENT_USER = "C=US,ST=New York,L=New York City,O=MongoDB,OU=KernelUser,CN=invalid";
+const SERVER_USER = "C=US,ST=New York,L=New York City,O=MongerDB,OU=Kernel,CN=server";
+const INTERNAL_USER = "C=US,ST=New York,L=New York City,O=MongerDB,OU=Kernel,CN=internal";
+const CLIENT_USER = "CN=client,OU=KernelUser,O=MongerDB,L=New York City,ST=New York,C=US";
+const INVALID_CLIENT_USER = "C=US,ST=New York,L=New York City,O=MongerDB,OU=KernelUser,CN=invalid";
 
 function authAndTest(monger) {
     external = monger.getDB("$external");
@@ -93,10 +93,10 @@ function authAndTest(monger) {
 print("1. Testing x.509 auth to mongerd");
 var x509_options = {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT};
 
-var monger = MongoRunner.runMongod(Object.merge(x509_options, {auth: ""}));
+var monger = MongerRunner.runMongerd(Object.merge(x509_options, {auth: ""}));
 
 authAndTest(monger);
-MongoRunner.stopMongod(monger);
+MongerRunner.stopMongerd(monger);
 
 print("2. Testing x.509 auth to mongers");
 
@@ -114,5 +114,5 @@ var st = new ShardingTest({
     }
 });
 
-authAndTest(new Mongo("localhost:" + st.s0.port));
+authAndTest(new Monger("localhost:" + st.s0.port));
 st.stop();

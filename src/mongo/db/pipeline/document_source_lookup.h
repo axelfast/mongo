@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -75,7 +75,7 @@ public:
             return {_foreignNssSet};
         }
 
-        PrivilegeVector requiredPrivileges(bool isMongos) const final {
+        PrivilegeVector requiredPrivileges(bool isMongers) const final {
             PrivilegeVector requiredPrivileges;
             Privilege::addPrivilegeToPrivilegeVector(
                 &requiredPrivileges,
@@ -83,7 +83,7 @@ public:
 
             if (_liteParsedPipeline) {
                 Privilege::addPrivilegesToPrivilegeVector(
-                    &requiredPrivileges, _liteParsedPipeline->requiredPrivileges(isMongos));
+                    &requiredPrivileges, _liteParsedPipeline->requiredPrivileges(isMongers));
             }
 
             return requiredPrivileges;
@@ -101,9 +101,9 @@ public:
             return (_foreignNssSet.find(nss) == _foreignNssSet.end());
         }
 
-        bool allowedToPassthroughFromMongos() const {
+        bool allowedToPassthroughFromMongers() const {
             // If a sub-pipeline exists, check that all its stages are allowed to pass through.
-            return !_liteParsedPipeline || _liteParsedPipeline->allowedToPassthroughFromMongos();
+            return !_liteParsedPipeline || _liteParsedPipeline->allowedToPassthroughFromMongers();
         }
 
     private:

@@ -7,9 +7,9 @@
     let runTest = function(useAuth) {
         let conn;
         if (useAuth) {
-            conn = MongoRunner.runMongod({auth: "", binVersion: oldVersion});
+            conn = MongerRunner.runMongerd({auth: "", binVersion: oldVersion});
         } else {
-            conn = MongoRunner.runMongod({binVersion: oldVersion});
+            conn = MongerRunner.runMongerd({binVersion: oldVersion});
         }
 
         let fromDB = conn.getDB("copydb2-test-a");
@@ -41,7 +41,7 @@
         assert.eq(1, fromDB.foo.count());
         assert.eq(1, toDB.foo.count());
         assert.eq(fromDB.foo.getIndexes().length, toDB.foo.getIndexes().length);
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     };
 
     runTest(/*useAuth*/ false);

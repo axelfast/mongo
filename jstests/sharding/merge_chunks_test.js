@@ -7,7 +7,7 @@
     var st = new ShardingTest({shards: 2, mongers: 2});
 
     var mongers = st.s0;
-    var staleMongos = st.s1;
+    var staleMongers = st.s1;
     var admin = mongers.getDB("admin");
     var coll = mongers.getCollection("foo.bar");
 
@@ -41,7 +41,7 @@
     assert.writeOK(coll.insert({_id: 40}));
     assert.writeOK(coll.insert({_id: 110}));
 
-    var staleCollection = staleMongos.getCollection(coll + "");
+    var staleCollection = staleMongers.getCollection(coll + "");
 
     jsTest.log("Trying merges that should fail...");
 

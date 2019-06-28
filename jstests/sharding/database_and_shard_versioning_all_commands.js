@@ -445,7 +445,7 @@
         whatsmyuri: {skip: "executes locally on mongers (not sent to any remote node)"},
     };
 
-    commandsRemovedFromMongosIn42.forEach(function(cmd) {
+    commandsRemovedFromMongersIn42.forEach(function(cmd) {
         testCases[cmd] = {skip: "must define test coverage for 4.0 backwards compatibility"};
     });
 
@@ -572,11 +572,11 @@
                 // so the test case is defined in last stable suites (in which these commands still
                 // exist on the mongers), but these test cases won't be run in regular suites, so we
                 // skip processing them below as well.
-                if (commandsAddedToMongosIn42.includes(key) ||
-                    commandsRemovedFromMongosIn42.includes(key)) {
+                if (commandsAddedToMongersIn42.includes(key) ||
+                    commandsRemovedFromMongersIn42.includes(key)) {
                     continue;
                 }
-                if (commandsAddedToMongosIn44.includes(key)) {
+                if (commandsAddedToMongersIn44.includes(key)) {
                     continue;
                 }
                 assert(testCases[key].validated || testCases[key].conditional,

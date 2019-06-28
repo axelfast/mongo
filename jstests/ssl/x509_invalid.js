@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    const CLIENT_NAME = "CN=client,OU=KernelUser,O=MongoDB,L=New York City,ST=New York,C=US";
+    const CLIENT_NAME = "CN=client,OU=KernelUser,O=MongerDB,L=New York City,ST=New York,C=US";
     const CLIENT_CERT = 'jstests/libs/client.pem';
     const SERVER_CERT = 'jstests/libs/server.pem';
     const CA_CERT = 'jstests/libs/ca.pem';
@@ -15,8 +15,8 @@
             auth.user = name;
         }
         const script = 'assert(db.getSiblingDB(\'$external\').auth(' + tojson(auth) + '));';
-        clearRawMongoProgramOutput();
-        const exitCode = runMongoProgram('monger',
+        clearRawMongerProgramOutput();
+        const exitCode = runMongerProgram('monger',
                                          '--ssl',
                                          '--sslAllowInvalidHostnames',
                                          '--sslPEMKeyFile',
@@ -31,7 +31,7 @@
         assert.eq(shouldSucceed, exitCode === 0, "exitCode = " + tojson(exitCode));
         assert.eq(
             !shouldSucceed,
-            rawMongoProgramOutput().includes('No verified subject name available from client'));
+            rawMongerProgramOutput().includes('No verified subject name available from client'));
     }
 
     function runTest(conn) {
@@ -49,7 +49,7 @@
     }
 
     // Standalone.
-    const mongerd = MongoRunner.runMongod({
+    const mongerd = MongerRunner.runMongerd({
         auth: '',
         sslMode: 'requireSSL',
         sslPEMKeyFile: SERVER_CERT,
@@ -57,5 +57,5 @@
         sslAllowInvalidCertificates: '',
     });
     runTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

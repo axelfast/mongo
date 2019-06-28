@@ -9,7 +9,7 @@ load('jstests/ssl/libs/ssl_helpers.js');
     const CLIENT_CERT = "jstests/libs/client_privatekey.pem";
 
     function authAndTest(port) {
-        const monger = runMongoProgram("monger",
+        const monger = runMongerProgram("monger",
                                       "--host",
                                       "localhost",
                                       "--port",
@@ -22,15 +22,15 @@ load('jstests/ssl/libs/ssl_helpers.js');
                                       "--eval",
                                       "1");
 
-        // runMongoProgram returns 0 on success
+        // runMongerProgram returns 0 on success
         assert.eq(0, monger, "Connection attempt failed");
     }
 
     const x509_options = {sslMode: "requireSSL", sslPEMKeyFile: SERVER_CERT, sslCAFile: CA_CERT};
 
-    let monger = MongoRunner.runMongod(Object.merge(x509_options, {auth: ""}));
+    let monger = MongerRunner.runMongerd(Object.merge(x509_options, {auth: ""}));
 
     authAndTest(monger.port);
 
-    MongoRunner.stopMongod(monger);
+    MongerRunner.stopMongerd(monger);
 }());

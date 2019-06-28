@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -414,7 +414,7 @@ Status ReplicationCoordinatorExternalStateImpl::initializeReplSetStorage(Operati
                            });
 
         // Update unique index format version for all non-replicated collections. It is possible
-        // for MongoDB to have a "clean startup", i.e., no non-local databases, but still have
+        // for MongerDB to have a "clean startup", i.e., no non-local databases, but still have
         // unique indexes on collections in the local database. On clean startup,
         // setFeatureCompatibilityVersion (which updates the unique index format version of
         // collections) is not called, so any pre-existing collections are upgraded here. We exclude
@@ -459,7 +459,7 @@ OpTime ReplicationCoordinatorExternalStateImpl::onTransitionToPrimary(OperationC
     invariant(opCtx->lockState()->isRSTLExclusive());
     invariant(!opCtx->shouldParticipateInFlowControl());
 
-    MongoDSessionCatalog::onStepUp(opCtx);
+    MongerDSessionCatalog::onStepUp(opCtx);
 
     // Clear the appliedThrough marker so on startup we'll use the top of the oplog. This must be
     // done before we add anything to our oplog.
@@ -778,7 +778,7 @@ void ReplicationCoordinatorExternalStateImpl::_shardingOnTransitionToPrimaryHook
 
         const auto configsvrConnStr =
             Grid::get(opCtx)->shardRegistry()->getConfigShard()->getConnString();
-        ShardingInitializationMongoD::get(opCtx)->updateShardIdentityConfigString(opCtx,
+        ShardingInitializationMongerD::get(opCtx)->updateShardIdentityConfigString(opCtx,
                                                                                   configsvrConnStr);
 
         CatalogCacheLoader::get(_service).onStepUp();

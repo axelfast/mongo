@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -109,7 +109,7 @@ private:
         TransactionOpIterator& operator=(const TransactionOpIterator&) = delete;
 
         TransactionOpIterator(OperationContext* opCtx,
-                              std::shared_ptr<MongoProcessInterface> mongerProcessInterface,
+                              std::shared_ptr<MongerProcessInterface> mongerProcessInterface,
                               const Document& input,
                               const pcrecpp::RE& nsRegex);
 
@@ -186,7 +186,7 @@ private:
         TxnNumber _txnNumber;
 
         // Used for traversing the oplog with TransactionHistoryInterface.
-        std::shared_ptr<MongoProcessInterface> _mongerProcessInterface;
+        std::shared_ptr<MongerProcessInterface> _mongerProcessInterface;
 
         // An operation is relevant to a change stream iff its namespace matches this regex.
         const pcrecpp::RE& _nsRegex;

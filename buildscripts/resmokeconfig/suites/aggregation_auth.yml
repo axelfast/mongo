@@ -24,7 +24,7 @@ executor:
           keyFile: *keyFile
           keyFileData: *keyFileData
           roleGraphInvalidationIsFatal: true
-      eval: jsTest.authenticate(db.getMongo())
+      eval: jsTest.authenticate(db.getMonger())
       authenticationDatabase: local
       authenticationMechanism: SCRAM-SHA-1
       password: *keyFileData
@@ -34,7 +34,7 @@ executor:
   - class: CleanEveryN
     n: 20
   fixture:
-    class: MongoDFixture
+    class: MongerDFixture
     mongerd_options:
       auth: ''
       keyFile: *keyFile

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -109,7 +109,7 @@ Value DocumentSourceLookupChangePostImage::lookupPostImage(const Document& updat
     auto resumeToken =
         ResumeToken::parse(updateOp[DocumentSourceChangeStream::kIdField].getDocument());
 
-    const auto readConcern = pExpCtx->inMongos
+    const auto readConcern = pExpCtx->inMongers
         ? boost::optional<BSONObj>(BSON("level"
                                         << "majority"
                                         << "afterClusterTime"
@@ -119,7 +119,7 @@ Value DocumentSourceLookupChangePostImage::lookupPostImage(const Document& updat
 
     // Update lookup queries sent from mongerS to shards are allowed to use speculative majority
     // reads.
-    const auto allowSpeculativeMajorityRead = pExpCtx->inMongos;
+    const auto allowSpeculativeMajorityRead = pExpCtx->inMongers;
     invariant(resumeToken.getData().uuid);
     auto lookedUpDoc =
         pExpCtx->mongerProcessInterface->lookupSingleDocument(pExpCtx,

@@ -6,7 +6,7 @@
 
     load('jstests/noPassthrough/libs/index_build.js');
 
-    const conn = MongoRunner.runMongod();
+    const conn = MongerRunner.runMongerd();
     assert.neq(null, conn, "mongerd was unable to start up");
 
     const testDB = conn.getDB("test");
@@ -44,5 +44,5 @@
 
     testAbortIndexBuild({background: true});
     testAbortIndexBuild({background: false});
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

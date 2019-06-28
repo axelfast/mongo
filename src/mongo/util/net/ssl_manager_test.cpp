@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -95,17 +95,17 @@ std::vector<RoleName> getSortedRoles(const stdx::unordered_set<RoleName>& roles)
     return vec;
 }
 
-TEST(SSLManager, MongoDBRolesParser) {
+TEST(SSLManager, MongerDBRolesParser) {
     /*
     openssl asn1parse -genconf mongerdbroles.cnf -out foo.der
 
     -------- mongerdbroles.cnf --------
-    asn1 = SET:MongoDBAuthorizationGrant
+    asn1 = SET:MongerDBAuthorizationGrant
 
-    [MongoDBAuthorizationGrant]
-    grant1 = SEQUENCE:MongoDBRole
+    [MongerDBAuthorizationGrant]
+    grant1 = SEQUENCE:MongerDBRole
 
-    [MongoDBRole]
+    [MongerDBRole]
     role  = UTF8:role_name
     database = UTF8:Third field
     */
@@ -331,15 +331,15 @@ TEST(SSLManager, DNParsingAndNormalization) {
           {"0.9.2342.19200300.100.1.25", "example"},
           {"0.9.2342.19200300.100.1.25", "net"}}},
         // Check that you can't fake a cluster dn with poor comma escaping
-        {R"(CN=evil\,OU\=Kernel,O=MongoDB Inc.,L=New York City,ST=New York,C=US)",
+        {R"(CN=evil\,OU\=Kernel,O=MongerDB Inc.,L=New York City,ST=New York,C=US)",
          {{"2.5.4.3", "evil,OU=Kernel"},
-          {"2.5.4.10", "MongoDB Inc."},
+          {"2.5.4.10", "MongerDB Inc."},
           {"2.5.4.7", "New York City"},
           {"2.5.4.8", "New York"},
           {"2.5.4.6", "US"}}},
         // check space handling (must be escaped at the beginning and end of strings)
         {R"(CN= \ escaped spaces\20\  )", {{"2.5.4.3", " escaped spaces  "}}},
-        {"CN=server, O=MongoDB Inc.", {{"2.5.4.3", "server"}, {"2.5.4.10", "MongoDB Inc."}}},
+        {"CN=server, O=MongerDB Inc.", {{"2.5.4.3", "server"}, {"2.5.4.10", "MongerDB Inc."}}},
         // Check that escaped #'s work correctly at the beginning of the string and throughout.
         {R"(CN=\#1 = \\#1)", {{"2.5.4.3", "#1 = \\#1"}}},
         {R"(CN== \#1)", {{"2.5.4.3", "= #1"}}},

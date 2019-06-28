@@ -36,7 +36,7 @@
     assert.eq(profileObj.docsExamined, 8, tojson(profileObj));
     assert.eq(profileObj.planSummary, "IXSCAN { a: 1 }", tojson(profileObj));
     assert.eq(profileObj.protocol,
-              getProfilerProtocolStringForCommand(testDB.getMongo()),
+              getProfilerProtocolStringForCommand(testDB.getMonger()),
               tojson(profileObj));
     assert.eq(profileObj.command.aggregate, coll.getName(), tojson(profileObj));
     assert.eq(profileObj.command.collation, {locale: "fr"}, tojson(profileObj));
@@ -50,7 +50,7 @@
     // configuring a server parameter which could mess up other tests. This testing is
     // done elsewhere so that this test can stay in the core suite
     assert(!profileObj.hasOwnProperty("usedDisk"), tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Confirm "fromMultiPlanner" metric.

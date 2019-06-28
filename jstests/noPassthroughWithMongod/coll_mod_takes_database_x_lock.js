@@ -7,7 +7,7 @@
     const failpoint = 'hangAfterDatabaseLock';
     assert.commandWorked(db.adminCommand({configureFailPoint: failpoint, mode: "alwaysOn"}));
 
-    const conn = db.getMongo();
+    const conn = db.getMonger();
     db.createCollection('foo');
 
     // Run a no-op collMod command.

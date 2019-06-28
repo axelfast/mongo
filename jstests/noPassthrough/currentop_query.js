@@ -74,8 +74,8 @@
             assert.writeOK(coll.insert({_id: i, a: i}));
         }
 
-        const isLocalMongosCurOp = (FixtureHelpers.isMongos(testDB) && localOps);
-        const isRemoteShardCurOp = (FixtureHelpers.isMongos(testDB) && !localOps);
+        const isLocalMongersCurOp = (FixtureHelpers.isMongers(testDB) && localOps);
+        const isRemoteShardCurOp = (FixtureHelpers.isMongers(testDB) && !localOps);
 
         // If 'truncatedOps' is true, run only the subset of tests designed to validate the
         // truncation behaviour. Otherwise, run the standard set of tests which assume that
@@ -120,18 +120,18 @@
             // found at TestData.currentOpTest.
             function doTest() {
                 const testDB = db.getSiblingDB(TestData.currentOpCollName);
-                testDB.getMongo().forceReadMode(TestData.shellReadMode);
+                testDB.getMonger().forceReadMode(TestData.shellReadMode);
                 TestData.currentOpTest(testDB);
             }
 
             // Run the operation in the background.
-            var awaitShell = startParallelShell(doTest, testDB.getMongo().port);
+            var awaitShell = startParallelShell(doTest, testDB.getMonger().port);
 
             // Augment the currentOpFilter with additional known predicates.
             if (!testObj.currentOpFilter.ns) {
                 testObj.currentOpFilter.ns = coll.getFullName();
             }
-            if (!isLocalMongosCurOp) {
+            if (!isLocalMongersCurOp) {
                 testObj.currentOpFilter.planSummary = testObj.planSummary;
             }
             if (testObj.hasOwnProperty("command")) {
@@ -150,9 +150,9 @@
 
                     if (result.inprog.length > 0) {
                         result.inprog.forEach((op) => {
-                            assert.eq(op.appName, "MongoDB Shell", tojson(result));
+                            assert.eq(op.appName, "MongerDB Shell", tojson(result));
                             assert.eq(op.clientMetadata.application.name,
-                                      "MongoDB Shell",
+                                      "MongerDB Shell",
                                       tojson(result));
                         });
                         return true;
@@ -164,7 +164,7 @@
                     return "Failed to find operation from " + tojson(testObj.currentOpFilter) +
                         " in currentOp() output: " +
                         tojson(currentOp(testDB, {}, truncatedOps, localOps)) +
-                        (isLocalMongosCurOp
+                        (isLocalMongersCurOp
                              ? ", with localOps=false: " +
                                  tojson(currentOp(testDB, {}, truncatedOps, false))
                              : "");
@@ -291,7 +291,7 @@
                   operation: "remove",
                   planSummary: "COLLSCAN",
                   currentOpFilter:
-                      (isLocalMongosCurOp
+                      (isLocalMongersCurOp
                            ? {"command.delete": coll.getName(), "command.ordered": true}
                            : {
                                "command.q.$comment": "currentop_query",
@@ -308,7 +308,7 @@
                   operation: "update",
                   planSummary: "COLLSCAN",
                   currentOpFilter:
-                      (isLocalMongosCurOp
+                      (isLocalMongersCurOp
                            ? {"command.update": coll.getName(), "command.ordered": true}
                            : {
                                "command.q.$comment": "currentop_query",

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -229,7 +229,7 @@ BSONArray trafficRecordingFileToBSONArr(const std::string& inputFile) {
     return builder.arr();
 }
 
-void trafficRecordingFileToMongoReplayFile(int inputFd, std::ostream& outputStream) {
+void trafficRecordingFileToMongerReplayFile(int inputFd, std::ostream& outputStream) {
     // Document expected by mongerreplay
     BSONObjBuilder opts{};
     opts.append("playbackfileversion", 1);

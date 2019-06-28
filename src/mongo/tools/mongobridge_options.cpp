@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -41,9 +41,9 @@
 
 namespace monger {
 
-MongoBridgeGlobalParams mongerBridgeGlobalParams;
+MongerBridgeGlobalParams mongerBridgeGlobalParams;
 
-void printMongoBridgeHelp(std::ostream* out) {
+void printMongerBridgeHelp(std::ostream* out) {
     *out << "Usage: mongerbridge --port <port> --dest <dest> [ --seed <seed> ] [ --verbose <vvv> ]"
             " [ --help ]"
          << std::endl;
@@ -51,15 +51,15 @@ void printMongoBridgeHelp(std::ostream* out) {
     *out << std::flush;
 }
 
-bool handlePreValidationMongoBridgeOptions(const moe::Environment& params) {
+bool handlePreValidationMongerBridgeOptions(const moe::Environment& params) {
     if (params.count("help")) {
-        printMongoBridgeHelp(&std::cout);
+        printMongerBridgeHelp(&std::cout);
         return false;
     }
     return true;
 }
 
-Status storeMongoBridgeOptions(const moe::Environment& params,
+Status storeMongerBridgeOptions(const moe::Environment& params,
                                const std::vector<std::string>& args) {
     if (!params.count("port")) {
         return {ErrorCodes::BadValue, "Missing required option: --port"};

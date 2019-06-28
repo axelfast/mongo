@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -242,7 +242,7 @@ public:
             }();
 
             if (requestedVersion.isWriteCompatibleWith(collectionShardVersion)) {
-                // MongoS and MongoD agree on what is the collection's shard version
+                // MongerS and MongerD agree on what is the collection's shard version
                 //
                 // Now we should update the connection's version if it's not compatible with the
                 // request's version. This could happen if the shard's metadata has changed, but

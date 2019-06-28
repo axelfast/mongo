@@ -140,7 +140,7 @@ class Process(object):
                 try:
                     monger_signal_handle = win32event.OpenEvent(
                         win32event.EVENT_MODIFY_STATE, False,
-                        "Global\\Mongo_" + str(self._process.pid))
+                        "Global\\Monger_" + str(self._process.pid))
 
                     if not monger_signal_handle:
                         # The process has already died.

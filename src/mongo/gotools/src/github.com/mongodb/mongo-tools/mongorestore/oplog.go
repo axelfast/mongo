@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -27,8 +27,8 @@ import (
 // Note that ops > 8MB will still be buffered, just as single elements.
 const oplogMaxCommandSize = 1024 * 1024 * 8
 
-// RestoreOplog attempts to restore a MongoDB oplog.
-func (restore *MongoRestore) RestoreOplog() error {
+// RestoreOplog attempts to restore a MongerDB oplog.
+func (restore *MongerRestore) RestoreOplog() error {
 	log.Logv(log.Always, "replaying oplog")
 	intent := restore.manager.Oplog()
 	if intent == nil {
@@ -115,7 +115,7 @@ func (restore *MongoRestore) RestoreOplog() error {
 
 // ApplyOps is a wrapper for the applyOps database command, we pass in
 // a session to avoid opening a new connection for a few inserts at a time.
-func (restore *MongoRestore) ApplyOps(session *monger.Client, entries []interface{}) error {
+func (restore *MongerRestore) ApplyOps(session *monger.Client, entries []interface{}) error {
 	singleRes := session.Database("admin").RunCommand(nil, bson.D{{"applyOps", entries}})
 	if err := singleRes.Err(); err != nil {
 		return fmt.Errorf("applyOps: %v", err)
@@ -131,7 +131,7 @@ func (restore *MongoRestore) ApplyOps(session *monger.Client, entries []interfac
 
 // TimestampBeforeLimit returns true if the given timestamp is allowed to be
 // applied to mongerrestore's target database.
-func (restore *MongoRestore) TimestampBeforeLimit(ts primitive.Timestamp) bool {
+func (restore *MongerRestore) TimestampBeforeLimit(ts primitive.Timestamp) bool {
 	if restore.oplogLimit.T == 0 && restore.oplogLimit.I == 0 {
 		// always valid if there is no --oplogLimit set
 		return true
@@ -142,7 +142,7 @@ func (restore *MongoRestore) TimestampBeforeLimit(ts primitive.Timestamp) bool {
 // ParseTimestampFlag takes in a string the form of <time_t>:<ordinal>,
 // where <time_t> is the seconds since the UNIX epoch, and <ordinal> represents
 // a counter of operations in the oplog that occurred in the specified second.
-// It parses this timestamp string and returns a bson.MongoTimestamp type.
+// It parses this timestamp string and returns a bson.MongerTimestamp type.
 func ParseTimestampFlag(ts string) (primitive.Timestamp, error) {
 	var seconds, increment int
 	timestampFields := strings.Split(ts, ":")
@@ -173,7 +173,7 @@ func ParseTimestampFlag(ts string) (primitive.Timestamp, error) {
 
 // filterUUIDs removes 'ui' entries from ops, including nested applyOps ops.
 // It also modifies ops that rely on 'ui'.
-func (restore *MongoRestore) filterUUIDs(op db.Oplog) (db.Oplog, error) {
+func (restore *MongerRestore) filterUUIDs(op db.Oplog) (db.Oplog, error) {
 	// Remove UUIDs from oplog entries
 	if !restore.OutputOptions.PreserveUUID {
 		op.UI = nil
@@ -242,7 +242,7 @@ func isApplyOpsCmd(cmd bson.D) bool {
 
 // newFilteredApplyOps iterates over nested ops in an applyOps document and
 // returns a new applyOps document that omits the 'ui' field from nested ops.
-func (restore *MongoRestore) newFilteredApplyOps(cmd bson.D) (bson.D, error) {
+func (restore *MongerRestore) newFilteredApplyOps(cmd bson.D) (bson.D, error) {
 	ops, err := unwrapNestedApplyOps(cmd)
 	if err != nil {
 		return nil, err

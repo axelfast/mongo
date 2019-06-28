@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -80,7 +80,7 @@ void initializeStorageEngine(ServiceContext* service, const StorageEngineInitFla
         } else if (repairObserver->isIncomplete()) {
             severe()
                 << "An incomplete repair has been detected! This is likely because a repair "
-                   "operation unexpectedly failed before completing. MongoDB will not start up "
+                   "operation unexpectedly failed before completing. MongerDB will not start up "
                    "again without --repair.";
             fassertFailedNoTrace(50922);
         }

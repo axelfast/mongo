@@ -72,7 +72,7 @@
         return res;
     };
 
-    const checkMongosResponse = function(
+    const checkMongersResponse = function(
         res, expectedErrorCode, expectedErrorLabel, writeConcernErrorExpected) {
         if (expectedErrorCode) {
             assert.eq(0, res.ok, tojson(res));
@@ -96,37 +96,37 @@
     };
 
     const runCommitTests = function(commandSentToShard) {
-        jsTest.log("Mongos does not attach any error label if " + commandSentToShard +
+        jsTest.log("Mongers does not attach any error label if " + commandSentToShard +
                    " returns success.");
         assert.commandWorked(startTransaction(mongersSession, dbName, collName));
         res = mongersSession.commitTransaction_forTesting();
-        checkMongosResponse(res, null, null, null);
+        checkMongersResponse(res, null, null, null);
 
-        jsTest.log("Mongos does not attach any error label if " + commandSentToShard +
+        jsTest.log("Mongers does not attach any error label if " + commandSentToShard +
                    " returns success with writeConcern error.");
         failCommandWithWriteConcernError(st.rs0, commandSentToShard);
         assert.commandWorked(startTransaction(mongersSession, dbName, collName));
         res = mongersSession.commitTransaction_forTesting();
-        checkMongosResponse(res, null, null, true);
+        checkMongersResponse(res, null, null, true);
         turnOffFailCommand(st.rs0);
 
-        jsTest.log("Mongos attaches 'TransientTransactionError' label if " + commandSentToShard +
+        jsTest.log("Mongers attaches 'TransientTransactionError' label if " + commandSentToShard +
                    " returns NoSuchTransaction.");
         assert.commandWorked(startTransaction(mongersSession, dbName, collName));
         abortTransactionDirectlyOnParticipant(
             st.rs0, mongersSession.getSessionId(), mongersSession.getTxnNumber_forTesting());
         res = mongersSession.commitTransaction_forTesting();
-        checkMongosResponse(res, ErrorCodes.NoSuchTransaction, "TransientTransactionError", null);
+        checkMongersResponse(res, ErrorCodes.NoSuchTransaction, "TransientTransactionError", null);
         turnOffFailCommand(st.rs0);
 
-        jsTest.log("Mongos does not attach any error label if " + commandSentToShard +
+        jsTest.log("Mongers does not attach any error label if " + commandSentToShard +
                    " returns NoSuchTransaction with writeConcern error.");
         failCommandWithWriteConcernError(st.rs0, commandSentToShard);
         assert.commandWorked(startTransaction(mongersSession, dbName, collName));
         abortTransactionDirectlyOnParticipant(
             st.rs0, mongersSession.getSessionId(), mongersSession.getTxnNumber_forTesting());
         res = mongersSession.commitTransaction_forTesting();
-        checkMongosResponse(res, ErrorCodes.NoSuchTransaction, null, true);
+        checkMongersResponse(res, ErrorCodes.NoSuchTransaction, null, true);
         turnOffFailCommand(st.rs0);
 
         jsTest.log("No error label for network error if " + commandSentToShard +
@@ -138,7 +138,7 @@
             closeConnection: true
         });
         res = mongersSession.commitTransaction_forTesting();
-        checkMongosResponse(res, ErrorCodes.HostUnreachable, false /* expectedErrorLabel */, null);
+        checkMongersResponse(res, ErrorCodes.HostUnreachable, false /* expectedErrorLabel */, null);
         turnOffFailCommand(st.rs0);
     };
 
@@ -170,7 +170,7 @@
         st.rs0,
         {commandToFail: "insert", errorCode: ErrorCodes.WriteConflict, closeConnection: false});
     res = startTransaction(mongersSession, dbName, collName);
-    checkMongosResponse(res, ErrorCodes.WriteConflict, "TransientTransactionError", null);
+    checkMongersResponse(res, ErrorCodes.WriteConflict, "TransientTransactionError", null);
     turnOffFailCommand(st.rs0);
     assert.commandFailedWithCode(mongersSession.abortTransaction_forTesting(),
                                  ErrorCodes.NoSuchTransaction);
@@ -180,7 +180,7 @@
         st.rs0,
         {commandToFail: "insert", errorCode: ErrorCodes.InternalError, closeConnection: true});
     res = startTransaction(mongersSession, dbName, collName);
-    checkMongosResponse(res, ErrorCodes.HostUnreachable, "TransientTransactionError", null);
+    checkMongersResponse(res, ErrorCodes.HostUnreachable, "TransientTransactionError", null);
     turnOffFailCommand(st.rs0);
     assert.commandFailedWithCode(mongersSession.abortTransaction_forTesting(),
                                  ErrorCodes.NoSuchTransaction);

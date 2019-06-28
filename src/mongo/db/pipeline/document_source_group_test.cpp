@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -71,7 +71,7 @@ using DocumentSourceGroupTest = AggregationContextFixture;
 
 TEST_F(DocumentSourceGroupTest, ShouldBeAbleToPauseLoading) {
     auto expCtx = getExpCtx();
-    expCtx->inMongos = true;  // Disallow external sort.
+    expCtx->inMongers = true;  // Disallow external sort.
                               // This is the only way to do this in a debug build.
     AccumulationStatement countStatement{"count",
                                          ExpressionConstant::create(expCtx, Value(1)),
@@ -145,7 +145,7 @@ TEST_F(DocumentSourceGroupTest, ShouldBeAbleToPauseLoadingWhileSpilled) {
 TEST_F(DocumentSourceGroupTest, ShouldErrorIfNotAllowedToSpillToDiskAndResultSetIsTooLarge) {
     auto expCtx = getExpCtx();
     const size_t maxMemoryUsageBytes = 1000;
-    expCtx->inMongos = true;  // Disallow external sort.
+    expCtx->inMongers = true;  // Disallow external sort.
                               // This is the only way to do this in a debug build.
 
     VariablesParseState vps = expCtx->variablesParseState;
@@ -167,7 +167,7 @@ TEST_F(DocumentSourceGroupTest, ShouldErrorIfNotAllowedToSpillToDiskAndResultSet
 TEST_F(DocumentSourceGroupTest, ShouldCorrectlyTrackMemoryUsageBetweenPauses) {
     auto expCtx = getExpCtx();
     const size_t maxMemoryUsageBytes = 1000;
-    expCtx->inMongos = true;  // Disallow external sort.
+    expCtx->inMongers = true;  // Disallow external sort.
                               // This is the only way to do this in a debug build.
 
     VariablesParseState vps = expCtx->variablesParseState;
@@ -260,15 +260,15 @@ public:
           _tempDir("DocumentSourceGroupTest") {}
 
 protected:
-    void createGroup(const BSONObj& spec, bool inShard = false, bool inMongos = false) {
+    void createGroup(const BSONObj& spec, bool inShard = false, bool inMongers = false) {
         BSONObj namedSpec = BSON("$group" << spec);
         BSONElement specElement = namedSpec.firstElement();
 
         intrusive_ptr<ExpressionContextForTest> expressionContext =
             new ExpressionContextForTest(_opCtx.get(), AggregationRequest(NamespaceString(ns), {}));
-        // For $group, 'inShard' implies 'fromMongos' and 'needsMerge'.
-        expressionContext->fromMongos = expressionContext->needsMerge = inShard;
-        expressionContext->inMongos = inMongos;
+        // For $group, 'inShard' implies 'fromMongers' and 'needsMerge'.
+        expressionContext->fromMongers = expressionContext->needsMerge = inShard;
+        expressionContext->inMongers = inMongers;
         // Won't spill to disk properly if it needs to.
         expressionContext->tempDir = _tempDir.path();
 

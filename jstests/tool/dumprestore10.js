@@ -39,9 +39,9 @@
 
     step("mongerdump from replset");
 
-    var data = MongoRunner.dataDir + "/dumprestore10-dump1/";
+    var data = MongerRunner.dataDir + "/dumprestore10-dump1/";
 
-    var exitCode = MongoRunner.runMongoTool("mongerdump", {
+    var exitCode = MongerRunner.runMongerTool("mongerdump", {
         host: "127.0.0.1:" + master.port,
         out: data,
     });
@@ -59,7 +59,7 @@
 
     step("try mongerrestore with write concern");
 
-    exitCode = MongoRunner.runMongoTool("mongerrestore", {
+    exitCode = MongerRunner.runMongerTool("mongerrestore", {
         writeConcern: "2",
         host: "127.0.0.1:" + master.port,
         dir: data,

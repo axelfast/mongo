@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -57,7 +57,7 @@ const StringData kDefaultWhenNotMatchedMode =
  * setup. For example, to compute its constraints, the $merge stage needs to know if the output
  * collection is sharded.
  */
-class MongoProcessInterfaceForTest : public StubMongoProcessInterface {
+class MongerProcessInterfaceForTest : public StubMongerProcessInterface {
 public:
     bool isSharded(OperationContext* opCtx, const NamespaceString& ns) override {
         return false;
@@ -82,7 +82,7 @@ public:
 class DocumentSourceMergeTest : public AggregationContextFixture {
 public:
     DocumentSourceMergeTest() : AggregationContextFixture() {
-        getExpCtx()->mongerProcessInterface = std::make_shared<MongoProcessInterfaceForTest>();
+        getExpCtx()->mongerProcessInterface = std::make_shared<MongerProcessInterfaceForTest>();
     }
 
     intrusive_ptr<DocumentSourceMerge> createMergeStage(BSONObj spec) {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,14 +46,14 @@ namespace monger {
  * authorization or not.  This can be determined by invoking ->requiresAuth() on the parsed command.
  * If it does not require authorization, return boost::none.
  *
- * Both isReplSetMemberOrMongos and supportsDocLocking need to be true if the command contains a
+ * Both isReplSetMemberOrMongers and supportsDocLocking need to be true if the command contains a
  * transaction number, otherwise this function will throw.
  */
 OperationSessionInfoFromClient initializeOperationSessionInfo(OperationContext* opCtx,
                                                               const BSONObj& requestBody,
                                                               bool requiresAuth,
                                                               bool attachToOpCtx,
-                                                              bool isReplSetMemberOrMongos,
+                                                              bool isReplSetMemberOrMongers,
                                                               bool supportsDocLocking);
 
 }  // namespace monger

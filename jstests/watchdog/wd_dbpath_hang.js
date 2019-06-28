@@ -9,6 +9,6 @@ load("jstests/watchdog/lib/wd_test_common.js");
 
     const dbPath = control.getMountPath() + "/db";
 
-    testFuseAndMongoD(control, {dbpath: dbPath});
+    testFuseAndMongerD(control, {dbpath: dbPath});
 
 })();

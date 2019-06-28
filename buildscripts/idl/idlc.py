@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2018-present MongoDB, Inc.
+# Copyright (C) 2018-present MongerDB, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Server Side Public License, version 1,
-# as published by MongoDB, Inc.
+# as published by MongerDB, Inc.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,7 +39,7 @@ import idl.compiler
 def main():
     # type: () -> None
     """Execute Main Entry point."""
-    parser = argparse.ArgumentParser(description='MongoDB IDL Compiler.')
+    parser = argparse.ArgumentParser(description='MongerDB IDL Compiler.')
 
     parser.add_argument('file', type=str, help="IDL input file")
 

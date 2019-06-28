@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,27 +45,27 @@ class Environment;
 
 namespace moe = monger::optionenvironment;
 
-struct MongoBridgeGlobalParams {
+struct MongerBridgeGlobalParams {
     int port = 0;
     std::int64_t seed = 0;
     std::string destUri;
 
-    MongoBridgeGlobalParams() = default;
+    MongerBridgeGlobalParams() = default;
 };
 
-extern MongoBridgeGlobalParams mongerBridgeGlobalParams;
+extern MongerBridgeGlobalParams mongerBridgeGlobalParams;
 
-Status addMongoBridgeOptions(moe::OptionSection* options);
+Status addMongerBridgeOptions(moe::OptionSection* options);
 
-void printMongoBridgeHelp(std::ostream* out);
+void printMongerBridgeHelp(std::ostream* out);
 
 /**
  * Handle options that should come before validation, such as "help".
  *
  * Returns false if an option was found that implies we should prematurely exit with success.
  */
-bool handlePreValidationMongoBridgeOptions(const moe::Environment& params);
+bool handlePreValidationMongerBridgeOptions(const moe::Environment& params);
 
-Status storeMongoBridgeOptions(const moe::Environment& params,
+Status storeMongerBridgeOptions(const moe::Environment& params,
                                const std::vector<std::string>& args);
 }

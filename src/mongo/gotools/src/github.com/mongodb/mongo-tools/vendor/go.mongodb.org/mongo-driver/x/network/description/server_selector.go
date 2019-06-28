@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -105,7 +105,7 @@ func WriteSelector() ServerSelector {
 			result := []Server{}
 			for _, candidate := range candidates {
 				switch candidate.Kind {
-				case Mongos, RSPrimary, Standalone:
+				case Mongers, RSPrimary, Standalone:
 					result = append(result, candidate)
 				}
 			}
@@ -133,7 +133,7 @@ func ReadPrefSelector(rp *readpref.ReadPref) ServerSelector {
 		case ReplicaSetNoPrimary, ReplicaSetWithPrimary:
 			return selectForReplicaSet(rp, t, candidates)
 		case Sharded:
-			return selectByKind(candidates, Mongos), nil
+			return selectByKind(candidates, Mongers), nil
 		}
 
 		return nil, nil

@@ -14,7 +14,7 @@ req_extensions = badSAN_extensions
 C = US
 ST = New York
 L = New York City
-O  = MongoDB
+O  = MongerDB
 OU = Kernel
 CN = 127.0.0.1
 

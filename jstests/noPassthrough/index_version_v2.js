@@ -19,7 +19,7 @@
         return indexesFilteredByName[0];
     }
 
-    const conn = MongoRunner.runMongod({});
+    const conn = MongerRunner.runMongerd({});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     const testDB = conn.getDB("test");
@@ -120,5 +120,5 @@
 
     // Test that attempting to create an index with v=3 returns an error.
     assert.commandFailed(testDB.index_version.createIndex({withV3: 1}, {v: 3}));
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

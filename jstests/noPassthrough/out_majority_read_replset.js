@@ -53,7 +53,7 @@
         assert.eq(indexes[0].name, "_id_");
         assert.eq(indexes[1].name, "secondIndex");
     }`,
-                                          db.getMongo().port);
+                                          db.getMonger().port);
 
     // Wait for the $out before restarting the replication.
     assert.soon(function() {

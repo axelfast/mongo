@@ -2,10 +2,10 @@
 //
 load("jstests/watchdog/lib/charybdefs_lib.js");
 
-function testMongoDHang(control, mongerd_options) {
+function testMongerDHang(control, mongerd_options) {
     'use strict';
 
-    // Now start MongoD with it enabled at startup
+    // Now start MongerD with it enabled at startup
     //
     if (mongerd_options.hasOwnProperty("dbPath")) {
         resetDbpath(mongerd_options.dbPath);
@@ -18,7 +18,7 @@ function testMongoDHang(control, mongerd_options) {
 
     options = Object.extend(mongerd_options, options);
 
-    const conn = MongoRunner.runMongod(options);
+    const conn = MongerRunner.runMongerd(options);
     assert.neq(null, conn, 'mongerd was unable to start up');
 
     // Wait for watchdog to get running
@@ -30,14 +30,14 @@ function testMongoDHang(control, mongerd_options) {
     // Hang the file system
     control.addWriteDelayFaultAndWait("watchdog_probe.*");
 
-    // Check MongoD is dead by sending SIGTERM
+    // Check MongerD is dead by sending SIGTERM
     // This will trigger our "nice" shutdown, but since mongerd is stuck in the kernel doing I/O,
     // the process will not terminate until charybdefs is done sleeping.
-    print("Stopping MongoDB now, it will terminate once charybdefs is done sleeping.");
-    MongoRunner.stopMongod(conn, undefined, {allowedExitCode: EXIT_WATCHDOG});
+    print("Stopping MongerDB now, it will terminate once charybdefs is done sleeping.");
+    MongerRunner.stopMongerd(conn, undefined, {allowedExitCode: EXIT_WATCHDOG});
 }
 
-function testFuseAndMongoD(control, mongerd_options) {
+function testFuseAndMongerD(control, mongerd_options) {
     'use strict';
 
     // Cleanup previous runs
@@ -47,7 +47,7 @@ function testFuseAndMongoD(control, mongerd_options) {
         // Start the file system
         control.start();
 
-        testMongoDHang(control, mongerd_options);
+        testMongerDHang(control, mongerd_options);
     } finally {
         control.cleanup();
     }

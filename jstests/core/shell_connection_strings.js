@@ -5,12 +5,12 @@
 (function() {
     'use strict';
 
-    const mongerd = new MongoURI(db.getMongo().host).servers[0];
+    const mongerd = new MongerURI(db.getMonger().host).servers[0];
     const host = mongerd.host;
     const port = mongerd.port;
 
     function testConnect(ok, ...args) {
-        const exitCode = runMongoProgram('monger', '--eval', ';', ...args);
+        const exitCode = runMongerProgram('monger', '--eval', ';', ...args);
         if (ok) {
             assert.eq(exitCode, 0, "failed to connect with `" + args.join(' ') + "`");
         } else {

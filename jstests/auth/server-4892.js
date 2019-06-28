@@ -9,7 +9,7 @@
  */
 
 var baseName = 'jstests_auth_server4892';
-var dbpath = MongoRunner.dataPath + baseName;
+var dbpath = MongerRunner.dataPath + baseName;
 resetDbpath(dbpath);
 var mongerdCommonArgs = {
     dbpath: dbpath,
@@ -20,15 +20,15 @@ var mongerdCommonArgs = {
  * Start an instance of mongerd, pass it as a parameter to operation(), then stop the instance of
  * mongerd before unwinding or returning out of with_mongerd().
  *
- * 'extraMongodArgs' are extra arguments to pass on the mongerd command line, as an object.
+ * 'extraMongerdArgs' are extra arguments to pass on the mongerd command line, as an object.
  */
-function withMongod(extraMongodArgs, operation) {
-    var mongerd = MongoRunner.runMongod(Object.merge(mongerdCommonArgs, extraMongodArgs));
+function withMongerd(extraMongerdArgs, operation) {
+    var mongerd = MongerRunner.runMongerd(Object.merge(mongerdCommonArgs, extraMongerdArgs));
 
     try {
         operation(mongerd);
     } finally {
-        MongoRunner.stopMongod(mongerd);
+        MongerRunner.stopMongerd(mongerd);
     }
 }
 
@@ -37,7 +37,7 @@ function withMongod(extraMongodArgs, operation) {
  * cursors on the server.
  */
 function expectNumLiveCursors(mongerd, expectedNumLiveCursors) {
-    var conn = new Mongo(mongerd.host);
+    var conn = new Monger(mongerd.host);
     var db = mongerd.getDB('admin');
     db.auth('admin', 'admin');
     var actualNumLiveCursors = db.serverStatus().metrics.cursor.open.total;
@@ -46,9 +46,9 @@ function expectNumLiveCursors(mongerd, expectedNumLiveCursors) {
                expectedNumLiveCursors + ")");
 }
 
-withMongod({noauth: ""}, function setupTest(mongerd) {
+withMongerd({noauth: ""}, function setupTest(mongerd) {
     var admin, somedb, conn;
-    conn = new Mongo(mongerd.host);
+    conn = new Monger(mongerd.host);
     admin = conn.getDB('admin');
     somedb = conn.getDB('somedb');
     admin.createUser({user: 'admin', pwd: 'admin', roles: jsTest.adminUserRoles});
@@ -61,8 +61,8 @@ withMongod({noauth: ""}, function setupTest(mongerd) {
     admin.logout();
 });
 
-withMongod({auth: ""}, function runTest(mongerd) {
-    var conn = new Mongo(mongerd.host);
+withMongerd({auth: ""}, function runTest(mongerd) {
+    var conn = new Monger(mongerd.host);
     var somedb = conn.getDB('somedb');
     somedb.auth('frim', 'fram');
 

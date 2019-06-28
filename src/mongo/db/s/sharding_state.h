@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,7 +42,7 @@ class ServiceContext;
 
 /**
  * Contains information about the shardingness of a running mongerd. This is a passive class and its
- * state and concurrency control is driven from outside (specifically ShardingInitializationMongoD,
+ * state and concurrency control is driven from outside (specifically ShardingInitializationMongerD,
  * which should be its only caller).
  *
  * There is one instance of this object per service context and once 'setInitialized' is called, it

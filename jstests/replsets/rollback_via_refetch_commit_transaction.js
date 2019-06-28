@@ -38,7 +38,7 @@ TestData.skipCheckDBHashes = true;
         primaryNode.getDB(dbName).runCommand({create: collName, writeConcern: {w: 2}}));
 
     // Issue a 'prepareTransaction' command just to the current primary.
-    const session = primaryNode.getDB(dbName).getMongo().startSession({causalConsistency: false});
+    const session = primaryNode.getDB(dbName).getMonger().startSession({causalConsistency: false});
     const sessionDB = session.getDatabase(dbName);
     const sessionColl = sessionDB.getCollection(collName);
     session.startTransaction();
@@ -55,7 +55,7 @@ TestData.skipCheckDBHashes = true;
     rollbackTest.transitionToSyncSourceOperationsBeforeRollback();
 
     // Verify the old primary crashes trying to roll back.
-    clearRawMongoProgramOutput();
+    clearRawMongerProgramOutput();
     rollbackTest.transitionToSyncSourceOperationsDuringRollback();
     jsTestLog("Waiting for crash");
     assert.soon(function() {
@@ -68,11 +68,11 @@ TestData.skipCheckDBHashes = true;
     }, "Node did not fassert", ReplSetTest.kDefaultTimeoutMS);
 
     // Let the ReplSetTest know the old primary is down.
-    rst.stop(rst.getNodeId(rollbackNode), undefined, {allowedExitCode: MongoRunner.EXIT_ABRUPT});
+    rst.stop(rst.getNodeId(rollbackNode), undefined, {allowedExitCode: MongerRunner.EXIT_ABRUPT});
 
     const msg = RegExp("Can't roll back this command yet: ");
     assert.soon(function() {
-        return rawMongoProgramOutput().match(msg);
+        return rawMongerProgramOutput().match(msg);
     }, "Node did not fail to roll back entry.");
 
     // Transaction is still in prepared state and validation will be blocked, so skip it.

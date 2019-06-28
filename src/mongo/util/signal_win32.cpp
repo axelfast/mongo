@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,7 +37,7 @@ namespace monger {
 #ifdef _WIN32
 // Generate windows event name for shutdown signal
 std::string getShutdownSignalName(int processId) {
-    const char* strEventNamePrefix = "Global\\Mongo_";
+    const char* strEventNamePrefix = "Global\\Monger_";
 
     return str::stream() << strEventNamePrefix << processId;
 }

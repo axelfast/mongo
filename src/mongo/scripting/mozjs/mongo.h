@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,13 +42,13 @@ using EncryptedDBClientCallback = std::unique_ptr<DBClientBase>(std::unique_ptr<
 void setEncryptedDBClientCallback(EncryptedDBClientCallback* callback);
 
 /**
- * Shared code for the "Mongo" javascript object.
+ * Shared code for the "Monger" javascript object.
  *
  * The idea here is that there is a lot of shared functionality between the
- * "Mongo" we see in the shell and the "Mongo" in dbeval.  So we provide one
+ * "Monger" we see in the shell and the "Monger" in dbeval.  So we provide one
  * info type with common code and differentiate with varying constructors.
  */
-struct MongoBase : public BaseInfo {
+struct MongerBase : public BaseInfo {
     static void finalize(js::FreeOp* fop, JSObject* obj);
     static void trace(JSTracer* trc, JSObject* obj);
 
@@ -77,7 +77,7 @@ struct MongoBase : public BaseInfo {
         MONGO_DECLARE_JS_FUNCTION(getMinWireVersion);
         MONGO_DECLARE_JS_FUNCTION(getMaxWireVersion);
         MONGO_DECLARE_JS_FUNCTION(isReplicaSetMember);
-        MONGO_DECLARE_JS_FUNCTION(isMongos);
+        MONGO_DECLARE_JS_FUNCTION(isMongers);
         MONGO_DECLARE_JS_FUNCTION(_startSession);
     };
 
@@ -88,9 +88,9 @@ struct MongoBase : public BaseInfo {
 };
 
 /**
- * The shell variant of "Mongo"
+ * The shell variant of "Monger"
  */
-struct MongoExternalInfo : public MongoBase {
+struct MongerExternalInfo : public MongerBase {
     static void construct(JSContext* cx, JS::CallArgs args);
 
     struct Functions {

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -202,7 +202,7 @@ const NamespaceString startupLogCollectionName("local.startup_log");
 
 #ifdef _WIN32
 const ntservice::NtServiceDefaultStrings defaultServiceStrings = {
-    L"MongoDB", L"MongoDB", L"MongoDB Server"};
+    L"MongerDB", L"MongerDB", L"MongerDB Server"};
 #endif
 
 void logStartup(OperationContext* opCtx) {
@@ -295,7 +295,7 @@ ExitCode _initAndListen(int listenPort) {
     {
         ProcessId pid = ProcessId::getCurrent();
         LogstreamBuilder l = log(LogComponent::kControl);
-        l << "MongoDB starting : pid=" << pid << " port=" << serverGlobalParams.port
+        l << "MongerDB starting : pid=" << pid << " port=" << serverGlobalParams.port
           << " dbpath=" << storageGlobalParams.dbpath;
 
         const bool is32bit = sizeof(int*) == 4;
@@ -310,7 +310,7 @@ ExitCode _initAndListen(int listenPort) {
 
     logProcessDetails();
 
-    serviceContext->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongod>(serviceContext));
+    serviceContext->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongerd>(serviceContext));
 
     if (!storageGlobalParams.repair) {
         auto tl =
@@ -376,7 +376,7 @@ ExitCode _initAndListen(int listenPort) {
         exitCleanly(EXIT_BADOPTIONS);
     }
 
-    logMongodStartupWarnings(storageGlobalParams, serverGlobalParams, serviceContext);
+    logMongerdStartupWarnings(storageGlobalParams, serverGlobalParams, serviceContext);
 
     {
         std::stringstream ss;
@@ -485,8 +485,8 @@ ExitCode _initAndListen(int listenPort) {
 
         if (foundSchemaVersion <= AuthorizationManager::schemaVersion26Final) {
             log() << "This server is using MONGODB-CR, an authentication mechanism which "
-                  << "has been removed from MongoDB 4.0. In order to upgrade the auth schema, "
-                  << "first downgrade MongoDB binaries to version 3.6 and then run the "
+                  << "has been removed from MongerDB 4.0. In order to upgrade the auth schema, "
+                  << "first downgrade MongerDB binaries to version 3.6 and then run the "
                   << "authSchemaUpgrade command. "
                   << "See http://dochub.mongerdb.org/core/3.0-upgrade-to-scram-sha-1";
             exitCleanly(EXIT_NEED_UPGRADE);
@@ -507,7 +507,7 @@ ExitCode _initAndListen(int listenPort) {
     }
 
     // This function may take the global lock.
-    auto shardingInitialized = ShardingInitializationMongoD::get(startupOpCtx.get())
+    auto shardingInitialized = ShardingInitializationMongerD::get(startupOpCtx.get())
                                    ->initializeShardingAwarenessIfNeeded(startupOpCtx.get());
     if (shardingInitialized) {
         auto status = waitForShardRegistryReload(startupOpCtx.get());
@@ -527,7 +527,7 @@ ExitCode _initAndListen(int listenPort) {
             logStartup(startupOpCtx.get());
         }
 
-        startMongoDFTDC();
+        startMongerDFTDC();
 
         startFreeMonitoring(serviceContext);
 
@@ -546,7 +546,7 @@ ExitCode _initAndListen(int listenPort) {
                 }
             }
         } else if (serverGlobalParams.clusterRole == ClusterRole::ConfigServer) {
-            initializeGlobalShardingStateForMongoD(startupOpCtx.get(),
+            initializeGlobalShardingStateForMongerD(startupOpCtx.get(),
                                                    ConnectionString::forLocal(),
                                                    kDistLockProcessIdForConfigServer);
 
@@ -720,13 +720,13 @@ void startupConfigActions(const std::vector<std::string>& args) {
 
         if (command[0].compare("run") != 0) {
             std::cout << "Invalid command: " << command[0] << endl;
-            printMongodHelp(moe::startupOptions);
+            printMongerdHelp(moe::startupOptions);
             quickExit(EXIT_FAILURE);
         }
 
         if (command.size() > 1) {
             std::cout << "Too many parameters to 'run' command" << endl;
-            printMongodHelp(moe::startupOptions);
+            printMongerdHelp(moe::startupOptions);
             quickExit(EXIT_FAILURE);
         }
     }
@@ -847,7 +847,7 @@ void setUpReplication(ServiceContext* serviceContext) {
     repl::ReplicationCoordinator::set(serviceContext, std::move(replCoord));
     repl::setOplogCollectionName(serviceContext);
 
-    IndexBuildsCoordinator::set(serviceContext, std::make_unique<IndexBuildsCoordinatorMongod>());
+    IndexBuildsCoordinator::set(serviceContext, std::make_unique<IndexBuildsCoordinatorMongerd>());
 }
 
 #ifdef MONGO_CONFIG_SSL
@@ -945,7 +945,7 @@ void shutdownTask(const ShutdownTaskArgs& shutdownArgs) {
         // it is building an index.
         repl::ReplicationCoordinator::get(serviceContext)->shutdown(opCtx);
 
-        ShardingInitializationMongoD::get(serviceContext)->shutDown(opCtx);
+        ShardingInitializationMongerD::get(serviceContext)->shutDown(opCtx);
 
         // Acquire the RSTL in mode X. First we enqueue the lock request, then kill all operations,
         // destroy all stashed transaction resources in order to release locks, and finally wait
@@ -1004,7 +1004,7 @@ void shutdownTask(const ShutdownTaskArgs& shutdownArgs) {
     stopFreeMonitoring();
 
     // Shutdown Full-Time Data Capture
-    stopMongoDFTDC();
+    stopMongerDFTDC();
 
     HealthLog::get(serviceContext).shutdown();
 
@@ -1062,7 +1062,7 @@ int mongerDbMain(int argc, char* argv[], char** envp) {
     auto service = getGlobalServiceContext();
     setUpCatalog(service);
     setUpReplication(service);
-    service->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongod>(service));
+    service->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongerd>(service));
 
     ErrorExtraInfo::invariantHaveAllParsers();
 

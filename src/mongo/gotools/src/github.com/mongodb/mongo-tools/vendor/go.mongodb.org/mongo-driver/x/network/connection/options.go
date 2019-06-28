@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -56,7 +56,7 @@ func newConfig(opts ...Option) (*config, error) {
 // Option is used to configure a connection.
 type Option func(*config) error
 
-// WithAppName sets the application name which gets sent to MongoDB when it
+// WithAppName sets the application name which gets sent to MongerDB when it
 // first connects.
 func WithAppName(fn func(string) string) Option {
 	return func(c *config) error {
@@ -82,7 +82,7 @@ func WithConnectTimeout(fn func(time.Duration) time.Duration) Option {
 	}
 }
 
-// WithDialer configures the Dialer to use when making a new connection to MongoDB.
+// WithDialer configures the Dialer to use when making a new connection to MongerDB.
 func WithDialer(fn func(Dialer) Dialer) Option {
 	return func(c *config) error {
 		c.dialer = fn(c.dialer)

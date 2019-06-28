@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -134,11 +134,11 @@ std::unique_ptr<DocumentSourceFacet::LiteParsed> DocumentSourceFacet::LiteParsed
     PrivilegeVector requiredPrivileges;
     for (auto&& pipeline : liteParsedPipelines) {
 
-        // A correct isMongos flag is only required for DocumentSourceCurrentOp which is disallowed
+        // A correct isMongers flag is only required for DocumentSourceCurrentOp which is disallowed
         // in $facet pipelines.
-        const bool unusedIsMongosFlag = false;
+        const bool unusedIsMongersFlag = false;
         Privilege::addPrivilegesToPrivilegeVector(&requiredPrivileges,
-                                                  pipeline.requiredPrivileges(unusedIsMongosFlag));
+                                                  pipeline.requiredPrivileges(unusedIsMongersFlag));
     }
 
     return std::make_unique<DocumentSourceFacet::LiteParsed>(std::move(liteParsedPipelines),
@@ -254,7 +254,7 @@ StageConstraints DocumentSourceFacet::constraints(Pipeline::SplitState) const {
     // This means that if any stage in any of the $facet pipelines needs to run on the primary shard
     // or on mongerS, then the entire $facet stage must run there.
     static const std::set<HostTypeRequirement> definitiveHosts = {
-        HostTypeRequirement::kMongoS, HostTypeRequirement::kPrimaryShard};
+        HostTypeRequirement::kMongerS, HostTypeRequirement::kPrimaryShard};
 
     HostTypeRequirement host = HostTypeRequirement::kNone;
 
@@ -330,7 +330,7 @@ DepsTracker::State DocumentSourceFacet::getDependencies(DepsTracker* deps) const
 intrusive_ptr<DocumentSource> DocumentSourceFacet::createFromBson(
     BSONElement elem, const intrusive_ptr<ExpressionContext>& expCtx) {
 
-    boost::optional<std::string> needsMongoS;
+    boost::optional<std::string> needsMongerS;
     boost::optional<std::string> needsShard;
 
     std::vector<FacetPipeline> facetPipelines;
@@ -345,15 +345,15 @@ intrusive_ptr<DocumentSource> DocumentSourceFacet::createFromBson(
         if (!needsShard && pipeline->needsShard()) {
             needsShard.emplace(facetName);
         }
-        if (!needsMongoS && pipeline->needsMongosMerger()) {
-            needsMongoS.emplace(facetName);
+        if (!needsMongerS && pipeline->needsMongersMerger()) {
+            needsMongerS.emplace(facetName);
         }
         uassert(ErrorCodes::IllegalOperation,
-                str::stream() << "$facet pipeline '" << *needsMongoS
+                str::stream() << "$facet pipeline '" << *needsMongerS
                               << "' must run on mongerS, but '"
                               << *needsShard
                               << "' requires a shard",
-                !(needsShard && needsMongoS));
+                !(needsShard && needsMongerS));
 
         facetPipelines.emplace_back(facetName, std::move(pipeline));
     }

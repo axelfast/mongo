@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -137,7 +137,7 @@ func (*NSOptions) Name() string {
 	return "namespace"
 }
 
-// ParseOptions reads the command line arguments and converts them into options used to configure a MongoRestore instance
+// ParseOptions reads the command line arguments and converts them into options used to configure a MongerRestore instance
 func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, error) {
 	opts := options.New("mongerrestore", versionStr, gitCommit, Usage,
 		options.EnabledOptions{Auth: true, Connection: true, URI: true})
@@ -172,7 +172,7 @@ func ParseOptions(rawArgs []string, versionStr, gitCommit string) (Options, erro
 	}
 	targetDir = util.ToUniversalPath(targetDir)
 
-	wc, err := db.NewMongoWriteConcern(outputOpts.WriteConcern, opts.URI.ParsedConnString())
+	wc, err := db.NewMongerWriteConcern(outputOpts.WriteConcern, opts.URI.ParsedConnString())
 	if err != nil {
 		return Options{}, fmt.Errorf("error parsing write concern: %v", err)
 	}

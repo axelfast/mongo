@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,9 +36,9 @@
 namespace monger {
 namespace {
 
-class MongoProcessInterfaceForTest : public MongoSInterface {
+class MongerProcessInterfaceForTest : public MongerSInterface {
 public:
-    using MongoSInterface::MongoSInterface;
+    using MongerSInterface::MongerSInterface;
 
     bool fieldsHaveSupportingUniqueIndex(const boost::intrusive_ptr<ExpressionContext>& expCtx,
                                          const NamespaceString& nss,
@@ -49,18 +49,18 @@ public:
     bool hasSupportingIndexForFields{true};
 };
 
-class MongoSInterfaceTest : public AggregationContextFixture {
+class MongerSInterfaceTest : public AggregationContextFixture {
 public:
-    MongoSInterfaceTest() {
-        getExpCtx()->inMongos = true;
+    MongerSInterfaceTest() {
+        getExpCtx()->inMongers = true;
     }
 
     auto makeProcessInterface() {
-        return std::make_unique<MongoProcessInterfaceForTest>();
+        return std::make_unique<MongerProcessInterfaceForTest>();
     }
 };
 
-TEST_F(MongoSInterfaceTest, FailsToEnsureFieldsUniqueIfTargetCollectionVersionIsSpecified) {
+TEST_F(MongerSInterfaceTest, FailsToEnsureFieldsUniqueIfTargetCollectionVersionIsSpecified) {
     auto expCtx = getExpCtx();
     auto targetCollectionVersion = boost::make_optional(ChunkVersion(0, 0, OID::gen()));
     auto processInterface = makeProcessInterface();
@@ -71,7 +71,7 @@ TEST_F(MongoSInterfaceTest, FailsToEnsureFieldsUniqueIfTargetCollectionVersionIs
                        51179);
 }
 
-TEST_F(MongoSInterfaceTest, FailsToEnsureFieldsUniqueIfNotSupportedByIndex) {
+TEST_F(MongerSInterfaceTest, FailsToEnsureFieldsUniqueIfNotSupportedByIndex) {
     auto expCtx = getExpCtx();
     auto targetCollectionVersion = boost::none;
     auto processInterface = makeProcessInterface();

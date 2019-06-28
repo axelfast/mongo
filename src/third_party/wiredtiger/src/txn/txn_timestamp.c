@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014-2019 MongoDB, Inc.
+ * Copyright (c) 2014-2019 MongerDB, Inc.
  * Copyright (c) 2008-2014 WiredTiger, Inc.
  *	All rights reserved.
  *
@@ -10,7 +10,7 @@
 
 /*
  * __wt_timestamp_to_string --
- *	Convert a timestamp to the MongoDB string representation.
+ *	Convert a timestamp to the MongerDB string representation.
  */
 char *
 __wt_timestamp_to_string(wt_timestamp_t ts, char *ts_string)
@@ -930,12 +930,12 @@ __wt_txn_set_read_timestamp(
 			__wt_readunlock(session, &txn_global->rwlock);
 
 			/*
-			 * In some cases, MongoDB sets a read timestamp older
+			 * In some cases, MongerDB sets a read timestamp older
 			 * than the oldest timestamp, relying on WiredTiger's
 			 * concurrency to detect and fail the set. In other
-			 * cases it's a bug and MongoDB wants error context to
+			 * cases it's a bug and MongerDB wants error context to
 			 * make it easier to find those problems. Don't output
-			 * an error message because that logs a MongoDB error,
+			 * an error message because that logs a MongerDB error,
 			 * use an informational message to provide the context
 			 * instead.
 			 */

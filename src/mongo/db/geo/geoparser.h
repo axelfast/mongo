@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,7 +38,7 @@ namespace monger {
 // It parses a subset of GeoJSON and creates S2 shapes from it.
 // See http://geojson.org/geojson-spec.html for the spec.
 //
-// This class also parses the ad-hoc geo formats that MongoDB introduced.
+// This class also parses the ad-hoc geo formats that MongerDB introduced.
 //
 // parse methods where validation is time consuming optimize to skip
 // validation if the BSONObj was previously validated.

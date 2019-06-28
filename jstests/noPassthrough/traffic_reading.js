@@ -1,10 +1,10 @@
 // tests for the traffic_recording commands.
 (function() {
     // Variables for this test
-    const recordingDir = MongoRunner.toRealDir("$dataDir/traffic_recording/");
+    const recordingDir = MongerRunner.toRealDir("$dataDir/traffic_recording/");
     const recordingFile = "recording.txt";
-    const recordingFilePath = MongoRunner.toRealDir(recordingDir + "/" + recordingFile);
-    const replayFilePath = MongoRunner.toRealDir(recordingDir + "/replay.txt");
+    const recordingFilePath = MongerRunner.toRealDir(recordingDir + "/" + recordingFile);
+    const replayFilePath = MongerRunner.toRealDir(recordingDir + "/replay.txt");
 
     assert.throws(function() {
         convertTrafficRecordingToBSON("notarealfileatall");
@@ -15,7 +15,7 @@
 
     // Create the options and run mongerd
     var opts = {auth: "", setParameter: "trafficRecordingDirectory=" + recordingDir};
-    m = MongoRunner.runMongod(opts);
+    m = MongerRunner.runMongerd(opts);
 
     // Get the port of the host
     var serverPort = m.port;
@@ -44,8 +44,8 @@
     // Stop recording traffic
     assert.commandWorked(testDB.runCommand({'stopRecordingTraffic': 1}));
 
-    // Shutdown Mongod
-    MongoRunner.stopMongod(m, null, {user: 'admin', pwd: 'password'});
+    // Shutdown Mongerd
+    MongerRunner.stopMongerd(m, null, {user: 'admin', pwd: 'password'});
 
     // Counters
     var numRequest = 0;

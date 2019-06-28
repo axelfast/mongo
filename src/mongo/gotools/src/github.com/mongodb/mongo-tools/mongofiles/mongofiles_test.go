@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -108,23 +108,23 @@ func tearDownGridFSTestData() error {
 
 	return nil
 }
-func simpleMongoFilesInstanceWithID(command, ID string) (*MongoFiles, error) {
-	return simpleMongoFilesInstanceWithFilenameAndID(command, "", ID)
+func simpleMongerFilesInstanceWithID(command, ID string) (*MongerFiles, error) {
+	return simpleMongerFilesInstanceWithFilenameAndID(command, "", ID)
 }
-func simpleMongoFilesInstanceWithFilename(command, fname string) (*MongoFiles, error) {
-	return simpleMongoFilesInstanceWithFilenameAndID(command, fname, "")
+func simpleMongerFilesInstanceWithFilename(command, fname string) (*MongerFiles, error) {
+	return simpleMongerFilesInstanceWithFilenameAndID(command, fname, "")
 }
-func simpleMongoFilesInstanceCommandOnly(command string) (*MongoFiles, error) {
-	return simpleMongoFilesInstanceWithFilenameAndID(command, "", "")
+func simpleMongerFilesInstanceCommandOnly(command string) (*MongerFiles, error) {
+	return simpleMongerFilesInstanceWithFilenameAndID(command, "", "")
 }
 
-func simpleMongoFilesInstanceWithFilenameAndID(command, fname, ID string) (*MongoFiles, error) {
+func simpleMongerFilesInstanceWithFilenameAndID(command, fname, ID string) (*MongerFiles, error) {
 	sessionProvider, err := db.NewSessionProvider(*toolOptions)
 	if err != nil {
 		return nil, err
 	}
 
-	mongerfiles := MongoFiles{
+	mongerfiles := MongerFiles{
 		ToolOptions:     toolOptions,
 		InputOptions:    &InputOptions{},
 		StorageOptions:  &StorageOptions{GridFSPrefix: "fs", DB: testDB},
@@ -137,10 +137,10 @@ func simpleMongoFilesInstanceWithFilenameAndID(command, fname, ID string) (*Mong
 	return &mongerfiles, nil
 }
 
-// simpleMockMongoFilesInstanceWithFilename gets an instance of MongoFiles with no underlying SessionProvider.
+// simpleMockMongerFilesInstanceWithFilename gets an instance of MongerFiles with no underlying SessionProvider.
 // Use this for tests that don't communicate with the server (e.g. options parsing tests)
-func simpleMockMongoFilesInstanceWithFilename(command, fname string) *MongoFiles {
-	return &MongoFiles{
+func simpleMockMongerFilesInstanceWithFilename(command, fname string) *MongerFiles {
+	return &MongerFiles{
 		ToolOptions:    toolOptions,
 		InputOptions:   &InputOptions{},
 		StorageOptions: &StorageOptions{GridFSPrefix: "fs", DB: testDB},
@@ -149,7 +149,7 @@ func simpleMockMongoFilesInstanceWithFilename(command, fname string) *MongoFiles
 	}
 }
 
-func getMongofilesWithArgs(args ...string) (*MongoFiles, error) {
+func getMongerfilesWithArgs(args ...string) (*MongerFiles, error) {
 	opts, err := ParseOptions(args, "", "")
 	if err != nil {
 		return nil, err
@@ -227,7 +227,7 @@ func getFilesAndBytesFromLines(lines []string) map[string]int {
 }
 
 func getFilesAndBytesListFromGridFS() (map[string]int, error) {
-	mfAfter, err := simpleMongoFilesInstanceCommandOnly("list")
+	mfAfter, err := simpleMongerFilesInstanceCommandOnly("list")
 	if err != nil {
 		return nil, err
 	}
@@ -256,8 +256,8 @@ func fileExists(name string) bool {
 func TestValidArguments(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.UnitTestType)
 
-	Convey("With a MongoFiles instance", t, func() {
-		mf := simpleMockMongoFilesInstanceWithFilename("search", "file")
+	Convey("With a MongerFiles instance", t, func() {
+		mf := simpleMockMongerFilesInstanceWithFilename("search", "file")
 		Convey("It should error out when no arguments fed", func() {
 			args := []string{}
 			err := mf.ValidateCommand(args)
@@ -315,17 +315,17 @@ func TestValidArguments(t *testing.T) {
 }
 
 // Test that the output from mongerfiles is actually correct
-func TestMongoFilesCommands(t *testing.T) {
+func TestMongerFilesCommands(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 
 	Convey("Testing the various commands (get|get_id|put|delete|delete_id|search|list) "+
-		"with a MongoDump instance", t, func() {
+		"with a MongerDump instance", t, func() {
 
 		bytesExpected, err := setUpGridFSTestData()
 		So(err, ShouldBeNil)
 
 		Convey("Testing the 'list' command with a file that isn't in GridFS should", func() {
-			mf, err := simpleMongoFilesInstanceWithFilename("list", "gibberish")
+			mf, err := simpleMongerFilesInstanceWithFilename("list", "gibberish")
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 
@@ -337,7 +337,7 @@ func TestMongoFilesCommands(t *testing.T) {
 		})
 
 		Convey("Testing the 'list' command with files that are in GridFS should", func() {
-			mf, err := simpleMongoFilesInstanceWithFilename("list", "testf")
+			mf, err := simpleMongerFilesInstanceWithFilename("list", "testf")
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 
@@ -355,7 +355,7 @@ func TestMongoFilesCommands(t *testing.T) {
 		})
 
 		Convey("Testing the 'search' command with files that are in GridFS should", func() {
-			mf, err := simpleMongoFilesInstanceWithFilename("search", "file")
+			mf, err := simpleMongerFilesInstanceWithFilename("search", "file")
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 
@@ -373,7 +373,7 @@ func TestMongoFilesCommands(t *testing.T) {
 		})
 
 		Convey("Testing the 'get' command with a file that is in GridFS should", func() {
-			mf, err := simpleMongoFilesInstanceWithFilename("get", "testfile1")
+			mf, err := simpleMongerFilesInstanceWithFilename("get", "testfile1")
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 
@@ -433,13 +433,13 @@ func TestMongoFilesCommands(t *testing.T) {
 		})
 
 		Convey("Testing the 'get_id' command with a file that is in GridFS should", func() {
-			mf, _ := simpleMongoFilesInstanceWithFilename("get", "testfile1")
+			mf, _ := simpleMongerFilesInstanceWithFilename("get", "testfile1")
 			id := idOfFile("testfile1")
 
 			So(err, ShouldBeNil)
 			idString := id
 
-			mf, err = simpleMongoFilesInstanceWithID("get_id", idString)
+			mf, err = simpleMongerFilesInstanceWithID("get_id", idString)
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 
@@ -478,7 +478,7 @@ func TestMongoFilesCommands(t *testing.T) {
 
 		Convey("Testing the 'put' command by putting some lorem ipsum file with 287613 bytes should", func() {
 			filename := "lorem_ipsum_287613_bytes.txt"
-			mf, err := simpleMongoFilesInstanceWithFilename("put", filename)
+			mf, err := simpleMongerFilesInstanceWithFilename("put", filename)
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 			mf.StorageOptions.LocalFileName = util.ToUniversalPath("testdata/" + filename)
@@ -503,7 +503,7 @@ func TestMongoFilesCommands(t *testing.T) {
 
 				Convey("and should have exactly the same content as the original file", func() {
 					buff.Truncate(0)
-					mfAfter, err := simpleMongoFilesInstanceWithFilename("get", "lorem_ipsum_287613_bytes.txt")
+					mfAfter, err := simpleMongerFilesInstanceWithFilename("get", "lorem_ipsum_287613_bytes.txt")
 					So(err, ShouldBeNil)
 					So(mf, ShouldNotBeNil)
 
@@ -546,7 +546,7 @@ func TestMongoFilesCommands(t *testing.T) {
 		})
 
 		Convey("Testing the 'delete' command with a file that is in GridFS should", func() {
-			mf, err := simpleMongoFilesInstanceWithFilename("delete", "testfile2")
+			mf, err := simpleMongerFilesInstanceWithFilename("delete", "testfile2")
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 
@@ -571,10 +571,10 @@ func TestMongoFilesCommands(t *testing.T) {
 
 		Convey("Testing the 'delete_id' command with a file that is in GridFS should", func() {
 			// hack to grab an _id
-			mf, _ := simpleMongoFilesInstanceWithFilename("get", "testfile2")
+			mf, _ := simpleMongerFilesInstanceWithFilename("get", "testfile2")
 			idString := idOfFile("testfile2")
 
-			mf, err := simpleMongoFilesInstanceWithID("delete_id", idString)
+			mf, err := simpleMongerFilesInstanceWithID("delete_id", idString)
 			So(err, ShouldBeNil)
 			So(mf, ShouldNotBeNil)
 
@@ -613,13 +613,13 @@ func TestDefaultWriteConcern(t *testing.T) {
 	}
 
 	Convey("with a URI that doesn't specify write concern", t, func() {
-		mf, err := getMongofilesWithArgs("get", "filename", "--uri", "mongerdb://localhost:33333")
+		mf, err := getMongerfilesWithArgs("get", "filename", "--uri", "mongerdb://localhost:33333")
 		So(err, ShouldBeNil)
 		So(mf.SessionProvider.DB("test").WriteConcern(), ShouldResemble, writeconcern.New(writeconcern.WMajority()))
 	})
 
 	Convey("with no URI and no write concern option", t, func() {
-		mf, err := getMongofilesWithArgs("get", "filename", "--port", "33333")
+		mf, err := getMongerfilesWithArgs("get", "filename", "--port", "33333")
 		So(err, ShouldBeNil)
 		So(mf.SessionProvider.DB("test").WriteConcern(), ShouldResemble, writeconcern.New(writeconcern.WMajority()))
 	})
@@ -627,7 +627,7 @@ func TestDefaultWriteConcern(t *testing.T) {
 
 func runPutIDTestCase(idToTest string, t *testing.T) {
 	remoteName := "remoteName"
-	mongerFilesInstance, err := simpleMongoFilesInstanceWithFilenameAndID("put_id", remoteName, idToTest)
+	mongerFilesInstance, err := simpleMongerFilesInstanceWithFilenameAndID("put_id", remoteName, idToTest)
 
 	var buff bytes.Buffer
 	log.SetWriter(&buff)
@@ -649,7 +649,7 @@ func runPutIDTestCase(idToTest string, t *testing.T) {
 
 	t.Log("and get_id should have exactly the same content as the original file")
 
-	mfAfter, err := simpleMongoFilesInstanceWithID("get_id", idToTest)
+	mfAfter, err := simpleMongerFilesInstanceWithID("get_id", idToTest)
 	So(err, ShouldBeNil)
 	So(mfAfter, ShouldNotBeNil)
 

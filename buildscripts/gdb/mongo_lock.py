@@ -1,4 +1,4 @@
-"""Mongo lock module."""
+"""Monger lock module."""
 
 import re
 import sys
@@ -8,7 +8,7 @@ import gdb.printing
 
 if sys.version_info[0] < 3:
     raise gdb.GdbError(
-        "MongoDB gdb extensions only support Python 3. Your GDB was compiled against Python 2")
+        "MongerDB gdb extensions only support Python 3. Your GDB was compiled against Python 2")
 
 
 class NonExecutingThread(object):
@@ -96,8 +96,8 @@ class Graph(object):
       {'node_key': {'node': {id: val}, 'next_nodes': [node_key_1, ...]}}
     Example graph:
       {
-       'Lock 1': {'node': {1: 'MongoDB lock'}, 'next_nodes': ['Thread 1']},
-       'Lock 2': {'node': {2: 'MongoDB lock'}, 'next_nodes': ['Thread 2']},
+       'Lock 1': {'node': {1: 'MongerDB lock'}, 'next_nodes': ['Thread 1']},
+       'Lock 2': {'node': {2: 'MongerDB lock'}, 'next_nodes': ['Thread 2']},
        'Thread 1': {'node': {1: 123}, 'next_nodes': ['Lock 2']},
        'Thread 2': {'node': {2: 456}, 'next_nodes': ['Lock 1']}
       }
@@ -309,8 +309,8 @@ def find_mutex_holder(graph, thread_dict, show):
 
 def find_lock_manager_holders(graph, thread_dict, show):  # pylint: disable=too-many-locals
     """Find lock manager holders."""
-    # In versions of MongoDB 4.0 and older, the LockerImpl class is templatized with a boolean
-    # parameter. With the removal of the MMAPv1 storage engine in MongoDB 4.2, the LockerImpl class
+    # In versions of MongerDB 4.0 and older, the LockerImpl class is templatized with a boolean
+    # parameter. With the removal of the MMAPv1 storage engine in MongerDB 4.2, the LockerImpl class
     # is no longer templatized.
     frame = find_frame(r'monger::LockerImpl(?:\<.*\>)?::')
     if not frame:
@@ -348,7 +348,7 @@ def find_lock_manager_holders(graph, thread_dict, show):  # pylint: disable=too-
         else:
             lock_holder = find_thread(thread_dict, lock_holder_id)
         if show:
-            print("MongoDB Lock at {} held by {} ({}) waited on by {}".format(
+            print("MongerDB Lock at {} held by {} ({}) waited on by {}".format(
                 lock_head, lock_holder, lock_request["mode"], lock_waiter))
         if graph:
             graph.add_edge(lock_waiter, Lock(int(lock_head), lock_request["mode"]))
@@ -392,12 +392,12 @@ def get_threads_info():
     return thread_dict
 
 
-class MongoDBShowLocks(gdb.Command):
-    """Show MongoDB locks & pthread mutexes."""
+class MongerDBShowLocks(gdb.Command):
+    """Show MongerDB locks & pthread mutexes."""
 
     def __init__(self):
-        """Initialize MongoDBShowLocks."""
-        RegisterMongoCommand.register(  # pylint: disable=undefined-variable
+        """Initialize MongerDBShowLocks."""
+        RegisterMongerCommand.register(  # pylint: disable=undefined-variable
             self, "mongerdb-show-locks", gdb.COMMAND_DATA)
 
     def invoke(self, *_):
@@ -414,15 +414,15 @@ class MongoDBShowLocks(gdb.Command):
             print("Ignoring GDB error '%s' in mongerdb_show_locks" % str(err))
 
 
-MongoDBShowLocks()
+MongerDBShowLocks()
 
 
-class MongoDBWaitsForGraph(gdb.Command):
-    """Create MongoDB WaitsFor lock graph [graph_file]."""
+class MongerDBWaitsForGraph(gdb.Command):
+    """Create MongerDB WaitsFor lock graph [graph_file]."""
 
     def __init__(self):
-        """Initialize MongoDBWaitsForGraph."""
-        RegisterMongoCommand.register(  # pylint: disable=undefined-variable
+        """Initialize MongerDBWaitsForGraph."""
+        RegisterMongerCommand.register(  # pylint: disable=undefined-variable
             self, "mongerdb-waitsfor-graph", gdb.COMMAND_DATA)
 
     def invoke(self, arg, *_):
@@ -457,6 +457,6 @@ class MongoDBWaitsForGraph(gdb.Command):
             print("Ignoring GDB error '%s' in mongerd_deadlock_graph" % str(err))
 
 
-MongoDBWaitsForGraph()
+MongerDBWaitsForGraph()
 
-print("MongoDB Lock analysis commands loaded")
+print("MongerDB Lock analysis commands loaded")

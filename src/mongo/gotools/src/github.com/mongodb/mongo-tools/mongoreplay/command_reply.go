@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -173,7 +173,7 @@ func (op *CommandReplyOp) FromReader(r io.Reader) error {
 
 // Execute logs a warning and returns nil because OP_COMMANDREPLY cannot yet be
 // handled fully by mongerreplay.
-func (op *CommandReplyOp) Execute(socket *mgo.MongoSocket) (Replyable, error) {
+func (op *CommandReplyOp) Execute(socket *mgo.MongerSocket) (Replyable, error) {
 	userInfoLogger.Logv(Always, "Skipping unimplemented op: OP_COMMANDREPLY")
 	return nil, nil
 }

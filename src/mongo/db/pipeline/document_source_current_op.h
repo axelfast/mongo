@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,12 +35,12 @@ namespace monger {
 
 class DocumentSourceCurrentOp final : public DocumentSource {
 public:
-    using TruncationMode = MongoProcessInterface::CurrentOpTruncateMode;
-    using ConnMode = MongoProcessInterface::CurrentOpConnectionsMode;
-    using LocalOpsMode = MongoProcessInterface::CurrentOpLocalOpsMode;
-    using SessionMode = MongoProcessInterface::CurrentOpSessionsMode;
-    using UserMode = MongoProcessInterface::CurrentOpUserMode;
-    using CursorMode = MongoProcessInterface::CurrentOpCursorMode;
+    using TruncationMode = MongerProcessInterface::CurrentOpTruncateMode;
+    using ConnMode = MongerProcessInterface::CurrentOpConnectionsMode;
+    using LocalOpsMode = MongerProcessInterface::CurrentOpLocalOpsMode;
+    using SessionMode = MongerProcessInterface::CurrentOpSessionsMode;
+    using UserMode = MongerProcessInterface::CurrentOpUserMode;
+    using CursorMode = MongerProcessInterface::CurrentOpCursorMode;
 
     static constexpr StringData kStageName = "$currentOp"_sd;
 
@@ -56,21 +56,21 @@ public:
             return stdx::unordered_set<NamespaceString>();
         }
 
-        PrivilegeVector requiredPrivileges(bool isMongos) const final {
+        PrivilegeVector requiredPrivileges(bool isMongers) const final {
             PrivilegeVector privileges;
 
             // In a sharded cluster, we always need the inprog privilege to run $currentOp on the
             // shards. If we are only looking up local mongerS operations, we do not need inprog to
             // view our own ops but *do* require it to view other users' ops.
             if (_allUsers == UserMode::kIncludeAll ||
-                (isMongos && _localOps == LocalOpsMode::kRemoteShardOps)) {
+                (isMongers && _localOps == LocalOpsMode::kRemoteShardOps)) {
                 privileges.push_back({ResourcePattern::forClusterResource(), ActionType::inprog});
             }
 
             return privileges;
         }
 
-        bool allowedToPassthroughFromMongos() const final {
+        bool allowedToPassthroughFromMongers() const final {
             return _localOps == LocalOpsMode::kRemoteShardOps;
         }
 
@@ -97,7 +97,7 @@ public:
         ConnMode includeIdleConnections = ConnMode::kExcludeIdle,
         SessionMode includeIdleSessions = SessionMode::kIncludeIdle,
         UserMode includeOpsFromAllUsers = UserMode::kExcludeOthers,
-        LocalOpsMode showLocalOpsOnMongoS = LocalOpsMode::kRemoteShardOps,
+        LocalOpsMode showLocalOpsOnMongerS = LocalOpsMode::kRemoteShardOps,
         TruncationMode truncateOps = TruncationMode::kNoTruncation,
         CursorMode idleCursors = CursorMode::kExcludeCursors);
 
@@ -108,7 +108,7 @@ public:
     StageConstraints constraints(Pipeline::SplitState pipeState) const final {
         StageConstraints constraints(StreamType::kStreaming,
                                      PositionRequirement::kFirst,
-                                     (_showLocalOpsOnMongoS == LocalOpsMode::kLocalMongosOps
+                                     (_showLocalOpsOnMongerS == LocalOpsMode::kLocalMongersOps
                                           ? HostTypeRequirement::kLocalOnly
                                           : HostTypeRequirement::kAnyShard),
                                      DiskUseRequirement::kNoDiskUse,
@@ -135,21 +135,21 @@ private:
                             ConnMode includeIdleConnections,
                             SessionMode includeIdleSessions,
                             UserMode includeOpsFromAllUsers,
-                            LocalOpsMode showLocalOpsOnMongoS,
+                            LocalOpsMode showLocalOpsOnMongerS,
                             TruncationMode truncateOps,
                             CursorMode idleCursors)
         : DocumentSource(pExpCtx),
           _includeIdleConnections(includeIdleConnections),
           _includeIdleSessions(includeIdleSessions),
           _includeOpsFromAllUsers(includeOpsFromAllUsers),
-          _showLocalOpsOnMongoS(showLocalOpsOnMongoS),
+          _showLocalOpsOnMongerS(showLocalOpsOnMongerS),
           _truncateOps(truncateOps),
           _idleCursors(idleCursors) {}
 
     ConnMode _includeIdleConnections = ConnMode::kExcludeIdle;
     SessionMode _includeIdleSessions = SessionMode::kIncludeIdle;
     UserMode _includeOpsFromAllUsers = UserMode::kExcludeOthers;
-    LocalOpsMode _showLocalOpsOnMongoS = LocalOpsMode::kRemoteShardOps;
+    LocalOpsMode _showLocalOpsOnMongerS = LocalOpsMode::kRemoteShardOps;
     TruncationMode _truncateOps = TruncationMode::kNoTruncation;
     CursorMode _idleCursors = CursorMode::kExcludeCursors;
 

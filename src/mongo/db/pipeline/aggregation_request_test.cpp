@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -57,7 +57,7 @@ const Document kDefaultCursorOptionDocument{
 TEST(AggregationRequestTest, ShouldParseAllKnownOptions) {
     NamespaceString nss("a.collection");
     const BSONObj inputBson = fromjson(
-        "{pipeline: [{$match: {a: 'abc'}}], explain: false, allowDiskUse: true, fromMongos: true, "
+        "{pipeline: [{$match: {a: 'abc'}}], explain: false, allowDiskUse: true, fromMongers: true, "
         "needsMerge: true, bypassDocumentValidation: true, collation: {locale: 'en_US'}, cursor: "
         "{batchSize: 10}, hint: {a: 1}, maxTimeMS: 100, readConcern: {level: 'linearizable'}, "
         "$queryOptions: {$readPreference: 'nearest'}, comment: 'agg_comment', exchange: {policy: "
@@ -65,7 +65,7 @@ TEST(AggregationRequestTest, ShouldParseAllKnownOptions) {
     auto request = unittest::assertGet(AggregationRequest::parseFromBSON(nss, inputBson));
     ASSERT_FALSE(request.getExplain());
     ASSERT_TRUE(request.shouldAllowDiskUse());
-    ASSERT_TRUE(request.isFromMongos());
+    ASSERT_TRUE(request.isFromMongers());
     ASSERT_TRUE(request.needsMerge());
     ASSERT_TRUE(request.shouldBypassDocumentValidation());
     ASSERT_EQ(request.getBatchSize(), 10);
@@ -152,7 +152,7 @@ TEST(AggregationRequestTest, ShouldNotSerializeOptionalValuesIfEquivalentToDefau
     AggregationRequest request(nss, {});
     request.setExplain(boost::none);
     request.setAllowDiskUse(false);
-    request.setFromMongos(false);
+    request.setFromMongers(false);
     request.setNeedsMerge(false);
     request.setBypassDocumentValidation(false);
     request.setCollation(BSONObj());
@@ -173,7 +173,7 @@ TEST(AggregationRequestTest, ShouldSerializeOptionalValuesIfSet) {
     NamespaceString nss("a.collection");
     AggregationRequest request(nss, {});
     request.setAllowDiskUse(true);
-    request.setFromMongos(true);
+    request.setFromMongers(true);
     request.setNeedsMerge(true);
     request.setBypassDocumentValidation(true);
     request.setBatchSize(10);
@@ -196,7 +196,7 @@ TEST(AggregationRequestTest, ShouldSerializeOptionalValuesIfSet) {
         Document{{AggregationRequest::kCommandName, nss.coll()},
                  {AggregationRequest::kPipelineName, Value(std::vector<Value>{})},
                  {AggregationRequest::kAllowDiskUseName, true},
-                 {AggregationRequest::kFromMongosName, true},
+                 {AggregationRequest::kFromMongersName, true},
                  {AggregationRequest::kNeedsMergeName, true},
                  {bypassDocumentValidationCommandOption(), true},
                  {AggregationRequest::kCollationName, collationObj},
@@ -333,21 +333,21 @@ TEST(AggregationRequestTest, ShouldRejectExplainIfObject) {
     ASSERT_NOT_OK(AggregationRequest::parseFromBSON(nss, inputBson).getStatus());
 }
 
-TEST(AggregationRequestTest, ShouldRejectNonBoolFromMongos) {
+TEST(AggregationRequestTest, ShouldRejectNonBoolFromMongers) {
     NamespaceString nss("a.collection");
     const BSONObj inputBson =
-        fromjson("{pipeline: [{$match: {a: 'abc'}}], cursor: {}, fromMongos: 1}");
+        fromjson("{pipeline: [{$match: {a: 'abc'}}], cursor: {}, fromMongers: 1}");
     ASSERT_NOT_OK(AggregationRequest::parseFromBSON(nss, inputBson).getStatus());
 }
 
 TEST(AggregationRequestTest, ShouldRejectNonBoolNeedsMerge) {
     NamespaceString nss("a.collection");
     const BSONObj inputBson =
-        fromjson("{pipeline: [{$match: {a: 'abc'}}], cursor: {}, needsMerge: 1, fromMongos: true}");
+        fromjson("{pipeline: [{$match: {a: 'abc'}}], cursor: {}, needsMerge: 1, fromMongers: true}");
     ASSERT_NOT_OK(AggregationRequest::parseFromBSON(nss, inputBson).getStatus());
 }
 
-TEST(AggregationRequestTest, ShouldRejectNeedsMergeIfFromMongosNotPresent) {
+TEST(AggregationRequestTest, ShouldRejectNeedsMergeIfFromMongersNotPresent) {
     NamespaceString nss("a.collection");
     const BSONObj inputBson =
         fromjson("{pipeline: [{$match: {a: 'abc'}}], cursor: {}, needsMerge: true}");
@@ -364,15 +364,15 @@ TEST(AggregationRequestTest, ShouldRejectNonBoolNeedsMerge34) {
 TEST(AggregationRequestTest, ShouldRejectNeedsMergeIfNeedsMerge34AlsoPresent) {
     NamespaceString nss("a.collection");
     const BSONObj inputBson = fromjson(
-        "{pipeline: [{$match: {a: 'abc'}}], cursor: {}, needsMerge: true, fromMongos: true, "
+        "{pipeline: [{$match: {a: 'abc'}}], cursor: {}, needsMerge: true, fromMongers: true, "
         "fromRouter: true}");
     ASSERT_NOT_OK(AggregationRequest::parseFromBSON(nss, inputBson).getStatus());
 }
 
-TEST(AggregationRequestTest, ShouldRejectFromMongosIfNeedsMerge34AlsoPresent) {
+TEST(AggregationRequestTest, ShouldRejectFromMongersIfNeedsMerge34AlsoPresent) {
     NamespaceString nss("a.collection");
     const BSONObj inputBson = fromjson(
-        "{pipeline: [{$match: {a: 'abc'}}], cursor: {}, fromMongos: true, fromRouter: true}");
+        "{pipeline: [{$match: {a: 'abc'}}], cursor: {}, fromMongers: true, fromRouter: true}");
     ASSERT_NOT_OK(AggregationRequest::parseFromBSON(nss, inputBson).getStatus());
 }
 

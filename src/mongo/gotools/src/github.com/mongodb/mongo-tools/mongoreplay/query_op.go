@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -158,7 +158,7 @@ func (op *QueryOp) FromReader(r io.Reader) error {
 
 // Execute performs the QueryOp on a given socket, yielding the reply when
 // successful (and an error otherwise).
-func (op *QueryOp) Execute(socket *mgo.MongoSocket) (Replyable, error) {
+func (op *QueryOp) Execute(socket *mgo.MongerSocket) (Replyable, error) {
 	before := time.Now()
 	_, _, replyData, resultReply, err := mgo.ExecOpWithReply(socket, &op.QueryOp)
 	after := time.Now()

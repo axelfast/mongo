@@ -68,7 +68,7 @@
             db: db.getSiblingDB("admin"),
             cmdObj: {configureFailPoint: "setYieldAllLocksHang", mode: "off"}
         });
-    }, mongersDB.getMongo().port);
+    }, mongersDB.getMonger().port);
 
     // Retrieve the results for the $sample aggregation.
     const sampleCursor = new DBCommandCursor(mongersDB, cmdRes);

@@ -5,7 +5,7 @@
     'use strict';
 
     const runURIAuthTest = function(userMech, uriMech, authMechanism, regexMechanism) {
-        const conn = MongoRunner.runMongod({auth: ""});
+        const conn = MongerRunner.runMongerd({auth: ""});
         const adminDB = conn.getDB("admin");
 
         adminDB.createUser({
@@ -41,7 +41,7 @@
             uri = "mongerdb://user:password@localhost:" + conn.port;
         }
 
-        var shell = runMongoProgram('./monger', uri, "--eval", "db.getName()");
+        var shell = runMongerProgram('./monger', uri, "--eval", "db.getName()");
         assert.eq(shell, 0, "Should be able to connect with specified params.");
 
         const log = adminDB.runCommand({getLog: "global"});
@@ -50,7 +50,7 @@
         assert(matches);
         assert.eq(2, matches.length);
 
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     };
 
     const SCRAM_SHA_256 = "SCRAM-SHA-256";

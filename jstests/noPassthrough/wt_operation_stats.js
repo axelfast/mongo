@@ -15,7 +15,7 @@
 
     let checkLogStats = function() {
         // Check if the log output contains the expected statistics.
-        let mongerdLogs = rawMongoProgramOutput();
+        let mongerdLogs = rawMongerProgramOutput();
         let lines = mongerdLogs.split('\n');
         let match;
         let logLineCount = 0;
@@ -42,7 +42,7 @@
         let name = "wt_op_stat";
 
         jsTestLog("run mongerd");
-        let conn = MongoRunner.runMongod();
+        let conn = MongerRunner.runMongerd();
         assert.neq(null, conn, "mongerd was unable to start up");
         let testDB = conn.getDB(name);
 
@@ -55,16 +55,16 @@
         }
 
         let connport = conn.port;
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
 
         // Restart the server
-        conn = MongoRunner.runMongod({
+        conn = MongerRunner.runMongerd({
             restart: true,
             port: connport,
             slowms: "0",
         });
 
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
 
         // Scan the collection and check the bytes read statistic in the slowop log and
         // system.profile.
@@ -81,7 +81,7 @@
         checkSystemProfileStats(profileObj, "bytesRead");
 
         // Stopping the mongerd waits until all of its logs have been read by the monger shell.
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
         checkLogStats();
 
         jsTestLog("Success!");

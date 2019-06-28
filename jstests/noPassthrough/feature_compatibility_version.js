@@ -6,7 +6,7 @@
 
     load("jstests/libs/feature_compatibility_version.js");
 
-    const conn = MongoRunner.runMongod({});
+    const conn = MongerRunner.runMongerd({});
     assert.neq(null, conn, "mongerd was unable to start up");
 
     let adminDB = conn.getDB("admin");
@@ -52,5 +52,5 @@
                               ErrorCodes.BadValue);
     checkFCV(adminDB, latestFCV);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -78,7 +78,7 @@ public:
     static constexpr StringData kSchemaTypeKeyword = "type"_sd;
     static constexpr StringData kSchemaUniqueItemsKeyword = "uniqueItems"_sd;
 
-    // MongoDB-specific (non-standard) JSON Schema keyword constants.
+    // MongerDB-specific (non-standard) JSON Schema keyword constants.
     static constexpr StringData kSchemaBsonTypeKeyword = "bsonType"_sd;
     static constexpr StringData kSchemaEncryptKeyword = "encrypt"_sd;
     static constexpr StringData kSchemaEncryptMetadataKeyword = "encryptMetadata"_sd;

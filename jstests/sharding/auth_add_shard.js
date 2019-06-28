@@ -37,7 +37,7 @@
     assert.eq(1, st.config.shards.count(), "initial server count wrong");
 
     // start a mongerd with NO keyfile
-    var conn = MongoRunner.runMongod({shardsvr: ""});
+    var conn = MongerRunner.runMongerd({shardsvr: ""});
     print(conn);
 
     // --------------- Test 1 --------------------
@@ -45,11 +45,11 @@
     printjson(assert.commandFailed(admin.runCommand({addShard: conn.host})));
 
     // stop mongerd
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     //--------------- Test 2 --------------------
     // start mongerd again, this time with keyfile
-    var conn = MongoRunner.runMongod({keyFile: "jstests/libs/key1", shardsvr: ""});
+    var conn = MongerRunner.runMongerd({keyFile: "jstests/libs/key1", shardsvr: ""});
     // try adding the new shard
     assert.commandWorked(admin.runCommand({addShard: conn.host}));
 
@@ -95,7 +95,7 @@
 
     assert.eq(1, st.config.shards.count(), "removed server still appears in count");
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     st.stop();
 })();

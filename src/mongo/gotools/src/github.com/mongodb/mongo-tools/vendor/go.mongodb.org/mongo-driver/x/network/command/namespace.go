@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -12,7 +12,7 @@ import (
 )
 
 // Namespace encapsulates a database and collection name, which together
-// uniquely identifies a collection within a MongoDB cluster.
+// uniquely identifies a collection within a MongerDB cluster.
 type Namespace struct {
 	DB         string
 	Collection string

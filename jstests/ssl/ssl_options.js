@@ -15,7 +15,7 @@ requireSSLProvider('openssl', function() {
         sslClusterPassword: "qwerty",
         sslCAFile: "jstests/libs/ca.pem"
     };
-    const mongerdSource = MongoRunner.runMongod(mongerdConfig);
+    const mongerdSource = MongerRunner.runMongerd(mongerdConfig);
 
     const getCmdLineOptsResult = mongerdSource.adminCommand("getCmdLineOpts");
 
@@ -43,7 +43,7 @@ requireSSLProvider('openssl', function() {
               "<password>",
               "Password not properly censored: " + tojson(getCmdLineOptsResult));
 
-    MongoRunner.stopMongod(mongerdSource);
+    MongerRunner.stopMongerd(mongerdSource);
 
     print(baseName + " succeeded.");
 });

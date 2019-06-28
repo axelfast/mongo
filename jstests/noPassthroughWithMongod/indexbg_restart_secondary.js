@@ -66,7 +66,7 @@
             {configureFailPoint: 'leaveIndexBuildUnfinishedForShutdown', mode: 'off'}));
     }
 
-    MongoRunner.stopMongod(second);
+    MongerRunner.stopMongerd(second);
     replTest.start(second, {}, /*restart=*/true, /*wait=*/true);
 
     // Make sure secondary comes back.

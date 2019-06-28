@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -272,12 +272,12 @@ TEST(ResolvedViewTest, FromBSONSuccessfullyParsesPopulatedBSONArrayIntoVector) {
 
 TEST(ResolvedViewTest, IsResolvedViewErrorResponseDetectsKickbackErrorCodeSuccessfully) {
     BSONObj errorResponse =
-        BSON("ok" << 0 << "code" << ErrorCodes::CommandOnShardedViewNotSupportedOnMongod << "errmsg"
+        BSON("ok" << 0 << "code" << ErrorCodes::CommandOnShardedViewNotSupportedOnMongerd << "errmsg"
                   << "This view is sharded and cannot be run on mongerd"
                   << "resolvedView"
                   << BSON("ns" << backingNss.ns() << "pipeline" << BSONArray()));
     auto status = getStatusFromCommandResult(errorResponse);
-    ASSERT_EQ(status, ErrorCodes::CommandOnShardedViewNotSupportedOnMongod);
+    ASSERT_EQ(status, ErrorCodes::CommandOnShardedViewNotSupportedOnMongerd);
     ASSERT(status.extraInfo<ResolvedView>());
 }
 
@@ -286,7 +286,7 @@ TEST(ResolvedViewTest, IsResolvedViewErrorResponseReportsFalseOnNonKickbackError
         BSON("ok" << 0 << "code" << ErrorCodes::ViewDepthLimitExceeded << "errmsg"
                   << "View nesting too deep or view cycle detected");
     auto status = getStatusFromCommandResult(errorResponse);
-    ASSERT_NE(status, ErrorCodes::CommandOnShardedViewNotSupportedOnMongod);
+    ASSERT_NE(status, ErrorCodes::CommandOnShardedViewNotSupportedOnMongerd);
     ASSERT(!status.extraInfo<ResolvedView>());
 }
 

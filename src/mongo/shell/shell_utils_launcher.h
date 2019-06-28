@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,14 +51,14 @@ namespace shell_utils {
 
 // Scoped management of monger program instances.  Simple implementation:
 // destructor kills all mongerd instances created by the shell.
-struct MongoProgramScope {
-    MongoProgramScope() {}  // Avoid 'unused variable' warning.
-    ~MongoProgramScope();
+struct MongerProgramScope {
+    MongerProgramScope() {}  // Avoid 'unused variable' warning.
+    ~MongerProgramScope();
 };
-int KillMongoProgramInstances();
+int KillMongerProgramInstances();
 
 // Returns true if there are running child processes.
-std::vector<ProcessId> getRunningMongoChildProcessIds();
+std::vector<ProcessId> getRunningMongerChildProcessIds();
 
 void installShellUtilsLauncher(Scope& scope);
 
@@ -122,9 +122,9 @@ public:
     /** @param args The program's arguments, including the program name.
      *  @param env Environment to run the program with, which will override any set by the local
      *             environment
-     * @param isMongo Indicator variable, true if runs as a monger process.
+     * @param isMonger Indicator variable, true if runs as a monger process.
      */
-    ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMongo);
+    ProgramRunner(const BSONObj& args, const BSONObj& env, bool isMonger);
     /** Launch the program. */
     void start();
     /** Continuously read the program's output, generally from a special purpose thread. */

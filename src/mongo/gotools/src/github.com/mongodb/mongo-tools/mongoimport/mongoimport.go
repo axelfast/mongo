@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongerimport allows importing content from a JSON, CSV, or TSV into a MongoDB instance.
+// Package mongerimport allows importing content from a JSON, CSV, or TSV into a MongerDB instance.
 package mongerimport
 
 import (
@@ -45,9 +45,9 @@ const (
 	progressBarLength = 24
 )
 
-// MongoImport is a container for the user-specified options and
+// MongerImport is a container for the user-specified options and
 // internal state used for running mongerimport.
-type MongoImport struct {
+type MongerImport struct {
 	// insertionCount keeps track of how many documents have successfully
 	// been inserted into the database
 	// updated atomically, aligned at the beginning of the struct
@@ -63,7 +63,7 @@ type MongoImport struct {
 	// InputOptions defines options used to read data to be ingested
 	InputOptions *InputOptions
 
-	// IngestOptions defines options used to ingest data into MongoDB
+	// IngestOptions defines options used to ingest data into MongerDB
 	IngestOptions *IngestOptions
 
 	// SessionProvider is used for connecting to the database
@@ -100,10 +100,10 @@ type InputReader interface {
 	sizeTracker
 }
 
-// New constructs a new MongoImport instance from the provided options. This will fail if the options are invalid or if
+// New constructs a new MongerImport instance from the provided options. This will fail if the options are invalid or if
 // it cannot establish a new connection to the server.
-func New(opts Options) (*MongoImport, error) {
-	mi := &MongoImport{
+func New(opts Options) (*MongerImport, error) {
+	mi := &MongerImport{
 		ToolOptions:   opts.ToolOptions,
 		InputOptions:  opts.InputOptions,
 		IngestOptions: opts.IngestOptions,
@@ -122,13 +122,13 @@ func New(opts Options) (*MongoImport, error) {
 }
 
 // Close disconnects the server.
-func (imp *MongoImport) Close() {
+func (imp *MongerImport) Close() {
 	imp.SessionProvider.Close()
 }
 
 // validateSettings ensures that the tool specific options supplied for
-// MongoImport are valid.
-func (imp *MongoImport) validateSettings(args []string) error {
+// MongerImport are valid.
+func (imp *MongerImport) validateSettings(args []string) error {
 	// namespace must have a valid database; if none is specified, use 'test'
 	if imp.ToolOptions.DB == "" {
 		imp.ToolOptions.DB = "test"
@@ -297,7 +297,7 @@ func (imp *MongoImport) validateSettings(args []string) error {
 // getSourceReader returns an io.Reader to read from the input source. Also
 // returns a progress.Progressor which can be used to track progress if the
 // reader supports it.
-func (imp *MongoImport) getSourceReader() (io.ReadCloser, int64, error) {
+func (imp *MongerImport) getSourceReader() (io.ReadCloser, int64, error) {
 	if imp.InputOptions.File != "" {
 		file, err := os.Open(util.ToUniversalPath(imp.InputOptions.File))
 		if err != nil {
@@ -331,7 +331,7 @@ func (fsp *fileSizeProgressor) Progress() (int64, int64) {
 // ImportDocuments is used to write input data to the database. It returns the
 // number of documents successfully imported to the appropriate namespace and
 // any error encountered in doing this
-func (imp *MongoImport) ImportDocuments() (uint64, uint64, error) {
+func (imp *MongerImport) ImportDocuments() (uint64, uint64, error) {
 	source, fileSize, err := imp.getSourceReader()
 	if err != nil {
 		return 0, 0, err
@@ -369,7 +369,7 @@ func (imp *MongoImport) ImportDocuments() (uint64, uint64, error) {
 // importDocuments is a helper to ImportDocuments and does all the ingestion
 // work by taking data from the inputReader source and writing it to the
 // appropriate namespace
-func (imp *MongoImport) importDocuments(inputReader InputReader) (numImported uint64, numFailed uint64, retErr error) {
+func (imp *MongerImport) importDocuments(inputReader InputReader) (numImported uint64, numFailed uint64, retErr error) {
 	session, err := imp.SessionProvider.GetSession()
 	if err != nil {
 		return 0, 0, err
@@ -423,7 +423,7 @@ func (imp *MongoImport) importDocuments(inputReader InputReader) (numImported ui
 // ingestDocuments accepts a channel from which it reads documents to be inserted
 // into the target collection. It spreads the insert/upsert workload across one
 // or more workers.
-func (imp *MongoImport) ingestDocuments(readDocs chan bson.D) (retErr error) {
+func (imp *MongerImport) ingestDocuments(readDocs chan bson.D) (retErr error) {
 	numInsertionWorkers := imp.IngestOptions.NumInsertionWorkers
 	if numInsertionWorkers <= 0 {
 		numInsertionWorkers = 1
@@ -456,7 +456,7 @@ func (imp *MongoImport) ingestDocuments(readDocs chan bson.D) (retErr error) {
 
 // runInsertionWorker is a helper to InsertDocuments - it reads document off
 // the read channel and prepares then in batches for insertion into the database
-func (imp *MongoImport) runInsertionWorker(readDocs chan bson.D) (err error) {
+func (imp *MongerImport) runInsertionWorker(readDocs chan bson.D) (err error) {
 	session, err := imp.SessionProvider.GetSession()
 	if err != nil {
 		return fmt.Errorf("error connecting to mongerd: %v", err)
@@ -488,7 +488,7 @@ readLoop:
 	return db.FilterError(imp.IngestOptions.StopOnError, err)
 }
 
-func (imp *MongoImport) updateCounts(result *monger.BulkWriteResult, err error) {
+func (imp *MongerImport) updateCounts(result *monger.BulkWriteResult, err error) {
 	if result != nil {
 		atomic.AddUint64(&imp.insertionCount, uint64(result.InsertedCount)+uint64(result.ModifiedCount)+uint64(result.UpsertedCount))
 	}
@@ -497,7 +497,7 @@ func (imp *MongoImport) updateCounts(result *monger.BulkWriteResult, err error) 
 	}
 }
 
-func (imp *MongoImport) importDocument(inserter *db.BufferedBulkInserter, document bson.D) error {
+func (imp *MongerImport) importDocument(inserter *db.BufferedBulkInserter, document bson.D) error {
 	var result *monger.BulkWriteResult
 	var err error
 
@@ -544,7 +544,7 @@ func splitInlineHeader(header string) (headers []string) {
 }
 
 // getInputReader returns an implementation of InputReader based on the input type
-func (imp *MongoImport) getInputReader(in io.Reader) (InputReader, error) {
+func (imp *MongerImport) getInputReader(in io.Reader) (InputReader, error) {
 	var colSpecs []ColumnSpec
 	var headers []string
 	var err error

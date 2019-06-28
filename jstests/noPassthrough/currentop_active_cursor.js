@@ -32,7 +32,7 @@
         assert.eq(cursorObject.tailable, false, tojson(activeCursors));
         assert.eq(cursorObject.awaitData, false, tojson(activeCursors));
     }
-    const conn = MongoRunner.runMongod({});
+    const conn = MongerRunner.runMongerd({});
     let failPointName = "waitWithPinnedCursorDuringGetMoreBatch";
     withPinnedCursor({
         conn: conn,
@@ -50,14 +50,14 @@
     // Test OP_GET_MORE (legacy read mode) against a mongerd.
     failPointName = "waitWithPinnedCursorDuringGetMoreBatch";
     const db = conn.getDB("test");
-    db.getMongo().forceReadMode("legacy");
+    db.getMonger().forceReadMode("legacy");
     withPinnedCursor({
         conn: conn,
         sessionId: null,
         db: db,
         assertFunction: runTest,
         runGetMoreFunc: function() {
-            db.getMongo().forceReadMode("legacy");
+            db.getMonger().forceReadMode("legacy");
             let cmdRes = {
                 "cursor": {"firstBatch": [], "id": cursorId, "ns": db.jstest_with_pinned_cursor},
                 "ok": 1
@@ -68,7 +68,7 @@
         failPointName: failPointName,
         assertEndCounts: true
     });
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     // Sharded test
     failPointName = "waitAfterPinningCursorBeforeGetMoreBatch";
@@ -93,7 +93,7 @@
         db: st.s.getDB("test"),
         assertFunction: runTest,
         runGetMoreFunc: function() {
-            db.getMongo().forceReadMode("legacy");
+            db.getMonger().forceReadMode("legacy");
             let cmdRes = {
                 "cursor": {"firstBatch": [], "id": cursorId, "ns": db.jstest_with_pinned_cursor},
                 "ok": 1

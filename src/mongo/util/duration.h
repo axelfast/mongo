@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -165,7 +165,7 @@ public:
         using OtherOverThis = std::ratio_divide<typename OtherDuration::period, period>;
         MONGO_STATIC_ASSERT_MSG(
             OtherOverThis::den == 1 || OtherOverThis::num == 1,
-            "Mongo duration types are only compatible with each other when one's period "
+            "Monger duration types are only compatible with each other when one's period "
             "is an even multiple of the other's.");
         static constexpr bool value = OtherOverThis::den == 1 && OtherOverThis::num != 1;
     };
@@ -179,7 +179,7 @@ public:
         using OtherOverThis = std::ratio_divide<typename OtherDuration::period, period>;
         MONGO_STATIC_ASSERT_MSG(
             OtherOverThis::den == 1 || OtherOverThis::num == 1,
-            "Mongo duration types are only compatible with each other when one's period "
+            "Monger duration types are only compatible with each other when one's period "
             "is an even multiple of the other's.");
         static constexpr bool value = OtherOverThis::num == 1 && OtherOverThis::den != 1;
     };

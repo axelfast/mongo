@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -52,13 +52,13 @@ const char kVersionField[] = "version";
 
 /**
  * Executes the serverStatus command against the specified shard and obtains the version of the
- * running MongoD service.
+ * running MongerD service.
  *
- * Returns the MongoD version in strig format or an error. Known error codes are:
+ * Returns the MongerD version in strig format or an error. Known error codes are:
  *  ShardNotFound if shard by that id is not available on the registry
  *  NoSuchKey if the version could not be retrieved
  */
-StatusWith<std::string> retrieveShardMongoDVersion(OperationContext* opCtx, ShardId shardId) {
+StatusWith<std::string> retrieveShardMongerDVersion(OperationContext* opCtx, ShardId shardId) {
     auto shardRegistry = Grid::get(opCtx)->shardRegistry();
     auto shardStatus = shardRegistry->getShard(opCtx, shardId);
     if (!shardStatus.isOK()) {
@@ -135,7 +135,7 @@ StatusWith<std::vector<ShardStatistics>> ClusterStatisticsImpl::getStats(Operati
 
         std::string mongerDVersion;
 
-        auto mongerDVersionStatus = retrieveShardMongoDVersion(opCtx, shard.getName());
+        auto mongerDVersionStatus = retrieveShardMongerDVersion(opCtx, shard.getName());
         if (mongerDVersionStatus.isOK()) {
             mongerDVersion = std::move(mongerDVersionStatus.getValue());
         } else {

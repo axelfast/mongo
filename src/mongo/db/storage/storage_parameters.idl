@@ -1,8 +1,8 @@
-# Copyright (C) 2019-present MongoDB, Inc.
+# Copyright (C) 2019-present MongerDB, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Server Side Public License, version 1,
-# as published by MongoDB, Inc.
+# as published by MongerDB, Inc.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,7 +36,7 @@ server_parameters:
         # NOT recommended for production use.
         description: >-
             Whether all queries must use indexes.
-            If true, MongoDB will not execute queries that require a table scan and will return an error.
+            If true, MongerDB will not execute queries that require a table scan and will return an error.
         set_at: [ startup, runtime ]
         cpp_varname: 'storageGlobalParams.noTableScan'
     syncdelay:

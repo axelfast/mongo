@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,17 +35,17 @@ namespace monger {
 namespace mozjs {
 
 /**
- * The "MongoStatus" Javascript object.
+ * The "MongerStatus" Javascript object.
  *
  * This type wraps the "Status" type in the server, allowing for lossless throwing of mongerdb native
  * exceptions through javascript.  It can be created (albeit without sidecar) from javascript.
  * These are also created automatically when exceptions are thrown from native c++ functions.
  *
- * They are somewhat special, in that the prototype for each MongoStatus object is actually an Error
+ * They are somewhat special, in that the prototype for each MongerStatus object is actually an Error
  * object specific to that status object.  This allows Error-like behavior such as useful stack
  * traces, and instanceOf Error.
  */
-struct MongoStatusInfo : public BaseInfo {
+struct MongerStatusInfo : public BaseInfo {
     static void finalize(js::FreeOp* fop, JSObject* obj);
 
     struct Functions {

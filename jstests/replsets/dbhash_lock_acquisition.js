@@ -36,7 +36,7 @@
 
     const threadCaptruncCmd = new ScopedThread(function(host) {
         try {
-            const conn = new Mongo(host);
+            const conn = new Monger(host);
             const db = conn.getDB("test");
 
             // We use the captrunc command as a catalog operation that requires a MODE_X lock on the
@@ -49,7 +49,7 @@
         } catch (e) {
             return {ok: 0, error: e.toString(), stack: e.stack};
         }
-    }, db.getMongo().host);
+    }, db.getMonger().host);
 
     threadCaptruncCmd.start();
 
@@ -60,7 +60,7 @@
 
     const threadDBHash = new ScopedThread(function(host, clusterTime) {
         try {
-            const conn = new Mongo(host);
+            const conn = new Monger(host);
             const db = conn.getDB("test");
             assert.commandWorked(db.runCommand({
                 dbHash: 1,
@@ -70,7 +70,7 @@
         } catch (e) {
             return {ok: 0, error: e.toString(), stack: e.stack};
         }
-    }, db.getMongo().host, tojson(clusterTime));
+    }, db.getMonger().host, tojson(clusterTime));
 
     threadDBHash.start();
 

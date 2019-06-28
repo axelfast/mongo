@@ -15,9 +15,9 @@ requireSSLProvider('apple', function() {
     'use strict';
 
     const CLIENT =
-        'C=US,ST=New York,L=New York City,O=MongoDB,OU=Kernel,CN=Trusted Kernel Test Client';
+        'C=US,ST=New York,L=New York City,O=MongerDB,OU=Kernel,CN=Trusted Kernel Test Client';
     const SERVER =
-        'C=US,ST=New York,L=New York City,O=MongoDB,OU=Kernel,CN=Trusted Kernel Test Server';
+        'C=US,ST=New York,L=New York City,O=MongerDB,OU=Kernel,CN=Trusted Kernel Test Server';
     const INVALID = null;
 
     const testCases = [
@@ -37,11 +37,11 @@ requireSSLProvider('apple', function() {
             waitForConnect: false,
             setParameter: {logLevel: '1'},
         };
-        clearRawMongoProgramOutput();
-        const mongerd = MongoRunner.runMongod(opts);
+        clearRawMongerProgramOutput();
+        const mongerd = MongerRunner.runMongerd(opts);
 
         assert.soon(function() {
-            const log = rawMongoProgramOutput();
+            const log = rawMongerProgramOutput();
             if ((cert.name === null) || (cluster.name === null)) {
                 // Invalid search criteria should fail.
                 return log.search('Certificate selector returned no results') >= 0;
@@ -50,10 +50,10 @@ requireSSLProvider('apple', function() {
             const certOK = log.search('Server Certificate Name: ' + cert.name) >= 0;
             const clusOK = log.search('Client Certificate Name: ' + cluster.name) >= 0;
             return certOK && clusOK;
-        }, "Starting Mongod with " + tojson(opts), 10000);
+        }, "Starting Mongerd with " + tojson(opts), 10000);
 
         try {
-            MongoRunner.stopMongod(mongerd);
+            MongerRunner.stopMongerd(mongerd);
         } catch (e) {
             // Depending on timing, exitCode might be 0, 1, or -9.
             // All that matters is that it dies, resmoke will tell us if that failed.

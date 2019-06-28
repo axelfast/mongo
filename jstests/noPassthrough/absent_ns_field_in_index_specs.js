@@ -50,7 +50,7 @@
     // with the 'ns' field. No changes should be necessary to the secondaries index spec, but
     // verify that it still has the 'ns' field.
     const options = {dbpath: primary.dbpath, noCleanData: true};
-    let conn = MongoRunner.runMongod(options);
+    let conn = MongerRunner.runMongerd(options);
     assert.neq(null, conn, 'mongerd was unable to start up with options: ' + tojson(options));
 
     let db = conn.getDB(dbName);
@@ -59,10 +59,10 @@
     assert.eq(true, spec.hasOwnProperty('ns'));
     assert.eq(dbName + '.' + collName, spec.ns);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     options.dbpath = secondary.dbpath;
-    conn = MongoRunner.runMongod(options);
+    conn = MongerRunner.runMongerd(options);
     assert.neq(null, conn, 'mongerd was unable to start up with options: ' + tojson(options));
 
     db = conn.getDB(dbName);
@@ -71,5 +71,5 @@
     assert.eq(true, spec.hasOwnProperty('ns'));
     assert.eq(dbName + '.' + collName, spec.ns);
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 }());

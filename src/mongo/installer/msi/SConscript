@@ -147,8 +147,8 @@ env.Command(objects,
             '"$WIXCANDLE" -wx'
             # cannot have anything other than x.x.x.x in version string.
             # we should choose a fourth version number that reflects pre-ness.
-            ' -dMongoDBMajorVersion=' + major_version +
-            ' -dMongoDBVersion=' + full_version +
+            ' -dMongerDBMajorVersion=' + major_version +
+            ' -dMongerDBVersion=' + full_version +
             ' -dLicenseSource=distsrc'
             r' -dEnterpriseBase=' + enterprisebase + '\\'
             ' -dBinarySource=' + buildDir + r'\monger'
@@ -164,7 +164,7 @@ env.Command(objects,
             ' -dPlatform=' + msi_platform +
             ' -dFlavor=' + msi_flavor +
             r' -dProjectDir=buildscripts\packaging\msi\\'
-            ' -dProjectName=MongoDB'
+            ' -dProjectName=MongerDB'
             ' -dCompassDir=src\monger\installer\compass'
             ' -dTargetDir=' + buildDir + r'\msi'
             ' -dTargetExt=.msi'

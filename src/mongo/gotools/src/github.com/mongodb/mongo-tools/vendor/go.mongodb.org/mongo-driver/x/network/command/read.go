@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -38,7 +38,7 @@ func (r *Read) createReadPref(serverKind description.ServerKind, topologyKind de
 	rp := r.ReadPref
 
 	if rp == nil {
-		if topologyKind == description.Single && serverKind != description.Mongos {
+		if topologyKind == description.Single && serverKind != description.Mongers {
 			return append(doc, bsonx.Elem{"mode", bsonx.String("primaryPreferred")})
 		}
 		return nil
@@ -46,7 +46,7 @@ func (r *Read) createReadPref(serverKind description.ServerKind, topologyKind de
 
 	switch rp.Mode() {
 	case readpref.PrimaryMode:
-		if serverKind == description.Mongos {
+		if serverKind == description.Mongers {
 			return nil
 		}
 		if topologyKind == description.Single {
@@ -57,7 +57,7 @@ func (r *Read) createReadPref(serverKind description.ServerKind, topologyKind de
 		doc = append(doc, bsonx.Elem{"mode", bsonx.String("primaryPreferred")})
 	case readpref.SecondaryPreferredMode:
 		_, ok := r.ReadPref.MaxStaleness()
-		if serverKind == description.Mongos && isOpQuery && !ok && len(r.ReadPref.TagSets()) == 0 {
+		if serverKind == description.Mongers && isOpQuery && !ok && len(r.ReadPref.TagSets()) == 0 {
 			return nil
 		}
 		doc = append(doc, bsonx.Elem{"mode", bsonx.String("secondaryPreferred")})
@@ -134,7 +134,7 @@ func (r *Read) encodeOpMsg(desc description.SelectedServer, cmd bsonx.Doc) (wire
 }
 
 func (r *Read) slaveOK(desc description.SelectedServer) wiremessage.QueryFlag {
-	if desc.Kind == description.Single && desc.Server.Kind != description.Mongos {
+	if desc.Kind == description.Single && desc.Server.Kind != description.Mongers {
 		return wiremessage.SlaveOK
 	}
 
@@ -157,7 +157,7 @@ func (r *Read) encodeOpQuery(desc description.SelectedServer, cmd bsonx.Doc) (wi
 		return nil, err
 	}
 
-	if desc.Server.Kind == description.Mongos {
+	if desc.Server.Kind == description.Mongers {
 		rdr, err = r.addReadPref(r.ReadPref, desc.Server.Kind, desc.Kind, rdr)
 		if err != nil {
 			return nil, err

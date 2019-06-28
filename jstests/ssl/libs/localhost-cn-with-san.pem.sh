@@ -3,7 +3,7 @@
 # but override it with a SAN field which will not match.
 set -ev
 
-RDN="/C=US/ST=New York/L=New York City/O=MongoDB/OU=Kernel/CN=localhost"
+RDN="/C=US/ST=New York/L=New York City/O=MongerDB/OU=Kernel/CN=localhost"
 OPENSSL="/opt/mongerdbtoolchain/v3/bin/openssl"
 FILE="jstests/ssl/libs/localhost-cn-with-san"
 

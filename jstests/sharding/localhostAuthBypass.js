@@ -34,7 +34,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     var addShard = function(st, shouldPass) {
         var m =
-            MongoRunner.runMongod({auth: "", keyFile: keyfile, useHostname: false, 'shardsvr': ''});
+            MongerRunner.runMongerd({auth: "", keyFile: keyfile, useHostname: false, 'shardsvr': ''});
         var res = st.getDB("admin").runCommand({addShard: m.host});
         if (shouldPass) {
             assert.commandWorked(res, "Add shard");
@@ -201,27 +201,27 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
         print("============ shutting down.");
 
         // SERVER-8445
-        // Unlike MongoRunner.stopMongod and ReplSetTest.stopSet,
+        // Unlike MongerRunner.stopMongerd and ReplSetTest.stopSet,
         // ShardingTest.stop does not have a way to provide auth
         // information.  Therefore, we'll do this manually for now.
 
         for (var i = 0; i < st._mongers.length; i++) {
             var conn = st["s" + i];
-            MongoRunner.stopMongos(conn,
+            MongerRunner.stopMongers(conn,
                                    /*signal*/ false,
                                    {auth: {user: username, pwd: password}});
         }
 
         for (var i = 0; i < st._connections.length; i++) {
             var conn = st["shard" + i];
-            MongoRunner.stopMongod(conn,
+            MongerRunner.stopMongerd(conn,
                                    /*signal*/ false,
                                    {auth: {user: username, pwd: password}});
         }
 
         for (var i = 0; i < st._configServers.length; i++) {
             var conn = st["config" + i];
-            MongoRunner.stopMongod(conn,
+            MongerRunner.stopMongerd(conn,
                                    /*signal*/ false,
                                    {auth: {user: username, pwd: password}});
         }
@@ -236,7 +236,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     var host = st.s.host;
     var extraShards = [];
 
-    var monger = new Mongo(host);
+    var monger = new Monger(host);
 
     assertCannotRunCommands(monger, st);
 
@@ -256,7 +256,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     print("reconnecting with a new client.");
     print("===============================");
 
-    monger = new Mongo(host);
+    monger = new Monger(host);
 
     assertCannotRunCommands(monger, st);
     extraShards.push(addShard(monger, 0));
@@ -269,6 +269,6 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     shutdown(st);
     extraShards.forEach(function(sh) {
-        MongoRunner.stopMongod(sh);
+        MongerRunner.stopMongerd(sh);
     });
 })();

@@ -13,7 +13,7 @@
         // If code breaks the incompatibility between `--noIndexBuildRetry` and `--replSet`, using
         // `notAStorageEngine` will cause a failure later in execution that returns a different
         // exit code (100).
-        var process = MongoRunner.runMongod({
+        var process = MongerRunner.runMongerd({
             noIndexBuildRetry: "",
             replSet: "rs0",
             storageEngine: "notAStorageEngine",
@@ -74,7 +74,7 @@
     // the oplog entry so it isn't replayed. If (A) is present without (B), then there are two ways
     // that the index can be rebuilt on startup and this test is only for the one triggered by (A).
     secondDB.adminCommand({fsync: 1});
-    replTest.stop(second, 9, {allowedExitCode: MongoRunner.EXIT_SIGKILL});
+    replTest.stop(second, 9, {allowedExitCode: MongerRunner.EXIT_SIGKILL});
     replTest.start(
         second, {"noReplSet": true, "noIndexBuildRetry": ""}, /*restart*/ true, /*wait=*/false);
 

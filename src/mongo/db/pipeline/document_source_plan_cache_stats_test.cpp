@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,11 +42,11 @@ namespace monger {
 using DocumentSourcePlanCacheStatsTest = AggregationContextFixture;
 
 /**
- * A MongoProcessInterface used for testing which returns artificial plan cache stats.
+ * A MongerProcessInterface used for testing which returns artificial plan cache stats.
  */
-class PlanCacheStatsMongoProcessInterface final : public StubMongoProcessInterface {
+class PlanCacheStatsMongerProcessInterface final : public StubMongerProcessInterface {
 public:
-    PlanCacheStatsMongoProcessInterface(std::vector<BSONObj> planCacheStats)
+    PlanCacheStatsMongerProcessInterface(std::vector<BSONObj> planCacheStats)
         : _planCacheStats(std::move(planCacheStats)) {}
 
     std::vector<BSONObj> getMatchingPlanCacheEntryStats(
@@ -81,9 +81,9 @@ TEST_F(DocumentSourcePlanCacheStatsTest, ShouldFailToParseIfSpecIsANonEmptyObjec
         ErrorCodes::FailedToParse);
 }
 
-TEST_F(DocumentSourcePlanCacheStatsTest, CannotCreateWhenInMongos) {
+TEST_F(DocumentSourcePlanCacheStatsTest, CannotCreateWhenInMongers) {
     const auto specObj = fromjson("{$planCacheStats: {}}");
-    getExpCtx()->inMongos = true;
+    getExpCtx()->inMongers = true;
     ASSERT_THROWS_CODE(
         DocumentSourcePlanCacheStats::createFromBson(specObj.firstElement(), getExpCtx()),
         AssertionException,
@@ -144,7 +144,7 @@ TEST_F(DocumentSourcePlanCacheStatsTest, SerializesSuccessfullyAfterAbsorbingMat
 
 TEST_F(DocumentSourcePlanCacheStatsTest, ReturnsImmediateEOFWithEmptyPlanCache) {
     getExpCtx()->mongerProcessInterface =
-        std::make_shared<PlanCacheStatsMongoProcessInterface>(std::vector<BSONObj>{});
+        std::make_shared<PlanCacheStatsMongerProcessInterface>(std::vector<BSONObj>{});
     const auto specObj = fromjson("{$planCacheStats: {}}");
     auto stage = DocumentSourcePlanCacheStats::createFromBson(specObj.firstElement(), getExpCtx());
     ASSERT(stage->getNext().isEOF());
@@ -162,7 +162,7 @@ TEST_F(DocumentSourcePlanCacheStatsTest, ReturnsOnlyMatchingStatsAfterAbsorbingM
                                     << "match"
                                     << true)};
     getExpCtx()->mongerProcessInterface =
-        std::make_shared<PlanCacheStatsMongoProcessInterface>(stats);
+        std::make_shared<PlanCacheStatsMongerProcessInterface>(stats);
 
     const auto specObj = fromjson("{$planCacheStats: {}}");
     auto planCacheStats =

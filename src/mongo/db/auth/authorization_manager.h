@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -140,25 +140,25 @@ public:
     static const int schemaVersionInvalid = 0;
 
     /**
-     * Auth schema version for MongoDB v2.4 and prior.
+     * Auth schema version for MongerDB v2.4 and prior.
      */
     static const int schemaVersion24 = 1;
 
     /**
-     * Auth schema version for MongoDB v2.6 during the upgrade process.  Same as
+     * Auth schema version for MongerDB v2.6 during the upgrade process.  Same as
      * schemaVersion26Final, except that user documents are found in admin.new.users, and user
      * management commands are disabled.
      */
     static const int schemaVersion26Upgrade = 2;
 
     /**
-     * Auth schema version for MongoDB 2.6 and 3.0 MONGODB-CR/SCRAM mixed auth mode.
+     * Auth schema version for MongerDB 2.6 and 3.0 MONGODB-CR/SCRAM mixed auth mode.
      * Users are stored in admin.system.users, roles in admin.system.roles.
      */
     static const int schemaVersion26Final = 3;
 
     /**
-     * Auth schema version for MongoDB 3.0 SCRAM only mode.
+     * Auth schema version for MongerDB 3.0 SCRAM only mode.
      * Users are stored in admin.system.users, roles in admin.system.roles.
      * MONGODB-CR credentials have been replaced with SCRAM credentials in the user documents.
      */

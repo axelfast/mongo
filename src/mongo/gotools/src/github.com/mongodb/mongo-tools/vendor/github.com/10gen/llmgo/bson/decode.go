@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2015-present.
+// Copyright (C) MongerDB, Inc. 2015-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -491,7 +491,7 @@ func (d *decoder) readElemTo(out reflect.Value, kind byte) (good bool) {
 	case 0x08: // Bool
 		in = d.readBool()
 	case 0x09: // Timestamp
-		// MongoDB handles timestamps as milliseconds.
+		// MongerDB handles timestamps as milliseconds.
 		i := d.readInt64()
 		if i == -62135596800000 {
 			in = time.Time{} // In UTC for convenience.
@@ -515,8 +515,8 @@ func (d *decoder) readElemTo(out reflect.Value, kind byte) (good bool) {
 		in = js
 	case 0x10: // Int32
 		in = int(d.readInt32())
-	case 0x11: // Mongo-specific timestamp
-		in = MongoTimestamp(d.readInt64())
+	case 0x11: // Monger-specific timestamp
+		in = MongerTimestamp(d.readInt64())
 	case 0x12: // Int64
 		in = d.readInt64()
 	case 0x7F: // Max key

@@ -54,7 +54,7 @@
 
     step("try mongerdump with $timestamp");
 
-    var data = MongoRunner.dataDir + "/dumprestore7-dump1/";
+    var data = MongerRunner.dataDir + "/dumprestore7-dump1/";
     var query = {ts: {$gt: time}};
     print("mongerdump query: " + tojson(query));
 
@@ -62,7 +62,7 @@
         replTest.getPrimary().getDB("local").getCollection("oplog.rs").find(query).itcount();
     assert.eq(testQueryCount, 20, "the query should match 20 documents");
 
-    var exitCode = MongoRunner.runMongoTool("mongerdump", {
+    var exitCode = MongerRunner.runMongerTool("mongerdump", {
         host: "127.0.0.1:" + replTest.ports[0],
         db: "local",
         collection: "oplog.rs",
@@ -73,22 +73,22 @@
 
     step("try mongerrestore from $timestamp");
 
-    var restoreMongod = MongoRunner.runMongod({});
-    exitCode = MongoRunner.runMongoTool("mongerrestore", {
-        host: "127.0.0.1:" + restoreMongod.port,
+    var restoreMongerd = MongerRunner.runMongerd({});
+    exitCode = MongerRunner.runMongerTool("mongerrestore", {
+        host: "127.0.0.1:" + restoreMongerd.port,
         dir: data,
         writeConcern: 1,
     });
     assert.eq(0, exitCode, "mongerrestore failed to restore the oplog");
 
-    var count = restoreMongod.getDB("local").getCollection("oplog.rs").count();
+    var count = restoreMongerd.getDB("local").getCollection("oplog.rs").count();
     if (count != 20) {
         print("mongerrestore restored too many documents");
-        restoreMongod.getDB("local").getCollection("oplog.rs").find().pretty().shellPrint();
+        restoreMongerd.getDB("local").getCollection("oplog.rs").find().pretty().shellPrint();
         assert.eq(count, 20, "mongerrestore should only have inserted the latter 20 entries");
     }
 
-    MongoRunner.stopMongod(restoreMongod);
+    MongerRunner.stopMongerd(restoreMongerd);
     step("stopping replset test");
     replTest.stopSet();
 })();

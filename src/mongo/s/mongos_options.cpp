@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,16 +51,16 @@
 
 namespace monger {
 
-MongosGlobalParams mongersGlobalParams;
+MongersGlobalParams mongersGlobalParams;
 
-void printMongosHelp(const moe::OptionSection& options) {
+void printMongersHelp(const moe::OptionSection& options) {
     std::cout << options.helpString() << std::endl;
 };
 
-bool handlePreValidationMongosOptions(const moe::Environment& params,
+bool handlePreValidationMongersOptions(const moe::Environment& params,
                                       const std::vector<std::string>& args) {
     if (params.count("help") && params["help"].as<bool>() == true) {
-        printMongosHelp(moe::startupOptions);
+        printMongersHelp(moe::startupOptions);
         return false;
     }
     if (params.count("version") && params["version"].as<bool>() == true) {
@@ -76,7 +76,7 @@ bool handlePreValidationMongosOptions(const moe::Environment& params,
     return true;
 }
 
-Status validateMongosOptions(const moe::Environment& params) {
+Status validateMongersOptions(const moe::Environment& params) {
     Status ret = validateServerOptions(params);
     if (!ret.isOK()) {
         return ret;
@@ -85,7 +85,7 @@ Status validateMongosOptions(const moe::Environment& params) {
     return Status::OK();
 }
 
-Status canonicalizeMongosOptions(moe::Environment* params) {
+Status canonicalizeMongersOptions(moe::Environment* params) {
     Status ret = canonicalizeServerOptions(params);
     if (!ret.isOK()) {
         return ret;
@@ -94,7 +94,7 @@ Status canonicalizeMongosOptions(moe::Environment* params) {
     return Status::OK();
 }
 
-Status storeMongosOptions(const moe::Environment& params) {
+Status storeMongersOptions(const moe::Environment& params) {
     Status ret = storeServerOptions(params);
     if (!ret.isOK()) {
         return ret;

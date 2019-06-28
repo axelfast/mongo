@@ -82,7 +82,7 @@
     }
 
     //
-    // Mongos should not return lastCommittedOpTime.
+    // Mongers should not return lastCommittedOpTime.
     //
 
     const st = new ShardingTest({shards: 1, rs: {nodes: 2}, config: 2});
@@ -182,9 +182,9 @@
     // A standalone mongerd does not return lastCommittedOpTime.
     //
 
-    const standalone = MongoRunner.runMongod();
+    const standalone = MongerRunner.runMongerd();
 
     assertDoesNotReturnLastCommittedOpTime(standalone.getDB("test"), "foo", "standalone mongerd");
 
-    MongoRunner.stopMongod(standalone);
+    MongerRunner.stopMongerd(standalone);
 })();

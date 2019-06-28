@@ -12,8 +12,8 @@
             auth.name = name;
         }
         const script = 'assert(db.getSiblingDB(\'$external\').auth(' + tojson(auth) + '));';
-        clearRawMongoProgramOutput();
-        const exitCode = runMongoProgram('monger',
+        clearRawMongerProgramOutput();
+        const exitCode = runMongerProgram('monger',
                                          '--ssl',
                                          '--sslAllowInvalidHostnames',
                                          '--sslPEMKeyFile',
@@ -29,7 +29,7 @@
     }
 
     function runTest(conn) {
-        const NAME = 'L=New York City+ST=New York+C=US,OU=KernelUser+O=MongoDB+CN=client';
+        const NAME = 'L=New York City+ST=New York+C=US,OU=KernelUser+O=MongerDB+CN=client';
 
         const admin = conn.getDB('admin');
         admin.createUser({user: "admin", pwd: "admin", roles: ["root"]});
@@ -43,7 +43,7 @@
     }
 
     // Standalone.
-    const mongerd = MongoRunner.runMongod({
+    const mongerd = MongerRunner.runMongerd({
         auth: '',
         sslMode: 'requireSSL',
         sslPEMKeyFile: SERVER_CERT,
@@ -51,5 +51,5 @@
         sslAllowInvalidCertificates: '',
     });
     runTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

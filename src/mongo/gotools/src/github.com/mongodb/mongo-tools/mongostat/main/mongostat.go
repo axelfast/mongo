@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -232,7 +232,7 @@ func main() {
 	}
 
 	opts.Direct = true
-	stat := &mongerstat.MongoStat{
+	stat := &mongerstat.MongerStat{
 		Options:       opts,
 		StatOptions:   statOpts,
 		Nodes:         map[string]*mongerstat.NodeMonitor{},

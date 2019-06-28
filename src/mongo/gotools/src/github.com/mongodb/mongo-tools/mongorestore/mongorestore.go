@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package mongerrestore writes BSON data to a MongoDB instance.
+// Package mongerrestore writes BSON data to a MongerDB instance.
 package mongerrestore
 
 import (
@@ -34,9 +34,9 @@ const (
 	progressBarWaitTime = time.Second * 3
 )
 
-// MongoRestore is a container for the user-specified options and
+// MongerRestore is a container for the user-specified options and
 // internal state used for running mongerrestore.
-type MongoRestore struct {
+type MongerRestore struct {
 	ToolOptions   *options.ToolOptions
 	InputOptions  *InputOptions
 	OutputOptions *OutputOptions
@@ -55,7 +55,7 @@ type MongoRestore struct {
 
 	objCheck         bool
 	oplogLimit       primitive.Timestamp
-	isMongos         bool
+	isMongers         bool
 	useWriteCommands bool
 	authVersions     authVersionPair
 
@@ -82,8 +82,8 @@ type MongoRestore struct {
 
 type collectionIndexes map[string][]IndexDocument
 
-// New initializes an instance of MongoRestore according to the provided options.
-func New(opts Options) (*MongoRestore, error) {
+// New initializes an instance of MongerRestore according to the provided options.
+func New(opts Options) (*MongerRestore, error) {
 	provider, err := db.NewSessionProvider(*opts.ToolOptions)
 	if err != nil {
 		return nil, fmt.Errorf("error connecting to host: %v", err)
@@ -93,7 +93,7 @@ func New(opts Options) (*MongoRestore, error) {
 	progressManager := progress.NewBarWriter(log.Writer(0), progressBarWaitTime, progressBarLength, true)
 	progressManager.Start()
 
-	restore := &MongoRestore{
+	restore := &MongerRestore{
 		ToolOptions:     opts.ToolOptions,
 		OutputOptions:   opts.OutputOptions,
 		InputOptions:    opts.InputOptions,
@@ -127,7 +127,7 @@ func SupportsCollectionUUID(sp *db.SessionProvider) (bool, error) {
 }
 
 // Close ends any connections and cleans up other internal state.
-func (restore *MongoRestore) Close() {
+func (restore *MongerRestore) Close() {
 	restore.SessionProvider.Close()
 	barWriter, ok := restore.ProgressManager.(*progress.BarWriter)
 	if ok { // should always be ok
@@ -136,7 +136,7 @@ func (restore *MongoRestore) Close() {
 }
 
 // ParseAndValidateOptions returns a non-nil error if user-supplied options are invalid.
-func (restore *MongoRestore) ParseAndValidateOptions() error {
+func (restore *MongerRestore) ParseAndValidateOptions() error {
 	// Can't use option pkg defaults for --objcheck because it's two separate flags,
 	// and we need to be able to see if they're both being used. We default to
 	// true here and then see if noobjcheck is enabled.
@@ -170,11 +170,11 @@ func (restore *MongoRestore) ParseAndValidateOptions() error {
 	}
 
 	var err error
-	restore.isMongos, err = restore.SessionProvider.IsMongos()
+	restore.isMongers, err = restore.SessionProvider.IsMongers()
 	if err != nil {
 		return err
 	}
-	if restore.isMongos {
+	if restore.isMongers {
 		log.Logv(log.DebugLow, "restoring to a sharded system")
 	}
 
@@ -319,7 +319,7 @@ func (restore *MongoRestore) ParseAndValidateOptions() error {
 }
 
 // Restore runs the mongerrestore program.
-func (restore *MongoRestore) Restore() Result {
+func (restore *MongerRestore) Restore() Result {
 	var target archive.DirLike
 	err := restore.ParseAndValidateOptions()
 	if err != nil {
@@ -440,7 +440,7 @@ func (restore *MongoRestore) Restore() Result {
 		return Result{Err: fmt.Errorf("error scanning filesystem: %v", err)}
 	}
 
-	if restore.isMongos && restore.manager.HasConfigDBIntent() && restore.NSOptions.DB == "" {
+	if restore.isMongers && restore.manager.HasConfigDBIntent() && restore.NSOptions.DB == "" {
 		return Result{Err: fmt.Errorf("cannot do a full restore on a sharded system - " +
 			"remove the 'config' directory from the dump directory first")}
 	}
@@ -581,7 +581,7 @@ func (restore *MongoRestore) Restore() Result {
 	return result
 }
 
-func (restore *MongoRestore) getArchiveReader() (rc io.ReadCloser, err error) {
+func (restore *MongerRestore) getArchiveReader() (rc io.ReadCloser, err error) {
 	if restore.InputOptions.Archive == "-" {
 		rc = ioutil.NopCloser(restore.InputReader)
 	} else {
@@ -615,7 +615,7 @@ func (restore *MongoRestore) getArchiveReader() (rc io.ReadCloser, err error) {
 	return rc, nil
 }
 
-func (restore *MongoRestore) HandleInterrupt() {
+func (restore *MongerRestore) HandleInterrupt() {
 	if restore.termChan != nil {
 		close(restore.termChan)
 	}

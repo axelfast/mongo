@@ -10,7 +10,7 @@ load("jstests/watchdog/lib/wd_test_common.js");
 
         const auditPath = control.getMountPath();
 
-        testFuseAndMongoD(control, {
+        testFuseAndMongerD(control, {
 
             auditDestination: 'file',
             auditFormat: 'JSON',

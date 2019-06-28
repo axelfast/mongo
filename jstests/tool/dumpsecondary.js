@@ -30,11 +30,11 @@
         commonOptions.password = jsTest.options().authPassword;
     }
 
-    var exitCode = MongoRunner.runMongoTool(
+    var exitCode = MongerRunner.runMongerTool(
         "mongerdump",
         Object.extend({
             host: slave.host,
-            out: MongoRunner.dataDir + "/jstests_tool_dumpsecondary_external/",
+            out: MongerRunner.dataDir + "/jstests_tool_dumpsecondary_external/",
         },
                       commonOptions));
     assert.eq(0, exitCode, "mongerdump failed to dump data from the secondary");
@@ -42,11 +42,11 @@
     db.foo.drop();
     assert.eq(0, db.foo.count(), "after drop");
 
-    exitCode = MongoRunner.runMongoTool(
+    exitCode = MongerRunner.runMongerTool(
         "mongerrestore",
         Object.extend({
             host: master.host,
-            dir: MongoRunner.dataDir + "/jstests_tool_dumpsecondary_external/",
+            dir: MongerRunner.dataDir + "/jstests_tool_dumpsecondary_external/",
         },
                       commonOptions));
     assert.eq(0, exitCode, "mongerrestore failed to restore data to the primary");
@@ -55,7 +55,7 @@
     assert.eq(1, db.foo.count(), "after restore");
     assert.eq(1000, db.foo.findOne().a, "after restore 2");
 
-    resetDbpath(MongoRunner.dataDir + '/jstests_tool_dumpsecondary_external');
+    resetDbpath(MongerRunner.dataDir + '/jstests_tool_dumpsecondary_external');
 
     replTest.stopSet(15);
 }());

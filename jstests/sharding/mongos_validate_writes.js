@@ -9,14 +9,14 @@
     var st = new ShardingTest({shards: 2, mongers: 3, other: {shardOptions: {verbose: 2}}});
 
     var mongers = st.s0;
-    var staleMongosA = st.s1;
-    var staleMongosB = st.s2;
+    var staleMongersA = st.s1;
+    var staleMongersB = st.s2;
 
     var admin = mongers.getDB("admin");
     var config = mongers.getDB("config");
     var coll = mongers.getCollection("foo.bar");
-    var staleCollA = staleMongosA.getCollection(coll + "");
-    var staleCollB = staleMongosB.getCollection(coll + "");
+    var staleCollA = staleMongersA.getCollection(coll + "");
+    var staleCollB = staleMongersB.getCollection(coll + "");
 
     assert.commandWorked(admin.runCommand({enableSharding: coll.getDB() + ""}));
     st.ensurePrimaryShard(coll.getDB().getName(), st.shard1.shardName);

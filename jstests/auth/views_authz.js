@@ -141,9 +141,9 @@
     }
 
     // Run the test on a standalone.
-    let mongerd = MongoRunner.runMongod({auth: "", bind_ip: "127.0.0.1"});
+    let mongerd = MongerRunner.runMongerd({auth: "", bind_ip: "127.0.0.1"});
     runTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 
     // Run the test on a sharded cluster.
     // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.

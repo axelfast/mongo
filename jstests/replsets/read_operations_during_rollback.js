@@ -32,7 +32,7 @@
     setFailPoint(rollbackNode, "GetMoreHangBeforeReadLock");
 
     const joinGetMoreThread = startParallelShell(() => {
-        db.getMongo().setSlaveOk();
+        db.getMonger().setSlaveOk();
         const cursorID =
             assert.commandWorked(db.runCommand({"find": "coll", batchSize: 0})).cursor.id;
         // Make sure an outstanding read operation gets killed during rollback even though the read

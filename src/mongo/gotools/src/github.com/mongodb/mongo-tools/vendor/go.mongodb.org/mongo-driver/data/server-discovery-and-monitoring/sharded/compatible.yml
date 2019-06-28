@@ -21,11 +21,11 @@ phases: [
         outcome: {
             servers: {
                 "a:27017": {
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 },
                 "b:27017": {
-                    type: "Mongos",
+                    type: "Mongers",
                     setName:
                 }
             },

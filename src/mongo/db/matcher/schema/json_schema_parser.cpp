@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -94,7 +94,7 @@ StatusWithMatchExpression _parse(const boost::intrusive_ptr<ExpressionContext>& 
 /**
  * Constructs and returns a match expression to evaluate a JSON Schema restriction keyword.
  *
- * This handles semantic differences between the MongoDB query language and JSON Schema. MongoDB
+ * This handles semantic differences between the MongerDB query language and JSON Schema. MongerDB
  * match expressions which apply to a particular type will reject non-matching types, whereas JSON
  * Schema restriction keywords allow non-matching types. As an example, consider the maxItems
  * keyword. This keyword only applies in JSON Schema if the type is an array, whereas the
@@ -360,7 +360,7 @@ StatusWithMatchExpression parseEnum(StringData path, BSONElement enumElement) {
 
         // 'enum' at the top-level implies a literal object match on the root document.
         if (path.empty()) {
-            // Top-level non-object enum values can be safely ignored, since MongoDB only stores
+            // Top-level non-object enum values can be safely ignored, since MongerDB only stores
             // objects, not scalars or arrays.
             if (arrayElem.type() == BSONType::Object) {
                 auto rootDocEq = std::make_unique<InternalSchemaRootDocEqMatchExpression>(

@@ -3,14 +3,14 @@
     // Create a temporary host file that creates two aliases for localhost that are in the
     // splithorizon certificate.
     // The aliases are 'splithorizon1' and 'splithorizon2'
-    const hostsFile = MongoRunner.dataPath + 'split-horizon-hosts';
+    const hostsFile = MongerRunner.dataPath + 'split-horizon-hosts';
     writeFile(hostsFile, "splithorizon1 localhost\nsplithorizon2 localhost\n");
 
     // Check if HOSTALIASES works on this system (Will not work on Windows or OSX and may not work
     // on Linux)
     try {
         var rc =
-            runMongoProgram("env", "HOSTALIASES=" + hostsFile, "getent", "hosts", "splithorizon1");
+            runMongerProgram("env", "HOSTALIASES=" + hostsFile, "getent", "hosts", "splithorizon1");
     } catch (e) {
         jsTestLog(
             `Failed the check for HOSTALIASES support using env, we are probably on a non-GNU platform. Skipping this test.`);
@@ -22,7 +22,7 @@
         removeFile(hostsFile);
 
         // Check glibc version to figure out of HOSTALIASES will work as expected
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
         var rc = runProgram("getconf", "GNU_LIBC_VERSION");
         if (rc != 0) {
             jsTestLog(
@@ -31,7 +31,7 @@
         }
 
         // Output is of the format: 'glibc x.yz'
-        var output = rawMongoProgramOutput();
+        var output = rawMongerProgramOutput();
         var fields = output.split(" ");
         var glibc_version = parseFloat(fields[2]);
 
@@ -94,7 +94,7 @@
             ("assert(db.runCommand({isMaster: 1})['hosts'][" + memberIndex + "] == '" +
              expectedHostname + "')")
         ];
-        return runMongoProgram(...argv);
+        return runMongerProgram(...argv);
     };
 
     // Using localhost should use the default horizon

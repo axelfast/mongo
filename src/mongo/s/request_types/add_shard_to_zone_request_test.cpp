@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,8 +38,8 @@ namespace monger {
 
 namespace {
 
-TEST(AddShardToZoneRequest, BasicValidMongosCommand) {
-    auto requestStatus = AddShardToZoneRequest::parseFromMongosCommand(BSON("addShardToZone"
+TEST(AddShardToZoneRequest, BasicValidMongersCommand) {
+    auto requestStatus = AddShardToZoneRequest::parseFromMongersCommand(BSON("addShardToZone"
                                                                             << "a"
                                                                             << "zone"
                                                                             << "z"));
@@ -51,7 +51,7 @@ TEST(AddShardToZoneRequest, BasicValidMongosCommand) {
 }
 
 TEST(AddShardToZoneRequest, CommandBuilderShouldAlwaysCreateConfigCommand) {
-    auto requestStatus = AddShardToZoneRequest::parseFromMongosCommand(BSON("addShardToZone"
+    auto requestStatus = AddShardToZoneRequest::parseFromMongersCommand(BSON("addShardToZone"
                                                                             << "a"
                                                                             << "zone"
                                                                             << "z"));
@@ -71,34 +71,34 @@ TEST(AddShardToZoneRequest, CommandBuilderShouldAlwaysCreateConfigCommand) {
 }
 
 TEST(AddShardToZoneRequest, MissingZoneErrors) {
-    auto request = AddShardToZoneRequest::parseFromMongosCommand(BSON("addShardToZone"
+    auto request = AddShardToZoneRequest::parseFromMongersCommand(BSON("addShardToZone"
                                                                       << "a"));
     ASSERT_EQ(ErrorCodes::NoSuchKey, request.getStatus());
 }
 
 TEST(AddShardToZoneRequest, MissingShardNameErrors) {
-    auto request = AddShardToZoneRequest::parseFromMongosCommand(BSON("zone"
+    auto request = AddShardToZoneRequest::parseFromMongersCommand(BSON("zone"
                                                                       << "z"));
     ASSERT_EQ(ErrorCodes::NoSuchKey, request.getStatus());
 }
 
 TEST(AddShardToZoneRequest, WrongShardNameTypeErrors) {
     auto request =
-        AddShardToZoneRequest::parseFromMongosCommand(BSON("addShardToZone" << 1234 << "zone"
+        AddShardToZoneRequest::parseFromMongersCommand(BSON("addShardToZone" << 1234 << "zone"
                                                                             << "z"));
     ASSERT_EQ(ErrorCodes::TypeMismatch, request.getStatus());
 }
 
 TEST(AddShardToZoneRequest, WrongZoneNameTypeErrors) {
-    auto request = AddShardToZoneRequest::parseFromMongosCommand(BSON("addShardToZone"
+    auto request = AddShardToZoneRequest::parseFromMongersCommand(BSON("addShardToZone"
                                                                       << "a"
                                                                       << "zone"
                                                                       << 1234));
     ASSERT_EQ(ErrorCodes::TypeMismatch, request.getStatus());
 }
 
-TEST(AddShardToZoneRequest, CannotUseMongosToParseConfigCommand) {
-    auto request = AddShardToZoneRequest::parseFromMongosCommand(BSON("_configsvrAddShardToZone"
+TEST(AddShardToZoneRequest, CannotUseMongersToParseConfigCommand) {
+    auto request = AddShardToZoneRequest::parseFromMongersCommand(BSON("_configsvrAddShardToZone"
                                                                       << "a"
                                                                       << "zone"
                                                                       << "z"));
@@ -155,7 +155,7 @@ TEST(CfgAddShardToZoneRequest, WrongZoneNameTypeErrors) {
     ASSERT_EQ(ErrorCodes::TypeMismatch, request.getStatus());
 }
 
-TEST(CfgAddShardToZoneRequest, CannotUseConfigToParseMongosCommand) {
+TEST(CfgAddShardToZoneRequest, CannotUseConfigToParseMongersCommand) {
     auto request = AddShardToZoneRequest::parseFromConfigCommand(BSON("addShardToZone"
                                                                       << "a"
                                                                       << "zone"

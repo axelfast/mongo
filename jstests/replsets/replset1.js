@@ -39,14 +39,14 @@ var doTest = function(signal) {
     // and slaves in the set and wait until the change has replicated.
     replTest.awaitReplication();
 
-    var cppconn = new Mongo(replTest.getURL()).getDB("foo");
+    var cppconn = new Monger(replTest.getURL()).getDB("foo");
     assert.eq(1000, cppconn.foo.findOne().a, "cppconn 1");
 
     {
         // check c++ finding other servers
         var temp = replTest.getURL();
         temp = temp.substring(0, temp.lastIndexOf(","));
-        temp = new Mongo(temp).getDB("foo");
+        temp = new Monger(temp).getDB("foo");
         assert.eq(1000, temp.foo.findOne().a, "cppconn 1");
     }
 
@@ -130,7 +130,7 @@ var doTest = function(signal) {
     replTest.waitForAllIndexBuildsToFinish('foo', 'foo');
 
     ts.forEach(function(z) {
-        assert.eq(2, z.getIndexKeys().length, "A " + z.getMongo());
+        assert.eq(2, z.getIndexKeys().length, "A " + z.getMonger());
     });
 
     t.reIndex();
@@ -139,7 +139,7 @@ var doTest = function(signal) {
 
     db.getLastError(3, 30000);
     ts.forEach(function(z) {
-        assert.eq(2, z.getIndexKeys().length, "A " + z.getMongo());
+        assert.eq(2, z.getIndexKeys().length, "A " + z.getMonger());
     });
 
     // Shut down the set and finish the test.

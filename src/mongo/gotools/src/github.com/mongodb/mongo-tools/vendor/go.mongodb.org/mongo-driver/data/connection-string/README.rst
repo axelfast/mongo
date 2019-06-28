@@ -16,7 +16,7 @@ Version
 -------
 
 Files in the "specifications" repository have no version scheme. They are not
-tied to a MongoDB server version.
+tied to a MongerDB server version.
 
 Format
 ------
@@ -61,7 +61,7 @@ Use as unit tests
 =================
 
 Testing whether a URI is valid or not should simply be a matter of checking
-whether URI parsing (or MongoClient construction) raises an error or exception.
+whether URI parsing (or MongerClient construction) raises an error or exception.
 Testing for emitted warnings may require more legwork (e.g. configuring a log
 handler and watching for output).
 

@@ -50,7 +50,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     // have loaded the routing table into memory.
     // TODO SERVER-30148: replace this with calls to awaitReplication() on each shard owning data
     // for the sharded collection once secondaries refresh proactively.
-    var mongersSetupConn = new Mongo(mongers.host);
+    var mongersSetupConn = new Monger(mongers.host);
     mongersSetupConn.setReadPref("secondary");
     assert(!mongersSetupConn.getCollection(collSharded.toString()).find({}).hasNext());
 
@@ -64,7 +64,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Inserting initial data...");
 
-    var mongersConnActive = new Mongo(mongers.host);
+    var mongersConnActive = new Monger(mongers.host);
     var mongersConnIdle = null;
     var mongersConnNew = null;
 
@@ -76,7 +76,7 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Stopping primary of third shard...");
 
-    mongersConnIdle = new Mongo(mongers.host);
+    mongersConnIdle = new Monger(mongers.host);
 
     st.rs2.stop(st.rs2.getPrimary());
 
@@ -102,25 +102,25 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Testing new connections with third primary down...");
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeOK(mongersConnNew.getCollection(collSharded.toString()).insert({_id: -4}, wc));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeOK(mongersConnNew.getCollection(collSharded.toString()).insert({_id: 4}, wc));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeOK(mongersConnNew.getCollection(collUnsharded.toString()).insert({_id: 4}, wc));
 
     gc();  // Clean up new connections
 
     jsTest.log("Stopping primary of second shard...");
 
-    mongersConnIdle = new Mongo(mongers.host);
+    mongersConnIdle = new Monger(mongers.host);
 
     // Need to save this node for later
     var rs1Secondary = st.rs1.getSecondary();
@@ -232,111 +232,111 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
     jsTest.log("Testing new connections with second primary down...");
 
     // Reads with read prefs
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
     gc();  // Clean up new connections incrementally to compensate for slow win32 machine.
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("primary");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("primary");
     assert.throws(function() {
         mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1});
     });
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("primary");
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
     gc();  // Clean up new connections incrementally to compensate for slow win32 machine.
 
     // Ensure read prefs override slaveok
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     mongersConnNew.setReadPref("primary");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     mongersConnNew.setReadPref("primary");
     assert.throws(function() {
         mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1});
     });
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     mongersConnNew.setReadPref("primary");
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
     gc();  // Clean up new connections incrementally to compensate for slow win32 machine.
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("secondary");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("secondary");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("secondary");
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
     gc();  // Clean up new connections incrementally to compensate for slow win32 machine.
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("primaryPreferred");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("primaryPreferred");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("primaryPreferred");
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
     gc();  // Clean up new connections incrementally to compensate for slow win32 machine.
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("secondaryPreferred");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("secondaryPreferred");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("secondaryPreferred");
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
     gc();  // Clean up new connections incrementally to compensate for slow win32 machine.
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("nearest");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("nearest");
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setReadPref("nearest");
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
     gc();  // Clean up new connections incrementally to compensate for slow win32 machine.
 
     // Writes
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeOK(mongersConnNew.getCollection(collSharded.toString()).insert({_id: -7}, wc));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeError(mongersConnNew.getCollection(collSharded.toString()).insert({_id: 7}, wc));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeOK(mongersConnNew.getCollection(collUnsharded.toString()).insert({_id: 7}, wc));
 
     gc();  // Clean up new connections
 
     jsTest.log("Stopping primary of first shard...");
 
-    mongersConnIdle = new Mongo(mongers.host);
+    mongersConnIdle = new Monger(mongers.host);
 
     st.rs0.stop(st.rs0.getPrimary());
 
@@ -364,28 +364,28 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Testing new connections with first primary down...");
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: 1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeError(mongersConnNew.getCollection(collSharded.toString()).insert({_id: -10}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeError(mongersConnNew.getCollection(collSharded.toString()).insert({_id: 10}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeError(mongersConnNew.getCollection(collUnsharded.toString()).insert({_id: 10}));
 
     gc();  // Clean up new connections
 
     jsTest.log("Stopping second shard...");
 
-    mongersConnIdle = new Mongo(mongers.host);
+    mongersConnIdle = new Monger(mongers.host);
 
     st.rs1.stop(rs1Secondary);
 
@@ -411,18 +411,18 @@ TestData.skipCheckingUUIDsConsistentAcrossCluster = true;
 
     jsTest.log("Testing new connections with second shard down...");
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collSharded.toString()).findOne({_id: -1}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     mongersConnNew.setSlaveOk();
     assert.neq(null, mongersConnNew.getCollection(collUnsharded.toString()).findOne({_id: 1}));
 
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeError(mongersConnNew.getCollection(collSharded.toString()).insert({_id: -13}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeError(mongersConnNew.getCollection(collSharded.toString()).insert({_id: 13}));
-    mongersConnNew = new Mongo(mongers.host);
+    mongersConnNew = new Monger(mongers.host);
     assert.writeError(mongersConnNew.getCollection(collUnsharded.toString()).insert({_id: 13}));
 
     gc();  // Clean up new connections

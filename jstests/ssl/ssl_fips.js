@@ -1,6 +1,6 @@
 // Test mongerd start with FIPS mode enabled
 var port = allocatePort();
-var md = MongoRunner.runMongod({
+var md = MongerRunner.runMongerd({
     port: port,
     sslMode: "requireSSL",
     sslPEMKeyFile: "jstests/libs/server.pem",
@@ -8,7 +8,7 @@ var md = MongoRunner.runMongod({
     sslFIPSMode: ""
 });
 
-var monger = runMongoProgram("monger",
+var monger = runMongerProgram("monger",
                             "--port",
                             port,
                             "--ssl",
@@ -22,7 +22,7 @@ var monger = runMongoProgram("monger",
 // if monger shell didn't start/connect properly
 if (monger != 0) {
     print("mongerd failed to start, checking for FIPS support");
-    mongerOutput = rawMongoProgramOutput();
+    mongerOutput = rawMongerProgramOutput();
     assert(mongerOutput.match(/this version of mongerdb was not compiled with FIPS support/) ||
            mongerOutput.match(/FIPS modes is not enabled on the operating system/) ||
            mongerOutput.match(/FIPS_mode_set:fips mode not supported/));
@@ -32,5 +32,5 @@ if (monger != 0) {
     assert(md.getDB("admin").auth("root", "root"), "auth failed");
 
     // kill mongerd
-    MongoRunner.stopMongod(md);
+    MongerRunner.stopMongerd(md);
 }

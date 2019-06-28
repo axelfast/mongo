@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -247,7 +247,7 @@ void OpObserverMock::_logOp(OperationContext* opCtx,
     oplogEntries.push_back(operationName);
 }
 
-class RenameCollectionTest : public ServiceContextMongoDTest {
+class RenameCollectionTest : public ServiceContextMongerDTest {
 public:
     static ServiceContext::UniqueOperationContext makeOpCtx();
 
@@ -271,7 +271,7 @@ ServiceContext::UniqueOperationContext RenameCollectionTest::makeOpCtx() {
 
 void RenameCollectionTest::setUp() {
     // Set up mongerd.
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
 
     auto service = getServiceContext();
     _opCtx = cc().makeOperationContext();
@@ -314,7 +314,7 @@ void RenameCollectionTest::tearDown() {
     repl::DropPendingCollectionReaper::set(service, {});
     repl::StorageInterface::set(service, {});
 
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 /**

@@ -2,16 +2,16 @@ Pod::Spec.new do |s|
 
   s.name         = "mongerc_embedded"
   s.version      = "@VERSION@"
-  s.summary      = "MongoDB Embedded C Driver Transport"
+  s.summary      = "MongerDB Embedded C Driver Transport"
 
   s.description  = <<-DESC
-    Library providing a client usable by the regular MongoDB C Driver that communicates with the MongoDB Embedded local storage.
+    Library providing a client usable by the regular MongerDB C Driver that communicates with the MongerDB Embedded local storage.
                    DESC
 
   s.homepage     = "https://www.mongerdb.com"
-  s.author       = { "MongoDB, Inc" => "cocoapods@mongerdb.com" }
+  s.author       = { "MongerDB, Inc" => "cocoapods@mongerdb.com" }
 
-  s.license      = { :type => "MongoDB Embedded License", :file => "iPhoneOS/Frameworks/mongerc_embedded.framework/LICENSE-Embedded.txt" }
+  s.license      = { :type => "MongerDB Embedded License", :file => "iPhoneOS/Frameworks/mongerc_embedded.framework/LICENSE-Embedded.txt" }
 
   s.ios.deployment_target = "11.0"
   s.watchos.deployment_target = "4.3"

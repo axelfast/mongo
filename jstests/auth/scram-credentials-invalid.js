@@ -38,7 +38,7 @@
         assert.eq(error, "Error: credential document SCRAM-SHA-1 failed validation");
     }
 
-    const mongerd = MongoRunner.runMongod({auth: "", useLogFiles: true});
+    const mongerd = MongerRunner.runMongerd({auth: "", useLogFiles: true});
     runTest(mongerd);
-    MongoRunner.stopMongod(mongerd);
+    MongerRunner.stopMongerd(mongerd);
 })();

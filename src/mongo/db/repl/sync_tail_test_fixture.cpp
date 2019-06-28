@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -105,7 +105,7 @@ OplogApplier::Options SyncTailTest::makeRecoveryOptions() {
 }
 
 void SyncTailTest::setUp() {
-    ServiceContextMongoDTest::setUp();
+    ServiceContextMongerDTest::setUp();
 
     serviceContext = getServiceContext();
     _opCtx = cc().makeOperationContext();
@@ -141,7 +141,7 @@ void SyncTailTest::tearDown() {
     _consistencyMarkers = {};
     DropPendingCollectionReaper::set(serviceContext, {});
     StorageInterface::set(serviceContext, {});
-    ServiceContextMongoDTest::tearDown();
+    ServiceContextMongerDTest::tearDown();
 }
 
 ReplicationConsistencyMarkers* SyncTailTest::getConsistencyMarkers() const {

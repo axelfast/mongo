@@ -60,18 +60,18 @@
                   tojson(secondaryCollectionInfos[0].options));
 
     // Shut down the secondary and restart it as a stand-alone mongerd.
-    var secondaryNodeId = rst.getNodeId(secondaryDB.getMongo());
+    var secondaryNodeId = rst.getNodeId(secondaryDB.getMonger());
     rst.stop(secondaryNodeId);
 
     var storageEngine = jsTest.options().storageEngine || "wiredTiger";
     if (storageEngine === "wiredTiger") {
-        secondaryConn = MongoRunner.runMongod({
+        secondaryConn = MongerRunner.runMongerd({
             dbpath: secondaryConn.dbpath,
             noCleanData: true,
             setParameter: {recoverFromOplogAsStandalone: true}
         });
     } else {
-        secondaryConn = MongoRunner.runMongod({dbpath: secondaryConn.dbpath, noCleanData: true});
+        secondaryConn = MongerRunner.runMongerd({dbpath: secondaryConn.dbpath, noCleanData: true});
     }
     assert.neq(null, secondaryConn, "secondary failed to start up as a stand-alone mongerd");
     secondaryDB = secondaryConn.getDB("test");
@@ -90,7 +90,7 @@
                   " stand-alone: " + tojson(secondaryCollectionInfos[0].options));
 
     // Shut down the secondary and restart it as a member of the replica set.
-    MongoRunner.stopMongod(secondaryConn);
+    MongerRunner.stopMongerd(secondaryConn);
 
     var restart = true;
     rst.start(secondaryNodeId, {}, restart);

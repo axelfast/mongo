@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -14,7 +14,7 @@ import (
 )
 
 func TestCompleteReply(t *testing.T) {
-	testtype.SkipUnlessTestType(t, testtype.MongoReplayTestType)
+	testtype.SkipUnlessTestType(t, testtype.MongerReplayTestType)
 	context := NewExecutionContext(&StatCollector{}, nil, &ExecutionOptions{})
 
 	// AddFromWire takes a recorded request and a live reply to the re-execution

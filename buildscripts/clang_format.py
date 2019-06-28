@@ -2,7 +2,7 @@
 """Clang format script that provides the following.
 
 1. Ability to grab binaries where possible from LLVM.
-2. Ability to download binaries from MongoDB cache for clang-format.
+2. Ability to download binaries from MongerDB cache for clang-format.
 3. Validates clang-format is the right version.
 4. Has support for checking which files are to be checked.
 5. Supports validating and updating a set of files to the right coding style.

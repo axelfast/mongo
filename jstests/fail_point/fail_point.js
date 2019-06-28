@@ -81,9 +81,9 @@
         expectFailPointState(res["failpoint.dummy"], 1, {x: 1});
     }
 
-    var conn = MongoRunner.runMongod();
+    var conn = MongerRunner.runMongerd();
     runTest(conn.getDB('admin'));
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 
     ///////////////////////////////////////////////////////////
     // Test mongers

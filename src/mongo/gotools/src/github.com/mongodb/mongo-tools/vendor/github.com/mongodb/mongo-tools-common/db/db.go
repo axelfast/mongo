@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package db implements generic connection to MongoDB, and contains
+// Package db implements generic connection to MongerDB, and contains
 // subpackages for specific methods of connection.
 package db
 
@@ -37,7 +37,7 @@ const (
 	DisableSocketTimeout
 )
 
-// MongoDB enforced limits.
+// MongerDB enforced limits.
 const (
 	MaxBSONSize = 16 * 1024 * 1024 // 16MB - maximum BSON document size
 )
@@ -90,7 +90,7 @@ type ApplyOpsResponse struct {
 	ErrMsg string `bson:"errmsg"`
 }
 
-// Oplog represents a MongoDB oplog document.
+// Oplog represents a MongerDB oplog document.
 type Oplog struct {
 	Timestamp  primitive.Timestamp `bson:"ts"`
 	HistoryID  int64               `bson:"h"`

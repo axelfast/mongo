@@ -9,7 +9,7 @@
  * retries transactions that fail due to implicit collection creation.
  *
  * (2) When a network connection to the monger shell is closed, attempting to call
- * Mongo.prototype.runCommand() and Mongo.prototype.runCommandWithMetadata() throws a JavaScript
+ * Monger.prototype.runCommand() and Monger.prototype.runCommandWithMetadata() throws a JavaScript
  * exception. This override catches these exceptions (i.e. ones where isNetworkError() returns true)
  * and automatically re-sends the command request to the server, or propagates the error if the
  * command should already be using the shell's existing retryability logic. The goal of this

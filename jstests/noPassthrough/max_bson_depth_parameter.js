@@ -9,7 +9,7 @@
 
     // Start mongerd with a valid BSON depth, then test that it accepts and rejects command
     // appropriately based on the depth.
-    let conn = MongoRunner.runMongod({setParameter: "maxBSONDepth=5"});
+    let conn = MongerRunner.runMongerd({setParameter: "maxBSONDepth=5"});
     assert.neq(null, conn, "Failed to start mongerd");
     let testDB = conn.getDB("test");
 
@@ -44,10 +44,10 @@
         "Expected server to reject command for exceeding the nesting depth limit");
 
     // Restart mongerd with a negative maximum BSON depth and test that it fails to start.
-    MongoRunner.stopMongod(conn);
-    conn = MongoRunner.runMongod({setParameter: "maxBSONDepth=-4"});
+    MongerRunner.stopMongerd(conn);
+    conn = MongerRunner.runMongerd({setParameter: "maxBSONDepth=-4"});
     assert.eq(null, conn, "Expected mongerd to fail at startup because depth was negative");
 
-    conn = MongoRunner.runMongod({setParameter: "maxBSONDepth=1"});
+    conn = MongerRunner.runMongerd({setParameter: "maxBSONDepth=1"});
     assert.eq(null, conn, "Expected mongerd to fail at startup because depth was too low");
 }());

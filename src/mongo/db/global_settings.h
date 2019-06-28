@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,14 +32,14 @@
 #include "monger/db/repl/repl_settings.h"
 
 namespace monger {
-struct MongodGlobalParams {
+struct MongerdGlobalParams {
     bool scriptingEnabled = true;  // Use "security.javascriptEnabled" to set this variable. Or use
                                    // --noscripting which will set it to false.
 
     boost::optional<std::vector<std::string>> whitelistedClusterNetwork;
 };
 
-extern MongodGlobalParams mongerdGlobalParams;
+extern MongerdGlobalParams mongerdGlobalParams;
 
 void setGlobalReplSettings(const repl::ReplSettings& settings);
 const repl::ReplSettings& getGlobalReplSettings();

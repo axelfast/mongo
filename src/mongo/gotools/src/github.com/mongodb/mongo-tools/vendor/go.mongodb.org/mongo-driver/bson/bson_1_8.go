@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -29,7 +29,7 @@ type Zeroer interface {
 //
 // 		primitive.D{{"foo", "bar"}, {"hello", "world"}, {"pi", 3.14159}}
 //
-// This type should be used in situations where order matters, such as MongoDB commands. If the
+// This type should be used in situations where order matters, such as MongerDB commands. If the
 // order is not important, a map is more comfortable and concise.
 type D []E
 

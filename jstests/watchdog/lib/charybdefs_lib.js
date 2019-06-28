@@ -19,8 +19,8 @@ function CharybdefsControl(test_name) {
     // amount of time plus a small buffer of time to account for thread scheduling, etc.
     const fs_delay_sec = wd_period_sec * 2 + 5;
 
-    const mount_point = MongoRunner.toRealPath(test_name + '_mnt');
-    const backing_path = MongoRunner.toRealPath(test_name + '_backing');
+    const mount_point = MongerRunner.toRealPath(test_name + '_mnt');
+    const backing_path = MongerRunner.toRealPath(test_name + '_backing');
 
     this._runControl = function(cmd, ...args) {
         let cmd_args = [python, control_py, cmd];
@@ -72,17 +72,17 @@ function CharybdefsControl(test_name) {
     /**
      *  Wait for the watchdog to run some checks first.
      *
-     * @param {object} MongoDB connection to admin database
+     * @param {object} MongerDB connection to admin database
      */
     this.waitForWatchdogToStart = function(admin) {
-        print("Waiting for MongoDB watchdog to checks run twice.");
+        print("Waiting for MongerDB watchdog to checks run twice.");
         assert.soon(function() {
             return _getGeneration(admin) > 2;
         }, "Watchdog did not start running", 5 * wd_period_sec * 1000);
     };
 
     /**
-     *  Inject delay on write, and wait to MongoDB to get hung.
+     *  Inject delay on write, and wait to MongerDB to get hung.
      *
      * @param {string} file_name - file name to inject fault on
      */
@@ -92,7 +92,7 @@ function CharybdefsControl(test_name) {
         this.addFault("write_buf", file_name, delay_us);
 
         // Wait for watchdog to stop
-        print("Waiting for MongoDB to hang.");
+        print("Waiting for MongerDB to hang.");
         sleep(fs_delay_sec * 1000);
 
     };

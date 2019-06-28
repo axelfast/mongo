@@ -6,10 +6,10 @@
 (function() {
     "use strict";
 
-    var dbpath = MongoRunner.dataPath + "ttl_capped";
+    var dbpath = MongerRunner.dataPath + "ttl_capped";
     resetDbpath(dbpath);
 
-    var conn = MongoRunner.runMongod({
+    var conn = MongerRunner.runMongerd({
         dbpath: dbpath,
         noCleanData: true,
         setParameter: "ttlMonitorSleepSecs=1",
@@ -82,5 +82,5 @@
         }
     }
 
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

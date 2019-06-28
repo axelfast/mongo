@@ -14,7 +14,7 @@
  *     chunkSize {number}: the chunk size to use as configuration for the cluster
  *
  *     mongers {number|Object|Array.<Object>}: number of mongers or mongers
- *       configuration object(s)(*). @see MongoRunner.runMongos
+ *       configuration object(s)(*). @see MongerRunner.runMongers
  *
  *     rs {Object|Array.<Object>}: replica set configuration object. Can
  *       contain:
@@ -26,10 +26,10 @@
  *       }
  *
  *     shards {number|Object|Array.<Object>}: number of shards or shard
- *       configuration object(s)(*). @see MongoRunner.runMongod
+ *       configuration object(s)(*). @see MongerRunner.runMongerd
  *
  *     config {number|Object|Array.<Object>}: number of config server or
- *       config server configuration object(s)(*). @see MongoRunner.runMongod
+ *       config server configuration object(s)(*). @see MongerRunner.runMongerd
  *
  *     (*) There are two ways For multiple configuration objects.
  *       (1) Using the object format. Example:
@@ -92,13 +92,13 @@
  *   }
  *
  * Member variables:
- * s {Mongo} - connection to the first mongers
- * s0, s1, ... {Mongo} - connection to different mongers
+ * s {Monger} - connection to the first mongers
+ * s0, s1, ... {Monger} - connection to different mongers
  * rs0, rs1, ... {ReplSetTest} - test objects to replica sets
- * shard0, shard1, ... {Mongo} - connection to shards (not available for replica sets)
- * d0, d1, ... {Mongo} - same as shard0, shard1, ...
- * config0, config1, ... {Mongo} - connection to config servers
- * c0, c1, ... {Mongo} - same as config0, config1, ...
+ * shard0, shard1, ... {Monger} - connection to shards (not available for replica sets)
+ * d0, d1, ... {Monger} - same as shard0, shard1, ...
+ * config0, config1, ... {Monger} - connection to config servers
+ * c0, c1, ... {Monger} - same as config0, config1, ...
  * configRS - If the config servers are a replset, this will contain the config ReplSetTest object
  */
 var ShardingTest = function(params) {
@@ -131,7 +131,7 @@ var ShardingTest = function(params) {
         var conn;
         assert.soon(function() {
             try {
-                conn = new Mongo(url);
+                conn = new Monger(url);
                 return true;
             } catch (e) {
                 print("Error connecting to " + url + ": " + e);
@@ -381,22 +381,22 @@ var ShardingTest = function(params) {
         }
     };
 
-    this.stopAllMongos = function(opts) {
+    this.stopAllMongers = function(opts) {
         for (var i = 0; i < this._mongers.length; i++) {
-            this.stopMongos(i, opts);
+            this.stopMongers(i, opts);
         }
     };
 
     this.stop = function(opts) {
         this.checkUUIDsConsistentAcrossCluster();
 
-        this.stopAllMongos(opts);
+        this.stopAllMongers(opts);
 
         for (var i = 0; i < this._connections.length; i++) {
             if (this._rs[i]) {
                 this._rs[i].test.stopSet(15, undefined, opts);
             } else {
-                this.stopMongod(i, opts);
+                this.stopMongerd(i, opts);
             }
         }
 
@@ -412,7 +412,7 @@ var ShardingTest = function(params) {
         if (!opts || !opts.noCleanData) {
             print("ShardingTest stop deleting all dbpaths");
             for (var i = 0; i < _alldbpaths.length; i++) {
-                resetDbpath(MongoRunner.dataPath + _alldbpaths[i]);
+                resetDbpath(MongerRunner.dataPath + _alldbpaths[i]);
             }
         }
 
@@ -424,7 +424,7 @@ var ShardingTest = function(params) {
 
     this.getDBPaths = function() {
         return _alldbpaths.map((path) => {
-            return MongoRunner.dataPath + path;
+            return MongerRunner.dataPath + path;
         });
     };
 
@@ -717,24 +717,24 @@ var ShardingTest = function(params) {
     /**
      * Kills the mongers with index n.
      */
-    this.stopMongos = function(n, opts) {
+    this.stopMongers = function(n, opts) {
         if (otherParams.useBridge) {
-            MongoRunner.stopMongos(unbridgedMongos[n], undefined, opts);
+            MongerRunner.stopMongers(unbridgedMongers[n], undefined, opts);
             this["s" + n].stop();
         } else {
-            MongoRunner.stopMongos(this["s" + n], undefined, opts);
+            MongerRunner.stopMongers(this["s" + n], undefined, opts);
         }
     };
 
     /**
      * Kills the shard mongerd with index n.
      */
-    this.stopMongod = function(n, opts) {
+    this.stopMongerd = function(n, opts) {
         if (otherParams.useBridge) {
-            MongoRunner.stopMongod(unbridgedConnections[n], undefined, opts);
+            MongerRunner.stopMongerd(unbridgedConnections[n], undefined, opts);
             this["d" + n].stop();
         } else {
-            MongoRunner.stopMongod(this["d" + n], undefined, opts);
+            MongerRunner.stopMongerd(this["d" + n], undefined, opts);
         }
     };
 
@@ -743,10 +743,10 @@ var ShardingTest = function(params) {
      */
     this.stopConfigServer = function(n, opts) {
         if (otherParams.useBridge) {
-            MongoRunner.stopMongod(unbridgedConfigServers[n], undefined, opts);
+            MongerRunner.stopMongerd(unbridgedConfigServers[n], undefined, opts);
             this._configServers[n].stop();
         } else {
-            MongoRunner.stopMongod(this._configServers[n], undefined, opts);
+            MongerRunner.stopMongerd(this._configServers[n], undefined, opts);
         }
     };
 
@@ -760,11 +760,11 @@ var ShardingTest = function(params) {
      *
      * Warning: Overwrites the old s (if n = 0) admin, config, and sn member variables.
      */
-    this.restartMongos = function(n, opts) {
+    this.restartMongers = function(n, opts) {
         var mongers;
 
         if (otherParams.useBridge) {
-            mongers = unbridgedMongos[n];
+            mongers = unbridgedMongers[n];
         } else {
             mongers = this["s" + n];
         }
@@ -772,7 +772,7 @@ var ShardingTest = function(params) {
         opts = opts || mongers;
         opts.port = opts.port || mongers.port;
 
-        this.stopMongos(n);
+        this.stopMongers(n);
 
         if (otherParams.useBridge) {
             var bridgeOptions =
@@ -786,7 +786,7 @@ var ShardingTest = function(params) {
                 dest: hostName + ":" + opts.port,
             });
 
-            this._mongers[n] = new MongoBridge(bridgeOptions);
+            this._mongers[n] = new MongerBridge(bridgeOptions);
         }
 
         if (opts.restart) {
@@ -794,19 +794,19 @@ var ShardingTest = function(params) {
 
             // If the mongers is being restarted with a newer version, make sure we remove any
             // options that no longer exist in the newer version.
-            if (MongoRunner.areBinVersionsTheSame('latest', opts.binVersion)) {
+            if (MongerRunner.areBinVersionsTheSame('latest', opts.binVersion)) {
                 delete opts.noAutoSplit;
             }
         }
 
-        var newConn = MongoRunner.runMongos(opts);
+        var newConn = MongerRunner.runMongers(opts);
         if (!newConn) {
             throw new Error("Failed to restart mongers " + n);
         }
 
         if (otherParams.useBridge) {
             this._mongers[n].connectToBridge();
-            unbridgedMongos[n] = newConn;
+            unbridgedMongers[n] = newConn;
         } else {
             this._mongers[n] = newConn;
         }
@@ -824,13 +824,13 @@ var ShardingTest = function(params) {
      *
      * If opts is specified, the new mongerd is started using those options. Otherwise, it is started
      * with its previous parameters. The 'beforeRestartCallback' parameter is an optional function
-     * that will be run after the MongoD is stopped, but before it is restarted. The intended uses
+     * that will be run after the MongerD is stopped, but before it is restarted. The intended uses
      * of the callback are modifications to the dbpath of the mongerd that must be made while it is
      * stopped.
      *
      * Warning: Overwrites the old dn/shardn member variables.
      */
-    this.restartMongod = function(n, opts, beforeRestartCallback) {
+    this.restartMongerd = function(n, opts, beforeRestartCallback) {
         var mongerd;
         if (otherParams.useBridge) {
             mongerd = unbridgedConnections[n];
@@ -841,7 +841,7 @@ var ShardingTest = function(params) {
         opts = opts || mongerd;
         opts.port = opts.port || mongerd.port;
 
-        this.stopMongod(n);
+        this.stopMongerd(n);
 
         if (otherParams.useBridge) {
             var bridgeOptions =
@@ -855,7 +855,7 @@ var ShardingTest = function(params) {
                 dest: hostName + ":" + opts.port,
             });
 
-            this._connections[n] = new MongoBridge(bridgeOptions);
+            this._connections[n] = new MongerBridge(bridgeOptions);
         }
 
         if (arguments.length >= 3) {
@@ -868,7 +868,7 @@ var ShardingTest = function(params) {
 
         opts.restart = true;
 
-        var newConn = MongoRunner.runMongod(opts);
+        var newConn = MongerRunner.runMongerd(opts);
         if (!newConn) {
             throw new Error("Failed to restart shard " + n);
         }
@@ -901,7 +901,7 @@ var ShardingTest = function(params) {
         }
 
         this["rs" + n].awaitSecondaryNodes();
-        this._connections[n] = new Mongo(this["rs" + n].getURL());
+        this._connections[n] = new Monger(this["rs" + n].getURL());
         this["shard" + n] = this._connections[n];
     };
 
@@ -936,11 +936,11 @@ var ShardingTest = function(params) {
                 dest: hostName + ":" + mongerd.port,
             });
 
-            this._configServers[n] = new MongoBridge(bridgeOptions);
+            this._configServers[n] = new MongerBridge(bridgeOptions);
         }
 
         mongerd.restart = true;
-        var newConn = MongoRunner.runMongod(mongerd);
+        var newConn = MongerRunner.runMongerd(mongerd);
         if (!newConn) {
             throw new Error("Failed to restart config server " + n);
         }
@@ -976,62 +976,62 @@ var ShardingTest = function(params) {
      *     otherParams.mongersOptions.binVersion
      */
     function _isMixedVersionCluster() {
-        var lastStableBinVersion = MongoRunner.getBinVersionFor('last-stable');
+        var lastStableBinVersion = MongerRunner.getBinVersionFor('last-stable');
 
         // Must check shardMixedBinVersion because it causes shardOptions.binVersion to be an object
         // (versionIterator) rather than a version string. Must check mongersBinVersion, as well,
         // because it does not update mongersOptions.binVersion.
         if (jsTestOptions().shardMixedBinVersions ||
             (jsTestOptions().mongersBinVersion &&
-             MongoRunner.areBinVersionsTheSame(lastStableBinVersion,
+             MongerRunner.areBinVersionsTheSame(lastStableBinVersion,
                                                jsTestOptions().mongersBinVersion))) {
             return true;
         }
 
         // Check for 'last-stable' config servers.
         if (otherParams.configOptions && otherParams.configOptions.binVersion &&
-            MongoRunner.areBinVersionsTheSame(
+            MongerRunner.areBinVersionsTheSame(
                 lastStableBinVersion,
-                MongoRunner.getBinVersionFor(otherParams.configOptions.binVersion))) {
+                MongerRunner.getBinVersionFor(otherParams.configOptions.binVersion))) {
             return true;
         }
         for (var i = 0; i < numConfigs; ++i) {
             if (otherParams['c' + i] && otherParams['c' + i].binVersion &&
-                MongoRunner.areBinVersionsTheSame(
+                MongerRunner.areBinVersionsTheSame(
                     lastStableBinVersion,
-                    MongoRunner.getBinVersionFor(otherParams['c' + i].binVersion))) {
+                    MongerRunner.getBinVersionFor(otherParams['c' + i].binVersion))) {
                 return true;
             }
         }
 
         // Check for 'last-stable' mongerd servers.
         if (otherParams.shardOptions && otherParams.shardOptions.binVersion &&
-            MongoRunner.areBinVersionsTheSame(
+            MongerRunner.areBinVersionsTheSame(
                 lastStableBinVersion,
-                MongoRunner.getBinVersionFor(otherParams.shardOptions.binVersion))) {
+                MongerRunner.getBinVersionFor(otherParams.shardOptions.binVersion))) {
             return true;
         }
         for (var i = 0; i < numShards; ++i) {
             if (otherParams['d' + i] && otherParams['d' + i].binVersion &&
-                MongoRunner.areBinVersionsTheSame(
+                MongerRunner.areBinVersionsTheSame(
                     lastStableBinVersion,
-                    MongoRunner.getBinVersionFor(otherParams['d' + i].binVersion))) {
+                    MongerRunner.getBinVersionFor(otherParams['d' + i].binVersion))) {
                 return true;
             }
         }
 
         // Check for 'last-stable' mongers servers.
         if (otherParams.mongersOptions && otherParams.mongersOptions.binVersion &&
-            MongoRunner.areBinVersionsTheSame(
+            MongerRunner.areBinVersionsTheSame(
                 lastStableBinVersion,
-                MongoRunner.getBinVersionFor(otherParams.mongersOptions.binVersion))) {
+                MongerRunner.getBinVersionFor(otherParams.mongersOptions.binVersion))) {
             return true;
         }
-        for (var i = 0; i < numMongos; ++i) {
+        for (var i = 0; i < numMongers; ++i) {
             if (otherParams['s' + i] && otherParams['s' + i].binVersion &&
-                MongoRunner.areBinVersionsTheSame(
+                MongerRunner.areBinVersionsTheSame(
                     lastStableBinVersion,
-                    MongoRunner.getBinVersionFor(otherParams['s' + i].binVersion))) {
+                    MongerRunner.getBinVersionFor(otherParams['s' + i].binVersion))) {
                 return true;
             }
         }
@@ -1056,7 +1056,7 @@ var ShardingTest = function(params) {
 
     var numShards = otherParams.hasOwnProperty('shards') ? otherParams.shards : 2;
     var mongersVerboseLevel = otherParams.hasOwnProperty('verbose') ? otherParams.verbose : 1;
-    var numMongos = otherParams.hasOwnProperty('mongers') ? otherParams.mongers : 1;
+    var numMongers = otherParams.hasOwnProperty('mongers') ? otherParams.mongers : 1;
     var numConfigs = otherParams.hasOwnProperty('config') ? otherParams.config : 3;
     var startShardsAsRS =
         otherParams.hasOwnProperty('shardAsReplicaSet') ? otherParams.shardAsReplicaSet : true;
@@ -1091,20 +1091,20 @@ var ShardingTest = function(params) {
         numShards = tempCount;
     }
 
-    if (Array.isArray(numMongos)) {
-        for (var i = 0; i < numMongos.length; i++) {
-            otherParams["s" + i] = numMongos[i];
+    if (Array.isArray(numMongers)) {
+        for (var i = 0; i < numMongers.length; i++) {
+            otherParams["s" + i] = numMongers[i];
         }
 
-        numMongos = numMongos.length;
-    } else if (isObject(numMongos)) {
+        numMongers = numMongers.length;
+    } else if (isObject(numMongers)) {
         var tempCount = 0;
-        for (var i in numMongos) {
-            otherParams[i] = numMongos[i];
+        for (var i in numMongers) {
+            otherParams[i] = numMongers[i];
             tempCount++;
         }
 
-        numMongos = tempCount;
+        numMongers = tempCount;
     }
 
     if (Array.isArray(numConfigs)) {
@@ -1147,17 +1147,17 @@ var ShardingTest = function(params) {
 
     let unbridgedConnections;
     let unbridgedConfigServers;
-    let unbridgedMongos;
+    let unbridgedMongers;
     let _makeAllocatePortFn;
-    let _allocatePortForMongos;
-    let _allocatePortForBridgeForMongos;
+    let _allocatePortForMongers;
+    let _allocatePortForBridgeForMongers;
     let _allocatePortForShard;
     let _allocatePortForBridgeForShard;
 
     if (otherParams.useBridge) {
         unbridgedConnections = [];
         unbridgedConfigServers = [];
-        unbridgedMongos = [];
+        unbridgedMongers = [];
 
         _makeAllocatePortFn = (preallocatedPorts, errorMessage) => {
             let idxNextNodePort = 0;
@@ -1175,28 +1175,28 @@ var ShardingTest = function(params) {
 
         let errorMessage = (length) =>
             "Cannot use more than " + length + " mongers processes when useBridge=true";
-        _allocatePortForBridgeForMongos =
-            _makeAllocatePortFn(allocatePorts(MongoBridge.kBridgeOffset), errorMessage);
-        _allocatePortForMongos =
-            _makeAllocatePortFn(allocatePorts(MongoBridge.kBridgeOffset), errorMessage);
+        _allocatePortForBridgeForMongers =
+            _makeAllocatePortFn(allocatePorts(MongerBridge.kBridgeOffset), errorMessage);
+        _allocatePortForMongers =
+            _makeAllocatePortFn(allocatePorts(MongerBridge.kBridgeOffset), errorMessage);
 
         errorMessage = (length) =>
             "Cannot use more than " + length + " stand-alone shards when useBridge=true";
         _allocatePortForBridgeForShard =
-            _makeAllocatePortFn(allocatePorts(MongoBridge.kBridgeOffset), errorMessage);
+            _makeAllocatePortFn(allocatePorts(MongerBridge.kBridgeOffset), errorMessage);
         _allocatePortForShard =
-            _makeAllocatePortFn(allocatePorts(MongoBridge.kBridgeOffset), errorMessage);
+            _makeAllocatePortFn(allocatePorts(MongerBridge.kBridgeOffset), errorMessage);
     } else {
-        _allocatePortForBridgeForShard = _allocatePortForBridgeForMongos = function() {
+        _allocatePortForBridgeForShard = _allocatePortForBridgeForMongers = function() {
             throw new Error("Using mongerbridge isn't enabled for this sharded cluster");
         };
-        _allocatePortForShard = _allocatePortForMongos = allocatePort;
+        _allocatePortForShard = _allocatePortForMongers = allocatePort;
     }
 
     otherParams.migrationLockAcquisitionMaxWaitMS =
         otherParams.migrationLockAcquisitionMaxWaitMS || 30000;
 
-    // Start the MongoD servers (shards)
+    // Start the MongerD servers (shards)
     for (var i = 0; i < numShards; i++) {
         if (otherParams.rs || otherParams["rs" + i] || startShardsAsRS) {
             var setName = testName + "-rs" + i;
@@ -1231,13 +1231,13 @@ var ShardingTest = function(params) {
                     if (!otherParams.shardOptions.binVersion) {
                         Random.setRandomSeed();
                         otherParams.shardOptions.binVersion =
-                            MongoRunner.versionIterator(["latest", "last-stable"], true);
+                            MongerRunner.versionIterator(["latest", "last-stable"], true);
                     }
                 }
 
                 if (otherParams.shardOptions && otherParams.shardOptions.binVersion) {
                     otherParams.shardOptions.binVersion =
-                        MongoRunner.versionIterator(otherParams.shardOptions.binVersion);
+                        MongerRunner.versionIterator(otherParams.shardOptions.binVersion);
                 }
 
                 rsDefaults = Object.merge(rsDefaults, otherParams["d" + i]);
@@ -1315,13 +1315,13 @@ var ShardingTest = function(params) {
                 if (!otherParams.shardOptions.binVersion) {
                     Random.setRandomSeed();
                     otherParams.shardOptions.binVersion =
-                        MongoRunner.versionIterator(["latest", "last-stable"], true);
+                        MongerRunner.versionIterator(["latest", "last-stable"], true);
                 }
             }
 
             if (otherParams.shardOptions && otherParams.shardOptions.binVersion) {
                 otherParams.shardOptions.binVersion =
-                    MongoRunner.versionIterator(otherParams.shardOptions.binVersion);
+                    MongerRunner.versionIterator(otherParams.shardOptions.binVersion);
             }
 
             options = Object.merge(options, otherParams.shardOptions);
@@ -1340,10 +1340,10 @@ var ShardingTest = function(params) {
                     dest: hostName + ":" + options.port,
                 });
 
-                var bridge = new MongoBridge(bridgeOptions);
+                var bridge = new MongerBridge(bridgeOptions);
             }
 
-            var conn = MongoRunner.runMongod(options);
+            var conn = MongerRunner.runMongerd(options);
             if (!conn) {
                 throw new Error("Failed to start shard " + i);
             }
@@ -1382,7 +1382,7 @@ var ShardingTest = function(params) {
 
         rs.awaitSecondaryNodes();
 
-        var rsConn = new Mongo(rs.getURL());
+        var rsConn = new Monger(rs.getURL());
         rsConn.name = rs.getURL();
 
         this._connections[i] = rsConn;
@@ -1413,7 +1413,7 @@ var ShardingTest = function(params) {
 
     if (otherParams.configOptions && otherParams.configOptions.binVersion) {
         otherParams.configOptions.binVersion =
-            MongoRunner.versionIterator(otherParams.configOptions.binVersion);
+            MongerRunner.versionIterator(otherParams.configOptions.binVersion);
     }
 
     startOptions = Object.merge(startOptions, otherParams.configOptions);
@@ -1444,7 +1444,7 @@ var ShardingTest = function(params) {
     // If 'otherParams.mongersOptions.binVersion' is an array value, then we'll end up constructing a
     // version iterator.
     const mongersOptions = [];
-    for (var i = 0; i < numMongos; ++i) {
+    for (var i = 0; i < numMongers; ++i) {
         let options = {
             useHostname: otherParams.useHostname,
             pathOpts: Object.merge(pathOpts, {mongers: i}),
@@ -1454,13 +1454,13 @@ var ShardingTest = function(params) {
 
         if (otherParams.mongersOptions && otherParams.mongersOptions.binVersion) {
             otherParams.mongersOptions.binVersion =
-                MongoRunner.versionIterator(otherParams.mongersOptions.binVersion);
+                MongerRunner.versionIterator(otherParams.mongersOptions.binVersion);
         }
 
         options = Object.merge(options, otherParams.mongersOptions);
         options = Object.merge(options, otherParams["s" + i]);
 
-        options.port = options.port || _allocatePortForMongos();
+        options.port = options.port || _allocatePortForMongers();
 
         mongersOptions.push(options);
     }
@@ -1517,8 +1517,8 @@ var ShardingTest = function(params) {
 
     this._mongers = [];
 
-    // Start the MongoS servers
-    for (var i = 0; i < numMongos; i++) {
+    // Start the MongerS servers
+    for (var i = 0; i < numMongers; i++) {
         const options = mongersOptions[i];
         options.configdb = this._configDB;
 
@@ -1527,16 +1527,16 @@ var ShardingTest = function(params) {
                 Object.merge(otherParams.bridgeOptions, options.bridgeOptions || {});
             bridgeOptions = Object.merge(bridgeOptions, {
                 hostName: otherParams.useHostname ? hostName : "localhost",
-                port: _allocatePortForBridgeForMongos(),
+                port: _allocatePortForBridgeForMongers(),
                 // The mongers processes identify themselves to mongerbridge as host:port, where the
                 // host is the actual hostname of the machine and not localhost.
                 dest: hostName + ":" + options.port,
             });
 
-            var bridge = new MongoBridge(bridgeOptions);
+            var bridge = new MongerBridge(bridgeOptions);
         }
 
-        var conn = MongoRunner.runMongos(options);
+        var conn = MongerRunner.runMongers(options);
         if (!conn) {
             throw new Error("Failed to start mongers " + i);
         }
@@ -1548,7 +1548,7 @@ var ShardingTest = function(params) {
         if (otherParams.useBridge) {
             bridge.connectToBridge();
             this._mongers.push(bridge);
-            unbridgedMongos.push(conn);
+            unbridgedMongers.push(conn);
         } else {
             this._mongers.push(conn);
         }
@@ -1612,13 +1612,13 @@ var ShardingTest = function(params) {
     // Ensure that the sessions collection exists so jstests can run things with
     // logical sessions and test them. We do this by forcing an immediate cache refresh
     // on the config server, which auto-shards the collection for the cluster.
-    var lastStableBinVersion = MongoRunner.getBinVersionFor('last-stable');
+    var lastStableBinVersion = MongerRunner.getBinVersionFor('last-stable');
     if ((!otherParams.configOptions) ||
         (otherParams.configOptions && !otherParams.configOptions.binVersion) ||
         (otherParams.configOptions && otherParams.configOptions.binVersion &&
-         MongoRunner.areBinVersionsTheSame(
+         MongerRunner.areBinVersionsTheSame(
              lastStableBinVersion,
-             MongoRunner.getBinVersionFor(otherParams.configOptions.binVersion)))) {
+             MongerRunner.getBinVersionFor(otherParams.configOptions.binVersion)))) {
         this.configRS.getPrimary().getDB("admin").runCommand({refreshLogicalSessionCacheNow: 1});
     }
 

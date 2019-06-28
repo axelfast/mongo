@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -40,7 +40,7 @@ std::string getFirstARecord(const std::string& service) {
     return res.front();
 }
 
-TEST(MongoDnsQuery, basic) {
+TEST(MongerDnsQuery, basic) {
     // We only require 50% of the records to pass, because it is possible that some large scale
     // outages could cause some of these records to fail.
     const double kPassingPercentage = 0.50;
@@ -102,8 +102,8 @@ TEST(MongoDnsQuery, basic) {
     ASSERT_GTE(resolution_count, kPassingRate);
 }
 
-TEST(MongoDnsQuery, srvRecords) {
-    const auto kMongodbSRVPrefix = "_mongerdb._tcp."s;
+TEST(MongerDnsQuery, srvRecords) {
+    const auto kMongerdbSRVPrefix = "_mongerdb._tcp."s;
     const struct {
         std::string query;
         std::vector<monger::dns::SRVHostEntry> result;
@@ -136,13 +136,13 @@ TEST(MongoDnsQuery, srvRecords) {
     for (const auto& test : tests) {
         const auto& expected = test.result;
         if (expected.empty()) {
-            ASSERT_THROWS_CODE(monger::dns::lookupSRVRecords(kMongodbSRVPrefix + test.query),
+            ASSERT_THROWS_CODE(monger::dns::lookupSRVRecords(kMongerdbSRVPrefix + test.query),
                                monger::DBException,
                                monger::ErrorCodes::DNSHostNotFound);
             continue;
         }
 
-        auto witness = monger::dns::lookupSRVRecords(kMongodbSRVPrefix + test.query);
+        auto witness = monger::dns::lookupSRVRecords(kMongerdbSRVPrefix + test.query);
         std::sort(begin(witness), end(witness));
 
         for (const auto& entry : witness) {
@@ -160,7 +160,7 @@ TEST(MongoDnsQuery, srvRecords) {
     }
 }
 
-TEST(MongoDnsQuery, txtRecords) {
+TEST(MongerDnsQuery, txtRecords) {
     const struct {
         std::string query;
         std::vector<std::string> result;

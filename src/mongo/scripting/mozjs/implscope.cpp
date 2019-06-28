@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -806,7 +806,7 @@ void MozJSImplScope::externalSetup() {
         // install thread-related functions (e.g. _threadInject)
         installFork();
 
-        // install the Mongo function object
+        // install the Monger function object
         _mongerExternalProto.install(_global);
         execCoreFiles();
         _connectState = ConnectState::External;

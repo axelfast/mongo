@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -33,14 +33,14 @@ var (
 	testArchiveWithOplog = "testdata/dump-w-oplog.archive"
 )
 
-func TestMongorestoreShortArchive(t *testing.T) {
+func TestMongerrestoreShortArchive(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 	_, err := testutil.GetBareSession()
 	if err != nil {
 		t.Fatalf("No server available")
 	}
 
-	Convey("With a test MongoRestore", t, func() {
+	Convey("With a test MongerRestore", t, func() {
 		args := []string{
 			ArchiveOption + "=" + testArchive,
 			NumParallelCollectionsOption, "1",
@@ -82,14 +82,14 @@ func TestMongorestoreShortArchive(t *testing.T) {
 	})
 }
 
-func TestMongorestoreArchiveWithOplog(t *testing.T) {
+func TestMongerrestoreArchiveWithOplog(t *testing.T) {
 	testtype.SkipUnlessTestType(t, testtype.IntegrationTestType)
 	_, err := testutil.GetBareSession()
 	if err != nil {
 		t.Fatalf("No server available")
 	}
 
-	Convey("With a test MongoRestore", t, func() {
+	Convey("With a test MongerRestore", t, func() {
 		args := []string{
 			ArchiveOption + "=" + testArchiveWithOplog,
 			OplogReplayOption,

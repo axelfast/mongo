@@ -60,7 +60,7 @@ TestData.skipCheckDBHashes = true;
     //     stmtId: NumberInt(0),
     //     autocommit: false,
     // }), ErrorCodes.MaxTimeMSExpired);
-    const runCommitThroughMongosInParallelShellExpectTimeOut = function() {
+    const runCommitThroughMongersInParallelShellExpectTimeOut = function() {
         const runCommitExpectTimeOutCode = "assert.commandFailedWithCode(db.adminCommand({" +
             "commitTransaction: 1, maxTimeMS: 2000 * 10, " + "lsid: " + tojson(lsid) + "," +
             "txnNumber: NumberLong(" + txnNumber + ")," + "stmtId: NumberInt(0)," +
@@ -93,7 +93,7 @@ TestData.skipCheckDBHashes = true;
 
     // Run commit through mongers in a parallel shell. This should timeout since we have set the
     // failpoint.
-    runCommitThroughMongosInParallelShellExpectTimeOut();
+    runCommitThroughMongersInParallelShellExpectTimeOut();
     waitForFailpoint("Hit hangBeforeWritingDecision failpoint", 1 /* numTimes */);
 
     jsTest.log("Stopping coordinator shard");

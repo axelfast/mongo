@@ -186,7 +186,7 @@ function runTest(conn) {
         assert.eq(0, db.getUser('user1').roles.length);
         assert.eq(null, db.getUser('user1').customData);
         // Make sure password didn't change
-        assert(new Mongo(db.getMongo().host).getDB(db.getName()).auth('user1', 'pwd'));
+        assert(new Monger(db.getMonger().host).getDB(db.getName()).auth('user1', 'pwd'));
     })();
 
     (function testRevokeRolesFromUser() {
@@ -276,9 +276,9 @@ function runTest(conn) {
 }
 
 jsTest.log('Test standalone');
-var conn = MongoRunner.runMongod({auth: ''});
+var conn = MongerRunner.runMongerd({auth: ''});
 runTest(conn);
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
 jsTest.log('Test sharding');
 // TODO: Remove 'shardAsReplicaSet: false' when SERVER-32672 is fixed.

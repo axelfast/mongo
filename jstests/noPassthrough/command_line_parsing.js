@@ -3,15 +3,15 @@
 var baseName = "jstests_slowNightly_command_line_parsing";
 
 // test notablescan
-var m = MongoRunner.runMongod({notablescan: ""});
+var m = MongerRunner.runMongerd({notablescan: ""});
 m.getDB(baseName).getCollection(baseName).save({a: 1});
 assert.throws(function() {
     m.getDB(baseName).getCollection(baseName).find({a: 1}).toArray();
 });
-MongoRunner.stopMongod(m);
+MongerRunner.stopMongerd(m);
 
 // test config file
-var m2 = MongoRunner.runMongod({config: "jstests/libs/testconfig"});
+var m2 = MongerRunner.runMongerd({config: "jstests/libs/testconfig"});
 
 var m2expected = {
     "parsed": {
@@ -24,7 +24,7 @@ var m2expected = {
     }
 };
 var m2result = m2.getDB("admin").runCommand("getCmdLineOpts");
-MongoRunner.stopMongod(m2);
+MongerRunner.stopMongerd(m2);
 
 // remove variables that depend on the way the test is started.
 delete m2result.parsed.net.serviceExecutor;
@@ -40,7 +40,7 @@ delete m2result.parsed.replication;  // Removes enableMajorityReadConcern settin
 assert.docEq(m2expected.parsed, m2result.parsed);
 
 // test JSON config file
-var m3 = MongoRunner.runMongod({config: "jstests/libs/testconfig"});
+var m3 = MongerRunner.runMongerd({config: "jstests/libs/testconfig"});
 
 var m3expected = {
     "parsed": {
@@ -53,7 +53,7 @@ var m3expected = {
     }
 };
 var m3result = m3.getDB("admin").runCommand("getCmdLineOpts");
-MongoRunner.stopMongod(m3);
+MongerRunner.stopMongerd(m3);
 
 // remove variables that depend on the way the test is started.
 delete m3result.parsed.net.serviceExecutor;

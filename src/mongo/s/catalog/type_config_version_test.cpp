@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -131,12 +131,12 @@ TEST(Excludes, Empty) {
     //
 
     VersionType versionInfo;
-    versionInfo.setExcludingMongoVersions({});
+    versionInfo.setExcludingMongerVersions({});
 
     // Make sure nothing is included
-    ASSERT(!isInMongoVersionRanges("1.2.3", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("1.2.3-pre", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("1.2.3-rc0", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("1.2.3", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("1.2.3-pre", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("1.2.3-rc0", versionInfo.getExcludingMongerVersions()));
 }
 
 TEST(Excludes, SinglePointRange) {
@@ -145,20 +145,20 @@ TEST(Excludes, SinglePointRange) {
     //
 
     VersionType versionInfo;
-    MongoVersionRange vr;
+    MongerVersionRange vr;
     vr.minVersion = "1.2.3";
-    versionInfo.setExcludingMongoVersions({vr});
+    versionInfo.setExcludingMongerVersions({vr});
 
-    ASSERT(isInMongoVersionRanges("1.2.3", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("1.2.3", versionInfo.getExcludingMongerVersions()));
 
-    ASSERT(!isInMongoVersionRanges("1.2.2-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("1.2.2", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("1.2.2-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("1.2.2", versionInfo.getExcludingMongerVersions()));
 
-    ASSERT(isInMongoVersionRanges("1.2.3-pre", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("1.2.3-rc0", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("1.2.3-pre", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("1.2.3-rc0", versionInfo.getExcludingMongerVersions()));
 
-    ASSERT(!isInMongoVersionRanges("1.2.4-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("1.2.4", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("1.2.4-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("1.2.4", versionInfo.getExcludingMongerVersions()));
 }
 
 TEST(Excludes, BetweenRange) {
@@ -167,39 +167,39 @@ TEST(Excludes, BetweenRange) {
     //
 
     VersionType versionInfo;
-    MongoVersionRange vr;
+    MongerVersionRange vr;
     vr.minVersion = "7.8.9";
     vr.maxVersion = "10.11.12";
-    versionInfo.setExcludingMongoVersions({vr});
+    versionInfo.setExcludingMongerVersions({vr});
 
-    ASSERT(isInMongoVersionRanges("7.8.9", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("10.11.12", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.9", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.12", versionInfo.getExcludingMongerVersions()));
 
     // Before
-    ASSERT(!isInMongoVersionRanges("7.8.8-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("7.8.8", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("7.8.8-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("7.8.8", versionInfo.getExcludingMongerVersions()));
 
     // Boundary
-    ASSERT(isInMongoVersionRanges("7.8.9-pre", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("7.8.9-rc0", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.9-pre", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.9-rc0", versionInfo.getExcludingMongerVersions()));
 
-    ASSERT(isInMongoVersionRanges("7.8.10-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("7.8.10", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.10-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.10", versionInfo.getExcludingMongerVersions()));
 
     // Between
-    ASSERT(isInMongoVersionRanges("8.9.10", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("9.10.11", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("8.9.10", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("9.10.11", versionInfo.getExcludingMongerVersions()));
 
     // Boundary
-    ASSERT(isInMongoVersionRanges("10.11.11-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("10.11.11", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.11-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.11", versionInfo.getExcludingMongerVersions()));
 
-    ASSERT(isInMongoVersionRanges("10.11.12-pre", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("10.11.12-rc0", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.12-pre", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.12-rc0", versionInfo.getExcludingMongerVersions()));
 
     // After
-    ASSERT(!isInMongoVersionRanges("10.11.13-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("10.11.13", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("10.11.13-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("10.11.13", versionInfo.getExcludingMongerVersions()));
 }
 
 TEST(Excludes, WeirdRange) {
@@ -208,40 +208,40 @@ TEST(Excludes, WeirdRange) {
     //
 
     VersionType versionInfo;
-    MongoVersionRange vr;
+    MongerVersionRange vr;
     vr.minVersion = "7.8.9-rc0";
     vr.maxVersion = "10.11.12-pre";
-    versionInfo.setExcludingMongoVersions({vr});
+    versionInfo.setExcludingMongerVersions({vr});
 
     // Near endpoints
-    ASSERT(isInMongoVersionRanges("7.8.9", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("10.11.12", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.9", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("10.11.12", versionInfo.getExcludingMongerVersions()));
 
     // Before
-    ASSERT(!isInMongoVersionRanges("7.8.8-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("7.8.8", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("7.8.8-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("7.8.8", versionInfo.getExcludingMongerVersions()));
 
     // Boundary
-    ASSERT(!isInMongoVersionRanges("7.8.9-pre", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("7.8.9-rc0", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("7.8.9-pre", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.9-rc0", versionInfo.getExcludingMongerVersions()));
 
-    ASSERT(isInMongoVersionRanges("7.8.10-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("7.8.10", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.10-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("7.8.10", versionInfo.getExcludingMongerVersions()));
 
     // Between
-    ASSERT(isInMongoVersionRanges("8.9.10", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("9.10.11", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("8.9.10", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("9.10.11", versionInfo.getExcludingMongerVersions()));
 
     // Boundary
-    ASSERT(isInMongoVersionRanges("10.11.11-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(isInMongoVersionRanges("10.11.11", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.11-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.11", versionInfo.getExcludingMongerVersions()));
 
-    ASSERT(isInMongoVersionRanges("10.11.12-pre", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("10.11.12-rc0", versionInfo.getExcludingMongoVersions()));
+    ASSERT(isInMongerVersionRanges("10.11.12-pre", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("10.11.12-rc0", versionInfo.getExcludingMongerVersions()));
 
     // After
-    ASSERT(!isInMongoVersionRanges("10.11.13-rc0", versionInfo.getExcludingMongoVersions()));
-    ASSERT(!isInMongoVersionRanges("10.11.13", versionInfo.getExcludingMongoVersions()));
+    ASSERT(!isInMongerVersionRanges("10.11.13-rc0", versionInfo.getExcludingMongerVersions()));
+    ASSERT(!isInMongerVersionRanges("10.11.13", versionInfo.getExcludingMongerVersions()));
 }
 
 TEST(Excludes, BadRangeArray) {
@@ -257,7 +257,7 @@ TEST(Excludes, BadRangeArray) {
     auto versionInfoResult = VersionType::fromBSON(BSON(
         VersionType::minCompatibleVersion(3) << VersionType::currentVersion(4)
                                              << VersionType::clusterId(OID::gen())
-                                             << VersionType::excludingMongoVersions(includeArr)));
+                                             << VersionType::excludingMongerVersions(includeArr)));
     ASSERT_EQ(ErrorCodes::FailedToParse, versionInfoResult.getStatus());
 }
 

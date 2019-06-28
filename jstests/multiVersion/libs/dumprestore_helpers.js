@@ -64,7 +64,7 @@ function multiVersionDumpRestoreTest(configObj) {
         var shardingTest = new ShardingTest(shardingTestConfig);
         var serverSource = shardingTest.s;
     } else {
-        var serverSource = MongoRunner.runMongod({
+        var serverSource = MongerRunner.runMongerd({
             binVersion: configObj.serverSourceVersion,
             dbpath: configObj.testDbpath,
             storageEngine: configObj.storageEngine
@@ -89,15 +89,15 @@ function multiVersionDumpRestoreTest(configObj) {
 
     // Dump using the specified version of mongerdump from the running mongerd or mongers instance.
     if (configObj.dumpType === "mongerd") {
-        MongoRunner.runMongoTool("mongerdump", {
+        MongerRunner.runMongerTool("mongerdump", {
             out: configObj.dumpDir,
             binVersion: configObj.mongerDumpVersion,
             host: serverSource.host,
             db: testBaseName
         });
-        MongoRunner.stopMongod(serverSource);
+        MongerRunner.stopMongerd(serverSource);
     } else { /* "mongers" */
-        MongoRunner.runMongoTool("mongerdump", {
+        MongerRunner.runMongerTool("mongerdump", {
             out: configObj.dumpDir,
             binVersion: configObj.mongerDumpVersion,
             host: serverSource.host,
@@ -108,10 +108,10 @@ function multiVersionDumpRestoreTest(configObj) {
 
     // Restore using the specified version of mongerrestore
     if (configObj.restoreType === "mongerd") {
-        var serverDest = MongoRunner.runMongod(
+        var serverDest = MongerRunner.runMongerd(
             {binVersion: configObj.serverDestVersion, storageEngine: configObj.storageEngine});
 
-        MongoRunner.runMongoTool("mongerrestore", {
+        MongerRunner.runMongerTool("mongerrestore", {
             dir: configObj.dumpDir + "/" + testBaseName,
             binVersion: configObj.mongerRestoreVersion,
             host: serverDest.host,
@@ -127,7 +127,7 @@ function multiVersionDumpRestoreTest(configObj) {
         };
         var shardingTest = new ShardingTest(shardingTestConfig);
         serverDest = shardingTest.s;
-        MongoRunner.runMongoTool("mongerrestore", {
+        MongerRunner.runMongerTool("mongerrestore", {
             dir: configObj.dumpDir + "/" + testBaseName,
             binVersion: configObj.mongerRestoreVersion,
             host: serverDest.host,
@@ -161,7 +161,7 @@ function multiVersionDumpRestoreTest(configObj) {
     if (configObj.restoreType === "mongers") {
         shardingTest.stop();
     } else {
-        MongoRunner.stopMongod(serverDest);
+        MongerRunner.stopMongerd(serverDest);
     }
 }
 

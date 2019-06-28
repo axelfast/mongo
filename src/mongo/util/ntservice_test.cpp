@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -61,7 +61,7 @@ TEST(NtService, ConstructServiceCommandLine) {
     ASSERT_TRUE(
         svec("--dbpath=C:\\Data\\",
              "-logpath",
-             "C:\\Program Files (x86)\\MongoDB\\Logs\\MongoDB.log",
+             "C:\\Program Files (x86)\\MongerDB\\Logs\\MongerDB.log",
              "--service",
              NULL) ==
         ntservice::constructServiceArgv(svec("-service",
@@ -77,16 +77,16 @@ TEST(NtService, ConstructServiceCommandLine) {
                                              "--serviceUser",
                                              "andy",
                                              "--serviceName",
-                                             "MongoDB",
+                                             "MongerDB",
                                              "-servicePassword==a\\b\\",
                                              "-servicePassword",
                                              "=a\\b\\",
                                              "-serviceUser",
                                              "andy",
                                              "-serviceName",
-                                             "MongoDB",
+                                             "MongerDB",
                                              "-logpath",
-                                             "C:\\Program Files (x86)\\MongoDB\\Logs\\MongoDB.log",
+                                             "C:\\Program Files (x86)\\MongerDB\\Logs\\MongerDB.log",
                                              NULL)));
 }
 

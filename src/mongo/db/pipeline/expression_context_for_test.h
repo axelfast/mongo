@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,7 +51,7 @@ public:
 
     ExpressionContextForTest(NamespaceString nss)
         : ExpressionContext(
-              std::move(nss), std::make_shared<StubMongoProcessInterface>(), kNullTimeZoneDatabase),
+              std::move(nss), std::make_shared<StubMongerProcessInterface>(), kNullTimeZoneDatabase),
           _testOpCtx(_serviceContext.makeOperationContext()) {
         TimeZoneDatabase::set(_serviceContext.getServiceContext(),
                               std::make_unique<TimeZoneDatabase>());
@@ -66,7 +66,7 @@ public:
 
     ExpressionContextForTest(OperationContext* opCtx, const AggregationRequest& request)
         : ExpressionContext(
-              opCtx, request, nullptr, std::make_shared<StubMongoProcessInterface>(), {}, {}) {}
+              opCtx, request, nullptr, std::make_shared<StubMongerProcessInterface>(), {}, {}) {}
 
     /**
      * Sets the resolved definition for an involved namespace.

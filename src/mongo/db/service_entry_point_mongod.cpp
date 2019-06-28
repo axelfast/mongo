@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -58,7 +58,7 @@ namespace monger {
 
 constexpr auto kLastCommittedOpTimeFieldName = "lastCommittedOpTime"_sd;
 
-class ServiceEntryPointMongod::Hooks final : public ServiceEntryPointCommon::Hooks {
+class ServiceEntryPointMongerd::Hooks final : public ServiceEntryPointCommon::Hooks {
 public:
     bool lockedForWriting() const override {
         return monger::lockedForWriting();
@@ -257,7 +257,7 @@ public:
     }
 };
 
-DbResponse ServiceEntryPointMongod::handleRequest(OperationContext* opCtx, const Message& m) {
+DbResponse ServiceEntryPointMongerd::handleRequest(OperationContext* opCtx, const Message& m) {
     return ServiceEntryPointCommon::handleRequest(opCtx, m, Hooks{});
 }
 

@@ -21,7 +21,7 @@
     assert.commandWorked(
         mongersA.getDB("admin").adminCommand({shardCollection: "" + collA, key: {_id: 1}}));
 
-    // MongoD doesn't know about the config shard version *until* MongoS tells it
+    // MongerD doesn't know about the config shard version *until* MongerS tells it
     collA.findOne();
 
     jsTest.log("Trigger shard version mismatch...");

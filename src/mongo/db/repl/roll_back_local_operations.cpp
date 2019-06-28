@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -40,7 +40,7 @@
 namespace monger {
 namespace repl {
 
-// After the release of MongoDB 3.8, these fail point declarations can
+// After the release of MongerDB 3.8, these fail point declarations can
 // be moved into the rs_rollback.cpp file, as we no longer need to maintain
 // functionality for rs_rollback_no_uuid.cpp. See SERVER-29766.
 

@@ -7,7 +7,7 @@
     load('jstests/hooks/validate_collections.js');  // For CollectionValidator.
 
     assert.eq(typeof db, 'object', 'Invalid `db` object, is the shell connected to a mongerd?');
-    const topology = DiscoverTopology.findConnectedNodes(db.getMongo());
+    const topology = DiscoverTopology.findConnectedNodes(db.getMonger());
 
     const hostList = [];
     let setFCVHost;

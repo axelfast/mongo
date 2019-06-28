@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -58,7 +58,7 @@
 // Provide log component in global scope so that MONGO_LOG will always have a valid component.
 // Global log component will be kDefault unless overridden by MONGO_LOG_DEFAULT_COMPONENT.
 #if defined(MONGO_LOG_DEFAULT_COMPONENT)
-const ::monger::logger::LogComponent MongoLogDefaultComponent_component =
+const ::monger::logger::LogComponent MongerLogDefaultComponent_component =
     MONGO_LOG_DEFAULT_COMPONENT;
 #else
 #error \
@@ -86,7 +86,7 @@ inline LogstreamBuilder severe() {
     return LogstreamBuilder(logger::globalLogDomain(),
                             getThreadName(),
                             logger::LogSeverity::Severe(),
-                            ::MongoLogDefaultComponent_component);
+                            ::MongerLogDefaultComponent_component);
 }
 
 inline LogstreamBuilder severe(logger::LogComponent component) {
@@ -101,7 +101,7 @@ inline LogstreamBuilder error() {
     return LogstreamBuilder(logger::globalLogDomain(),
                             getThreadName(),
                             logger::LogSeverity::Error(),
-                            ::MongoLogDefaultComponent_component);
+                            ::MongerLogDefaultComponent_component);
 }
 
 inline LogstreamBuilder error(logger::LogComponent component) {
@@ -116,7 +116,7 @@ inline LogstreamBuilder warning() {
     return LogstreamBuilder(logger::globalLogDomain(),
                             getThreadName(),
                             logger::LogSeverity::Warning(),
-                            ::MongoLogDefaultComponent_component);
+                            ::MongerLogDefaultComponent_component);
 }
 
 inline LogstreamBuilder warning(logger::LogComponent component) {
@@ -131,7 +131,7 @@ inline LogstreamBuilder log() {
     return LogstreamBuilder(logger::globalLogDomain(),
                             getThreadName(),
                             logger::LogSeverity::Log(),
-                            ::MongoLogDefaultComponent_component);
+                            ::MongerLogDefaultComponent_component);
 }
 
 /**
@@ -146,7 +146,7 @@ inline LogstreamBuilder logNoCache() {
     return LogstreamBuilder(logger::globalLogDomain(),
                             getThreadName(),
                             logger::LogSeverity::Log(),
-                            ::MongoLogDefaultComponent_component,
+                            ::MongerLogDefaultComponent_component,
                             false);
 }
 
@@ -168,21 +168,21 @@ inline bool shouldLog(logger::LogComponent logComponent, logger::LogSeverity sev
 }
 
 inline bool shouldLog(logger::LogSeverity severity) {
-    return shouldLog(::MongoLogDefaultComponent_component, severity);
+    return shouldLog(::MongerLogDefaultComponent_component, severity);
 }
 
 }  // namespace
 
-// MONGO_LOG uses log component from MongoLogDefaultComponent from current or global namespace.
+// MONGO_LOG uses log component from MongerLogDefaultComponent from current or global namespace.
 #define MONGO_LOG(DLEVEL)                                                              \
     if (!(::monger::logger::globalLogDomain())                                          \
-             ->shouldLog(MongoLogDefaultComponent_component,                           \
+             ->shouldLog(MongerLogDefaultComponent_component,                           \
                          ::monger::LogstreamBuilder::severityCast(DLEVEL))) {           \
     } else                                                                             \
     ::monger::logger::LogstreamBuilder(::monger::logger::globalLogDomain(),              \
                                       ::monger::getThreadName(),                        \
                                       ::monger::LogstreamBuilder::severityCast(DLEVEL), \
-                                      MongoLogDefaultComponent_component)
+                                      MongerLogDefaultComponent_component)
 
 #define LOG MONGO_LOG
 

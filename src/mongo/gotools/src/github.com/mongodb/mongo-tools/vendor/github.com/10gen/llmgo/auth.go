@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2015-present.
+// Copyright (C) MongerDB, Inc. 2015-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -88,7 +88,7 @@ type saslStepper interface {
 	Close()
 }
 
-func (socket *MongoSocket) getNonce() (nonce string, err error) {
+func (socket *MongerSocket) getNonce() (nonce string, err error) {
 	socket.Lock()
 	for socket.cachedNonce == "" && socket.dead == nil {
 		debugf("Socket %p to %s: waiting for nonce", socket, socket.addr)
@@ -108,7 +108,7 @@ func (socket *MongoSocket) getNonce() (nonce string, err error) {
 	return
 }
 
-func (socket *MongoSocket) resetNonce() {
+func (socket *MongerSocket) resetNonce() {
 	debugf("Socket %p to %s: requesting a new nonce", socket, socket.addr)
 	op := &QueryOp{}
 	op.Query = &getNonceCmd{GetNonce: 1}
@@ -154,7 +154,7 @@ func (socket *MongoSocket) resetNonce() {
 	}
 }
 
-func (socket *MongoSocket) Login(cred Credential) error {
+func (socket *MongerSocket) Login(cred Credential) error {
 	socket.Lock()
 	maxWire := socket.serverInfo.MaxWireVersion
 	socket.Unlock()
@@ -216,7 +216,7 @@ func (socket *MongoSocket) Login(cred Credential) error {
 	return err
 }
 
-func (socket *MongoSocket) negotiateDefaultMech(cred Credential) (string, error) {
+func (socket *MongerSocket) negotiateDefaultMech(cred Credential) (string, error) {
 	user := cred.Source + "." + cred.Username
 	req := &saslMechNegotation{IsMaster: 1, SaslSupportedMechs: user}
 	res := saslMechResult{}
@@ -237,7 +237,7 @@ func (socket *MongoSocket) negotiateDefaultMech(cred Credential) (string, error)
 	return "SCRAM-SHA-1", nil
 }
 
-func (socket *MongoSocket) loginClassic(cred Credential) error {
+func (socket *MongerSocket) loginClassic(cred Credential) error {
 	// Note that this only works properly because this function is
 	// synchronous, which means the nonce won't get reset while we're
 	// using it and any other login requests will block waiting for a
@@ -277,7 +277,7 @@ type authX509Cmd struct {
 	Mechanism    string
 }
 
-func (socket *MongoSocket) loginX509(cred Credential) error {
+func (socket *MongerSocket) loginX509(cred Credential) error {
 	cmd := authX509Cmd{Authenticate: 1, User: cred.Username, Mechanism: "MONGODB-X509"}
 	res := authResult{}
 	return socket.loginRun(cred.Source, &cmd, &res, func() error {
@@ -292,7 +292,7 @@ func (socket *MongoSocket) loginX509(cred Credential) error {
 	})
 }
 
-func (socket *MongoSocket) loginPlain(cred Credential) error {
+func (socket *MongerSocket) loginPlain(cred Credential) error {
 	cmd := saslCmd{Start: 1, Mechanism: "PLAIN", Payload: []byte("\x00" + cred.Username + "\x00" + cred.Password)}
 	res := authResult{}
 	return socket.loginRun(cred.Source, &cmd, &res, func() error {
@@ -307,7 +307,7 @@ func (socket *MongoSocket) loginPlain(cred Credential) error {
 	})
 }
 
-func (socket *MongoSocket) loginSASL(cred Credential) error {
+func (socket *MongerSocket) loginSASL(cred Credential) error {
 	var sasl saslStepper
 	var err error
 	// SCRAM is handled without external libraries.
@@ -420,7 +420,7 @@ func (s *saslScram) Step(serverData []byte) (clientData []byte, done bool, err e
 	return s.client.Out(), !more, s.client.Err()
 }
 
-func (socket *MongoSocket) loginRun(db string, query, result interface{}, f func() error) error {
+func (socket *MongerSocket) loginRun(db string, query, result interface{}, f func() error) error {
 	var mutex sync.Mutex
 	var replyErr error
 	mutex.Lock()
@@ -455,7 +455,7 @@ func (socket *MongoSocket) loginRun(db string, query, result interface{}, f func
 	return replyErr
 }
 
-func (socket *MongoSocket) Logout(db string) {
+func (socket *MongerSocket) Logout(db string) {
 	socket.Lock()
 	cred, found := socket.dropAuth(db)
 	if found {
@@ -465,7 +465,7 @@ func (socket *MongoSocket) Logout(db string) {
 	socket.Unlock()
 }
 
-func (socket *MongoSocket) LogoutAll() {
+func (socket *MongerSocket) LogoutAll() {
 	socket.Lock()
 	if l := len(socket.creds); l > 0 {
 		debugf("Socket %p to %s: logout all (flagged %d)", socket, socket.addr, l)
@@ -475,7 +475,7 @@ func (socket *MongoSocket) LogoutAll() {
 	socket.Unlock()
 }
 
-func (socket *MongoSocket) flushLogout() (ops []interface{}) {
+func (socket *MongerSocket) flushLogout() (ops []interface{}) {
 	socket.Lock()
 	if l := len(socket.logout); l > 0 {
 		debugf("Socket %p to %s: logout all (flushing %d)", socket, socket.addr, l)
@@ -492,7 +492,7 @@ func (socket *MongoSocket) flushLogout() (ops []interface{}) {
 	return
 }
 
-func (socket *MongoSocket) dropAuth(db string) (cred Credential, found bool) {
+func (socket *MongerSocket) dropAuth(db string) (cred Credential, found bool) {
 	for i, sockCred := range socket.creds {
 		if sockCred.Source == db {
 			copy(socket.creds[i:], socket.creds[i+1:])
@@ -503,7 +503,7 @@ func (socket *MongoSocket) dropAuth(db string) (cred Credential, found bool) {
 	return cred, false
 }
 
-func (socket *MongoSocket) dropLogout(cred Credential) (found bool) {
+func (socket *MongerSocket) dropLogout(cred Credential) (found bool) {
 	for i, sockCred := range socket.logout {
 		if sockCred == cred {
 			copy(socket.logout[i:], socket.logout[i+1:])

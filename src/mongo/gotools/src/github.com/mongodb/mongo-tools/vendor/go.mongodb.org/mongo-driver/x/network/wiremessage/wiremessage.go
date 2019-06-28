@@ -1,10 +1,10 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-// Package wiremessage contains types for speaking the MongoDB Wire Protocol. Since this low
+// Package wiremessage contains types for speaking the MongerDB Wire Protocol. Since this low
 // level library is meant to be used in the context of a driver and in the context of a server
 // all of the flags and types of the wire protocol are implemented. For each op there are two
 // corresponding implementations. One prefixed with Immutable which can be created by casting a
@@ -60,7 +60,7 @@ const (
 	ErrRead
 )
 
-// OpCode represents a MongoDB wire protocol opcode.
+// OpCode represents a MongerDB wire protocol opcode.
 type OpCode int32
 
 // These constants are the valid opcodes for the version of the wireprotocol
@@ -112,7 +112,7 @@ func (oc OpCode) String() string {
 	}
 }
 
-// WireMessage represents a message in the MongoDB wire protocol.
+// WireMessage represents a message in the MongerDB wire protocol.
 type WireMessage interface {
 	Marshaler
 	Validator
@@ -124,26 +124,26 @@ type WireMessage interface {
 }
 
 // Validator is the interface implemented by types that can validate
-// themselves as a MongoDB wire protocol message.
+// themselves as a MongerDB wire protocol message.
 type Validator interface {
 	ValidateWireMessage() error
 }
 
 // Marshaler is the interface implemented by types that can marshal
-// themselves into a valid MongoDB wire protocol message.
+// themselves into a valid MongerDB wire protocol message.
 type Marshaler interface {
 	MarshalWireMessage() ([]byte, error)
 }
 
 // Appender is the interface implemented by types that can append themselves, as
-// a MongoDB wire protocol message, to the provided slice of bytes.
+// a MongerDB wire protocol message, to the provided slice of bytes.
 type Appender interface {
 	AppendWireMessage([]byte) ([]byte, error)
 }
 
 // Unmarshaler is the interface implemented by types that can unmarshal a
-// MongoDB wire protocol message version of themselves. The input can be
-// assumed to be a valid MongoDB wire protocol message. UnmarshalWireMessage
+// MongerDB wire protocol message version of themselves. The input can be
+// assumed to be a valid MongerDB wire protocol message. UnmarshalWireMessage
 // must copy the data if it wishes to retain the data after returning.
 type Unmarshaler interface {
 	UnmarshalWireMessage([]byte) error
@@ -202,5 +202,5 @@ func ReadFrom(io.Reader) (WireMessage, error) { return nil, nil }
 // Unmarshal will unmarshal data into a WireMessage.
 func Unmarshal([]byte) (WireMessage, error) { return nil, nil }
 
-// Validate will validate that data is a valid MongoDB wire protocol message.
+// Validate will validate that data is a valid MongerDB wire protocol message.
 func Validate([]byte) error { return nil }

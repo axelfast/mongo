@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -57,7 +57,7 @@ void logCommonStartupWarnings(const ServerGlobalParams& serverParams) {
         auto&& vii = VersionInfoInterface::instance();
         if ((vii.minorVersion() % 2) != 0) {
             log() << startupWarningsLog;
-            log() << "** NOTE: This is a development version (" << vii.version() << ") of MongoDB."
+            log() << "** NOTE: This is a development version (" << vii.version() << ") of MongerDB."
                   << startupWarningsLog;
             log() << "**       Not recommended for production." << startupWarningsLog;
             warned = true;
@@ -77,7 +77,7 @@ void logCommonStartupWarnings(const ServerGlobalParams& serverParams) {
     const bool is32bit = sizeof(int*) == 4;
     if (is32bit) {
         log() << startupWarningsLog;
-        log() << "** WARNING: This 32-bit MongoDB binary is deprecated" << startupWarningsLog;
+        log() << "** WARNING: This 32-bit MongerDB binary is deprecated" << startupWarningsLog;
         warned = true;
     }
 
@@ -122,9 +122,9 @@ void logCommonStartupWarnings(const ServerGlobalParams& serverParams) {
     BOOL wow64Process;
     BOOL retWow64 = IsWow64Process(GetCurrentProcess(), &wow64Process);
     if (retWow64 && wow64Process) {
-        log() << "** NOTE: This is a 32-bit MongoDB binary running on a 64-bit operating"
+        log() << "** NOTE: This is a 32-bit MongerDB binary running on a 64-bit operating"
               << startupWarningsLog;
-        log() << "**      system. Switch to a 64-bit build of MongoDB to" << startupWarningsLog;
+        log() << "**      system. Switch to a 64-bit build of MongerDB to" << startupWarningsLog;
         log() << "**      support larger databases." << startupWarningsLog;
         warned = true;
     }

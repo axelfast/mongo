@@ -4,7 +4,7 @@
  */
 (function() {
     load("jstests/aggregation/extras/merge_helpers.js");  // For withEachMergeMode().
-    load("jstests/libs/fixture_helpers.js");              // For isMongos().
+    load("jstests/libs/fixture_helpers.js");              // For isMongers().
     load("jstests/libs/profiler.js");  // For profilerHasSingleMatchingEntryOrThrow.
 
     const kDBName = "test";
@@ -144,12 +144,12 @@
 
     // Run on a standalone.
     (function() {
-        const conn = MongoRunner.runMongod({});
+        const conn = MongerRunner.runMongerd({});
         assert.neq(null, conn, 'mongerd was unable to start up');
         insertDocs(conn.getDB(kDBName)[kSourceCollName]);
         withEachMergeMode(
             (mode) => runUnshardedTest(mode.whenMatchedMode, mode.whenNotMatchedMode, conn));
-        MongoRunner.stopMongod(conn);
+        MongerRunner.stopMongerd(conn);
     })();
 
     // Runs a $merge against 'mongersConn' and verifies that the maxTimeMS value is included in the

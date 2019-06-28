@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -51,13 +51,13 @@
 
 namespace monger {
 
-ServiceContextMongoDTest::ServiceContextMongoDTest()
-    : ServiceContextMongoDTest("ephemeralForTest") {}
+ServiceContextMongerDTest::ServiceContextMongerDTest()
+    : ServiceContextMongerDTest("ephemeralForTest") {}
 
-ServiceContextMongoDTest::ServiceContextMongoDTest(std::string engine)
-    : ServiceContextMongoDTest(engine, RepairAction::kNoRepair) {}
+ServiceContextMongerDTest::ServiceContextMongerDTest(std::string engine)
+    : ServiceContextMongerDTest(engine, RepairAction::kNoRepair) {}
 
-ServiceContextMongoDTest::ServiceContextMongoDTest(std::string engine, RepairAction repair)
+ServiceContextMongerDTest::ServiceContextMongerDTest(std::string engine, RepairAction repair)
     : _tempDir("service_context_d_test_fixture") {
 
     _stashedStorageParams.engine = std::exchange(storageGlobalParams.engine, std::move(engine));
@@ -67,7 +67,7 @@ ServiceContextMongoDTest::ServiceContextMongoDTest(std::string engine, RepairAct
         std::exchange(storageGlobalParams.repair, (repair == RepairAction::kRepair));
 
     auto const serviceContext = getServiceContext();
-    serviceContext->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongod>(serviceContext));
+    serviceContext->setServiceEntryPoint(std::make_unique<ServiceEntryPointMongerd>(serviceContext));
     auto logicalClock = std::make_unique<LogicalClock>(serviceContext);
     LogicalClock::set(serviceContext, std::move(logicalClock));
 
@@ -82,10 +82,10 @@ ServiceContextMongoDTest::ServiceContextMongoDTest(std::string engine, RepairAct
     DatabaseHolder::set(serviceContext, std::make_unique<DatabaseHolderImpl>());
     IndexAccessMethodFactory::set(serviceContext, std::make_unique<IndexAccessMethodFactoryImpl>());
     Collection::Factory::set(serviceContext, std::make_unique<CollectionImpl::FactoryImpl>());
-    IndexBuildsCoordinator::set(serviceContext, std::make_unique<IndexBuildsCoordinatorMongod>());
+    IndexBuildsCoordinator::set(serviceContext, std::make_unique<IndexBuildsCoordinatorMongerd>());
 }
 
-ServiceContextMongoDTest::~ServiceContextMongoDTest() {
+ServiceContextMongerDTest::~ServiceContextMongerDTest() {
     {
         auto opCtx = getClient()->makeOperationContext();
         Lock::GlobalLock glk(opCtx.get(), MODE_X);

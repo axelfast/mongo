@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,9 +36,9 @@ namespace monger {
 struct StorageGlobalParams;
 struct ServerGlobalParams;
 
-class StartupWarningsMongod {
+class StartupWarningsMongerd {
 private:
-    StartupWarningsMongod();
+    StartupWarningsMongerd();
 
 public:
     /**
@@ -57,7 +57,7 @@ public:
 
 // Checks various startup conditions and logs any necessary warnings that
 // are specific to the mongerd process.
-void logMongodStartupWarnings(const StorageGlobalParams& storageParams,
+void logMongerdStartupWarnings(const StorageGlobalParams& storageParams,
                               const ServerGlobalParams& serverParams,
                               ServiceContext* svcCtx);
 }  // namespace monger

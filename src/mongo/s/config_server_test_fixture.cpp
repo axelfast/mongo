@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -102,7 +102,7 @@ ConfigServerTestFixture::ConfigServerTestFixture() = default;
 ConfigServerTestFixture::~ConfigServerTestFixture() = default;
 
 void ConfigServerTestFixture::setUp() {
-    ShardingMongodTestFixture::setUp();
+    ShardingMongerdTestFixture::setUp();
 
     // TODO: SERVER-26919 set the flag on the mock repl coordinator just for the window where it
     // actually needs to bypass the op observer.
@@ -128,7 +128,7 @@ void ConfigServerTestFixture::setUp() {
     CatalogCacheLoader::set(getServiceContext(),
                             std::make_unique<ConfigServerCatalogCacheLoader>());
 
-    uassertStatusOK(initializeGlobalShardingStateForMongodForTest(ConnectionString::forLocal()));
+    uassertStatusOK(initializeGlobalShardingStateForMongerdForTest(ConnectionString::forLocal()));
 }
 
 void ConfigServerTestFixture::tearDown() {
@@ -140,7 +140,7 @@ void ConfigServerTestFixture::tearDown() {
 
     CatalogCacheLoader::clearForTests(getServiceContext());
 
-    ShardingMongodTestFixture::tearDown();
+    ShardingMongerdTestFixture::tearDown();
 }
 
 std::unique_ptr<DistLockCatalog> ConfigServerTestFixture::makeDistLockCatalog() {

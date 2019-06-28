@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -112,7 +112,7 @@ Status _authenticateX509(OperationContext* opCtx, const UserName& user, const BS
                                       .getField("name"_sd)
                                       .checkAndGetStringData();
                 if (!clientMetadata->getApplicationName().empty() ||
-                    (driverName != "MongoDB Internal Client" &&
+                    (driverName != "MongerDB Internal Client" &&
                      driverName != "NetworkInterfaceTL")) {
                     warning() << "Client isn't a mongerd or mongers, but is connecting with a "
                                  "certificate with cluster membership";
@@ -184,7 +184,7 @@ private:
  *
  * Previously, this command would have been called prior to {authenticate: ...}
  * when using the MONGODB-CR authentication mechanism.
- * Since that mechanism has been removed from MongoDB 3.8,
+ * Since that mechanism has been removed from MongerDB 3.8,
  * it is nominally no longer required.
  *
  * Unfortunately, monger-tools uses a connection library

@@ -62,7 +62,7 @@
             shard.adminCommand({configureFailPoint: failpoint, mode: failpointMode}));
         let awaitShell = startParallelShell(codeToRunInParallelShell, st.s.port);
         waitForFailpoint("Hit " + failpoint, 1);
-        clearRawMongoProgramOutput();
+        clearRawMongerProgramOutput();
         return awaitShell;
     }
 
@@ -89,7 +89,7 @@
                                      ErrorCodes.MaxTimeMSExpired);
         // Run the non-transactional update again in a separate thread and wait for it to start.
         function conflictingUpdate(host, kDbName, query, update) {
-            const mongersConn = new Mongo(host);
+            const mongersConn = new Monger(host);
             return mongersConn.getDB(kDbName).foo.update(query, update);
         }
         let thread = new ScopedThread(
@@ -152,7 +152,7 @@
     // shard key, we get a write conflict.
     (() => {
         let codeToRunInParallelShell = `{
-                let session = db.getMongo().startSession();
+                let session = db.getMonger().startSession();
                 let sessionDB = session.getDatabase("db");
                 session.startTransaction();
                 let res = sessionDB.foo.update({"x": -50, "a" : 10}, {$set: {"x": 10}});
@@ -182,7 +182,7 @@
     // attempts to modify the shard key for, we get a write conflict.
     (() => {
         let codeToRunInParallelShell = `{
-                 let session = db.getMongo().startSession();
+                 let session = db.getMonger().startSession();
                  let sessionDB = session.getDatabase("db");
                  session.startTransaction();
                  let res = sessionDB.foo.update({"x": 100}, {$set: {"x": -1}});
@@ -211,7 +211,7 @@
     // shard), the original update to the shard key will get a write conflict.
     (() => {
         let codeToRunInParallelShell = `{
-                let session = db.getMongo().startSession();
+                let session = db.getMonger().startSession();
                 let sessionDB = session.getDatabase("db");
                 session.startTransaction();
                 let res = sessionDB.foo.update({"x": -50}, {$set: {"x": 80}});
@@ -249,7 +249,7 @@
     // shard key, it does not match and documents.
     (() => {
         let codeToRunInParallelShell = `{
-                let session = db.getMongo().startSession();
+                let session = db.getMonger().startSession();
                 let sessionDB = session.getDatabase("db");
                 session.startTransaction();
                 let res = sessionDB.foo.update({"x": -100, "a" : 4}, {$set: {"x": 10}});
@@ -259,7 +259,7 @@
                 assert.commandWorked(session.commitTransaction_forTesting());
             }`;
         let codeToRunInParallelShell2 = `{
-                let session = db.getMongo().startSession();
+                let session = db.getMonger().startSession();
                 let sessionDB = session.getDatabase("db");
                 let res = sessionDB.foo.update({"x": -100}, {$inc: {"a": 1}});
                 assert.commandWorked(res);
@@ -286,7 +286,7 @@
     // attempts to modify the shard key for, we get a write conflict.
     (() => {
         let codeToRunInParallelShell = `{
-                let session = db.getMongo().startSession();
+                let session = db.getMonger().startSession();
                 let sessionDB = session.getDatabase("db");
                 session.startTransaction();
                 let res = sessionDB.foo.update({"x": 10, "a" : 4}, {$set: {"x": -70}});
@@ -296,7 +296,7 @@
                 assert.commandWorked(session.commitTransaction_forTesting());
             }`;
         let codeToRunInParallelShell2 = `{
-                let session = db.getMongo().startSession();
+                let session = db.getMonger().startSession();
                 let sessionDB = session.getDatabase("db");
                 let res = sessionDB.foo.remove({"x": 10});
                 assert.commandWorked(res);
@@ -360,7 +360,7 @@
     // the shard key no longer matches the doc, it does not modify the doc.
     (() => {
         let codeToRunInParallelShell = `{
-                let session = db.getMongo().startSession({retryWrites : true});
+                let session = db.getMonger().startSession({retryWrites : true});
                 let sessionDB = session.getDatabase("db");
                 let res = sessionDB.foo.update({"x": -150, "a" : 15}, {$set: {"x": 1000}});
                 assert.commandWorked(res);
@@ -389,7 +389,7 @@
     // shard key still matches the doc, the final document reflects both updates.
     (() => {
         let codeToRunInParallelShell = `{
-                let session = db.getMongo().startSession({retryWrites : true});
+                let session = db.getMonger().startSession({retryWrites : true});
                 let sessionDB = session.getDatabase("db");
                 let res = sessionDB.foo.update({"x": 150}, {$set: {"x": -1000}});
                 assert.commandWorked(res);
@@ -418,7 +418,7 @@
     // attempts to modify the shard key for, we don't match any docs.
     (() => {
         let codeToRunInParallelShell = `{
-                let session = db.getMongo().startSession({retryWrites : true});
+                let session = db.getMonger().startSession({retryWrites : true});
                 let sessionDB = session.getDatabase("db");
                 let res = sessionDB.foo.update({"x": -150}, {$set: {"x": 1000}});
                 assert.commandWorked(res);

@@ -1,6 +1,6 @@
 "use strict";
 
-var {runMongoeBench} = (function() {
+var {runMongereBench} = (function() {
 
     /**
      * Spawns a mongerebench process with the specified options.
@@ -9,11 +9,11 @@ var {runMongoeBench} = (function() {
      * a file as a JSON string which is then specified as the config file for the mongerebench
      * process.
      */
-    function runMongoeBench(config, options = {}) {
+    function runMongereBench(config, options = {}) {
         const args = ["mongerebench"];
 
         if (typeof config === "object") {
-            const filename = MongoRunner.dataPath + "mongerebench_config.json";
+            const filename = MongerRunner.dataPath + "mongerebench_config.json";
             writeFile(filename, tojson(config));
             args.push(filename);
         } else if (typeof config === "string") {
@@ -23,7 +23,7 @@ var {runMongoeBench} = (function() {
         }
 
         if (!options.hasOwnProperty("dbpath")) {
-            options.dbpath = MongoRunner.dataDir;
+            options.dbpath = MongerRunner.dataDir;
         }
 
         for (let key of Object.keys(options)) {
@@ -41,9 +41,9 @@ var {runMongoeBench} = (function() {
             }
         }
 
-        const exitCode = _runMongoProgram(...args);
+        const exitCode = _runMongerProgram(...args);
         assert.eq(0, exitCode, "encountered an error in mongerebench");
     }
 
-    return {runMongoeBench};
+    return {runMongereBench};
 })();

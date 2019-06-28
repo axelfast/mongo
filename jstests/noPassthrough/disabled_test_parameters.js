@@ -4,13 +4,13 @@
     'use strict';
 
     function assertFails(opts) {
-        assert.eq(null, MongoRunner.runMongod(opts), "Mongod startup up");
+        assert.eq(null, MongerRunner.runMongerd(opts), "Mongerd startup up");
     }
 
     function assertStarts(opts) {
-        const mongerd = MongoRunner.runMongod(opts);
-        assert(mongerd, "Mongod startup up");
-        MongoRunner.stopMongod(mongerd);
+        const mongerd = MongerRunner.runMongerd(opts);
+        assert(mongerd, "Mongerd startup up");
+        MongerRunner.stopMongerd(mongerd);
     }
 
     setJsTestOption('enableTestCommands', false);

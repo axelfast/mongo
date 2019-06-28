@@ -28,7 +28,7 @@
     });
 
     const sessionOptions = {causalConsistency: false};
-    const session = db.getMongo().startSession(sessionOptions);
+    const session = db.getMonger().startSession(sessionOptions);
     const sessionDb = session.getDatabase(db.getName());
     const sessionColl = sessionDb[coll.getName()];
 

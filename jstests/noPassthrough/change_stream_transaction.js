@@ -64,7 +64,7 @@
         //
         // Start transaction 1.
         //
-        const session1 = db.getMongo().startSession();
+        const session1 = db.getMonger().startSession();
         const sessionDb1 = session1.getDatabase(dbName);
         const sessionColl1 = sessionDb1[collName];
         session1.startTransaction({readConcern: {level: "majority"}});
@@ -72,7 +72,7 @@
         //
         // Start transaction 2.
         //
-        const session2 = db.getMongo().startSession();
+        const session2 = db.getMonger().startSession();
         const sessionDb2 = session2.getDatabase(dbName);
         const sessionColl2 = sessionDb2[collName];
         session2.startTransaction({readConcern: {level: "majority"}});
@@ -80,7 +80,7 @@
         //
         // Start transaction 3.
         //
-        const session3 = db.getMongo().startSession();
+        const session3 = db.getMonger().startSession();
         const sessionDb3 = session3.getDatabase(dbName);
         const sessionColl3 = sessionDb3[collName];
         session3.startTransaction({readConcern: {level: "majority"}});
@@ -176,7 +176,7 @@
         //
         // Start transaction 4.
         //
-        const session4 = db.getMongo().startSession();
+        const session4 = db.getMonger().startSession();
         const sessionDb4 = session4.getDatabase(dbName);
         const sessionColl4 = sessionDb4[collName];
         session4.startTransaction({readConcern: {level: "majority"}});
@@ -200,7 +200,7 @@
         //
         // Start transaction 5.
         //
-        const session5 = db.getMongo().startSession();
+        const session5 = db.getMonger().startSession();
         const sessionDb5 = session5.getDatabase(dbName);
         const sessionColl5 = sessionDb5[collName];
         session5.startTransaction({readConcern: {level: "majority"}});

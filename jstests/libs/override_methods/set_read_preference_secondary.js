@@ -115,7 +115,7 @@
                    !OverrideHelpers.isMapReduceWithInlineOutput(commandName, commandObjUnwrapped)) {
             // A map-reduce operation with non-inline output must be sent to the primary.
             shouldForceReadPreference = false;
-        } else if (conn.isMongos() && kDatabasesOnConfigServers.has(dbName)) {
+        } else if (conn.isMongers() && kDatabasesOnConfigServers.has(dbName)) {
             // Avoid overriding the read preference for config server since there may only be one
             // of them.
             shouldForceReadPreference = false;

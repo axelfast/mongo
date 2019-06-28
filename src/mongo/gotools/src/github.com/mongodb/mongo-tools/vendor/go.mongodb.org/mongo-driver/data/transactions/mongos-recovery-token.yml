@@ -6,7 +6,7 @@ data: []
 
 tests:
   - description: commitTransaction explicit retries include recoveryToken
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -86,7 +86,7 @@ tests:
           - _id: 1
 
   - description: commitTransaction retry succeeds on new mongers
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -102,7 +102,7 @@ tests:
             _id: 1
         result:
           insertedId: 1
-      # Enable the fail point only on the Mongos that session0 is pinned to.
+      # Enable the fail point only on the Mongers that session0 is pinned to.
       - name: targetedFailPoint
         object: testRunner
         arguments:
@@ -171,7 +171,7 @@ tests:
           - _id: 1
 
   - description: commitTransaction retry fails on new mongers
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     clientOptions:
       # Increase heartbeatFrequencyMS to avoid the race condition where an in
       # flight heartbeat refreshes the first mongeres' SDAM state in between
@@ -188,7 +188,7 @@ tests:
             _id: 1
         result:
           insertedId: 1
-      # Enable the fail point only on the Mongos that session0 is pinned to.
+      # Enable the fail point only on the Mongers that session0 is pinned to.
       # Fail isMaster to prevent the heartbeat requested directly after the
       # retryable commit error from racing with server selection for the retry.
       # Note: times: 7 is slightly artbitrary but it accounts for one failed
@@ -266,7 +266,7 @@ tests:
         data: []
 
   - description: abortTransaction does not send recoveryToken
-    useMultipleMongoses: true
+    useMultipleMongerses: true
     operations:
       - name: startTransaction
         object: session0
@@ -278,7 +278,7 @@ tests:
             _id: 1
         result:
           insertedId: 1
-      # Enable the fail point only on the Mongos that session0 is pinned to.
+      # Enable the fail point only on the Mongers that session0 is pinned to.
       - name: targetedFailPoint
         object: testRunner
         arguments:

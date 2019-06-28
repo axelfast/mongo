@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,17 +38,17 @@
 
 namespace monger {
 
-AuthzSessionExternalStateMongos::AuthzSessionExternalStateMongos(AuthorizationManager* authzManager)
+AuthzSessionExternalStateMongers::AuthzSessionExternalStateMongers(AuthorizationManager* authzManager)
     : AuthzSessionExternalStateServerCommon(authzManager) {}
-AuthzSessionExternalStateMongos::~AuthzSessionExternalStateMongos() {}
+AuthzSessionExternalStateMongers::~AuthzSessionExternalStateMongers() {}
 
-void AuthzSessionExternalStateMongos::startRequest(OperationContext* opCtx) {
+void AuthzSessionExternalStateMongers::startRequest(OperationContext* opCtx) {
     _checkShouldAllowLocalhost(opCtx);
 }
 
 MONGO_REGISTER_SHIM(AuthzSessionExternalState::create)
 (AuthorizationManager* const authzManager)->std::unique_ptr<AuthzSessionExternalState> {
-    return std::make_unique<AuthzSessionExternalStateMongos>(authzManager);
+    return std::make_unique<AuthzSessionExternalStateMongers>(authzManager);
 }
 
 }  // namespace monger

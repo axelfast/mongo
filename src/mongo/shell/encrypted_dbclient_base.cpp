@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2019-present MongoDB, Inc.
+ *    Copyright (C) 2019-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -281,7 +281,7 @@ void EncryptedDBClientBase::encrypt(mozjs::MozJSImplScope* scope,
                         algorithm != FleAlgorithmInt::kDeterministic);
             }
 
-            // If it is one of our Mongo defined types, then we have to use the ValueWriter
+            // If it is one of our Monger defined types, then we have to use the ValueWriter
             // writeThis function, which takes in a set of WriteFieldRecursionFrames (setting
             // a limit on how many times we can recursively dig into an object's nested
             // structure)
@@ -441,8 +441,8 @@ bool EncryptedDBClientBase::isReplicaSetMember() const {
     return _conn->isReplicaSetMember();
 }
 
-bool EncryptedDBClientBase::isMongos() const {
-    return _conn->isMongos();
+bool EncryptedDBClientBase::isMongers() const {
+    return _conn->isMongers();
 }
 
 NamespaceString EncryptedDBClientBase::getCollectionNS() {

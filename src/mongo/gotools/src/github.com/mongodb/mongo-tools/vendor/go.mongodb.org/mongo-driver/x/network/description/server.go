@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -112,7 +112,7 @@ func NewServer(addr address.Address, isMaster result.IsMaster) Server {
 			i.Kind = RSMember
 		}
 	} else if isMaster.Msg == "isdbgrid" {
-		i.Kind = Mongos
+		i.Kind = Mongers
 	}
 
 	i.WireVersion = &VersionRange{
@@ -139,7 +139,7 @@ func (s Server) SetAverageRTT(rtt time.Duration) Server {
 func (s Server) DataBearing() bool {
 	return s.Kind == RSPrimary ||
 		s.Kind == RSSecondary ||
-		s.Kind == Mongos ||
+		s.Kind == Mongers ||
 		s.Kind == Standalone
 }
 

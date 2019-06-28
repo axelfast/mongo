@@ -18,7 +18,7 @@ const self = this;
     'use strict';
 
     const testName = jsTest.name();
-    const conn = MongoRunner.runMongod({auth: ''});
+    const conn = MongerRunner.runMongerd({auth: ''});
     const admin = conn.getDB('admin');
     admin.createUser({user: 'admin', pwd: 'pass', roles: jsTest.adminUserRoles});
     assert(admin.auth('admin', 'pass'));
@@ -37,7 +37,7 @@ const self = this;
     testDB.businessClass.insertOne({});
 
     // Must use 'db' to test autocompletion.
-    self.db = new Mongo(conn.host).getDB(testName);
+    self.db = new Monger(conn.host).getDB(testName);
     assert(db.auth('coachPassenger', 'password'));
     const authzErrorCode = 13;
     assert.commandFailedWithCode(db.runCommand({listCollections: 1}), authzErrorCode);
@@ -48,5 +48,5 @@ const self = this;
            `Completions should include 'coachClass': ${__autocomplete__}`);
     assert(!__autocomplete__.includes('db.businessClass'),
            `Completions should NOT include 'businessClass': ${__autocomplete__}`);
-    MongoRunner.stopMongod(conn);
+    MongerRunner.stopMongerd(conn);
 })();

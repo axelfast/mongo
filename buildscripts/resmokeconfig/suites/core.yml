@@ -5,7 +5,7 @@ selector:
   - jstests/core/**/*.js
   - jstests/core_standalone/**/*.js
   exclude_files:
-  # Transactions are not supported on MongoDB standalone nodes, so we do not run these tests in the
+  # Transactions are not supported on MongerDB standalone nodes, so we do not run these tests in the
   # 'core' suite. Instead we run them against a 1-node replica set in the 'core_txns' suite.
   - jstests/core/txns/**/*.js
 executor:
@@ -25,7 +25,7 @@ executor:
   - class: CleanEveryN
     n: 20
   fixture:
-    class: MongoDFixture
+    class: MongerDFixture
     mongerd_options:
       set_parameters:
         enableTestCommands: 1

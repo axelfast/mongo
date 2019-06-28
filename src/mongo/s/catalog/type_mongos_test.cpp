@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -40,65 +40,65 @@ namespace {
 using namespace monger;
 
 TEST(Validity, MissingName) {
-    BSONObj obj = BSON(MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
+    BSONObj obj = BSON(MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_EQ(ErrorCodes::NoSuchKey, mongersTypeResult.getStatus());
 }
 
 TEST(Validity, MissingPing) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_EQ(ErrorCodes::NoSuchKey, mongersTypeResult.getStatus());
 }
 
 TEST(Validity, MissingUp) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_EQ(ErrorCodes::NoSuchKey, mongersTypeResult.getStatus());
 }
 
 TEST(Validity, MissingWaiting) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_EQ(ErrorCodes::NoSuchKey, mongersTypeResult.getStatus());
 }
 
-TEST(Validity, MissingMongoVersion) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
+TEST(Validity, MissingMongerVersion) {
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_OK(mongersTypeResult.getStatus());
 
-    MongosType& mtype = mongersTypeResult.getValue();
+    MongersType& mtype = mongersTypeResult.getValue();
     /**
      * Note: mongerVersion should eventually become mandatory, but is optional now
      *       for backward compatibility reasons.
@@ -107,17 +107,17 @@ TEST(Validity, MissingMongoVersion) {
 }
 
 TEST(Validity, MissingConfigVersion) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_OK(mongersTypeResult.getStatus());
 
-    MongosType& mtype = mongersTypeResult.getValue();
+    MongersType& mtype = mongersTypeResult.getValue();
     /**
      * Note: configVersion should eventually become mandatory, but is optional now
      *       for backward compatibility reasons.
@@ -126,74 +126,74 @@ TEST(Validity, MissingConfigVersion) {
 }
 
 TEST(Validity, MissingAdvisoryHostFQDNs) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0));
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_OK(mongersTypeResult.getStatus());
 
-    MongosType& mType = mongersTypeResult.getValue();
+    MongersType& mType = mongersTypeResult.getValue();
     // advisoryHostFQDNs is optional
     ASSERT_OK(mType.validate());
 }
 
 TEST(Validity, EmptyAdvisoryHostFQDNs) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSONArrayBuilder().arr()));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_OK(mongersTypeResult.getStatus());
 
-    MongosType& mType = mongersTypeResult.getValue();
+    MongersType& mType = mongersTypeResult.getValue();
     ASSERT_OK(mType.validate());
 
     ASSERT_EQUALS(mType.getAdvisoryHostFQDNs().size(), 0UL);
 }
 
 TEST(Validity, BadTypeAdvisoryHostFQDNs) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSON_ARRAY("foo" << 0 << "baz")));
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSON_ARRAY("foo" << 0 << "baz")));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_EQ(ErrorCodes::TypeMismatch, mongersTypeResult.getStatus());
 }
 
 TEST(Validity, Valid) {
-    BSONObj obj = BSON(MongosType::name("localhost:27017")
-                       << MongosType::ping(Date_t::fromMillisSinceEpoch(1))
-                       << MongosType::uptime(100)
-                       << MongosType::waiting(false)
-                       << MongosType::mongerVersion("x.x.x")
-                       << MongosType::configVersion(0)
-                       << MongosType::advisoryHostFQDNs(BSON_ARRAY("foo"
+    BSONObj obj = BSON(MongersType::name("localhost:27017")
+                       << MongersType::ping(Date_t::fromMillisSinceEpoch(1))
+                       << MongersType::uptime(100)
+                       << MongersType::waiting(false)
+                       << MongersType::mongerVersion("x.x.x")
+                       << MongersType::configVersion(0)
+                       << MongersType::advisoryHostFQDNs(BSON_ARRAY("foo"
                                                                    << "bar"
                                                                    << "baz")));
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_OK(mongersTypeResult.getStatus());
 
-    MongosType& mType = mongersTypeResult.getValue();
+    MongersType& mType = mongersTypeResult.getValue();
     ASSERT_OK(mType.validate());
 
     ASSERT_EQUALS(mType.getName(), "localhost:27017");
     ASSERT_EQUALS(mType.getPing(), Date_t::fromMillisSinceEpoch(1));
     ASSERT_EQUALS(mType.getUptime(), 100);
     ASSERT_EQUALS(mType.getWaiting(), false);
-    ASSERT_EQUALS(mType.getMongoVersion(), "x.x.x");
+    ASSERT_EQUALS(mType.getMongerVersion(), "x.x.x");
     ASSERT_EQUALS(mType.getConfigVersion(), 0);
     ASSERT_EQUALS(mType.getAdvisoryHostFQDNs().size(), 3UL);
     ASSERT_EQUALS(mType.getAdvisoryHostFQDNs()[0], "foo");
@@ -202,9 +202,9 @@ TEST(Validity, Valid) {
 }
 
 TEST(Validity, BadType) {
-    BSONObj obj = BSON(MongosType::name() << 0);
+    BSONObj obj = BSON(MongersType::name() << 0);
 
-    auto mongersTypeResult = MongosType::fromBSON(obj);
+    auto mongersTypeResult = MongersType::fromBSON(obj);
     ASSERT_EQ(ErrorCodes::TypeMismatch, mongersTypeResult.getStatus());
 }
 

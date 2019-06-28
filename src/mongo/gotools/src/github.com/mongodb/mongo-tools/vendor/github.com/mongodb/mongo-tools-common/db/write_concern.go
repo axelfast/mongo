@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2014-present.
+// Copyright (C) MongerDB, Inc. 2014-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -26,10 +26,10 @@ const (
 	majString = "majority"
 )
 
-// NewMongoWriteConcern takes a string (from the command line writeConcern option) and a ConnString object
+// NewMongerWriteConcern takes a string (from the command line writeConcern option) and a ConnString object
 // (from the command line uri option) and returns a WriteConcern. If both are provided, preference is given to
 // the command line writeConcern option. If neither is provided, the default 'majority' write concern is constructed.
-func NewMongoWriteConcern(writeConcern string, cs *connstring.ConnString) (wc *writeconcern.WriteConcern, err error) {
+func NewMongerWriteConcern(writeConcern string, cs *connstring.ConnString) (wc *writeconcern.WriteConcern, err error) {
 
 	// Log whatever write concern was generated
 	defer func() {

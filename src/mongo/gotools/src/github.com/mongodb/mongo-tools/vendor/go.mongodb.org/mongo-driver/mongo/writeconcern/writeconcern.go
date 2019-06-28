@@ -1,4 +1,4 @@
-// Copyright (C) MongoDB, Inc. 2017-present.
+// Copyright (C) MongerDB, Inc. 2017-present.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may
 // not use this file except in compliance with the License. You may obtain
@@ -27,7 +27,7 @@ var ErrNegativeW = errors.New("write concern `w` field cannot be a negative numb
 // ErrNegativeWTimeout indicates that a negative WTimeout was specified.
 var ErrNegativeWTimeout = errors.New("write concern `wtimeout` field cannot be negative")
 
-// WriteConcern describes the level of acknowledgement requested from MongoDB for write operations
+// WriteConcern describes the level of acknowledgement requested from MongerDB for write operations
 // to a standalone mongerd or to replica sets or to sharded clusters.
 type WriteConcern struct {
 	w        interface{}
@@ -73,7 +73,7 @@ func WTagSet(tag string) Option {
 	}
 }
 
-// J requests acknowledgement from MongoDB that write operations are written to
+// J requests acknowledgement from MongerDB that write operations are written to
 // the journal.
 func J(j bool) Option {
 	return func(concern *WriteConcern) {

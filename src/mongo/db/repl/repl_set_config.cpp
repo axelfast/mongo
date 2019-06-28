@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -630,9 +630,9 @@ Status ReplSetConfig::validate() const {
         return Status(
             ErrorCodes::BadValue,
             str::stream()
-                << "Support for replication protocol version 0 was removed in MongoDB 4.0. "
-                << "Downgrade to MongoDB version 3.6 and upgrade your protocol "
-                   "version to 1 before upgrading your MongoDB version");
+                << "Support for replication protocol version 0 was removed in MongerDB 4.0. "
+                << "Downgrade to MongerDB version 3.6 and upgrade your protocol "
+                   "version to 1 before upgrading your MongerDB version");
     }
     if (_protocolVersion != 1) {
         return Status(ErrorCodes::BadValue,

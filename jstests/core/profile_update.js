@@ -40,13 +40,13 @@
     assert(profileObj.hasOwnProperty("millis"), tojson(profileObj));
     assert(profileObj.hasOwnProperty("numYield"), tojson(profileObj));
     assert(profileObj.hasOwnProperty("locks"), tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Confirm metrics for parameters that require "commands" mode.
     //
 
-    if (db.getMongo().writeMode() === "commands") {
+    if (db.getMonger().writeMode() === "commands") {
         coll.drop();
         assert.writeOK(coll.insert({_id: 0, a: [0]}));
 
@@ -81,7 +81,7 @@
     assert.eq(profileObj.nModified, 5, tojson(profileObj));
     assert.eq(profileObj.planSummary, "IXSCAN { a: 1 }", tojson(profileObj));
     assert(profileObj.execStats.hasOwnProperty("stage"), tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Confirm metrics for insert on update with "upsert: true".
@@ -106,7 +106,7 @@
     assert.eq(profileObj.upsert, true, tojson(profileObj));
     assert.eq(profileObj.planSummary, "IXSCAN { _id: 1 }", tojson(profileObj));
     assert(profileObj.execStats.hasOwnProperty("stage"), tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 
     //
     // Confirm "fromMultiPlanner" metric.
@@ -122,5 +122,5 @@
     profileObj = getLatestProfilerEntry(testDB);
 
     assert.eq(profileObj.fromMultiPlanner, true, tojson(profileObj));
-    assert.eq(profileObj.appName, "MongoDB Shell", tojson(profileObj));
+    assert.eq(profileObj.appName, "MongerDB Shell", tojson(profileObj));
 })();

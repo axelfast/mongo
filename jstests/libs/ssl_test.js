@@ -2,7 +2,7 @@
 // can be used to connect to a server with a given SSL configuration.
 // This is necessary because SSL settings are currently process global - so if the monger shell
 // started by resmoke.py has an SSL configuration that's incompatible with a server created with
-// MongoRunner, it will not be able to connect to it.
+// MongerRunner, it will not be able to connect to it.
 
 /**
  * A utility for checking if a shell configured with the specified command line options can
@@ -35,7 +35,7 @@ function SSLTest(serverOpts, clientOpts) {
         return canonical;
     };
 
-    this.serverOpts = MongoRunner.mongerdOptions(canonicalServerOpts(serverOpts));
+    this.serverOpts = MongerRunner.mongerdOptions(canonicalServerOpts(serverOpts));
     this.port = this.serverOpts.port;
     resetDbpath(this.serverOpts.dbpath);
 
@@ -68,19 +68,19 @@ SSLTest.prototype.noSSLClientOptions = {
 SSLTest.prototype.connectWorked = function() {
     var connectTimeoutMillis = 3 * 60 * 1000;
 
-    var serverArgv = MongoRunner.arrOptions("mongerd", this.serverOpts);
-    var clientArgv = MongoRunner.arrOptions("monger", this.clientOpts);
+    var serverArgv = MongerRunner.arrOptions("mongerd", this.serverOpts);
+    var clientArgv = MongerRunner.arrOptions("monger", this.clientOpts);
 
-    var serverPID = _startMongoProgram.apply(null, serverArgv);
+    var serverPID = _startMongerProgram.apply(null, serverArgv);
     try {
         assert.soon(function() {
             return checkProgram(serverPID).alive &&
-                (0 === _runMongoProgram.apply(null, clientArgv));
+                (0 === _runMongerProgram.apply(null, clientArgv));
         }, "connect failed", connectTimeoutMillis);
     } catch (ex) {
         return false;
     } finally {
-        _stopMongoProgram(this.port);
+        _stopMongerProgram(this.port);
     }
     return true;
 };

@@ -2,7 +2,7 @@
 .
 .TH "MONGOFILES" "1" "Jun 21, 2018" "4.0" "mongerdb-manual"
 .SH NAME
-mongerfiles \- MongoDB GridFS Utility
+mongerfiles \- MongerDB GridFS Utility
 .
 .nr rst2man-indent-level 0
 .
@@ -54,7 +54,7 @@ of  mongerfiles\&.
 .SH SYNOPSIS
 .sp
 The \fI\%mongerfiles\fP utility makes it possible to manipulate files
-stored in your MongoDB instance in GridFS objects from the
+stored in your MongerDB instance in GridFS objects from the
 command line. It is particularly useful as it provides an interface
 between objects stored in your file system and GridFS.
 .sp
@@ -208,9 +208,9 @@ URI connection string)
 .B \-\-host <hostname><:port>
 Specifies a resolvable hostname for the \fBmongerd\fP that holds
 your GridFS system. By default \fI\%mongerfiles\fP attempts to connect
-to a MongoDB process running on the localhost port number \fB27017\fP\&.
+to a MongerDB process running on the localhost port number \fB27017\fP\&.
 .sp
-Optionally, specify a port number to connect a MongoDB instance running
+Optionally, specify a port number to connect a MongerDB instance running
 on a port other than 27017.
 .UNINDENT
 .INDENT 0.0
@@ -218,7 +218,7 @@ on a port other than 27017.
 .B \-\-port <port>
 \fIDefault\fP: 27017
 .sp
-Specifies the TCP port on which the MongoDB instance listens for
+Specifies the TCP port on which the MongerDB instance listens for
 client connections.
 .UNINDENT
 .INDENT 0.0
@@ -227,8 +227,8 @@ client connections.
 \fIRemoved in version 3.0.\fP
 .sp
 Enables IPv6 support and allows \fBmongerfiles\fP to connect to the
-MongoDB instance using an IPv6 network. Prior to MongoDB 3.0, you
-had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongoDB 3.0 and later, IPv6
+MongerDB instance using an IPv6 network. Prior to MongerDB 3.0, you
+had to specify \fI\%\-\-ipv6\fP to use IPv6. In MongerDB 3.0 and later, IPv6
 is always enabled.
 .UNINDENT
 .INDENT 0.0
@@ -240,7 +240,7 @@ New in version 2.6.
 Enables connection to a \fBmongerd\fP or \fBmongers\fP that has
 TLS/SSL support enabled.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -277,7 +277,7 @@ intrusion is a possibility.
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -296,7 +296,7 @@ to a \fBmongerd\fP or \fBmongers\fP that has
 \fBCAFile\fP enabled \fIwithout\fP
 \fBallowConnectionsWithoutCertificates\fP\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -315,7 +315,7 @@ If the private key in the PEM file is encrypted and you do not specify
 the \fI\%\-\-sslPEMKeyPassword\fP option, the \fBmongerfiles\fP will prompt for a passphrase. See
 ssl\-certificate\-password\&.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -329,7 +329,7 @@ Specifies the \fB\&.pem\fP file that contains the Certificate Revocation
 List. Specify the file name of the \fB\&.pem\fP file using relative or
 absolute paths.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -341,10 +341,10 @@ New in version 2.6.
 .sp
 Bypasses the validation checks for server certificates and allows
 the use of invalid certificates. When using the
-\fBallowInvalidCertificates\fP setting, MongoDB logs as a
+\fBallowInvalidCertificates\fP setting, MongerDB logs as a
 warning the use of the invalid certificate.
 .sp
-Starting in MongoDB 4.0, if you specify
+Starting in MongerDB 4.0, if you specify
 \fB\-\-sslAllowInvalidCertificates\fP or \fBssl.allowInvalidCertificates:
 true\fP when using x.509 authentication, an invalid certificate is
 only sufficient to establish a TLS/SSL connection but is
@@ -371,7 +371,7 @@ well as to foreign processes posing as valid
 .UNINDENT
 .UNINDENT
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -382,10 +382,10 @@ New in version 3.0.
 
 .sp
 Disables the validation of the hostnames in TLS/SSL certificates. Allows
-\fBmongerfiles\fP to connect to MongoDB instances even if the hostname in their
+\fBmongerfiles\fP to connect to MongerDB instances even if the hostname in their
 certificates do not match the specified hostname.
 .sp
-For more information about TLS/SSL and MongoDB, see
+For more information about TLS/SSL and MongerDB, see
 /tutorial/configure\-ssl and
 /tutorial/configure\-ssl\-clients .
 .UNINDENT
@@ -403,7 +403,7 @@ the \fI\%\-\-sslFIPSMode\fP option.
 .INDENT 7.0
 .INDENT 3.5
 FIPS\-compatible TLS/SSL is
-available only in \fI\%MongoDB Enterprise\fP\&. See
+available only in \fI\%MongerDB Enterprise\fP\&. See
 /tutorial/configure\-fips for more information.
 .UNINDENT
 .UNINDENT
@@ -411,14 +411,14 @@ available only in \fI\%MongoDB Enterprise\fP\&. See
 .INDENT 0.0
 .TP
 .B \-\-username <username>, \-u <username>
-Specifies a username with which to authenticate to a MongoDB database
+Specifies a username with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-password\fP and
 \fB\-\-authenticationDatabase\fP options.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password <password>, \-p <password>
-Specifies a password with which to authenticate to a MongoDB database
+Specifies a password with which to authenticate to a MongerDB database
 that uses authentication. Use in conjunction with the \fB\-\-username\fP and
 \fB\-\-authenticationDatabase\fP options.
 .sp
@@ -446,10 +446,10 @@ See user\-authentication\-database\&.
 Specifies the authentication mechanism the \fBmongerfiles\fP instance uses to
 authenticate to the \fBmongerd\fP or \fBmongers\fP\&.
 .sp
-Changed in version 4.0: MongoDB removes support for the deprecated MongoDB
+Changed in version 4.0: MongerDB removes support for the deprecated MongerDB
 Challenge\-Response (\fBMONGODB\-CR\fP) authentication mechanism.
 .sp
-MongoDB adds support for SCRAM mechanism using the SHA\-256 hash
+MongerDB adds support for SCRAM mechanism using the SHA\-256 hash
 function (\fBSCRAM\-SHA\-256\fP).
 
 .TS
@@ -485,14 +485,14 @@ _
 T{
 MONGODB\-X509
 T}	T{
-MongoDB TLS/SSL certificate authentication.
+MongerDB TLS/SSL certificate authentication.
 T}
 _
 T{
 GSSAPI (Kerberos)
 T}	T{
 External authentication using Kerberos. This mechanism is
-available only in \fI\%MongoDB Enterprise\fP\&.
+available only in \fI\%MongerDB Enterprise\fP\&.
 T}
 _
 T{
@@ -501,7 +501,7 @@ T}	T{
 External authentication using LDAP. You can also use \fBPLAIN\fP
 for authenticating in\-database users. \fBPLAIN\fP transmits
 passwords in plain text. This mechanism is available only in
-\fI\%MongoDB Enterprise\fP\&.
+\fI\%MongerDB Enterprise\fP\&.
 T}
 _
 .TE
@@ -515,7 +515,7 @@ New in version 2.6.
 Specify the name of the service using GSSAPI/Kerberos\&. Only required if the service does not use the
 default name of \fBmongerdb\fP\&.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -526,7 +526,7 @@ New in version 2.6.
 Specify the hostname of a service using GSSAPI/Kerberos\&. \fIOnly\fP required if the hostname of a machine does
 not match the hostname resolved by DNS.
 .sp
-This option is available only in MongoDB Enterprise.
+This option is available only in MongerDB Enterprise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -769,7 +769,7 @@ mongerfiles \-d records get_id \(aqObjectId("56feac751f417d0357e7140f")\(aq
 .sp
 You must include quotation marks around the \fB_id\fP\&.
 .SH AUTHOR
-MongoDB Documentation Project
+MongerDB Documentation Project
 .SH COPYRIGHT
 2008-2018
 .\" Generated by docutils manpage writer.

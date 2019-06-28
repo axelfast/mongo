@@ -23,7 +23,7 @@
             [{op: "c", ns: testDB.getName() + ".$cmd", o: {create: tempCollName, temp: true}}]
     }));
 
-    const session = db.getMongo().startSession();
+    const session = db.getMonger().startSession();
     const sessionDB = session.getDatabase(dbName);
     const sessionTempColl = sessionDB.getCollection(tempCollName);
 

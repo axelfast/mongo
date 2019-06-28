@@ -1,9 +1,9 @@
 /**
- *    Copyright (C) 2018-present MongoDB, Inc.
+ *    Copyright (C) 2018-present MongerDB, Inc.
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the Server Side Public License, version 1,
- *    as published by MongoDB, Inc.
+ *    as published by MongerDB, Inc.
  *
  *    This program is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,7 +46,7 @@ namespace repl {
 // It is necessary to have this forward declare for the monger fail point
 // at this location because of the splitting of the rollback algorithms into
 // two separate files, rs_rollback and rs_rollback_no_uuid. However, after
-// MongoDB 3.8 is released, we no longer need to maintain rs_rollback_no_uuid
+// MongerDB 3.8 is released, we no longer need to maintain rs_rollback_no_uuid
 // code and these forward declares can be removed. See SERVER-29766.
 MONGO_FAIL_POINT_DECLARE(rollbackHangBeforeFinish);
 MONGO_FAIL_POINT_DECLARE(rollbackHangThenFailAfterWritingMinValid);

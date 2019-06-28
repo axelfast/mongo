@@ -11,7 +11,7 @@ load("jstests/client_encrypt/lib/mock_kms.js");
     const mock_kms = new MockKMSServer();
     mock_kms.start();
 
-    const shell = Mongo();
+    const shell = Monger();
     const keyVault = shell.getKeyVault();
 
     const test = shell.getDB("test");

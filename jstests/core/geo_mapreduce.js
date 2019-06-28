@@ -6,7 +6,7 @@
 
 // Test script from SERVER-1742
 
-// MongoDB test script for mapreduce with geo query
+// MongerDB test script for mapreduce with geo query
 
 // setup test collection
 db.apples.drop();

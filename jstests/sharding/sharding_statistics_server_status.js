@@ -55,12 +55,12 @@
     }
 
     function runConcurrentMoveChunk(host, ns, toShard) {
-        const mongers = new Mongo(host);
+        const mongers = new Monger(host);
         return mongers.adminCommand({moveChunk: ns, find: {_id: 1}, to: toShard});
     }
 
     function runConcurrentRead(host, dbName, collName) {
-        const mongers = new Mongo(host);
+        const mongers = new Monger(host);
         return mongers.getDB(dbName)[collName].find({_id: 5}).comment("concurrent read").itcount();
     }
 

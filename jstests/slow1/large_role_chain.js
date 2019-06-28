@@ -33,9 +33,9 @@ function runTest(conn) {
 }
 
 // run all tests standalone
-var conn = MongoRunner.runMongod();
+var conn = MongerRunner.runMongerd();
 runTest(conn);
-MongoRunner.stopMongod(conn);
+MongerRunner.stopMongerd(conn);
 
 // run all tests sharded
 conn = new ShardingTest({shards: 2, mongers: 1, config: 3});

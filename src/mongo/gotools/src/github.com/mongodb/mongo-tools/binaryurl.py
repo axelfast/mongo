@@ -15,7 +15,7 @@ url_full = "http://downloads.mongerdb.org/full.json"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--arch", help="processor architecture (e.g. 'x86_64', 'arm64')")
-parser.add_argument("--edition", help="edition of MongoDB to use (e.g. 'targeted', 'enterprise'); defaults to 'base'")
+parser.add_argument("--edition", help="edition of MongerDB to use (e.g. 'targeted', 'enterprise'); defaults to 'base'")
 parser.add_argument("--target", help="system in use (e.g. 'ubuntu1204', 'windows_x86_64-2008plus-ssl', 'rhel71')")
 parser.add_argument("--version", help="version branch (e.g. '2.6', '3.2.8-rc1', 'latest')")
 opts = parser.parse_args()

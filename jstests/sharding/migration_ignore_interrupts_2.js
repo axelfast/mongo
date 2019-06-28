@@ -6,7 +6,7 @@ load('./jstests/libs/chunk_manipulation_util.js');
 (function() {
     "use strict";
 
-    var staticMongod = MongoRunner.runMongod({});  // For startParallelOps.
+    var staticMongerd = MongerRunner.runMongerd({});  // For startParallelOps.
 
     var st = new ShardingTest({shards: 2});
 
@@ -31,7 +31,7 @@ load('./jstests/libs/chunk_manipulation_util.js');
     // Start a migration between shard0 and shard1 on coll1, pause in steady state before commit.
     pauseMoveChunkAtStep(shard0, moveChunkStepNames.reachedSteadyState);
     var joinMoveChunk = moveChunkParallel(
-        staticMongod, st.s0.host, {a: 0}, null, coll1.getFullName(), st.shard1.shardName);
+        staticMongerd, st.s0.host, {a: 0}, null, coll1.getFullName(), st.shard1.shardName);
     waitForMoveChunkStep(shard0, moveChunkStepNames.reachedSteadyState);
 
     jsTest.log('Sending false commit command....');
@@ -53,5 +53,5 @@ load('./jstests/libs/chunk_manipulation_util.js');
     assert.eq(1, shard1Coll1.find().itcount());
 
     st.stop();
-    MongoRunner.stopMongod(staticMongod);
+    MongerRunner.stopMongerd(staticMongerd);
 })();
